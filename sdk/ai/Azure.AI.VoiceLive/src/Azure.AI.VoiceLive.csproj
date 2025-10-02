@@ -14,10 +14,10 @@
       * Implement function calling and tool integration for dynamic responses
       * Create avatar-enabled voice interactions with visual components
 
-      See https://aka.ms/voicelivesdk-net for more inforamtion.
+      See https://aka.ms/voicelivesdk-net for more information.
     </Description>
     <AssemblyTitle>Microsoft Azure.AI.VoiceLive client library</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Azure.AI.VoiceLive</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

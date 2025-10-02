@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RequestTextContentPart. </summary>
+    /// <summary> A text content part for a request. </summary>
     public partial class RequestTextContentPart : VoiceLiveContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestTextContentPart"/>. </summary>
-        internal RequestTextContentPart() : base(ContentPartType.InputText)
+        public RequestTextContentPart() : base(ContentPartType.InputText)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
             Text = text;
         }
 
-        /// <summary> Gets the Text. </summary>
-        public string Text { get; }
+        /// <summary> Gets or sets the Text. </summary>
+        public string Text { get; set; }
     }
 }

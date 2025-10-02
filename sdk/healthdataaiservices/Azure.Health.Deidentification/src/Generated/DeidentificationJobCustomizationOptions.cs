@@ -27,11 +27,13 @@ namespace Azure.Health.Deidentification
         /// Please refer to https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format for more details.
         /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
+        /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, string inputLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedactionFormat = redactionFormat;
             SurrogateLocale = surrogateLocale;
+            InputLocale = inputLocale;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,5 +45,8 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Locale in which the output surrogates are written. </summary>
         public string SurrogateLocale { get; set; }
+
+        /// <summary> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </summary>
+        public string InputLocale { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    public partial class Shark : IJsonModel<Shark>
+    public partial class Shark : Fish, IJsonModel<Shark>
     {
         internal Shark() => throw null;
 

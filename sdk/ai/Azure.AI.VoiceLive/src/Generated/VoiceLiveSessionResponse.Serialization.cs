@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveSessionResponse. </summary>
+    /// <summary> Base for session configuration in the response. </summary>
     public partial class VoiceLiveSessionResponse : IJsonModel<VoiceLiveSessionResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -26,28 +26,159 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VoiceLiveSessionResponse)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
+            if (Optional.IsCollectionDefined(Modalities))
+            {
+                writer.WritePropertyName("modalities"u8);
+                writer.WriteStartArray();
+                foreach (InteractionModality item in Modalities)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Animation))
+            {
+                writer.WritePropertyName("animation"u8);
+                writer.WriteObjectValue(Animation, options);
+            }
+            if (Optional.IsDefined(Voice))
+            {
+                writer.WritePropertyName("voice"u8);
+                writer.WriteObjectValue(Voice, options);
+            }
+            if (Optional.IsDefined(Instructions))
+            {
+                writer.WritePropertyName("instructions"u8);
+                writer.WriteStringValue(Instructions);
+            }
+            if (Optional.IsDefined(InputAudioSamplingRate))
+            {
+                writer.WritePropertyName("input_audio_sampling_rate"u8);
+                writer.WriteNumberValue(InputAudioSamplingRate.Value);
+            }
+            if (Optional.IsDefined(InputAudioFormat))
+            {
+                writer.WritePropertyName("input_audio_format"u8);
+                writer.WriteStringValue(InputAudioFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(OutputAudioFormat))
+            {
+                writer.WritePropertyName("output_audio_format"u8);
+                writer.WriteStringValue(OutputAudioFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(InputAudioNoiseReduction))
+            {
+                writer.WritePropertyName("input_audio_noise_reduction"u8);
+                writer.WriteObjectValue(InputAudioNoiseReduction, options);
+            }
+            if (Optional.IsDefined(InputAudioEchoCancellation))
+            {
+                writer.WritePropertyName("input_audio_echo_cancellation"u8);
+                writer.WriteObjectValue(InputAudioEchoCancellation, options);
+            }
+            if (Optional.IsDefined(Avatar))
+            {
+                writer.WritePropertyName("avatar"u8);
+                writer.WriteObjectValue(Avatar, options);
+            }
+            if (Optional.IsDefined(InputAudioTranscription))
+            {
+                writer.WritePropertyName("input_audio_transcription"u8);
+                writer.WriteObjectValue(InputAudioTranscription, options);
+            }
+            if (Optional.IsCollectionDefined(OutputAudioTimestampTypes))
+            {
+                writer.WritePropertyName("output_audio_timestamp_types"u8);
+                writer.WriteStartArray();
+                foreach (AudioTimestampType item in OutputAudioTimestampTypes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Tools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (VoiceLiveToolDefinition item in Tools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+                writer.WriteObjectValue(ToolChoice, options);
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
+            }
+            if (Optional.IsDefined(MaxResponseOutputTokens))
+            {
+                writer.WritePropertyName("max_response_output_tokens"u8);
+                writer.WriteObjectValue(MaxResponseOutputTokens, options);
+            }
+            if (Optional.IsDefined(Agent))
+            {
+                writer.WritePropertyName("agent"u8);
+                writer.WriteObjectValue(Agent, options);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(_turnDetection))
+            {
+                writer.WritePropertyName("turn_detection"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(_turnDetection);
+#else
+                using (JsonDocument document = JsonDocument.Parse(_turnDetection))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveSessionResponse IJsonModel<VoiceLiveSessionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceLiveSessionResponse)JsonModelCreateCore(ref reader, options);
+        VoiceLiveSessionResponse IJsonModel<VoiceLiveSessionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceLiveSessionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceLiveSessionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -67,27 +198,26 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             string model = default;
-            IList<InputModality> modalities = default;
+            IList<InteractionModality> modalities = default;
             AnimationOptions animation = default;
+            VoiceProvider voice = default;
             string instructions = default;
-            InputAudio inputAudio = default;
             int? inputAudioSamplingRate = default;
-            AudioFormat? inputAudioFormat = default;
-            AudioFormat? outputAudioFormat = default;
-            TurnDetection turnDetection = default;
+            InputAudioFormat? inputAudioFormat = default;
+            OutputAudioFormat? outputAudioFormat = default;
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
             AvatarConfiguration avatar = default;
-            AudioInputTranscriptionSettings inputAudioTranscription = default;
+            AudioInputTranscriptionOptions inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
+            ToolChoiceOption toolChoice = default;
             float? temperature = default;
+            MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             RespondingAgentOptions agent = default;
-            BinaryData voiceInternal = default;
-            BinaryData maxResponseOutputTokens = default;
-            BinaryData toolChoice = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
+            BinaryData turnDetection = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
@@ -101,10 +231,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<InputModality> array = new List<InputModality>();
+                    List<InteractionModality> array = new List<InteractionModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new InputModality(item.GetString()));
+                        array.Add(new InteractionModality(item.GetString()));
                     }
                     modalities = array;
                     continue;
@@ -118,18 +248,18 @@ namespace Azure.AI.VoiceLive
                     animation = AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("instructions"u8))
-                {
-                    instructions = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("input_audio"u8))
+                if (prop.NameEquals("voice"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    inputAudio = InputAudio.DeserializeInputAudio(prop.Value, options);
+                    voice = VoiceProvider.DeserializeVoiceProvider(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("instructions"u8))
+                {
+                    instructions = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("input_audio_sampling_rate"u8))
@@ -147,7 +277,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    inputAudioFormat = new AudioFormat(prop.Value.GetString());
+                    inputAudioFormat = new InputAudioFormat(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("output_audio_format"u8))
@@ -156,17 +286,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    outputAudioFormat = new AudioFormat(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("turn_detection"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        turnDetection = null;
-                        continue;
-                    }
-                    turnDetection = TurnDetection.DeserializeTurnDetection(prop.Value, options);
+                    outputAudioFormat = new OutputAudioFormat(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("input_audio_noise_reduction"u8))
@@ -202,7 +322,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    inputAudioTranscription = AudioInputTranscriptionSettings.DeserializeAudioInputTranscriptionSettings(prop.Value, options);
+                    inputAudioTranscription = AudioInputTranscriptionOptions.DeserializeAudioInputTranscriptionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_audio_timestamp_types"u8))
@@ -233,6 +353,15 @@ namespace Azure.AI.VoiceLive
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -240,6 +369,15 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     temperature = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("max_response_output_tokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxResponseOutputTokens = MaxResponseOutputTokensOption.DeserializeMaxResponseOutputTokensOption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent"u8))
@@ -251,36 +389,18 @@ namespace Azure.AI.VoiceLive
                     agent = RespondingAgentOptions.DeserializeRespondingAgentOptions(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("voice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    voiceInternal = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("max_response_output_tokens"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxResponseOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("tool_choice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("turn_detection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    turnDetection = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -290,34 +410,33 @@ namespace Azure.AI.VoiceLive
             }
             return new VoiceLiveSessionResponse(
                 model,
-                modalities ?? new ChangeTrackingList<InputModality>(),
+                modalities ?? new ChangeTrackingList<InteractionModality>(),
                 animation,
+                voice,
                 instructions,
-                inputAudio,
                 inputAudioSamplingRate,
                 inputAudioFormat,
                 outputAudioFormat,
-                turnDetection,
                 inputAudioNoiseReduction,
                 inputAudioEchoCancellation,
                 avatar,
                 inputAudioTranscription,
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
-                temperature,
-                agent,
-                voiceInternal,
-                maxResponseOutputTokens,
                 toolChoice,
-                additionalBinaryDataProperties,
-                id);
+                temperature,
+                maxResponseOutputTokens,
+                agent,
+                id,
+                turnDetection,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VoiceLiveSessionResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -331,11 +450,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceLiveSessionResponse IPersistableModel<VoiceLiveSessionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceLiveSessionResponse)PersistableModelCreateCore(data, options);
+        VoiceLiveSessionResponse IPersistableModel<VoiceLiveSessionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceLiveSessionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceLiveSessionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveSessionResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

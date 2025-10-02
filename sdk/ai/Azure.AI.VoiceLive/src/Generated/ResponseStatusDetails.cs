@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/>. </summary>
         /// <param name="type"></param>
-        private protected ResponseStatusDetails(string @type)
+        private protected ResponseStatusDetails(SessionResponseStatus @type)
         {
             Type = @type;
         }
@@ -29,13 +29,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseStatusDetails(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseStatusDetails(SessionResponseStatus @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        internal string Type { get; set; }
+        internal SessionResponseStatus Type { get; set; }
     }
 }

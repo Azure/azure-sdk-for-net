@@ -38,6 +38,12 @@ namespace MgmtTypeSpec
             return subscriptionResource.GetCachedClient(client => new MockableMgmtTypeSpecSubscriptionResource(client, subscriptionResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableMgmtTypeSpecTenantResource GetMockableMgmtTypeSpecTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableMgmtTypeSpecTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -248,6 +254,30 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMgmtTypeSpecArmClient(client).GetJobResource(id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public static HciVmInstanceResource GetHciVmInstanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetHciVmInstanceResource(id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
+        public static HciVmInstanceResource GetHciVmInstance(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetHciVmInstance(scope);
         }
 
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
@@ -547,6 +577,28 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
+        }
+
+        /// <summary> Starts a failed runtime resource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response> StartFailedServerlessRuntimeAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableMgmtTypeSpecTenantResource(tenantResource).StartFailedServerlessRuntimeAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Starts a failed runtime resource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response StartFailedServerlessRuntime(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableMgmtTypeSpecTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
         }
     }
 }

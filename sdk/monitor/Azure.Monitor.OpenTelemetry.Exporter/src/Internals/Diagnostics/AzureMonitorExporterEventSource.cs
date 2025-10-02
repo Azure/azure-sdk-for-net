@@ -459,13 +459,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(45, Message = "The {0} method received an AzureMonitorExporterOptions with EnableLiveMetrics set to true, which isn't supported. Note that LiveMetrics is only available via the UseAzureMonitorExporter API.", Level = EventLevel.Warning)]
         public void LiveMetricsNotSupported(string methodName) => WriteEvent(45, methodName);
 
-        [Event(46, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {1}. Not user actionable.", Level = EventLevel.Error)]
+        [NonEvent]
+        public void CustomerSdkStatsTrackingFailed(string metricType, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                CustomerSdkStatsTrackingFailed(metricType, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(46, Message = "Customer SDK stats tracking failed for metric type '{0}' due to an exception. This is only for internal telemetry and can safely be ignored. {1}", Level = EventLevel.Informational)]
+        public void CustomerSdkStatsTrackingFailed(string metricType, string exceptionMessage) => WriteEvent(46, metricType, exceptionMessage);
+
+        [Event(47, Message = "Customer SDK stats enabled with export interval of {0} milliseconds.", Level = EventLevel.Informational)]
+        public void CustomerSdkStatsEnabled(int exportIntervalMilliseconds) => WriteEvent(47, exportIntervalMilliseconds);
+
+        [NonEvent]
+        public void CustomerSdkStatsInitializationFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                CustomerSdkStatsInitializationFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(48, Message = "Customer SDK stats initialization failed due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Warning)]
+        public void CustomerSdkStatsInitializationFailed(string exceptionMessage) => WriteEvent(48, exceptionMessage);
+
+        [Event(51, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {1}. Not user actionable.", Level = EventLevel.Error)]
         public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(46, previousCollectedTime, recentCollectedTime);
 
-        [Event(47, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {1}. Not user actionable.", Level = EventLevel.Error)]
+        [Event(52, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {1}. Not user actionable.", Level = EventLevel.Error)]
         public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(47, previousCollectedValue, recentCollectedValue);
 
-        [Event(48, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        [Event(53, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
         public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(48, period, diffValue, calculatedValue, processorCount, normalizedValue);
 
         [NonEvent]
@@ -477,7 +504,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(49, Message = "Failed to collect Process Private Bytes due to an exception. {0}", Level = EventLevel.Warning)]
+        [Event(54, Message = "Failed to collect Process Private Bytes due to an exception. {0}", Level = EventLevel.Warning)]
         public void FailedToCollectProcessPrivateBytes(string exceptionMessage) => WriteEvent(49, exceptionMessage);
     }
 }

@@ -160,7 +160,8 @@ namespace Azure.Generator.Tests.Visitors
 
             Assert.IsNotNull(explicitOperator);
             Assert.IsNotNull(explicitOperator!.BodyStatements);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), explicitOperator!.BodyStatements!.ToDisplayString());
+            var result = explicitOperator!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
         }
 
         [Test]

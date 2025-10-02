@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
         }
 
         VirtualMachineScaleSetData IJsonModel<VirtualMachineScaleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -108,6 +113,7 @@ namespace Azure.ResourceManager.Compute
             IList<string> zones = default;
             ExtendedLocation extendedLocation = default;
             string etag = default;
+            VirtualMachinePlacement placement = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -182,6 +188,15 @@ namespace Azure.ResourceManager.Compute
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = VirtualMachinePlacement.DeserializeVirtualMachinePlacement(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -245,6 +260,7 @@ namespace Azure.ResourceManager.Compute
                 zones ?? new ChangeTrackingList<string>(),
                 extendedLocation,
                 etag,
+                placement,
                 serializedAdditionalRawData);
         }
 

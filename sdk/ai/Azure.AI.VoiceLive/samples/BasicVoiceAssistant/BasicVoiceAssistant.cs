@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive.Samples;
 /// This sample now demonstrates some of the new convenience methods added to the VoiceLive SDK:
 /// - ClearStreamingAudioAsync() - Clears all input audio currently being streamed
 /// - CancelResponseAsync() - Cancels the current response generation (existing method)
-/// - ConfigureConversationSessionAsync() - Configures session options (existing method)
+/// - ConfigureSessionAsync() - Configures session options (existing method)
 ///
 /// Additional convenience methods available but not shown in this sample:
 /// - StartAudioTurnAsync() / EndAudioTurnAsync() / CancelAudioTurnAsync() - Audio turn management
@@ -123,11 +123,11 @@ public class BasicVoiceAssistant : IDisposable
         var azureVoice = new AzureStandardVoice(_voice);
 
         // Create strongly typed turn detection configuration
-        var turnDetectionConfig = new ServerVad
+        var turnDetectionConfig = new ServerVadTurnDetection
         {
             Threshold = 0.5f,
-            PrefixPaddingMs = 300,
-            SilenceDurationMs = 500
+            PrefixPadding = TimeSpan.FromMilliseconds(300),
+            SilenceDuration = TimeSpan.FromMilliseconds(500)
         };
 
         // Create conversation session options
@@ -137,17 +137,17 @@ public class BasicVoiceAssistant : IDisposable
             Model = _model,
             Instructions = _instructions,
             Voice = azureVoice,
-            InputAudioFormat = AudioFormat.Pcm16,
-            OutputAudioFormat = AudioFormat.Pcm16,
+            InputAudioFormat = InputAudioFormat.Pcm16,
+            OutputAudioFormat = OutputAudioFormat.Pcm16,
             TurnDetection = turnDetectionConfig
         };
 
         // Ensure modalities include audio
         sessionOptions.Modalities.Clear();
-        sessionOptions.Modalities.Add(InputModality.Text);
-        sessionOptions.Modalities.Add(InputModality.Audio);
+        sessionOptions.Modalities.Add(InteractionModality.Text);
+        sessionOptions.Modalities.Add(InteractionModality.Audio);
 
-        await _session!.ConfigureConversationSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
+        await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Session configuration sent");
     }

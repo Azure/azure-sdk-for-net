@@ -148,6 +148,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsCollectionDefined(ShapeAttributes))
+            {
+                writer.WritePropertyName("shapeAttributes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ShapeAttributes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -209,6 +219,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleDatabaseComputeModel? computeModel = default;
             bool? areServerTypesSupported = default;
             string displayName = default;
+            IReadOnlyList<string> shapeAttributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -413,6 +424,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("shapeAttributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    shapeAttributes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -444,6 +469,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeModel,
                 areServerTypesSupported,
                 displayName,
+                shapeAttributes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

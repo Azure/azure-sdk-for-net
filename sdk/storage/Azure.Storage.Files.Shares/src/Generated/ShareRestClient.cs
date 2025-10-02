@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-11-05". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2026-02-06". </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, ShareTokenIntent? fileRequestIntent = null)
@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares
             _fileRequestIntent = fileRequestIntent;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -106,6 +106,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-share-provisioned-bandwidth-mibps", shareProvisionedBandwidthMibps.Value);
             }
+            if (enableSmbDirectoryLease != null)
+            {
+                request.Headers.Add("x-ms-enable-smb-directory-lease", enableSmbDirectoryLease.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -123,10 +127,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
         /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
+        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps);
+            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ShareCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -151,10 +156,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
         /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
+        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps);
+            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease);
             _pipeline.Send(message, cancellationToken);
             var headers = new ShareCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -929,7 +935,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -988,6 +994,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-share-provisioned-bandwidth-mibps", shareProvisionedBandwidthMibps.Value);
             }
+            if (enableSmbDirectoryLease != null)
+            {
+                request.Headers.Add("x-ms-enable-smb-directory-lease", enableSmbDirectoryLease.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1003,11 +1013,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
         /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
+        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, shareFileRequestConditions);
+            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ShareSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1030,11 +1041,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
         /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
+        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, shareFileRequestConditions);
+            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new ShareSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
