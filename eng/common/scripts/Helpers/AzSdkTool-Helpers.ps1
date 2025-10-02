@@ -108,7 +108,14 @@ function isNewVersion(
 function Get-GitHubApiHeaders {
     # Use GitHub cli to get an auth token if available
     if (Get-Command gh -ErrorAction SilentlyContinue) {
-        $token = gh auth token 2>$null
+        try
+        {
+            $token = gh auth token 2>$null
+        }
+        catch
+        {
+            Write-Host "Failed to get GitHub CLI auth token."
+        }
     }
 
     # Get token from env if not available from gh cli
@@ -122,7 +129,7 @@ function Get-GitHubApiHeaders {
     {
         Write-Host "Using authenticated GitHub API requests."
         $headers = @{
-            Authorization = "Bearer $tokentest"
+            Authorization = "Bearer $token"
         }
         return $headers
     }
