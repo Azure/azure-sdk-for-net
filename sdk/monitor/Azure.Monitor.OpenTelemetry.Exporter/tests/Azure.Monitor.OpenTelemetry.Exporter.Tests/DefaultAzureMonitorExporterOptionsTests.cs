@@ -141,6 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             string? prevSampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
             string? prevSamplerArg = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+
             try
             {
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage");
@@ -166,20 +167,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void Configure_Sampler_EnvironmentVariable_Overrides_IConfiguration()
         {
-            // Arrange - configuration provides fixed percentage
-            var configValues = new List<KeyValuePair<string, string?>>
-            {
-                new("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage"),
-                new("OTEL_TRACES_SAMPLER_ARG", "0.50"),
-            };
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
-            var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
-            var options = new AzureMonitorExporterOptions();
-
             string? prevSampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
             string? prevSamplerArg = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+
             try
             {
+                // Clear environment variables first to ensure clean state
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
+
+                // Arrange - configuration provides fixed percentage
+                var configValues = new List<KeyValuePair<string, string?>>
+                {
+                    new("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage"),
+                    new("OTEL_TRACES_SAMPLER_ARG", "0.50"),
+                };
+                var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+                var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+                var options = new AzureMonitorExporterOptions();
+
                 // Environment overrides to rate_limited 10
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.rate_limited");
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "10");
