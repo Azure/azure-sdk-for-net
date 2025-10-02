@@ -107,6 +107,7 @@ function isNewVersion(
 
 function Get-GitHubApiHeaders {
     # Use GitHub cli to get an auth token if available
+    $token = ""
     if (Get-Command gh -ErrorAction SilentlyContinue) {
         try
         {
