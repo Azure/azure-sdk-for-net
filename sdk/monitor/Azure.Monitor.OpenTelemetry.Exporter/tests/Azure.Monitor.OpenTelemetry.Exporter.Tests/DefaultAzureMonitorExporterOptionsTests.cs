@@ -8,87 +8,132 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    [CollectionDefinition("ExporterEnvVarTests", DisableParallelization = true)]
+    [Collection("ExporterEnvVarTests")]
     public class DefaultAzureMonitorExporterOptionsTests
     {
         [Fact]
         public void Configure_Sampler_From_IConfiguration_FixedPercentage()
         {
-            // Arrange
-            var configValues = new List<KeyValuePair<string, string?>>
+            string? prevSampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
+            string? prevSamplerArg = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+
+            try
             {
-                new("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage"),
-                new("OTEL_TRACES_SAMPLER_ARG", "0.25"),
-            };
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
-            var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
-            var options = new AzureMonitorExporterOptions();
+                // Clear environment variables to ensure they don't interfere with IConfiguration
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
 
-            // Act
-            defaultConfigurator.Configure(options);
+                // Arrange
+                var configValues = new List<KeyValuePair<string, string?>>
+                {
+                    new("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage"),
+                    new("OTEL_TRACES_SAMPLER_ARG", "0.25"),
+                };
+                var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+                var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+                var options = new AzureMonitorExporterOptions();
 
-            // Assert
-            Assert.Equal(0.25f, options.SamplingRatio);
-            Assert.Null(options.TracesPerSecond); // Not set for fixed percentage
+                // Act
+                defaultConfigurator.Configure(options);
+
+                // Assert
+                Assert.Equal(0.25f, options.SamplingRatio);
+                Assert.Null(options.TracesPerSecond); // Not set for fixed percentage
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", prevSampler);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", prevSamplerArg);
+            }
         }
 
         [Fact]
         public void Configure_Sampler_From_IConfiguration_RateLimited()
         {
-            // Arrange
-            var configValues = new List<KeyValuePair<string, string?>>
+            string? prevSampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
+            string? prevSamplerArg = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+
+            try
             {
-                new("OTEL_TRACES_SAMPLER", "microsoft.rate_limited"),
-                new("OTEL_TRACES_SAMPLER_ARG", "5"),
-            };
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
-            var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
-            var options = new AzureMonitorExporterOptions();
+                // Clear environment variables to ensure they don't interfere with IConfiguration
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
 
-            // Act
-            defaultConfigurator.Configure(options);
+                // Arrange
+                var configValues = new List<KeyValuePair<string, string?>>
+                {
+                    new("OTEL_TRACES_SAMPLER", "microsoft.rate_limited"),
+                    new("OTEL_TRACES_SAMPLER_ARG", "5"),
+                };
+                var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+                var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+                var options = new AzureMonitorExporterOptions();
 
-            // Assert
-            Assert.Equal(5d, options.TracesPerSecond);
-            Assert.Equal(1.0f, options.SamplingRatio); // untouched
+                // Act
+                defaultConfigurator.Configure(options);
+
+                // Assert
+                Assert.Equal(5d, options.TracesPerSecond);
+                Assert.Equal(1.0f, options.SamplingRatio); // untouched
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", prevSampler);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", prevSamplerArg);
+            }
         }
 
         [Fact]
         public void Configure_Sampler_InvalidArgs_Ignored()
         {
-            // Arrange invalid fixed percentage (>1)
-            var configValues = new List<KeyValuePair<string, string?>>
+            string? prevSampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
+            string? prevSamplerArg = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+
+            try
             {
-                new("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage"),
-                new("OTEL_TRACES_SAMPLER_ARG", "1.5"),
-            };
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
-            var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
-            var options = new AzureMonitorExporterOptions();
+                // Clear environment variables to ensure they don't interfere with IConfiguration
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
 
-            // Act
-            defaultConfigurator.Configure(options);
+                // Arrange invalid fixed percentage (>1)
+                var configValues = new List<KeyValuePair<string, string?>>
+                {
+                    new("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage"),
+                    new("OTEL_TRACES_SAMPLER_ARG", "1.5"),
+                };
+                var configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+                var defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+                var options = new AzureMonitorExporterOptions();
 
-            // Assert - defaults unchanged
-            Assert.Equal(1.0f, options.SamplingRatio);
-            Assert.Null(options.TracesPerSecond);
+                // Act
+                defaultConfigurator.Configure(options);
 
-            // Now test invalid negative rate_limited
-            configValues = new List<KeyValuePair<string, string?>>
+                // Assert - defaults unchanged
+                Assert.Equal(1.0f, options.SamplingRatio);
+                Assert.Null(options.TracesPerSecond);
+
+                // Now test invalid negative rate_limited
+                configValues = new List<KeyValuePair<string, string?>>
+                {
+                    new("OTEL_TRACES_SAMPLER", "microsoft.rate_limited"),
+                    new("OTEL_TRACES_SAMPLER_ARG", "-2"),
+                };
+                configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
+                defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
+                options = new AzureMonitorExporterOptions();
+
+                // Act
+                defaultConfigurator.Configure(options);
+
+                // Assert
+                Assert.Null(options.TracesPerSecond);
+                Assert.Equal(1.0f, options.SamplingRatio);
+            }
+            finally
             {
-                new("OTEL_TRACES_SAMPLER", "microsoft.rate_limited"),
-                new("OTEL_TRACES_SAMPLER_ARG", "-2"),
-            };
-            configuration = new ConfigurationBuilder().AddInMemoryCollection(configValues).Build();
-            defaultConfigurator = new DefaultAzureMonitorExporterOptions(configuration);
-            options = new AzureMonitorExporterOptions();
-
-            // Act
-            defaultConfigurator.Configure(options);
-
-            // Assert
-            Assert.Null(options.TracesPerSecond);
-            Assert.Equal(1.0f, options.SamplingRatio);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", prevSampler);
+                Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", prevSamplerArg);
+            }
         }
 
         [Fact]
