@@ -20,13 +20,10 @@ namespace Azure.AI.Speech.BatchTranscription
         public BatchTranscriptionClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Speech.BatchTranscription.BatchTranscriptionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response DeleteTranscription(string id, Azure.RequestContext context = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTranscriptionAsync(string id, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTranscription(string id, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Speech.BatchTranscription.TranscriptionJob> GetTranscription(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTranscriptionAsync(string id, Azure.RequestContext context) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Speech.BatchTranscription.TranscriptionJob>> GetTranscriptionAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetTranscriptionFiles(string id, int? maxCount, int? skip, string filter, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Speech.BatchTranscription.TranscriptionFile> GetTranscriptionFiles(string id, int? maxCount = default(int?), int? skip = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -38,12 +35,9 @@ namespace Azure.AI.Speech.BatchTranscription
         public virtual Azure.AsyncPageable<Azure.AI.Speech.BatchTranscription.TranscriptionJob> GetTranscriptionsAsync(int? maxCount = default(int?), int? skip = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Speech.BatchTranscription.TranscriptionJob> StartTranscription(Azure.AI.Speech.BatchTranscription.TranscriptionJob resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StartTranscription(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Speech.BatchTranscription.TranscriptionJob>> StartTranscriptionAsync(Azure.AI.Speech.BatchTranscription.TranscriptionJob resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> StartTranscriptionAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Speech.BatchTranscription.TranscriptionJob> Transcribe(Azure.AI.Speech.BatchTranscription.TranscriptionJob resource, Azure.WaitUntil waitUntil, System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Speech.BatchTranscription.TranscriptionJob>> TranscribeAsync(Azure.AI.Speech.BatchTranscription.TranscriptionJob resource, Azure.WaitUntil waitUntil, System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchTranscriptionClientOptions : Azure.Core.ClientOptions
