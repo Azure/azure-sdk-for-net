@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-31-preview";
+            _apiVersion = apiVersion ?? "2025-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static BatchNodeReimageOption Terminate { get; } = new BatchNodeReimageOption(TerminateValue);
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Reimage the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeReimageOption TaskCompletion { get; } = new BatchNodeReimageOption(TaskCompletionValue);
-        /// <summary> Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Reimage the Compute Node when all Task retention periods have expired. </summary>
+        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Reimage the Compute Node when all Task retention periods have expired. </summary>
         public static BatchNodeReimageOption RetainedData { get; } = new BatchNodeReimageOption(RetainedDataValue);
         /// <summary> Determines if two <see cref="BatchNodeReimageOption"/> values are the same. </summary>
         public static bool operator ==(BatchNodeReimageOption left, BatchNodeReimageOption right) => left.Equals(right);

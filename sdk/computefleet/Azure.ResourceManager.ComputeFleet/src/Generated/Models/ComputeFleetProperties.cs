@@ -69,8 +69,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
+        /// <param name="mode"> Mode of the Fleet. </param>
+        /// <param name="capacityType">
+        /// Specifies capacity type for Fleet Regular and Spot priority profiles.
+        /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
+        /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
+        /// </param>
+        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, FleetMode? mode, CapacityType? capacityType, ZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -81,6 +88,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeProfile = computeProfile;
             CreatedOn = createdOn;
             UniqueId = uniqueId;
+            Mode = mode;
+            CapacityType = capacityType;
+            ZoneAllocationPolicy = zoneAllocationPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -114,5 +124,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Specifies the ID which uniquely identifies a Compute Fleet. </summary>
         public string UniqueId { get; }
+        /// <summary> Mode of the Fleet. </summary>
+        public FleetMode? Mode { get; set; }
+        /// <summary>
+        /// Specifies capacity type for Fleet Regular and Spot priority profiles.
+        /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
+        /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
+        /// </summary>
+        public CapacityType? CapacityType { get; set; }
+        /// <summary> Zone Allocation Policy for Fleet. </summary>
+        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
     }
 }

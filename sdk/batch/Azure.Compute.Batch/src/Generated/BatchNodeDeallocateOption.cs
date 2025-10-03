@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static BatchNodeDeallocateOption Terminate { get; } = new BatchNodeDeallocateOption(TerminateValue);
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeDeallocateOption TaskCompletion { get; } = new BatchNodeDeallocateOption(TaskCompletionValue);
-        /// <summary> Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Task retention periods have expired. </summary>
+        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Task retention periods have expired. </summary>
         public static BatchNodeDeallocateOption RetainedData { get; } = new BatchNodeDeallocateOption(RetainedDataValue);
         /// <summary> Determines if two <see cref="BatchNodeDeallocateOption"/> values are the same. </summary>
         public static bool operator ==(BatchNodeDeallocateOption left, BatchNodeDeallocateOption right) => left.Equals(right);

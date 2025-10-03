@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExportDependenciesAsync(WaitUntil waitUntil, ExportDependenciesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExportDependenciesOperationResult>> ExportDependenciesAsync(WaitUntil waitUntil, ExportDependenciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -725,9 +725,9 @@ namespace Azure.ResourceManager.DependencyMap
             try
             {
                 var response = await _dependencyMapMapsRestClient.ExportDependenciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DependencyMapArmOperation<ExportDependenciesOperationResult>(new ExportDependenciesOperationResultOperationSource(), _dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ExportDependencies(WaitUntil waitUntil, ExportDependenciesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExportDependenciesOperationResult> ExportDependencies(WaitUntil waitUntil, ExportDependenciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -771,9 +771,9 @@ namespace Azure.ResourceManager.DependencyMap
             try
             {
                 var response = _dependencyMapMapsRestClient.ExportDependencies(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DependencyMapArmOperation<ExportDependenciesOperationResult>(new ExportDependenciesOperationResultOperationSource(), _dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
