@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/storage/ci.webjobs.yml
+    - sdk/storage/ci.functions.yml
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
