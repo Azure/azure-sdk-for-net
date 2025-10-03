@@ -3,8 +3,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
 {
-    // TODO: Avoid allocation change to struct.
-    internal sealed class TelemetryCounter
+    internal sealed class TelemetrySchemaTypeCounter
     {
         internal int _requestCount;
         internal int _dependencyCount;

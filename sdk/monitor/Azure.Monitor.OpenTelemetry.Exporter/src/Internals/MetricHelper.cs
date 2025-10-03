@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -15,9 +16,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new();
+
             foreach (var metric in batch)
             {
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
@@ -40,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            return telemetryItems;
+            return (telemetryItems, new TelemetrySchemaTypeCounter() { _metricCount = telemetryItems.Count });
         }
     }
 }
