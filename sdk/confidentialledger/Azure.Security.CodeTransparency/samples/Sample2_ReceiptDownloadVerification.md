@@ -1,15 +1,14 @@
-# Download and verification of a transparent statement
+# Downloading and verifying a transparent statement
 
 <!-- cspell:ignore cose -->
 
-This sample demonstrates how to download the transparent statement from the service for a given transaction.
-It will also show how to verify it.
+This sample demonstrates how to download and verify a transparent statement for a given transaction.
 
-To get started, you'll need a URL for the service.
+To get started, you'll need the service URL.
 
 ## Create a client
 
-To create a new `CodeTransparencyClient` that will interact with the service without explicit credentials (if the service allows it, or if you only need publicly accessible data). Then use a subclient to work with entries:
+Create a new `CodeTransparencyClient` that interacts with the service without explicit credentials (if the service allows it or if you only need publicly accessible data). Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample_CreateClient
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -17,9 +16,9 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 
 ## Download the transparent statement
 
-The receipt on its own contains only the inclusion proof and the signature. You also need the original signed statement (`COSE_Sign1`) that was submitted to perform integrity verification. 
+The receipt alone contains only the inclusion proof and signature. You also need the original signed statement (`COSE_Sign1`) that was submitted for integrity verification.
 
-The easiest way is to download both the receipt and the signed statement together as a transparent statement. The receipt will be added to the unprotected header of the signed statement.
+The easiest approach is to download both the receipt and the signed statement together as a single transparent statement. The receipt is added to the unprotected header of the signed statement.
 
 ```C# Snippet:CodeTransparencySample2_GetEntryStatement
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
@@ -27,7 +26,7 @@ Response<BinaryData> transparentStatementResponse = await client.GetEntryStateme
 
 ### Raw receipt
 
-If you already have the signed statement as a separate file, you can download only the raw receipt.
+If you already have the signed statement as a separate file, you can download just the raw receipt.
 
 ```C# Snippet:CodeTransparencySample2_GetRawReceipt
 Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
@@ -35,13 +34,13 @@ Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
 
 ## Verify
 
-Verification proves that the signed statement was registered in the immutable ledger for your service. Cryptographic verification needs three things: the original signed statement, the receipt, and the service public key. The latter is publicly accessible and advertised at a well-known service location. Verification runs locally.
+Verification proves that the signed statement was registered in the immutable ledger for your service. Cryptographic verification requires three things: the original signed statement, the receipt, and the service public key. The public key is available at a well-known service endpoint. Verification runs locally.
 
 The following examples use a default public key resolver to obtain the keys for verification.
 
 ### Using a transparent statement
 
-The receipt will contain the service endpoint, which is used to download the public keys.
+The receipt included in the unprotected header of the signed statement contains the service endpoint used to download the public keys.
 
 ```C# Snippet:CodeTransparencyVerification
 Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
@@ -57,16 +56,15 @@ catch (Exception e)
 }
 ```
 
-Alternatively, you can provide your own `JsonWebKey`, the receipt, and the corresponding signed claims:
+### Verify a file without knowing the service endpoint
 
-```C# Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
-// Create a JsonWebKey
-JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
-byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
+The receipt contains the issuer information needed to create the client instance. An alternate constructor automatically extracts the issuer URL.
 
+```C# Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
+byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
 try
 {
-    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, transparentStatementBytes, inputSignedStatement);
+    new CodeTransparencyClient(transparentStatementBytes).RunTransparentStatementVerification(transparentStatementBytes);
 }
 catch (Exception e)
 {
@@ -74,15 +72,18 @@ catch (Exception e)
 }
 ```
 
-### Verify a file without knowing the endpoint
+### Using a receipt and a signed statement
 
-The receipt contains issuer information needed to create the client instance. An alternative constructor allows automatic extraction of the issuer URL when creating an instance.
+Alternatively, you can provide separate files for the receipt and the signed statement, plus a `JsonWebKey` obtained from the service:
 
-```C# Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
-byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
+```C# Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
+// Create a JsonWebKey
+JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
+byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
+byte[] inputReceipt = readFileBytes("<input_receipt>");
 try
 {
-    new CodeTransparencyClient(transparentStatementBytes).RunTransparentStatementVerification(transparentStatementBytes);
+    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, inputReceipt, inputSignedStatement);
 }
 catch (Exception e)
 {
