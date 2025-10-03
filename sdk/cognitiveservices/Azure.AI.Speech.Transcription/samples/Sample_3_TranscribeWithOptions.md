@@ -105,7 +105,7 @@ If not specified, multiple channels are merged and transcribed jointly. Only up 
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
-    options.Channels.Add(0);
+    options.ActiveChannels.Add(0);
 
     var request = new TranscribeRequestContent
     {
@@ -137,7 +137,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     diarizationOptions.MaxSpeakers = 2;
 
     var options = new TranscriptionOptions();
-    options.Diarization = diarizationOptions;
+    options.DiarizationOptions = diarizationOptions;
 
     var request = new TranscribeRequestContent
     {

@@ -104,7 +104,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             // Enable speaker diarization
             TranscriptionOptions options = new TranscriptionOptions
             {
-                Diarization = new TranscriptionDiarizationOptions
+                DiarizationOptions = new TranscriptionDiarizationOptions
                 {
                     Enabled = true,
                     MaxSpeakers = 4 // Expect up to 4 speakers in the conversation
@@ -191,8 +191,8 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             // Specify which channels to transcribe separately
             TranscriptionOptions options = new TranscriptionOptions();
-            options.Channels.Add(0); // Left channel
-            options.Channels.Add(1); // Right channel
+            options.ActiveChannels.Add(0); // Left channel
+            options.ActiveChannels.Add(1); // Right channel
 
             TranscribeRequestContent request = new TranscribeRequestContent
             {
@@ -271,7 +271,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionOptions options = new TranscriptionOptions
             {
                 ProfanityFilterMode = ProfanityFilterMode.Masked,
-                Diarization = new TranscriptionDiarizationOptions
+                DiarizationOptions = new TranscriptionDiarizationOptions
                 {
                     Enabled = true,
                     MaxSpeakers = 5
