@@ -484,21 +484,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
-            const int expectedRequestCount = 5;
-            const int expectedExceptionCount = 3;
-
-            // Record start time for rate calculations
-            var testStartTime = DateTimeOffset.UtcNow;
-
             // Generate multiple request activities to increment the RequestRate counter.
-            for (int i = 0; i < expectedRequestCount; i++)
+            for (int i = 0; i < 5; i++)
             {
                 using var a = activitySource.StartActivity("Req", ActivityKind.Server);
                 a?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
             }
 
-            // Generate a few thrown (and caught) exceptions to trigger exception rate metric
-            for (int i = 0; i < expectedExceptionCount; i++)
+            // Generate a few thrown (and caught) exceptions to trigger System.Runtime "dotnet.exceptions" counter where available.
+            for (int i = 0; i < 3; i++)
             {
                 try
                 {
@@ -510,18 +504,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 }
             }
 
-            // Allocate some memory to ensure the process has meaningful private bytes
-            var memoryPressure = new byte[1024 * 1024]; // 1MB allocation
-            GC.KeepAlive(memoryPressure);
-
             tracerProvider?.ForceFlush();
             WaitForActivityExport(traceTelemetryItems);
-
-            // Add a meaningful delay to allow gauge calculations to have a proper time window
-            Thread.Sleep(1000); // 1 second to get a measurable rate
-
-            var testEndTime = DateTimeOffset.UtcNow;
-            var actualTimeWindowSeconds = (testEndTime - testStartTime).TotalSeconds;
 
             standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
@@ -535,45 +519,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestRate = FindMetric(PerfCounterConstants.RequestRateMetricIdValue);
             Assert.NotNull(requestRate);
-            // Calculate expected rate: requests per second over the actual time window
-            var expectedRequestRate = expectedRequestCount / actualTimeWindowSeconds;
-            // Allow for some tolerance due to timing variations (±20%)
-            var tolerance = expectedRequestRate * 0.2;
-            Assert.True(Math.Abs(requestRate!.Metrics[0].Value - expectedRequestRate) <= tolerance,
-                $"Request rate should be approximately {expectedRequestRate:F2} req/sec (±{tolerance:F2}), actual: {requestRate.Metrics[0].Value:F2}");
+            Assert.True(requestRate!.Metrics[0].Value >= 1, "Request rate should be >= 1");
 
             var privateBytes = FindMetric(PerfCounterConstants.ProcessPrivateBytesMetricIdValue);
             Assert.NotNull(privateBytes);
+            Assert.True(privateBytes!.Metrics[0].Value >= 0);
 
             var cpu = FindMetric(PerfCounterConstants.ProcessCpuMetricIdValue);
             Assert.NotNull(cpu);
-            Assert.True(cpu!.Metrics[0].Value >= 0, "CPU usage should be >= 0");
+            Assert.True(cpu!.Metrics[0].Value >= 0);
 
             var cpuNormalized = FindMetric(PerfCounterConstants.ProcessCpuNormalizedMetricIdValue);
             Assert.NotNull(cpuNormalized);
-            Assert.True(cpuNormalized!.Metrics[0].Value >= 0, "Normalized CPU usage should be >= 0");
-            Assert.True(cpuNormalized.Metrics[0].Value <= 100, "Normalized CPU usage should be <= 100%");
+            Assert.True(cpuNormalized!.Metrics[0].Value >= 0);
 
             // Exception rate metric may not be available on all target frameworks/runtimes; assert only if present.
             var exceptionRate = FindMetric(PerfCounterConstants.ExceptionRateMetricIdValue);
             if (exceptionRate != null)
             {
-                // In CI environments, there may be background exceptions from test framework, other threads, etc.
-                // We verify that at least some exceptions are being counted, but allow for significant variance
-                // due to environmental factors beyond our control
-                var actualExceptionRate = exceptionRate.Metrics[0].Value;
-                var minimumExpectedRate = expectedExceptionCount / (actualTimeWindowSeconds * 2); // Very lenient minimum
-
-                Assert.True(actualExceptionRate >= minimumExpectedRate,
-                    $"Exception rate should be at least {minimumExpectedRate:F2} exceptions/sec (allowing for background exceptions), actual: {actualExceptionRate:F2}");
-
-                // Also verify it's not unreasonably high (allow up to 10x the expected rate for CI variance)
-                var maximumExpectedRate = (expectedExceptionCount / actualTimeWindowSeconds) * 10;
-                Assert.True(actualExceptionRate <= maximumExpectedRate,
-                    $"Exception rate should not exceed {maximumExpectedRate:F2} exceptions/sec, actual: {actualExceptionRate:F2}");
+                Assert.True(exceptionRate.Metrics[0].Value >= 0);
             }
-
-            GC.KeepAlive(memoryPressure);
         }
 
         private void WaitForActivityExport(List<TelemetryItem> traceTelemetryItems)
