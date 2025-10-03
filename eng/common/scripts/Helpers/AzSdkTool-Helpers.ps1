@@ -105,39 +105,6 @@ function isNewVersion(
     return $true
 }
 
-function Get-GitHubApiHeaders {
-    # Use GitHub cli to get an auth token if available
-    $token = ""
-    if (Get-Command gh -ErrorAction SilentlyContinue) {
-        try
-        {
-            $token = gh auth token 2>$null
-        }
-        catch
-        {
-            Write-Host "Failed to get GitHub CLI auth token."
-        }
-    }
-
-    # Get token from env if not available from gh cli
-    if (!$token)
-    {
-        Write-Host "Checking for GITHUB_TOKEN environment variable."
-        $token = $env:GITHUB_TOKEN
-    }
-
-    if ($token)
-    {
-        Write-Host "Using authenticated GitHub API requests."
-        $headers = @{
-            Authorization = "Bearer $token"
-        }
-        return $headers
-    }
-    Write-Host "Using unauthenticated GitHub API requests."
-    return @{}
-}
-
 <#
 .SYNOPSIS
 Installs a standalone version of an engsys tool.
@@ -168,12 +135,11 @@ function Install-Standalone-Tool (
     }
 
     $tag = "${Package}_${Version}"
-    $headers = Get-GitHubApiHeaders
 
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
         $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-        $releases = Invoke-RestMethod -Uri $releasesUrl -Headers $headers
+        $releases = Invoke-RestMethod -Uri $releasesUrl
         $found = $false
         foreach ($release in $releases) {
             if ($release.tag_name -like "$Package*") {
@@ -197,7 +163,7 @@ function Install-Standalone-Tool (
 
     if (isNewVersion $version $downloadFolder) {
         Write-Host "Installing '$Package' '$Version' to '$downloadFolder' from $downloadUrl"
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation -Headers $headers
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation
 
         if ($downloadFile -like "*.zip") {
             Expand-Archive -Path $downloadLocation -DestinationPath $downloadFolder -Force
