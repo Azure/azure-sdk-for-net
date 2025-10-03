@@ -1,5 +1,13 @@
 # Release History
 
+## 2.5.0-beta.1 (2025-10-03)
+
+This update restores compatibility with the latest `2.5.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#250-2025-09-23).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#250-2025-09-23) for details.
+
 ## 2.3.0-beta.2 (2025-08-21)
 
 ### Features Added

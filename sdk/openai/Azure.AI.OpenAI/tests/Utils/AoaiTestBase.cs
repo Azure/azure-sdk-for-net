@@ -583,9 +583,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(VectorStore):
                 _vectorStoreIdsToDelete.Add(id);
                 break;
-            case nameof(CreateVectorStoreOperation):
-                _vectorStoreIdsToDelete.Add(id);
-                break;
             case nameof(CreateBatchOperation):
                 _batchIdsToDelete.Add(id);
                 break;
@@ -603,8 +600,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ThreadMessage):
                 _threadIdsWithMessageIdsToDelete.Add((parentId, id));
                 break;
-            case nameof(VectorStoreFileAssociation):
-                _vectorStoreFileAssociationsToRemove.Add((parentId, id));
+            case nameof(VectorStoreFile):
+                _vectorStoreFilesToRemove.Add((parentId, id));
                 break;
             default:
                 throw new NotImplementedException();
@@ -624,9 +621,9 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         {
             ValidateById<ThreadMessage>(message.Id, message.ThreadId);
         }
-        else if (target is VectorStoreFileAssociation fileAssociation)
+        else if (target is VectorStoreFile vectorStoreFile)
         {
-            ValidateById<VectorStoreFileAssociation>(fileAssociation.VectorStoreId, fileAssociation.FileId);
+            ValidateById<VectorStoreFile>(vectorStoreFile.VectorStoreId, vectorStoreFile.FileId);
         }
         else
         {
@@ -637,7 +634,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
                 OpenAIFile file => file.Id,
                 ThreadRun run => run.Id,
                 VectorStore store => store.Id,
-                CreateVectorStoreOperation op => op.VectorStoreId,
                 CreateBatchOperation batchOperation => batchOperation.BatchId,
                 _ => throw new NotImplementedException(),
             });
@@ -690,9 +686,9 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         {
             WriteIfNotSuppressed($"Cleanup: {threadId} -> {client.DeleteThread(threadId, requestOptions)?.GetRawResponse().Status}");
         }
-        foreach ((string vectorStoreId, string fileId) in _vectorStoreFileAssociationsToRemove)
+        foreach ((string vectorStoreId, string fileId) in _vectorStoreFilesToRemove)
         {
-            WriteIfNotSuppressed($"Cleanup: {vectorStoreId}<->{fileId} => {vectorStoreClient.RemoveFileFromStore(vectorStoreId, fileId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {vectorStoreId}<->{fileId} => {vectorStoreClient.RemoveFileFromVectorStore(vectorStoreId, fileId, requestOptions)?.GetRawResponse().Status}");
         }
         foreach (string vectorStoreId in _vectorStoreIdsToDelete)
         {
@@ -701,7 +697,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         _threadIdsWithMessageIdsToDelete.Clear();
         _assistantIdsToDelete.Clear();
         _threadIdsToDelete.Clear();
-        _vectorStoreFileAssociationsToRemove.Clear();
+        _vectorStoreFilesToRemove.Clear();
         _vectorStoreIdsToDelete.Clear();
 #endif
 
@@ -764,7 +760,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     private readonly List<string> _threadIdsToDelete = [];
     private readonly List<(string, string)> _threadIdsWithMessageIdsToDelete = [];
     private readonly List<string> _fileIdsToDelete = [];
-    private readonly List<(string, string)> _vectorStoreFileAssociationsToRemove = [];
+    private readonly List<(string, string)> _vectorStoreFilesToRemove = [];
     private readonly List<string> _vectorStoreIdsToDelete = [];
     private readonly List<string> _batchIdsToDelete = [];
 }

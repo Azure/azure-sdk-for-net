@@ -53,12 +53,10 @@ internal partial class AzureFineTuningClient : FineTuningClient
     {
         return new AzureAsyncCollectionResult<FineTuningJob, FineTuningCollectionPageToken>(
             Pipeline,
-            options,
             continuation => GetJobsPipelineMessage(continuation?.After, pageSize, options),
             page => FineTuningCollectionPageToken.FromResponse(page, pageSize),
             page => GetJobsFromResponse(page.GetRawResponse()),
-            options?.CancellationToken ?? default
-            );
+            options?.CancellationToken ?? default);
     }
 
     private IEnumerable<FineTuningJob> GetJobsFromResponse(PipelineResponse response)
