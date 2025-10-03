@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -92,6 +93,46 @@ namespace Azure.Data.AppConfiguration
                 LastModified = lastModified,
                 IsReadOnly = isReadOnly
             };
+        }
+
+        /// <summary> A feature flag. </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="alias"> The alias of the feature flag. </param>
+        /// <param name="label"> The label the feature flag belongs to. </param>
+        /// <param name="description"> The description of the feature flag. </param>
+        /// <param name="enabled"> The enabled state of the feature flag. </param>
+        /// <param name="conditions"> The conditions of the feature flag. </param>
+        /// <param name="variants"> The variants of the feature flag. </param>
+        /// <param name="allocation"> The allocation of the feature flag. </param>
+        /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
+        /// <param name="tags">
+        /// A dictionary of tags used to assign additional properties to a feature flag.
+        ///     These can be used to indicate how a feature flag may be applied.
+        /// </param>
+        /// <param name="isReadOnly">
+        /// A value indicating whether the feature flag is read only.
+        ///     A read only feature flag may not be modified until it is made writable.
+        /// </param>
+        /// <param name="lastModified"> The last time a modifying operation was performed on the given feature flag. </param>
+        /// <param name="eTag"> An ETag indicating the state of a feature flag within a configuration store. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
+        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, string @alias = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, bool? isReadOnly = default, DateTimeOffset? lastModified = default, ETag eTag = default)
+        {
+            return new FeatureFlag(
+                name,
+                enabled,
+                label,
+                description,
+                @alias,
+                conditions,
+                variants != null ? variants.ToList() : null,
+                allocation,
+                telemetry,
+                tags,
+                isReadOnly,
+                lastModified,
+                eTag,
+                additionalBinaryDataProperties: null);
         }
     }
 }

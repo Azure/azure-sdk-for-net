@@ -10,27 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Labels are used to group key values or feature flags. </summary>
-    public partial class SettingLabel
+    /// <summary> Feature Flag Filter object. </summary>
+    public partial class FeatureFlagFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>. </summary>
-        internal SettingLabel()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>. </summary>
-        /// <param name="name"> The name of the label. </param>
+        /// <summary> Initializes a new instance of <see cref="FeatureFlagFilter"/>. </summary>
+        /// <param name="name"> Gets the name of the feature filter. </param>
+        /// <param name="parameters"> Gets the parameters of the feature filter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SettingLabel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlagFilter(string name, IDictionary<string, object> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            Parameters = parameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The name of the label. </summary>
-        public string Name { get; }
     }
 }
