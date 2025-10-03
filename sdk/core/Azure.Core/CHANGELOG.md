@@ -4,7 +4,7 @@
 
 ### Acknowledgments
 
-Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+Thank you to our developer community members who helped to make the Azure.Core library better with their contributions to this release:
 
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
