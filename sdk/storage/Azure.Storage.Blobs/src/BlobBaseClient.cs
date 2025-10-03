@@ -4676,7 +4676,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
-                            modifiedAccessConditions: conditions?.ModifiedAccessConditions,
+                            blobAccessTierRequestConditions: conditions?.AccessTierRequestConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4690,7 +4690,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
-                            modifiedAccessConditions: conditions?.ModifiedAccessConditions,
+                            blobAccessTierRequestConditions: conditions?.AccessTierRequestConditions,
                             cancellationToken: cancellationToken);
                     }
 

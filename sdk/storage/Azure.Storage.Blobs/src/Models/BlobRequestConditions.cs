@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optionally limit requests to resources whose access tier was modified/unmodified since this time.
         /// </summary>
-        public ModifiedAccessConditions ModifiedAccessConditions { get; set; }
+        public BlobAccessTierRequestConditions AccessTierRequestConditions { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -36,8 +36,8 @@ namespace Azure.Storage.Blobs.Models
         {
             Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
             LeaseId = deepCopySource.LeaseId;
-            ModifiedAccessConditions.AccessTierIfModifiedSince = deepCopySource.ModifiedAccessConditions.AccessTierIfModifiedSince;
-            ModifiedAccessConditions.AccessTierIfUnmodifiedSince = deepCopySource.ModifiedAccessConditions.AccessTierIfUnmodifiedSince;
+            AccessTierRequestConditions.AccessTierIfModifiedSince = deepCopySource.AccessTierRequestConditions.AccessTierIfModifiedSince;
+            AccessTierRequestConditions.AccessTierIfUnmodifiedSince = deepCopySource.AccessTierRequestConditions.AccessTierIfUnmodifiedSince;
         }
 
         /// <summary>
@@ -120,14 +120,14 @@ namespace Azure.Storage.Blobs.Models
                 conditions.Append(nameof(TagConditions)).Append('=').Append(TagConditions).Append(';');
             }
 
-            if (ModifiedAccessConditions.AccessTierIfModifiedSince != null)
+            if (AccessTierRequestConditions.AccessTierIfModifiedSince != null)
             {
-                conditions.Append(nameof(ModifiedAccessConditions.AccessTierIfModifiedSince)).Append('=').Append(ModifiedAccessConditions.AccessTierIfModifiedSince).Append(';');
+                conditions.Append(nameof(AccessTierRequestConditions.AccessTierIfModifiedSince)).Append('=').Append(AccessTierRequestConditions.AccessTierIfModifiedSince).Append(';');
             }
 
-            if (ModifiedAccessConditions.AccessTierIfUnmodifiedSince != null)
+            if (AccessTierRequestConditions.AccessTierIfUnmodifiedSince != null)
             {
-                conditions.Append(nameof(ModifiedAccessConditions.AccessTierIfUnmodifiedSince)).Append('=').Append(ModifiedAccessConditions.AccessTierIfUnmodifiedSince).Append(';');
+                conditions.Append(nameof(AccessTierRequestConditions.AccessTierIfUnmodifiedSince)).Append('=').Append(AccessTierRequestConditions.AccessTierIfUnmodifiedSince).Append(';');
             }
         }
     }

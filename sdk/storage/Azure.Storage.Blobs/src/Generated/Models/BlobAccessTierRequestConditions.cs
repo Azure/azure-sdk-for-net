@@ -10,17 +10,17 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Parameter group. </summary>
-    public partial class ModifiedAccessConditions
+    public partial class BlobAccessTierRequestConditions
     {
-        /// <summary> Initializes a new instance of <see cref="ModifiedAccessConditions"/>. </summary>
-        public ModifiedAccessConditions()
+        /// <summary> Initializes a new instance of <see cref="BlobAccessTierRequestConditions"/>. </summary>
+        public BlobAccessTierRequestConditions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModifiedAccessConditions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobAccessTierRequestConditions"/>. </summary>
         /// <param name="accessTierIfModifiedSince"> Specify this header value to operate only on a blob if the access-tier has been modified since the specified date/time. </param>
         /// <param name="accessTierIfUnmodifiedSince"> Specify this header value to operate only on a blob if the access-tier has not been modified since the specified date/time. </param>
-        internal ModifiedAccessConditions(DateTimeOffset? accessTierIfModifiedSince, DateTimeOffset? accessTierIfUnmodifiedSince)
+        internal BlobAccessTierRequestConditions(DateTimeOffset? accessTierIfModifiedSince, DateTimeOffset? accessTierIfUnmodifiedSince)
         {
             AccessTierIfModifiedSince = accessTierIfModifiedSince;
             AccessTierIfUnmodifiedSince = accessTierIfUnmodifiedSince;
