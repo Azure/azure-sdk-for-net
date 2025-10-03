@@ -3925,7 +3925,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task DeleteAsync_ModifiedAccessConditions(bool isAccessTierModifiedSince)
+        public async Task DeleteAsync_BlobAccessTierRequestConditions(bool isAccessTierModifiedSince)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -3967,7 +3967,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task DeleteAsync_ModifiedAccessConditions_Fail(bool isAccessTierModifiedSince)
+        public async Task DeleteAsync_BlobAccessTierRequestConditions_Fail(bool isAccessTierModifiedSince)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
