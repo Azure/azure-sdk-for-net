@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    public partial class DellFileSystemEncryptionProperties : IUtf8JsonSerializable, IJsonModel<DellFileSystemEncryptionProperties>
+    /// <summary> EncryptionProperties of Dell FileSystem resource. </summary>
+    public partial class DellFileSystemEncryptionProperties : IJsonModel<DellFileSystemEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DellFileSystemEncryptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionProperties"/> for deserialization. </summary>
+        internal DellFileSystemEncryptionProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DellFileSystemEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DellFileSystemEncryptionProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("encryptionType"u8);
             writer.WriteStringValue(EncryptionType.ToString());
             if (Optional.IsDefined(KeyUri))
@@ -46,15 +51,15 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 writer.WritePropertyName("encryptionIdentityProperties"u8);
                 writer.WriteObjectValue(EncryptionIdentityProperties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,65 +68,71 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
-        DellFileSystemEncryptionProperties IJsonModel<DellFileSystemEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DellFileSystemEncryptionProperties IJsonModel<DellFileSystemEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DellFileSystemEncryptionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DellFileSystemEncryptionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDellFileSystemEncryptionProperties(document.RootElement, options);
         }
 
-        internal static DellFileSystemEncryptionProperties DeserializeDellFileSystemEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DellFileSystemEncryptionProperties DeserializeDellFileSystemEncryptionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DellFileSystemEncryptionType encryptionType = default;
-            string keyUrl = default;
+            string keyUri = default;
             DellFileSystemEncryptionIdentityProperties encryptionIdentityProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("encryptionType"u8))
+                if (prop.NameEquals("encryptionType"u8))
                 {
-                    encryptionType = new DellFileSystemEncryptionType(property.Value.GetString());
+                    encryptionType = new DellFileSystemEncryptionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyUrl"u8))
+                if (prop.NameEquals("keyUrl"u8))
                 {
-                    keyUrl = property.Value.GetString();
+                    keyUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionIdentityProperties"u8))
+                if (prop.NameEquals("encryptionIdentityProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionIdentityProperties = DellFileSystemEncryptionIdentityProperties.DeserializeDellFileSystemEncryptionIdentityProperties(property.Value, options);
+                    encryptionIdentityProperties = DellFileSystemEncryptionIdentityProperties.DeserializeDellFileSystemEncryptionIdentityProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DellFileSystemEncryptionProperties(encryptionType, keyUrl, encryptionIdentityProperties, serializedAdditionalRawData);
+            return new DellFileSystemEncryptionProperties(encryptionType, keyUri, encryptionIdentityProperties, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DellFileSystemEncryptionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DellFileSystemEncryptionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +142,20 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
-        DellFileSystemEncryptionProperties IPersistableModel<DellFileSystemEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DellFileSystemEncryptionProperties IPersistableModel<DellFileSystemEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DellFileSystemEncryptionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDellFileSystemEncryptionProperties(document.RootElement, options);
                     }
                 default:
@@ -147,6 +163,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DellFileSystemEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

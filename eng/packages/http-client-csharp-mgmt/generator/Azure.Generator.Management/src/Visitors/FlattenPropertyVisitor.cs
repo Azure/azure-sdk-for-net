@@ -72,7 +72,7 @@ namespace Azure.Generator.Management.Visitors
 
                         // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
                         var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
-                            propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
+                            propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsIn, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
                             propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
                         if (isOverriddenValueType)
@@ -239,9 +239,16 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, (Dictionary<string, List<FlattenPropertyInfo>>, Dictionary<CSharpType, List<FlattenPropertyInfo>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
-
+        private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
+            if (_visitedModelTypes.Contains(model.Type))
+            {
+                // already visiting this model type, we have a cycle, return
+                return;
+            }
+            _visitedModelTypes.Add(model.Type);
+
             var isFlattenProperty = false;
             var isSafeFlatten = false;
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
@@ -334,6 +341,7 @@ namespace Azure.Generator.Management.Visitors
                             model,
                             innerProperty.ExplicitInterface,
                             innerProperty.WireInfo,
+                            innerProperty.IsRef,
                             innerProperty.Attributes);
 
                     if (propertyMap.TryGetValue(internalProperty, out var value))
@@ -378,6 +386,7 @@ namespace Azure.Generator.Management.Visitors
                     model,
                     innerProperty.ExplicitInterface,
                     null,
+                    innerProperty.IsRef,
                     innerProperty.Attributes);
 
             // make the internalized properties internal

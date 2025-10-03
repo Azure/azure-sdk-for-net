@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             ShapeName = shapeName;
             AvailableCoreCount = availableCoreCount;
+            ShapeAttributes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleDBSystemShapeProperties"/>. </summary>
@@ -82,8 +83,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <param name="areServerTypesSupported"> Indicates if the shape supports database and storage server types. </param>
         /// <param name="displayName"> The display name of the shape used for the DB system. </param>
+        /// <param name="shapeAttributes"> The shapeAttributes of the DB system shape.. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBSystemShapeProperties(string shapeFamily, string shapeName, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, OracleDatabaseComputeModel? computeModel, bool? areServerTypesSupported, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDBSystemShapeProperties(string shapeFamily, string shapeName, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, OracleDatabaseComputeModel? computeModel, bool? areServerTypesSupported, string displayName, IReadOnlyList<string> shapeAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShapeFamily = shapeFamily;
             ShapeName = shapeName;
@@ -109,6 +111,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ComputeModel = computeModel;
             AreServerTypesSupported = areServerTypesSupported;
             DisplayName = displayName;
+            ShapeAttributes = shapeAttributes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -165,5 +168,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public bool? AreServerTypesSupported { get; }
         /// <summary> The display name of the shape used for the DB system. </summary>
         public string DisplayName { get; }
+        /// <summary> The shapeAttributes of the DB system shape.. </summary>
+        public IReadOnlyList<string> ShapeAttributes { get; }
     }
 }
