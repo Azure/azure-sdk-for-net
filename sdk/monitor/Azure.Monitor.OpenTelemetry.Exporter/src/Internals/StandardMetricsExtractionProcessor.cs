@@ -205,6 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             try
             {
+                _process.Refresh();
                 return _process.PrivateMemorySize64;
             }
             catch (Exception ex)
