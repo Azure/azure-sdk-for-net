@@ -4,5 +4,6 @@
     <Version>1.0.0</Version>
     <PackageTags>azure;management;arm;resource manager;storagediscovery</PackageTags>
     <PackageId>Azure.ResourceManager.StorageDiscovery</PackageId>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 </Project>
