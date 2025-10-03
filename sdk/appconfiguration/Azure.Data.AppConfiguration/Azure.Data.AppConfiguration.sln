@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.308
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration", "src\Azure.Data.AppConfiguration.csproj", "{25CE0676-8F2C-497B-8FB5-7DA41A31F6F9}"
 EndProject
@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{676CF11A-2788-478F-ABBA-0CD79CF60BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{859DE6FF-6030-4388-8FE6-1B9C471DD7B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +31,6 @@ Global
 		{AAA761F4-D037-46AC-BF7A-496C15310F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAA761F4-D037-46AC-BF7A-496C15310F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAA761F4-D037-46AC-BF7A-496C15310F66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{019A28FC-EFEA-4431-872C-AB8F9C0049BF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,10 +51,6 @@ Global
 		{676CF11A-2788-478F-ABBA-0CD79CF60BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{676CF11A-2788-478F-ABBA-0CD79CF60BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{676CF11A-2788-478F-ABBA-0CD79CF60BE3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{859DE6FF-6030-4388-8FE6-1B9C471DD7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{859DE6FF-6030-4388-8FE6-1B9C471DD7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{859DE6FF-6030-4388-8FE6-1B9C471DD7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{859DE6FF-6030-4388-8FE6-1B9C471DD7B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

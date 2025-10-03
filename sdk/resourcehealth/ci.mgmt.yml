@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ResourceHealth
       safeName: AzureResourceManagerResourceHealth
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ResourceHealth
-      ExpectedWarningsFilepath: None

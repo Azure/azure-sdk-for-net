@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Grafana
       safeName: AzureResourceManagerGrafana
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Grafana
-      ExpectedWarningsFilepath: None

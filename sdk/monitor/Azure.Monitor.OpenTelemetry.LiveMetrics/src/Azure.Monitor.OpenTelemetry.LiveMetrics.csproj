@@ -9,6 +9,7 @@
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);LIVE_METRICS_PROJECT;</DefineConstants>
     <NoWarn>$(NoWarn);AZC0011</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
 

@@ -31,6 +31,5 @@ extends:
       safeName: MicrosoftCoreWCFAzureStorageQueues
     - name: Microsoft.WCF.Azure.StorageQueues
       safeName: MicrosoftWCFAzureStorageQueues
-    CheckAOTCompat: false
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

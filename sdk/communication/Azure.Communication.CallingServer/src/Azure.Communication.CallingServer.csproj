@@ -10,12 +10,11 @@
     <PackageTags>Microsoft Azure Communication CallingServer Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallingServer Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\README.md" Link="README.md" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
