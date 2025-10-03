@@ -107,6 +107,9 @@ namespace Azure.Storage.DataMovement
                     // Tell the transfer manager to clean up the completed/paused job.
                     TransferManager.TryRemoveTransfer(_id);
 
+                    // Remove Transfer Manager reference after no longer needed.
+                    TransferManager = null;
+
                     // Once we reach a Completed/Paused, Dispose the CancellationTokenSource to release resources (since it is no longer needed).
                     DisposeCancellationTokenSource();
                 }
