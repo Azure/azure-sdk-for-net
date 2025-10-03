@@ -18,6 +18,7 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential, optio
 To transcribe a remote file synchronously, create a stream from url of the file and call `Transcribe` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
 
 ```C# Snippet:TranscribeRemoteFileSync
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using HttpClient httpClient = new HttpClient();
 using HttpResponseMessage httpResponse = httpClient.GetAsync("https://your-domain.com/your-file.mp3").Result;
 using Stream stream = httpResponse.Content.ReadAsStreamAsync().Result;
@@ -37,6 +38,7 @@ foreach (var phrase in response.Value.PhrasesByChannel.First().Phrases)
 To transcribe a remote file ssynchronously, create a stream from url of the file and call `TranscribeAsync` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
 
 ```C# Snippet:TranscribeRemoteFileAsync
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using HttpClient httpClient = new HttpClient();
 using HttpResponseMessage httpResponse = await httpClient.GetAsync("https://your-domain.com/your-file.mp3");
 using Stream stream = await httpResponse.Content.ReadAsStreamAsync();

@@ -18,6 +18,8 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential, optio
 To transcribe a local file synchronously, create a stream from the file and call `Transcribe` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
 
 ```C# Snippet:TranscribeLocalFileSync
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var request = new TranscribeRequestContent { Audio = fileStream };
@@ -36,6 +38,8 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 To transcribe a local file asynchronously, create a stream from the file and call `TranscribeAsync` on the `TranscriptionClient` clientlet, which returns the transcribed phrases and total duration of the file
 
 ```C# Snippet:TranscribeLocalFileAsync
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var request = new TranscribeRequestContent { Audio = fileStream };

@@ -20,6 +20,8 @@ To transcribe a file using manually specified locales, create a stream from the 
 If not specified, the locale of the speech in the audio is detected automatically from all supported locales.
 
 ```C# Snippet:TranscribeWithLocales
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
@@ -48,6 +50,8 @@ To transcribe a file using specific models for specific locales, create a stream
 If no mapping is given, the default model for the locale is used.
 
 ```C# Snippet:TranscribeWithModels
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
@@ -74,6 +78,8 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 To transcribe a file using profanity filters, create a stream from the file, specify the filter mode in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 ```C# Snippet:TranscribeWithProfinityFilter
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
@@ -102,6 +108,8 @@ To transcribe a file using only a subset of the channels, create a stream from t
 If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported.
 
 ```C# Snippet:TranscribeWithActiveChannels
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
@@ -130,6 +138,8 @@ To transcribe a file with speaker identification, create a stream from the file,
 If not specified, no speaker information is included in the transcribed phrases.
 
 ```C# Snippet:TranscribeWithDiarization
+string filePath = "path/to/audio.wav";
+TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var diarizationOptions = new TranscriptionDiarizationOptions();
