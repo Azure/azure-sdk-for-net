@@ -259,24 +259,32 @@ extends:
             displayName: Download pipeline artifacts
 
           - pwsh: |
-              npm install -g @azure-tools/typespec-client-generator-cli@latest
-            displayName: Install tsp-client
+              $tspClientDir = "$(Build.SourcesDirectory)/eng/common/tsp-client"
+              Push-Location $tspClientDir
+              npm ci
+              Pop-Location
+            displayName: Install tsp-client from pinned version
 
           - pwsh: |
               Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+              
+              $tspClientDir = "$(Build.SourcesDirectory)/eng/common/tsp-client"
 
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
-                tsp-client generate-config-files `
+                Push-Location $tspClientDir
+                npm exec --no -- tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
                 --overrides '$(buildArtifactsPath)/packages/overrides.json'
+                Pop-Location
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-
-                tsp-client generate-config-files `
+                Push-Location $tspClientDir
+                npm exec --no -- tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
+                Pop-Location
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
             workingDirectory: $(Build.SourcesDirectory)
