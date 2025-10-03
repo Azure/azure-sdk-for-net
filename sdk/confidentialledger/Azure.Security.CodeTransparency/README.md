@@ -113,4 +113,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ccf]: https://github.com/Microsoft/CCF
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
