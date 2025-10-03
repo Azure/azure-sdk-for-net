@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.AI.Speech.Transcription; // Added explicit using
 
 namespace Azure.AI.Speech.Transcription.Samples
 {
@@ -241,12 +240,12 @@ namespace Azure.AI.Speech.Transcription.Samples
 ["key"] = new Uri("http://localhost:3000")
 },
                     ProfanityFilterMode = ProfanityFilterMode.None,
-                    Diarization = new TranscriptionDiarizationOptions
+                    DiarizationOptions = new TranscriptionDiarizationOptions
                     {
                         Enabled = true,
                         MaxSpeakers = 1234,
                     },
-                    Channels = { 1234 },
+                    ActiveChannels = { 1234 },
                     EnhancedMode = new EnhancedModeProperties
                     {
                         Enabled = true,
@@ -284,12 +283,12 @@ namespace Azure.AI.Speech.Transcription.Samples
 ["key"] = new Uri("http://localhost:3000")
 },
                     ProfanityFilterMode = ProfanityFilterMode.None,
-                    Diarization = new TranscriptionDiarizationOptions
+                    DiarizationOptions = new TranscriptionDiarizationOptions
                     {
                         Enabled = true,
                         MaxSpeakers = 1234,
                     },
-                    Channels = { 1234 },
+                    ActiveChannels = { 1234 },
                     EnhancedMode = new EnhancedModeProperties
                     {
                         Enabled = true,

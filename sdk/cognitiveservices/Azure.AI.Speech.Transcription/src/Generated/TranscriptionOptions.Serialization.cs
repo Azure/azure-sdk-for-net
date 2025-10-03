@@ -70,16 +70,16 @@ namespace Azure.AI.Speech.Transcription
                 writer.WritePropertyName("profanityFilterMode"u8);
                 writer.WriteStringValue(ProfanityFilterMode.Value.ToString());
             }
-            if (Optional.IsDefined(Diarization))
+            if (Optional.IsDefined(DiarizationOptions))
             {
                 writer.WritePropertyName("diarization"u8);
-                writer.WriteObjectValue(Diarization, options);
+                writer.WriteObjectValue(DiarizationOptions, options);
             }
-            if (Optional.IsCollectionDefined(Channels))
+            if (Optional.IsCollectionDefined(ActiveChannels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStartArray();
-                foreach (var item in Channels)
+                foreach (var item in ActiveChannels)
                 {
                     writer.WriteNumberValue(item);
                 }

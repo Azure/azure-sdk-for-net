@@ -50,7 +50,7 @@ namespace Azure.AI.Speech.Transcription
         {
             Locales = new ChangeTrackingList<string>();
             Models = new ChangeTrackingDictionary<string, Uri>();
-            Channels = new ChangeTrackingList<int>();
+            ActiveChannels = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
@@ -58,19 +58,19 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="locales"> A list of possible locales for the transcription. If not specified, the locale of the speech in the audio is detected automatically from all supported locales. </param>
         /// <param name="models"> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </param>
         /// <param name="profanityFilterMode"> Mode of profanity filtering. </param>
-        /// <param name="diarization"> Mode of diarization. </param>
-        /// <param name="channels"> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </param>
+        /// <param name="diarizationOptions"> Mode of diarization. </param>
+        /// <param name="activeChannels"> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </param>
         /// <param name="enhancedMode"> Enhanced mode properties. </param>
         /// <param name="phraseList"> Phrase list properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionOptions(Uri audioUrl, IList<string> locales, IDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarization, IList<int> channels, EnhancedModeProperties enhancedMode, PhraseListProperties phraseList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionOptions(Uri audioUrl, IList<string> locales, IDictionary<string, Uri> models, ProfanityFilterMode? profanityFilterMode, TranscriptionDiarizationOptions diarizationOptions, IList<int> activeChannels, EnhancedModeProperties enhancedMode, PhraseListProperties phraseList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioUrl = audioUrl;
             Locales = locales;
             Models = models;
             ProfanityFilterMode = profanityFilterMode;
-            Diarization = diarization;
-            Channels = channels;
+            DiarizationOptions = diarizationOptions;
+            ActiveChannels = activeChannels;
             EnhancedMode = enhancedMode;
             PhraseList = phraseList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,9 +85,9 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Mode of profanity filtering. </summary>
         public ProfanityFilterMode? ProfanityFilterMode { get; set; }
         /// <summary> Mode of diarization. </summary>
-        public TranscriptionDiarizationOptions Diarization { get; set; }
+        public TranscriptionDiarizationOptions DiarizationOptions { get; set; }
         /// <summary> The 0-based indices of the channels to be transcribed separately. If not specified, multiple channels are merged and transcribed jointly. Only up to two channels are supported. </summary>
-        public IList<int> Channels { get; }
+        public IList<int> ActiveChannels { get; }
         /// <summary> Enhanced mode properties. </summary>
         public EnhancedModeProperties EnhancedMode { get; set; }
         /// <summary> Phrase list properties. </summary>
