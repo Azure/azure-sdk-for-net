@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            if (Optional.IsDefined(IsShippingBoxRequired))
+            if (Optional.IsDefined(ShippingBoxRequired))
             {
                 writer.WritePropertyName("shippingBoxRequired"u8);
-                writer.WriteBooleanValue(IsShippingBoxRequired.Value);
+                writer.WriteBooleanValue(ShippingBoxRequired.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

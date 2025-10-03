@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            EdgeOrderStageStatus? stageStatus = default;
-            EdgeOrderStageName? stageName = default;
+            StageStatus? stageStatus = default;
+            StageName? stageName = default;
             string displayName = default;
             DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    stageStatus = new EdgeOrderStageStatus(property.Value.GetString());
+                    stageStatus = new StageStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stageName"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    stageName = new EdgeOrderStageName(property.Value.GetString());
+                    stageName = new StageName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

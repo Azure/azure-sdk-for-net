@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductCostInformation(IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails, Uri billingInfoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProductCostInformation(IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails, string billingInfoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingMeterDetails = billingMeterDetails;
             BillingInfoUri = billingInfoUri;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Details on the various billing aspects for the product system. </summary>
         public IReadOnlyList<EdgeOrderProductBillingMeterDetails> BillingMeterDetails { get; }
         /// <summary> Default url to display billing information. </summary>
-        public Uri BillingInfoUri { get; }
+        public string BillingInfoUri { get; }
     }
 }

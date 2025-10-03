@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="linkType"> Type of link. </param>
         /// <param name="linkUri"> Url of the link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductLink(ProductLinkType? linkType, Uri linkUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductLink(LinkType? linkType, string linkUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkType = linkType;
             LinkUri = linkUri;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Type of link. </summary>
-        public ProductLinkType? LinkType { get; }
+        public LinkType? LinkType { get; }
         /// <summary> Url of the link. </summary>
-        public Uri LinkUri { get; }
+        public string LinkUri { get; }
     }
 }
