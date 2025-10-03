@@ -116,10 +116,10 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta
+/sdk/appconfiguration/                                             @zhiyuanliang-ms @avanigupta
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @shenmuxiaosen @avanigupta
+# ServiceOwners:                                                   @zhiyuanliang-ms @avanigupta
 
 # ServiceLabel: %App Services
 # ServiceOwners:                                                   @antcp @AzureAppServiceCLI
@@ -221,13 +221,13 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @ctstone @vkurpad
+/sdk/documentintelligence/                                         @vkurpad
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @ctstone @vkurpad
+/sdk/formrecognizer/                                               @vkurpad
 
 # ServiceLabel: %Cognitive - Form Recognizer
-# ServiceOwners:                                                   @ctstone @vkurpad
+# ServiceOwners:                                                   @vkurpad
 
 # PRLabel: %Cognitive - Health Insights
 /sdk/healthinsights/                                               @asaflevi-ms @tomsft @koen-mertens
@@ -314,7 +314,7 @@
 /sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/               @Arazan @whisper6284 @danielortega-msft @sofiar-msft
+/sdk/communication/Azure.Communication.PhoneNumbers/               @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014 @ihuseynov-msft @kirill-linnik
 
 # PRLabel: %Communication - Programmable Connectivity
 /sdk/communication/Azure.Communication.ProgrammableConnectivity/   @Azure/azure-sdk-write-communication
@@ -323,7 +323,7 @@
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
 
 # PRLabel: %Communication - Short Codes
-/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @whisper6284 @danielortega-msft @sofiar-msft
+/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @whisper6284 @danielortega-msft
 
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
@@ -377,7 +377,7 @@
 # ServiceOwners:                                                   @TiagoCrewGitHubIssues
 
 # ServiceLabel: %Container Instances
-# ServiceOwners:                                                   @dkkapur
+# ServiceOwners:                                                   @drishtipeshwani09
 
 # PRLabel: %Container Registry
 /sdk/containerregistry/                                            @Azure/azsdk-acr
@@ -547,10 +547,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
+/sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %KeyVault
-# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
+# ServiceOwners:                                                   @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru

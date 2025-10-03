@@ -23,13 +23,13 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="item"></param>
         /// <param name="eventId"></param>
-        internal SessionUpdateConversationItemRetrieved(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseItem item, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemRetrieved(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SessionResponseItem item, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Item = item;
         }
 
         /// <summary> Gets the Item. </summary>
-        public ResponseItem Item { get; }
+        public SessionResponseItem Item { get; }
 
         /// <summary> Gets the EventId. </summary>
         public override string EventId { get; }

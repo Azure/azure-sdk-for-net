@@ -21,15 +21,18 @@ namespace MgmtTypeSpec.Models
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
         /// <param name="something"> something. </param>
         /// <param name="prop1"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="prop1"/> is null. </exception>
-        public FooProperties(string something, IEnumerable<string> prop1)
+        /// <param name="nestedProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedProperty"/> is null. </exception>
+        public FooProperties(string something, IEnumerable<string> prop1, NestedFooModel nestedProperty)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(nestedProperty, nameof(nestedProperty));
 
             Something = something;
             Prop1 = prop1.ToList();
             Prop2 = new ChangeTrackingList<int>();
+            NestedProperty = nestedProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
@@ -40,8 +43,9 @@ namespace MgmtTypeSpec.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
+        /// <param name="nestedProperty"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -50,6 +54,7 @@ namespace MgmtTypeSpec.Models
             DoubleValue = doubleValue;
             Prop1 = prop1;
             Prop2 = prop2;
+            NestedProperty = nestedProperty;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,5 +78,21 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Gets the Prop2. </summary>
         public IList<int> Prop2 { get; } = new ChangeTrackingList<int>();
+
+        /// <summary> Gets or sets the NestedProperty. </summary>
+        internal NestedFooModel NestedProperty { get; set; }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return NestedProperty is null ? default : NestedProperty.Properties;
+            }
+            set
+            {
+                NestedProperty = new NestedFooModel(value);
+            }
+        }
     }
 }

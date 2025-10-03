@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Subscription-level location-based Playwright quota resource. </summary>
-    public partial class PlaywrightQuotaData : IJsonModel<PlaywrightQuotaData>
+    public partial class PlaywrightQuotaData : ResourceData, IJsonModel<PlaywrightQuotaData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

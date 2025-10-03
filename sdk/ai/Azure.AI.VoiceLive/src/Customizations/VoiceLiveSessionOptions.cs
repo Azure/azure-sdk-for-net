@@ -18,68 +18,20 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         internal IDictionary<string, BinaryData> AdditionalProperties => this._additionalBinaryDataProperties;
 
-        private BinaryData VoiceInternal;
-
         /// <summary>
         /// Gets or sets the Voice.
         /// </summary>
-        public VoiceProvider Voice
-        {
-            get
-            {
-                if (VoiceInternal == null)
-                {
-                    return null;
-                }
-
-                var s = VoiceInternal.ToString();
-
-                return null;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    VoiceInternal = null;
-                }
-                else
-                {
-                    VoiceInternal = value.ToBinaryData();
-                }
-            }
-        }
-
-        [CodeGenMember("MaxResponseOutputTokens")]
-        private BinaryData _maxResponseOutputTokens;
+        public VoiceProvider Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of tokens to generate in the response.
         /// </summary>
-        public ResponseMaxOutputTokensOption MaxResponseOutputTokens
-        {
-            get => ResponseMaxOutputTokensOption.FromBinaryData(_maxResponseOutputTokens);
-            set
-            {
-                var persistable = value as IPersistableModel<ResponseMaxOutputTokensOption>;
-                _maxResponseOutputTokens = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
-            }
-        }
-
-        [CodeGenMember("ToolChoice")]
-        private BinaryData _toolChoice;
+        public MaxResponseOutputTokensOption MaxResponseOutputTokens { get; set; }
 
         /// <summary>
         /// Gets or sets the tool choice strategy for response generation.
         /// </summary>
-        public ToolChoiceOption ToolChoice
-        {
-            get => ToolChoiceOption.FromBinaryData(_toolChoice);
-            set
-            {
-                var persistable = value as IPersistableModel<ToolChoiceOption>;
-                _toolChoice = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
-            }
-        }
+        public ToolChoiceOption ToolChoice { get; set; }
 
         [CodeGenMember("TurnDetection")]
         private BinaryData _turnDetection;

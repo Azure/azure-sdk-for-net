@@ -455,6 +455,7 @@
     {
       "filename": "**/sdk/containerapps/**/*",
       "words": [
+        "agentic",
         "dapr",
         "grpc",
         "proto"
@@ -1120,6 +1121,7 @@
         "dbnodeocid",
         "dbserverocid",
         "dbsystemshapename",
+        "dbversionsname",
         "dnsprivateviewocid",
         "ecpu",
         "exadata",
