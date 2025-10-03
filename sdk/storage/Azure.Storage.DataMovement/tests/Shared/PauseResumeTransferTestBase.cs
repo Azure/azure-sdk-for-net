@@ -1207,7 +1207,7 @@ namespace Azure.Storage.DataMovement.Tests
             await Task.Delay(delayInMs);
 
             // Pause Transfer
-            CancellationTokenSource pauseCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource pauseCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferManager.PauseTransferAsync(transfer.Id, pauseCancellation.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -1256,7 +1256,7 @@ namespace Azure.Storage.DataMovement.Tests
                 manager._transfers.TryAdd(Guid.NewGuid().ToString(), transfer.Object);
             }
 
-            CancellationTokenSource token = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource token = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await manager.PauseAllRunningTransfersAsync(token.Token);
 
             foreach (Mock<TransferOperation> transfer in pausable)

@@ -18,5 +18,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="content"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SystemMessageItem(InputTextContentPart content) : this(new[] { content }) { }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SystemMessageItem"/> with the specified system message text.
+        /// </summary>
+        /// <param name="systemMessageText">The text of the message</param>
+        public SystemMessageItem(string systemMessageText) : this(new InputTextContentPart(systemMessageText)) { }
     }
 }

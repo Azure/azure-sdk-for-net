@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// final state. The Response object included in the `response.done` event will
     /// include all output Items in the Response but will omit the raw audio data.
     /// </summary>
-    public partial class SessionUpdateResponseDone : IJsonModel<SessionUpdateResponseDone>
+    public partial class SessionUpdateResponseDone : SessionUpdate, IJsonModel<SessionUpdateResponseDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseDone"/> for deserialization. </summary>
         internal SessionUpdateResponseDone()
@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive
             ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VoiceLiveResponse response = default;
+            SessionResponse response = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("response"u8))
                 {
-                    response = VoiceLiveResponse.DeserializeVoiceLiveResponse(prop.Value, options);
+                    response = SessionResponse.DeserializeSessionResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

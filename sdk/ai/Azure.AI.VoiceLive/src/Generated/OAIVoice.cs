@@ -14,13 +14,21 @@ namespace Azure.AI.VoiceLive
     public readonly partial struct OAIVoice : IEquatable<OAIVoice>
     {
         private readonly string _value;
+        /// <summary> Alloy voice. </summary>
         private const string AlloyValue = "alloy";
+        /// <summary> Ash voice. </summary>
         private const string AshValue = "ash";
+        /// <summary> Ballard voice. </summary>
         private const string BalladValue = "ballad";
+        /// <summary> Coral voice. </summary>
         private const string CoralValue = "coral";
+        /// <summary> Echo voice. </summary>
         private const string EchoValue = "echo";
+        /// <summary> Sage voice. </summary>
         private const string SageValue = "sage";
+        /// <summary> Shimmer voice. </summary>
         private const string ShimmerValue = "shimmer";
+        /// <summary> Verse voice. </summary>
         private const string VerseValue = "verse";
 
         /// <summary> Initializes a new instance of <see cref="OAIVoice"/>. </summary>
@@ -33,28 +41,28 @@ namespace Azure.AI.VoiceLive
             _value = value;
         }
 
-        /// <summary> Gets the Alloy. </summary>
+        /// <summary> Alloy voice. </summary>
         public static OAIVoice Alloy { get; } = new OAIVoice(AlloyValue);
 
-        /// <summary> Gets the Ash. </summary>
+        /// <summary> Ash voice. </summary>
         public static OAIVoice Ash { get; } = new OAIVoice(AshValue);
 
-        /// <summary> Gets the Ballad. </summary>
+        /// <summary> Ballard voice. </summary>
         public static OAIVoice Ballad { get; } = new OAIVoice(BalladValue);
 
-        /// <summary> Gets the Coral. </summary>
+        /// <summary> Coral voice. </summary>
         public static OAIVoice Coral { get; } = new OAIVoice(CoralValue);
 
-        /// <summary> Gets the Echo. </summary>
+        /// <summary> Echo voice. </summary>
         public static OAIVoice Echo { get; } = new OAIVoice(EchoValue);
 
-        /// <summary> Gets the Sage. </summary>
+        /// <summary> Sage voice. </summary>
         public static OAIVoice Sage { get; } = new OAIVoice(SageValue);
 
-        /// <summary> Gets the Shimmer. </summary>
+        /// <summary> Shimmer voice. </summary>
         public static OAIVoice Shimmer { get; } = new OAIVoice(ShimmerValue);
 
-        /// <summary> Gets the Verse. </summary>
+        /// <summary> Verse voice. </summary>
         public static OAIVoice Verse { get; } = new OAIVoice(VerseValue);
 
         /// <summary> Determines if two <see cref="OAIVoice"/> values are the same. </summary>

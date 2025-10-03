@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseFunctionCallItem. </summary>
-    public partial class ResponseFunctionCallItem : ResponseItem
+    /// <summary> A function call item within a conversation. </summary>
+    public partial class ResponseFunctionCallItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(string name, string callId, string arguments, VoiceLiveResponseItemStatus status) : base(ItemType.FunctionCall)
+        internal ResponseFunctionCallItem(string name, string callId, string arguments, SessionResponseItemStatus status) : base(ItemType.FunctionCall)
         {
             Name = name;
             CallId = callId;
@@ -29,13 +29,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="object"></param>
+        /// <param name="object"> Gets the Object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"></param>
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, VoiceLiveResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseFunctionCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, SessionResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Name = name;
             CallId = callId;
@@ -53,6 +53,6 @@ namespace Azure.AI.VoiceLive
         public string Arguments { get; }
 
         /// <summary> Gets the Status. </summary>
-        public VoiceLiveResponseItemStatus Status { get; }
+        public SessionResponseItemStatus Status { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a new Response is created. The first event of response creation,
     /// where the response is in an initial state of `in_progress`.
     /// </summary>
-    public partial class SessionUpdateResponseCreated : IJsonModel<SessionUpdateResponseCreated>
+    public partial class SessionUpdateResponseCreated : SessionUpdate, IJsonModel<SessionUpdateResponseCreated>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseCreated"/> for deserialization. </summary>
         internal SessionUpdateResponseCreated()
@@ -74,7 +74,7 @@ namespace Azure.AI.VoiceLive
             ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VoiceLiveResponse response = default;
+            SessionResponse response = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -89,7 +89,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("response"u8))
                 {
-                    response = VoiceLiveResponse.DeserializeVoiceLiveResponse(prop.Value, options);
+                    response = SessionResponse.DeserializeSessionResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

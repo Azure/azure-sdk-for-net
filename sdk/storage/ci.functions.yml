@@ -31,8 +31,12 @@ extends:
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
       safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
       skipSmokeTests: true
+      triggeringPaths:
+      - /sdk/storage/Azure.Storage.Blobs/
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
       safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
       skipSmokeTests: true
+      triggeringPaths:
+      - /sdk/storage/Azure.Storage.Queues/
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

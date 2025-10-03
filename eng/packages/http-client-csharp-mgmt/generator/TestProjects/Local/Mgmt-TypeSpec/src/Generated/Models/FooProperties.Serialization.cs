@@ -85,6 +85,8 @@ namespace MgmtTypeSpec.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("nestedProperty"u8);
+            writer.WriteObjectValue(NestedProperty, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +136,7 @@ namespace MgmtTypeSpec.Models
             double? doubleValue = default;
             IList<string> prop1 = default;
             IList<int> prop2 = default;
+            NestedFooModel nestedProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,6 +212,11 @@ namespace MgmtTypeSpec.Models
                     prop2 = array;
                     continue;
                 }
+                if (prop.NameEquals("nestedProperty"u8))
+                {
+                    nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -222,6 +230,7 @@ namespace MgmtTypeSpec.Models
                 doubleValue,
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),
+                nestedProperty,
                 additionalBinaryDataProperties);
         }
 

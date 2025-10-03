@@ -144,8 +144,8 @@ public class BasicVoiceAssistant : IDisposable
 
         // Ensure modalities include audio
         sessionOptions.Modalities.Clear();
-        sessionOptions.Modalities.Add(InputModality.Text);
-        sessionOptions.Modalities.Add(InputModality.Audio);
+        sessionOptions.Modalities.Add(InteractionModality.Text);
+        sessionOptions.Modalities.Add(InteractionModality.Audio);
 
         await _session!.ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 

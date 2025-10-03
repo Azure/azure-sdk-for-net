@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure personal voice configuration. </summary>
-    public partial class AzurePersonalVoice : IJsonModel<AzurePersonalVoice>
+    public partial class AzurePersonalVoice : AzureVoice, IJsonModel<AzurePersonalVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/> for deserialization. </summary>
         internal AzurePersonalVoice()
@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "azure-personal";
+            AzureVoiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             float? temperature = default;
@@ -84,7 +84,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new AzureVoiceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

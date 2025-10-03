@@ -57,5 +57,17 @@ namespace Azure.Storage.Files.DataLake
         public string LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value : null;
         /// <summary> The lease status of the resource. </summary>
         public string LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value : null;
+        /// <summary> The value of this header is set to true if the directory metadata is completely encrypted using the specified algorithm. Otherwise, the value is set to false. </summary>
+        public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-server-encrypted", out bool? value) ? value : null;
+        /// <summary> The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key. </summary>
+        public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
+        /// <summary> The encryption context used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key. </summary>
+        public string EncryptionContext => _response.Headers.TryGetValue("x-ms-encryption-context", out string value) ? value : null;
+        /// <summary> Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope. </summary>
+        public string EncryptionScope => _response.Headers.TryGetValue("x-ms-encryption-scope", out string value) ? value : null;
+        /// <summary> Returns the date and time the blob was created. </summary>
+        public DateTimeOffset? CreationTime => _response.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> The time this blob will expire. </summary>
+        public DateTimeOffset? ExpiresOn => _response.Headers.TryGetValue("x-ms-expiry-time", out DateTimeOffset? value) ? value : null;
     }
 }

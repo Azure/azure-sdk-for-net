@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(AudioNoiseReduction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToAudioNoiseReductionType();
+                    @type = new AudioNoiseReductionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
