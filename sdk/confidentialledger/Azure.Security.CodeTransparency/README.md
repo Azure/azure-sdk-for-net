@@ -2,7 +2,7 @@
 
 <!-- cspell:ignore cose merkle scitt -->
 
-`Azure.Security.CodeTransparency` is based on a managed service complying with a [draft SCITT RFC][SCITT_ARCHITECTURE_RFC]. It is a managed service that allows countersigning [COSE signature envelopes][COSE_RFC]. Countersignatures are recorded and signed in the immutable merkle tree for any auditing purposes and [the receipt][SCITT_RECEIPT_RFC] gets issued.
+`Azure.Security.CodeTransparency` is based on a managed service that complies with a [draft SCITT RFC][SCITT_ARCHITECTURE_RFC]. It allows countersigning [COSE signature envelopes][COSE_RFC]. Countersignatures are recorded and signed in an immutable Merkle tree for auditing purposes, and a [receipt][SCITT_RECEIPT_RFC] is issued.
 
 - [OSS server application source code][Service_source_code]
 
@@ -10,9 +10,9 @@
 
 ### Install the package
 
-Make sure you have access to the correct NuGet Feed.
+Ensure you have access to the correct NuGet feed.
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library via NuGet:
 
 ```dotnetcli
 dotnet add package Azure.Security.CodeTransparency --prerelease
@@ -20,10 +20,10 @@ dotnet add package Azure.Security.CodeTransparency --prerelease
 
 ### Prerequisites
 
-- A running and accessible Code Transparency Service
-- Ability to create `COSE_Sign1` envelopes, [an example script][CTS_claim_generator_script]
-- Your signer details (CA cert) have to be configured in the running service, [about available configuration][CTS_configuration_doc]
-- You can get a valid Bearer token if the service authentication is configured to require one, [see example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)
+- A running, accessible Code Transparency service
+- Ability to create `COSE_Sign1` envelopes (see [example script][CTS_claim_generator_script])
+- Your signer details (CA certificate) must be configured in the running service (see [configuration options][CTS_configuration_doc])
+- Obtain a valid bearer token if service authentication requires one (see [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md))
 
 ### Thread safety
 
@@ -31,15 +31,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Authenticate the client
 
-You can get a valid Bearer token if the service authentication is configured to require one, [see example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md).
+Obtain a valid bearer token if the service requires authentication (see [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)).
 
 ## Examples
 
-There are two main use cases for this service: submitting a cose signature envelope and verifying the cryptographic submission receipt. The receipt proves that the signature file was successfully accepted.
+There are two main use cases: submitting a COSE signature envelope and verifying the cryptographic submission receipt, which proves that the signature file was accepted.
 
-Before submitting the cose file, the service must be configured with the relevant Certificate Authority certificate to be able to accept it.
+Before submitting the COSE file, ensure the service is configured with the appropriate policy.
 
-To submit the signature, use the following code:
+Use the following code to submit the signature:
 
 ```C# Snippet:CodeTransparencySubmission
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -48,23 +48,21 @@ BinaryData content = BinaryData.FromStream(fileStream);
 Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
-Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
+Then obtain the transparent statement:
 
-```C# Snippet:CodeTransparencyVerifyReceipt
-Response<JwksDocument> key = client.GetPublicKeys();
-
-CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes);
+```C# Snippet:CodeTransparencyDownloadTransparentStatement
+Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
+string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
 ```
 
-Alternatively, you can retrieve the Transparent Statement of the corresponding submission and run the receipt verification logic
+After obtaining the transparent statement, you can distribute it so others can verify its inclusion in the service. The verifier checks that the receipt was issued for the given signature and that its signature was endorsed by the service. Because users might not know which service instance the statement came from, they can extract that information from the receipt to create the client for verification.
 
 ```C# Snippet:CodeTransparencyVerification
-Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
 byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-
 try
 {
-    client.RunTransparentStatementVerification(transparentStatementBytes);
+    new CodeTransparencyClient(transparentStatementBytes).RunTransparentStatementVerification(transparentStatementBytes);
 }
 catch (Exception e)
 {
@@ -72,9 +70,9 @@ catch (Exception e)
 }
 ```
 
-If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.
+If verification completes without exception, you can trust the signature and the receipt. You can then safely inspect the files, especially the payload embedded in the COSE signature envelope.
 
-To learn more about other APIs, please refer to our [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples).
+To learn more about other APIs, see the [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples).
 
 ### Key concepts
 
@@ -90,12 +88,11 @@ To learn more about other APIs, please refer to our [samples](https://github.com
 
 ## Troubleshooting
 
-Response values returned from Azure confidential ledger client methods are `Response` objects, which contain information about the http response such as the http `Status` property and a `Headers` object containing more information about the failure.
+Response values returned from client methods are `Response` objects, which contain information about the HTTP response such as the HTTP `Status` property and a `Headers` collection with more details.
 
 ## Next steps
 
-For more extensive documentation, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/).
-You may also read more about Microsoft Research's open-source [Confidential Consortium Framework][ccf].
+For more extensive documentation, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/). You can also read more about Microsoft Research's open-source [Confidential Consortium Framework][ccf].
 
 ## Contributing
 
@@ -115,4 +112,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [CTS_configuration_doc]: https://github.com/microsoft/scitt-ccf-ledger/blob/main/docs/configuration.md
 [ccf]: https://github.com/Microsoft/CCF
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

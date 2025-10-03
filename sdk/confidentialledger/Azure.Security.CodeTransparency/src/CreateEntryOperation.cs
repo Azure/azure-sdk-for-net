@@ -87,22 +87,7 @@ namespace Azure.Security.CodeTransparency
                 return OperationState.Pending(response);
             }
 
-            string status = string.Empty;
-
-            // Read GetOperation Cbor response
-            CborReader cborReader = new(response.Content);
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
-            {
-                string key = cborReader.ReadTextString();
-                if (string.Equals(key , "Status", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    status = cborReader.ReadTextString();
-                    break;
-                }
-                else
-                    cborReader.SkipValue();
-            }
+            string status = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "Status");
 
             if (!Enum.TryParse(status, true, out CodeTransparencyOperationStatus parsedStatus))
             {

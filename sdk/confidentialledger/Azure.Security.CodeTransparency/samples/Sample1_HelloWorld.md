@@ -1,16 +1,16 @@
-# Submission of a signed statement to the service
+# Submit a signed statement to the service
 
 <!-- cspell:ignore cose -->
 
 This sample demonstrates how to submit your signed statement (`COSE_Sign1`) to the service.
 
-To get started, you'll need a URL for the service.
+To get started, you'll need the service URL.
 
-You will also need a valid `COSE_Sign1` file. There are many ways to obtain it; this sample assumes you already have one.
+You will also need a valid `COSE_Sign1` file. There are many ways to obtain one; this sample assumes you already have one.
 
 ## Create a client
 
-To create a new `CodeTransparencyClient` that will interact with the service without explicit credentials (if the service allows it, or if you only need publicly accessible data). Then use a subclient to work with entries:
+Create a new `CodeTransparencyClient` that interacts with the service without explicit credentials (if the service allows it or if you only need publicly accessible data). Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample_CreateClient
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -18,7 +18,7 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 
 ## Submit the file
 
-The most basic usage is to submit a valid signature file to the service. Accepting the submission is a long-running operation, which is why the response contains the operation ID.
+The most basic usage submits a valid signature file to the service. Accepting the submission is a long-running operation, so the response contains the operation ID.
 
 ```C# Snippet:CodeTransparencySubmission
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -29,27 +29,20 @@ Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Starte
 
 ## Verify the operation was successful
 
-To ensure the submission completed successfully, you must check the status of the operation. A successful operation means the signed statement was accepted by the service and countersigned, which in turn allows you to obtain the cryptographic receipt.
+To ensure the submission completes successfully, check the status of the operation. A successful operation means the service has accepted and countersigned the signed statement, which in turn allows you to obtain the cryptographic receipt.
 
-Another important aspect of checking the operation is that it returns an identifier (entry ID) used to retrieve the transparent statement or a transaction receipt.
+Checking the operation also returns an identifier (entry ID) used to retrieve the transparent statement or a transaction receipt.
 
 ```C# Snippet:CodeTransparencySample1_WaitForResult
 Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-
-string entryId = string.Empty;
-CborReader cborReader = new CborReader(operationResult.Value);
-cborReader.ReadStartMap();
-while (cborReader.PeekState() != CborReaderState.EndMap)
-{
-    string key = cborReader.ReadTextString();
-    if (key == "EntryId")
-    {
-        entryId = cborReader.ReadTextString();
-    }
-    else
-        cborReader.SkipValue();
-}
-
+string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
 Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
 ```
+
+## Download the transparent statement
+
+Once the operation is complete, you can download the transparent statement so you can distribute it to verify this registration.
+
+```C# Snippet:CodeTransparencySample1_DownloadStatement
+Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
 ```

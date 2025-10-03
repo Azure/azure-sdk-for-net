@@ -151,26 +151,11 @@ namespace Azure.Security.CodeTransparency
             {
                 throw new InvalidOperationException("CWT-MAP not found in receipt.");
             }
-
-            string issuer = string.Empty;
-
-            CborReader cborReader = new CborReader(cwtMap.EncodedValue.ToArray());
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
-            {
-                int key = cborReader.ReadInt32();
-                if (key == CcfReceipt.CoseReceiptCwtIssLabel)
-                    issuer = cborReader.ReadTextString();
-                else
-                    cborReader.SkipValue();
-            }
-            cborReader.ReadEndMap();
-
+            string issuer = CborUtils.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
             if (string.IsNullOrEmpty(issuer))
             {
                 throw new InvalidOperationException("Issuer not found in receipt.");
             }
-
             return issuer;
         }
 
@@ -251,20 +236,7 @@ namespace Azure.Security.CodeTransparency
                 string operationId = string.Empty;
                 try
                 {
-                    // Read cbor response to get the operationId
-                    CborReader cborReader = new(response.Content);
-                    cborReader.ReadStartMap();
-                    while (cborReader.PeekState() != CborReaderState.EndMap)
-                    {
-                        string key = cborReader.ReadTextString();
-                        if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            operationId = cborReader.ReadTextString();
-                            break;
-                        }
-                        else
-                            cborReader.SkipValue();
-                    }
+                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
                 }
                 catch (Exception ex)
                 {
@@ -315,24 +287,11 @@ namespace Azure.Security.CodeTransparency
                 string operationId = string.Empty;
                 try
                 {
-                    // Read cbor response to get the operationId
-                    CborReader cborReader = new(response.Content);
-                    cborReader.ReadStartMap();
-                    while (cborReader.PeekState() != CborReaderState.EndMap)
-                    {
-                        string key = cborReader.ReadTextString();
-                        if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            operationId = cborReader.ReadTextString();
-                            break;
-                        }
-                        else
-                            cborReader.SkipValue();
-                    }
+                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
                 }
                 catch (Exception ex)
                 {
-                    throw new RequestFailedException($"Failed to parse the Cbor response.", ex);
+                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
                 }
 
                 if (string.IsNullOrEmpty(operationId))
