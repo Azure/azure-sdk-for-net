@@ -491,5 +491,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(50, Message = "Invalid sampler argument '{1}' for sampler '{0}'. Ignoring.", Level = EventLevel.Warning)]
         public void InvalidSamplerArgument(string samplerType, string samplerArg) => WriteEvent(50, samplerType, samplerArg);
+
+        [Event(51, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {1}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(51, previousCollectedTime, recentCollectedTime);
+
+        [Event(52, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {1}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(52, previousCollectedValue, recentCollectedValue);
+
+        [Event(53, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(53, period, diffValue, calculatedValue, processorCount, normalizedValue);
+
+        [NonEvent]
+        public void FailedToCollectProcessPrivateBytes(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToCollectProcessPrivateBytes(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(54, Message = "Failed to collect Process Private Bytes due to an exception. {0}", Level = EventLevel.Warning)]
+        public void FailedToCollectProcessPrivateBytes(string exceptionMessage) => WriteEvent(54, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToCalculateRequestRate(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToCalculateRequestRate(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(55, Message = "Failed to calculate request rate due to an exception. {0}", Level = EventLevel.Warning)]
+        public void FailedToCalculateRequestRate(string exceptionMessage) => WriteEvent(55, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToCalculateExceptionRate(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToCalculateExceptionRate(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(56, Message = "Failed to calculate exception rate due to an exception. {0}", Level = EventLevel.Warning)]
+        public void FailedToCalculateExceptionRate(string exceptionMessage) => WriteEvent(56, exceptionMessage);
     }
 }
