@@ -21,6 +21,11 @@ namespace Azure.Storage.Blobs.Models
         public string LeaseId { get; set; }
 
         /// <summary>
+        /// Optionally limit requests to resources whose access tier was modified/unmodified since this time.
+        /// </summary>
+        public ModifiedAccessConditions ModifiedAccessConditions { get; set; }
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         public BlobRequestConditions()
@@ -31,6 +36,8 @@ namespace Azure.Storage.Blobs.Models
         {
             Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
             LeaseId = deepCopySource.LeaseId;
+            ModifiedAccessConditions.AccessTierIfModifiedSince = deepCopySource.ModifiedAccessConditions.AccessTierIfModifiedSince;
+            ModifiedAccessConditions.AccessTierIfUnmodifiedSince = deepCopySource.ModifiedAccessConditions.AccessTierIfUnmodifiedSince;
         }
 
         /// <summary>
@@ -111,6 +118,16 @@ namespace Azure.Storage.Blobs.Models
             if (TagConditions != null)
             {
                 conditions.Append(nameof(TagConditions)).Append('=').Append(TagConditions).Append(';');
+            }
+
+            if (ModifiedAccessConditions.AccessTierIfModifiedSince != null)
+            {
+                conditions.Append(nameof(ModifiedAccessConditions.AccessTierIfModifiedSince)).Append('=').Append(ModifiedAccessConditions.AccessTierIfModifiedSince).Append(';');
+            }
+
+            if (ModifiedAccessConditions.AccessTierIfUnmodifiedSince != null)
+            {
+                conditions.Append(nameof(ModifiedAccessConditions.AccessTierIfUnmodifiedSince)).Append('=').Append(ModifiedAccessConditions.AccessTierIfUnmodifiedSince).Append(';');
             }
         }
     }

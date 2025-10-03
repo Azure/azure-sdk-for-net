@@ -3923,6 +3923,96 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteAsync_ModifiedAccessConditions(bool isAccessTierModifiedSince)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // modify the access tier
+            await blob.SetAccessTierAsync(AccessTier.Cool);
+            DateTimeOffset changeTime = Recording.UtcNow;
+
+            ModifiedAccessConditions condition;
+            if (isAccessTierModifiedSince)
+            {
+                condition = new ModifiedAccessConditions
+                {
+                    // requires modification since yesterday (which there should be modification in this time window)
+                    AccessTierIfModifiedSince = changeTime.AddDays(-1)
+                };
+            }
+            else
+            {
+                condition = new ModifiedAccessConditions
+                {
+                    // requires no modification after 5 minutes from now (which there should be no modification then)
+                    AccessTierIfUnmodifiedSince = changeTime.AddMinutes(5)
+                };
+            }
+            BlobRequestConditions accessConditions = new();
+            accessConditions.ModifiedAccessConditions = condition;
+
+            // Act
+            Response response = await blob.DeleteAsync(conditions: accessConditions);
+
+            // Assert
+            Assert.IsNotNull(response.Headers.RequestId);
+            Assert.IsFalse(await blob.ExistsAsync());
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteAsync_ModifiedAccessConditions_Fail(bool isAccessTierModifiedSince)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // modify the access tier
+            await blob.SetAccessTierAsync(AccessTier.Cool);
+            DateTimeOffset changeTime = Recording.UtcNow;
+
+            ModifiedAccessConditions condition;
+            if (isAccessTierModifiedSince)
+            {
+                condition = new ModifiedAccessConditions
+                {
+                    // requires modification after 5 minutes from now (which there should be no modification then)
+                    AccessTierIfModifiedSince = changeTime.AddMinutes(5)
+                };
+            }
+            else
+            {
+                condition = new ModifiedAccessConditions
+                {
+                    // requires no modification since yesterday (which there should be modification in this time window)
+                    AccessTierIfUnmodifiedSince = changeTime.AddDays(-1)
+                };
+            }
+            BlobRequestConditions accessConditions = new();
+            accessConditions.ModifiedAccessConditions = condition;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.DeleteAsync(conditions: accessConditions),
+                e =>
+                {
+                    Assert.AreEqual(412, e.Status);
+                    Assert.AreEqual("AccessTierChangeTimeConditionNotMet", e.ErrorCode);
+                    StringAssert.Contains("The condition specified using access tier change time conditional header(s) is not met.", e.Message);
+                });
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [RecordedTest]
         public async Task DeleteIfExistsAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
