@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
             ExtendedLocation = extendedLocation;
+            ActionStates = new ChangeTrackingList<ActionState>();
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AvailableUpgradeVersions = new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
             ClusterType = clusterType;
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
         /// <param name="identity"> The identity for the resource. </param>
+        /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
         /// <param name="analyticsWorkspaceId"> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
         /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
-        /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterServicePrincipal"> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
         /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
@@ -120,11 +122,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, IReadOnlyList<ActionState> actionStates, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
             Identity = identity;
+            ActionStates = actionStates;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsOutputSettings = analyticsOutputSettings;
             AnalyticsWorkspaceId = analyticsWorkspaceId;
@@ -169,6 +172,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </summary>
+        public IReadOnlyList<ActionState> ActionStates { get; }
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
         /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
@@ -189,7 +194,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus { get; }
         /// <summary> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </summary>
         public ResourceIdentifier ClusterManagerId { get; }
-        /// <summary> The service principal to be used by the cluster during Arc Appliance installation. </summary>
+        /// <summary> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
         public ServicePrincipalInformation ClusterServicePrincipal { get; set; }
         /// <summary> The type of rack configuration for the cluster. </summary>
         public ClusterType ClusterType { get; set; }

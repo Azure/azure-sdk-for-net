@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Get.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterAggregatorOrSingleRackDefinition()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_AggregatorOrSingleRackDefinition.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_AggregatorOrSingleRackDefinition.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterAnalyticsOutput()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_AnalyticsOutput.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_AnalyticsOutput.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +173,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterCommandOutput()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_CommandOutput.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_CommandOutput.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,6 +213,16 @@ StorageApplianceName = "vmName",
                         UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2"),
                     },
                     ContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                    Overrides = {new CommandOutputOverride
+{
+AssociatedIdentity = new ManagedServiceIdentitySelector
+{
+IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
+UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2"),
+},
+CommandOutputType = CommandOutputType.StorageRunReadCommands,
+ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?restype=container"),
+}},
                 },
             };
             ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
@@ -229,7 +239,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterLocation()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_Location.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_Location.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -269,7 +279,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchRuntimeProtectionConfiguration()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_RuntimeProtectionConfiguration.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_RuntimeProtectionConfiguration.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,7 +319,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchSecretArchive()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_SecretArchive.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_SecretArchive.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -357,7 +367,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchUpdateStrategy()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_UpdateStrategy.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_UpdateStrategy.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -401,7 +411,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchVulnerabilityScanning()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Patch_VulnerabilityScanning.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Patch_VulnerabilityScanning.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -441,7 +451,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task ContinueUpdateVersion_ContinueUpdateClusterVersion()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_ContinueUpdateVersion.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_ContinueUpdateVersion.json
             // this example is just showing the usage of "Clusters_ContinueUpdateVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -472,7 +482,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Deploy_DeployCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Deploy.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Deploy.json
             // this example is just showing the usage of "Clusters_Deploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -500,7 +510,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task Deploy_DeployClusterSkippingValidation()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_Deploy_SkipValidation.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_Deploy_SkipValidation.json
             // this example is just showing the usage of "Clusters_Deploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -531,7 +541,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task ScanRuntime_ExecuteARuntimeProtectionScanOnTheCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_ScanRuntime.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_ScanRuntime.json
             // this example is just showing the usage of "Clusters_ScanRuntime" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -562,7 +572,7 @@ StorageApplianceName = "vmName",
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateVersion_UpdateClusterVersion()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_UpdateVersion.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/Clusters_UpdateVersion.json
             // this example is just showing the usage of "Clusters_UpdateVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
