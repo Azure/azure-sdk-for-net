@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 string prefix = GetSearchPrefix("blob", hourCursor, hourCursor);
 
                 await foreach (var page in containerClient
-                    .GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken)
+                    .GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, states: BlobStates.None, cancellationToken: cancellationToken)
                     .AsPages(pageSizeHint: 200)
                     .ConfigureAwait(false))
                 {
