@@ -14,7 +14,7 @@ namespace Azure.Communication
     internal partial class PhoneNumberIdentifierModel
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
-        /// <param name="value"> The phone number in E.164 format. </param>
+        /// <param name="value"> The phone number, usually in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhoneNumberIdentifierModel(string value)
         {
@@ -23,7 +23,22 @@ namespace Azure.Communication
             Value = value;
         }
 
-        /// <summary> The phone number in E.164 format. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
+        /// <param name="value"> The phone number, usually in E.164 format. </param>
+        /// <param name="isAnonymous"> True if the phone number is anonymous. By default false if missing. If the phone number is anonymous, the value will be the string 'anonymous'. </param>
+        /// <param name="assertedId"> The asserted Id of the phone number. An asserted Id gets generated when the same phone number joins the same call more than once. </param>
+        internal PhoneNumberIdentifierModel(string value, bool? isAnonymous, string assertedId)
+        {
+            Value = value;
+            IsAnonymous = isAnonymous;
+            AssertedId = assertedId;
+        }
+
+        /// <summary> The phone number, usually in E.164 format. </summary>
         public string Value { get; set; }
+        /// <summary> True if the phone number is anonymous. By default false if missing. If the phone number is anonymous, the value will be the string 'anonymous'. </summary>
+        public bool? IsAnonymous { get; set; }
+        /// <summary> The asserted Id of the phone number. An asserted Id gets generated when the same phone number joins the same call more than once. </summary>
+        public string AssertedId { get; set; }
     }
 }
