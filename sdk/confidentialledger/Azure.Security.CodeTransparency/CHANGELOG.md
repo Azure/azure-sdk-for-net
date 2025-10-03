@@ -4,13 +4,13 @@
 
 ### Features Added
 
-- New constructor allows to extract the endpoint from the receipt as verifier would not know it
-- Exposed CborUtils to easily extract the values from cbor maps which would otherwise require working with the cbor library
+- New constructor allows extracting the endpoint from the receipt in the transparent statement when the verifier does not know it
+- Exposed `CborUtils` to extract values from CBOR maps, which would otherwise require working directly with a CBOR library
 
 ### Other Changes
 
 - Updated samples
-- Fixed grammar in readmes
+- Fixed grammar in README files
 
 ## 1.0.0-beta.4 (2025-05-06)
 
@@ -22,7 +22,7 @@
 
 ### Features Added
 
-- Aligned with the latest changes (Feb 25) of the IETF draft: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
+- Aligned with the latest (Feb 25) changes to the IETF draft: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
 - Updated receipt verification logic.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
@@ -30,7 +30,7 @@
 
 ### Bugs Fixed
 
-- Do not fail the submission of the entry if it responds with HTTP status 202
+- Do not fail submission of an entry if the service responds with HTTP status 202
 
 ## 1.0.0-beta.1 (2024-03-26)
 
