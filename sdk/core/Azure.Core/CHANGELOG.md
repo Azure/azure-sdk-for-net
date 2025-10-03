@@ -2,6 +2,12 @@
 
 ## 1.50.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
 ### Features Added
 
 ### Breaking Changes
@@ -9,6 +15,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Several performance and efficiency improvements were made to how request content is created and managed.   _([#52488](https://github.com/Azure/azure-sdk-for-net/pull/52488), a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 1.49.0 (2025-09-22)
 
