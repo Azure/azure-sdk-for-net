@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string BareMetalMachineRunDataExtractsValue = "BareMetalMachineRunDataExtracts";
         private const string BareMetalMachineRunReadCommandsValue = "BareMetalMachineRunReadCommands";
         private const string StorageRunReadCommandsValue = "StorageRunReadCommands";
+        private const string BareMetalMachineRunDataExtractsRestrictedValue = "BareMetalMachineRunDataExtractsRestricted";
 
         /// <summary> BareMetalMachineRunCommand. </summary>
         public static CommandOutputType BareMetalMachineRunCommand { get; } = new CommandOutputType(BareMetalMachineRunCommandValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static CommandOutputType BareMetalMachineRunReadCommands { get; } = new CommandOutputType(BareMetalMachineRunReadCommandsValue);
         /// <summary> StorageRunReadCommands. </summary>
         public static CommandOutputType StorageRunReadCommands { get; } = new CommandOutputType(StorageRunReadCommandsValue);
+        /// <summary> BareMetalMachineRunDataExtractsRestricted. </summary>
+        public static CommandOutputType BareMetalMachineRunDataExtractsRestricted { get; } = new CommandOutputType(BareMetalMachineRunDataExtractsRestrictedValue);
         /// <summary> Determines if two <see cref="CommandOutputType"/> values are the same. </summary>
         public static bool operator ==(CommandOutputType left, CommandOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommandOutputType"/> values are not the same. </summary>

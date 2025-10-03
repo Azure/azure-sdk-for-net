@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
         /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
         /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
-        /// <param name="networkData"> Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </param>
+        /// <param name="networkData"> Field Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </param>
         /// <param name="networkDataContent"> The Base64 encoded cloud-init network data. </param>
         /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
         /// <param name="powerState"> The power state of the virtual machine. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
         /// <param name="sshPublicKeys"> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </param>
         /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
-        /// <param name="userData"> Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </param>
+        /// <param name="userData"> Field Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </param>
         /// <param name="userDataContent"> The Base64 encoded cloud-init user data. </param>
         /// <param name="virtioInterface"> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </param>
         /// <param name="vmDeviceModel"> The type of the device model to use. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public long MemorySizeInGB { get; set; }
         /// <summary> The list of network attachments to the virtual machine. </summary>
         public IList<NetworkAttachment> NetworkAttachments { get; }
-        /// <summary> Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </summary>
+        /// <summary> Field Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </summary>
         public string NetworkData { get; set; }
         /// <summary> The Base64 encoded cloud-init network data. </summary>
         public string NetworkDataContent { get; set; }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public IList<NetworkCloudSshPublicKey> SshPublicKeys { get; }
         /// <summary> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </summary>
         public NetworkCloudStorageProfile StorageProfile { get; set; }
-        /// <summary> Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </summary>
+        /// <summary> Field Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </summary>
         public string UserData { get; set; }
         /// <summary> The Base64 encoded cloud-init user data. </summary>
         public string UserDataContent { get; set; }

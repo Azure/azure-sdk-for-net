@@ -423,15 +423,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
         /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
-        /// <param name="clusterServicePrincipal"> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
         /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
         /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions">
-        /// The list of rack definitions for the compute racks in a multi-rack
-        /// cluster, or an empty list in a single-rack cluster.
-        /// </param>
+        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
         /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
         /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
@@ -505,10 +502,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
         /// <param name="bootMacAddress"> The MAC address associated with the PXE NIC card. </param>
         /// <param name="machineDetails"> The free-form additional information about the machine, e.g. an asset tag. </param>
-        /// <param name="machineName">
-        /// The user-provided name for the bare metal machine created from this specification.
-        /// If not provided, the machine name will be generated programmatically.
-        /// </param>
+        /// <param name="machineName"> The user-provided name for the bare metal machine created from this specification. If not provided, the machine name will be generated programmatically. </param>
         /// <param name="rackSlot"> The slot the physical machine is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </param>
         /// <returns> A new <see cref="Models.BareMetalMachineConfiguration"/> instance for mocking. </returns>
@@ -705,46 +699,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkAttachment"/>. </summary>
-        /// <param name="attachedNetworkArmId">
-        /// The resource ID of the associated network attached to the virtual machine.
-        /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.
-        /// </param>
-        /// <param name="defaultGateway">
-        /// The indicator of whether this is the default gateway.
-        /// Only one of the attached networks (including the CloudServicesNetwork attachment) for a single machine may be specified as True.
-        /// </param>
-        /// <param name="ipAllocationMethod">
-        /// The IP allocation mechanism for the virtual machine.
-        /// Dynamic and Static are only valid for l3Network which may also specify Disabled.
-        /// Otherwise, Disabled is the only permitted value.
-        /// </param>
-        /// <param name="ipv4Address">
-        /// The IPv4 address of the virtual machine.
-        ///
-        /// This field is used only if the attached network has IPAllocationType of IPV4 or DualStack.
-        ///
-        /// If IPAllocationMethod is:
-        /// Static - this field must contain a user specified IPv4 address from within the subnet specified in the attached network.
-        /// Dynamic - this field is read-only, but will be populated with an address from within the subnet specified in the attached network.
-        /// Disabled - this field will be empty.
-        /// </param>
-        /// <param name="ipv6Address">
-        /// The IPv6 address of the virtual machine.
-        ///
-        /// This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.
-        ///
-        /// If IPAllocationMethod is:
-        /// Static - this field must contain an IPv6 address range from within the range specified in the attached network.
-        /// Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network.
-        /// Disabled - this field will be empty.
-        /// </param>
+        /// <param name="attachedNetworkArmId"> The resource ID of the associated network attached to the virtual machine. It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources. </param>
+        /// <param name="defaultGateway"> The indicator of whether this is the default gateway. Only one of the attached networks (including the CloudServicesNetwork attachment) for a single machine may be specified as True. </param>
+        /// <param name="ipAllocationMethod"> The IP allocation mechanism for the virtual machine. Dynamic and Static are only valid for l3Network which may also specify Disabled. Otherwise, Disabled is the only permitted value. </param>
+        /// <param name="ipv4Address"> The IPv4 address of the virtual machine.  This field is used only if the attached network has IPAllocationType of IPV4 or DualStack.  If IPAllocationMethod is: Static - this field must contain a user specified IPv4 address from within the subnet specified in the attached network. Dynamic - this field is read-only, but will be populated with an address from within the subnet specified in the attached network. Disabled - this field will be empty. </param>
+        /// <param name="ipv6Address"> The IPv6 address of the virtual machine.  This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.  If IPAllocationMethod is: Static - this field must contain an IPv6 address range from within the range specified in the attached network. Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network. Disabled - this field will be empty. </param>
         /// <param name="macAddress"> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </param>
-        /// <param name="networkAttachmentName">
-        /// The associated network's interface name.
-        /// If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine.
-        /// If the user doesn’t specify this value, the default interface name of the network resource will be used.
-        /// For a CloudServicesNetwork resource, this name will be ignored.
-        /// </param>
+        /// <param name="networkAttachmentName"> The associated network's interface name. If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine. If the user doesn’t specify this value, the default interface name of the network resource will be used. For a CloudServicesNetwork resource, this name will be ignored. </param>
         /// <returns> A new <see cref="Models.NetworkAttachment"/> instance for mocking. </returns>
         public static NetworkAttachment NetworkAttachment(ResourceIdentifier attachedNetworkArmId = null, DefaultGateway? defaultGateway = null, VirtualMachineIPAllocationMethod ipAllocationMethod = default, string ipv4Address = null, string ipv6Address = null, string macAddress = null, string networkAttachmentName = null)
         {
@@ -826,14 +787,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
         /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to "DualStack". </param>
-        /// <param name="ipv4ConnectedPrefix">
-        /// The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type
-        /// is IPV4 or DualStack.
-        /// </param>
-        /// <param name="ipv6ConnectedPrefix">
-        /// The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type
-        /// is IPV6 or DualStack.
-        /// </param>
+        /// <param name="ipv4ConnectedPrefix"> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </param>
+        /// <param name="ipv6ConnectedPrefix"> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </param>
         /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
         /// <param name="provisioningState"> The provisioning state of the L3 network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </param>
@@ -1170,14 +1125,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
         /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
         /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
-        /// <param name="networkData"> Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </param>
+        /// <param name="networkData"> Field Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </param>
         /// <param name="networkDataContent"> The Base64 encoded cloud-init network data. </param>
         /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
         /// <param name="powerState"> The power state of the virtual machine. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
         /// <param name="sshPublicKeys"> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </param>
         /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
-        /// <param name="userData"> Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </param>
+        /// <param name="userData"> Field Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </param>
         /// <param name="userDataContent"> The Base64 encoded cloud-init user data. </param>
         /// <param name="virtioInterface"> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </param>
         /// <param name="vmDeviceModel"> The type of the device model to use. </param>
@@ -1314,10 +1269,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.BareMetalMachineRunCommandContent"/>. </summary>
         /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
-        /// <param name="limitTimeSeconds">
-        /// The maximum time the script is allowed to run.
-        /// If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252).
-        /// </param>
+        /// <param name="limitTimeSeconds"> The maximum time the script is allowed to run. If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252). </param>
         /// <param name="script"> The base64 encoded script to execute on the bare metal machine. </param>
         /// <returns> A new <see cref="Models.BareMetalMachineRunCommandContent"/> instance for mocking. </returns>
         public static BareMetalMachineRunCommandContent BareMetalMachineRunCommandContent(IEnumerable<string> arguments = null, long limitTimeSeconds = default, string script = null)
