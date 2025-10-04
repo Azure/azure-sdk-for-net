@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string MonitoredValue = "Monitored";
         private const string UnmonitoredAutoValue = "UnmonitoredAuto";
 
-        /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 0. </summary>
+        /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. </summary>
         public static RollingUpgradeMode Monitored { get; } = new RollingUpgradeMode(MonitoredValue);
-        /// <summary> The upgrade will proceed automatically without performing any health monitoring. The value is 1. </summary>
+        /// <summary> The upgrade will proceed automatically without performing any health monitoring. </summary>
         public static RollingUpgradeMode UnmonitoredAuto { get; } = new RollingUpgradeMode(UnmonitoredAutoValue);
         /// <summary> Determines if two <see cref="RollingUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(RollingUpgradeMode left, RollingUpgradeMode right) => left.Equals(right);
