@@ -22,7 +22,7 @@ public partial class ToolOutput
     /// <remarks>
     /// When using this constructor, the <see cref="Output"/> property should be set prior to submission.
     /// </remarks>
-    public ToolOutput(string toolCallId)
+    public ToolOutput(string toolCallId) : this()
     {
         ToolCallId = toolCallId;
     }
@@ -30,7 +30,7 @@ public partial class ToolOutput
     /// <summary> Initializes a new instance of <see cref="ToolOutput"/>. </summary>
     /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
     /// <param name="output"> The output from the tool to be submitted. </param>
-    public ToolOutput(string toolCallId, string output=null)
+    public ToolOutput(string toolCallId, string output=null) : this()
     {
         ToolCallId = toolCallId;
         Output = output;
@@ -41,7 +41,7 @@ public partial class ToolOutput
     /// <remarks>
     /// When using this constructor, the <see cref="Output"/> property should be set prior to submission.
     /// </remarks>
-    public ToolOutput(RequiredToolCall toolCall)
+    public ToolOutput(RequiredToolCall toolCall) : this()
     {
         ToolCallId = toolCall.Id;
     }
@@ -52,7 +52,7 @@ public partial class ToolOutput
     /// <remarks>
     /// When using this constructor, the <see cref="Output"/> property should be set prior to submission.
     /// </remarks>
-    public ToolOutput(RequiredToolCall toolCall, string output)
+    public ToolOutput(RequiredToolCall toolCall, string output) : this()
     {
         ToolCallId = toolCall.Id;
         Output = output;

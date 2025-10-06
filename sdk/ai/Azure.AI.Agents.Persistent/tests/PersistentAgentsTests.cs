@@ -1128,7 +1128,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     },
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided functions to help answer questions.",
                 tools: new List<ToolDefinition> { getFavouriteNameTool }
@@ -1886,7 +1886,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 tools.Add(incorrectGeHhumidityByAddressTool);
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                    model: "gpt-4o-mini",
+                    model: "gpt-4o",
                     name: AGENT_NAME,
                     instructions: "Use the provided functions to help answer questions.",
                     tools: tools
