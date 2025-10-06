@@ -114,7 +114,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task<TransferOperation> CreateStartTransfer(
             TContainerClient containerClient,
             string localDirectoryPath,
-            TransferManager transferManager,
+            int concurrency,
             bool createFailedCondition = false,
             TransferOptions options = default,
             int size = DataMovementTestConstants.KB)
@@ -141,26 +141,18 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItem sourceResource = GetStorageResourceItem(TObjectClient);
             StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(destFile);
 
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = concurrency,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
             // Start transfer and await for completion.
             return await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// For usage, please dispose of the TransferManager after use.
-        /// </summary>
-        /// <param name="concurrency">Concurrency to set in TransferManagerOptions.</param>
-        /// <returns>Valid TransferManager that needs to be disposed after use.</returns>
-        private TransferManager CreateTransferManager(int concurrency = default)
-        {
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
-            {
-                MaximumConcurrency = concurrency,
-                ErrorMode = TransferErrorMode.StopOnAnyFailure
-            };
-            return new TransferManager(managerOptions);
         }
 
         [RecordedTest]
@@ -170,16 +162,13 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
-            // Create Transfer Manager with single threaded operation
-            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
-
             // Create transfer to do a AwaitCompletion
             TransferOptions options = new TransferOptions();
             TestEventsRaised failureTransferHolder = new TestEventsRaised(options);
             TransferOperation transfer = await CreateStartTransfer(
                 containerClient: test.Container,
                 localDirectoryPath: testDirectory.DirectoryPath,
-                transferManager: transferManager,
+                concurrency: 1,
                 options: options);
 
             // Act
@@ -203,9 +192,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
-            // Create Transfer Manager with single threaded operation
-            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
-
             TransferOptions options = new TransferOptions()
             {
                 CreationMode = StorageResourceCreationMode.FailIfExists
@@ -216,7 +202,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 containerClient: test.Container,
                 localDirectoryPath: testDirectory.DirectoryPath,
-                transferManager: transferManager,
+                concurrency: 1,
                 createFailedCondition: true,
                 options: options);
 
@@ -244,9 +230,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
-            // Create Transfer Manager with single threaded operation
-            await using TransferManager transferManager = CreateTransferManager(concurrency: 1);
-
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
@@ -258,7 +241,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await CreateStartTransfer(
                 containerClient: test.Container,
                 localDirectoryPath: testDirectory.DirectoryPath,
-                transferManager: transferManager,
+                concurrency: 1,
                 createFailedCondition: true,
                 options: options);
 
@@ -303,7 +286,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the object
         ///
-        /// By default in this function an event argument will be added to the options event handler
+        /// By default in this function an event arguement will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="size"></param>
@@ -346,7 +329,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<VerifyDownloadObjectContentInfo> downloadedObjectInfo = new List<VerifyDownloadObjectContentInfo>(objectCount);
 
             // Initialize TransferManager
-            await using TransferManager transferManager = new TransferManager(transferManagerOptions);
+            TransferManager transferManager = new TransferManager(transferManagerOptions);
             // Upload set of VerifyDownloadObjectContentInfo objects to download
             for (int i = 0; i < objectCount; i++)
             {
@@ -515,7 +498,7 @@ namespace Azure.Storage.DataMovement.Tests
                 return Task.CompletedTask;
             };
             TestEventsRaised testEventsRaised = new(options);
-            await using TransferManager transferManager = new TransferManager();
+            TransferManager transferManager = new TransferManager();
 
             StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(destFile);
 
@@ -568,7 +551,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItem sourceResource = GetStorageResourceItem(sourceClient);
             StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(destFile);
 
-            await using TransferManager transferManager = new TransferManager();
+            TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(

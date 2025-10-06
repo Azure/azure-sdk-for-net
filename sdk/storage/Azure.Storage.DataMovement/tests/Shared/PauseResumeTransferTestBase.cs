@@ -406,7 +406,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             TestProgressHandler progressHandler = new();
             TransferOptions transferOptions = new TransferOptions
             {
@@ -482,7 +482,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -520,7 +520,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        public async Task TryPauseTransferAsync_Error()
+        public void TryPauseTransferAsync_Error()
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -529,7 +529,7 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
 
             // Act / Assert
             Assert.CatchAsync(async () => await transferManager.PauseTransferAsync("bad transfer Id"));
@@ -566,7 +566,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -632,7 +632,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             long size = DataMovementTestConstants.KB * 100;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
@@ -720,7 +720,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             long size = DataMovementTestConstants.KB * 100;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
@@ -784,7 +784,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
 
             Metadata metadata = DataProvider.BuildMetadata();
             string contentLanguage = "en-US";
@@ -849,7 +849,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
@@ -898,7 +898,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
@@ -947,7 +947,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
@@ -1007,7 +1007,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions()
             {
                 InitialTransferSize = DataMovementTestConstants.KB,
@@ -1091,7 +1091,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions()
             {
                 InitialTransferSize = DataMovementTestConstants.KB,
@@ -1182,7 +1182,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            await using TransferManager transferManager = new TransferManager(options);
+            TransferManager transferManager = new TransferManager(options);
             long size = DataMovementTestConstants.MB;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(

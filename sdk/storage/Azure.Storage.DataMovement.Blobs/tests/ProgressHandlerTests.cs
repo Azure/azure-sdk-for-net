@@ -126,7 +126,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
-            await using TransferManager transferManager = new TransferManager(transferManagerOptions);
+            TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             TestProgressHandler progressHandler = new TestProgressHandler();
             transferOptions ??= new TransferOptions();

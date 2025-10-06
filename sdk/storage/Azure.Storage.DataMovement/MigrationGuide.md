@@ -186,7 +186,7 @@ await TransferManager.UploadAsync(
 string filePath;
 Uri blobUri;
 BlobsStorageResourceProvider blobs;
-await using TransferManager transferManager = new TransferManager();
+TransferManager transferManager;
 ```
 ```C# Snippet:DataMovementMigration_UploadSingleFile
 // upload blob
@@ -216,7 +216,7 @@ await TransferManager.UploadDirectoryAsync(
 string directoryPath, blobDirectoryPath;
 Uri containerUri;
 BlobsStorageResourceProvider blobs;
-await using TransferManager transferManager = new TransferManager();
+TransferManager transferManager;
 ```
 ```C# Snippet:DataMovementMigration_UploadBlobDirectory
 // upload blobs
@@ -251,7 +251,7 @@ await TransferManager.DownloadAsync(
 string filePath;
 Uri blobUri;
 BlobsStorageResourceProvider blobs;
-await using TransferManager transferManager = new TransferManager();
+TransferManager transferManager;
 ```
 ```C# Snippet:DataMovementMigration_DownloadBlob
 // download blob
@@ -283,7 +283,7 @@ await TransferManager.DownloadDirectoryAsync(
 string directoryPath, blobDirectoryPath;
 Uri containerUri;
 BlobsStorageResourceProvider blobs;
-await using TransferManager transferManager = new TransferManager();
+TransferManager transferManager;
 ```
 ```C# Snippet:DataMovementMigration_DownloadBlobDirectory
 // download blob directory
@@ -320,7 +320,7 @@ await TransferManager.DownloadAsync(
 // these values provided by your code
 Uri srcBlobUri, dstBlobUri;
 BlobsStorageResourceProvider blobs;
-await using TransferManager transferManager = new TransferManager();
+TransferManager transferManager;
 ```
 ```C# Snippet:DataMovementMigration_CopyBlobToBlob
 // upload blob
@@ -354,7 +354,7 @@ await TransferManager.DownloadAsync(
 Uri blobUri, fileUri;
 BlobsStorageResourceProvider blobs;
 ShareFilesStorageResourceProvider files;
-await using TransferManager transferManager = new TransferManager();
+TransferManager transferManager;
 ```
 ```C# Snippet:DataMovementMigration_CopyBlobToShareFile
 // upload blob

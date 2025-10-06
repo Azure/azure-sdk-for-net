@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            await using TransferManager transferManager = new TransferManager();
+            TransferManager transferManager = new TransferManager();
 
             // Act - Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -188,7 +188,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            await using TransferManager transferManager = new TransferManager();
+            TransferManager transferManager = new TransferManager();
 
             // Act - Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
