@@ -30,7 +30,7 @@
 
 ### Bugs Fixed
 
-- Do not fail submission of an entry if the service responds with HTTP status 202
+- Do not fail the submission of the entry if it responds with HTTP status 202
 
 ## 1.0.0-beta.1 (2024-03-26)
 
