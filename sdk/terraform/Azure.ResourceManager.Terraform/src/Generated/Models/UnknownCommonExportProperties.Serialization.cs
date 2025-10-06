@@ -61,8 +61,6 @@ namespace Azure.ResourceManager.Terraform.Models
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
-            bool? includeRoleAssignment = default;
-            bool? includeManagedResource = default;
             IList<string> excludeAzureResource = default;
             IList<string> excludeTerraformResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,24 +97,6 @@ namespace Azure.ResourceManager.Terraform.Models
                         continue;
                     }
                     maskSensitive = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeRoleAssignment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeRoleAssignment = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeManagedResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeManagedResource = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("excludeAzureResource"u8))
@@ -158,8 +138,6 @@ namespace Azure.ResourceManager.Terraform.Models
                 targetProvider,
                 fullProperties,
                 maskSensitive,
-                includeRoleAssignment,
-                includeManagedResource,
                 excludeAzureResource ?? new ChangeTrackingList<string>(),
                 excludeTerraformResource ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

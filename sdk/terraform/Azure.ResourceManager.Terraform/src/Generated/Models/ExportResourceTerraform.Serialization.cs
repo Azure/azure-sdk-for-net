@@ -62,16 +62,6 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("namePattern"u8);
                 writer.WriteStringValue(NamePattern);
             }
-            if (Optional.IsDefined(Recursive))
-            {
-                writer.WritePropertyName("recursive"u8);
-                writer.WriteBooleanValue(Recursive.Value);
-            }
-            if (Optional.IsDefined(IncludeResourceGroup))
-            {
-                writer.WritePropertyName("includeResourceGroup"u8);
-                writer.WriteBooleanValue(IncludeResourceGroup.Value);
-            }
         }
 
         ExportResourceTerraform IJsonModel<ExportResourceTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -98,14 +88,10 @@ namespace Azure.ResourceManager.Terraform.Models
             string resourceName = default;
             string resourceType = default;
             string namePattern = default;
-            bool? recursive = default;
-            bool? includeResourceGroup = default;
             CommonExportType type = default;
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
-            bool? includeRoleAssignment = default;
-            bool? includeManagedResource = default;
             IList<string> excludeAzureResource = default;
             IList<string> excludeTerraformResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,24 +130,6 @@ namespace Azure.ResourceManager.Terraform.Models
                     namePattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recursive"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recursive = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeResourceGroup"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeResourceGroup = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new CommonExportType(property.Value.GetString());
@@ -192,24 +160,6 @@ namespace Azure.ResourceManager.Terraform.Models
                         continue;
                     }
                     maskSensitive = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeRoleAssignment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeRoleAssignment = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeManagedResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeManagedResource = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("excludeAzureResource"u8))
@@ -251,17 +201,13 @@ namespace Azure.ResourceManager.Terraform.Models
                 targetProvider,
                 fullProperties,
                 maskSensitive,
-                includeRoleAssignment,
-                includeManagedResource,
                 excludeAzureResource ?? new ChangeTrackingList<string>(),
                 excludeTerraformResource ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 resourceIds,
                 resourceName,
                 resourceType,
-                namePattern,
-                recursive,
-                includeResourceGroup);
+                namePattern);
         }
 
         BinaryData IPersistableModel<ExportResourceTerraform>.Write(ModelReaderWriterOptions options)

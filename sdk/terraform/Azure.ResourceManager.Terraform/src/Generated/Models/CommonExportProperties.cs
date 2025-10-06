@@ -58,22 +58,18 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="type"> The parameter type. </param>
-        /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
-        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
-        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
-        /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
-        /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
-        /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
+        /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             TargetProvider = targetProvider;
             IsOutputFullPropertiesEnabled = isOutputFullPropertiesEnabled;
             IsMaskSensitiveEnabled = isMaskSensitiveEnabled;
-            IncludeRoleAssignment = includeRoleAssignment;
-            IncludeManagedResource = includeManagedResource;
             AzureResourcesToExclude = azureResourcesToExclude;
             TerraformResourcesToExclude = terraformResourcesToExclude;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -81,19 +77,15 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> The parameter type. </summary>
         internal CommonExportType Type { get; set; }
-        /// <summary> The target Azure Terraform provider. Defaults to `azurerm`. </summary>
+        /// <summary> The target Azure Terraform Provider. </summary>
         public TargetTerraformProvider? TargetProvider { get; set; }
-        /// <summary> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </summary>
+        /// <summary> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </summary>
         public bool? IsOutputFullPropertiesEnabled { get; set; }
-        /// <summary> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </summary>
+        /// <summary> Mask sensitive attributes in the Terraform configuration. </summary>
         public bool? IsMaskSensitiveEnabled { get; set; }
-        /// <summary> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </summary>
-        public bool? IncludeRoleAssignment { get; set; }
-        /// <summary> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </summary>
-        public bool? IncludeManagedResource { get; set; }
-        /// <summary> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </summary>
+        /// <summary> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </summary>
         public IList<string> AzureResourcesToExclude { get; }
-        /// <summary> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </summary>
+        /// <summary> Exclude resources from being exported based on the Terraform resource type. </summary>
         public IList<string> TerraformResourcesToExclude { get; }
     }
 }

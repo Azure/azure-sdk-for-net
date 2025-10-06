@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    /// <summary> Uses ARG (Azure Resource Graph) query to choose resources to be exported. </summary>
+    /// <summary> Export parameter for resources queried by ARG (Azure Resource Graph). </summary>
     public partial class ExportQueryTerraform : CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/>. </summary>
-        /// <param name="query"> The ARG where predicate. Multiple predicates can be combined using `and` operator. Example: `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. The default ARG table is `Resources`, use 'table' property to query a different table. </param>
+        /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public ExportQueryTerraform(string query)
         {
@@ -26,26 +26,22 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
-        /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
-        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
-        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
-        /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
-        /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
-        /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
+        /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="query"> The ARG where predicate. Multiple predicates can be combined using `and` operator. Example: `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. The default ARG table is `Resources`, use 'table' property to query a different table. </param>
-        /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
-        /// <param name="isRecursive"> Recursively includes child resources. Defaults to `false`. </param>
-        /// <param name="includeResourceGroup"> Includes the resource group in the exported Terraform resources. Defaults to `false`. </param>
-        /// <param name="table"> The ARG table name. Defaults to 'Resources'. </param>
+        /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
+        /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
+        /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
+        /// <param name="table"> The ARG table name. </param>
         /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
-        internal ExportQueryTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? isRecursive, bool? includeResourceGroup, string table, TerraformAuthorizationScopeFilter? authorizationScopeFilter) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
+        internal ExportQueryTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? isRecursive, string table, TerraformAuthorizationScopeFilter? authorizationScopeFilter) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
         {
             Query = query;
             NamePattern = namePattern;
             IsRecursive = isRecursive;
-            IncludeResourceGroup = includeResourceGroup;
             Table = table;
             AuthorizationScopeFilter = authorizationScopeFilter;
             Type = type;
@@ -56,15 +52,13 @@ namespace Azure.ResourceManager.Terraform.Models
         {
         }
 
-        /// <summary> The ARG where predicate. Multiple predicates can be combined using `and` operator. Example: `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. The default ARG table is `Resources`, use 'table' property to query a different table. </summary>
+        /// <summary> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </summary>
         public string Query { get; }
-        /// <summary> The id prefix for the exported Terraform resources. Defaults to `res-`. </summary>
+        /// <summary> The name pattern of the Terraform resources. </summary>
         public string NamePattern { get; set; }
-        /// <summary> Recursively includes child resources. Defaults to `false`. </summary>
+        /// <summary> Whether to recursively list child resources of the query result. </summary>
         public bool? IsRecursive { get; set; }
-        /// <summary> Includes the resource group in the exported Terraform resources. Defaults to `false`. </summary>
-        public bool? IncludeResourceGroup { get; set; }
-        /// <summary> The ARG table name. Defaults to 'Resources'. </summary>
+        /// <summary> The ARG table name. </summary>
         public string Table { get; set; }
         /// <summary> The ARG Scope Filter parameter. </summary>
         public TerraformAuthorizationScopeFilter? AuthorizationScopeFilter { get; set; }

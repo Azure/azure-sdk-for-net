@@ -47,11 +47,6 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteBooleanValue(IsRecursive.Value);
             }
-            if (Optional.IsDefined(IncludeResourceGroup))
-            {
-                writer.WritePropertyName("includeResourceGroup"u8);
-                writer.WriteBooleanValue(IncludeResourceGroup.Value);
-            }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
@@ -87,15 +82,12 @@ namespace Azure.ResourceManager.Terraform.Models
             string query = default;
             string namePattern = default;
             bool? recursive = default;
-            bool? includeResourceGroup = default;
             string table = default;
             TerraformAuthorizationScopeFilter? authorizationScopeFilter = default;
             CommonExportType type = default;
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
-            bool? includeRoleAssignment = default;
-            bool? includeManagedResource = default;
             IList<string> excludeAzureResource = default;
             IList<string> excludeTerraformResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,15 +111,6 @@ namespace Azure.ResourceManager.Terraform.Models
                         continue;
                     }
                     recursive = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeResourceGroup"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeResourceGroup = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("table"u8))
@@ -176,24 +159,6 @@ namespace Azure.ResourceManager.Terraform.Models
                     maskSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeRoleAssignment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeRoleAssignment = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeManagedResource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeManagedResource = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("excludeAzureResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -233,15 +198,12 @@ namespace Azure.ResourceManager.Terraform.Models
                 targetProvider,
                 fullProperties,
                 maskSensitive,
-                includeRoleAssignment,
-                includeManagedResource,
                 excludeAzureResource ?? new ChangeTrackingList<string>(),
                 excludeTerraformResource ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 query,
                 namePattern,
                 recursive,
-                includeResourceGroup,
                 table,
                 authorizationScopeFilter);
         }

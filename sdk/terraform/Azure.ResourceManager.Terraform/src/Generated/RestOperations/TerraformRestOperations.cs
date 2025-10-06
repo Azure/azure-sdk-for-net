@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Terraform
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-09-01-preview";
+            _apiVersion = apiVersion ?? "2025-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.Terraform
             uri.AppendPath("/providers/Microsoft.AzureTerraform/exportTerraform", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.Terraform
             switch (message.Response.Status)
             {
                 case 202:
-                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -106,7 +104,6 @@ namespace Azure.ResourceManager.Terraform
             switch (message.Response.Status)
             {
                 case 202:
-                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
