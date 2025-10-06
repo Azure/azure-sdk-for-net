@@ -24,12 +24,100 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$id": "4",
+            "kind": "enum",
+            "decorators": [],
+            "name": "ClientType",
+            "isGeneratedName": false,
+            "namespace": "Client.Structure.Service",
+            "valueType": {
+              "$id": "5",
+              "kind": "string",
+              "decorators": [],
+              "name": "string",
+              "doc": "A sequence of textual characters.",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "values": [
+              {
+                "$id": "6",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Default",
+                "value": "default",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "7",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "MultiClient",
+                "value": "multi-client",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "8",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "RenamedOperation",
+                "value": "renamed-operation",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "9",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "TwoOperationGroup",
+                "value": "two-operation-group",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "10",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "ClientOperationGroup",
+                "value": "client-operation-group",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              }
+            ],
+            "isFixed": true,
+            "isFlags": false,
+            "usage": "Input",
+            "access": "public",
+            "crossLanguageDefinitionId": "Client.Structure.Service.ClientType",
+            "apiVersions": [],
+            "isUnionAsEnum": false,
+            "__accessSet": true
           },
           "decorators": []
         },
         {
-          "$id": "4",
+          "$id": "11",
           "kind": "enumvalue",
           "name": "MultiClient",
           "value": "multi-client",
@@ -37,12 +125,12 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "decorators": []
         },
         {
-          "$id": "5",
+          "$id": "12",
           "kind": "enumvalue",
           "name": "RenamedOperation",
           "value": "renamed-operation",
@@ -50,12 +138,12 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "decorators": []
         },
         {
-          "$id": "6",
+          "$id": "13",
           "kind": "enumvalue",
           "name": "TwoOperationGroup",
           "value": "two-operation-group",
@@ -63,12 +151,12 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "decorators": []
         },
         {
-          "$id": "7",
+          "$id": "14",
           "kind": "enumvalue",
           "name": "ClientOperationGroup",
           "value": "client-operation-group",
@@ -76,7 +164,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "decorators": []
         }
@@ -92,20 +180,20 @@
   "models": [],
   "clients": [
     {
-      "$id": "8",
+      "$id": "15",
       "kind": "client",
       "name": "TwoOperationGroupClient",
       "namespace": "Client.Structure.TwoOperationGroup",
       "methods": [],
       "parameters": [
         {
-          "$id": "9",
+          "$id": "16",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "10",
+            "$id": "17",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -120,7 +208,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
         },
         {
-          "$id": "11",
+          "$id": "18",
           "kind": "endpoint",
           "name": "client",
           "serializedName": "client",
@@ -143,19 +231,19 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "12",
+          "$id": "19",
           "kind": "client",
           "name": "Group1",
           "namespace": "Client.Structure.TwoOperationGroup",
           "methods": [
             {
-              "$id": "13",
+              "$id": "20",
               "kind": "basic",
               "name": "one",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "14",
+                "$id": "21",
                 "name": "one",
                 "resourceName": "Group1",
                 "accessibility": "public",
@@ -186,13 +274,13 @@
               "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group1.one"
             },
             {
-              "$id": "15",
+              "$id": "22",
               "kind": "basic",
               "name": "three",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "16",
+                "$id": "23",
                 "name": "three",
                 "resourceName": "Group1",
                 "accessibility": "public",
@@ -223,13 +311,13 @@
               "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group1.three"
             },
             {
-              "$id": "17",
+              "$id": "24",
               "kind": "basic",
               "name": "four",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "18",
+                "$id": "25",
                 "name": "four",
                 "resourceName": "Group1",
                 "accessibility": "public",
@@ -262,13 +350,13 @@
           ],
           "parameters": [
             {
-              "$id": "19",
+              "$id": "26",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Need to be set as 'http://localhost:3000' in client.",
               "type": {
-                "$id": "20",
+                "$id": "27",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -283,7 +371,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
             },
             {
-              "$id": "21",
+              "$id": "28",
               "kind": "endpoint",
               "name": "client",
               "serializedName": "client",
@@ -305,23 +393,23 @@
           "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group1",
           "apiVersions": [],
           "parent": {
-            "$ref": "8"
+            "$ref": "15"
           }
         },
         {
-          "$id": "22",
+          "$id": "29",
           "kind": "client",
           "name": "Group2",
           "namespace": "Client.Structure.TwoOperationGroup",
           "methods": [
             {
-              "$id": "23",
+              "$id": "30",
               "kind": "basic",
               "name": "two",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "24",
+                "$id": "31",
                 "name": "two",
                 "resourceName": "Group2",
                 "accessibility": "public",
@@ -352,13 +440,13 @@
               "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group2.two"
             },
             {
-              "$id": "25",
+              "$id": "32",
               "kind": "basic",
               "name": "five",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "26",
+                "$id": "33",
                 "name": "five",
                 "resourceName": "Group2",
                 "accessibility": "public",
@@ -389,13 +477,13 @@
               "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group2.five"
             },
             {
-              "$id": "27",
+              "$id": "34",
               "kind": "basic",
               "name": "six",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "28",
+                "$id": "35",
                 "name": "six",
                 "resourceName": "Group2",
                 "accessibility": "public",
@@ -428,13 +516,13 @@
           ],
           "parameters": [
             {
-              "$id": "29",
+              "$id": "36",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Need to be set as 'http://localhost:3000' in client.",
               "type": {
-                "$id": "30",
+                "$id": "37",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -449,7 +537,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
             },
             {
-              "$id": "31",
+              "$id": "38",
               "kind": "endpoint",
               "name": "client",
               "serializedName": "client",
@@ -471,7 +559,7 @@
           "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group2",
           "apiVersions": [],
           "parent": {
-            "$ref": "8"
+            "$ref": "15"
           }
         }
       ]
