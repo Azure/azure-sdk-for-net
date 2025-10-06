@@ -229,9 +229,8 @@ namespace Azure.Storage.Blobs
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
         /// <summary>
-        /// Whether to trim leading and trailing slashes on a blob name when using
-        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
-        /// Defaults to true for backwards compatibility.
+        /// Whether to include the StorageRequestValidationPipelinePolicy which throws an exception when the
+        /// <see cref="Constants.HeaderNames.ClientRequestId"/> header is different for the request and the response.
         /// </summary>
         public bool DontIncludeStorageRequestValidationPipelinePolicy { get; set; } = Constants.DontIncludeStorageRequestValidationPipelinePolicy;
 
