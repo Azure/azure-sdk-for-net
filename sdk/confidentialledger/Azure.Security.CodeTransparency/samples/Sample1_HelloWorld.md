@@ -44,5 +44,5 @@ Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent 
 Once the operation is complete, you can download the transparent statement so you can distribute it to verify this registration.
 
 ```C# Snippet:CodeTransparencySample1_DownloadStatement
-Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
+Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
 ```

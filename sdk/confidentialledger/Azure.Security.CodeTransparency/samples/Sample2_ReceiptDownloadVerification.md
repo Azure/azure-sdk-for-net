@@ -43,9 +43,8 @@ The following examples use a default public key resolver to obtain the keys for 
 The receipt included in the unprotected header of the signed statement contains the service endpoint used to download the public keys.
 
 ```C# Snippet:CodeTransparencyVerification
-Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
-byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-
+Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
+byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
 try
 {
     client.RunTransparentStatementVerification(transparentStatementBytes);
@@ -64,7 +63,8 @@ The receipt contains the issuer information needed to create the client instance
 byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
 try
 {
-    new CodeTransparencyClient(transparentStatementBytes).RunTransparentStatementVerification(transparentStatementBytes);
+    CodeTransparencyClient client = new(transparentStatementBytes);
+    client.RunTransparentStatementVerification(transparentStatementBytes);
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)
@@ -78,7 +78,6 @@ catch (Exception e)
 Alternatively, you can provide separate files for the receipt and the signed statement, plus a `JsonWebKey` obtained from the service:
 
 ```C# Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
-// Create a JsonWebKey
 JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
 byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
 byte[] inputReceipt = readFileBytes("<input_receipt>");
