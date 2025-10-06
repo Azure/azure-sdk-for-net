@@ -53,20 +53,23 @@ Then obtain the transparent statement:
 ```C# Snippet:CodeTransparencyDownloadTransparentStatement
 Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
 string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
-Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
+Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
+Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
 ```
 
 After obtaining the transparent statement, you can distribute it so others can verify its inclusion in the service. The verifier checks that the receipt was issued for the given signature and that its signature was endorsed by the service. Because users might not know which service instance the statement came from, they can extract that information from the receipt to create the client for verification.
 
-```C# Snippet:CodeTransparencyVerification
-byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
+```C# Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
+byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
 try
 {
-    new CodeTransparencyClient(transparentStatementBytes).RunTransparentStatementVerification(transparentStatementBytes);
+    CodeTransparencyClient client = new(transparentStatementBytes);
+    client.RunTransparentStatementVerification(transparentStatementBytes);
+    Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    Console.WriteLine($"Verification failed: {e.Message}");
 }
 ```
 
