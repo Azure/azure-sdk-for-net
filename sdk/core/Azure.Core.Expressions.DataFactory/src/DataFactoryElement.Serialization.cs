@@ -287,6 +287,8 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactoryElement<T>(value);
         }
 
+#pragma warning disable IL2060 // MakeGenericMethod is not AOT friendly
+#pragma warning disable IL3050 // MakeGenericMethod is not AOT friendly
         private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
         {
             return typeof(DataFactoryElementJsonConverter)
@@ -295,5 +297,7 @@ namespace Azure.Core.Expressions.DataFactory
                     BindingFlags.Static | BindingFlags.NonPublic)!
                 .MakeGenericMethod(typeToConvert);
         }
+#pragma warning restore IL2060 // MakeGenericMethod is not AOT friendly
+#pragma warning restore IL3050 // MakeGenericMethod is not AOT friendly
     }
 }

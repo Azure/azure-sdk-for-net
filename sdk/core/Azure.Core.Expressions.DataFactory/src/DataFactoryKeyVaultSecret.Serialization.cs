@@ -96,7 +96,11 @@ namespace Azure.Core.Expressions.DataFactory
                 }
                 if (property.NameEquals("secretName"u8))
                 {
+#pragma warning disable IL2026 // Unsafe JSON serialization
+#pragma warning disable IL3050 // Unsafe JSON serialization
                     secretName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+#pragma warning restore IL2026 // Unsafe JSON serialization
+#pragma warning restore IL3050 // Unsafe JSON serialization
                     continue;
                 }
                 if (property.NameEquals("secretVersion"u8))
@@ -105,7 +109,11 @@ namespace Azure.Core.Expressions.DataFactory
                     {
                         continue;
                     }
+#pragma warning disable IL2026 // Unsafe JSON serialization
+#pragma warning disable IL3050 // Unsafe JSON serialization
                     secretVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+#pragma warning restore IL2026 // Unsafe JSON serialization
+#pragma warning restore IL3050 // Unsafe JSON serialization
                     continue;
                 }
                 if (property.NameEquals("type"u8))
