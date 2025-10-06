@@ -26,7 +26,47 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$id": "4",
+            "kind": "enum",
+            "decorators": [],
+            "name": "ApiVersions",
+            "isGeneratedName": false,
+            "namespace": "Client.AlternateApiVersion.Service.Query",
+            "doc": "Supported api versions.",
+            "valueType": {
+              "$id": "5",
+              "kind": "string",
+              "decorators": [],
+              "name": "string",
+              "doc": "A sequence of textual characters.",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "values": [
+              {
+                "$id": "6",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "v2025_01_01",
+                "value": "2025-01-01",
+                "doc": "Api version 2025-01-01.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              }
+            ],
+            "isFixed": true,
+            "isFlags": false,
+            "usage": "ApiVersionEnum",
+            "access": "public",
+            "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.ApiVersions",
+            "apiVersions": [
+              "2025-01-01"
+            ],
+            "isUnionAsEnum": false,
+            "__accessSet": true
           },
           "doc": "Api version 2025-01-01.",
           "decorators": []
@@ -44,13 +84,13 @@
   "models": [],
   "clients": [
     {
-      "$id": "4",
+      "$id": "7",
       "kind": "client",
       "name": "QueryClient",
       "namespace": "Client.AlternateApiVersion.Service.Query",
       "methods": [
         {
-          "$id": "5",
+          "$id": "8",
           "kind": "basic",
           "name": "queryApiVersion",
           "accessibility": "public",
@@ -59,19 +99,19 @@
           ],
           "doc": "Query api version parameter.",
           "operation": {
-            "$id": "6",
+            "$id": "9",
             "name": "queryApiVersion",
             "resourceName": "Query",
             "doc": "Query api version parameter.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "7",
+                "$id": "10",
                 "kind": "query",
                 "name": "version",
                 "serializedName": "version",
                 "type": {
-                  "$id": "8",
+                  "$id": "11",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -81,7 +121,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "9",
+                    "$id": "12",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -123,13 +163,13 @@
       ],
       "parameters": [
         {
-          "$id": "10",
+          "$id": "13",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "11",
+            "$id": "14",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -140,7 +180,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "12",
+              "$id": "15",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"

@@ -27,13 +27,68 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$id": "4",
+            "kind": "enum",
+            "decorators": [],
+            "name": "Versions",
+            "isGeneratedName": false,
+            "namespace": "Versioning.ReturnTypeChangedFrom",
+            "doc": "The version of the API.",
+            "valueType": {
+              "$id": "5",
+              "kind": "string",
+              "decorators": [],
+              "name": "string",
+              "doc": "A sequence of textual characters.",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "values": [
+              {
+                "$id": "6",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "v1",
+                "value": "v1",
+                "doc": "The version v1.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "7",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "v2",
+                "value": "v2",
+                "doc": "The version v2.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              }
+            ],
+            "isFixed": true,
+            "isFlags": false,
+            "usage": "Input,ApiVersionEnum",
+            "access": "public",
+            "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.Versions",
+            "apiVersions": [
+              "v1",
+              "v2"
+            ],
+            "isUnionAsEnum": false,
+            "__accessSet": true
           },
           "doc": "The version v1.",
           "decorators": []
         },
         {
-          "$id": "4",
+          "$id": "8",
           "kind": "enumvalue",
           "name": "v2",
           "value": "v2",
@@ -41,7 +96,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "The version v2.",
           "decorators": []
@@ -57,41 +112,9 @@
   ],
   "constants": [
     {
-      "$id": "5",
-      "kind": "constant",
-      "name": "TestRequestContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "6",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "7",
-      "kind": "constant",
-      "name": "testContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "8",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
       "$id": "9",
       "kind": "constant",
-      "name": "TestRequestContentType1",
+      "name": "TestRequestContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -107,11 +130,43 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "TestRequestContentType2",
+      "name": "testContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
         "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "TestRequestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "TestRequestContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -124,14 +179,14 @@
   "models": [],
   "clients": [
     {
-      "$id": "13",
+      "$id": "17",
       "kind": "client",
       "name": "ReturnTypeChangedFromClient",
       "namespace": "Versioning.ReturnTypeChangedFrom",
       "doc": "Test for the `@returnTypeChangedFrom` decorator.",
       "methods": [
         {
-          "$id": "14",
+          "$id": "18",
           "kind": "basic",
           "name": "test",
           "accessibility": "public",
@@ -140,18 +195,18 @@
             "v2"
           ],
           "operation": {
-            "$id": "15",
+            "$id": "19",
             "name": "test",
             "resourceName": "ReturnTypeChangedFrom",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "16",
+                "$id": "20",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "type": {
-                  "$ref": "5"
+                  "$ref": "9"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -162,12 +217,12 @@
                 "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType"
               },
               {
-                "$id": "17",
+                "$id": "21",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "7"
+                  "$ref": "11"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -178,12 +233,12 @@
                 "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept"
               },
               {
-                "$id": "18",
+                "$id": "22",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
                 "type": {
-                  "$id": "19",
+                  "$id": "23",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -207,7 +262,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$id": "20",
+                  "$id": "24",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -218,7 +273,7 @@
                     "name": "contentType",
                     "nameInResponse": "content-type",
                     "type": {
-                      "$ref": "9"
+                      "$ref": "13"
                     }
                   }
                 ],
@@ -242,12 +297,12 @@
           },
           "parameters": [
             {
-              "$id": "21",
+              "$id": "25",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
               "type": {
-                "$ref": "11"
+                "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -259,12 +314,12 @@
               "decorators": []
             },
             {
-              "$id": "22",
+              "$id": "26",
               "kind": "method",
               "name": "body",
               "serializedName": "body",
               "type": {
-                "$id": "23",
+                "$id": "27",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -280,12 +335,12 @@
               "decorators": []
             },
             {
-              "$id": "24",
+              "$id": "28",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "7"
+                "$ref": "11"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -299,7 +354,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "20"
+              "$ref": "24"
             }
           },
           "isOverride": false,
@@ -310,13 +365,13 @@
       ],
       "parameters": [
         {
-          "$id": "25",
+          "$id": "29",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "26",
+            "$id": "30",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -331,7 +386,7 @@
           "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.endpoint"
         },
         {
-          "$id": "27",
+          "$id": "31",
           "kind": "endpoint",
           "name": "version",
           "serializedName": "version",
@@ -345,7 +400,7 @@
           "isEndpoint": false,
           "defaultValue": {
             "type": {
-              "$id": "28",
+              "$id": "32",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
