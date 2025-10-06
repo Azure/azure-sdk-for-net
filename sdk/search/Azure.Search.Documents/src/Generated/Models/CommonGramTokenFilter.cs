@@ -30,21 +30,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="CommonGramTokenFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="commonWords"> The set of common words. </param>
         /// <param name="ignoreCase"> A value indicating whether common words matching will be case insensitive. Default is false. </param>
         /// <param name="useQueryMode"> A value that indicates whether the token filter is in query mode. When in query mode, the token filter generates bigrams and then removes common words and single terms followed by a common word. Default is false. </param>
-        internal CommonGramTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> commonWords, bool? ignoreCase, bool? useQueryMode) : base(oDataType, name, serializedAdditionalRawData)
+        internal CommonGramTokenFilter(string oDataType, string name, IList<string> commonWords, bool? ignoreCase, bool? useQueryMode) : base(oDataType, name)
         {
             CommonWords = commonWords;
             IgnoreCase = ignoreCase;
             UseQueryMode = useQueryMode;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CommonGramTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CommonGramTokenFilter"/> for deserialization. </summary>
-        internal CommonGramTokenFilter()
-        {
         }
         /// <summary> A value indicating whether common words matching will be case insensitive. Default is false. </summary>
         public bool? IgnoreCase { get; set; }

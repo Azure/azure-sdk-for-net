@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -28,7 +27,6 @@ namespace Azure.Search.Documents.Indexes.Models
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             Container = container ?? throw new ArgumentNullException(nameof(container));
             Type = type;
-            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
         }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             get
             {
-                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue, serializedAdditionalRawData: null);
+                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue);
             }
 
             set

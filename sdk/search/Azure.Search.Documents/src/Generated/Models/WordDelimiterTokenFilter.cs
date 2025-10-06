@@ -27,7 +27,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="generateWordParts"> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example "AzureSearch" becomes "Azure" "Search". Default is true. </param>
         /// <param name="generateNumberParts"> A value indicating whether to generate number subwords. Default is true. </param>
         /// <param name="catenateWords"> A value indicating whether maximum runs of word parts will be catenated. For example, if this is set to true, "Azure-Search" becomes "AzureSearch". Default is false. </param>
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="splitOnNumerics"> A value indicating whether to split on numbers. For example, if this is set to true, "Azure1Search" becomes "Azure" "1" "Search". Default is true. </param>
         /// <param name="stemEnglishPossessive"> A value indicating whether to remove trailing "'s" for each subword. Default is true. </param>
         /// <param name="protectedWords"> A list of tokens to protect from being delimited. </param>
-        internal WordDelimiterTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(oDataType, name, serializedAdditionalRawData)
+        internal WordDelimiterTokenFilter(string oDataType, string name, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(oDataType, name)
         {
             GenerateWordParts = generateWordParts;
             GenerateNumberParts = generateNumberParts;
@@ -51,11 +50,6 @@ namespace Azure.Search.Documents.Indexes.Models
             StemEnglishPossessive = stemEnglishPossessive;
             ProtectedWords = protectedWords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/> for deserialization. </summary>
-        internal WordDelimiterTokenFilter()
-        {
         }
 
         /// <summary> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example "AzureSearch" becomes "Azure" "Search". Default is true. </summary>

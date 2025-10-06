@@ -5,35 +5,17 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerIndexProjectionsParameters : IUtf8JsonSerializable, IJsonModel<SearchIndexerIndexProjectionsParameters>
+    public partial class SearchIndexerIndexProjectionsParameters : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexerIndexProjectionsParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<SearchIndexerIndexProjectionsParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerIndexProjectionsParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SearchIndexerIndexProjectionsParameters)} does not support writing '{format}' format.");
-            }
-
             if (Optional.IsDefined(ProjectionMode))
             {
                 writer.WritePropertyName("projectionMode"u8);
@@ -42,26 +24,13 @@ namespace Azure.Search.Documents.Indexes.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value, options);
+                writer.WriteObjectValue<object>(item.Value);
             }
+            writer.WriteEndObject();
         }
 
-        SearchIndexerIndexProjectionsParameters IJsonModel<SearchIndexerIndexProjectionsParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static SearchIndexerIndexProjectionsParameters DeserializeSearchIndexerIndexProjectionsParameters(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerIndexProjectionsParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SearchIndexerIndexProjectionsParameters)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchIndexerIndexProjectionsParameters(document.RootElement, options);
-        }
-
-        internal static SearchIndexerIndexProjectionsParameters DeserializeSearchIndexerIndexProjectionsParameters(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,37 +55,6 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchIndexerIndexProjectionsParameters(projectionMode, additionalProperties);
         }
 
-        BinaryData IPersistableModel<SearchIndexerIndexProjectionsParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerIndexProjectionsParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexerIndexProjectionsParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SearchIndexerIndexProjectionsParameters IPersistableModel<SearchIndexerIndexProjectionsParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerIndexProjectionsParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSearchIndexerIndexProjectionsParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexerIndexProjectionsParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SearchIndexerIndexProjectionsParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchIndexerIndexProjectionsParameters FromResponse(Response response)
@@ -129,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

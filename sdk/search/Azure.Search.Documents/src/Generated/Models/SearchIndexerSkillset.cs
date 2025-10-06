@@ -14,44 +14,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A list of skills. </summary>
     public partial class SearchIndexerSkillset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SearchIndexerSkillset"/>. </summary>
         /// <param name="name"> The name of the skillset. </param>
         /// <param name="skills">
         /// A list of skills in the skillset.
         /// Please note <see cref="SearchIndexerSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="ChatCompletionSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="OcrSkill"/> and <see cref="VisionVectorizeSkill"/>.
+        /// The available derived classes include <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/> and <see cref="OcrSkill"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skills"/> is null. </exception>
         public SearchIndexerSkillset(string name, IEnumerable<SearchIndexerSkill> skills)
@@ -69,19 +37,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="skills">
         /// A list of skills in the skillset.
         /// Please note <see cref="SearchIndexerSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="ChatCompletionSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="OcrSkill"/> and <see cref="VisionVectorizeSkill"/>.
+        /// The available derived classes include <see cref="WebApiSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/> and <see cref="OcrSkill"/>.
         /// </param>
         /// <param name="cognitiveServicesAccount">
         /// Details about the Azure AI service to be used when running skills.
         /// Please note <see cref="Models.CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesAccountIdentity"/>, <see cref="AIServicesAccountKey"/>, <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
+        /// The available derived classes include <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
         /// </param>
         /// <param name="knowledgeStore"> Definition of additional projections to Azure blob, table, or files, of enriched data. </param>
         /// <param name="indexProjection"> Definition of additional projections to secondary search index(es). </param>
         /// <param name="etag"> The ETag of the skillset. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your skillset definition when you want full assurance that no one, not even Microsoft, can decrypt your skillset definition. Once you have encrypted your skillset definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your skillset definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerSkillset(string name, string description, IList<SearchIndexerSkill> skills, CognitiveServicesAccount cognitiveServicesAccount, KnowledgeStore knowledgeStore, SearchIndexerIndexProjection indexProjection, string etag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchIndexerSkillset(string name, string description, IList<SearchIndexerSkill> skills, CognitiveServicesAccount cognitiveServicesAccount, KnowledgeStore knowledgeStore, SearchIndexerIndexProjection indexProjection, string etag, SearchResourceEncryptionKey encryptionKey)
         {
             Name = name;
             Description = description;
@@ -91,12 +58,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexProjection = indexProjection;
             _etag = etag;
             EncryptionKey = encryptionKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerSkillset"/> for deserialization. </summary>
-        internal SearchIndexerSkillset()
-        {
         }
 
         /// <summary> The name of the skillset. </summary>
@@ -106,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Details about the Azure AI service to be used when running skills.
         /// Please note <see cref="Models.CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesAccountIdentity"/>, <see cref="AIServicesAccountKey"/>, <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
+        /// The available derived classes include <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
         /// </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }
         /// <summary> Definition of additional projections to Azure blob, table, or files, of enriched data. </summary>

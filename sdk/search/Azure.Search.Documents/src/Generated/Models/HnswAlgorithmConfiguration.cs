@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -26,17 +25,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to HNSW algorithm. </param>
-        internal HnswAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, HnswParameters parameters) : base(name, kind, serializedAdditionalRawData)
+        internal HnswAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, HnswParameters parameters) : base(name, kind)
         {
             Parameters = parameters;
             Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/> for deserialization. </summary>
-        internal HnswAlgorithmConfiguration()
-        {
         }
 
         /// <summary> Contains the parameters specific to HNSW algorithm. </summary>

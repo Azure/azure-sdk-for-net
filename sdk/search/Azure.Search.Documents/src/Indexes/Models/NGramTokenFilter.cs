@@ -7,6 +7,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("NGramTokenFilterV2")]
+    [CodeGenSuppress(nameof(NGramTokenFilter), typeof(string), typeof(string), typeof(int?), typeof(int?))]
     public partial class NGramTokenFilter : IUtf8JsonSerializable
     {
         /// <summary>

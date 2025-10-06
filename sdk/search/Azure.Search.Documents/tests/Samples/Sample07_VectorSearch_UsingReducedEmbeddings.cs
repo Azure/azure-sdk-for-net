@@ -10,7 +10,6 @@ using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.AI.OpenAI;
 using OpenAI.Embeddings;
-using System.ClientModel;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {

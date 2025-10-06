@@ -7,17 +7,12 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-use-model-reader-writer: true
-```
-
 ## Swagger Source(s)
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/searchservice.json
- - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/knowledgeagent.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -63,59 +58,6 @@ directive:
     $["discriminator"] = "@odata.type";
 ```
 
-### Remove nullable annotations
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.SearchIndexerDataSource.properties.indexerPermissionOptions
-  transform: >
-    delete $["x-nullable"]
-```
-
-### Make `KnowledgeSourceKind` internal
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.KnowledgeSourceKind
-  transform: $["x-accessibility"] = "internal"
-```
-
-### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
-
-Models in knowledgeagent.json should be moved to Azure.Search.Documents.Agents.Models.
-
-```yaml
-directive:
-  from: knowledgeagent.json
-  where: $.definitions.*
-  transform: >
-    $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
-```
-
-### Remove models that have newer versions
-
-These classes have `CodeGenModel` pointing to newer models. Don't try to generate the
-old models into the same class.
-
-```yaml
-directive:
-  - remove-model: EdgeNGramTokenFilter
-  - remove-model: KeywordTokenizer
-  - remove-model: LuceneStandardTokenizer
-  - remove-model: NGramTokenFilter
-```
-
-## Renaming models after the AI Studio rebrand to AI Foundry
-These should eventually be fixed in the swagger files.
-```yaml
-directive:
-- from: "searchservice.json"
-  where: $.definitions.AIStudioModelCatalogName
-  transform: $["x-ms-enum"].name = "AIFoundryModelCatalogName";
-```
-
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
 ``` yaml
@@ -139,18 +81,23 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Fix `SearchResult["@search.documentDebugInfo"]`
-``` yaml
+### Fix for 206 response
+
+```yaml
 directive:
-  - from: searchindex.json
-    where: $.definitions.SearchResult.properties
+  - from: "searchindex.json"
+    where: $.paths
     transform: >
-      $["@search.documentDebugInfo"]["$ref"] = $["@search.documentDebugInfo"].items["$ref"];
-      delete $["@search.documentDebugInfo"].type;
-      delete $["@search.documentDebugInfo"].items;
+      let response206 = {
+        "description": "Response containing partial documents that match the search criteria.",
+        "schema": {
+          "$ref": "#/definitions/SearchDocumentsResult"
+        }
+      };
+      $["/docs/search.post.search"].post.responses["206"] = response206;
 ```
 
-### Archboard feedback for 11.6.0
+### Archboard feedback for 2024-07-01
 
 ```yaml
 directive:

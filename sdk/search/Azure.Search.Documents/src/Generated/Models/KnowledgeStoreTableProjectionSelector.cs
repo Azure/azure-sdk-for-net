@@ -29,16 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
-        internal KnowledgeStoreTableProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, serializedAdditionalRawData)
+        internal KnowledgeStoreTableProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string tableName) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs)
         {
             TableName = tableName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/> for deserialization. </summary>
-        internal KnowledgeStoreTableProjectionSelector()
-        {
         }
 
         /// <summary> Name of the Azure table to store projected data in. </summary>

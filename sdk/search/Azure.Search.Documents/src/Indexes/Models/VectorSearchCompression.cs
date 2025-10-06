@@ -5,7 +5,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public abstract partial class VectorSearchCompression
     {
-        /// <summary> The name to associate with this particular configuration. </summary>
+        /// <summary> Gets the name associated with this particular configuration. </summary>
         public string CompressionName { get; }
     }
 }

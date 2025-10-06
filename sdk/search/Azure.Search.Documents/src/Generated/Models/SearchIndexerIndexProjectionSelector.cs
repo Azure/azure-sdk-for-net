@@ -14,38 +14,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Description for what data to store in the designated search index. </summary>
     public partial class SearchIndexerIndexProjectionSelector
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionSelector"/>. </summary>
         /// <param name="targetIndexName"> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </param>
         /// <param name="parentKeyFieldName"> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </param>
@@ -70,19 +38,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="parentKeyFieldName"> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </param>
         /// <param name="sourceContext"> Source context for the projections. Represents the cardinality at which the document will be split into multiple sub documents. </param>
         /// <param name="mappings"> Mappings for the projection, or which source should be mapped to which field in the target index. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IList<InputFieldMappingEntry> mappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IList<InputFieldMappingEntry> mappings)
         {
             TargetIndexName = targetIndexName;
             ParentKeyFieldName = parentKeyFieldName;
             SourceContext = sourceContext;
             Mappings = mappings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionSelector"/> for deserialization. </summary>
-        internal SearchIndexerIndexProjectionSelector()
-        {
         }
 
         /// <summary> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </summary>

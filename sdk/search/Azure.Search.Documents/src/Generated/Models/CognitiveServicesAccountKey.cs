@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -27,17 +26,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
-        internal CognitiveServicesAccountKey(string oDataType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, string key) : base(oDataType, description, serializedAdditionalRawData)
+        internal CognitiveServicesAccountKey(string oDataType, string description, string key) : base(oDataType, description)
         {
             Key = key;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CognitiveServicesByKey";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/> for deserialization. </summary>
-        internal CognitiveServicesAccountKey()
-        {
         }
 
         /// <summary> The key used to provision the Azure AI service resource attached to a skillset. </summary>

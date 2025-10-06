@@ -32,21 +32,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="includeOpinionMining"> If set to true, the skill output will include information from Text Analytics for opinion mining, namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is false. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
-        internal SentimentSkillV3(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string defaultLanguageCode, bool? includeOpinionMining, string modelVersion) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
+        internal SentimentSkillV3(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string defaultLanguageCode, bool? includeOpinionMining, string modelVersion) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             IncludeOpinionMining = includeOpinionMining;
             ModelVersion = modelVersion;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.V3.SentimentSkill";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SentimentSkillV3"/> for deserialization. </summary>
-        internal SentimentSkillV3()
-        {
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>

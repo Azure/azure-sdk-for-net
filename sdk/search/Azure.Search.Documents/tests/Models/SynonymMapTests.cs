@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Tests.Models
         [TestCase("\"0123abcd\"", "\"0123abcd\"")]
         public void ParsesETag(string value, string expected)
         {
-            SynonymMap sut = new SynonymMap(null, null, null, null, value, serializedAdditionalRawData: null);
+            SynonymMap sut = new SynonymMap(null, null, null, null, value);
             Assert.AreEqual(expected, sut.ETag?.ToString());
         }
     }

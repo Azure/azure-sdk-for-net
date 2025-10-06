@@ -49,7 +49,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Suggesters = new ChangeTrackingList<SearchSuggester>();
             TokenFilters = new ChangeTrackingList<TokenFilter>();
             Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
-            Normalizers = new ChangeTrackingList<LexicalNormalizer>();
         }
 
         /// <summary>
@@ -148,11 +147,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Gets the tokenizers for the index.
         /// </summary>
         public IList<LexicalTokenizer> Tokenizers { get; }
-
-        /// <summary>
-        /// Gets the normalizers for the index.
-        /// </summary>
-        public IList<LexicalNormalizer> Normalizers { get; }
 
         /// <summary>
         /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndex"/>.

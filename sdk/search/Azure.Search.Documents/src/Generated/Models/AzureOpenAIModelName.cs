@@ -25,11 +25,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string TextEmbeddingAda002Value = "text-embedding-ada-002";
         private const string TextEmbedding3LargeValue = "text-embedding-3-large";
         private const string TextEmbedding3SmallValue = "text-embedding-3-small";
-        private const string Gpt4OValue = "gpt-4o";
-        private const string Gpt4OMiniValue = "gpt-4o-mini";
-        private const string Gpt41Value = "gpt-4.1";
-        private const string Gpt41MiniValue = "gpt-4.1-mini";
-        private const string Gpt41NanoValue = "gpt-4.1-nano";
 
         /// <summary> text-embedding-ada-002. </summary>
         public static AzureOpenAIModelName TextEmbeddingAda002 { get; } = new AzureOpenAIModelName(TextEmbeddingAda002Value);
@@ -37,16 +32,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static AzureOpenAIModelName TextEmbedding3Large { get; } = new AzureOpenAIModelName(TextEmbedding3LargeValue);
         /// <summary> text-embedding-3-small. </summary>
         public static AzureOpenAIModelName TextEmbedding3Small { get; } = new AzureOpenAIModelName(TextEmbedding3SmallValue);
-        /// <summary> gpt-4o. </summary>
-        public static AzureOpenAIModelName Gpt4O { get; } = new AzureOpenAIModelName(Gpt4OValue);
-        /// <summary> gpt-4o-mini. </summary>
-        public static AzureOpenAIModelName Gpt4OMini { get; } = new AzureOpenAIModelName(Gpt4OMiniValue);
-        /// <summary> gpt-4.1. </summary>
-        public static AzureOpenAIModelName Gpt41 { get; } = new AzureOpenAIModelName(Gpt41Value);
-        /// <summary> gpt-4.1-mini. </summary>
-        public static AzureOpenAIModelName Gpt41Mini { get; } = new AzureOpenAIModelName(Gpt41MiniValue);
-        /// <summary> gpt-4.1-nano. </summary>
-        public static AzureOpenAIModelName Gpt41Nano { get; } = new AzureOpenAIModelName(Gpt41NanoValue);
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
         public static bool operator ==(AzureOpenAIModelName left, AzureOpenAIModelName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are not the same. </summary>

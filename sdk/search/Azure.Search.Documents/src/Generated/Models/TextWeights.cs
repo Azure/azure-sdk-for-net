@@ -13,38 +13,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines weights on index fields for which matches should boost scoring in search queries. </summary>
     public partial class TextWeights
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
@@ -53,20 +21,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(weights, nameof(weights));
 
             Weights = weights;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
-        /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextWeights(IDictionary<string, double> weights, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Weights = weights;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TextWeights"/> for deserialization. </summary>
-        internal TextWeights()
-        {
         }
     }
 }

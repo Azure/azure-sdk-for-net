@@ -6,45 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a combination of configurations to use with vector search. </summary>
     public partial class VectorSearchProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
@@ -63,19 +30,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
         /// <param name="vectorizerName"> The name of the vectorization being configured for use with vector search. </param>
         /// <param name="compressionName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionName)
         {
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
             VectorizerName = vectorizerName;
             CompressionName = compressionName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/> for deserialization. </summary>
-        internal VectorSearchProfile()
-        {
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>

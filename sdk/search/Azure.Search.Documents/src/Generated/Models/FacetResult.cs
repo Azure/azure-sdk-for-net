@@ -15,28 +15,19 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         internal FacetResult()
         {
-            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
-        /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FacetResult(long? count, double? sum, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyDictionary<string, object> additionalProperties)
+        internal FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Count = count;
-            Sum = sum;
-            Facets = facets;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The approximate count of documents falling within the bucket described by this facet. </summary>
         public long? Count { get; }
-        /// <summary> The resulting total sum for the facet when a sum metric is requested. </summary>
-        public double? Sum { get; }
-        /// <summary> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </summary>
-        public IReadOnlyDictionary<string, IList<FacetResult>> Facets { get; }
     }
 }

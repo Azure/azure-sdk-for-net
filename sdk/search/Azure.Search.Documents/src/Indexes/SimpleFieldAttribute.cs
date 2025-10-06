@@ -50,18 +50,6 @@ namespace Azure.Search.Documents.Indexes
         /// </remarks>
         public bool IsSortable { get; set; }
 
-        /// <summary>
-        /// The name of the normalizer to use for the field.
-        /// This option can be used only with fields with filterable, sortable, or facetable enabled. Once the normalizer is chosen, it cannot be changed for the field.
-        /// Must be null for complex fields.
-        /// </summary>
-        /// <value>String values from <see cref="LexicalNormalizerName.Values">LexicalAnalyzerName</see>.</value>
-        public string NormalizerName { get; set; }
-
-        /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-        /// <value>String values from <see cref="PermissionFilter.Values">PermissionFilter</see>.</value>
-        public string PermissionFilter { get; set; }
-
         /// <inheritdoc/>
         void ISearchFieldAttribute.SetField(SearchField field) => SetField(field);
 
@@ -79,16 +67,6 @@ namespace Azure.Search.Documents.Indexes
                 // Use a SearchableFieldAttribute instead, which will override this property.
                 // The service will return Searchable == false for all non-searchable simple types.
                 field.IsSearchable = false;
-            }
-
-            if (NormalizerName != null)
-            {
-                field.NormalizerName = NormalizerName;
-            }
-
-            if (PermissionFilter != null)
-            {
-                field.PermissionFilter = PermissionFilter;
             }
         }
     }

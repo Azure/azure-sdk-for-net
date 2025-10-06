@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using Azure.AI.OpenAI;
 using OpenAI.Embeddings;
 #pragma warning disable SA1402 // File may only contain a single type

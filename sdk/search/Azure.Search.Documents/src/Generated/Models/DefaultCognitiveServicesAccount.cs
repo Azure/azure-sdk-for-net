@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> An empty object that represents the default Azure AI service resource for a skillset. </summary>
@@ -22,8 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="DefaultCognitiveServicesAccount"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultCognitiveServicesAccount(string oDataType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, description, serializedAdditionalRawData)
+        internal DefaultCognitiveServicesAccount(string oDataType, string description) : base(oDataType, description)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.DefaultCognitiveServices";
         }

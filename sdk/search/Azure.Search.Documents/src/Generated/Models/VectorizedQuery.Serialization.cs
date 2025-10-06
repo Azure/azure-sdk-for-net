@@ -6,35 +6,16 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class VectorizedQuery : IUtf8JsonSerializable, IJsonModel<VectorizedQuery>
+    public partial class VectorizedQuery : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorizedQuery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<VectorizedQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizedQuery>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(VectorizedQuery)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vector"u8);
             writer.WriteStartArray();
             foreach (var item in Vector.Span)
@@ -42,24 +23,38 @@ namespace Azure.Search.Documents.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-        }
-
-        VectorizedQuery IJsonModel<VectorizedQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizedQuery>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(KNearestNeighborsCount))
             {
-                throw new FormatException($"The model {nameof(VectorizedQuery)} does not support reading '{format}' format.");
+                writer.WritePropertyName("k"u8);
+                writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVectorizedQuery(document.RootElement, options);
+            if (Optional.IsDefined(FieldsRaw))
+            {
+                writer.WritePropertyName("fields"u8);
+                writer.WriteStringValue(FieldsRaw);
+            }
+            if (Optional.IsDefined(Exhaustive))
+            {
+                writer.WritePropertyName("exhaustive"u8);
+                writer.WriteBooleanValue(Exhaustive.Value);
+            }
+            if (Optional.IsDefined(Oversampling))
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
+            }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            writer.WriteEndObject();
         }
 
-        internal static VectorizedQuery DeserializeVectorizedQuery(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VectorizedQuery DeserializeVectorizedQuery(JsonElement element)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,11 +66,6 @@ namespace Azure.Search.Documents.Models
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
-            VectorThreshold threshold = default;
-            string filterOverride = default;
-            int? perDocumentVectorLimit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vector"u8))
@@ -140,35 +130,7 @@ namespace Azure.Search.Documents.Models
                     weight = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("threshold"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("filterOverride"u8))
-                {
-                    filterOverride = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("perDocumentVectorLimit"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    perDocumentVectorLimit = property.Value.GetInt32();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VectorizedQuery(
                 kind,
                 k,
@@ -176,43 +138,8 @@ namespace Azure.Search.Documents.Models
                 exhaustive,
                 oversampling,
                 weight,
-                threshold,
-                filterOverride,
-                perDocumentVectorLimit,
-                serializedAdditionalRawData,
                 vector);
         }
-
-        BinaryData IPersistableModel<VectorizedQuery>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizedQuery>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VectorizedQuery)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VectorizedQuery IPersistableModel<VectorizedQuery>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizedQuery>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVectorizedQuery(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VectorizedQuery)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VectorizedQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -226,7 +153,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

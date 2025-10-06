@@ -28,7 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string JsonValue = "json";
         private const string JsonArrayValue = "jsonArray";
         private const string JsonLinesValue = "jsonLines";
-        private const string MarkdownValue = "markdown";
 
         /// <summary> Set to default for normal file processing. </summary>
         public static BlobIndexerParsingMode Default { get; } = new BlobIndexerParsingMode(DefaultValue);
@@ -42,8 +41,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static BlobIndexerParsingMode JsonArray { get; } = new BlobIndexerParsingMode(JsonArrayValue);
         /// <summary> Set to jsonLines to extract individual JSON entities, separated by a new line, as separate documents. </summary>
         public static BlobIndexerParsingMode JsonLines { get; } = new BlobIndexerParsingMode(JsonLinesValue);
-        /// <summary> Set to markdown to extract content from markdown files. </summary>
-        public static BlobIndexerParsingMode Markdown { get; } = new BlobIndexerParsingMode(MarkdownValue);
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are not the same. </summary>

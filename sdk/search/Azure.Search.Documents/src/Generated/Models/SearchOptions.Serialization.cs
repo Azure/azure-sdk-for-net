@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,27 +12,11 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
-    public partial class SearchOptions : IUtf8JsonSerializable, IJsonModel<SearchOptions>
+    public partial class SearchOptions : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<SearchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SearchOptions)} does not support writing '{format}' format.");
-            }
-
             if (Optional.IsDefined(IncludeTotalCount))
             {
                 writer.WritePropertyName("count"u8);
@@ -110,11 +92,6 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("scoringProfile"u8);
                 writer.WriteStringValue(ScoringProfile);
             }
-            if (Optional.IsDefined(Debug))
-            {
-                writer.WritePropertyName("debug"u8);
-                writer.WriteStringValue(Debug.Value.ToString());
-            }
             if (Optional.IsDefined(SearchText))
             {
                 writer.WritePropertyName("search"u8);
@@ -129,16 +106,6 @@ namespace Azure.Search.Documents
             {
                 writer.WritePropertyName("searchMode"u8);
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(QueryLanguage))
-            {
-                writer.WritePropertyName("queryLanguage"u8);
-                writer.WriteStringValue(QueryLanguage.Value.ToString());
-            }
-            if (Optional.IsDefined(QuerySpeller))
-            {
-                writer.WritePropertyName("speller"u8);
-                writer.WriteStringValue(QuerySpeller.Value.ToString());
             }
             if (Optional.IsDefined(SelectRaw))
             {
@@ -192,23 +159,13 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
-            if (Optional.IsDefined(QueryRewritesRaw))
-            {
-                writer.WritePropertyName("queryRewrites"u8);
-                writer.WriteStringValue(QueryRewritesRaw);
-            }
-            if (Optional.IsDefined(SemanticFieldsRaw))
-            {
-                writer.WritePropertyName("semanticFields"u8);
-                writer.WriteStringValue(SemanticFieldsRaw);
-            }
             if (Optional.IsCollectionDefined(VectorQueries))
             {
                 writer.WritePropertyName("vectorQueries"u8);
                 writer.WriteStartArray();
                 foreach (var item in VectorQueries)
                 {
-                    writer.WriteObjectValue<VectorQuery>(item, options);
+                    writer.WriteObjectValue<VectorQuery>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -217,44 +174,11 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("vectorFilterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
             }
-            if (Optional.IsDefined(HybridSearch))
-            {
-                writer.WritePropertyName("hybridSearch"u8);
-                writer.WriteObjectValue(HybridSearch, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            writer.WriteEndObject();
         }
 
-        SearchOptions IJsonModel<SearchOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static SearchOptions DeserializeSearchOptions(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SearchOptions)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchOptions(document.RootElement, options);
-        }
-
-        internal static SearchOptions DeserializeSearchOptions(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -272,12 +196,9 @@ namespace Azure.Search.Documents
             string sessionId = default;
             IList<string> scoringParameters = default;
             string scoringProfile = default;
-            QueryDebugMode? debug = default;
             string search = default;
             string searchFields = default;
             SearchMode? searchMode = default;
-            QueryLanguage? queryLanguage = default;
-            QuerySpellerType? speller = default;
             string select = default;
             int? skip = default;
             int? top = default;
@@ -287,13 +208,8 @@ namespace Azure.Search.Documents
             string semanticQuery = default;
             string answers = default;
             string captions = default;
-            string queryRewrites = default;
-            string semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? vectorFilterMode = default;
-            HybridSearch hybridSearch = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -395,15 +311,6 @@ namespace Azure.Search.Documents
                     scoringProfile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("debug"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    debug = new QueryDebugMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("search"u8))
                 {
                     search = property.Value.GetString();
@@ -421,24 +328,6 @@ namespace Azure.Search.Documents
                         continue;
                     }
                     searchMode = property.Value.GetString().ToSearchMode();
-                    continue;
-                }
-                if (property.NameEquals("queryLanguage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryLanguage = new QueryLanguage(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("speller"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    speller = new QuerySpellerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("select"u8))
@@ -503,16 +392,6 @@ namespace Azure.Search.Documents
                     captions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryRewrites"u8))
-                {
-                    queryRewrites = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("semanticFields"u8))
-                {
-                    semanticFields = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("vectorQueries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -522,7 +401,7 @@ namespace Azure.Search.Documents
                     List<VectorQuery> array = new List<VectorQuery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorQuery.DeserializeVectorQuery(item, options));
+                        array.Add(VectorQuery.DeserializeVectorQuery(item));
                     }
                     vectorQueries = array;
                     continue;
@@ -536,21 +415,7 @@ namespace Azure.Search.Documents
                     vectorFilterMode = new VectorFilterMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hybridSearch"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hybridSearch = HybridSearch.DeserializeHybridSearch(property.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchOptions(
                 count,
                 facets ?? new ChangeTrackingList<string>(),
@@ -565,12 +430,9 @@ namespace Azure.Search.Documents
                 sessionId,
                 scoringParameters ?? new ChangeTrackingList<string>(),
                 scoringProfile,
-                debug,
                 search,
                 searchFields,
                 searchMode,
-                queryLanguage,
-                speller,
                 select,
                 skip,
                 top,
@@ -580,44 +442,9 @@ namespace Azure.Search.Documents
                 semanticQuery,
                 answers,
                 captions,
-                queryRewrites,
-                semanticFields,
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
-                vectorFilterMode,
-                hybridSearch,
-                serializedAdditionalRawData);
+                vectorFilterMode);
         }
-
-        BinaryData IPersistableModel<SearchOptions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchOptions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SearchOptions IPersistableModel<SearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchOptions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSearchOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -631,7 +458,7 @@ namespace Azure.Search.Documents
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
