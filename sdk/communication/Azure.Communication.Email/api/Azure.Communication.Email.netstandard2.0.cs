@@ -36,13 +36,14 @@ namespace Azure.Communication.Email
     }
     public partial class EmailClientOptions : Azure.Core.ClientOptions
     {
-        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2024_07_01_Preview) { }
+        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2025_09_01) { }
         public enum ServiceVersion
         {
             V2021_10_01_Preview = 1,
             V2023_01_15_Preview = 2,
             V2023_03_31 = 3,
             V2024_07_01_Preview = 4,
+            V2025_09_01 = 5,
         }
     }
     public partial class EmailContent
