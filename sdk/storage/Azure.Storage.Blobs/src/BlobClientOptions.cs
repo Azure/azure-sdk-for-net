@@ -228,6 +228,13 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
+        /// <summary>
+        /// Whether to trim leading and trailing slashes on a blob name when using
+        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
+        /// Defaults to true for backwards compatibility.
+        /// </summary>
+        public bool DontIncludeStorageRequestValidationPipelinePolicy { get; set; } = Constants.DontIncludeStorageRequestValidationPipelinePolicy;
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion
@@ -381,7 +388,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri, Request100ContinueOptions);
+            return this.Build(authentication, GeoRedundantSecondaryUri, Request100ContinueOptions, DontIncludeStorageRequestValidationPipelinePolicy);
         }
 
         /// <summary>
@@ -391,7 +398,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri, Request100ContinueOptions);
+            return this.Build(credentials, GeoRedundantSecondaryUri, Request100ContinueOptions, DontIncludeStorageRequestValidationPipelinePolicy);
         }
 
         /// <inheritdoc />

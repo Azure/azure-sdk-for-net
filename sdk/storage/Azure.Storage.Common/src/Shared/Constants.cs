@@ -73,6 +73,11 @@ namespace Azure.Storage
         /// </summary>
         public const bool DefaultTrimBlobNameSlashes = true;
 
+        /// <summary>
+        /// Backwards compatible default value for whether to include the StorageRequestValidationPipelinePolicy.
+        /// </summary>
+        public const bool DontIncludeStorageRequestValidationPipelinePolicy = true;
+
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";
 
