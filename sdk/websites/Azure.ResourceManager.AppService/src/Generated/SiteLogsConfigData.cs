@@ -78,12 +78,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Application logs configuration. </summary>
+        [WirePath("properties.applicationLogs")]
         public ApplicationLogsConfig ApplicationLogs { get; set; }
         /// <summary> HTTP logs configuration. </summary>
+        [WirePath("properties.httpLogs")]
         public AppServiceHttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
         internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.failedRequestsTracing.enabled")]
         public bool? IsFailedRequestsTracingEnabled
         {
             get => IsFailedRequestsTracing is null ? default : IsFailedRequestsTracing.Enabled;
@@ -98,6 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Detailed error messages configuration. </summary>
         internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.detailedErrorMessages.enabled")]
         public bool? IsDetailedErrorMessagesEnabled
         {
             get => IsDetailedErrorMessages is null ? default : IsDetailedErrorMessages.Enabled;
@@ -110,6 +114,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

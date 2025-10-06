@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The content of the event response message. </summary>
+        [WirePath("content")]
         public string Content { get; }
         /// <summary> The headers of the event response message. </summary>
+        [WirePath("headers")]
         public IReadOnlyDictionary<string, string> Headers { get; }
         /// <summary> The reason phrase of the event response message. </summary>
+        [WirePath("reasonPhrase")]
         public string ReasonPhrase { get; }
         /// <summary> The status code of the event response message. </summary>
+        [WirePath("statusCode")]
         public string StatusCode { get; }
         /// <summary> The HTTP message version. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

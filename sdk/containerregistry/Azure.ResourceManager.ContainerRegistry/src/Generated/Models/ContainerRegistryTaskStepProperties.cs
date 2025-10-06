@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -74,10 +73,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The type of the step. </summary>
         internal ContainerRegistryTaskStepType ContainerRegistryTaskStepType { get; set; }
         /// <summary> List of base image dependencies for a step. </summary>
+        [WirePath("baseImageDependencies")]
         public IReadOnlyList<ContainerRegistryBaseImageDependency> BaseImageDependencies { get; }
         /// <summary> The URL(absolute or relative) of the source context for the task step. </summary>
+        [WirePath("contextPath")]
         public string ContextPath { get; set; }
         /// <summary> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </summary>
+        [WirePath("contextAccessToken")]
         public string ContextAccessToken { get; set; }
     }
 }

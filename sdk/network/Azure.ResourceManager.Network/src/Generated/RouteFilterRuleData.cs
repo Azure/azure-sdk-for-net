@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -47,16 +46,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The access type of the rule. </summary>
+        [WirePath("properties.access")]
         public NetworkAccess? Access { get; set; }
         /// <summary> The rule type of the rule. </summary>
+        [WirePath("properties.routeFilterRuleType")]
         public RouteFilterRuleType? RouteFilterRuleType { get; set; }
         /// <summary> The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']. </summary>
+        [WirePath("properties.communities")]
         public IList<string> Communities { get; }
         /// <summary> The provisioning state of the route filter rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

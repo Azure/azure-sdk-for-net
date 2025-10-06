@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -58,20 +57,20 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/>. </summary>
-        /// <param name="dataCenterAddressType"> Data center address type. </param>
+        /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCenterAddressResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataCenterAddressResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DataCenterAddressType = dataCenterAddressType;
+            DatacenterAddressType = datacenterAddressType;
             SupportedCarriersForReturnShipment = supportedCarriersForReturnShipment;
             DataCenterAzureLocation = dataCenterAzureLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Data center address type. </summary>
-        internal DataCenterAddressType DataCenterAddressType { get; set; }
+        internal DatacenterAddressType DatacenterAddressType { get; set; }
         /// <summary> List of supported carriers for return shipment. </summary>
         public IReadOnlyList<string> SupportedCarriersForReturnShipment { get; }
         /// <summary> Azure Location where the Data Center serves primarily. </summary>

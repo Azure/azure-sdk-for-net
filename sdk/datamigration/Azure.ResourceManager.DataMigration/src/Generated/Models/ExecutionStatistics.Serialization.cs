@@ -10,37 +10,44 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ExecutionStatistics : IUtf8JsonSerializable, IJsonModel<ExecutionStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExecutionStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ExecutionCount))
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (Optional.IsDefined(CpuTimeMs))
+            if (Optional.IsDefined(CpuTimeInMilliseconds))
             {
                 writer.WritePropertyName("cpuTimeMs"u8);
-                writer.WriteNumberValue(CpuTimeMs.Value);
+                writer.WriteNumberValue(CpuTimeInMilliseconds.Value);
             }
-            if (Optional.IsDefined(ElapsedTimeMs))
+            if (Optional.IsDefined(ElapsedTimeInMilliseconds))
             {
                 writer.WritePropertyName("elapsedTimeMs"u8);
-                writer.WriteNumberValue(ElapsedTimeMs.Value);
+                writer.WriteNumberValue(ElapsedTimeInMilliseconds.Value);
             }
             if (Optional.IsCollectionDefined(WaitStats))
             {
@@ -49,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in WaitStats)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -76,14 +83,13 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExecutionStatistics IJsonModel<ExecutionStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,11 +115,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             long? executionCount = default;
             float? cpuTimeMs = default;
             float? elapsedTimeMs = default;
-            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
+            IReadOnlyDictionary<string, MigrationValidationWaitStatistics> waitStats = default;
             bool? hasErrors = default;
             IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionCount"u8))
@@ -149,10 +155,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
+                    Dictionary<string, MigrationValidationWaitStatistics> dictionary = new Dictionary<string, MigrationValidationWaitStatistics>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value, options));
+                        dictionary.Add(property0.Name, MigrationValidationWaitStatistics.DeserializeMigrationValidationWaitStatistics(property0.Value, options));
                     }
                     waitStats = dictionary;
                     continue;
@@ -182,15 +188,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExecutionStatistics(
                 executionCount,
                 cpuTimeMs,
                 elapsedTimeMs,
-                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
+                waitStats ?? new ChangeTrackingDictionary<string, MigrationValidationWaitStatistics>(),
                 hasErrors,
                 sqlErrors ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
@@ -203,9 +209,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,11 +223,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExecutionStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -77,14 +76,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Text describing the validation outcome. </summary>
+        [WirePath("properties.message")]
         public string Message { get; set; }
         /// <summary> A flag describing whether or not validation failed. </summary>
+        [WirePath("properties.failed")]
         public bool? IsFailed { get; set; }
         /// <summary> A list of tests that failed in the validation. </summary>
+        [WirePath("properties.failedTests")]
         public IList<VirtualNetworkValidationTestFailure> FailedTests { get; }
         /// <summary> A list of warnings generated during validation. </summary>
+        [WirePath("properties.warnings")]
         public IList<VirtualNetworkValidationTestFailure> Warnings { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

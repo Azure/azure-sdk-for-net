@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing the MonitorWorkspaceResource data model.
-    /// An Azure Monitor Workspace definition
+    /// An Azure Monitor Workspace definition.
     /// </summary>
     public partial class MonitorWorkspaceResourceData : TrackedResourceData
     {
@@ -67,20 +66,24 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="accountId"> The immutable ID of the Azure Monitor workspace. This property is read-only. </param>
-        /// <param name="metrics"> Information about metrics for the Azure Monitor workspace. </param>
-        /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
+        /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
+        /// <param name="accountId"> The immutable ID of the Azure Monitor workspace. This property is read-only. </param>
+        /// <param name="metricsPropertiesMetrics"> Information about metrics for the Azure Monitor workspace. </param>
+        /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
+        /// <param name="defaultIngestionSettingsPropertiesDefaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to workspace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string accountId, MonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, MonitorWorkspaceMetrics metrics, string accountId, MonitorWorkspaceMetricProperties metricsPropertiesMetrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceIngestionSettings defaultIngestionSettingsPropertiesDefaultIngestionSettings, IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
-            AccountId = accountId;
-            Metrics = metrics;
-            ProvisioningState = provisioningState;
             DefaultIngestionSettings = defaultIngestionSettings;
+            Metrics = metrics;
+            AccountId = accountId;
+            MetricsPropertiesMetrics = metricsPropertiesMetrics;
+            ProvisioningState = provisioningState;
+            DefaultIngestionSettingsPropertiesDefaultIngestionSettings = defaultIngestionSettingsPropertiesDefaultIngestionSettings;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -93,14 +96,18 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Resource entity tag (ETag). </summary>
         public ETag? ETag { get; }
+        /// <summary> The Data Collection Rule and Endpoint used for ingestion by default. </summary>
+        public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
+        /// <summary> Properties related to the metrics container in the Azure Monitor Workspace. </summary>
+        public MonitorWorkspaceMetrics Metrics { get; }
         /// <summary> The immutable ID of the Azure Monitor workspace. This property is read-only. </summary>
         public string AccountId { get; }
         /// <summary> Information about metrics for the Azure Monitor workspace. </summary>
-        public MonitorWorkspaceMetrics Metrics { get; }
+        public MonitorWorkspaceMetricProperties MetricsPropertiesMetrics { get; set; }
         /// <summary> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </summary>
         public MonitorProvisioningState? ProvisioningState { get; }
         /// <summary> The Data Collection Rule and Endpoint used for ingestion by default. </summary>
-        public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
+        public MonitorWorkspaceIngestionSettings DefaultIngestionSettingsPropertiesDefaultIngestionSettings { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets allow or disallow public network access to workspace. </summary>

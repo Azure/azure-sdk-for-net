@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    /// <summary> The UnknownArtifact. </summary>
+    /// <summary> Unknown version of Artifact. </summary>
     internal partial class UnknownArtifact : ArtifactData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownArtifact"/>. </summary>

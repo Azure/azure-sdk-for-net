@@ -78,18 +78,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
+        [WirePath("properties.meterId")]
         public Guid? MeterId { get; set; }
         /// <summary> Azure Location of billable resource. </summary>
+        [WirePath("properties.billingLocation")]
         public AzureLocation? BillingLocation { get; set; }
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
+        [WirePath("properties.shortName")]
         public string ShortName { get; set; }
         /// <summary> Friendly name of the meter. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> App Service OS type meter used for. </summary>
+        [WirePath("properties.osType")]
         public string OSType { get; set; }
         /// <summary> Meter Multiplier. </summary>
+        [WirePath("properties.multiplier")]
         public double? Multiplier { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

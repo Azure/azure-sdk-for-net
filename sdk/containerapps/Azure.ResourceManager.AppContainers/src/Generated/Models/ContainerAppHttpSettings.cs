@@ -64,10 +64,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("requireHttps")]
         public bool? RequireHttps { get; set; }
         /// <summary> The configuration settings of the paths HTTP requests. </summary>
         internal HttpSettingsRoutes Routes { get; set; }
         /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
+        [WirePath("routes.apiPrefix")]
         public string RoutesApiPrefix
         {
             get => Routes is null ? default : Routes.ApiPrefix;
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
+        [WirePath("forwardProxy")]
         public ContainerAppForwardProxy ForwardProxy { get; set; }
     }
 }

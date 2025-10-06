@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="site"> The Active Directory site the service will limit Domain Controller discovery to. </param>
         /// <param name="backupOperators"> Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier. </param>
         /// <param name="administrators"> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </param>
-        /// <param name="kdcIP"> kdc server IP addresses for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
+        /// <param name="kdcIP"> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
         /// <param name="adName"> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
         /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
         /// <param name="isAesEncryptionEnabled"> If enabled, AES encryption will be enabled for SMB communication. </param>
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public IList<string> BackupOperators { get; }
         /// <summary> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </summary>
         public IList<string> Administrators { get; }
-        /// <summary> kdc server IP addresses for the active directory machine. This optional parameter is used only while creating kerberos volume. </summary>
+        /// <summary> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </summary>
         public IPAddress KdcIP { get; set; }
         /// <summary> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </summary>
         public string AdName { get; set; }

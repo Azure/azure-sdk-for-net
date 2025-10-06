@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownFabricSpecificCreateNetworkMappingContent. </summary>
+    /// <summary> Unknown version of FabricSpecificCreateNetworkMappingInput. </summary>
     internal partial class UnknownFabricSpecificCreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFabricSpecificCreateNetworkMappingContent"/>. </summary>

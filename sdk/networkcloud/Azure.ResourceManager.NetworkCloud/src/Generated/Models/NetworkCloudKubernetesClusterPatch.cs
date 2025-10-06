@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -54,12 +53,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
         /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="administratorConfiguration"> The configuration of the default administrator credentials. </param>
         /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. Accepts n.n, n.n.n, and n.n.n-n format. The interpreted version used will be resolved into this field after creation or update. </param>
+        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterPatch(IDictionary<string, string> tags, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudKubernetesClusterPatch(IDictionary<string, string> tags, AdministratorConfigurationPatch administratorConfiguration, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            AdministratorConfiguration = administratorConfiguration;
             ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
             KubernetesVersion = kubernetesVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -67,21 +68,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </summary>
-        internal ControlPlaneNodePatchConfiguration ControlPlaneNodeConfiguration { get; set; }
-        /// <summary> The number of virtual machines that use this configuration. </summary>
-        public long? ControlPlaneNodeCount
+        /// <summary> The configuration of the default administrator credentials. </summary>
+        internal AdministratorConfigurationPatch AdministratorConfiguration { get; set; }
+        /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
+        public IList<NetworkCloudSshPublicKey> AdministratorSshPublicKeys
         {
-            get => ControlPlaneNodeConfiguration is null ? default : ControlPlaneNodeConfiguration.Count;
-            set
+            get
             {
-                if (ControlPlaneNodeConfiguration is null)
-                    ControlPlaneNodeConfiguration = new ControlPlaneNodePatchConfiguration();
-                ControlPlaneNodeConfiguration.Count = value;
+                if (AdministratorConfiguration is null)
+                    AdministratorConfiguration = new AdministratorConfigurationPatch();
+                return AdministratorConfiguration.SshPublicKeys;
             }
         }
 
-        /// <summary> The Kubernetes version for this cluster. Accepts n.n, n.n.n, and n.n.n-n format. The interpreted version used will be resolved into this field after creation or update. </summary>
+        /// <summary> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </summary>
+        public ControlPlaneNodePatchConfiguration ControlPlaneNodeConfiguration { get; set; }
+        /// <summary> The Kubernetes version for this cluster. </summary>
         public string KubernetesVersion { get; set; }
     }
 }

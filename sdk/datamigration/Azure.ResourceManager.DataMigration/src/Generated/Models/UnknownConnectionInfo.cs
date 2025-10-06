@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownConnectionInfo. </summary>
-    internal partial class UnknownConnectionInfo : ConnectionInfo
+    /// <summary> Unknown version of ConnectionInfo. </summary>
+    internal partial class UnknownConnectionInfo : ServerConnectionInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>

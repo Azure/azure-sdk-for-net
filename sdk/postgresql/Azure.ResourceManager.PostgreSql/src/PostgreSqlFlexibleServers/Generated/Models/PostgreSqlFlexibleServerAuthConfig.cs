@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> If Enabled, Azure Active Directory authentication is enabled. </summary>
+        [WirePath("activeDirectoryAuth")]
         public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
         /// <summary> If Enabled, Password authentication is enabled. </summary>
+        [WirePath("passwordAuth")]
         public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
         /// <summary> Tenant id of the server. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

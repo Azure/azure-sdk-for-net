@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -49,14 +48,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
+        [WirePath("properties.rules")]
         public IList<RouteFilterRuleData> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
+        [WirePath("properties.peerings")]
         public IReadOnlyList<ExpressRouteCircuitPeeringData> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
+        [WirePath("properties.ipv6Peerings")]
         public IReadOnlyList<ExpressRouteCircuitPeeringData> IPv6Peerings { get; }
         /// <summary> The provisioning state of the route filter resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

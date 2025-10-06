@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Certificate Version. </summary>
+        [WirePath("version")]
         public int? Version { get; }
         /// <summary> Certificate Serial Number. </summary>
+        [WirePath("serialNumber")]
         public string SerialNumber { get; }
         /// <summary> Certificate Thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string ThumbprintString { get; }
         /// <summary> Certificate Subject. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
         /// <summary> Date Certificate is valid from. </summary>
+        [WirePath("notBefore")]
         public DateTimeOffset? NotBefore { get; }
         /// <summary> Date Certificate is valid to. </summary>
+        [WirePath("notAfter")]
         public DateTimeOffset? NotAfter { get; }
         /// <summary> Certificate Signature algorithm. </summary>
+        [WirePath("signatureAlgorithm")]
         public string SignatureAlgorithm { get; }
         /// <summary> Certificate Issuer. </summary>
+        [WirePath("issuer")]
         public string Issuer { get; }
         /// <summary> Raw certificate data. </summary>
+        [WirePath("rawData")]
         public string RawData { get; }
     }
 }

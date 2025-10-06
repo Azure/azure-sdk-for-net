@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static bool operator ==(EventSubTypeValue left, EventSubTypeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSubTypeValue"/> values are not the same. </summary>
         public static bool operator !=(EventSubTypeValue left, EventSubTypeValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventSubTypeValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventSubTypeValue"/>. </summary>
         public static implicit operator EventSubTypeValue(string value) => new EventSubTypeValue(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

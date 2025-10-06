@@ -15,17 +15,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     [PersistableModelProxy(typeof(UnknownPartitionSchemeDescription))]
     public partial class PartitionSchemeDescription : IUtf8JsonSerializable, IJsonModel<PartitionSchemeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartitionSchemeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartitionSchemeDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartitionSchemeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PartitionSchemeDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -36,14 +44,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PartitionSchemeDescription IJsonModel<PartitionSchemeDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -51,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartitionSchemeDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static PartitionSchemeDescription DeserializePartitionSchemeDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,9 +92,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -99,11 +106,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePartitionSchemeDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudBareMetalMachineKeySetResource IOperationSource<NetworkCloudBareMetalMachineKeySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudBareMetalMachineKeySetResource(_client, data);
         }
 
         async ValueTask<NetworkCloudBareMetalMachineKeySetResource> IOperationSource<NetworkCloudBareMetalMachineKeySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement);
-            return new NetworkCloudBareMetalMachineKeySetResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            return await Task.FromResult(new NetworkCloudBareMetalMachineKeySetResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

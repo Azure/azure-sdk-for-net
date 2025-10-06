@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -123,56 +122,82 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The display name of the alert. </summary>
+        [WirePath("properties.alertDisplayName")]
         public string AlertDisplayName { get; }
         /// <summary> The type name of the alert. </summary>
+        [WirePath("properties.alertType")]
         public string AlertType { get; }
         /// <summary> Display name of the main entity being reported on. </summary>
+        [WirePath("properties.compromisedEntity")]
         public string CompromisedEntity { get; }
         /// <summary> The confidence level of this alert. </summary>
+        [WirePath("properties.confidenceLevel")]
         public SecurityInsightsAlertConfidenceLevel? ConfidenceLevel { get; }
         /// <summary> The confidence reasons. </summary>
+        [WirePath("properties.confidenceReasons")]
         public IReadOnlyList<SecurityInsightsAlertConfidenceReason> ConfidenceReasons { get; }
         /// <summary> The confidence score of the alert. </summary>
+        [WirePath("properties.confidenceScore")]
         public double? ConfidenceScore { get; }
         /// <summary> The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final. </summary>
+        [WirePath("properties.confidenceScoreStatus")]
         public SecurityInsightsAlertConfidenceScoreStatus? ConfidenceScoreStatus { get; }
         /// <summary> Alert description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> The impact end time of the alert (the time of the last event contributing to the alert). </summary>
+        [WirePath("properties.endTimeUtc")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Holds the alert intent stage(s) mapping for this alert. </summary>
+        [WirePath("properties.intent")]
         public SecurityInsightsKillChainIntent? Intent { get; }
         /// <summary> The identifier of the alert inside the product which generated the alert. </summary>
+        [WirePath("properties.providerAlertId")]
         public string ProviderAlertId { get; }
         /// <summary> The time the alert was made available for consumption. </summary>
+        [WirePath("properties.processingEndTime")]
         public DateTimeOffset? ProcessingEndOn { get; }
         /// <summary> The name of a component inside the product which generated the alert. </summary>
+        [WirePath("properties.productComponentName")]
         public string ProductComponentName { get; }
         /// <summary> The name of the product which published this alert. </summary>
+        [WirePath("properties.productName")]
         public string ProductName { get; }
         /// <summary> The version of the product generating the alert. </summary>
+        [WirePath("properties.productVersion")]
         public string ProductVersion { get; }
         /// <summary> Manual action items to take to remediate the alert. </summary>
+        [WirePath("properties.remediationSteps")]
         public IReadOnlyList<string> RemediationSteps { get; }
         /// <summary> The severity of the alert. </summary>
+        [WirePath("properties.severity")]
         public SecurityInsightsAlertSeverity? Severity { get; set; }
         /// <summary> The impact start time of the alert (the time of the first event contributing to the alert). </summary>
+        [WirePath("properties.startTimeUtc")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The lifecycle status of the alert. </summary>
+        [WirePath("properties.status")]
         public SecurityInsightsAlertStatus? Status { get; }
         /// <summary> Holds the product identifier of the alert for the product. </summary>
+        [WirePath("properties.systemAlertId")]
         public string SystemAlertId { get; }
         /// <summary> The tactics of the alert. </summary>
+        [WirePath("properties.tactics")]
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
         /// <summary> The time the alert was generated. </summary>
+        [WirePath("properties.timeGenerated")]
         public DateTimeOffset? AlertGeneratedOn { get; }
         /// <summary> The name of the vendor that raise the alert. </summary>
+        [WirePath("properties.vendorName")]
         public string VendorName { get; }
         /// <summary> The uri link of the alert. </summary>
+        [WirePath("properties.alertLink")]
         public string AlertLink { get; }
         /// <summary>
         /// The list of resource identifiers of the alert.
@@ -204,6 +229,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.resourceIdentifiers")]
         public IReadOnlyList<BinaryData> ResourceIdentifiers { get; }
     }
 }

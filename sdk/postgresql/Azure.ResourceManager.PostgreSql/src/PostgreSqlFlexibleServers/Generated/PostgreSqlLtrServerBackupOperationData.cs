@@ -88,24 +88,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Size of datasource in bytes. </summary>
+        [WirePath("properties.datasourceSizeInBytes")]
         public long? DatasourceSizeInBytes { get; set; }
         /// <summary> Data transferred in bytes. </summary>
+        [WirePath("properties.dataTransferredInBytes")]
         public long? DataTransferredInBytes { get; set; }
         /// <summary> Name of Backup operation. </summary>
+        [WirePath("properties.backupName")]
         public string BackupName { get; set; }
         /// <summary> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </summary>
+        [WirePath("properties.backupMetadata")]
         public string BackupMetadata { get; set; }
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>
+        [WirePath("properties.status")]
         public PostgreSqlExecutionStatus? Status { get; set; }
         /// <summary> Start time of the operation. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the operation. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> PercentageCompleted. </summary>
+        [WirePath("properties.percentComplete")]
         public double? PercentComplete { get; set; }
         /// <summary> The error code. </summary>
+        [WirePath("properties.errorCode")]
         public string ErrorCode { get; }
         /// <summary> The error message. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
     }
 }

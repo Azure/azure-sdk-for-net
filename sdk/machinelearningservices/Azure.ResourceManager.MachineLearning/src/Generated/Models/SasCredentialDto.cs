@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Full SAS Uri, including the storage, container/blob path and SAS token. </summary>
+        [WirePath("sasUri")]
         public Uri SasUri { get; }
     }
 }

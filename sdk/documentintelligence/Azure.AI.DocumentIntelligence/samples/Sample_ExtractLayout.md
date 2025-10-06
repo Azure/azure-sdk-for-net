@@ -2,18 +2,18 @@
 
 This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents.
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentIntelligenceClient`
 
-To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 ```
 
 ## Extract the layout of a document from a URI
@@ -22,13 +22,7 @@ To extract the layout from a given file at a URI, use the `AnalyzeDocument` meth
 
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
-
-var content = new AnalyzeDocumentContent()
-{
-    UrlSource = uriSource
-};
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", uriSource);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -60,7 +54,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"    State: {selectionMark.State}");
 
         Console.Write("    Bounding polygon, with points ordered clockwise:");
-        for (int j = 0; j < selectionMark.Polygon.Count; j++)
+        for (int j = 0; j < selectionMark.Polygon.Count; j += 2)
         {
             Console.Write($" ({selectionMark.Polygon[j]}, {selectionMark.Polygon[j + 1]})");
         }
@@ -95,8 +89,8 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            var handwrittenContent = result.Content.Substring(span.Offset, span.Length);
-            Console.WriteLine($"  {handwrittenContent}");
+            var handwrittenOptions = result.Content.Substring(span.Offset, span.Length);
+            Console.WriteLine($"  {handwrittenOptions}");
         }
     }
 }

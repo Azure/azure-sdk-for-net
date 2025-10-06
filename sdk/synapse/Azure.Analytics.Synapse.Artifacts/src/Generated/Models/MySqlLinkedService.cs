@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,39 +13,91 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class MySqlLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/>. </summary>
-        /// <param name="connectionString"> The connection string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public MySqlLinkedService(object connectionString)
+        public MySqlLinkedService()
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
             Type = "MySql";
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="driverVersion"> The version of the MySQL driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </param>
         /// <param name="connectionString"> The connection string. </param>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="port"> The port for the connection. Type: integer. </param>
+        /// <param name="username"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1: prefer, 2: require, 3: verify-ca, 4: verify-full. </param>
+        /// <param name="useSystemTrustStore"> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal MySqlLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="allowZeroDateTime"> This allows the special “zero” date value 0000-00-00 to be retrieved from the database. Type: boolean. </param>
+        /// <param name="connectionTimeout"> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. Type: integer. </param>
+        /// <param name="convertZeroDateTime"> True to return DateTime.MinValue for date or datetime columns that have disallowed values. Type: boolean. </param>
+        /// <param name="guidFormat"> Determines which column type (if any) should be read as a GUID. Type: string. None: No column types are automatically read as a Guid; Char36: All CHAR(36) columns are read/written as a Guid using lowercase hex with hyphens, which matches UUID. </param>
+        /// <param name="sslCert"> The path to the client’s SSL certificate file in PEM format. SslKey must also be specified. Type: string. </param>
+        /// <param name="sslKey"> The path to the client’s SSL private key in PEM format. SslCert must also be specified. Type: string. </param>
+        /// <param name="treatTinyAsBoolean"> When set to true, TINYINT(1) values are returned as booleans. Type: bool. </param>
+        internal MySqlLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object driverVersion, object connectionString, object server, object port, object username, object database, object sslMode, object useSystemTrustStore, AzureKeyVaultSecretReference password, object encryptedCredential, object allowZeroDateTime, object connectionTimeout, object convertZeroDateTime, object guidFormat, object sslCert, object sslKey, object treatTinyAsBoolean) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
+            DriverVersion = driverVersion;
             ConnectionString = connectionString;
+            Server = server;
+            Port = port;
+            Username = username;
+            Database = database;
+            SslMode = sslMode;
+            UseSystemTrustStore = useSystemTrustStore;
             Password = password;
             EncryptedCredential = encryptedCredential;
+            AllowZeroDateTime = allowZeroDateTime;
+            ConnectionTimeout = connectionTimeout;
+            ConvertZeroDateTime = convertZeroDateTime;
+            GuidFormat = guidFormat;
+            SslCert = sslCert;
+            SslKey = sslKey;
+            TreatTinyAsBoolean = treatTinyAsBoolean;
             Type = type ?? "MySql";
         }
 
+        /// <summary> The version of the MySQL driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </summary>
+        public object DriverVersion { get; set; }
         /// <summary> The connection string. </summary>
         public object ConnectionString { get; set; }
+        /// <summary> Server name for connection. Type: string. </summary>
+        public object Server { get; set; }
+        /// <summary> The port for the connection. Type: integer. </summary>
+        public object Port { get; set; }
+        /// <summary> Username for authentication. Type: string. </summary>
+        public object Username { get; set; }
+        /// <summary> Database name for connection. Type: string. </summary>
+        public object Database { get; set; }
+        /// <summary> SSL mode for connection. Type: integer. 0: disable, 1: prefer, 2: require, 3: verify-ca, 4: verify-full. </summary>
+        public object SslMode { get; set; }
+        /// <summary> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </summary>
+        public object UseSystemTrustStore { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> This allows the special “zero” date value 0000-00-00 to be retrieved from the database. Type: boolean. </summary>
+        public object AllowZeroDateTime { get; set; }
+        /// <summary> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. Type: integer. </summary>
+        public object ConnectionTimeout { get; set; }
+        /// <summary> True to return DateTime.MinValue for date or datetime columns that have disallowed values. Type: boolean. </summary>
+        public object ConvertZeroDateTime { get; set; }
+        /// <summary> Determines which column type (if any) should be read as a GUID. Type: string. None: No column types are automatically read as a Guid; Char36: All CHAR(36) columns are read/written as a Guid using lowercase hex with hyphens, which matches UUID. </summary>
+        public object GuidFormat { get; set; }
+        /// <summary> The path to the client’s SSL certificate file in PEM format. SslKey must also be specified. Type: string. </summary>
+        public object SslCert { get; set; }
+        /// <summary> The path to the client’s SSL private key in PEM format. SslCert must also be specified. Type: string. </summary>
+        public object SslKey { get; set; }
+        /// <summary> When set to true, TINYINT(1) values are returned as booleans. Type: bool. </summary>
+        public object TreatTinyAsBoolean { get; set; }
     }
 }

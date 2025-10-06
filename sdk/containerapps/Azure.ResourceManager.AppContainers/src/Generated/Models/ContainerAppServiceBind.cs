@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Resource id of the target service. </summary>
+        [WirePath("serviceId")]
         public ResourceIdentifier ServiceId { get; set; }
         /// <summary> Name of the service bind. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

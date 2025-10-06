@@ -10,12 +10,13 @@ Start by importing the namespace for the `ConversationAnalysisClient` and relate
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 ```
 
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -26,34 +27,27 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-string projectName = "Menu";
+string projectName = "EmailApp";
 string deploymentName = "production";
 
-var data = new
-{
-    AnalysisInput = new
+AnalyzeConversationInput data =
+    new ConversationLanguageUnderstandingInput(
+        new ConversationAnalysisInput(
+            new TextConversationItem(
+                id: "1",
+                participantId: "participant1",
+                text: "Enviar un email a Carol acerca de la presentación de mañana")
+            {
+                Language = "es"
+            }),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        ConversationItem = new
-        {
-            Text = "Enviar un email a Carol acerca de la presentación de mañana",
-            Language = "es",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
-        Verbose = true,
-
         // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+        Verbose = true
+    });
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
 ## Asynchronous
@@ -61,5 +55,5 @@ Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonP
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
 ```

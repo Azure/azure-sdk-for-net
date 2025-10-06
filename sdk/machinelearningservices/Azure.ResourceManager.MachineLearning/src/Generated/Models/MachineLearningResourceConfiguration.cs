@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -50,41 +48,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningResourceConfiguration"/>. </summary>
         public MachineLearningResourceConfiguration()
         {
-            Locations = new ChangeTrackingList<string>();
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningResourceConfiguration"/>. </summary>
         /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
-        /// <param name="locations"> Locations where the job can run. </param>
-        /// <param name="maxInstanceCount">
-        /// Optional max allowed number of instances or nodes to be used by the compute target.
-        /// For use with elastic training, currently supported by PyTorch distribution type only.
-        /// </param>
         /// <param name="properties"> Additional properties bag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningResourceConfiguration(int? instanceCount, string instanceType, IList<string> locations, int? maxInstanceCount, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCount = instanceCount;
             InstanceType = instanceType;
-            Locations = locations;
-            MaxInstanceCount = maxInstanceCount;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Optional number of instances or nodes used by the compute target. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; set; }
         /// <summary> Optional type of VM used as supported by the compute target. </summary>
+        [WirePath("instanceType")]
         public string InstanceType { get; set; }
-        /// <summary> Locations where the job can run. </summary>
-        public IList<string> Locations { get; set; }
-        /// <summary>
-        /// Optional max allowed number of instances or nodes to be used by the compute target.
-        /// For use with elastic training, currently supported by PyTorch distribution type only.
-        /// </summary>
-        public int? MaxInstanceCount { get; set; }
         /// <summary>
         /// Additional properties bag.
         /// <para>
@@ -115,6 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public IDictionary<string, BinaryData> Properties { get; set; }
     }
 }

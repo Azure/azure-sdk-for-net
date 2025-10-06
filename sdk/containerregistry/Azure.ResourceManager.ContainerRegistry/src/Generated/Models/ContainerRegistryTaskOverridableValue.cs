@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -78,10 +77,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The name of the overridable value. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The overridable value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Flag to indicate whether the value represents a secret or not. </summary>
+        [WirePath("isSecret")]
         public bool? IsSecret { get; set; }
     }
 }

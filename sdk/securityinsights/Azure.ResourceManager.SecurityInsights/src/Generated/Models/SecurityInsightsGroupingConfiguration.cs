@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -89,18 +88,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Grouping enabled. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Re-open closed matching incidents. </summary>
+        [WirePath("reopenClosedIncident")]
         public bool IsClosedIncidentReopened { get; set; }
         /// <summary> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </summary>
+        [WirePath("lookbackDuration")]
         public TimeSpan LookbackDuration { get; set; }
         /// <summary> Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty. </summary>
+        [WirePath("matchingMethod")]
         public SecurityInsightsGroupingMatchingMethod MatchingMethod { get; set; }
         /// <summary> A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the current alert rule may be used. </summary>
+        [WirePath("groupByEntities")]
         public IList<SecurityInsightsAlertRuleEntityMappingType> GroupByEntities { get; }
         /// <summary> A list of alert details to group by (when matchingMethod is Selected). </summary>
+        [WirePath("groupByAlertDetails")]
         public IList<SecurityInsightsAlertDetail> GroupByAlertDetails { get; }
         /// <summary> A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in the current alert rule may be used. </summary>
+        [WirePath("groupByCustomDetails")]
         public IList<string> GroupByCustomDetails { get; }
     }
 }

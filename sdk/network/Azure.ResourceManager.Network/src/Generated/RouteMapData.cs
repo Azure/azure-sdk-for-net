@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -82,14 +81,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> List of connections which have this RoutMap associated for inbound traffic. </summary>
+        [WirePath("properties.associatedInboundConnections")]
         public IList<string> AssociatedInboundConnections { get; }
         /// <summary> List of connections which have this RoutMap associated for outbound traffic. </summary>
+        [WirePath("properties.associatedOutboundConnections")]
         public IList<string> AssociatedOutboundConnections { get; }
         /// <summary> List of RouteMap rules to be applied. </summary>
+        [WirePath("properties.rules")]
         public IList<RouteMapRule> Rules { get; }
         /// <summary> The provisioning state of the RouteMap resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

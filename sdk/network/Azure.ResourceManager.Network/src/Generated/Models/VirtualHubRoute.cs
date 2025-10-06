@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of all addressPrefixes. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> NextHop ip address. </summary>
+        [WirePath("nextHopIpAddress")]
         public string NextHopIPAddress { get; set; }
     }
 }

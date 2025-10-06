@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -75,18 +74,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
+        [WirePath("properties.newRelicAccountProperties")]
         public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
         /// <summary> User Info. </summary>
+        [WirePath("properties.userInfo")]
         public NewRelicObservabilityUserInfo UserInfo { get; set; }
         /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> Source of org creation. </summary>
+        [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>
+        [WirePath("properties.accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
     }
 }

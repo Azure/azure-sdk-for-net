@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -44,16 +42,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the Custom Service. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Describes the Image Specifications. </summary>
+        [WirePath("image")]
         public ImageSetting Image { get; set; }
         /// <summary> Environment Variable for the container. </summary>
+        [WirePath("environmentVariables")]
         public IDictionary<string, EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Describes the docker settings for the image. </summary>
+        [WirePath("docker")]
         public DockerSetting Docker { get; set; }
         /// <summary> Configuring the endpoints for the container. </summary>
+        [WirePath("endpoints")]
         public IList<ContainerEndpoint> Endpoints { get; }
         /// <summary> Configuring the volumes for the container. </summary>
+        [WirePath("volumes")]
         public IList<VolumeDefinition> Volumes { get; }
         /// <summary>
         /// Additional Properties
@@ -85,6 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

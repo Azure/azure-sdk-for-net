@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
@@ -36,6 +35,30 @@ namespace Azure.ResourceManager.TrafficManager
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft, IEnumerable<double> botRight)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/heatMaps/", false);
+            uri.AppendPath(heatMapType.ToString(), true);
+            if (topLeft != null && !(topLeft is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
+            }
+            if (botRight != null && !(botRight is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                uri.AppendQueryDelimited("botRight", botRight, ",", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft, IEnumerable<double> botRight)
@@ -91,7 +114,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerHeatMapData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerHeatMapData.DeserializeTrafficManagerHeatMapData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,7 +148,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerHeatMapData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerHeatMapData.DeserializeTrafficManagerHeatMapData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource used as the source by connection monitor. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The source port used by connection monitor. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
     }
 }

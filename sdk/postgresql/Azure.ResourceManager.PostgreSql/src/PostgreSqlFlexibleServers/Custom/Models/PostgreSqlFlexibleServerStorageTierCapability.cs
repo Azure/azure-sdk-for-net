@@ -12,11 +12,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> Storage tier name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("tierName")]
         public string TierName { get; }
         /// <summary> Indicates if this is a baseline storage tier or not. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("isBaseline")]
         public bool? IsBaseline { get; }
         /// <summary> Supported IOPS for this storage tier. </summary>
+        [WirePath("iops")]
         public long? Iops { get; }
     }
 }

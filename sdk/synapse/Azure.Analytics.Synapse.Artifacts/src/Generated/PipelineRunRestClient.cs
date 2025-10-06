@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -72,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineRunsQueryResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineRunsQueryResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -141,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineRun value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PipelineRun.DeserializePipelineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineRun value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PipelineRun.DeserializePipelineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +226,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         ActivityRunsQueryResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -264,7 +263,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         ActivityRunsQueryResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

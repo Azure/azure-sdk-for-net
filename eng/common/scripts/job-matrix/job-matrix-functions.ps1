@@ -96,10 +96,15 @@ function GenerateMatrix(
     [String]$displayNameFilter = ".*",
     [Array]$filters = @(),
     [Array]$replace = @(),
-    [Array]$nonSparseParameters = @()
+    [Array]$nonSparseParameters = @(),
+    [Switch]$skipEnvironmentVariables
 ) {
-    $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = `
-        ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
+    $result = ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
+
+    $matrixParameters = $result.Matrix
+    $importedMatrix = $result.ImportedMatrix
+    $combinedDisplayNameLookup = $result.DisplayNamesLookup
+
     if ($selectFromMatrixType -eq "sparse") {
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
     }
@@ -124,7 +129,9 @@ function GenerateMatrix(
 
     $matrix = FilterMatrix $matrix $filters
     $matrix = ProcessReplace $matrix $replace $combinedDisplayNameLookup
-    $matrix = ProcessEnvironmentVariableReferences $matrix $combinedDisplayNameLookup
+    if (!$skipEnvironmentVariables) {
+        $matrix = ProcessEnvironmentVariableReferences $matrix $combinedDisplayNameLookup
+    }
     $matrix = FilterMatrixDisplayName $matrix $displayNameFilter
     return $matrix
 }
@@ -141,6 +148,9 @@ function ProcessNonSparseParameters(
     $nonSparse = [MatrixParameter[]]@()
 
     foreach ($param in $parameters) {
+        if ($null -eq $param) {
+            continue
+        }
         if ($param.Name -in $nonSparseParameters) {
             $nonSparse += $param
         }
@@ -210,7 +220,7 @@ function GetMatrixConfigFromFile([String] $config) {
 }
 
 function GetMatrixConfigFromYaml([String] $yamlConfig) {
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
     # ConvertTo then from json is to make sure the nested values are in PSCustomObject
     [MatrixConfig]$config = ConvertFrom-Yaml $yamlConfig -Ordered | ConvertTo-Json -Depth 100 | ConvertFrom-Json
     return GetMatrixConfig $config
@@ -419,7 +429,11 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         }
     }
     if ((!$matrix -and !$importPath) -or !$importPath) {
-        return $matrix, @(), $displayNamesLookup
+        return [PSCustomObject]@{
+            Matrix             = $matrix
+            ImportedMatrix     = @()
+            DisplayNamesLookup = $displayNamesLookup
+        }
     }
 
     if (!(Test-Path $importPath)) {
@@ -427,17 +441,25 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         exit 1
     }
     $importedMatrixConfig = GetMatrixConfigFromFile (Get-Content -Raw $importPath)
+    # Add skipEnvironmentVariables so we don't process environment variables on import
+    # because we want top level filters to work against the the env key, not the value.
+    # The environment variables will get resolved after the import.
     $importedMatrix = GenerateMatrix `
         -config $importedMatrixConfig `
         -selectFromMatrixType $selection `
-        -nonSparseParameters $nonSparseParameters
+        -nonSparseParameters $nonSparseParameters `
+        -skipEnvironmentVariables
 
     $combinedDisplayNameLookup = $importedMatrixConfig.displayNamesLookup
     foreach ($lookup in $displayNamesLookup.GetEnumerator()) {
         $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
     }
 
-    return $matrix, $importedMatrix, $combinedDisplayNameLookup
+    return [PSCustomObject]@{
+        Matrix             = $matrix ?? @()
+        ImportedMatrix     = $importedMatrix
+        DisplayNamesLookup = $combinedDisplayNameLookup
+    }
 }
 
 function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{}) {
@@ -483,7 +505,7 @@ function CloneOrderedDictionary([System.Collections.Specialized.OrderedDictionar
 function SerializePipelineMatrix([Array]$matrix) {
     $pipelineMatrix = [Ordered]@{}
     foreach ($entry in $matrix) {
-        if ($pipelineMatrix.Contains($entry.Name)) {
+        if ($pipelineMatrix.Contains($entry.name)) {
             Write-Warning "Found duplicate configurations for job `"$($entry.name)`". Multiple values may have been replaced with the same value."
             continue
         }
@@ -621,6 +643,9 @@ function InitializeMatrix {
 function GetMatrixDimensions([MatrixParameter[]]$parameters) {
     $dimensions = @()
     foreach ($param in $parameters) {
+        if ($null -eq $param) {
+            continue
+        }
         $dimensions += $param.Length()
     }
 
@@ -733,3 +758,30 @@ function Get4dMatrixIndex([int]$index, [Array]$dimensions) {
     return @($page3, $page2, $page1, $remainder)
 }
 
+function GenerateMatrixForConfig {
+    param (
+        [Parameter(Mandatory = $true)][string] $ConfigPath,
+        [Parameter(Mandatory = $true)][string] $Selection,
+        [Parameter(Mandatory = $false)][string] $DisplayNameFilter,
+        [Parameter(Mandatory = $false)][array] $Filters,
+        [Parameter(Mandatory = $false)][array] $Replace,
+        [Parameter(Mandatory = $false)][Array] $NonSparseParameters = @()
+    )
+    $matrixFile = Join-Path $PSScriptRoot ".." ".." ".." ".." $ConfigPath
+
+    $resolvedMatrixFile = Resolve-Path $matrixFile
+
+    $config = GetMatrixConfigFromFile (Get-Content $resolvedMatrixFile -Raw)
+    # Strip empty string filters in order to be able to use azure pipelines yaml join()
+    $Filters = $Filters | Where-Object { $_ }
+
+    [array]$matrix = GenerateMatrix `
+        -config $config `
+        -selectFromMatrixType $Selection `
+        -displayNameFilter $DisplayNameFilter `
+        -filters $Filters `
+        -replace $Replace `
+        -nonSparseParameters $NonSparseParameters
+
+    return , $matrix
+}

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -93,6 +92,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can't contains parameters.
         /// </summary>
+        [WirePath("urlTemplate")]
         public string UrlTemplate { get; set; }
         /// <summary>
         /// Gets or sets the matching pattern for event names.
@@ -101,10 +101,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
         ///     3. The single event name, for example, "event1", it matches "event1"
         /// </summary>
+        [WirePath("userEventPattern")]
         public string UserEventPattern { get; set; }
         /// <summary> Gets ot sets the list of system events. </summary>
+        [WirePath("systemEvents")]
         public IList<string> SystemEvents { get; }
         /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
+        [WirePath("auth")]
         public UpstreamAuthSettings Auth { get; set; }
     }
 }

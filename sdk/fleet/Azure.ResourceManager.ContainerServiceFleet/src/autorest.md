@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: ContainerServiceFleet
 namespace: Azure.ResourceManager.ContainerServiceFleet
-require: https://github.com/Azure/azure-rest-api-specs/blob/9837baba3ca259b4f2a3f736593311f445c35c63/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
-#tag: package-2023-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/d19d4d8c69cf37c355ee55095b335ca92643120e/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
+#tag: package-2025-04-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -28,10 +28,24 @@ rename-mapping:
   FleetMember: ContainerServiceFleetMember
   FleetMemberListResult: ContainerServiceFleetMemberListResult
   MemberUpdateStatus.clusterResourceId: -|arm-id
+  SkipProperties: ContainerServiceFleetSkipProperties
+  SkipTarget: ContainerServiceFleetSkipTarget
+  TargetType: ContainerServiceFleetTargetType
+  UpgradeChannel: ContainerServiceFleetUpgradeChannel
+  GenerateResponse: AutoUpgradeProfileGenerateResult
+  FleetMemberStatus: ContainerServiceFleetMemberStatus
+  FleetStatus: ContainerServiceFleetStatus
+  Timing: ContainerServiceFleetGateTiming 
 
 prepend-rp-prefix:
   - AgentProfile
   - APIServerAccessProfile
+  - Gate
+  - GateConfiguration
+  - GateProvisioningState
+  - GateState
+  - GateTarget
+  - GateType
   - ManagedClusterUpdate
   - ManagedClusterUpgradeSpec
   - ManagedClusterUpgradeType
@@ -55,6 +69,21 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+operations-to-lro-api-version-override:
+  Fleets_CreateOrUpdate: "2016-03-30"
+  Fleets_Update: "2016-03-30"
+  Fleets_Delete: "2016-03-30"
+  FleetMembers_Create: "2016-03-30"
+  FleetMembers_Update: "2016-03-30"
+  FleetMembers_Delete: "2016-03-30"
+  UpdateRuns_CreateOrUpdate: "2016-03-30"
+  UpdateRuns_Delete: "2016-03-30"
+  FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
+  FleetUpdateStrategies_Delete: "2016-03-30"
+
+override-operation-name:
+  AutoUpgradeProfileOperations_GenerateUpdateRun: GenerateUpdateRun
+
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
@@ -77,18 +106,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
-operations-to-lro-api-version-override:
-  Fleets_CreateOrUpdate: "2016-03-30"
-  Fleets_Update: "2016-03-30"
-  Fleets_Delete: "2016-03-30"
-  FleetMembers_Create: "2016-03-30"
-  FleetMembers_Update: "2016-03-30"
-  FleetMembers_Delete: "2016-03-30"
-  UpdateRuns_CreateOrUpdate: "2016-03-30"
-  UpdateRuns_Delete: "2016-03-30"
-  FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
-  FleetUpdateStrategies_Delete: "2016-03-30"
+  ETag: ETag|eTag
 
 models-to-treat-empty-string-as-null:
 - SubnetResourceId

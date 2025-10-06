@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -77,20 +76,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Start time of the correlated event. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the correlated event. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Message describing the event. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> Represents the name of the Detector. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
         /// <summary> Represents the rank of the Detector. </summary>
+        [WirePath("priority")]
         public double? Priority { get; set; }
         /// <summary> Downtime metadata. </summary>
+        [WirePath("metaData")]
         public IList<IList<AppServiceNameValuePair>> MetaData { get; }
         /// <summary> Represents the type of the Detector. </summary>
+        [WirePath("type")]
         public DetectorIssueType? IssueType { get; set; }
         /// <summary> List of proposed solutions. </summary>
+        [WirePath("solutions")]
         public IList<DiagnosticSolution> Solutions { get; }
     }
 }

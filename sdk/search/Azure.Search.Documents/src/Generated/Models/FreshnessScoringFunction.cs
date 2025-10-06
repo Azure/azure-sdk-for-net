@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Search.Documents;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,11 +18,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
-        internal FreshnessScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation, FreshnessScoringParameters parameters) : base(type, fieldName, boost, interpolation)
+        internal FreshnessScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation, IDictionary<string, BinaryData> serializedAdditionalRawData, FreshnessScoringParameters parameters) : base(type, fieldName, boost, interpolation, serializedAdditionalRawData)
         {
             Parameters = parameters;
             Type = type ?? "freshness";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FreshnessScoringFunction"/> for deserialization. </summary>
+        internal FreshnessScoringFunction()
+        {
         }
 
         /// <summary> Parameter values for the freshness scoring function. </summary>

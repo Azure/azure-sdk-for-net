@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The display name of the web test location. </summary>
+        [WirePath("DisplayName")]
         public string DisplayName { get; }
         /// <summary> Internally defined geographic location tag. </summary>
+        [WirePath("Tag")]
         public string Tag { get; }
     }
 }

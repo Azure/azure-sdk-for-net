@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> Resource's identity. </param>
         /// <param name="sku"> The sku properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="keyVaultProperties"> The associated key properties. </param>
@@ -70,15 +69,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary> Resource's identity. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku properties. </summary>
+        [WirePath("sku")]
         public OperationalInsightsClusterSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The associated key properties. </summary>
+        [WirePath("properties.keyVaultProperties")]
         public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The cluster's billing type. </summary>
+        [WirePath("properties.billingType")]
         public OperationalInsightsBillingType? BillingType { get; set; }
     }
 }

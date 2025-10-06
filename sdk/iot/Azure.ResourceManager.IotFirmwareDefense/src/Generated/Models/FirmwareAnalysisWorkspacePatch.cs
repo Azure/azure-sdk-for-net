@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Firmware analysis workspace. </summary>
+    /// <summary> The type used for update operations of the Workspace. </summary>
     public partial class FirmwareAnalysisWorkspacePatch
     {
         /// <summary>
@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisWorkspacePatch"/>. </summary>
         public FirmwareAnalysisWorkspacePatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisWorkspacePatch"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ProvisioningState = provisioningState;
+            Sku = sku;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning state of the resource. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public IotFirmwareDefenseSkuUpdate Sku { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

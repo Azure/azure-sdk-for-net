@@ -43,10 +43,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             {
                 _config = TestConfigurations.DefaultTargetManagedDisk;
 
-                TokenCredential tokenCredentials = new Identity.ClientSecretCredential(
-                    _config.ActiveDirectoryTenantId, _config.ActiveDirectoryApplicationId, _config.ActiveDirectoryApplicationSecret);
-
-                ArmClient client = new ArmClient(tokenCredentials, _config.SubsriptionId);
+                ArmClient client = new ArmClient(Environment.Credential, _config.SubsriptionId);
                 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
                 _resourceGroup = await subscription.GetResourceGroups().GetAsync(_config.ResourceGroupName);
                 var disks = await _resourceGroup.GetManagedDisks().GetAllAsync().ToListAsync();

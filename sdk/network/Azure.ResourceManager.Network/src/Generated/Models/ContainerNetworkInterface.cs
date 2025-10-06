@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -43,12 +41,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Container network interface configuration from which this container network interface is created. </summary>
+        [WirePath("properties.containerNetworkInterfaceConfiguration")]
         public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get; }
         /// <summary> Reference to the container to which this container network interface is attached. </summary>
         internal WritableSubResource Container { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.container.id")]
         public ResourceIdentifier ContainerId
         {
             get => Container is null ? default : Container.Id;
@@ -61,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get; }
         /// <summary> The provisioning state of the container network interface resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

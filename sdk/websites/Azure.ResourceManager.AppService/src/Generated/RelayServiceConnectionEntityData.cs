@@ -81,18 +81,25 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets or sets the entity name. </summary>
+        [WirePath("properties.entityName")]
         public string EntityName { get; set; }
         /// <summary> Gets or sets the entity connection string. </summary>
+        [WirePath("properties.entityConnectionString")]
         public string EntityConnectionString { get; set; }
         /// <summary> Gets or sets the resource connection string. </summary>
+        [WirePath("properties.resourceConnectionString")]
         public string ResourceConnectionString { get; set; }
         /// <summary> Gets or sets the hostname. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname { get; set; }
         /// <summary> Gets or sets the port. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; set; }
         /// <summary> Gets or sets the biztalk uri. </summary>
+        [WirePath("properties.biztalkUri")]
         public Uri BiztalkUri { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

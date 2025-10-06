@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of pool names that should be migrated from Nic based to IP based pool. </summary>
+        [WirePath("pools")]
         public IList<string> Pools { get; }
     }
 }

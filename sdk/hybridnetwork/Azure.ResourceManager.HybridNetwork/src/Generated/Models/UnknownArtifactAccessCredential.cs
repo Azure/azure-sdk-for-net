@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownArtifactAccessCredential. </summary>
+    /// <summary> Unknown version of ArtifactAccessCredential. </summary>
     internal partial class UnknownArtifactAccessCredential : ArtifactAccessCredential
     {
         /// <summary> Initializes a new instance of <see cref="UnknownArtifactAccessCredential"/>. </summary>

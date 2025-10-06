@@ -10,6 +10,8 @@ trigger:
   paths:
     include:
       - sdk/eventgrid/Azure.Messaging.EventGrid
+      - sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces
+      - sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents
       - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       - sdk/eventgrid/service.projects
       - sdk/eventgrid/ci.yml
@@ -24,6 +26,8 @@ pr:
   paths:
     include:
       - sdk/eventgrid/Azure.Messaging.EventGrid
+      - sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces
+      - sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents
       - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       - sdk/eventgrid/service.projects
       - sdk/eventgrid/ci.yml
@@ -39,5 +43,14 @@ extends:
       safeName: AzureMessagingEventGrid
     - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents
+    - name: Azure.Messaging.EventGrid.Namespaces
+      safeName: AzureMessagingEventGridNamespaces
+    - name: Azure.Messaging.EventGrid.SystemEvents
+      safeName: AzureMessagingEventGridSystemEvents
+      # MSDocs are being temporarily disabled because of an issue with MSDocs generation.
+      # The following issue is being used to track reenabling MSDocs publishing when
+      # the MSDocs issue is fixed.
+      # https://github.com/Azure/azure-sdk-for-net/issues/45032
+      skipPublishDocMs: true
 
-    
+

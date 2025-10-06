@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> The UnknownServerPropertiesForCreate. </summary>
+    /// <summary> Unknown version of ServerPropertiesForCreate. </summary>
     internal partial class UnknownServerPropertiesForCreate : PostgreSqlServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServerPropertiesForCreate"/>. </summary>

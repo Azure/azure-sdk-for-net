@@ -24,16 +24,22 @@ namespace Azure.Search.Documents.Models
 
         private const string VectorValue = "vector";
         private const string TextValue = "text";
+        private const string ImageUrlValue = "imageUrl";
+        private const string ImageBinaryValue = "imageBinary";
 
         /// <summary> Vector query where a raw vector value is provided. </summary>
         public static VectorQueryKind Vector { get; } = new VectorQueryKind(VectorValue);
         /// <summary> Vector query where a text value that needs to be vectorized is provided. </summary>
         public static VectorQueryKind Text { get; } = new VectorQueryKind(TextValue);
+        /// <summary> Vector query where an url that represents an image value that needs to be vectorized is provided. </summary>
+        public static VectorQueryKind ImageUrl { get; } = new VectorQueryKind(ImageUrlValue);
+        /// <summary> Vector query where a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
+        public static VectorQueryKind ImageBinary { get; } = new VectorQueryKind(ImageBinaryValue);
         /// <summary> Determines if two <see cref="VectorQueryKind"/> values are the same. </summary>
         public static bool operator ==(VectorQueryKind left, VectorQueryKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorQueryKind"/> values are not the same. </summary>
         public static bool operator !=(VectorQueryKind left, VectorQueryKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VectorQueryKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorQueryKind"/>. </summary>
         public static implicit operator VectorQueryKind(string value) => new VectorQueryKind(value);
 
         /// <inheritdoc />
@@ -44,7 +50,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

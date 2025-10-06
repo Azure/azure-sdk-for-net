@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -23,6 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringData"/>. </summary>
         public VirtualNetworkPeeringData()
         {
+            LocalSubnetNames = new ChangeTrackingList<string>();
+            RemoteSubnetNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringData"/>. </summary>
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
         /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
         /// <param name="remoteVirtualNetwork"> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </param>
+        /// <param name="localAddressSpace"> The local address space of the local virtual network that is peered. </param>
+        /// <param name="localVirtualNetworkAddressSpace"> The current local address space of the local virtual network that is peered. </param>
         /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
         /// <param name="remoteVirtualNetworkAddressSpace"> The reference to the current address space of the remote virtual network. </param>
         /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
@@ -45,7 +48,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="areCompleteVnetsPeered"> Whether complete virtual network address space is peered. </param>
+        /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
+        /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
+        /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
+        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -53,6 +60,8 @@ namespace Azure.ResourceManager.Network
             AllowGatewayTransit = allowGatewayTransit;
             UseRemoteGateways = useRemoteGateways;
             RemoteVirtualNetwork = remoteVirtualNetwork;
+            LocalAddressSpace = localAddressSpace;
+            LocalVirtualNetworkAddressSpace = localVirtualNetworkAddressSpace;
             RemoteAddressSpace = remoteAddressSpace;
             RemoteVirtualNetworkAddressSpace = remoteVirtualNetworkAddressSpace;
             RemoteBgpCommunities = remoteBgpCommunities;
@@ -62,21 +71,31 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             DoNotVerifyRemoteGateways = doNotVerifyRemoteGateways;
             ResourceGuid = resourceGuid;
+            AreCompleteVnetsPeered = areCompleteVnetsPeered;
+            EnableOnlyIPv6Peering = enableOnlyIPv6Peering;
+            LocalSubnetNames = localSubnetNames;
+            RemoteSubnetNames = remoteSubnetNames;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </summary>
+        [WirePath("properties.allowVirtualNetworkAccess")]
         public bool? AllowVirtualNetworkAccess { get; set; }
         /// <summary> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </summary>
+        [WirePath("properties.allowForwardedTraffic")]
         public bool? AllowForwardedTraffic { get; set; }
         /// <summary> If gateway links can be used in remote virtual networking to link to this virtual network. </summary>
+        [WirePath("properties.allowGatewayTransit")]
         public bool? AllowGatewayTransit { get; set; }
         /// <summary> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </summary>
+        [WirePath("properties.useRemoteGateways")]
         public bool? UseRemoteGateways { get; set; }
         /// <summary> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </summary>
         internal WritableSubResource RemoteVirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.remoteVirtualNetwork.id")]
         public ResourceIdentifier RemoteVirtualNetworkId
         {
             get => RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
@@ -88,45 +107,50 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The local address space of the local virtual network that is peered. </summary>
+        [WirePath("properties.localAddressSpace")]
+        public VirtualNetworkAddressSpace LocalAddressSpace { get; set; }
+        /// <summary> The current local address space of the local virtual network that is peered. </summary>
+        [WirePath("properties.localVirtualNetworkAddressSpace")]
+        public VirtualNetworkAddressSpace LocalVirtualNetworkAddressSpace { get; set; }
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
-        internal AddressSpace RemoteAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> RemoteAddressPrefixes
-        {
-            get
-            {
-                if (RemoteAddressSpace is null)
-                    RemoteAddressSpace = new AddressSpace();
-                return RemoteAddressSpace.AddressPrefixes;
-            }
-        }
-
+        [WirePath("properties.remoteAddressSpace")]
+        public VirtualNetworkAddressSpace RemoteAddressSpace { get; set; }
         /// <summary> The reference to the current address space of the remote virtual network. </summary>
-        internal AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> RemoteVirtualNetworkAddressPrefixes
-        {
-            get
-            {
-                if (RemoteVirtualNetworkAddressSpace is null)
-                    RemoteVirtualNetworkAddressSpace = new AddressSpace();
-                return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
+        [WirePath("properties.remoteVirtualNetworkAddressSpace")]
+        public VirtualNetworkAddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
         /// <summary> The reference to the remote virtual network's Bgp Communities. </summary>
+        [WirePath("properties.remoteBgpCommunities")]
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
         /// <summary> The reference to the remote virtual network's encryption. </summary>
+        [WirePath("properties.remoteVirtualNetworkEncryption")]
         public VirtualNetworkEncryption RemoteVirtualNetworkEncryption { get; }
         /// <summary> The status of the virtual network peering. </summary>
+        [WirePath("properties.peeringState")]
         public VirtualNetworkPeeringState? PeeringState { get; set; }
         /// <summary> The peering sync status of the virtual network peering. </summary>
+        [WirePath("properties.peeringSyncLevel")]
         public VirtualNetworkPeeringLevel? PeeringSyncLevel { get; set; }
         /// <summary> The provisioning state of the virtual network peering resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> If we need to verify the provisioning state of the remote gateway. </summary>
+        [WirePath("properties.doNotVerifyRemoteGateways")]
         public bool? DoNotVerifyRemoteGateways { get; set; }
         /// <summary> The resourceGuid property of the Virtual Network peering resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
+        /// <summary> Whether complete virtual network address space is peered. </summary>
+        [WirePath("properties.peerCompleteVnets")]
+        public bool? AreCompleteVnetsPeered { get; set; }
+        /// <summary> Whether only Ipv6 address space is peered for subnet peering. </summary>
+        [WirePath("properties.enableOnlyIPv6Peering")]
+        public bool? EnableOnlyIPv6Peering { get; set; }
+        /// <summary> List of local subnet names that are subnet peered with remote virtual network. </summary>
+        [WirePath("properties.localSubnetNames")]
+        public IList<string> LocalSubnetNames { get; }
+        /// <summary> List of remote subnet names from remote virtual network that are subnet peered. </summary>
+        [WirePath("properties.remoteSubnetNames")]
+        public IList<string> RemoteSubnetNames { get; }
     }
 }

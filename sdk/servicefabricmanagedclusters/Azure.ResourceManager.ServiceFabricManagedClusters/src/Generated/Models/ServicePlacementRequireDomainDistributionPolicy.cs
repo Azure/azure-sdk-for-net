@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -21,7 +20,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// In the event that one of the datacenters goes offline, normally the replica that was placed in that
     /// datacenter will be packed into one of the remaining datacenters. If this is not desirable then this
     /// policy should be set.
-    ///
     /// </summary>
     public partial class ServicePlacementRequireDomainDistributionPolicy : ManagedServicePlacementPolicy
     {
@@ -33,17 +31,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            ServicePlacementPolicyType = ServicePlacementPolicyType.RequiredDomainDistribution;
+            Type = ServicePlacementPolicyType.RequiredDomainDistribution;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
-        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="type"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(servicePlacementPolicyType, serializedAdditionalRawData)
+        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
         {
             DomainName = domainName;
-            ServicePlacementPolicyType = servicePlacementPolicyType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/> for deserialization. </summary>

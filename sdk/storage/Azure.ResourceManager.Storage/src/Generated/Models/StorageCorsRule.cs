@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -91,14 +90,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </summary>
+        [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
         /// <summary> Required if CorsRule element is present. A list of HTTP methods that are allowed to be executed by the origin. </summary>
+        [WirePath("allowedMethods")]
         public IList<CorsRuleAllowedMethod> AllowedMethods { get; }
         /// <summary> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </summary>
+        [WirePath("maxAgeInSeconds")]
         public int MaxAgeInSeconds { get; set; }
         /// <summary> Required if CorsRule element is present. A list of response headers to expose to CORS clients. </summary>
+        [WirePath("exposedHeaders")]
         public IList<string> ExposedHeaders { get; }
         /// <summary> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </summary>
+        [WirePath("allowedHeaders")]
         public IList<string> AllowedHeaders { get; }
     }
 }

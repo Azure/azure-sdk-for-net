@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -55,22 +54,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
+        /// <param name="bypass"> Setting for trusted services. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesNetworkRuleSet(CognitiveServicesNetworkRuleAction? defaultAction, IList<CognitiveServicesIPRule> ipRules, IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesNetworkRuleSet(CognitiveServicesNetworkRuleAction? defaultAction, TrustedServicesByPassSelection? bypass, IList<CognitiveServicesIPRule> ipRules, IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
+            Bypass = bypass;
             IPRules = ipRules;
             VirtualNetworkRules = virtualNetworkRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
+        [WirePath("defaultAction")]
         public CognitiveServicesNetworkRuleAction? DefaultAction { get; set; }
+        /// <summary> Setting for trusted services. </summary>
+        [WirePath("bypass")]
+        public TrustedServicesByPassSelection? Bypass { get; set; }
         /// <summary> The list of IP address rules. </summary>
+        [WirePath("ipRules")]
         public IList<CognitiveServicesIPRule> IPRules { get; }
         /// <summary> The list of virtual network rules. </summary>
+        [WirePath("virtualNetworkRules")]
         public IList<CognitiveServicesVirtualNetworkRule> VirtualNetworkRules { get; }
     }
 }

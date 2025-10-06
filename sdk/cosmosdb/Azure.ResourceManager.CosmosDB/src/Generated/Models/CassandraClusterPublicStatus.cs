@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -73,14 +71,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the e tag. </summary>
+        [WirePath("eTag")]
         public ETag? ETag { get; }
         /// <summary> Gets the reaper status. </summary>
+        [WirePath("reaperStatus")]
         public CassandraReaperStatus ReaperStatus { get; }
         /// <summary> List relevant information about any connection errors to the Datacenters. </summary>
+        [WirePath("connectionErrors")]
         public IReadOnlyList<CassandraConnectionError> ConnectionErrors { get; }
         /// <summary> List relevant information about any errors about cluster, data center and connection error. </summary>
+        [WirePath("errors")]
         public IReadOnlyList<CassandraError> Errors { get; }
         /// <summary> List of the status of each datacenter in this cluster. </summary>
+        [WirePath("dataCenters")]
         public IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> DataCenters { get; }
     }
 }

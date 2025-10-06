@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="RetrieveAsync(string,NetworkIdentifier,CancellationToken)">
+      <example>
+This sample shows how to call RetrieveAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
+
+NetworkIdentifier body = new NetworkIdentifier("ipv6", "3001:0da8:75a3:0000:0000:8a2e:0370:7334");
+Response<NetworkRetrievalResult> response = await client.RetrieveAsync("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="Retrieve(string,NetworkIdentifier,CancellationToken)">
+      <example>
+This sample shows how to call Retrieve.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
+
+NetworkIdentifier body = new NetworkIdentifier("ipv6", "3001:0da8:75a3:0000:0000:8a2e:0370:7334");
+Response<NetworkRetrievalResult> response = client.Retrieve("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="RetrieveAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RetrieveAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    identifierType = "ipv6",
+    identifier = "3001:0da8:75a3:0000:0000:8a2e:0370:7334",
+});
+Response response = await client.RetrieveAsync("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("networkCode").ToString());
+]]></code></example>
+    </member>
+    <member name="Retrieve(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Retrieve and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    identifierType = "ipv6",
+    identifier = "3001:0da8:75a3:0000:0000:8a2e:0370:7334",
+});
+Response response = client.Retrieve("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("networkCode").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

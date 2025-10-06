@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -44,12 +43,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of available Ssl predefined policy. </summary>
+        [WirePath("properties.predefinedPolicies")]
         public IList<WritableSubResource> PredefinedPolicies { get; }
         /// <summary> Name of the Ssl predefined policy applied by default to application gateway. </summary>
+        [WirePath("properties.defaultPolicy")]
         public ApplicationGatewaySslPolicyName? DefaultPolicy { get; set; }
         /// <summary> List of available Ssl cipher suites. </summary>
+        [WirePath("properties.availableCipherSuites")]
         public IList<ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get; }
         /// <summary> List of available Ssl protocols. </summary>
+        [WirePath("properties.availableProtocols")]
         public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }
     }
 }

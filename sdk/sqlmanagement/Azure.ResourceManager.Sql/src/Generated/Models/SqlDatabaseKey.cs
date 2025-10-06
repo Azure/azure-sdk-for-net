@@ -55,23 +55,32 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
         /// <param name="createdOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
+        /// <param name="keyVersion"> The database key's version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyType = keyType;
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
             Subregion = subregion;
+            KeyVersion = keyVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database key type. Only supported value is 'AzureKeyVault'. </summary>
+        [WirePath("type")]
         public SqlDatabaseKeyType? KeyType { get; }
         /// <summary> Thumbprint of the database key. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
         /// <summary> The database key creation date. </summary>
+        [WirePath("creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Subregion of the server key. </summary>
+        [WirePath("subregion")]
         public string Subregion { get; }
+        /// <summary> The database key's version. </summary>
+        [WirePath("keyVersion")]
+        public string KeyVersion { get; }
     }
 }

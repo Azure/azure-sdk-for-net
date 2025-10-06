@@ -36,7 +36,7 @@ namespace Azure.Communication
         public static bool operator ==(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are not the same. </summary>
         public static bool operator !=(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
         public static implicit operator CommunicationCloudEnvironmentModel(string value) => new CommunicationCloudEnvironmentModel(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Communication
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 5.14.0-beta.1 (Unreleased)
+## 5.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,73 @@
 
 ### Bugs Fixed
 
+- Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with ScaleControlelr V2) - AB#32302750
+
 ### Other Changes
+
+## 5.17.0 (2025-06-20)
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 8.x line, the Azure extensions to 1.12.0, and the latest dependencies for the Functions host.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.16.6 (2025-04-08)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.19.0
+
+## 5.16.5 (2025-03-14)
+
+Updated GetProcessorCount to not override the processor count for flex consumption. (#45970)
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
+
+## 5.16.4 (2024-08-08)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.18.1. Previous release still depended on 7.17.5.
+
+## 5.16.3 (2024-08-01)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.18.1.
+
+## 5.16.2 (2024-07-25)
+
+### Other Changes
+
+- When the trigger's connection property is set to a valid connection string instead of an informational name, the mistake will be detected and sensitive information will be redacted from the error message to avoid accidental capture in logs and similar mechanisms.
+
+## 5.16.1 (2024-06-13)
+
+### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`.
+
+## 5.16.0 (2024-05-30)
+
+### Features Added
+
+- Adding support for `ServiceBusSessionMessageActions` and `RenewMessageLock` use in the isolated worker model.
+
+## 5.15.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`.
+
+## 5.14.0 (2024-03-14)
+
+### Features Added
+
+- Added the `MaxMessageBatchSize` property to the `ServiceBusTrigger` attribute to allow configuring the maximum number of messages to process in a batch at the function level.
 
 ## 5.13.6 (2024-03-05)
 
@@ -24,9 +90,9 @@
 
 ### Other Changes
 
-- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be 
-  used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor 
-  improvement on macOS. This update also enables support for TLS 1.3. Additionally, this update contains a fix for 
+- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be
+  used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor
+  improvement on macOS. This update also enables support for TLS 1.3. Additionally, this update contains a fix for
   session messages to ensure FIFO ordering.
 
 ## 5.13.4 (2023-11-09)
@@ -40,7 +106,7 @@
 
 ### Bugs Fixed
 
-- Fixed issue where deadlettering a message without specifying properties to modify could throw 
+- Fixed issue where deadlettering a message without specifying properties to modify could throw
   an exception from out of proc extension.
 - Include underlying exception details in RpcException when a failure occurs.
 
@@ -54,7 +120,7 @@
 
 ### Bugs Fixed
 
-- Fixed the disposal pattern for cached Service Bus clients so that they are disposed only on 
+- Fixed the disposal pattern for cached Service Bus clients so that they are disposed only on
   host shutdown.
 
 ### Other Changes
@@ -76,7 +142,7 @@
 ### Bugs Fixed
 
 - When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
-  To detect if the function app is in Drain Mode, use dependency injection to inject the 
+  To detect if the function app is in Drain Mode, use dependency injection to inject the
   `IDrainModeManager`, and check the `IsDrainModeEnabled` property.
 
 ## 5.11.0 (2023-06-06)
@@ -141,7 +207,7 @@
 
 ### Bugs Fixed
 
-- `SessionIdleTimeout` now will be applied for batch functions in addition to single-message 
+- `SessionIdleTimeout` now will be applied for batch functions in addition to single-message
   functions.
 
 ## 5.5.1 (2022-06-07)

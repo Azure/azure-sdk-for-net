@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> Provisioning state of the service. </summary>
+    /// <summary> The provisioning state of the resource. </summary>
     public readonly partial struct ApiCenterProvisioningState : IEquatable<ApiCenterProvisioningState>
     {
         private readonly string _value;
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiCenter.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static ApiCenterProvisioningState Succeeded { get; } = new ApiCenterProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static ApiCenterProvisioningState Failed { get; } = new ApiCenterProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static ApiCenterProvisioningState Canceled { get; } = new ApiCenterProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ApiCenterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ApiCenterProvisioningState left, ApiCenterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiCenterProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ApiCenterProvisioningState left, ApiCenterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiCenterProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiCenterProvisioningState"/>. </summary>
         public static implicit operator ApiCenterProvisioningState(string value) => new ApiCenterProvisioningState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="location"> Location of database server. </param>
         /// <param name="version"> Version for database engine. </param>
         /// <param name="storageMb"> Storage size in MB for database server. </param>
-        /// <param name="sku"> SKU for the database server. </param>
+        /// <param name="sku"> SKU for the database server. This object is empty for PG single server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlServerMetadata(AzureLocation? location, string version, int? storageMb, ServerSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlServerMetadata(AzureLocation? location, string version, int? storageMb, PostgreSqlFlexibleServersServerSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Version = version;
@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Location of database server. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Version for database engine. </summary>
+        [WirePath("version")]
         public string Version { get; }
         /// <summary> Storage size in MB for database server. </summary>
+        [WirePath("storageMb")]
         public int? StorageMb { get; }
-        /// <summary> SKU for the database server. </summary>
-        public ServerSku Sku { get; }
+        /// <summary> SKU for the database server. This object is empty for PG single server. </summary>
+        [WirePath("sku")]
+        public PostgreSqlFlexibleServersServerSku Sku { get; }
     }
 }

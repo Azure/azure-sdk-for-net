@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Subscription.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.Subscription
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Subscription/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelRequest(string subscriptionId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         CanceledSubscriptionId value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CanceledSubscriptionId.DeserializeCanceledSubscriptionId(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,24 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         CanceledSubscriptionId value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CanceledSubscriptionId.DeserializeCanceledSubscriptionId(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameRequestUri(string subscriptionId, SubscriptionName body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Subscription/rename", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameRequest(string subscriptionId, SubscriptionName body)
@@ -119,7 +140,7 @@ namespace Azure.ResourceManager.Subscription
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -143,7 +164,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         RenamedSubscriptionId value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenamedSubscriptionId.DeserializeRenamedSubscriptionId(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,13 +191,24 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         RenamedSubscriptionId value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenamedSubscriptionId.DeserializeRenamedSubscriptionId(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEnableRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Subscription/enable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateEnableRequest(string subscriptionId)
@@ -212,7 +244,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         EnabledSubscriptionId value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnabledSubscriptionId.DeserializeEnabledSubscriptionId(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -237,13 +269,24 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         EnabledSubscriptionId value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnabledSubscriptionId.DeserializeEnabledSubscriptionId(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAcceptOwnershipRequestUri(string subscriptionId, AcceptOwnershipContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/acceptOwnership", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAcceptOwnershipRequest(string subscriptionId, AcceptOwnershipContent content)
@@ -261,7 +304,7 @@ namespace Azure.ResourceManager.Subscription
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -311,6 +354,17 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
+        internal RequestUriBuilder CreateAcceptOwnershipStatusRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/acceptOwnershipStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAcceptOwnershipStatusRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -344,7 +398,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         AcceptOwnershipStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.AcceptOwnershipStatus.DeserializeAcceptOwnershipStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +423,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         AcceptOwnershipStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.AcceptOwnershipStatus.DeserializeAcceptOwnershipStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

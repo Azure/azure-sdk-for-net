@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(GlobalMeshSupportFlag left, GlobalMeshSupportFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GlobalMeshSupportFlag"/> values are not the same. </summary>
         public static bool operator !=(GlobalMeshSupportFlag left, GlobalMeshSupportFlag right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GlobalMeshSupportFlag"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GlobalMeshSupportFlag"/>. </summary>
         public static implicit operator GlobalMeshSupportFlag(string value) => new GlobalMeshSupportFlag(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

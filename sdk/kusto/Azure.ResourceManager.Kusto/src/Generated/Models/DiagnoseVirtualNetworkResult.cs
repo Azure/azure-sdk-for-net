@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of network connectivity diagnostic finding. </summary>
+        [WirePath("findings")]
         public IReadOnlyList<string> Findings { get; }
     }
 }

@@ -1,0 +1,179 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.AppConfiguration
+    - sdk/provisioning/Azure.Provisioning.CognitiveServices
+    - sdk/provisioning/Azure.Provisioning.CosmosDB
+    - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.Kusto
+    - sdk/provisioning/Azure.Provisioning.PostgreSql
+    - sdk/provisioning/Azure.Provisioning.Redis
+    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
+    - sdk/provisioning/Azure.Provisioning.Search
+    - sdk/provisioning/Azure.Provisioning.ServiceBus
+    - sdk/provisioning/Azure.Provisioning.SignalR
+    - sdk/provisioning/Azure.Provisioning.Sql
+    - sdk/provisioning/Azure.Provisioning.Storage
+    - sdk/provisioning/Azure.Provisioning.WebPubSub
+    exclude:
+    - sdk/provisioning/Generator/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.AppConfiguration
+    - sdk/provisioning/Azure.Provisioning.CognitiveServices
+    - sdk/provisioning/Azure.Provisioning.CosmosDB
+    - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.Kusto
+    - sdk/provisioning/Azure.Provisioning.PostgreSql
+    - sdk/provisioning/Azure.Provisioning.Redis
+    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
+    - sdk/provisioning/Azure.Provisioning.Search
+    - sdk/provisioning/Azure.Provisioning.ServiceBus
+    - sdk/provisioning/Azure.Provisioning.SignalR
+    - sdk/provisioning/Azure.Provisioning.Sql
+    - sdk/provisioning/Azure.Provisioning.Storage
+    - sdk/provisioning/Azure.Provisioning.WebPubSub
+    exclude:
+    - sdk/provisioning/Generator/
+
+parameters:
+  - name: release_Azure_Provisioning
+    displayName: 'Azure.Provisioning'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_AppConfiguration
+    displayName: 'Azure.Provisioning.AppConfiguration'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_CognitiveServices
+    displayName: 'Azure.Provisioning.CognitiveServices'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_CosmosDB
+    displayName: 'Azure.Provisioning.CosmosDB'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_EventHubs
+    displayName: 'Azure.Provisioning.EventHubs'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_KeyVault
+    displayName: 'Azure.Provisioning.KeyVault'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Kusto
+    displayName: 'Azure.Provisioning.Kusto'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_PostgreSql
+    displayName: 'Azure.Provisioning.PostgreSql'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Redis
+    displayName: 'Azure.Provisioning.Redis'
+    type: boolean
+  - name: release_Azure_Provisioning_RedisEnterprise
+    displayName: 'Azure.Provisioning.RedisEnterprise'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Search
+    displayName: 'Azure.Provisioning.Search'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_ServiceBus
+    displayName: 'Azure.Provisioning.ServiceBus'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_SignalR
+    displayName: 'Azure.Provisioning.SignalR'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Sql
+    displayName: 'Azure.Provisioning.Sql'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Storage
+    displayName: 'Azure.Provisioning.Storage'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_WebPubSub
+    displayName: 'Azure.Provisioning.WebPubSub'
+    type: boolean
+    default: false
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SdkType: data
+    ServiceDirectory: provisioning
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Provisioning
+      safeName: AzureProvisioning
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning }}
+    - name: Azure.Provisioning.AppConfiguration
+      safeName: AzureProvisioningAppConfiguration
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_AppConfiguration }}
+    - name: Azure.Provisioning.CognitiveServices
+      safeName: AzureProvisioningCognitiveServices
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_CognitiveServices }}
+    - name: Azure.Provisioning.CosmosDB
+      safeName: AzureProvisioningCosmosDB
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_CosmosDB }}
+    - name: Azure.Provisioning.EventHubs
+      safeName: AzureProvisioningEventHubs
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_EventHubs }}
+    - name: Azure.Provisioning.KeyVault
+      safeName: AzureProvisioningKeyVault
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}
+    - name: Azure.Provisioning.Kusto
+      safeName: AzureProvisioningKusto
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
+    - name: Azure.Provisioning.PostgreSql
+      safeName: AzureProvisioningPostgreSql
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_PostgreSql }}
+    - name: Azure.Provisioning.Redis
+      safeName: AzureProvisioningRedis
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Redis }}
+    - name: Azure.Provisioning.RedisEnterprise
+      safeName: AzureProvisioningRedisEnterprise
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_RedisEnterprise }}
+    - name: Azure.Provisioning.Search
+      safeName: AzureProvisioningSearch
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Search }}
+    - name: Azure.Provisioning.ServiceBus
+      safeName: AzureProvisioningServiceBus
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_ServiceBus }}
+    - name: Azure.Provisioning.SignalR
+      safeName: AzureProvisioningSignalR
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_SignalR }}
+    - name: Azure.Provisioning.Sql
+      safeName: AzureProvisioningSql
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Sql }}
+    - name: Azure.Provisioning.Storage
+      safeName: AzureProvisioningStorage
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Storage }}
+    - name: Azure.Provisioning.WebPubSub
+      safeName: AzureProvisioningWebPubSub
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_WebPubSub }}

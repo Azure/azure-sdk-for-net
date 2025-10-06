@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -80,14 +79,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A description of the admin rule collection. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Groups for configuration. </summary>
+        [WirePath("properties.appliesToGroups")]
         public IList<NetworkManagerSecurityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

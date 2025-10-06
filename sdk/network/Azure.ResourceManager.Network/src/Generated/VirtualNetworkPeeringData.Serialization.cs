@@ -8,8 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,36 +19,30 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkPeeringData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkPeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkPeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -74,27 +69,37 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
-                JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
+                ((IJsonModel<WritableSubResource>)RemoteVirtualNetwork).Write(writer, options);
+            }
+            if (Optional.IsDefined(LocalAddressSpace))
+            {
+                writer.WritePropertyName("localAddressSpace"u8);
+                writer.WriteObjectValue(LocalAddressSpace, options);
+            }
+            if (Optional.IsDefined(LocalVirtualNetworkAddressSpace))
+            {
+                writer.WritePropertyName("localVirtualNetworkAddressSpace"u8);
+                writer.WriteObjectValue(LocalVirtualNetworkAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
-                writer.WriteObjectValue(RemoteAddressSpace);
+                writer.WriteObjectValue(RemoteAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
-                writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace);
+                writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteBgpCommunities))
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
-                writer.WriteObjectValue(RemoteBgpCommunities);
+                writer.WriteObjectValue(RemoteBgpCommunities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteVirtualNetworkEncryption))
             {
                 writer.WritePropertyName("remoteVirtualNetworkEncryption"u8);
-                writer.WriteObjectValue(RemoteVirtualNetworkEncryption);
+                writer.WriteObjectValue(RemoteVirtualNetworkEncryption, options);
             }
             if (Optional.IsDefined(PeeringState))
             {
@@ -121,21 +126,35 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(AreCompleteVnetsPeered))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("peerCompleteVnets"u8);
+                writer.WriteBooleanValue(AreCompleteVnetsPeered.Value);
+            }
+            if (Optional.IsDefined(EnableOnlyIPv6Peering))
+            {
+                writer.WritePropertyName("enableOnlyIPv6Peering"u8);
+                writer.WriteBooleanValue(EnableOnlyIPv6Peering.Value);
+            }
+            if (Optional.IsCollectionDefined(LocalSubnetNames))
+            {
+                writer.WritePropertyName("localSubnetNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocalSubnetNames)
                 {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteStringValue(item);
                 }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RemoteSubnetNames))
+            {
+                writer.WritePropertyName("remoteSubnetNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RemoteSubnetNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -145,7 +164,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +173,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkPeeringData DeserializeVirtualNetworkPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,8 +188,10 @@ namespace Azure.ResourceManager.Network
             bool? allowGatewayTransit = default;
             bool? useRemoteGateways = default;
             WritableSubResource remoteVirtualNetwork = default;
-            AddressSpace remoteAddressSpace = default;
-            AddressSpace remoteVirtualNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace localAddressSpace = default;
+            VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace remoteAddressSpace = default;
+            VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = default;
             VirtualNetworkBgpCommunities remoteBgpCommunities = default;
             VirtualNetworkEncryption remoteVirtualNetworkEncryption = default;
             VirtualNetworkPeeringState? peeringState = default;
@@ -178,8 +199,12 @@ namespace Azure.ResourceManager.Network
             NetworkProvisioningState? provisioningState = default;
             bool? doNotVerifyRemoteGateways = default;
             Guid? resourceGuid = default;
+            bool? peerCompleteVnets = default;
+            bool? enableOnlyIPv6Peering = default;
+            IList<string> localSubnetNames = default;
+            IList<string> remoteSubnetNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -265,7 +290,25 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVirtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            continue;
+                        }
+                        if (property0.NameEquals("localAddressSpace"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            localAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("localVirtualNetworkAddressSpace"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            localVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteAddressSpace"u8))
@@ -274,7 +317,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            remoteAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetworkAddressSpace"u8))
@@ -283,7 +326,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            remoteVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteBgpCommunities"u8))
@@ -349,15 +392,61 @@ namespace Azure.ResourceManager.Network
                             resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("peerCompleteVnets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peerCompleteVnets = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableOnlyIPv6Peering"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableOnlyIPv6Peering = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("localSubnetNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            localSubnetNames = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteSubnetNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            remoteSubnetNames = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkPeeringData(
                 id,
                 name,
@@ -369,6 +458,8 @@ namespace Azure.ResourceManager.Network
                 allowGatewayTransit,
                 useRemoteGateways,
                 remoteVirtualNetwork,
+                localAddressSpace,
+                localVirtualNetworkAddressSpace,
                 remoteAddressSpace,
                 remoteVirtualNetworkAddressSpace,
                 remoteBgpCommunities,
@@ -377,7 +468,436 @@ namespace Azure.ResourceManager.Network
                 peeringSyncLevel,
                 provisioningState,
                 doNotVerifyRemoteGateways,
-                resourceGuid);
+                resourceGuid,
+                peerCompleteVnets,
+                enableOnlyIPv6Peering,
+                localSubnetNames ?? new ChangeTrackingList<string>(),
+                remoteSubnetNames ?? new ChangeTrackingList<string>());
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowVirtualNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowVirtualNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowVirtualNetworkAccess))
+                {
+                    builder.Append("    allowVirtualNetworkAccess: ");
+                    var boolValue = AllowVirtualNetworkAccess.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowForwardedTraffic), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowForwardedTraffic: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowForwardedTraffic))
+                {
+                    builder.Append("    allowForwardedTraffic: ");
+                    var boolValue = AllowForwardedTraffic.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowGatewayTransit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowGatewayTransit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowGatewayTransit))
+                {
+                    builder.Append("    allowGatewayTransit: ");
+                    var boolValue = AllowGatewayTransit.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseRemoteGateways), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    useRemoteGateways: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseRemoteGateways))
+                {
+                    builder.Append("    useRemoteGateways: ");
+                    var boolValue = UseRemoteGateways.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RemoteVirtualNetworkId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteVirtualNetwork: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      remoteVirtualNetwork: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteVirtualNetwork))
+                {
+                    builder.Append("    remoteVirtualNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RemoteVirtualNetwork, options, 4, false, "    remoteVirtualNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalAddressSpace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localAddressSpace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalAddressSpace))
+                {
+                    builder.Append("    localAddressSpace: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LocalAddressSpace, options, 4, false, "    localAddressSpace: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalVirtualNetworkAddressSpace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localVirtualNetworkAddressSpace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalVirtualNetworkAddressSpace))
+                {
+                    builder.Append("    localVirtualNetworkAddressSpace: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LocalVirtualNetworkAddressSpace, options, 4, false, "    localVirtualNetworkAddressSpace: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteAddressSpace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteAddressSpace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteAddressSpace))
+                {
+                    builder.Append("    remoteAddressSpace: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RemoteAddressSpace, options, 4, false, "    remoteAddressSpace: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteVirtualNetworkAddressSpace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteVirtualNetworkAddressSpace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
+                {
+                    builder.Append("    remoteVirtualNetworkAddressSpace: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RemoteVirtualNetworkAddressSpace, options, 4, false, "    remoteVirtualNetworkAddressSpace: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteBgpCommunities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteBgpCommunities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteBgpCommunities))
+                {
+                    builder.Append("    remoteBgpCommunities: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RemoteBgpCommunities, options, 4, false, "    remoteBgpCommunities: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteVirtualNetworkEncryption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteVirtualNetworkEncryption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteVirtualNetworkEncryption))
+                {
+                    builder.Append("    remoteVirtualNetworkEncryption: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RemoteVirtualNetworkEncryption, options, 4, false, "    remoteVirtualNetworkEncryption: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peeringState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeeringState))
+                {
+                    builder.Append("    peeringState: ");
+                    builder.AppendLine($"'{PeeringState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringSyncLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peeringSyncLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeeringSyncLevel))
+                {
+                    builder.Append("    peeringSyncLevel: ");
+                    builder.AppendLine($"'{PeeringSyncLevel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoNotVerifyRemoteGateways), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    doNotVerifyRemoteGateways: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DoNotVerifyRemoteGateways))
+                {
+                    builder.Append("    doNotVerifyRemoteGateways: ");
+                    var boolValue = DoNotVerifyRemoteGateways.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGuid))
+                {
+                    builder.Append("    resourceGuid: ");
+                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AreCompleteVnetsPeered), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peerCompleteVnets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AreCompleteVnetsPeered))
+                {
+                    builder.Append("    peerCompleteVnets: ");
+                    var boolValue = AreCompleteVnetsPeered.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableOnlyIPv6Peering), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableOnlyIPv6Peering: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableOnlyIPv6Peering))
+                {
+                    builder.Append("    enableOnlyIPv6Peering: ");
+                    var boolValue = EnableOnlyIPv6Peering.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalSubnetNames), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localSubnetNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocalSubnetNames))
+                {
+                    if (LocalSubnetNames.Any())
+                    {
+                        builder.Append("    localSubnetNames: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocalSubnetNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSubnetNames), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteSubnetNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RemoteSubnetNames))
+                {
+                    if (RemoteSubnetNames.Any())
+                    {
+                        builder.Append("    remoteSubnetNames: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RemoteSubnetNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options)
@@ -387,9 +907,11 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -401,11 +923,11 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualNetworkPeeringData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -110,27 +110,33 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the attached data network resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </summary>
+        [WirePath("properties.userPlaneDataInterface")]
         public MobileNetworkInterfaceProperties UserPlaneDataInterface { get; set; }
         /// <summary> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </summary>
+        [WirePath("properties.dnsAddresses")]
         public IList<string> DnsAddresses { get; }
         /// <summary>
         /// The network address and port translation (NAPT) configuration.
         /// If this is not specified, the attached data network will use a default NAPT configuration with NAPT enabled.
         /// </summary>
+        [WirePath("properties.naptConfiguration")]
         public NaptConfiguration NaptConfiguration { get; set; }
         /// <summary>
         /// The user equipment (UE) address pool prefixes for the attached data network from which the packet core instance will dynamically assign IP addresses to UEs.
         /// The packet core instance assigns an IP address to a UE when the UE sets up a PDU session.
         ///  You must define at least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix. If you define both, they must be of the same size.
         /// </summary>
+        [WirePath("properties.userEquipmentAddressPoolPrefix")]
         public IList<string> UserEquipmentAddressPoolPrefix { get; }
         /// <summary>
         /// The user equipment (UE) address pool prefixes for the attached data network from which the packet core instance will assign static IP addresses to UEs.
         /// The packet core instance assigns an IP address to a UE when the UE sets up a PDU session. The static IP address for a specific UE is set in StaticIPConfiguration on the corresponding SIM resource.
         /// At least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix must be defined. If both are defined, they must be of the same size.
         /// </summary>
+        [WirePath("properties.userEquipmentStaticAddressPoolPrefix")]
         public IList<string> UserEquipmentStaticAddressPoolPrefix { get; }
     }
 }

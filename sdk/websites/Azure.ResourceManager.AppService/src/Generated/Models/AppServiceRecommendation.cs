@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -115,52 +114,76 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Timestamp when this instance was created. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
+        [WirePath("properties.recommendationId")]
         public Guid? RecommendationId { get; set; }
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </summary>
+        [WirePath("properties.resourceScope")]
         public ResourceScopeType? ResourceScope { get; set; }
         /// <summary> Unique name of the rule. </summary>
+        [WirePath("properties.ruleName")]
         public string RuleName { get; set; }
         /// <summary> UI friendly name of the rule (may not be unique). </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Recommendation text. </summary>
+        [WirePath("properties.message")]
         public string Message { get; set; }
         /// <summary> Level indicating how critical this recommendation can impact. </summary>
+        [WirePath("properties.level")]
         public NotificationLevel? Level { get; set; }
         /// <summary> List of channels that this recommendation can apply. </summary>
+        [WirePath("properties.channels")]
         public RecommendationChannel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation belongs to. </summary>
+        [WirePath("properties.categoryTags")]
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> Name of action recommended by this object. </summary>
+        [WirePath("properties.actionName")]
         public string ActionName { get; set; }
         /// <summary> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </summary>
+        [WirePath("properties.enabled")]
         public int? Enabled { get; set; }
         /// <summary> The list of states of this recommendation. If it's null then it should be considered "Active". </summary>
+        [WirePath("properties.states")]
         public IList<string> States { get; }
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end time in UTC of a range that the recommendation refers to. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </summary>
+        [WirePath("properties.nextNotificationTime")]
         public DateTimeOffset? NextNotificationOn { get; set; }
         /// <summary> Date and time in UTC when this notification expires. </summary>
+        [WirePath("properties.notificationExpirationTime")]
         public DateTimeOffset? NotificationExpirationOn { get; set; }
         /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </summary>
+        [WirePath("properties.notifiedTime")]
         public DateTimeOffset? NotifiedOn { get; set; }
         /// <summary> A metric value measured by the rule. </summary>
+        [WirePath("properties.score")]
         public double? Score { get; set; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>
+        [WirePath("properties.isDynamic")]
         public bool? IsDynamic { get; set; }
         /// <summary> Extension name of the portal if exists. </summary>
+        [WirePath("properties.extensionName")]
         public string ExtensionName { get; set; }
         /// <summary> Deep link to a blade on the portal. </summary>
+        [WirePath("properties.bladeName")]
         public string BladeName { get; set; }
         /// <summary> Forward link to an external document associated with the rule. </summary>
+        [WirePath("properties.forwardLink")]
         public string ForwardLink { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

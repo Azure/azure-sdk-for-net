@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -60,10 +59,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
         internal WritableSubResource VirtualHub { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId
         {
             get => VirtualHub is null ? default : VirtualHub.Id;
@@ -76,20 +77,28 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of all vpn connections to the gateway. </summary>
+        [WirePath("properties.connections")]
         public IList<VpnConnectionData> Connections { get; }
         /// <summary> Local network gateway's BGP speaker settings. </summary>
+        [WirePath("properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The provisioning state of the VPN gateway resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The scale unit for this vpn gateway. </summary>
+        [WirePath("properties.vpnGatewayScaleUnit")]
         public int? VpnGatewayScaleUnit { get; set; }
         /// <summary> List of all IPs configured on the gateway. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IReadOnlyList<VpnGatewayIPConfiguration> IPConfigurations { get; }
         /// <summary> Enable BGP routes translation for NAT on this VpnGateway. </summary>
+        [WirePath("properties.enableBgpRouteTranslationForNat")]
         public bool? EnableBgpRouteTranslationForNat { get; set; }
         /// <summary> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </summary>
+        [WirePath("properties.isRoutingPreferenceInternet")]
         public bool? IsRoutingPreferenceInternet { get; set; }
         /// <summary> List of all the nat Rules associated with the gateway. </summary>
+        [WirePath("properties.natRules")]
         public IList<VpnGatewayNatRuleData> NatRules { get; }
     }
 }

@@ -53,14 +53,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         /// <param name="name"> The name of the identity source. </param>
         /// <param name="alias"> The domain's NetBIOS name. </param>
-        /// <param name="domain"> The domain's dns name. </param>
+        /// <param name="domain"> The domain's DNS name. </param>
         /// <param name="baseUserDN"> The base distinguished name for users. </param>
         /// <param name="baseGroupDN"> The base distinguished name for groups. </param>
         /// <param name="primaryServer"> Primary server URL. </param>
         /// <param name="secondaryServer"> Secondary server URL. </param>
         /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
-        /// <param name="username"> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </param>
-        /// <param name="password"> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </param>
+        /// <param name="username">
+        /// The ID of an Active Directory user with a minimum of read-only access to Base
+        /// DN for users and group
+        /// </param>
+        /// <param name="password">
+        /// The password of the Active Directory user with a minimum of read-only access to
+        /// Base DN for users and groups.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.Avs.Models
         public string Name { get; set; }
         /// <summary> The domain's NetBIOS name. </summary>
         public string Alias { get; set; }
-        /// <summary> The domain's dns name. </summary>
+        /// <summary> The domain's DNS name. </summary>
         public string Domain { get; set; }
         /// <summary> The base distinguished name for users. </summary>
         public string BaseUserDN { get; set; }
@@ -93,9 +99,15 @@ namespace Azure.ResourceManager.Avs.Models
         public Uri SecondaryServer { get; set; }
         /// <summary> Protect LDAP communication using SSL certificate (LDAPS). </summary>
         public SslCertificateStatus? Ssl { get; set; }
-        /// <summary> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </summary>
+        /// <summary>
+        /// The ID of an Active Directory user with a minimum of read-only access to Base
+        /// DN for users and group
+        /// </summary>
         public string Username { get; set; }
-        /// <summary> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </summary>
+        /// <summary>
+        /// The password of the Active Directory user with a minimum of read-only access to
+        /// Base DN for users and groups.
+        /// </summary>
         public string Password { get; set; }
     }
 }

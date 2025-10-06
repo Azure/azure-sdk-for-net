@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -74,18 +73,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> List of hops between the source and the destination. </summary>
+        [WirePath("hops")]
         public IReadOnlyList<ConnectivityHop> Hops { get; }
         /// <summary> The connection status. </summary>
+        [WirePath("connectionStatus")]
         public ConnectionStatus? ConnectionStatus { get; }
         /// <summary> Average latency in milliseconds. </summary>
+        [WirePath("avgLatencyInMs")]
         public long? AvgLatencyInMs { get; }
         /// <summary> Minimum latency in milliseconds. </summary>
+        [WirePath("minLatencyInMs")]
         public long? MinLatencyInMs { get; }
         /// <summary> Maximum latency in milliseconds. </summary>
+        [WirePath("maxLatencyInMs")]
         public long? MaxLatencyInMs { get; }
         /// <summary> Total number of probes sent. </summary>
+        [WirePath("probesSent")]
         public long? ProbesSent { get; }
         /// <summary> Number of failed probes. </summary>
+        [WirePath("probesFailed")]
         public long? ProbesFailed { get; }
     }
 }

@@ -21,9 +21,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="name"> Name of data source credential. </param>
         /// <param name="description"> Description of data source credential. </param>
         /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
-        public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
+        public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = null, string id = null, string name = null, string description = null)
         {
-            return new UnknownDataSourceCredential(credentialKind, id, name, description);
+            return new UnknownDataSourceCredential(credentialKind == null ? default : new DataSourceCredentialKind(credentialKind), id, name, description);
         }
     }
 }

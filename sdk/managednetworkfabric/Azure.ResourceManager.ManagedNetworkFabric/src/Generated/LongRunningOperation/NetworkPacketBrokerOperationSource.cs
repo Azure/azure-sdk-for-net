@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkPacketBrokerResource IOperationSource<NetworkPacketBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return new NetworkPacketBrokerResource(_client, data);
         }
 
         async ValueTask<NetworkPacketBrokerResource> IOperationSource<NetworkPacketBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement);
-            return new NetworkPacketBrokerResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            return await Task.FromResult(new NetworkPacketBrokerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

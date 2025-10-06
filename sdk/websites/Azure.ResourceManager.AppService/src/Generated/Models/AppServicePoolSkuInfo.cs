@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
         /// <summary> Name and tier of the SKU. </summary>
+        [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; }
         /// <summary> Min, max, and default scale values of the SKU. </summary>
+        [WirePath("capacity")]
         public AppServiceSkuCapacity Capacity { get; }
     }
 }

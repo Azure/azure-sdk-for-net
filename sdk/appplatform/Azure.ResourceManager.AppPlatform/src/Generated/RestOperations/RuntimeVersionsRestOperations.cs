@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppPlatform.Models;
@@ -35,6 +34,15 @@ namespace Azure.ResourceManager.AppPlatform
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRuntimeVersionsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/runtimeVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRuntimeVersionsRequest()
@@ -63,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AvailableRuntimeVersions value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableRuntimeVersions.DeserializeAvailableRuntimeVersions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -83,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AvailableRuntimeVersions value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableRuntimeVersions.DeserializeAvailableRuntimeVersions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

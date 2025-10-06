@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Log level. </summary>
+        [WirePath("level")]
         public WebAppLogLevel? Level { get; set; }
         /// <summary> SAS URL to an Azure table with add/query/delete permissions. </summary>
+        [WirePath("sasUrl")]
         public string SasUriString { get; set; }
     }
 }

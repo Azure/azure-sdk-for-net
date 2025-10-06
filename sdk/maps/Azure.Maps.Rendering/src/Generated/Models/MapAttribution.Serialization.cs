@@ -39,5 +39,13 @@ namespace Azure.Maps.Rendering
             }
             return new MapAttribution(copyrights ?? new ChangeTrackingList<string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapAttribution FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMapAttribution(document.RootElement);
+        }
     }
 }

@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.3.0-beta.1</Version>
+    <Version>1.3.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.2</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.KeyVault</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.KeyVault.</Description>
     <PackageTags>azure;management;keyvault</PackageTags>

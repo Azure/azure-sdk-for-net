@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Current access rules version. </summary>
+        [WirePath("accessRulesVersion")]
         public string AccessRulesVersion { get; }
         /// <summary> List of Access Rules. </summary>
+        [WirePath("accessRules")]
         public IReadOnlyList<EventHubsNspAccessRule> AccessRules { get; }
     }
 }

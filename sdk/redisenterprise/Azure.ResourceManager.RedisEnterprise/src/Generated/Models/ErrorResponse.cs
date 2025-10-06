@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -61,6 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The error object. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

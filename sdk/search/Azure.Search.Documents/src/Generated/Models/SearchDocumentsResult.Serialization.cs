@@ -5,17 +5,163 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SearchDocumentsResult
+    internal partial class SearchDocumentsResult : IUtf8JsonSerializable, IJsonModel<SearchDocumentsResult>
     {
-        internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchDocumentsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SearchDocumentsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("@odata.count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Coverage))
+            {
+                writer.WritePropertyName("@search.coverage"u8);
+                writer.WriteNumberValue(Coverage.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Facets))
+            {
+                writer.WritePropertyName("@search.facets"u8);
+                writer.WriteStartObject();
+                foreach (var item in Facets)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartArray();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WriteObjectValue(item0, options);
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Answers))
+            {
+                if (Answers != null)
+                {
+                    writer.WritePropertyName("@search.answers"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Answers)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("@search.answers");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(DebugInfo))
+            {
+                if (DebugInfo != null)
+                {
+                    writer.WritePropertyName("@search.debug"u8);
+                    writer.WriteObjectValue(DebugInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("@search.debug");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextPageParameters))
+            {
+                writer.WritePropertyName("@search.nextPageParameters"u8);
+                writer.WriteObjectValue(NextPageParameters, options);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Results)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SemanticPartialResponseReason))
+            {
+                writer.WritePropertyName("@search.semanticPartialResponseReason"u8);
+                writer.WriteStringValue(SemanticPartialResponseReason.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SemanticPartialResponseType))
+            {
+                writer.WritePropertyName("@search.semanticPartialResponseType"u8);
+                writer.WriteStringValue(SemanticPartialResponseType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SemanticQueryRewritesResultType))
+            {
+                writer.WritePropertyName("@search.semanticQueryRewritesResultType"u8);
+                writer.WriteStringValue(SemanticQueryRewritesResultType.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        SearchDocumentsResult IJsonModel<SearchDocumentsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchDocumentsResult(document.RootElement, options);
+        }
+
+        internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,11 +170,15 @@ namespace Azure.Search.Documents.Models
             double? searchCoverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyList<QueryAnswerResult> searchAnswers = default;
+            DebugInfo searchDebug = default;
             SearchOptions searchNextPageParameters = default;
-            SemanticErrorReason? searchSemanticPartialResponseReason = default;
-            SemanticSearchResultsType? searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
             string odataNextLink = default;
+            SemanticErrorReason? searchSemanticPartialResponseReason = default;
+            SemanticSearchResultsType? searchSemanticPartialResponseType = default;
+            SemanticQueryRewritesResultType? searchSemanticQueryRewritesResultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -67,7 +217,7 @@ namespace Azure.Search.Documents.Models
                             List<FacetResult> array = new List<FacetResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FacetResult.DeserializeFacetResult(item));
+                                array.Add(FacetResult.DeserializeFacetResult(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -85,9 +235,19 @@ namespace Azure.Search.Documents.Models
                     List<QueryAnswerResult> array = new List<QueryAnswerResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item));
+                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item, options));
                     }
                     searchAnswers = array;
+                    continue;
+                }
+                if (property.NameEquals("@search.debug"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchDebug = null;
+                        continue;
+                    }
+                    searchDebug = DebugInfo.DeserializeDebugInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@search.nextPageParameters"u8))
@@ -96,7 +256,22 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("value"u8))
+                {
+                    List<SearchResult> array = new List<SearchResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchResult.DeserializeSearchResult(item, options));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@search.semanticPartialResponseReason"u8))
@@ -117,32 +292,81 @@ namespace Azure.Search.Documents.Models
                     searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("@search.semanticQueryRewritesResultType"u8))
                 {
-                    List<SearchResult> array = new List<SearchResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        continue;
                     }
-                    value = array;
+                    searchSemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.nextLink"u8))
+                if (options.Format != "W")
                 {
-                    odataNextLink = property.Value.GetString();
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchDocumentsResult(
                 odataCount,
                 searchCoverage,
                 searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
                 searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                searchDebug,
                 searchNextPageParameters,
+                value,
+                odataNextLink,
                 searchSemanticPartialResponseReason,
                 searchSemanticPartialResponseType,
-                value,
-                odataNextLink);
+                searchSemanticQueryRewritesResultType,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchDocumentsResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchDocumentsResult IPersistableModel<SearchDocumentsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchDocumentsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchDocumentsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchDocumentsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchDocumentsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchDocumentsResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

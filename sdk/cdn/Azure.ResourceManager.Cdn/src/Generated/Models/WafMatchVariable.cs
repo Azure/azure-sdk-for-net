@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Match variable to compare against. </summary>
+    /// <summary>
+    /// Match variable to compare against.
+    /// Serialized Name: WafMatchVariable
+    /// </summary>
     public readonly partial struct WafMatchVariable : IEquatable<WafMatchVariable>
     {
         private readonly string _value;
@@ -32,29 +35,56 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CookiesValue = "Cookies";
         private const string PostArgsValue = "PostArgs";
 
-        /// <summary> RemoteAddr. </summary>
+        /// <summary>
+        /// RemoteAddr
+        /// Serialized Name: WafMatchVariable.RemoteAddr
+        /// </summary>
         public static WafMatchVariable RemoteAddr { get; } = new WafMatchVariable(RemoteAddrValue);
-        /// <summary> SocketAddr. </summary>
+        /// <summary>
+        /// SocketAddr
+        /// Serialized Name: WafMatchVariable.SocketAddr
+        /// </summary>
         public static WafMatchVariable SocketAddr { get; } = new WafMatchVariable(SocketAddrValue);
-        /// <summary> RequestMethod. </summary>
+        /// <summary>
+        /// RequestMethod
+        /// Serialized Name: WafMatchVariable.RequestMethod
+        /// </summary>
         public static WafMatchVariable RequestMethod { get; } = new WafMatchVariable(RequestMethodValue);
-        /// <summary> RequestHeader. </summary>
+        /// <summary>
+        /// RequestHeader
+        /// Serialized Name: WafMatchVariable.RequestHeader
+        /// </summary>
         public static WafMatchVariable RequestHeader { get; } = new WafMatchVariable(RequestHeaderValue);
-        /// <summary> RequestUri. </summary>
+        /// <summary>
+        /// RequestUri
+        /// Serialized Name: WafMatchVariable.RequestUri
+        /// </summary>
         public static WafMatchVariable RequestUri { get; } = new WafMatchVariable(RequestUriValue);
-        /// <summary> QueryString. </summary>
+        /// <summary>
+        /// QueryString
+        /// Serialized Name: WafMatchVariable.QueryString
+        /// </summary>
         public static WafMatchVariable QueryString { get; } = new WafMatchVariable(QueryStringValue);
-        /// <summary> RequestBody. </summary>
+        /// <summary>
+        /// RequestBody
+        /// Serialized Name: WafMatchVariable.RequestBody
+        /// </summary>
         public static WafMatchVariable RequestBody { get; } = new WafMatchVariable(RequestBodyValue);
-        /// <summary> Cookies. </summary>
+        /// <summary>
+        /// Cookies
+        /// Serialized Name: WafMatchVariable.Cookies
+        /// </summary>
         public static WafMatchVariable Cookies { get; } = new WafMatchVariable(CookiesValue);
-        /// <summary> PostArgs. </summary>
+        /// <summary>
+        /// PostArgs
+        /// Serialized Name: WafMatchVariable.PostArgs
+        /// </summary>
         public static WafMatchVariable PostArgs { get; } = new WafMatchVariable(PostArgsValue);
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are the same. </summary>
         public static bool operator ==(WafMatchVariable left, WafMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are not the same. </summary>
         public static bool operator !=(WafMatchVariable left, WafMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafMatchVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMatchVariable"/>. </summary>
         public static implicit operator WafMatchVariable(string value) => new WafMatchVariable(value);
 
         /// <inheritdoc />
@@ -65,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

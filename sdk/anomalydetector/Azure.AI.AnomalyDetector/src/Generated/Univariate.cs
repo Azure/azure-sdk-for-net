@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -134,8 +133,8 @@ namespace Azure.AI.AnomalyDetector
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectUnivariateLastPointAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(UnivariateLastDetectionResult.FromResponse(response), response);
         }
@@ -153,8 +152,8 @@ namespace Azure.AI.AnomalyDetector
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectUnivariateLastPoint(content, context);
             return Response.FromValue(UnivariateLastDetectionResult.FromResponse(response), response);
         }
@@ -247,8 +246,8 @@ namespace Azure.AI.AnomalyDetector
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectUnivariateChangePointAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(UnivariateChangePointDetectionResult.FromResponse(response), response);
         }
@@ -263,8 +262,8 @@ namespace Azure.AI.AnomalyDetector
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectUnivariateChangePoint(content, context);
             return Response.FromValue(UnivariateChangePointDetectionResult.FromResponse(response), response);
         }

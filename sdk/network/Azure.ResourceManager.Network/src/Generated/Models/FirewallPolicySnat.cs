@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of private IP addresses/IP address ranges to not be SNAT. </summary>
+        [WirePath("privateRanges")]
         public IList<string> PrivateRanges { get; }
         /// <summary> The operation mode for automatically learning private ranges to not be SNAT. </summary>
+        [WirePath("autoLearnPrivateRanges")]
         public AutoLearnPrivateRangesMode? AutoLearnPrivateRanges { get; set; }
     }
 }

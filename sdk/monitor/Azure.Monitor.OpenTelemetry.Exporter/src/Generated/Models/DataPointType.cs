@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static bool operator ==(DataPointType left, DataPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataPointType"/> values are not the same. </summary>
         public static bool operator !=(DataPointType left, DataPointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataPointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPointType"/>. </summary>
         public static implicit operator DataPointType(string value) => new DataPointType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

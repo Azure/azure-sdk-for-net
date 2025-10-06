@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSku"/>. </summary>
-        /// <param name="name"> The name of this Bastion Host. </param>
+        /// <param name="name"> The name of the sku of this Bastion Host. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSku(BastionHostSkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.Network.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of this Bastion Host. </summary>
+        /// <summary> The name of the sku of this Bastion Host. </summary>
+        [WirePath("name")]
         public BastionHostSkuName? Name { get; set; }
     }
 }

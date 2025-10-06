@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Script that's run every time the machine starts. </summary>
+        [WirePath("startupScript")]
         public MachineLearningScriptReference StartupScript { get; set; }
         /// <summary> Script that's run only once during provision of the compute. </summary>
+        [WirePath("creationScript")]
         public MachineLearningScriptReference CreationScript { get; set; }
     }
 }

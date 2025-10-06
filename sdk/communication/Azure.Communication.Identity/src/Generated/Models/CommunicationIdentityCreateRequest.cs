@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.Identity;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -20,14 +19,18 @@ namespace Azure.Communication.Identity.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityCreateRequest"/>. </summary>
+        /// <param name="customId"> Set to tag the identity with your own id, Maximum length is 256 characters. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
-        internal CommunicationIdentityCreateRequest(IList<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
+        internal CommunicationIdentityCreateRequest(string customId, IList<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
         {
+            CustomId = customId;
             CreateTokenWithScopes = createTokenWithScopes;
             ExpiresInMinutes = expiresInMinutes;
         }
 
+        /// <summary> Set to tag the identity with your own id, Maximum length is 256 characters. </summary>
+        public string CustomId { get; set; }
         /// <summary> Also create access token for the created identity. </summary>
         public IList<CommunicationTokenScope> CreateTokenWithScopes { get; }
         /// <summary> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </summary>

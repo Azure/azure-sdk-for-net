@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Managed Certificate used for https. </summary>
+    /// <summary>
+    /// Managed Certificate used for https
+    /// Serialized Name: ManagedCertificateParameters
+    /// </summary>
     public partial class ManagedCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
@@ -20,10 +23,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
-        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="secretType">
+        /// The type of the secret resource.
+        /// Serialized Name: SecretParameters.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expiresOn"> Certificate expiration date. </param>
+        /// <param name="subject">
+        /// Subject name in the certificate.
+        /// Serialized Name: ManagedCertificateParameters.subject
+        /// </param>
+        /// <param name="expiresOn">
+        /// Certificate expiration date.
+        /// Serialized Name: ManagedCertificateParameters.expirationDate
+        /// </param>
         internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, string subject, DateTimeOffset? expiresOn) : base(secretType, serializedAdditionalRawData)
         {
             Subject = subject;
@@ -31,9 +43,15 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType = secretType;
         }
 
-        /// <summary> Subject name in the certificate. </summary>
+        /// <summary>
+        /// Subject name in the certificate.
+        /// Serialized Name: ManagedCertificateParameters.subject
+        /// </summary>
         public string Subject { get; }
-        /// <summary> Certificate expiration date. </summary>
+        /// <summary>
+        /// Certificate expiration date.
+        /// Serialized Name: ManagedCertificateParameters.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpiresOn { get; }
     }
 }

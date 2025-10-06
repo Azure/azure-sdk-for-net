@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -28,11 +27,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="articles"> The set of articles to remove. </param>
-        internal ElisionTokenFilter(string oDataType, string name, IList<string> articles) : base(oDataType, name)
+        internal ElisionTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> articles) : base(oDataType, name, serializedAdditionalRawData)
         {
             Articles = articles;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.ElisionTokenFilter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/> for deserialization. </summary>
+        internal ElisionTokenFilter()
+        {
         }
     }
 }

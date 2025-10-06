@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
@@ -34,8 +33,68 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && !(metrics is ChangeTrackingList<LogMetric> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("granularity", granularity.ToString(), true);
+            if (groupBy != null && !(groupBy is ChangeTrackingList<LogMetricsGroupBy> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param.ToString(), true);
+                }
+            }
+            if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in continents)
+                {
+                    uri.AppendQuery("continents", param, true);
+                }
+            }
+            if (countryOrRegions != null && !(countryOrRegions is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in countryOrRegions)
+                {
+                    uri.AppendQuery("countryOrRegions", param, true);
+                }
+            }
+            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var param in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param, true);
+                }
+            }
+            if (protocols != null && !(protocols is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var param in protocols)
+                {
+                    uri.AppendQuery("protocols", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
@@ -105,8 +164,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -136,7 +195,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         MetricsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricsResponse.DeserializeMetricsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -146,8 +205,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -177,13 +236,52 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         MetricsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricsResponse.DeserializeMetricsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsRankings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (rankings != null && !(rankings is ChangeTrackingList<LogRanking> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in rankings)
+                {
+                    uri.AppendQuery("rankings", param.ToString(), true);
+                }
+            }
+            if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("maxRanking", maxRanking, true);
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
@@ -232,8 +330,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
@@ -259,7 +357,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         RankingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,8 +367,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
@@ -296,13 +394,28 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         RankingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsLocationsRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string subscriptionId, string resourceGroupName, string profileName)
@@ -327,8 +440,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -346,7 +459,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ContinentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -356,8 +469,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -375,13 +488,28 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ContinentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsResourcesRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsResourcesRequest(string subscriptionId, string resourceGroupName, string profileName)
@@ -406,8 +534,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -425,7 +553,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ResourcesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourcesResponse.DeserializeResourcesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -435,8 +563,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -454,13 +582,59 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ResourcesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourcesResponse.DeserializeResourcesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWafLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getWafLogAnalyticsMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("granularity", granularity.ToString(), true);
+            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in actions)
+                {
+                    uri.AppendQuery("actions", param.ToString(), true);
+                }
+            }
+            if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param.ToString(), true);
+                }
+            }
+            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWafLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
@@ -516,8 +690,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -543,7 +717,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         WafMetricsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WafMetricsResponse.DeserializeWafMetricsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,8 +727,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -580,13 +754,59 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         WafMetricsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WafMetricsResponse.DeserializeWafMetricsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWafLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getWafLogAnalyticsRankings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("maxRanking", maxRanking, true);
+            if (rankings != null && !(rankings is ChangeTrackingList<WafRankingType> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in rankings)
+                {
+                    uri.AppendQuery("rankings", param.ToString(), true);
+                }
+            }
+            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in actions)
+                {
+                    uri.AppendQuery("actions", param.ToString(), true);
+                }
+            }
+            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWafLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
@@ -642,8 +862,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -670,7 +890,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         WafRankingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WafRankingsResponse.DeserializeWafRankingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -680,8 +900,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -708,7 +928,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         WafRankingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WafRankingsResponse.DeserializeWafRankingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

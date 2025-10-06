@@ -85,12 +85,15 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The identity used to retrieve the encryption key from Azure key vault. </summary>
+        [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> The provisioning state of the SIM group resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A key to encrypt the SIM data that belongs to this SIM group. </summary>
         internal KeyVaultKey EncryptionKey { get; set; }
         /// <summary> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </summary>
+        [WirePath("properties.encryptionKey.keyUrl")]
         public Uri KeyUri
         {
             get => EncryptionKey is null ? default : EncryptionKey.KeyUri;
@@ -105,6 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </summary>
         internal WritableSubResource MobileNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.mobileNetwork.id")]
         public ResourceIdentifier MobileNetworkId
         {
             get => MobileNetwork is null ? default : MobileNetwork.Id;

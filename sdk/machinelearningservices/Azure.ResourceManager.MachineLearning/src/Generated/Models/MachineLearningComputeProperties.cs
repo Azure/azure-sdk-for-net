@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Machine Learning compute object.
     /// Please note <see cref="MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/> and <see cref="MachineLearningVirtualMachineCompute"/>.
+    /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/> and <see cref="MachineLearningVirtualMachineCompute"/>.
     /// </summary>
     public abstract partial class MachineLearningComputeProperties
     {
@@ -87,22 +86,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The type of compute. </summary>
         internal ComputeType ComputeType { get; set; }
         /// <summary> Location for the underlying compute. </summary>
+        [WirePath("computeLocation")]
         public string ComputeLocation { get; set; }
         /// <summary> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </summary>
+        [WirePath("provisioningState")]
         public MachineLearningProvisioningState? ProvisioningState { get; }
         /// <summary> The description of the Machine Learning compute. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> The time at which the compute was created. </summary>
+        [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time at which the compute was last modified. </summary>
+        [WirePath("modifiedOn")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> ARM resource id of the underlying compute. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Errors during provisioning. </summary>
+        [WirePath("provisioningErrors")]
         public IReadOnlyList<MachineLearningError> ProvisioningErrors { get; }
         /// <summary> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </summary>
+        [WirePath("isAttachedCompute")]
         public bool? IsAttachedCompute { get; }
         /// <summary> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Mocking
 {

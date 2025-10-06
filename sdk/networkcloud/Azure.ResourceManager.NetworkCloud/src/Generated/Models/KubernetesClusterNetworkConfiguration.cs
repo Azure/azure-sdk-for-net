@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -65,20 +64,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterNetworkConfiguration"/>. </summary>
         /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the cluster for use by the workloads that run on this Kubernetes cluster. </param>
-        /// <param name="bgpServiceLoadBalancerConfiguration"> The configuration of the BGP service load balancer for this Kubernetes cluster. </param>
+        /// <param name="bgpServiceLoadBalancerConfiguration"> The configuration of the BGP service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </param>
         /// <param name="cloudServicesNetworkId"> The resource ID of the associated Cloud Services network. </param>
         /// <param name="cniNetworkId"> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </param>
         /// <param name="dnsServiceIP"> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </param>
+        /// <param name="l2ServiceLoadBalancerConfiguration"> The configuration of the Layer 2 service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </param>
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration, ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId, IPAddress dnsServiceIP, IList<string> podCidrs, IList<string> serviceCidrs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration, ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId, IPAddress dnsServiceIP, L2ServiceLoadBalancerConfiguration l2ServiceLoadBalancerConfiguration, IList<string> podCidrs, IList<string> serviceCidrs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AttachedNetworkConfiguration = attachedNetworkConfiguration;
             BgpServiceLoadBalancerConfiguration = bgpServiceLoadBalancerConfiguration;
             CloudServicesNetworkId = cloudServicesNetworkId;
             CniNetworkId = cniNetworkId;
             DnsServiceIP = dnsServiceIP;
+            L2ServiceLoadBalancerConfiguration = l2ServiceLoadBalancerConfiguration;
             PodCidrs = podCidrs;
             ServiceCidrs = serviceCidrs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The configuration of networks being attached to the cluster for use by the workloads that run on this Kubernetes cluster. </summary>
         public AttachedNetworkConfiguration AttachedNetworkConfiguration { get; set; }
-        /// <summary> The configuration of the BGP service load balancer for this Kubernetes cluster. </summary>
+        /// <summary> The configuration of the BGP service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </summary>
         public BgpServiceLoadBalancerConfiguration BgpServiceLoadBalancerConfiguration { get; set; }
         /// <summary> The resource ID of the associated Cloud Services network. </summary>
         public ResourceIdentifier CloudServicesNetworkId { get; set; }
@@ -99,6 +100,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ResourceIdentifier CniNetworkId { get; set; }
         /// <summary> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </summary>
         public IPAddress DnsServiceIP { get; set; }
+        /// <summary> The configuration of the Layer 2 service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </summary>
+        internal L2ServiceLoadBalancerConfiguration L2ServiceLoadBalancerConfiguration { get; set; }
+        /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
+        public IList<IPAddressPool> L2ServiceLoadBalancerIPAddressPools
+        {
+            get
+            {
+                if (L2ServiceLoadBalancerConfiguration is null)
+                    L2ServiceLoadBalancerConfiguration = new L2ServiceLoadBalancerConfiguration();
+                return L2ServiceLoadBalancerConfiguration.IPAddressPools;
+            }
+        }
+
         /// <summary> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </summary>
         public IList<string> PodCidrs { get; }
         /// <summary> The CIDR notation IP ranges from which to assign service IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </summary>

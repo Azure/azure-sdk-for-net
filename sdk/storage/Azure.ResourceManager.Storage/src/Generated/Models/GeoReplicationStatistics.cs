@@ -54,20 +54,38 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="status"> The status of the secondary location. Possible values are: - Live: Indicates that the secondary location is active and operational. - Bootstrap: Indicates initial synchronization from the primary location to the secondary location is in progress.This typically occurs when replication is first enabled. - Unavailable: Indicates that the secondary location is temporarily unavailable. </param>
         /// <param name="lastSyncOn"> All primary writes preceding this UTC date/time value are guaranteed to be available for read operations. Primary writes following this point in time may or may not be available for reads. Element may be default value if value of LastSyncTime is not available, this can happen if secondary is offline or we are in bootstrap. </param>
         /// <param name="canFailover"> A boolean flag which indicates whether or not account failover is supported for the account. </param>
+        /// <param name="canPlannedFailover"> A boolean flag which indicates whether or not planned account failover is supported for the account. </param>
+        /// <param name="postFailoverRedundancy"> The redundancy type of the account after an account failover is performed. </param>
+        /// <param name="postPlannedFailoverRedundancy"> The redundancy type of the account after a planned account failover is performed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoReplicationStatistics(GeoReplicationStatus? status, DateTimeOffset? lastSyncOn, bool? canFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GeoReplicationStatistics(GeoReplicationStatus? status, DateTimeOffset? lastSyncOn, bool? canFailover, bool? canPlannedFailover, PostFailoverRedundancy? postFailoverRedundancy, PostPlannedFailoverRedundancy? postPlannedFailoverRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             LastSyncOn = lastSyncOn;
             CanFailover = canFailover;
+            CanPlannedFailover = canPlannedFailover;
+            PostFailoverRedundancy = postFailoverRedundancy;
+            PostPlannedFailoverRedundancy = postPlannedFailoverRedundancy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the secondary location. Possible values are: - Live: Indicates that the secondary location is active and operational. - Bootstrap: Indicates initial synchronization from the primary location to the secondary location is in progress.This typically occurs when replication is first enabled. - Unavailable: Indicates that the secondary location is temporarily unavailable. </summary>
+        [WirePath("status")]
         public GeoReplicationStatus? Status { get; }
         /// <summary> All primary writes preceding this UTC date/time value are guaranteed to be available for read operations. Primary writes following this point in time may or may not be available for reads. Element may be default value if value of LastSyncTime is not available, this can happen if secondary is offline or we are in bootstrap. </summary>
+        [WirePath("lastSyncTime")]
         public DateTimeOffset? LastSyncOn { get; }
         /// <summary> A boolean flag which indicates whether or not account failover is supported for the account. </summary>
+        [WirePath("canFailover")]
         public bool? CanFailover { get; }
+        /// <summary> A boolean flag which indicates whether or not planned account failover is supported for the account. </summary>
+        [WirePath("canPlannedFailover")]
+        public bool? CanPlannedFailover { get; }
+        /// <summary> The redundancy type of the account after an account failover is performed. </summary>
+        [WirePath("postFailoverRedundancy")]
+        public PostFailoverRedundancy? PostFailoverRedundancy { get; }
+        /// <summary> The redundancy type of the account after a planned account failover is performed. </summary>
+        [WirePath("postPlannedFailoverRedundancy")]
+        public PostPlannedFailoverRedundancy? PostPlannedFailoverRedundancy { get; }
     }
 }

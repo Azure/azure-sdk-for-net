@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The registration state of the feature for the subscription. </summary>
+        [WirePath("state")]
         public string State { get; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ManagedNetworkGroupResource IOperationSource<ManagedNetworkGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedNetworkGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkContext.Default);
             return new ManagedNetworkGroupResource(_client, data);
         }
 
         async ValueTask<ManagedNetworkGroupResource> IOperationSource<ManagedNetworkGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(document.RootElement);
-            return new ManagedNetworkGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedNetworkGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkContext.Default);
+            return await Task.FromResult(new ManagedNetworkGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

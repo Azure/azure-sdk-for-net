@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="status"> Status of the cluster agent. </param>
+        /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. </param>
         /// <param name="cloudId"> Unique, immutable resource id. </param>
         /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
         /// <param name="aadClientId"> App id of cluster AAD identity. </param>
@@ -74,8 +75,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
         /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
         /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
+        /// <param name="logCollectionProperties"> Log Collection properties of the cluster. </param>
+        /// <param name="remoteSupportProperties"> RemoteSupport properties of the cluster. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
         /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
+        /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
         /// <param name="billingModel"> Type of billing applied to the resource. </param>
         /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
@@ -88,10 +92,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
+            ConnectivityStatus = connectivityStatus;
             CloudId = cloudId;
             CloudManagementEndpoint = cloudManagementEndpoint;
             AadClientId = aadClientId;
@@ -99,8 +104,11 @@ namespace Azure.ResourceManager.Hci
             AadApplicationObjectId = aadApplicationObjectId;
             AadServicePrincipalObjectId = aadServicePrincipalObjectId;
             SoftwareAssuranceProperties = softwareAssuranceProperties;
+            LogCollectionProperties = logCollectionProperties;
+            RemoteSupportProperties = remoteSupportProperties;
             DesiredProperties = desiredProperties;
             ReportedProperties = reportedProperties;
+            IsolatedVmAttestationConfiguration = isolatedVmAttestationConfiguration;
             TrialDaysRemaining = trialDaysRemaining;
             BillingModel = billingModel;
             RegistrationTimestamp = registrationTimestamp;
@@ -121,48 +129,82 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the cluster agent. </summary>
+        [WirePath("properties.status")]
         public HciClusterStatus? Status { get; }
+        /// <summary> Overall connectivity status for the cluster resource. </summary>
+        [WirePath("properties.connectivityStatus")]
+        public HciClusterConnectivityStatus? ConnectivityStatus { get; }
         /// <summary> Unique, immutable resource id. </summary>
+        [WirePath("properties.cloudId")]
         public Guid? CloudId { get; }
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
+        [WirePath("properties.cloudManagementEndpoint")]
         public string CloudManagementEndpoint { get; set; }
         /// <summary> App id of cluster AAD identity. </summary>
+        [WirePath("properties.aadClientId")]
         public Guid? AadClientId { get; set; }
         /// <summary> Tenant id of cluster AAD identity. </summary>
+        [WirePath("properties.aadTenantId")]
         public Guid? AadTenantId { get; set; }
         /// <summary> Object id of cluster AAD identity. </summary>
+        [WirePath("properties.aadApplicationObjectId")]
         public Guid? AadApplicationObjectId { get; set; }
         /// <summary> Id of cluster identity service principal. </summary>
+        [WirePath("properties.aadServicePrincipalObjectId")]
         public Guid? AadServicePrincipalObjectId { get; set; }
         /// <summary> Software Assurance properties of the cluster. </summary>
+        [WirePath("properties.softwareAssuranceProperties")]
         public SoftwareAssuranceProperties SoftwareAssuranceProperties { get; set; }
+        /// <summary> Log Collection properties of the cluster. </summary>
+        [WirePath("properties.logCollectionProperties")]
+        public LogCollectionProperties LogCollectionProperties { get; set; }
+        /// <summary> RemoteSupport properties of the cluster. </summary>
+        [WirePath("properties.remoteSupportProperties")]
+        public RemoteSupportProperties RemoteSupportProperties { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
+        [WirePath("properties.desiredProperties")]
         public HciClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> Properties reported by cluster agent. </summary>
+        [WirePath("properties.reportedProperties")]
         public HciClusterReportedProperties ReportedProperties { get; }
+        /// <summary> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </summary>
+        [WirePath("properties.isolatedVmAttestationConfiguration")]
+        public IsolatedVmAttestationConfiguration IsolatedVmAttestationConfiguration { get; }
         /// <summary> Number of days remaining in the trial period. </summary>
+        [WirePath("properties.trialDaysRemaining")]
         public float? TrialDaysRemaining { get; }
         /// <summary> Type of billing applied to the resource. </summary>
+        [WirePath("properties.billingModel")]
         public string BillingModel { get; }
         /// <summary> First cluster sync timestamp. </summary>
+        [WirePath("properties.registrationTimestamp")]
         public DateTimeOffset? RegistrationTimestamp { get; }
         /// <summary> Most recent cluster sync timestamp. </summary>
+        [WirePath("properties.lastSyncTimestamp")]
         public DateTimeOffset? LastSyncTimestamp { get; }
         /// <summary> Most recent billing meter timestamp. </summary>
+        [WirePath("properties.lastBillingTimestamp")]
         public DateTimeOffset? LastBillingTimestamp { get; }
         /// <summary> Region specific DataPath Endpoint of the cluster. </summary>
+        [WirePath("properties.serviceEndpoint")]
         public string ServiceEndpoint { get; }
         /// <summary> Object id of RP Service Principal. </summary>
+        [WirePath("properties.resourceProviderObjectId")]
         public string ResourceProviderObjectId { get; }
         /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [WirePath("identity.principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [WirePath("identity.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        [WirePath("identity.type")]
         public HciManagedServiceIdentityType? TypeIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        [WirePath("identity.userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

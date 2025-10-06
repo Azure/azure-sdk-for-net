@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -50,11 +49,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationFabricProperties"/>. </summary>
         /// <param name="customProperties">
         /// Fabric model custom properties.
-        /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHciFabricModelCustomProperties"/>, <see cref="GeneralFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationFabricCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzStackHciFabricCustomProperties"/>, <see cref="HyperVMigrateFabricCustomProperties"/> and <see cref="VMwareMigrateFabricCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
-        public DataReplicationFabricProperties(FabricModelCustomProperties customProperties)
+        public DataReplicationFabricProperties(DataReplicationFabricCustomProperties customProperties)
         {
             Argument.AssertNotNull(customProperties, nameof(customProperties));
 
@@ -70,11 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="healthErrors"> Gets or sets the list of health errors. </param>
         /// <param name="customProperties">
         /// Fabric model custom properties.
-        /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHciFabricModelCustomProperties"/>, <see cref="GeneralFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationFabricCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzStackHciFabricCustomProperties"/>, <see cref="HyperVMigrateFabricCustomProperties"/> and <see cref="VMwareMigrateFabricCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationFabricProperties(DataReplicationProvisioningState? provisioningState, string serviceEndpoint, ResourceIdentifier serviceResourceId, DataReplicationHealthStatus? health, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, FabricModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationFabricProperties(DataReplicationProvisioningState? provisioningState, string serviceEndpoint, ResourceIdentifier serviceResourceId, DataReplicationHealthStatus? health, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationFabricCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ServiceEndpoint = serviceEndpoint;
@@ -102,9 +101,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IReadOnlyList<DataReplicationHealthErrorInfo> HealthErrors { get; }
         /// <summary>
         /// Fabric model custom properties.
-        /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHciFabricModelCustomProperties"/>, <see cref="GeneralFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationFabricCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzStackHciFabricCustomProperties"/>, <see cref="HyperVMigrateFabricCustomProperties"/> and <see cref="VMwareMigrateFabricCustomProperties"/>.
         /// </summary>
-        public FabricModelCustomProperties CustomProperties { get; set; }
+        public DataReplicationFabricCustomProperties CustomProperties { get; set; }
     }
 }

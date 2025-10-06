@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(DataConnectionFrequency left, DataConnectionFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectionFrequency"/> values are not the same. </summary>
         public static bool operator !=(DataConnectionFrequency left, DataConnectionFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataConnectionFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectionFrequency"/>. </summary>
         public static implicit operator DataConnectionFrequency(string value) => new DataConnectionFrequency(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

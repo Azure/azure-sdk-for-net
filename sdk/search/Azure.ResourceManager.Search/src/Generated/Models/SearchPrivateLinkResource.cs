@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes a supported private link resource for the Azure Cognitive Search service. </summary>
+    /// <summary> Describes a supported private link resource for the Azure AI Search service. </summary>
     public partial class SearchPrivateLinkResource : ResourceData
     {
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Describes the properties of a supported private link resource for the Azure Cognitive Search service. </param>
+        /// <param name="properties"> Describes the properties of a supported private link resource for the Azure AI Search service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SearchPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SearchPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Describes the properties of a supported private link resource for the Azure Cognitive Search service. </summary>
+        /// <summary> Describes the properties of a supported private link resource for the Azure AI Search service. </summary>
+        [WirePath("properties")]
         public SearchPrivateLinkResourceProperties Properties { get; }
     }
 }

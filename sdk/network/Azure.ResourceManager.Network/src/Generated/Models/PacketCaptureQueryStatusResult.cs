@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the packet capture resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The ID of the packet capture resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The start time of the packet capture session. </summary>
+        [WirePath("captureStartTime")]
         public DateTimeOffset? CaptureStartOn { get; }
         /// <summary> The status of the packet capture session. </summary>
+        [WirePath("packetCaptureStatus")]
         public PcStatus? PacketCaptureStatus { get; }
         /// <summary> The reason the current packet capture session was stopped. </summary>
+        [WirePath("stopReason")]
         public string StopReason { get; }
         /// <summary> List of errors of packet capture session. </summary>
+        [WirePath("packetCaptureError")]
         public IReadOnlyList<PcError> PacketCaptureError { get; }
     }
 }

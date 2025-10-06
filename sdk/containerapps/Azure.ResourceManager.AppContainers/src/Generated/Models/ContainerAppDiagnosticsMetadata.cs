@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -79,16 +78,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Details of the diagnostics info. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Authors' names of the detector. </summary>
+        [WirePath("author")]
         public string Author { get; }
         /// <summary> Category of the detector. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> List of support topics. </summary>
+        [WirePath("supportTopicList")]
         public IList<ContainerAppDiagnosticSupportTopic> SupportTopicList { get; }
         /// <summary> List of analysis types. </summary>
+        [WirePath("analysisTypes")]
         public IList<string> AnalysisTypes { get; }
         /// <summary> Authors' names of the detector. </summary>
+        [WirePath("score")]
         public float? Score { get; }
     }
 }

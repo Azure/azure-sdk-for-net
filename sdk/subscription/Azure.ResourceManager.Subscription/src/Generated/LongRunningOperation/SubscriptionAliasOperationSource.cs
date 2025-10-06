@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Subscription
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Subscription
 
         SubscriptionAliasResource IOperationSource<SubscriptionAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
+            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSubscriptionContext.Default);
             return new SubscriptionAliasResource(_client, data);
         }
 
         async ValueTask<SubscriptionAliasResource> IOperationSource<SubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
-            return new SubscriptionAliasResource(_client, data);
+            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSubscriptionContext.Default);
+            return await Task.FromResult(new SubscriptionAliasResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

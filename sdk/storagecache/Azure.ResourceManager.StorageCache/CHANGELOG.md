@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,40 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-09-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-03' to 'package-2025-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ec0ec094fc9eae3a75ac16b175a3b596a482003b/specification/storagecache/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.47.3 to 1.49.0
+
+## 1.3.2 (2025-08-27)
+
+### Features Added
+
+- Make `Azure.ResourceManager.StorageCache` AOT-compatible
+
+## 1.3.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.3.0 (2024-06-03)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cb1185d9961b7dabe002fdb4c3a28c07d130e47e/specification/storagecache/resource-manager/readme.md
+    - Adding import jobs resource type.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
 
 ## 1.3.0-beta.1 (2024-02-01)
 
@@ -102,4 +136,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

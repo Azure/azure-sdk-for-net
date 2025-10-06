@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownOutboundRule. </summary>
+    /// <summary> Unknown version of OutboundRule. </summary>
     internal partial class UnknownOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOutboundRule"/>. </summary>

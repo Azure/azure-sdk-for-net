@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A list of NSX Port Mirroring. </summary>
+    /// <summary> The response of a WorkloadNetworkPortMirroring list operation. </summary>
     internal partial class WorkloadNetworkPortMirroringList
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringList"/>. </summary>
-        internal WorkloadNetworkPortMirroringList()
+        /// <param name="value"> The WorkloadNetworkPortMirroring items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal WorkloadNetworkPortMirroringList(IEnumerable<WorkloadNetworkPortMirroringProfileData> value)
         {
-            Value = new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringList"/>. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> URL to get the next page if any. </param>
+        /// <param name="value"> The WorkloadNetworkPortMirroring items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The items on the page. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringList"/> for deserialization. </summary>
+        internal WorkloadNetworkPortMirroringList()
+        {
+        }
+
+        /// <summary> The WorkloadNetworkPortMirroring items on this page. </summary>
         public IReadOnlyList<WorkloadNetworkPortMirroringProfileData> Value { get; }
-        /// <summary> URL to get the next page if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

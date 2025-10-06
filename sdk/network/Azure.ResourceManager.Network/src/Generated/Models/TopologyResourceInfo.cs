@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> ID of the resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Holds the associations the resource has with other resources in the resource group. </summary>
+        [WirePath("associations")]
         public IReadOnlyList<TopologyAssociation> Associations { get; }
     }
 }

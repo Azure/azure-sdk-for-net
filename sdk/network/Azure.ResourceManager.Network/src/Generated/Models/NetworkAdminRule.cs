@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -63,26 +61,37 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Network protocol this rule applies to. </summary>
+        [WirePath("properties.protocol")]
         public SecurityConfigurationRuleProtocol? Protocol { get; set; }
         /// <summary> The CIDR or source IP ranges. </summary>
+        [WirePath("properties.sources")]
         public IList<AddressPrefixItem> Sources { get; }
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
+        [WirePath("properties.destinations")]
         public IList<AddressPrefixItem> Destinations { get; }
         /// <summary> The source port ranges. </summary>
+        [WirePath("properties.sourcePortRanges")]
         public IList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. </summary>
+        [WirePath("properties.destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; }
         /// <summary> Indicates the access allowed for this particular rule. </summary>
+        [WirePath("properties.access")]
         public SecurityConfigurationRuleAccess? Access { get; set; }
         /// <summary> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> Indicates if the traffic matched against the rule in inbound or outbound. </summary>
+        [WirePath("properties.direction")]
         public SecurityConfigurationRuleDirection? Direction { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
     }
 }

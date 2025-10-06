@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -60,6 +59,50 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Request etag. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
+        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CertificateVerificationCodeProperties properties = null)
+        {
+            return new CertificateVerificationCodeResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeProperties"/>. </summary>
+        /// <param name="verificationCode"> Verification code. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="expireOn"> Code expiry. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="isVerified"> Indicate if the certificate is verified by owner of private key. </param>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        /// <param name="createdOn"> Certificate created time. </param>
+        /// <param name="updatedOn"> Certificate updated time. </param>
+        /// <returns> A new <see cref="Models.CertificateVerificationCodeProperties"/> instance for mocking. </returns>
+        public static CertificateVerificationCodeProperties CertificateVerificationCodeProperties(string verificationCode = null, string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, BinaryData certificate = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
+        {
+            return new CertificateVerificationCodeProperties(
+                verificationCode,
+                subject,
+                expireOn,
+                thumbprint,
+                isVerified,
+                certificate,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -68,10 +111,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="resourceGroup"> The resource group of the resource. </param>
+        /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
         /// <param name="sku"> Sku info for a provisioning Service. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DeviceProvisioningServiceProperties properties = null, DeviceProvisioningServicesSkuInfo sku = null)
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string resourceGroup = null, string subscriptionId = null, DeviceProvisioningServiceProperties properties = null, DeviceProvisioningServicesSkuInfo sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -83,8 +129,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 tags,
                 location,
                 etag,
+                resourceGroup,
+                subscriptionId,
                 properties,
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -95,6 +144,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
         /// <param name="provisioningState"> The ARM provisioning state of the provisioning service. </param>
         /// <param name="iotHubs"> List of IoT hubs associated with this provisioning service. </param>
+        /// <param name="deviceRegistryNamespace"> The Device Registry namespace that is linked to the provisioning service. </param>
         /// <param name="allocationPolicy"> Allocation policy to be used by this provisioning service. </param>
         /// <param name="serviceOperationsHostName"> Service endpoint for provisioning service. </param>
         /// <param name="deviceProvisioningHostName"> Device endpoint for this provisioning service. </param>
@@ -104,8 +154,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Optional.
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </param>
+        /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServiceProperties"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = null, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = null, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, IEnumerable<IotHubDefinitionDescription> iotHubs = null, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = null, string serviceOperationsHostName = null, string deviceProvisioningHostName = null, string idScope = null, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = null, bool? isDataResidencyEnabled = null)
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = null, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = null, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, IEnumerable<IotHubDefinitionDescription> iotHubs = null, DeviceRegistryNamespaceDescription deviceRegistryNamespace = null, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = null, string serviceOperationsHostName = null, string deviceProvisioningHostName = null, string idScope = null, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = null, bool? isDataResidencyEnabled = null, string portalOperationsHostName = null)
         {
             ipFilterRules ??= new List<DeviceProvisioningServicesIPFilterRule>();
             privateEndpointConnections ??= new List<DeviceProvisioningServicesPrivateEndpointConnectionData>();
@@ -119,12 +170,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 privateEndpointConnections?.ToList(),
                 provisioningState,
                 iotHubs?.ToList(),
+                deviceRegistryNamespace,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
                 idScope,
                 authorizationPolicies?.ToList(),
                 isDataResidencyEnabled,
+                portalOperationsHostName,
                 serializedAdditionalRawData: null);
         }
 
@@ -182,60 +235,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesSkuDefinition(name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Request etag. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CertificateVerificationCodeProperties properties = null)
-        {
-            return new CertificateVerificationCodeResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                etag,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeProperties"/>. </summary>
-        /// <param name="verificationCode"> Verification code. </param>
-        /// <param name="subject"> Certificate subject. </param>
-        /// <param name="expireOn"> Code expiry. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="isVerified"> Indicate if the certificate is verified by owner of private key. </param>
-        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
-        /// <param name="createdOn"> Certificate created time. </param>
-        /// <param name="updatedOn"> Certificate updated time. </param>
-        /// <returns> A new <see cref="Models.CertificateVerificationCodeProperties"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeProperties CertificateVerificationCodeProperties(string verificationCode = null, string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, BinaryData certificate = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
-        {
-            return new CertificateVerificationCodeProperties(
-                verificationCode,
-                subject,
-                expireOn,
-                thumbprint,
-                isVerified,
-                certificate,
-                createdOn,
-                updatedOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> specifies if a name is available or not. </param>
-        /// <param name="reason"> specifies the reason a name is unavailable. </param>
-        /// <param name="message"> message containing a detailed reason name is unavailable. </param>
-        /// <returns> A new <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesNameAvailabilityResult DeviceProvisioningServicesNameAvailabilityResult(bool? isNameAvailable = null, DeviceProvisioningServicesNameUnavailableReason? reason = null, string message = null)
-        {
-            return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -265,6 +264,56 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             requiredZoneNames ??= new List<string>();
 
             return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> specifies if a name is available or not. </param>
+        /// <param name="reason"> specifies the reason a name is unavailable. </param>
+        /// <param name="message"> message containing a detailed reason name is unavailable. </param>
+        /// <returns> A new <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DeviceProvisioningServicesNameAvailabilityResult DeviceProvisioningServicesNameAvailabilityResult(bool? isNameAvailable = null, DeviceProvisioningServicesNameUnavailableReason? reason = null, string message = null)
+        {
+            return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="properties"> Service specific properties for a provisioning service. </param>
+        /// <param name="sku"> Sku info for a provisioning Service. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku)
+        {
+            return DeviceProvisioningServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, resourceGroup: default, subscriptionId: default, properties: properties, sku: sku, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties" />. </summary>
+        /// <param name="state"> Current state of the provisioning service. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="ipFilterRules"> The IP filter rules. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
+        /// <param name="provisioningState"> The ARM provisioning state of the provisioning service. </param>
+        /// <param name="iotHubs"> List of IoT hubs associated with this provisioning service. </param>
+        /// <param name="allocationPolicy"> Allocation policy to be used by this provisioning service. </param>
+        /// <param name="serviceOperationsHostName"> Service endpoint for provisioning service. </param>
+        /// <param name="deviceProvisioningHostName"> Device endpoint for this provisioning service. </param>
+        /// <param name="idScope"> Unique identifier of this provisioning service. </param>
+        /// <param name="authorizationPolicies"> List of authorization keys for a provisioning service. </param>
+        /// <param name="isDataResidencyEnabled">
+        /// Optional.
+        /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
+        /// </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
+        {
+            return DeviceProvisioningServiceProperties(state: state, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, iotHubs: iotHubs, deviceRegistryNamespace: default, allocationPolicy: allocationPolicy, serviceOperationsHostName: serviceOperationsHostName, deviceProvisioningHostName: deviceProvisioningHostName, idScope: idScope, authorizationPolicies: authorizationPolicies, isDataResidencyEnabled: isDataResidencyEnabled, portalOperationsHostName: default);
         }
     }
 }

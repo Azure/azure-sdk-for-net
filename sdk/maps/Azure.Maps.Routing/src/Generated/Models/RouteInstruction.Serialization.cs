@@ -32,7 +32,7 @@ namespace Azure.Maps.Routing.Models
             string stateCode = default;
             JunctionType? junctionType = default;
             int? turnAngleInDecimalDegrees = default;
-            string roundaboutExitNumber = default;
+            long? roundaboutExitNumber = default;
             bool? possibleCombineWithNext = default;
             DrivingSide? drivingSide = default;
             GuidanceManeuver? maneuver = default;
@@ -144,7 +144,11 @@ namespace Azure.Maps.Routing.Models
                 }
                 if (property.NameEquals("roundaboutExitNumber"u8))
                 {
-                    roundaboutExitNumber = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    roundaboutExitNumber = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("possibleCombineWithNext"u8))
@@ -205,6 +209,14 @@ namespace Azure.Maps.Routing.Models
                 maneuver,
                 message,
                 combinedMessage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteInstruction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRouteInstruction(document.RootElement);
         }
     }
 }

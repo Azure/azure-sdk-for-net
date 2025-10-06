@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
+    /// <summary>
+    /// Provisioning state of the WebApplicationFirewallPolicy.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct WebApplicationFirewallPolicyProvisioningState : IEquatable<WebApplicationFirewallPolicyProvisioningState>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProvisioningState.Creating
+        /// </summary>
         public static WebApplicationFirewallPolicyProvisioningState Creating { get; } = new WebApplicationFirewallPolicyProvisioningState(CreatingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static WebApplicationFirewallPolicyProvisioningState Succeeded { get; } = new WebApplicationFirewallPolicyProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static WebApplicationFirewallPolicyProvisioningState Failed { get; } = new WebApplicationFirewallPolicyProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallPolicyProvisioningState left, WebApplicationFirewallPolicyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationFirewallPolicyProvisioningState left, WebApplicationFirewallPolicyProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationFirewallPolicyProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallPolicyProvisioningState"/>. </summary>
         public static implicit operator WebApplicationFirewallPolicyProvisioningState(string value) => new WebApplicationFirewallPolicyProvisioningState(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The type of user. </summary>
+        [WirePath("userType")]
         public RoleManagementUserType? UserType { get; set; }
         /// <summary> The value indicating whether the user is a backup fallback approver. </summary>
+        [WirePath("isBackup")]
         public bool? IsBackup { get; set; }
         /// <summary> The object id of the user. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The description of the user. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

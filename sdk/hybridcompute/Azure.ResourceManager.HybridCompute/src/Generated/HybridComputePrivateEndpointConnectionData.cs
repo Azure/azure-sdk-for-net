@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public HybridComputePrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

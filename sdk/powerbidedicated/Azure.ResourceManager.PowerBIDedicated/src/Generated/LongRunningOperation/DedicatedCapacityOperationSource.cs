@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         DedicatedCapacityResource IOperationSource<DedicatedCapacityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
+            var data = ModelReaderWriter.Read<DedicatedCapacityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPowerBIDedicatedContext.Default);
             return new DedicatedCapacityResource(_client, data);
         }
 
         async ValueTask<DedicatedCapacityResource> IOperationSource<DedicatedCapacityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
-            return new DedicatedCapacityResource(_client, data);
+            var data = ModelReaderWriter.Read<DedicatedCapacityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPowerBIDedicatedContext.Default);
+            return await Task.FromResult(new DedicatedCapacityResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

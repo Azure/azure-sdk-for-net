@@ -15,7 +15,6 @@ param(
   $AuthToken
 )
 Set-StrictMode -version 3
-
 . (Join-Path $PSScriptRoot common.ps1)
 
 function Get-AllBranchesAndPullRequestInfo($owner, $repo) {
@@ -66,67 +65,124 @@ if ($AuthToken) {
 }
 
 $owner, $repo = $RepoId -split "/"
-$branches = Get-AllBranchesAndPullRequestInfo $owner $repo
 
-foreach ($branch in $branches)
-{
-  $branchName = $branch.Name
-  if ($branchName -notmatch $BranchRegex) {
-    continue
+# These will always be output at the end of the script. Their only purpose is for information gathering
+# Total number returned from query
+$totalBranchesFromQuery = 0
+# reasons why a branch was skipped
+$skippedBranchNotMatchRegex = 0
+$skippedForCommitDate = 0
+$skippedForOpenPRs = 0
+$skippedForPRNotInBranch = 0
+$skippedForPRNotInRepo = 0
+# gh call counters
+$ghPRViewCalls = 0
+$ghBranchDeleteCalls = 0
+
+try {
+  # Output the core rate limit at the start of processing. There's no real need
+  # to output this at the end because the GH call counts are being output
+  $coreRateLimit = Get-RateLimit core
+  Write-RateLimit $coreRateLimit
+  # Output the GraphQL rate limit before and after the call
+  $graphqlRateLimit = Get-RateLimit graphql
+  Write-RateLimit $graphqlRateLimit "Before GraphQL Call"
+  $branches = Get-AllBranchesAndPullRequestInfo $owner $repo
+  $graphqlRateLimit = Get-RateLimit graphql
+  Write-RateLimit $graphqlRateLimit "After GraphQL Call"
+
+  if ($branches) {
+    $totalBranchesFromQuery = $branches.Count
   }
-  $openPullRequests = @($branch.pullRequests | Where-Object { !$_.Closed })
 
-  # If we have a central PR that created this branch still open don't delete the branch
-  if ($CentralRepoId)
+  foreach ($branch in $branches)
   {
-    $pullRequestNumber = $matches["PrNumber"]
-    # If central PR number is not found, then skip
-    if (!$pullRequestNumber) {
-      LogError "No PR number found in the branch name. Please check the branch name '$branchName'. Skipping..."
+    $branchName = $branch.Name
+    if ($branchName -notmatch $BranchRegex) {
+      $skippedBranchNotMatchRegex++
       continue
     }
+    $openPullRequests = @($branch.pullRequests | Where-Object { !$_.Closed })
 
-    $centralPR = gh pr view --json 'url,closed' --repo $CentralRepoId $pullRequestNumber | ConvertFrom-Json
-    if ($LASTEXITCODE) {
-      LogError "PR '$pullRequestNumber' not found in repo '$CentralRepoId'. Skipping..."
-      continue;
-    } else {
-      LogDebug "Found central PR $($centralPR.url) and Closed=$($centralPR.closed)"
-      if (!$centralPR.Closed) {
-        # Skipping if there is an open central PR open for the branch.
-        LogDebug "Central PR is still open so skipping the deletion of branch '$branchName'. Skipping..."
-        continue;
+    # If we have a central PR that created this branch still open don't delete the branch
+    if ($CentralRepoId)
+    {
+      $pullRequestNumber = $matches["PrNumber"]
+      # If central PR number is not found, then skip
+      if (!$pullRequestNumber) {
+        LogError "No PR number found in the branch name. Please check the branch name '$branchName'. Skipping..."
+        $skippedForPRNotInBranch++
+        continue
+      }
+
+      $ghPRViewCalls++
+      $centralPR = gh pr view --json 'url,closed' --repo $CentralRepoId $pullRequestNumber | ConvertFrom-Json
+      if ($LASTEXITCODE) {
+        LogError "PR '$pullRequestNumber' not found in repo '$CentralRepoId'. Skipping..."
+        $skippedForPRNotInRepo++
+        continue
+      } else {
+        LogDebug "Found central PR $($centralPR.url) and Closed=$($centralPR.closed)"
+        if (!$centralPR.Closed) {
+          $skippedForOpenPRs++
+          # Skipping if there is an open central PR open for the branch.
+          LogDebug "Central PR is still open so skipping the deletion of branch '$branchName'. Skipping..."
+          continue
+        }
       }
     }
-  }
-  else {
-    # Not CentralRepoId - not associated with a central repo PR
-    if ($openPullRequests.Count -gt 0 -and !$DeleteBranchesEvenIfThereIsOpenPR) {
-      LogDebug "Found open PRs associate with branch '$branchName'. Skipping..."
-      continue
+    else {
+      # Not CentralRepoId - not associated with a central repo PR
+      if ($openPullRequests.Count -gt 0 -and !$DeleteBranchesEvenIfThereIsOpenPR) {
+        $skippedForOpenPRs++
+        LogDebug "Found open PRs associate with branch '$branchName'. Skipping..."
+        continue
+      }
+    }
+
+    # If there is date filter, then check if branch last commit is older than the date.
+    if ($LastCommitOlderThan)
+    {
+      $commitDate = $branch.committedDate
+      if ($commitDate -gt $LastCommitOlderThan) {
+        $skippedForCommitDate++
+        LogDebug "The branch $branch last commit date '$commitDate' is newer than the date '$LastCommitOlderThan'. Skipping..."
+        continue
+      }
+    }
+
+    foreach ($openPullRequest in $openPullRequests) {
+      LogDebug "Note: Open pull Request '$($openPullRequest.url)' will be closed after branch deletion, given the central PR is closed."
+    }
+
+    $commitUrl = $branch.commitUrl
+    if ($PSCmdlet.ShouldProcess("'$branchName' in '$RepoId'", "Deleting branch on cleanup script")) {
+      $ghBranchDeleteCalls++
+      gh api "repos/${RepoId}/git/refs/heads/${branchName}" -X DELETE
+      if ($LASTEXITCODE) {
+        LogError "Deletion of branch '$branchName` failed, see command output above"
+        exit $LASTEXITCODE
+      }
+      LogDebug "The branch '$branchName' at commit '$commitUrl' in '$RepoId' has been deleted."
     }
   }
+}
+finally {
 
-  # If there is date filter, then check if branch last commit is older than the date.
-  if ($LastCommitOlderThan)
-  {
-    $commitDate = $branch.committedDate
-    if ($commitDate -gt $LastCommitOlderThan) {
-      LogDebug "The branch $branch last commit date '$commitDate' is newer than the date '$LastCommitOlderThan'. Skipping..."
-      continue
-    }
+
+  Write-Host "Number of branches returned from graphql query: $totalBranchesFromQuery"
+  # The $BranchRegex seems to be always set
+  if ($BranchRegex) {
+    Write-Host "Number of branches that didn't match the BranchRegex: $skippedBranchNotMatchRegex"
   }
-
-  foreach ($openPullRequest in $openPullRequests) {
-    Write-Host "Note: Open pull Request '$($openPullRequest.url)' will be closed after branch deletion, given the central PR is closed."
-  }
-
-  $commitUrl = $branch.commitUrl
-  if ($PSCmdlet.ShouldProcess("'$branchName' in '$RepoId'", "Deleting branch on cleanup script")) {
-    gh api "repos/${RepoId}/git/refs/heads/${branchName}" -X DELETE
-    if ($LASTEXITCODE) {
-      LogError "Deletion of branch '$branchName` failed"
-    }
-    Write-Host "The branch '$branchName' at commit '$commitUrl' in '$RepoId' has been deleted."
+  Write-Host "Number of branches skipped for newer last commit date: $skippedForCommitDate"
+  Write-Host "Number of branches skipped for open PRs: $skippedForOpenPRs"
+  Write-Host "Number of gh api calls to delete branches: $ghBranchDeleteCalls"
+  # The following are only applicable when $CentralRepoId is passed in
+  if ($CentralRepoId) {
+    Write-Host "The following are applicable because CentralRepoId was passed in:"
+    Write-Host "  Number of gh pr view calls: $ghPRViewCalls"
+    Write-Host "  Number of branches skipped due to PR not in the repository: $skippedForPRNotInRepo "
+    Write-Host "  Number of branches skipped due to PR not in the branch name: $skippedForPRNotInBranch"
   }
 }

@@ -205,6 +205,58 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         /// </summary>
         ///
         [Test]
+        public void TryAdRespectsTheMaximumMessageCount()
+        {
+            var maximumCount = 5;
+            var currentIndex = -1;
+            var messages = new AmqpMessage[maximumCount + 1];
+            var mockMessage = new Mock<AmqpMessage>();
+
+            var mockMessageConverter = new InjectableMockConverter
+            {
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => messages[++currentIndex]
+            };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(40);
+
+            var options = new CreateMessageBatchOptions
+            {
+                MaxSizeInBytes = 50000,
+                MaxMessageCount = maximumCount
+            };
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                var size = 40;
+                var messageToAdd = new Mock<AmqpMessage>();
+                messageToAdd.Setup(messageToAdd => messageToAdd.SerializedMessageSize).Returns(size);
+                messages[index] = messageToAdd.Object;
+            }
+
+            var batch = new AmqpMessageBatch(mockMessageConverter, options);
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                if (index == messages.Length - 1)
+                {
+                    Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[10])), Is.False, "The final addition should not fit in the available space.");
+                }
+                else
+                {
+                    Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[10])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void TryAddSetsTheCount()
         {
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };

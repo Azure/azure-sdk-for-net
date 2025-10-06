@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The number of values for the metric. </summary>
+        [WirePath("_count")]
         public int? Count { get; }
         /// <summary> The average value of the metric. </summary>
+        [WirePath("average")]
         public double? Average { get; }
         /// <summary> The max value of the metric. </summary>
+        [WirePath("maximum")]
         public double? Maximum { get; }
         /// <summary> The min value of the metric. </summary>
+        [WirePath("minimum")]
         public double? Minimum { get; }
         /// <summary> The metric timestamp (ISO-8601 format). </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The total value of the metric. </summary>
+        [WirePath("total")]
         public double? Total { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> ARM ID of user Identity selected for encryption. </summary>
+        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
     }
 }

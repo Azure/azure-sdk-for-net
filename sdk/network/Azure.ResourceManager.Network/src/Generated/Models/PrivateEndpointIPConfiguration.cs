@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the resource that is unique within a resource group. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
+        [WirePath("type")]
         public string PrivateEndpointIPConfigurationType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The ID of a group obtained from the remote resource that this private endpoint should connect to. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; set; }
         /// <summary> The member name of a group obtained from the remote resource that this private endpoint should connect to. </summary>
+        [WirePath("properties.memberName")]
         public string MemberName { get; set; }
         /// <summary> A private ip address obtained from the private endpoint's subnet. </summary>
+        [WirePath("properties.privateIPAddress")]
         public IPAddress PrivateIPAddress { get; set; }
     }
 }

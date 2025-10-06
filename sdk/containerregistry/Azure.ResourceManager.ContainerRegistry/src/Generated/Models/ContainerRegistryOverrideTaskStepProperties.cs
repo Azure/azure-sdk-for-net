@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -76,19 +75,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The source context against which run has to be queued. </summary>
+        [WirePath("contextPath")]
         public string ContextPath { get; set; }
         /// <summary> The file against which run has to be queued. </summary>
+        [WirePath("file")]
         public string File { get; set; }
         /// <summary>
         /// Gets or sets the collection of override arguments to be used when
         /// executing a build step.
         /// </summary>
+        [WirePath("arguments")]
         public IList<ContainerRegistryRunArgument> Arguments { get; }
         /// <summary> The name of the target build stage for the docker build. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
         /// <summary> The collection of overridable values that can be passed when running a Task. </summary>
+        [WirePath("values")]
         public IList<ContainerRegistryTaskOverridableValue> Values { get; }
         /// <summary> Base64 encoded update trigger token that will be attached with the base image trigger webhook. </summary>
+        [WirePath("updateTriggerToken")]
         public string UpdateTriggerToken { get; set; }
     }
 }

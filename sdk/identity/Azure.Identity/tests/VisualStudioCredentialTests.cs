@@ -39,6 +39,7 @@ namespace Azure.Identity.Tests
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             return InstrumentClient(new VisualStudioCredential(config.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
         }
@@ -227,21 +228,13 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithVsCredential_ProcessFailed([Values(true, false)] bool isChainedCredential)
+        public void AuthenticateWithVsCredential_ProcessFailed()
         {
             var testProcess = new TestProcess { Error = "Some error" };
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions { IsChainedCredential = isChainedCredential }));
-            if (isChainedCredential)
-            {
-                Assert.ThrowsAsync<CredentialUnavailableException>(
-                    async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
-            }
-            else
-            {
-                Assert.ThrowsAsync<AuthenticationFailedException>(
-                    async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
-            }
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions()));
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
         }
 
         [Test]
@@ -290,22 +283,48 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void GenericException_throws_CredentialUnavailableException_WhenChained([Values(true, false)] bool isChainedCredential)
+        public void GenericException_throws_CredentialUnavailableException_Always()
         {
             var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new Exception("Test exception") };
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions { IsChainedCredential = isChainedCredential }));
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions()));
 
-            if (isChainedCredential)
-            {
-                Assert.ThrowsAsync<CredentialUnavailableException>(
-                    async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
-            }
-            else
-            {
-                Assert.ThrowsAsync<AuthenticationFailedException>(
-                    async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
-            }
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
+        }
+
+        [Test]
+        public void AuthenticationFailedException_throws_CredentialUnavailableException_Always()
+        {
+            var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new AuthenticationFailedException("Test exception") };
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions()));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
+        }
+
+        [Test]
+        public void OperationCanceledException_throws_CredentialUnavailableException_WhenChained()
+        {
+            var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new OperationCanceledException("Test exception") };
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions { IsChainedCredential = true }));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
+        }
+
+        [Test]
+        [TestCase("TS003: Error, TS005: No accounts found.  Please go to Tools->Options->Azure Services Authentication, and add an account to be authenticated to Azure services during development.")]
+        public void GeneralExceptions_With_CertainErrors_throws_CredentialUnavailableException(string exceptionMessage)
+        {
+            var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new InvalidOperationException(exceptionMessage) };
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions { IsChainedCredential = false }));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
         }
     }
 }

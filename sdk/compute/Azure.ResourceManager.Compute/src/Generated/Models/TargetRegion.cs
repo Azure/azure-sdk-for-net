@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            AdditionalReplicaSets = new ChangeTrackingList<AdditionalReplicaSet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetRegion"/>. </summary>
@@ -62,14 +62,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
         /// <param name="isExcludedFromLatest"> Contains the flag setting to hide an image when users specify version='latest'. </param>
+        /// <param name="additionalReplicaSets"> List of storage sku with replica count to create direct drive replicas. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? isExcludedFromLatest, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? isExcludedFromLatest, IList<AdditionalReplicaSet> additionalReplicaSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             RegionalReplicaCount = regionalReplicaCount;
             StorageAccountType = storageAccountType;
             Encryption = encryption;
             IsExcludedFromLatest = isExcludedFromLatest;
+            AdditionalReplicaSets = additionalReplicaSets;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,5 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionImages Encryption { get; set; }
         /// <summary> Contains the flag setting to hide an image when users specify version='latest'. </summary>
         public bool? IsExcludedFromLatest { get; set; }
+        /// <summary> List of storage sku with replica count to create direct drive replicas. </summary>
+        public IList<AdditionalReplicaSet> AdditionalReplicaSets { get; }
     }
 }

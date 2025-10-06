@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         GitHubOwnerResource IOperationSource<GitHubOwnerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GitHubOwnerData.DeserializeGitHubOwnerData(document.RootElement);
+            var data = ModelReaderWriter.Read<GitHubOwnerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityDevOpsContext.Default);
             return new GitHubOwnerResource(_client, data);
         }
 
         async ValueTask<GitHubOwnerResource> IOperationSource<GitHubOwnerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GitHubOwnerData.DeserializeGitHubOwnerData(document.RootElement);
-            return new GitHubOwnerResource(_client, data);
+            var data = ModelReaderWriter.Read<GitHubOwnerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityDevOpsContext.Default);
+            return await Task.FromResult(new GitHubOwnerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

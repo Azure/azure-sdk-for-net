@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,15 +25,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobInput"/>. </summary>
-        /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="description"> Description for the input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="mode"> Input Asset Delivery Mode. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal MachineLearningFlowModelJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType, serializedAdditionalRawData)
+        /// <param name="mode"> Input Asset Delivery Mode. </param>
+        internal MachineLearningFlowModelJobInput(JobInputType jobInputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, MachineLearningInputDeliveryMode? mode) : base(jobInputType, description, serializedAdditionalRawData)
         {
-            Mode = mode;
             Uri = uri;
+            Mode = mode;
             JobInputType = jobInputType;
         }
 
@@ -43,9 +42,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Input Asset Delivery Mode. </summary>
-        public MachineLearningInputDeliveryMode? Mode { get; set; }
         /// <summary> [Required] Input Asset URI. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
+        /// <summary> Input Asset Delivery Mode. </summary>
+        [WirePath("mode")]
+        public MachineLearningInputDeliveryMode? Mode { get; set; }
     }
 }

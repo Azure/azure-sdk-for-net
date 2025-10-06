@@ -5,17 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Request type document. </summary>
+    /// <summary> Request document type. </summary>
     internal partial class Request : DocumentIngress
     {
         /// <summary> Initializes a new instance of <see cref="Request"/>. </summary>
         public Request()
         {
-            DocumentType = DocumentIngressDocumentType.Request;
+            DocumentType = DocumentType.Request;
         }
 
         /// <summary> Initializes a new instance of <see cref="Request"/>. </summary>
@@ -24,9 +25,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="name"> Name of the request, e.g., 'GET /values/{id}'. </param>
         /// <param name="url"> Request URL with all query string parameters. </param>
-        /// <param name="responseCode"> Result of a request execution. For http requestss, it could be some HTTP status code. </param>
+        /// <param name="responseCode"> Result of a request execution. For http requests, it could be some HTTP status code. </param>
         /// <param name="duration"> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </param>
-        internal Request(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, string url, string responseCode, string duration) : base(documentType, documentStreamIds, properties)
+        internal Request(DocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, Uri url, string responseCode, string duration) : base(documentType, documentStreamIds, properties)
         {
             Name = name;
             Url = url;
@@ -38,8 +39,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <summary> Name of the request, e.g., 'GET /values/{id}'. </summary>
         public string Name { get; set; }
         /// <summary> Request URL with all query string parameters. </summary>
-        public string Url { get; set; }
-        /// <summary> Result of a request execution. For http requestss, it could be some HTTP status code. </summary>
+        public Uri Url { get; set; }
+        /// <summary> Result of a request execution. For http requests, it could be some HTTP status code. </summary>
         public string ResponseCode { get; set; }
         /// <summary> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </summary>
         public string Duration { get; set; }

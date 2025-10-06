@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -95,7 +93,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -144,7 +144,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

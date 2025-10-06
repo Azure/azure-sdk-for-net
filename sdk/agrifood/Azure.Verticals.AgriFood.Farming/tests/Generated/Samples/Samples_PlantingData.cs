@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -25,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = client.GetPlantingData("<partyId>", "<plantingDataId>", null);
 
@@ -39,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = await client.GetPlantingDataAsync("<partyId>", "<plantingDataId>", null);
 
@@ -53,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = client.GetPlantingData("<partyId>", "<plantingDataId>", null);
 
@@ -98,7 +96,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = await client.GetPlantingDataAsync("<partyId>", "<plantingDataId>", null);
 
@@ -143,7 +141,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<plantingDataId>", content);
@@ -158,7 +156,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantingDataId>", content);
@@ -173,7 +171,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -245,7 +243,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -317,7 +315,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = client.Delete("<partyId>", "<plantingDataId>");
 
@@ -330,7 +328,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
 
@@ -343,7 +341,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = client.Delete("<partyId>", "<plantingDataId>");
 
@@ -356,7 +354,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
 
@@ -369,7 +367,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -385,7 +383,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -401,7 +399,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -426,7 +424,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -451,7 +449,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -466,7 +464,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -481,7 +479,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -527,7 +525,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -573,7 +571,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             foreach (BinaryData item in client.GetAllPlantingData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -588,7 +586,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             await foreach (BinaryData item in client.GetAllPlantingDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -603,7 +601,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             foreach (BinaryData item in client.GetAllPlantingData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -649,7 +647,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             await foreach (BinaryData item in client.GetAllPlantingDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -695,7 +693,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
             BinaryData responseData = operation.Value;
@@ -712,7 +710,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
             BinaryData responseData = operation.Value;
@@ -729,7 +727,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
             BinaryData responseData = operation.Value;
@@ -755,7 +753,7 @@ productName = "<productName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+            PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
             BinaryData responseData = operation.Value;

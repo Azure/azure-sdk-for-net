@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Gets the certificates. </summary>
+        [WirePath("certificates")]
         public IList<ContainerRegistryTokenCertificate> Certificates { get; }
         /// <summary> Gets the passwords. </summary>
+        [WirePath("passwords")]
         public IList<ContainerRegistryTokenPassword> Passwords { get; }
     }
 }

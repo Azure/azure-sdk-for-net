@@ -42,6 +42,26 @@ parameters:
 - name: PreGenerationSteps
   type: stepList
   default: []
+- name: EnablePRGeneration
+  type: boolean
+  default: false
+# name of the variable that will be added when creating batches for the PR Job Matrix
+- name: PRMatrixSetting
+  type: string
+  default: 'ArtifactPackageNames'
+# name of the key in PackageInfo that will be used to get the identifier when generating matrix batches
+- name: PRMatrixKey
+  type: string
+  default: 'ArtifactName'
+- name: PRJobBatchSize
+  type: number
+  default: 10
+- name: PRMatrixIndirectFilters
+  type: object
+  default: []
+- name: PRMatrixSparseIndirect
+  type: boolean
+  default: true
 # Mappings to OS name required at template compile time by 1es pipeline templates
 - name: Pools
   type: object
@@ -84,57 +104,90 @@ jobs:
 
     - ${{ parameters.PreGenerationSteps }}
 
-    - ${{ each config in parameters.MatrixConfigs }}:
+    - ${{ if eq(parameters.EnablePRGeneration, false) }}:
+      - ${{ each config in parameters.MatrixConfigs }}:
+        - ${{ each pool in parameters.Pools }}:
+          - ${{ if eq(config.GenerateVMJobs, 'true') }}:
+            - task: Powershell@2
+              inputs:
+                pwsh: true
+                filePath: eng/common/scripts/job-matrix/Create-JobMatrix.ps1
+                arguments: >
+                  -ConfigPath ${{ config.Path }}
+                  -Selection ${{ config.Selection }}
+                  -DisplayNameFilter '$(displayNameFilter)'
+                  -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
+                  -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
+                  -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
+              displayName: Create ${{ pool.name }} Matrix ${{ config.Name }}
+              name: vm_job_matrix_${{ config.Name }}_${{ pool.name }}
+          - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
+            - task: Powershell@2
+              inputs:
+                pwsh: true
+                filePath: eng/common/scripts/job-matrix/Create-JobMatrix.ps1
+                arguments: >
+                  -ConfigPath ${{ config.Path }}
+                  -Selection ${{ config.Selection }}
+                  -DisplayNameFilter '$(displayNameFilter)'
+                  -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
+                  -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
+              displayName: Create ${{ pool.name }} Container Matrix ${{ config.Name }}
+              name: container_job_matrix_${{ config.Name }}_${{ pool.name }}
+
+      # This else being set also currently assumes that the $(Build.ArtifactStagingDirectory)/PackageInfo folder is populated by PreGenerationSteps.
+      # Not currently not hardcoded, so not doing the needful and populating this folder before we hit this step will result in generation errors.
+    - ${{ else }}:
       - ${{ each pool in parameters.Pools }}:
-        - ${{ if eq(config.GenerateVMJobs, 'true') }}:
-          - task: Powershell@2
-            inputs:
-              pwsh: true
-              filePath: eng/common/scripts/job-matrix/Create-JobMatrix.ps1
-              arguments: >
-                -ConfigPath ${{ config.Path }}
-                -Selection ${{ config.Selection }}
-                -DisplayNameFilter '$(displayNameFilter)'
-                -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
-                -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
-                -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
-            displayName: Create ${{ pool.name }} Matrix ${{ config.Name }}
-            name: vm_job_matrix_${{ config.Name }}_${{ pool.name }}
+        - pwsh: |
+            '${{ convertToJson(parameters.MatrixConfigs) }}' | Set-Content matrix.json
 
-        - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
-          - task: Powershell@2
-            inputs:
-              pwsh: true
-              filePath: eng/common/scripts/job-matrix/Create-JobMatrix.ps1
-              arguments: >
-                -ConfigPath ${{ config.Path }}
-                -Selection ${{ config.Selection }}
-                -DisplayNameFilter '$(displayNameFilter)'
-                -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
-                -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
-            displayName: Create ${{ pool.name }} Container Matrix ${{ config.Name }}
-            name: container_job_matrix_${{ config.Name }}_${{ pool.name }}
+            ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
+              -PackagePropertiesFolder $(Build.ArtifactStagingDirectory)/PackageInfo `
+              -PRMatrixFile matrix.json `
+              -PRMatrixSetting ${{ parameters.PRMatrixSetting }} `
+              -PRMatrixKey ${{ parameters.PRMatrixKey }} `
+              -DisplayNameFilter '$(displayNameFilter)' `
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
+              -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
+              -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
+              -PackagesPerPRJob ${{ parameters.PRJobBatchSize }} `
+              -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
+          displayName: Create ${{ pool.name }} PR Matrix
+          name: vm_job_matrix_pr_${{ pool.name }}
 
-- ${{ each config in parameters.MatrixConfigs }}:
+- ${{ if eq(parameters.EnablePRGeneration, false) }}:
+  - ${{ each config in parameters.MatrixConfigs }}:
+    - ${{ each pool in parameters.Pools }}:
+      - ${{ if eq(config.GenerateVMJobs, 'true') }}:
+        - template: ${{ parameters.JobTemplatePath }}
+          parameters:
+            UsePlatformContainer: false
+            OSName: ${{ pool.os }}
+            Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['vm_job_matrix_${{ config.Name }}_${{ pool.name }}.matrix']
+            DependsOn: ${{ parameters.GenerateJobName }}
+            CloudConfig: ${{ parameters.CloudConfig }}
+            ${{ each param in parameters.AdditionalParameters }}:
+              ${{ param.key }}: ${{ param.value }}
+
+      - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
+        - template: ${{ parameters.JobTemplatePath }}
+          parameters:
+            UsePlatformContainer: true
+            OSName: ${{ pool.os }}
+            Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['vm_job_matrix_${{ config.Name }}_${{ pool.name }}.matrix']
+            DependsOn: ${{ parameters.GenerateJobName }}
+            CloudConfig: ${{ parameters.CloudConfig }}
+            ${{ each param in parameters.AdditionalParameters }}:
+              ${{ param.key }}: ${{ param.value }}
+- ${{ else }}:
   - ${{ each pool in parameters.Pools }}:
-    - ${{ if eq(config.GenerateVMJobs, 'true') }}:
-      - template: ${{ parameters.JobTemplatePath }}
-        parameters:
-          UsePlatformContainer: false
-          OSName: ${{ pool.os }}
-          Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['vm_job_matrix_${{ config.Name }}_${{ pool.name }}.matrix']
-          DependsOn: ${{ parameters.GenerateJobName }}
-          CloudConfig: ${{ parameters.CloudConfig }}
-          ${{ each param in parameters.AdditionalParameters }}:
-            ${{ param.key }}: ${{ param.value }}
-
-    - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
-      - template: ${{ parameters.JobTemplatePath }}
-        parameters:
-          UsePlatformContainer: true
-          OSName: ${{ pool.os }}
-          Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['vm_job_matrix_${{ config.Name }}_${{ pool.name }}.matrix']
-          DependsOn: ${{ parameters.GenerateJobName }}
-          CloudConfig: ${{ parameters.CloudConfig }}
-          ${{ each param in parameters.AdditionalParameters }}:
-            ${{ param.key }}: ${{ param.value }}
+    - template: ${{ parameters.JobTemplatePath }}
+      parameters:
+        UsePlatformContainer: false
+        OSName: ${{ pool.os }}
+        Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['vm_job_matrix_pr_${{ pool.name }}.matrix']
+        DependsOn: ${{ parameters.GenerateJobName }}
+        CloudConfig: ${{ parameters.CloudConfig }}
+        ${{ each param in parameters.AdditionalParameters }}:
+          ${{ param.key }}: ${{ param.value }}

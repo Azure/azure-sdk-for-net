@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -57,31 +56,37 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isEnabled"> A flag that indicates whether this rule is enabled by the user. </param>
         /// <param name="sendEmailsToSubscriptionOwners"> A flag that indicated whether notifications on this rule should be sent to subscription owners. </param>
         /// <param name="customEmails"> Custom email addresses for this rule notifications. </param>
-        /// <param name="lastUpdatedTime"> The last time this rule was updated. </param>
+        /// <param name="lastUpdatedOn"> The last time this rule was updated. </param>
         /// <param name="ruleDefinitions"> Static definitions of the ProactiveDetection configuration rule (same values for all components). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, string lastUpdatedTime, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, DateTimeOffset? lastUpdatedOn, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsEnabled = isEnabled;
             SendEmailsToSubscriptionOwners = sendEmailsToSubscriptionOwners;
             CustomEmails = customEmails;
-            LastUpdatedTime = lastUpdatedTime;
+            LastUpdatedOn = lastUpdatedOn;
             RuleDefinitions = ruleDefinitions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The rule name. </summary>
+        [WirePath("Name")]
         public string Name { get; set; }
         /// <summary> A flag that indicates whether this rule is enabled by the user. </summary>
+        [WirePath("Enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> A flag that indicated whether notifications on this rule should be sent to subscription owners. </summary>
+        [WirePath("SendEmailsToSubscriptionOwners")]
         public bool? SendEmailsToSubscriptionOwners { get; set; }
         /// <summary> Custom email addresses for this rule notifications. </summary>
+        [WirePath("CustomEmails")]
         public IList<string> CustomEmails { get; }
         /// <summary> The last time this rule was updated. </summary>
-        public string LastUpdatedTime { get; set; }
+        [WirePath("LastUpdatedTime")]
+        public DateTimeOffset? LastUpdatedOn { get; set; }
         /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
+        [WirePath("RuleDefinitions")]
         public ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions RuleDefinitions { get; set; }
     }
 }

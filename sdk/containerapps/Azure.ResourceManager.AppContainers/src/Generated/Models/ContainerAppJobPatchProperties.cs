@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Resource ID of environment. </summary>
+        [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
         /// <summary> Container Apps Job configuration properties. </summary>
+        [WirePath("configuration")]
         public ContainerAppJobConfiguration Configuration { get; set; }
         /// <summary> Container Apps job definition. </summary>
+        [WirePath("template")]
         public ContainerAppJobTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses of a container apps job. </summary>
+        [WirePath("outboundIpAddresses")]
         public IList<string> OutboundIPAddresses { get; }
         /// <summary> The endpoint of the eventstream of the container apps job. </summary>
+        [WirePath("eventStreamEndpoint")]
         public string EventStreamEndpoint { get; set; }
     }
 }

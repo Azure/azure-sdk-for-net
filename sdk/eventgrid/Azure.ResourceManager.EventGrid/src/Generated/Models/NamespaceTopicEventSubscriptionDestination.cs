@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This field is required and the Namespace Topic resource listed must already exist.
         /// The resource ARM Id should follow this pattern: /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.EventGrid/namespaces/{NamespaceName}/topics/{TopicName}.
         /// </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

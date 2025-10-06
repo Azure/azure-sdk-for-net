@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Istio ingress gateways. </summary>
+        [WirePath("ingressGateways")]
         public IList<IstioIngressGateway> IngressGateways { get; }
         /// <summary> Istio egress gateways. </summary>
+        [WirePath("egressGateways")]
         public IList<IstioEgressGateway> EgressGateways { get; }
     }
 }

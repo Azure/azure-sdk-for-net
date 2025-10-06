@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Name of data provider. </summary>
+        [WirePath("providerName")]
         public string ProviderName { get; set; }
         /// <summary> Collection of properties. </summary>
+        [WirePath("propertyBag")]
         public IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> PropertyBag { get; }
     }
 }

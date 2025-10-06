@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes an API key for a given Azure Cognitive Search service that has permissions for query operations only. </summary>
+    /// <summary> Describes an API key for a given Azure AI Search service that conveys read-only permissions on the docs collection of an index. </summary>
     public partial class SearchServiceQueryKey
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceQueryKey"/>. </summary>
-        /// <param name="name"> The name of the query API key; may be empty. </param>
+        /// <param name="name"> The name of the query API key. Query names are optional, but assigning a name can help you remember how it's used. </param>
         /// <param name="key"> The value of the query API key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SearchServiceQueryKey(string name, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the query API key; may be empty. </summary>
+        /// <summary> The name of the query API key. Query names are optional, but assigning a name can help you remember how it's used. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The value of the query API key. </summary>
+        [WirePath("key")]
         public string Key { get; }
     }
 }

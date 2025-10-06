@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
 
         PacketCoreDataPlaneResource IOperationSource<PacketCoreDataPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
+            var data = ModelReaderWriter.Read<PacketCoreDataPlaneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
             return new PacketCoreDataPlaneResource(_client, data);
         }
 
         async ValueTask<PacketCoreDataPlaneResource> IOperationSource<PacketCoreDataPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
-            return new PacketCoreDataPlaneResource(_client, data);
+            var data = ModelReaderWriter.Read<PacketCoreDataPlaneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            return await Task.FromResult(new PacketCoreDataPlaneResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

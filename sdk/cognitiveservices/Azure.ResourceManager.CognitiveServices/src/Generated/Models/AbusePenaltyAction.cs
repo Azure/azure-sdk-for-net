@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(AbusePenaltyAction left, AbusePenaltyAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AbusePenaltyAction"/> values are not the same. </summary>
         public static bool operator !=(AbusePenaltyAction left, AbusePenaltyAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AbusePenaltyAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AbusePenaltyAction"/>. </summary>
         public static implicit operator AbusePenaltyAction(string value) => new AbusePenaltyAction(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

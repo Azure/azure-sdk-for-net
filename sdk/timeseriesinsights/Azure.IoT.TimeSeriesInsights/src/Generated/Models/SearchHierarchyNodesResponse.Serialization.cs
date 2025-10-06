@@ -54,5 +54,13 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             return new SearchHierarchyNodesResponse(hits ?? new ChangeTrackingList<HierarchyHit>(), hitCount, continuationToken);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchHierarchyNodesResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchHierarchyNodesResponse(document.RootElement);
+        }
     }
 }

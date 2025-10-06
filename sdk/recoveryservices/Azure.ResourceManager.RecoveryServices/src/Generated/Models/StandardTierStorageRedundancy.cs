@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string InvalidValue = "Invalid";
         private const string LocallyRedundantValue = "LocallyRedundant";
         private const string GeoRedundantValue = "GeoRedundant";
         private const string ZoneRedundantValue = "ZoneRedundant";
 
+        /// <summary> Invalid. </summary>
+        public static StandardTierStorageRedundancy Invalid { get; } = new StandardTierStorageRedundancy(InvalidValue);
         /// <summary> LocallyRedundant. </summary>
         public static StandardTierStorageRedundancy LocallyRedundant { get; } = new StandardTierStorageRedundancy(LocallyRedundantValue);
         /// <summary> GeoRedundant. </summary>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(StandardTierStorageRedundancy left, StandardTierStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StandardTierStorageRedundancy"/> values are not the same. </summary>
         public static bool operator !=(StandardTierStorageRedundancy left, StandardTierStorageRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StandardTierStorageRedundancy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StandardTierStorageRedundancy"/>. </summary>
         public static implicit operator StandardTierStorageRedundancy(string value) => new StandardTierStorageRedundancy(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

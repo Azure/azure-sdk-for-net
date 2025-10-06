@@ -48,18 +48,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatchProperties"/>. </summary>
         public DataProtectionBackupVaultPatchProperties()
         {
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatchProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
         /// <param name="securitySettings"> Security Settings. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultPatchProperties(MonitoringSettings monitoringSettings, BackupVaultSecuritySettings securitySettings, BackupVaultFeatureSettings featureSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionBackupVaultPatchProperties(MonitoringSettings monitoringSettings, BackupVaultSecuritySettings securitySettings, BackupVaultFeatureSettings featureSettings, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MonitoringSettings = monitoringSettings;
             SecuritySettings = securitySettings;
             FeatureSettings = featureSettings;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,5 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultSecuritySettings SecuritySettings { get; set; }
         /// <summary> Feature Settings. </summary>
         public BackupVaultFeatureSettings FeatureSettings { get; set; }
+        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
+        public IList<string> ResourceGuardOperationRequests { get; }
     }
 }

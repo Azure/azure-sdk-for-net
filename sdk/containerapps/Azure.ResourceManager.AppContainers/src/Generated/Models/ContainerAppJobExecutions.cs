@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerAppJobExecutionData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

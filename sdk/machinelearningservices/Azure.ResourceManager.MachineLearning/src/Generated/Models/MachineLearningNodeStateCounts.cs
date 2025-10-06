@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Number of compute nodes in idle state. </summary>
+        [WirePath("idleNodeCount")]
         public int? IdleNodeCount { get; }
         /// <summary> Number of compute nodes which are running jobs. </summary>
+        [WirePath("runningNodeCount")]
         public int? RunningNodeCount { get; }
         /// <summary> Number of compute nodes which are being prepared. </summary>
+        [WirePath("preparingNodeCount")]
         public int? PreparingNodeCount { get; }
         /// <summary> Number of compute nodes which are in unusable state. </summary>
+        [WirePath("unusableNodeCount")]
         public int? UnusableNodeCount { get; }
         /// <summary> Number of compute nodes which are leaving the amlCompute. </summary>
+        [WirePath("leavingNodeCount")]
         public int? LeavingNodeCount { get; }
         /// <summary> Number of compute nodes which are in preempted state. </summary>
+        [WirePath("preemptedNodeCount")]
         public int? PreemptedNodeCount { get; }
     }
 }

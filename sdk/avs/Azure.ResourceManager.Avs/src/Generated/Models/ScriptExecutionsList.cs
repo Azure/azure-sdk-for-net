@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Pageable list of script executions. </summary>
+    /// <summary> The response of a ScriptExecution list operation. </summary>
     internal partial class ScriptExecutionsList
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptExecutionsList"/>. </summary>
-        internal ScriptExecutionsList()
+        /// <param name="value"> The ScriptExecution items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ScriptExecutionsList(IEnumerable<ScriptExecutionData> value)
         {
-            Value = new ChangeTrackingList<ScriptExecutionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptExecutionsList"/>. </summary>
-        /// <param name="value"> List of scripts. </param>
-        /// <param name="nextLink"> URL to get the next page if any. </param>
+        /// <param name="value"> The ScriptExecution items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptExecutionsList(IReadOnlyList<ScriptExecutionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptExecutionsList(IReadOnlyList<ScriptExecutionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of scripts. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionsList"/> for deserialization. </summary>
+        internal ScriptExecutionsList()
+        {
+        }
+
+        /// <summary> The ScriptExecution items on this page. </summary>
         public IReadOnlyList<ScriptExecutionData> Value { get; }
-        /// <summary> URL to get the next page if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

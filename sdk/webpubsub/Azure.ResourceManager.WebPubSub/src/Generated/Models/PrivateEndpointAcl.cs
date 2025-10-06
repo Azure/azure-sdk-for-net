@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -40,6 +39,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Name of the private endpoint connection. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

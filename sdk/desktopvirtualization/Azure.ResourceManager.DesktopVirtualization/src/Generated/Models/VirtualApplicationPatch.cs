@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -84,28 +83,40 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Description of Application. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Friendly name of Application. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Specifies a path for the executable file for the application. </summary>
+        [WirePath("properties.filePath")]
         public string FilePath { get; set; }
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
+        [WirePath("properties.commandLineSetting")]
         public VirtualApplicationCommandLineSetting? CommandLineSetting { get; set; }
         /// <summary> Command Line Arguments for Application. </summary>
+        [WirePath("properties.commandLineArguments")]
         public string CommandLineArguments { get; set; }
         /// <summary> Specifies whether to show the RemoteApp program in the RD Web Access server. </summary>
+        [WirePath("properties.showInPortal")]
         public bool? ShowInPortal { get; set; }
         /// <summary> Path to icon. </summary>
+        [WirePath("properties.iconPath")]
         public string IconPath { get; set; }
         /// <summary> Index of the icon. </summary>
+        [WirePath("properties.iconIndex")]
         public int? IconIndex { get; set; }
         /// <summary> Specifies the package family name for MSIX applications. </summary>
+        [WirePath("properties.msixPackageFamilyName")]
         public string MsixPackageFamilyName { get; set; }
         /// <summary> Specifies the package application Id for MSIX applications. </summary>
+        [WirePath("properties.msixPackageApplicationId")]
         public string MsixPackageApplicationId { get; set; }
         /// <summary> Resource Type of Application. </summary>
+        [WirePath("properties.applicationType")]
         public RemoteApplicationType? ApplicationType { get; set; }
     }
 }

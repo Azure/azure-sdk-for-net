@@ -71,12 +71,12 @@ namespace Azure.AI.DocumentIntelligence
             Paragraphs = new ChangeTrackingList<DocumentParagraph>();
             Tables = new ChangeTrackingList<DocumentTable>();
             Figures = new ChangeTrackingList<DocumentFigure>();
-            Lists = new ChangeTrackingList<DocumentList>();
             Sections = new ChangeTrackingList<DocumentSection>();
             KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
             Styles = new ChangeTrackingList<DocumentStyle>();
             Languages = new ChangeTrackingList<DocumentLanguage>();
             Documents = new ChangeTrackingList<AnalyzedDocument>();
+            Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
@@ -92,14 +92,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="paragraphs"> Extracted paragraphs. </param>
         /// <param name="tables"> Extracted tables. </param>
         /// <param name="figures"> Extracted figures. </param>
-        /// <param name="lists"> Extracted lists. </param>
         /// <param name="sections"> Extracted sections. </param>
         /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
         /// <param name="styles"> Extracted font styles. </param>
         /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
+        /// <param name="warnings"> List of warnings encountered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, ContentFormat? contentFormat, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentFigure> figures, IReadOnlyList<DocumentList> lists, IReadOnlyList<DocumentSection> sections, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, DocumentContentFormat? contentFormat, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentFigure> figures, IReadOnlyList<DocumentSection> sections, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
@@ -110,12 +110,12 @@ namespace Azure.AI.DocumentIntelligence
             Paragraphs = paragraphs;
             Tables = tables;
             Figures = figures;
-            Lists = lists;
             Sections = sections;
             KeyValuePairs = keyValuePairs;
             Styles = styles;
             Languages = languages;
             Documents = documents;
+            Warnings = warnings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,10 +128,8 @@ namespace Azure.AI.DocumentIntelligence
         public string ApiVersion { get; }
         /// <summary> Document model ID used to produce this result. </summary>
         public string ModelId { get; }
-        /// <summary> Method used to compute string offset and length. </summary>
-        public StringIndexType StringIndexType { get; }
         /// <summary> Format of the analyze result top-level content. </summary>
-        public ContentFormat? ContentFormat { get; }
+        public DocumentContentFormat? ContentFormat { get; }
         /// <summary>
         /// Concatenate string representation of all textual and visual elements in reading
         /// order.
@@ -145,8 +143,6 @@ namespace Azure.AI.DocumentIntelligence
         public IReadOnlyList<DocumentTable> Tables { get; }
         /// <summary> Extracted figures. </summary>
         public IReadOnlyList<DocumentFigure> Figures { get; }
-        /// <summary> Extracted lists. </summary>
-        public IReadOnlyList<DocumentList> Lists { get; }
         /// <summary> Extracted sections. </summary>
         public IReadOnlyList<DocumentSection> Sections { get; }
         /// <summary> Extracted key-value pairs. </summary>
@@ -157,5 +153,7 @@ namespace Azure.AI.DocumentIntelligence
         public IReadOnlyList<DocumentLanguage> Languages { get; }
         /// <summary> Extracted documents. </summary>
         public IReadOnlyList<AnalyzedDocument> Documents { get; }
+        /// <summary> List of warnings encountered. </summary>
+        public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
     }
 }

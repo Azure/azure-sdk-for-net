@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application notification endpoint. </summary>
+        [WirePath("notificationEndpoints")]
         public IList<ArmApplicationNotificationEndpoint> NotificationEndpoints { get; }
     }
 }

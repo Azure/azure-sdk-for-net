@@ -1,16 +1,57 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2025-09-25)
+
+### Features Added
+
+- Stable version release for API version 2025-07-01.
+    - Added property `RenameTo` in the model `ItemPathBasedRestoreCriteria` to support rename during restore.
+    - Added model `AdlsBlobBackupDatasourceParameters` to support ADLS Gen2 backup datasource.
+- Make `Azure.ResourceManager.DataProtectionBackup` AOT-compatible.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
+
+## 1.6.0 (2025-02-12)
+
+### Other Changes
+
+- Stable version release of 1.6.0-beta.1.
+
+## 1.6.0-beta.1 (2025-02-07)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+- Added a new property `UserAssignedIdentityId` in `DataProtectionIdentityDetails` to replace the old property `UserAssignedIdentityArmUri` with wrong type (https://github.com/Azure/azure-sdk-for-net/issues/47031).
+
+## 1.5.0 (2024-06-17)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2023-11' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a6ba164815464151a4adb687ea12a7a7090ed7fe/specification/dataprotection/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+- Obsoleted method 'ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource
 
 ## 1.4.0 (2023-12-27)
 
@@ -108,7 +149,7 @@ Polishing since last public beta release:
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `ResouceType` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
-- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Optimized the name of some models and functions.
 
@@ -138,4 +179,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

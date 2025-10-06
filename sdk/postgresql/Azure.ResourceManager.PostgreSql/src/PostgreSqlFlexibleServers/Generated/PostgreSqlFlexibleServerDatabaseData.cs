@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The charset of the database. </summary>
+        [WirePath("properties.charset")]
         public string Charset { get; set; }
         /// <summary> The collation of the database. </summary>
+        [WirePath("properties.collation")]
         public string Collation { get; set; }
     }
 }

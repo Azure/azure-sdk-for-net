@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </summary>
+    /// <summary> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </summary>
     public readonly partial struct RedisEnterpriseSkuName : IEquatable<RedisEnterpriseSkuName>
     {
         private readonly string _value;
@@ -22,15 +22,64 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string EnterpriseE1Value = "Enterprise_E1";
         private const string EnterpriseE5Value = "Enterprise_E5";
         private const string EnterpriseE10Value = "Enterprise_E10";
         private const string EnterpriseE20Value = "Enterprise_E20";
         private const string EnterpriseE50Value = "Enterprise_E50";
         private const string EnterpriseE100Value = "Enterprise_E100";
+        private const string EnterpriseE200Value = "Enterprise_E200";
+        private const string EnterpriseE400Value = "Enterprise_E400";
         private const string EnterpriseFlashF300Value = "EnterpriseFlash_F300";
         private const string EnterpriseFlashF700Value = "EnterpriseFlash_F700";
         private const string EnterpriseFlashF1500Value = "EnterpriseFlash_F1500";
+        private const string BalancedB0Value = "Balanced_B0";
+        private const string BalancedB1Value = "Balanced_B1";
+        private const string BalancedB3Value = "Balanced_B3";
+        private const string BalancedB5Value = "Balanced_B5";
+        private const string BalancedB10Value = "Balanced_B10";
+        private const string BalancedB20Value = "Balanced_B20";
+        private const string BalancedB50Value = "Balanced_B50";
+        private const string BalancedB100Value = "Balanced_B100";
+        private const string BalancedB150Value = "Balanced_B150";
+        private const string BalancedB250Value = "Balanced_B250";
+        private const string BalancedB350Value = "Balanced_B350";
+        private const string BalancedB500Value = "Balanced_B500";
+        private const string BalancedB700Value = "Balanced_B700";
+        private const string BalancedB1000Value = "Balanced_B1000";
+        private const string MemoryOptimizedM10Value = "MemoryOptimized_M10";
+        private const string MemoryOptimizedM20Value = "MemoryOptimized_M20";
+        private const string MemoryOptimizedM50Value = "MemoryOptimized_M50";
+        private const string MemoryOptimizedM100Value = "MemoryOptimized_M100";
+        private const string MemoryOptimizedM150Value = "MemoryOptimized_M150";
+        private const string MemoryOptimizedM250Value = "MemoryOptimized_M250";
+        private const string MemoryOptimizedM350Value = "MemoryOptimized_M350";
+        private const string MemoryOptimizedM500Value = "MemoryOptimized_M500";
+        private const string MemoryOptimizedM700Value = "MemoryOptimized_M700";
+        private const string MemoryOptimizedM1000Value = "MemoryOptimized_M1000";
+        private const string MemoryOptimizedM1500Value = "MemoryOptimized_M1500";
+        private const string MemoryOptimizedM2000Value = "MemoryOptimized_M2000";
+        private const string ComputeOptimizedX3Value = "ComputeOptimized_X3";
+        private const string ComputeOptimizedX5Value = "ComputeOptimized_X5";
+        private const string ComputeOptimizedX10Value = "ComputeOptimized_X10";
+        private const string ComputeOptimizedX20Value = "ComputeOptimized_X20";
+        private const string ComputeOptimizedX50Value = "ComputeOptimized_X50";
+        private const string ComputeOptimizedX100Value = "ComputeOptimized_X100";
+        private const string ComputeOptimizedX150Value = "ComputeOptimized_X150";
+        private const string ComputeOptimizedX250Value = "ComputeOptimized_X250";
+        private const string ComputeOptimizedX350Value = "ComputeOptimized_X350";
+        private const string ComputeOptimizedX500Value = "ComputeOptimized_X500";
+        private const string ComputeOptimizedX700Value = "ComputeOptimized_X700";
+        private const string FlashOptimizedA250Value = "FlashOptimized_A250";
+        private const string FlashOptimizedA500Value = "FlashOptimized_A500";
+        private const string FlashOptimizedA700Value = "FlashOptimized_A700";
+        private const string FlashOptimizedA1000Value = "FlashOptimized_A1000";
+        private const string FlashOptimizedA1500Value = "FlashOptimized_A1500";
+        private const string FlashOptimizedA2000Value = "FlashOptimized_A2000";
+        private const string FlashOptimizedA4500Value = "FlashOptimized_A4500";
 
+        /// <summary> Enterprise_E1. </summary>
+        public static RedisEnterpriseSkuName EnterpriseE1 { get; } = new RedisEnterpriseSkuName(EnterpriseE1Value);
         /// <summary> Enterprise_E5. </summary>
         public static RedisEnterpriseSkuName EnterpriseE5 { get; } = new RedisEnterpriseSkuName(EnterpriseE5Value);
         /// <summary> Enterprise_E10. </summary>
@@ -41,17 +90,109 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseSkuName EnterpriseE50 { get; } = new RedisEnterpriseSkuName(EnterpriseE50Value);
         /// <summary> Enterprise_E100. </summary>
         public static RedisEnterpriseSkuName EnterpriseE100 { get; } = new RedisEnterpriseSkuName(EnterpriseE100Value);
+        /// <summary> Enterprise_E200. </summary>
+        public static RedisEnterpriseSkuName EnterpriseE200 { get; } = new RedisEnterpriseSkuName(EnterpriseE200Value);
+        /// <summary> Enterprise_E400. </summary>
+        public static RedisEnterpriseSkuName EnterpriseE400 { get; } = new RedisEnterpriseSkuName(EnterpriseE400Value);
         /// <summary> EnterpriseFlash_F300. </summary>
         public static RedisEnterpriseSkuName EnterpriseFlashF300 { get; } = new RedisEnterpriseSkuName(EnterpriseFlashF300Value);
         /// <summary> EnterpriseFlash_F700. </summary>
         public static RedisEnterpriseSkuName EnterpriseFlashF700 { get; } = new RedisEnterpriseSkuName(EnterpriseFlashF700Value);
         /// <summary> EnterpriseFlash_F1500. </summary>
         public static RedisEnterpriseSkuName EnterpriseFlashF1500 { get; } = new RedisEnterpriseSkuName(EnterpriseFlashF1500Value);
+        /// <summary> Balanced_B0. </summary>
+        public static RedisEnterpriseSkuName BalancedB0 { get; } = new RedisEnterpriseSkuName(BalancedB0Value);
+        /// <summary> Balanced_B1. </summary>
+        public static RedisEnterpriseSkuName BalancedB1 { get; } = new RedisEnterpriseSkuName(BalancedB1Value);
+        /// <summary> Balanced_B3. </summary>
+        public static RedisEnterpriseSkuName BalancedB3 { get; } = new RedisEnterpriseSkuName(BalancedB3Value);
+        /// <summary> Balanced_B5. </summary>
+        public static RedisEnterpriseSkuName BalancedB5 { get; } = new RedisEnterpriseSkuName(BalancedB5Value);
+        /// <summary> Balanced_B10. </summary>
+        public static RedisEnterpriseSkuName BalancedB10 { get; } = new RedisEnterpriseSkuName(BalancedB10Value);
+        /// <summary> Balanced_B20. </summary>
+        public static RedisEnterpriseSkuName BalancedB20 { get; } = new RedisEnterpriseSkuName(BalancedB20Value);
+        /// <summary> Balanced_B50. </summary>
+        public static RedisEnterpriseSkuName BalancedB50 { get; } = new RedisEnterpriseSkuName(BalancedB50Value);
+        /// <summary> Balanced_B100. </summary>
+        public static RedisEnterpriseSkuName BalancedB100 { get; } = new RedisEnterpriseSkuName(BalancedB100Value);
+        /// <summary> Balanced_B150. </summary>
+        public static RedisEnterpriseSkuName BalancedB150 { get; } = new RedisEnterpriseSkuName(BalancedB150Value);
+        /// <summary> Balanced_B250. </summary>
+        public static RedisEnterpriseSkuName BalancedB250 { get; } = new RedisEnterpriseSkuName(BalancedB250Value);
+        /// <summary> Balanced_B350. </summary>
+        public static RedisEnterpriseSkuName BalancedB350 { get; } = new RedisEnterpriseSkuName(BalancedB350Value);
+        /// <summary> Balanced_B500. </summary>
+        public static RedisEnterpriseSkuName BalancedB500 { get; } = new RedisEnterpriseSkuName(BalancedB500Value);
+        /// <summary> Balanced_B700. </summary>
+        public static RedisEnterpriseSkuName BalancedB700 { get; } = new RedisEnterpriseSkuName(BalancedB700Value);
+        /// <summary> Balanced_B1000. </summary>
+        public static RedisEnterpriseSkuName BalancedB1000 { get; } = new RedisEnterpriseSkuName(BalancedB1000Value);
+        /// <summary> MemoryOptimized_M10. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM10 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM10Value);
+        /// <summary> MemoryOptimized_M20. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM20 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM20Value);
+        /// <summary> MemoryOptimized_M50. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM50 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM50Value);
+        /// <summary> MemoryOptimized_M100. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM100 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM100Value);
+        /// <summary> MemoryOptimized_M150. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM150 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM150Value);
+        /// <summary> MemoryOptimized_M250. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM250 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM250Value);
+        /// <summary> MemoryOptimized_M350. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM350 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM350Value);
+        /// <summary> MemoryOptimized_M500. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM500 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM500Value);
+        /// <summary> MemoryOptimized_M700. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM700 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM700Value);
+        /// <summary> MemoryOptimized_M1000. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM1000 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM1000Value);
+        /// <summary> MemoryOptimized_M1500. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM1500 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM1500Value);
+        /// <summary> MemoryOptimized_M2000. </summary>
+        public static RedisEnterpriseSkuName MemoryOptimizedM2000 { get; } = new RedisEnterpriseSkuName(MemoryOptimizedM2000Value);
+        /// <summary> ComputeOptimized_X3. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX3 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX3Value);
+        /// <summary> ComputeOptimized_X5. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX5 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX5Value);
+        /// <summary> ComputeOptimized_X10. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX10 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX10Value);
+        /// <summary> ComputeOptimized_X20. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX20 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX20Value);
+        /// <summary> ComputeOptimized_X50. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX50 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX50Value);
+        /// <summary> ComputeOptimized_X100. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX100 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX100Value);
+        /// <summary> ComputeOptimized_X150. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX150 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX150Value);
+        /// <summary> ComputeOptimized_X250. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX250 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX250Value);
+        /// <summary> ComputeOptimized_X350. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX350 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX350Value);
+        /// <summary> ComputeOptimized_X500. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX500 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX500Value);
+        /// <summary> ComputeOptimized_X700. </summary>
+        public static RedisEnterpriseSkuName ComputeOptimizedX700 { get; } = new RedisEnterpriseSkuName(ComputeOptimizedX700Value);
+        /// <summary> FlashOptimized_A250. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA250 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA250Value);
+        /// <summary> FlashOptimized_A500. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA500 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA500Value);
+        /// <summary> FlashOptimized_A700. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA700 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA700Value);
+        /// <summary> FlashOptimized_A1000. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA1000 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA1000Value);
+        /// <summary> FlashOptimized_A1500. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA1500 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA1500Value);
+        /// <summary> FlashOptimized_A2000. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA2000 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA2000Value);
+        /// <summary> FlashOptimized_A4500. </summary>
+        public static RedisEnterpriseSkuName FlashOptimizedA4500 { get; } = new RedisEnterpriseSkuName(FlashOptimizedA4500Value);
         /// <summary> Determines if two <see cref="RedisEnterpriseSkuName"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseSkuName left, RedisEnterpriseSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseSkuName"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseSkuName left, RedisEnterpriseSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseSkuName"/>. </summary>
         public static implicit operator RedisEnterpriseSkuName(string value) => new RedisEnterpriseSkuName(value);
 
         /// <inheritdoc />
@@ -62,7 +203,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

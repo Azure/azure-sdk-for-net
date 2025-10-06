@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing a list of Azure Cognitive Search services. </summary>
+    /// <summary> Response containing a list of Azure AI Search services. </summary>
     internal partial class SearchServiceListResult
     {
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceListResult"/>. </summary>
-        /// <param name="value"> The list of Search services. </param>
+        /// <param name="value"> The list of search services. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of search services. Returned when the total number of requested search services exceed maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SearchServiceListResult(IReadOnlyList<SearchServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Search services. </summary>
+        /// <summary> The list of search services. </summary>
         public IReadOnlyList<SearchServiceData> Value { get; }
         /// <summary> Request URL that can be used to query next page of search services. Returned when the total number of requested search services exceed maximum page size. </summary>
         public string NextLink { get; }

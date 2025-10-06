@@ -89,28 +89,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The network message id of email to which submission belongs. </summary>
+        [WirePath("properties.networkMessageId")]
         public Guid? NetworkMessageId { get; }
         /// <summary> The submission id. </summary>
+        [WirePath("properties.submissionId")]
         public Guid? SubmissionId { get; }
         /// <summary> The submitter. </summary>
+        [WirePath("properties.submitter")]
         public string Submitter { get; }
         /// <summary> The submission date. </summary>
+        [WirePath("properties.submissionDate")]
         public DateTimeOffset? SubmitOn { get; }
         /// <summary> The Time stamp when the message is received (Mail). </summary>
+        [WirePath("properties.timestamp")]
         public DateTimeOffset? MessageReceivedOn { get; }
         /// <summary> The recipient of the mail. </summary>
+        [WirePath("properties.recipient")]
         public string Recipient { get; }
         /// <summary> The sender of the mail. </summary>
+        [WirePath("properties.sender")]
         public string Sender { get; }
         /// <summary> The sender's IP. </summary>
+        [WirePath("properties.senderIp")]
         public IPAddress SenderIP { get; }
         /// <summary> The subject of submission mail. </summary>
+        [WirePath("properties.subject")]
         public string Subject { get; }
         /// <summary> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </summary>
+        [WirePath("properties.reportType")]
         public string ReportType { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The list of OS upgrades performed on the virtual machine scale set. </param>
         /// <param name="nextLink"> The uri to fetch the next page of OS Upgrade History. Call ListNext() with this to fetch the next page of history of upgrades. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetListOSUpgradeHistory(IReadOnlyList<UpgradeOperationHistoricalStatusInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetListOSUpgradeHistory(IReadOnlyList<UpgradeOperationHistoricalStatusInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -76,6 +75,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The list of OS upgrades performed on the virtual machine scale set. </summary>
         public IReadOnlyList<UpgradeOperationHistoricalStatusInfo> Value { get; }
         /// <summary> The uri to fetch the next page of OS Upgrade History. Call ListNext() with this to fetch the next page of history of upgrades. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

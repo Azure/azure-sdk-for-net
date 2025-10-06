@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -79,14 +78,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
+        [WirePath("tier")]
         public CognitiveServicesSkuTier? Tier { get; set; }
         /// <summary> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </summary>
+        [WirePath("size")]
         public string Size { get; set; }
         /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
+        [WirePath("family")]
         public string Family { get; set; }
         /// <summary> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

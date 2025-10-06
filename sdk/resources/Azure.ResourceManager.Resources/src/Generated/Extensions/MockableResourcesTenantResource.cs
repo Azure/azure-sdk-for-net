@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Mocking
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -95,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,6 +110,71 @@ namespace Azure.ResourceManager.Resources.Mocking
             return GetArmDeployments().Get(deploymentName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of TenantDataBoundaryResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantDataBoundaryResources and their operations over a TenantDataBoundaryResource. </returns>
+        public virtual TenantDataBoundaryCollection GetTenantDataBoundaries()
+        {
+            return GetCachedClient(client => new TenantDataBoundaryCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get data boundary of tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/dataBoundaries/{default}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataBoundaries_GetTenant</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantDataBoundaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TenantDataBoundaryResource>> GetTenantDataBoundaryAsync(DataBoundaryName name, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantDataBoundaries().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get data boundary of tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/dataBoundaries/{default}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataBoundaries_GetTenant</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantDataBoundaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<TenantDataBoundaryResource> GetTenantDataBoundary(DataBoundaryName name, CancellationToken cancellationToken = default)
+        {
+            return GetTenantDataBoundaries().Get(name, cancellationToken);
+        }
+
         /// <summary>
         /// Calculate the hash of the given template.
         /// <list type="bullet">
@@ -126,7 +188,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +230,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

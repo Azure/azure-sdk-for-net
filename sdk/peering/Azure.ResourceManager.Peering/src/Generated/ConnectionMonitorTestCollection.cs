@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Peering
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _connectionMonitorTestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()));
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _connectionMonitorTestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken);
-                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()));
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

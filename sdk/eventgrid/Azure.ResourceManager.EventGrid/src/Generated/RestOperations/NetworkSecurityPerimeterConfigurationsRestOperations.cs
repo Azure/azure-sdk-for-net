@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
@@ -33,8 +32,28 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-12-15-preview";
+            _apiVersion = apiVersion ?? "2025-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, NetworkSecurityPerimeterResourceType resourceType, string resourceName, string perimeterGuid, string associationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
+            uri.AppendPath(resourceType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations/", false);
+            uri.AppendPath(perimeterGuid, true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(associationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, NetworkSecurityPerimeterResourceType resourceType, string resourceName, string perimeterGuid, string associationName)
@@ -88,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         NetworkSecurityPerimeterConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -124,7 +143,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         NetworkSecurityPerimeterConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -133,6 +152,27 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReconcileRequestUri(string subscriptionId, string resourceGroupName, NetworkSecurityPerimeterResourceType resourceType, string resourceName, string perimeterGuid, string associationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
+            uri.AppendPath(resourceType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations/", false);
+            uri.AppendPath(perimeterGuid, true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(associationName, true);
+            uri.AppendPath("/reconcile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReconcileRequest(string subscriptionId, string resourceGroupName, NetworkSecurityPerimeterResourceType resourceType, string resourceName, string perimeterGuid, string associationName)
@@ -222,6 +262,23 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, NetworkSecurityPerimeterResourceType resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
+            uri.AppendPath(resourceType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, NetworkSecurityPerimeterResourceType resourceType, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -266,7 +323,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         NetworkSecurityPerimeterConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterConfigurationList.DeserializeNetworkSecurityPerimeterConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +353,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         NetworkSecurityPerimeterConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterConfigurationList.DeserializeNetworkSecurityPerimeterConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,82 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2025-07-29)
+
+### Other Changes
+- Package will target netstandard 2.0 and net 8.0.
+- Package will reference the latest stable releases of its dependencies. 
+
+## 1.0.1 (2024-06-25)
+
+### Other Changes
+- Updated README.md to reflect the latest changes
+
+## 1.0.0 (2024-05-15)
+
+### Other Changes
+- Removed '--prerelease' from README.md
+
+## 1.0.0-beta.8 (2024-05-01)
+
+### Other Changes
+- Updated Prefix WebJobs for WebjobsAuthenticationEventsTokenClaim -> WebJobsAuthenticationEventsTokenClaim
+
+## 1.0.0-beta.7 (2024-04-15)
+
+### Other Changes
+- Consildated namespaces. Removing:
+	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
+	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
+
+- Added Prefix WebJobs and WebJobsAuthenticationEvents to objects
+	- ActionableCloudEventResponse -> WebJobsActionableCloudEventResponse
+	- ActionableResponse -> WebJobsActionableResponse
+	- AuthenticationEventAction -> WebJobsAuthenticationEventAction
+	- AuthenticationEventAction -> WebJobsAuthenticationEventAction
+	- AuthenticationEventContext -> WebJobsAuthenticationEventsContext
+	- AuthenticationEventContextClient -> WebJobsAuthenticationEventsContextClient
+	- AuthenticationEventContextServicePrincipal -> WebJobsAuthenticationEventsContextServicePrincipal
+	- AuthenticationEventContextServicePrincipal -> WebJobsAuthenticationEventsContextServicePrincipal
+	- AuthenticationEventContextUser -> WebJobsAuthenticationEventsContextUser
+	- AuthenticationEventData -> WebJobsAuthenticationEventData
+	- AuthenticationEventMetadataAttribute -> WebJobsAuthenticationEventMetadataAttribute
+	- AuthenticationEventRequest -> WebJobsAuthenticationEventRequest
+	- AuthenticationEventResponse -> WebJobsAuthenticationEventResponse
+	- AuthenticationEventWebJobsStartup  -> WebJobsAuthenticationEventWebJobsStartup
+	- CloudEventData -> WebJobsAuthenticationEventsCloudEventRequest
+	- CloudEventData -> WebJobsAuthenticationEventsTypedData
+	- ProvideClaimsForToken -> WebJobsProvideClaimsForToken
+	- RequestStatusType -> WebJobsAuthenticationEventsRequestStatusType
+	- TokenClaim -> WebjobsAuthenticationEventsTokenClaim
+	- TokenIssuanceAction -> WebJobsTokenIssuanceAction
+	- TokenIssuanceStartData -> WebJobsTokenIssuanceStartData
+	- TokenIssuanceStartRequest -> WebJobsTokenIssuanceStartRequest
+	- TokenIssuanceStartResponse -> WebJobsTokenIssuanceStartResponse
+
+## 1.0.0-beta.6 (2024-03-13)
+
+### Features Added
+
+- Updated token internal validation to utlizie Microsoft.IdentityModel.Protocols.OpenIdConnect to get OIDC configuration.
+
+### Breaking Changes
+
+- Removing 'TeantId' from the AuthenticationEventTrigger Attribute API configuration
+- Adding 'AuthorizedPartyAppId', 'AuthorityUrl' to the AuthenticationEventTrigger Attribute API configuration
+- Adding 'AuthenticationEvents__ShowPIIDataInLogsKey` (defaults to true) to configuration manager for logging PIIData in logs
+- Updated the Failed and Completed methods to not be async
+
+### Bugs Fixed
+
+- Made the request validation errors return 400 and the response validation errors return 500.
+
+### Other Changes
+
+- Cleaned out unused methods.
+- Renamed MiscTests.cs to RequestResponseModelTests.cs
 
 ## 1.0.0-beta.5 (2023-12-07)
 

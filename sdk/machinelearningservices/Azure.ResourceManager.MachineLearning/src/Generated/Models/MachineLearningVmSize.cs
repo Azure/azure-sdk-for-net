@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -82,26 +81,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The name of the virtual machine size. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The family name of the virtual machine size. </summary>
+        [WirePath("family")]
         public string Family { get; }
         /// <summary> The number of vCPUs supported by the virtual machine size. </summary>
+        [WirePath("vCPUs")]
         public int? VCpus { get; }
         /// <summary> The number of gPUs supported by the virtual machine size. </summary>
+        [WirePath("gpus")]
         public int? Gpus { get; }
         /// <summary> The OS VHD disk size, in MB, allowed by the virtual machine size. </summary>
+        [WirePath("osVhdSizeMB")]
         public int? OSVhdSizeMB { get; }
         /// <summary> The resource volume size, in MB, allowed by the virtual machine size. </summary>
+        [WirePath("maxResourceVolumeMB")]
         public int? MaxResourceVolumeMB { get; }
         /// <summary> The amount of memory, in GB, supported by the virtual machine size. </summary>
+        [WirePath("memoryGB")]
         public double? MemoryGB { get; }
         /// <summary> Specifies if the virtual machine size supports low priority VMs. </summary>
+        [WirePath("lowPriorityCapable")]
         public bool? LowPriorityCapable { get; }
         /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
+        [WirePath("premiumIO")]
         public bool? IsPremiumIOSupported { get; }
         /// <summary> The estimated price information for using a VM. </summary>
+        [WirePath("estimatedVMPrices")]
         public MachineLearningEstimatedVmPrices EstimatedVmPrices { get; }
         /// <summary> Specifies the compute types supported by the virtual machine size. </summary>
+        [WirePath("supportedComputeTypes")]
         public IReadOnlyList<string> SupportedComputeTypes { get; }
     }
 }

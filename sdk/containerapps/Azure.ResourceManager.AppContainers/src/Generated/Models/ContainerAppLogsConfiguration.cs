@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Logs destination, can be 'log-analytics', 'azure-monitor' or 'none'. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
         /// <summary> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </summary>
+        [WirePath("logAnalyticsConfiguration")]
         public ContainerAppLogAnalyticsConfiguration LogAnalyticsConfiguration { get; set; }
     }
 }

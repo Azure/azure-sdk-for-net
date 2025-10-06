@@ -53,9 +53,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public DedicatedHsmData(AzureLocation location) : base(location)
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="properties"> Properties of the dedicated HSM. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="properties"/> is null. </exception>
+        public DedicatedHsmData(AzureLocation location, DedicatedHsmSku sku, DedicatedHsmProperties properties) : base(location)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Sku = sku;
             Zones = new ChangeTrackingList<string>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
@@ -65,23 +73,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="networkProfile"> Specifies the network interfaces of the dedicated hsm. </param>
-        /// <param name="managementNetworkProfile"> Specifies the management network interfaces of the dedicated hsm. </param>
-        /// <param name="stampId"> This field will be used when RP does not support Availability zones. </param>
-        /// <param name="statusMessage"> Resource Status Message. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="sku"> SKU details. </param>
-        /// <param name="zones"> The Dedicated Hsm zones. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkProfile networkProfile, NetworkProfile managementNetworkProfile, string stampId, string statusMessage, JsonWebKeyType? provisioningState, HardwareSecurityModulesSku sku, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedHsmSku sku, IList<string> zones, DedicatedHsmProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            NetworkProfile = networkProfile;
-            ManagementNetworkProfile = managementNetworkProfile;
-            StampId = stampId;
-            StatusMessage = statusMessage;
-            ProvisioningState = provisioningState;
             Sku = sku;
             Zones = zones;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,31 +90,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
         }
 
-        /// <summary> Specifies the network interfaces of the dedicated hsm. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
-        /// <summary> Specifies the management network interfaces of the dedicated hsm. </summary>
-        public NetworkProfile ManagementNetworkProfile { get; set; }
-        /// <summary> This field will be used when RP does not support Availability zones. </summary>
-        public string StampId { get; set; }
-        /// <summary> Resource Status Message. </summary>
-        public string StatusMessage { get; }
-        /// <summary> Provisioning state. </summary>
-        public JsonWebKeyType? ProvisioningState { get; }
         /// <summary> SKU details. </summary>
-        internal HardwareSecurityModulesSku Sku { get; set; }
+        internal DedicatedHsmSku Sku { get; set; }
         /// <summary> SKU of the dedicated HSM. </summary>
-        public HardwareSecurityModulesSkuName? SkuName
+        public DedicatedHsmSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
             set
             {
                 if (Sku is null)
-                    Sku = new HardwareSecurityModulesSku();
+                    Sku = new DedicatedHsmSku();
                 Sku.Name = value;
             }
         }
 
-        /// <summary> The Dedicated Hsm zones. </summary>
+        /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
+        /// <summary> Properties of the dedicated HSM. </summary>
+        public DedicatedHsmProperties Properties { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The type of access key. </summary>
+        [WirePath("keyType")]
         public WebPubSubKeyType? KeyType { get; set; }
     }
 }

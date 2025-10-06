@@ -64,13 +64,13 @@ Azure:SignalR:Endpoints:<EndpointName>:<EndpointType>
 }
 ```
 
-> * When you configure Azure SignalR endpoints in the App Service in the Azure portal, replace `":"` with `"__"` (the double underscore) in the keys. For reasons, see [Environment variables](https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0#environment-variables-1).
+> * When you configure Azure SignalR endpoints in the App Service in the Azure portal, replace `":"` with `"__"` (the double underscore) in the keys. For reasons, see [Environment variables](https://learn.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0#environment-variables-1).
 >
 > * A connection string configured with the key `{ConnectionStringSetting}` (defaults to "AzureSignalRConnectionString") is also recognized as a primary service endpoint with empty name. But this configuration style isn't recommended for multiple endpoints.
 
 #### Azure Identity support
 
-The [SignalR Service Owner role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#signalr-service-owner) is required to use an Identity-based connection.
+The [SignalR Service Owner role](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#signalr-service-owner) is required to use an Identity-based connection.
 
 Here's an example to configure Azure Identity for a SignalR endpoint named "Endpoint1":
 
@@ -87,7 +87,7 @@ Here's an example to configure Azure Identity for a SignalR endpoint named "Endp
 
 The `serviceUri` is required. Other items, such as `clientId` and `clientSecret`, are optional depending upon which credentials you want to use.
 
-For more information, see [Common properties for Identity-based connections](https://docs.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections). Note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
+For more information, see [Common properties for Identity-based connections](https://learn.microsoft.com/azure/azure-functions/functions-reference?tabs=azurewebjobsstorage#common-properties-for-identity-based-connections). Note that you should replace `<CONNECTION_NAME_PREFIX>` there with `Azure__SignalR__Endpoints__<EndpointName>`.
 
     
 ## Routing

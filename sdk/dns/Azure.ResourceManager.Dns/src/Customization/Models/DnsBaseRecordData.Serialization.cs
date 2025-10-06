@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile");
+                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,12 +128,13 @@ namespace Azure.ResourceManager.Dns
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             IDictionary<string, string> metadata = default;
             long? ttl = default;
             string fqdn = default;
             string provisioningState = default;
             WritableSubResource targetResource = default;
+            WritableSubResource trafficManagementProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -216,6 +222,16 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
+                        if (property0.NameEquals("trafficManagementProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -236,6 +252,7 @@ namespace Azure.ResourceManager.Dns
                 fqdn,
                 provisioningState,
                 targetResource,
+                trafficManagementProfile,
                 serializedAdditionalRawData);
         }
 
@@ -246,7 +263,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsBaseRecordData)} does not support '{options.Format}' format.");
             }

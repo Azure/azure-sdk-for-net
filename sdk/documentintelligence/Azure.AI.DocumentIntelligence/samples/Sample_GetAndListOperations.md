@@ -2,38 +2,39 @@
 
 This sample demonstrates how to get and list operations of a Document Intelligence resource. Note that operation information only persists for 24 hours.
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentIntelligenceAdministrationClient`
 
-To create a new `DocumentIntelligenceAdministrationClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceAdministrationClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Get and List Document Model Operations
 
-The method `GetOperations` returns a list of `OperationDetails` instances. The instances returned by this method contain general information about the operation, such as its ID, its status, and the `PercentCompleted` property to track progress, but it does not include details about the result or errors that happened during its execution.
+The method `GetOperations` returns a list of `DocumentIntelligenceOperationDetails` instances. The instances returned by this method contain general information about the operation, such as its ID, its status, and the `PercentCompleted` property to track progress, but it does not include details about the result or errors that happened during its execution.
 
-The method `GetOperation` can be called to get these extra properties. It returns a single `OperationDetails` instance, including the result of the operation and errors, if any. However, in order to access the `Result` property, you need to cast it to one of its derived types:
+The method `GetOperation` can be called to get these extra properties. It returns a single `DocumentIntelligenceOperationDetails` instance, including the result of the operation and errors, if any. However, in order to access the `Result` property, you need to cast it to one of its derived types:
 - A `DocumentModelBuildOperationDetails` for `BuildDocumentModel` operations.
 - A `DocumentModelCopyToOperationDetails` for `CopyModelTo` operations.
 - A `DocumentModelComposeOperationDetails` for `ComposeModel` operations.
 - A `DocumentClassifierBuildOperationDetails` for `BuildClassifier` operations.
+- A `DocumentClassifierCopyTolOperationDetails` for `CopyClassifierTo` operations.
 
 Note that operation information only persists for 24 hours.
 
 ```C# Snippet:DocumentIntelligenceSampleGetAndListOperations
 // Get an operation by ID.
 string operationId = "<operationId>";
-OperationDetails operationDetails = await client.GetOperationAsync(operationId);
+DocumentIntelligenceOperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
-if (operationDetails.Status == OperationStatus.Succeeded)
+if (operationDetails.Status == DocumentIntelligenceOperationStatus.Succeeded)
 {
     Console.WriteLine($"Operation with ID '{operationDetails.OperationId}' has succeeded.");
 
@@ -55,9 +56,13 @@ if (operationDetails.Status == OperationStatus.Succeeded)
         case DocumentClassifierBuildOperationDetails classifierOperation:
             Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
             break;
+
+        case DocumentClassifierCopyToOperationDetails classifierOperation:
+            Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
+            break;
     }
 }
-else if (operationDetails.Status == OperationStatus.Failed)
+else if (operationDetails.Status == DocumentIntelligenceOperationStatus.Failed)
 {
     Console.WriteLine($"Operation with ID '{operationDetails.OperationId}' has failed.");
     Console.WriteLine($"Error code: {operationDetails.Error.Code}");
@@ -71,7 +76,7 @@ else
 // List up to 10 operations that have been executed in the last 24 hours.
 int count = 0;
 
-await foreach (OperationDetails operationItem in client.GetOperationsAsync())
+await foreach (DocumentIntelligenceOperationDetails operationItem in client.GetOperationsAsync())
 {
     Console.WriteLine($"Operation details:");
     Console.WriteLine($"  Operation ID: {operationItem.OperationId}");

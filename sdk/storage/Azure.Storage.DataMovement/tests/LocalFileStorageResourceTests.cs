@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Mono.Unix.Native;
 using NUnit.Framework;
@@ -71,6 +72,40 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(path, storageResource.Uri.LocalPath);
                 Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
             }
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Windows = true)]
+        [TestCase("C:\\test\\path=true@&#%", "C:/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
+        [TestCase("C:\\test\\file with spaces", "C:/test/file%20with%20spaces")]
+        public void Ctor_String_Encoding_Windows(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
+        [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
+        [TestCase("/test/file with spaces", "/test/file%20with%20spaces")]
+        public void Ctor_String_Encoding_Unix(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+        }
+
+        public void Ctor_String_Encoding(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
         }
 
         [Test]
@@ -170,7 +205,8 @@ namespace Azure.Storage.DataMovement.Tests
                     stream,
                     streamLength: length,
                     false,
-                    completeLength: length);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Initial = true });
             }
 
             // Assert
@@ -200,7 +236,7 @@ namespace Azure.Storage.DataMovement.Tests
                     streamLength: length,
                     overwrite: false,
                     completeLength: length,
-                    options: new StorageResourceWriteToOffsetOptions() { Position = writePosition });
+                    options: new StorageResourceWriteToOffsetOptions() { Position = writePosition, Initial = false });
             }
 
             // Assert
@@ -219,7 +255,7 @@ namespace Azure.Storage.DataMovement.Tests
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: length);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
             var data = GetRandomBuffer(length);
-            try
+            Assert.ThrowsAsync<IOException>(async () =>
             {
                 using (var stream = new MemoryStream(data))
                 {
@@ -227,13 +263,11 @@ namespace Azure.Storage.DataMovement.Tests
                         stream: stream,
                         streamLength: length,
                         overwrite: false,
-                        completeLength: length);
+                        completeLength: length,
+                        options: new StorageResourceWriteToOffsetOptions() { Initial = true });
                 }
-            }
-            catch (IOException ex)
-            {
-                Assert.AreEqual(ex.Message, $"File path `{path}` already exists. Cannot overwrite file.");
-            }
+            },
+            $"File path `{path}` already exists. Cannot overwrite file.");
         }
 
         [Test]

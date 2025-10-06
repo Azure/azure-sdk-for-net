@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Purview.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Purview
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/getDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
@@ -72,7 +86,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         DefaultPurviewAccountPayload value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +109,28 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         DefaultPurviewAccountPayload value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRemoveRequestUri(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/removeDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
@@ -163,6 +192,15 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
+        internal RequestUriBuilder CreateSetRequestUri(DefaultPurviewAccountPayload defaultAccountPayload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/setDefaultAccount", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)
         {
             var message = _pipeline.CreateMessage();
@@ -176,7 +214,7 @@ namespace Azure.ResourceManager.Purview
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(defaultAccountPayload);
+            content.JsonWriter.WriteObjectValue(defaultAccountPayload, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -197,7 +235,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         DefaultPurviewAccountPayload value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -221,7 +259,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         DefaultPurviewAccountPayload value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

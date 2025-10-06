@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the rule group that will be disabled. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; set; }
         /// <summary> The list of rules that will be disabled. If null, all rules of the rule group will be disabled. </summary>
+        [WirePath("rules")]
         public IList<int> Rules { get; }
     }
 }

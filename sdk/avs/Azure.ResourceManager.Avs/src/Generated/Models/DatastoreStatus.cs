@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The operational status of the datastore. </summary>
+    /// <summary> datastore status. </summary>
     public readonly partial struct DatastoreStatus : IEquatable<DatastoreStatus>
     {
         private readonly string _value;
@@ -30,25 +30,25 @@ namespace Azure.ResourceManager.Avs.Models
         private const string LostCommunicationValue = "LostCommunication";
         private const string DeadOrErrorValue = "DeadOrError";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> is unknown. </summary>
         public static DatastoreStatus Unknown { get; } = new DatastoreStatus(UnknownValue);
-        /// <summary> Accessible. </summary>
+        /// <summary> is accessible. </summary>
         public static DatastoreStatus Accessible { get; } = new DatastoreStatus(AccessibleValue);
-        /// <summary> Inaccessible. </summary>
+        /// <summary> is inaccessible. </summary>
         public static DatastoreStatus Inaccessible { get; } = new DatastoreStatus(InaccessibleValue);
-        /// <summary> Attached. </summary>
+        /// <summary> is attached. </summary>
         public static DatastoreStatus Attached { get; } = new DatastoreStatus(AttachedValue);
-        /// <summary> Detached. </summary>
+        /// <summary> is detached. </summary>
         public static DatastoreStatus Detached { get; } = new DatastoreStatus(DetachedValue);
-        /// <summary> LostCommunication. </summary>
+        /// <summary> is lost communication. </summary>
         public static DatastoreStatus LostCommunication { get; } = new DatastoreStatus(LostCommunicationValue);
-        /// <summary> DeadOrError. </summary>
+        /// <summary> is dead or error. </summary>
         public static DatastoreStatus DeadOrError { get; } = new DatastoreStatus(DeadOrErrorValue);
         /// <summary> Determines if two <see cref="DatastoreStatus"/> values are the same. </summary>
         public static bool operator ==(DatastoreStatus left, DatastoreStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatastoreStatus"/> values are not the same. </summary>
         public static bool operator !=(DatastoreStatus left, DatastoreStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatastoreStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatastoreStatus"/>. </summary>
         public static implicit operator DatastoreStatus(string value) => new DatastoreStatus(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

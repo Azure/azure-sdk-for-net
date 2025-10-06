@@ -24,16 +24,22 @@ namespace Azure.ResourceManager.NetApp.Models
 
         private const string IdleValue = "Idle";
         private const string TransferringValue = "Transferring";
+        private const string FailedValue = "Failed";
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Idle. </summary>
         public static NetAppRelationshipStatus Idle { get; } = new NetAppRelationshipStatus(IdleValue);
         /// <summary> Transferring. </summary>
         public static NetAppRelationshipStatus Transferring { get; } = new NetAppRelationshipStatus(TransferringValue);
+        /// <summary> Failed. </summary>
+        public static NetAppRelationshipStatus Failed { get; } = new NetAppRelationshipStatus(FailedValue);
+        /// <summary> Unknown. </summary>
+        public static NetAppRelationshipStatus Unknown { get; } = new NetAppRelationshipStatus(UnknownValue);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are not the same. </summary>
         public static bool operator !=(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppRelationshipStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppRelationshipStatus"/>. </summary>
         public static implicit operator NetAppRelationshipStatus(string value) => new NetAppRelationshipStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

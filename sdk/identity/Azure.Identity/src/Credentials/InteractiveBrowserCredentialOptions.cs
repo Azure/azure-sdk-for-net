@@ -3,15 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
-    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
 
@@ -38,7 +38,8 @@ namespace Azure.Identity
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
-        /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.
+        /// The client ID of the application used to authenticate the user. It is recommended that developers register their applications and assign appropriate roles. For more information, visit <see href="https://aka.ms/azsdk/identity/AppRegistrationAndRoleAssignment"/>.
+        /// If not specified, users will authenticate to an Azure development application, which is not recommended for production scenarios.
         /// </summary>
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
@@ -70,5 +71,34 @@ namespace Azure.Identity
         /// The options for customizing the browser for interactive authentication.
         /// </summary>
         public BrowserCustomizationOptions BrowserCustomization { get; set; }
+
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+        {
+            var clone = base.Clone<T>();
+            if (clone is InteractiveBrowserCredentialOptions ibcoClone)
+            {
+                ibcoClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
+                ibcoClone.TenantId = _tenantId;
+                ibcoClone.AdditionallyAllowedTenants = AdditionallyAllowedTenants;
+                ibcoClone.ClientId = ClientId;
+                ibcoClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
+                ibcoClone.RedirectUri = RedirectUri;
+                ibcoClone.AuthenticationRecord = AuthenticationRecord;
+                ibcoClone.LoginHint = LoginHint;
+                ibcoClone.DisableInstanceDiscovery = DisableInstanceDiscovery;
+                if (BrowserCustomization != null)
+                {
+                    ibcoClone.BrowserCustomization = new BrowserCustomizationOptions
+                    {
+                        ErrorMessage = BrowserCustomization.ErrorMessage,
+                        SuccessMessage = BrowserCustomization.SuccessMessage,
+#pragma warning disable CS0618 // Type or member is obsolete
+                        UseEmbeddedWebView = BrowserCustomization.UseEmbeddedWebView ?? false
+#pragma warning restore CS0618 // Type or member is obsolete
+                    };
+                }
+            }
+            return clone;
+        }
     }
 }

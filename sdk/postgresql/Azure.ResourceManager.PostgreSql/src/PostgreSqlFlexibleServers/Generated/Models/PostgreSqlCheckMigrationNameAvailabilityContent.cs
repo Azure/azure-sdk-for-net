@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -82,14 +81,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; set; }
         /// <summary> Indicates whether the resource name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> Migration name availability reason. </summary>
+        [WirePath("reason")]
         public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
         /// <summary> Migration name availability message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

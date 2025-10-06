@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The priority value for this SRV record. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
         /// <summary> The weight value for this SRV record. </summary>
+        [WirePath("weight")]
         public int? Weight { get; set; }
         /// <summary> The port value for this SRV record. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
         /// <summary> The target domain name for this SRV record. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
     }
 }

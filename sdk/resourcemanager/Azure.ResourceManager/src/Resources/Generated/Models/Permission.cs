@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -71,12 +70,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Allowed actions. </summary>
+        [WirePath("actions")]
         public IReadOnlyList<string> AllowedActions { get; }
         /// <summary> Denied actions. </summary>
+        [WirePath("notActions")]
         public IReadOnlyList<string> DeniedActions { get; }
         /// <summary> Allowed Data actions. </summary>
+        [WirePath("dataActions")]
         public IReadOnlyList<string> AllowedDataActions { get; }
         /// <summary> Denied Data actions. </summary>
+        [WirePath("notDataActions")]
         public IReadOnlyList<string> DeniedDataActions { get; }
     }
 }

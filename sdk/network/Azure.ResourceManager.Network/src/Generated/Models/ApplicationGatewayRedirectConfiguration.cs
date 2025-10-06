@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -53,12 +51,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> HTTP redirection type. </summary>
+        [WirePath("properties.redirectType")]
         public ApplicationGatewayRedirectType? RedirectType { get; set; }
         /// <summary> Reference to a listener to redirect the request to. </summary>
         internal WritableSubResource TargetListener { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.targetListener.id")]
         public ResourceIdentifier TargetListenerId
         {
             get => TargetListener is null ? default : TargetListener.Id;
@@ -71,16 +72,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Url to redirect the request to. </summary>
+        [WirePath("properties.targetUrl")]
         public Uri TargetUri { get; set; }
         /// <summary> Include path in the redirected url. </summary>
+        [WirePath("properties.includePath")]
         public bool? IncludePath { get; set; }
         /// <summary> Include query string in the redirected url. </summary>
+        [WirePath("properties.includeQueryString")]
         public bool? IncludeQueryString { get; set; }
         /// <summary> Request routing specifying redirect configuration. </summary>
+        [WirePath("properties.requestRoutingRules")]
         public IList<WritableSubResource> RequestRoutingRules { get; }
         /// <summary> Url path maps specifying default redirect configuration. </summary>
+        [WirePath("properties.urlPathMaps")]
         public IList<WritableSubResource> UrlPathMaps { get; }
         /// <summary> Path rules specifying redirect configuration. </summary>
+        [WirePath("properties.pathRules")]
         public IList<WritableSubResource> PathRules { get; }
     }
 }

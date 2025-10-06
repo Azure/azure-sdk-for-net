@@ -11,7 +11,6 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// The MachineLearningTriggerBase.
     /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
     /// </summary>
@@ -55,6 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerBase"/>. </summary>
+        /// <param name="triggerType"> [Required]. </param>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -65,31 +65,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningTriggerBase(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            TriggerType = triggerType;
             EndTime = endTime;
             StartTime = startTime;
             TimeZone = timeZone;
-            TriggerType = triggerType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> [Required]. </summary>
+        internal TriggerType TriggerType { get; set; }
         /// <summary>
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
         /// If not present, the schedule will run indefinitely
         /// </summary>
+        [WirePath("endTime")]
         public string EndTime { get; set; }
         /// <summary> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
-        /// <summary> [Required]. </summary>
-        internal MachineLearningTriggerType TriggerType { get; set; }
     }
 }

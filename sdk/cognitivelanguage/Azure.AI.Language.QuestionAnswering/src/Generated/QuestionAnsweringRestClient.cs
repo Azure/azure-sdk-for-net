@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -87,7 +86,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 case 200:
                     {
                         AnswersResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnswersResult.DeserializeAnswersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -124,7 +123,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 case 200:
                     {
                         AnswersResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnswersResult.DeserializeAnswersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,7 +169,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 case 200:
                     {
                         AnswersFromTextResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnswersFromTextResult.DeserializeAnswersFromTextResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +196,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 case 200:
                     {
                         AnswersFromTextResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnswersFromTextResult.DeserializeAnswersFromTextResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

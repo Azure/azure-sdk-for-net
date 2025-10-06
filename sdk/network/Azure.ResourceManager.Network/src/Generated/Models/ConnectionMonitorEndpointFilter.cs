@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The behavior of the endpoint filter. Currently only 'Include' is supported. </summary>
+        [WirePath("type")]
         public ConnectionMonitorEndpointFilterType? FilterType { get; set; }
         /// <summary> List of items in the filter. </summary>
+        [WirePath("items")]
         public IList<ConnectionMonitorEndpointFilterItem> Items { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describes the types of schema for analytical storage. </summary>
+        [WirePath("schemaType")]
         public AnalyticalStorageSchemaType? SchemaType { get; set; }
     }
 }

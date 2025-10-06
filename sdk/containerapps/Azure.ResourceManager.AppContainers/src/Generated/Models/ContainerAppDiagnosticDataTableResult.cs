@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -67,8 +66,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Table name. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
         /// <summary> Columns in the table. </summary>
+        [WirePath("columns")]
         public IList<ContainerAppDiagnosticDataColumn> Columns { get; }
         /// <summary>
         /// Rows in the table
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("rows")]
         public IList<BinaryData> Rows { get; }
     }
 }

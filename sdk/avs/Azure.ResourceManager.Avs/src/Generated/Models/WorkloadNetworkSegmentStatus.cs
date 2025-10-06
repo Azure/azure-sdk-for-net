@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SuccessValue = "SUCCESS";
         private const string FailureValue = "FAILURE";
 
-        /// <summary> SUCCESS. </summary>
+        /// <summary> is success. </summary>
         public static WorkloadNetworkSegmentStatus Success { get; } = new WorkloadNetworkSegmentStatus(SuccessValue);
-        /// <summary> FAILURE. </summary>
+        /// <summary> is failure. </summary>
         public static WorkloadNetworkSegmentStatus Failure { get; } = new WorkloadNetworkSegmentStatus(FailureValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
         public static implicit operator WorkloadNetworkSegmentStatus(string value) => new WorkloadNetworkSegmentStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

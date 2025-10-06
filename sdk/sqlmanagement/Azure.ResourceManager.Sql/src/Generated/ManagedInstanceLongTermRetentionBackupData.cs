@@ -68,8 +68,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupOn"> The time the backup was taken. </param>
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateOn = managedInstanceCreateOn;
@@ -78,22 +79,33 @@ namespace Azure.ResourceManager.Sql
             BackupOn = backupOn;
             BackupExpireOn = backupExpireOn;
             BackupStorageRedundancy = backupStorageRedundancy;
+            BackupStorageAccessTier = backupStorageAccessTier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed instance that the backup database belongs to. </summary>
+        [WirePath("properties.managedInstanceName")]
         public string ManagedInstanceName { get; }
         /// <summary> The create time of the instance. </summary>
+        [WirePath("properties.managedInstanceCreateTime")]
         public DateTimeOffset? ManagedInstanceCreateOn { get; }
         /// <summary> The name of the database the backup belong to. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> The delete time of the database. </summary>
+        [WirePath("properties.databaseDeletionTime")]
         public DateTimeOffset? DatabaseDeletedOn { get; }
         /// <summary> The time the backup was taken. </summary>
+        [WirePath("properties.backupTime")]
         public DateTimeOffset? BackupOn { get; }
         /// <summary> The time the long term retention backup will expire. </summary>
+        [WirePath("properties.backupExpirationTime")]
         public DateTimeOffset? BackupExpireOn { get; }
         /// <summary> The storage redundancy type of the backup. </summary>
+        [WirePath("properties.backupStorageRedundancy")]
         public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
+        /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
+        [WirePath("properties.backupStorageAccessTier")]
+        public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
     }
 }

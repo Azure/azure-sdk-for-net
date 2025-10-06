@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new PipelineRunInvokedBy(name, id, invokedByType);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineRunInvokedBy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePipelineRunInvokedBy(document.RootElement);
+        }
+
         internal partial class PipelineRunInvokedByConverter : JsonConverter<PipelineRunInvokedBy>
         {
             public override void Write(Utf8JsonWriter writer, PipelineRunInvokedBy model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override PipelineRunInvokedBy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

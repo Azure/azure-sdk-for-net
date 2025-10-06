@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The property to evaluate in an automation rule property condition. </summary>
+        [WirePath("propertyName")]
         public AutomationRulePropertyConditionSupportedProperty? PropertyName { get; set; }
         /// <summary> Gets or sets the operator. </summary>
+        [WirePath("operator")]
         public AutomationRulePropertyConditionSupportedOperator? Operator { get; set; }
         /// <summary> Gets the property values. </summary>
+        [WirePath("propertyValues")]
         public IList<string> PropertyValues { get; }
     }
 }

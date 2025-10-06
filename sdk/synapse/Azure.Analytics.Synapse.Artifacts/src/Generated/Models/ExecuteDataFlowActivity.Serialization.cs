@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -83,6 +82,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
+            if (Optional.IsDefined(ContinuationSettings))
+            {
+                writer.WritePropertyName("continuationSettings"u8);
+                writer.WriteObjectValue(ContinuationSettings);
+            }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
@@ -91,28 +95,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-                writer.WriteObjectValue(TraceLevel);
+                writer.WriteObjectValue<object>(TraceLevel);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-                writer.WriteObjectValue(ContinueOnError);
+                writer.WriteObjectValue<object>(ContinueOnError);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-                writer.WriteObjectValue(RunConcurrently);
+                writer.WriteObjectValue<object>(RunConcurrently);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-                writer.WriteObjectValue(SourceStagingConcurrency);
+                writer.WriteObjectValue<object>(SourceStagingConcurrency);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -135,6 +139,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DataFlowReference dataflow = default;
             DataFlowStagingInfo staging = default;
             IntegrationRuntimeReference integrationRuntime = default;
+            ContinuationSettingsReference continuationSettings = default;
             ExecuteDataFlowActivityTypePropertiesCompute compute = default;
             object traceLevel = default;
             object continueOnError = default;
@@ -255,6 +260,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("continuationSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            continuationSettings = ContinuationSettingsReference.DeserializeContinuationSettingsReference(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("compute"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -320,11 +334,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 dataflow,
                 staging,
                 integrationRuntime,
+                continuationSettings,
                 compute,
                 traceLevel,
                 continueOnError,
                 runConcurrently,
                 sourceStagingConcurrency);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteDataFlowActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExecuteDataFlowActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>
@@ -333,6 +364,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ExecuteDataFlowActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

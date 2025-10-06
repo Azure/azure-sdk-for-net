@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -72,16 +71,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Isolation mode for the managed network of a machine learning workspace. </summary>
+        [WirePath("isolationMode")]
         public IsolationMode? IsolationMode { get; set; }
         /// <summary> Gets the network id. </summary>
+        [WirePath("networkId")]
         public string NetworkId { get; }
         /// <summary>
         /// Dictionary of &lt;OutboundRule&gt;
         /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </summary>
+        [WirePath("outboundRules")]
         public IDictionary<string, MachineLearningOutboundRule> OutboundRules { get; set; }
         /// <summary> Status of the Provisioning for the managed network of a machine learning workspace. </summary>
+        [WirePath("status")]
         public ManagedNetworkProvisionStatus Status { get; set; }
     }
 }

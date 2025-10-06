@@ -183,6 +183,13 @@ namespace Azure.Storage.Sas
         public string EncryptionScope { get; set; }
 
         /// <summary>
+        /// Optional. Beginning in version 2025-07-05, this value  specifies the Entra ID of the user would is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
+        /// </summary>
+        public string DelegatedUserObjectId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -340,34 +347,33 @@ namespace Azure.Storage.Sas
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public BlobSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
+            => ToSasQueryParameters(sharedKeyCredential, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="BlobSasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="BlobSasQueryParameters"/> used for authenticating
+        /// requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public BlobSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential, out string stringToSign)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            stringToSign = ToStringToSign(sharedKeyCredential);
 
-            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = String.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
-                Identifier,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                Snapshot ?? BlobVersionId,
-                EncryptionScope,
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
-
-            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
             BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
@@ -390,6 +396,31 @@ namespace Azure.Storage.Sas
             return p;
         }
 
+        private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                Permissions,
+                startTime,
+                expiryTime,
+                GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
+                Identifier,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version,
+                Resource,
+                Snapshot ?? BlobVersionId,
+                EncryptionScope,
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
+        }
+
         /// <summary>
         /// Use an account's <see cref="UserDelegationKey"/> to sign this
         /// shared access signature values to produce the proper SAS query
@@ -405,44 +436,34 @@ namespace Azure.Storage.Sas
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public BlobSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
+            => ToSasQueryParameters(userDelegationKey, accountName, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="UserDelegationKey"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="userDelegationKey">
+        /// A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <returns>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="BlobSasQueryParameters"/>.
+        /// </param>
+        /// The <see cref="BlobSasQueryParameters"/> used for authenticating requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public BlobSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
 
             EnsureState();
 
-            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            stringToSign = ToStringToSign(userDelegationKey, accountName);
 
-            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
-                    Permissions,
-                    startTime,
-                    expiryTime,
-                    GetCanonicalName(accountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
-                    userDelegationKey.SignedObjectId,
-                    userDelegationKey.SignedTenantId,
-                    signedStart,
-                    signedExpiry,
-                    userDelegationKey.SignedService,
-                    userDelegationKey.SignedVersion,
-                    PreauthorizedAgentObjectId,
-                    null, // AgentObjectId - enabled only in HNS accounts
-                    CorrelationId,
-                    IPRange.ToString(),
-                    SasExtensions.ToProtocolString(Protocol),
-                    Version,
-                    Resource,
-                    Snapshot ?? BlobVersionId,
-                    EncryptionScope,
-                    CacheControl,
-                    ContentDisposition,
-                    ContentEncoding,
-                    ContentLanguage,
-                    ContentType);
-
-            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
             BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
@@ -469,8 +490,46 @@ namespace Azure.Storage.Sas
                 contentType: ContentType,
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
-                encryptionScope: EncryptionScope);
+                encryptionScope: EncryptionScope,
+                delegatedUserObjectId: DelegatedUserObjectId);
             return p;
+        }
+
+        private string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+
+            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(accountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
+                    userDelegationKey.SignedObjectId,
+                    userDelegationKey.SignedTenantId,
+                    signedStart,
+                    signedExpiry,
+                    userDelegationKey.SignedService,
+                    userDelegationKey.SignedVersion,
+                    PreauthorizedAgentObjectId,
+                    null, // AgentObjectId - enabled only in HNS accounts
+                    CorrelationId,
+                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                    DelegatedUserObjectId,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    Snapshot ?? BlobVersionId,
+                    EncryptionScope,
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
         }
 
         /// <summary>
@@ -486,22 +545,6 @@ namespace Azure.Storage.Sas
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
-
-        /// <summary>
-        /// ComputeHMACSHA256 generates a base-64 hash signature string for an
-        /// HTTP request or for a SAS.
-        /// </summary>
-        /// <param name="userDelegationKeyValue">
-        /// A <see cref="UserDelegationKey.Value"/> used to sign with a key
-        /// representing AD credentials.
-        /// </param>
-        /// <param name="message">The message to sign.</param>
-        /// <returns>The signed message.</returns>
-        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
-            Convert.ToBase64String(
-                new HMACSHA256(
-                    Convert.FromBase64String(userDelegationKeyValue))
-                .ComputeHash(Encoding.UTF8.GetBytes(message)));
 
         /// <summary>
         /// Ensure the <see cref="BlobSasBuilder"/>'s properties are in a

@@ -6,8 +6,7 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotFirmwareDefense;
+using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 {
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
+        public virtual FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier id)
+        {
+            FirmwareAnalysisWorkspaceResource.ValidateResourceId(id);
+            return new FirmwareAnalysisWorkspaceResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="IotFirmwareResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IotFirmwareResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -50,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 
         /// <summary>
         /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier(string,string,string,string,FirmwareAnalysisSummaryType)" /> to create a <see cref="FirmwareAnalysisSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirmwareAnalysisSummaryResource"/> object. </returns>
@@ -61,15 +72,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="UsageMetricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UsageMetricResource.CreateResourceIdentifier" /> to create an <see cref="UsageMetricResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
-        public virtual FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="UsageMetricResource"/> object. </returns>
+        public virtual UsageMetricResource GetUsageMetricResource(ResourceIdentifier id)
         {
-            FirmwareAnalysisWorkspaceResource.ValidateResourceId(id);
-            return new FirmwareAnalysisWorkspaceResource(Client, id);
+            UsageMetricResource.ValidateResourceId(id);
+            return new UsageMetricResource(Client, id);
         }
     }
 }

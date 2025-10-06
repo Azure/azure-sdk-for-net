@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format write settings.
     /// Please note <see cref="FormatWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AvroWriteSettings"/>, <see cref="JsonWriteSettings"/>, <see cref="OrcWriteSettings"/>, <see cref="ParquetWriteSettings"/> and <see cref="DelimitedTextWriteSettings"/>.
+    /// The available derived classes include <see cref="AvroWriteSettings"/>, <see cref="DelimitedTextWriteSettings"/>, <see cref="IcebergWriteSettings"/>, <see cref="JsonWriteSettings"/>, <see cref="OrcWriteSettings"/> and <see cref="ParquetWriteSettings"/>.
     /// </summary>
     public abstract partial class FormatWriteSettings
     {

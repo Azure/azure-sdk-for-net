@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The time the snapshot was taken. </summary>
+        [WirePath("properties.time")]
         public string Time { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Analytics.Synapse.Artifacts;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {

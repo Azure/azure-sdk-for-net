@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -52,6 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
             ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForWindows>();
             KbNumbersToInclude = new ChangeTrackingList<string>();
             KbNumbersToExclude = new ChangeTrackingList<string>();
+            PatchNameMasksToInclude = new ChangeTrackingList<string>();
+            PatchNameMasksToExclude = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WindowsParameters"/>. </summary>
@@ -60,14 +61,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="kbNumbersToExclude"> Kbs to exclude in the patch operation. </param>
         /// <param name="excludeKbsRequiringReboot"> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </param>
         /// <param name="maxPatchPublishOn"> This is used to install patches that were published on or before this given max published date. </param>
+        /// <param name="patchNameMasksToInclude"> This is used to include patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </param>
+        /// <param name="patchNameMasksToExclude"> This is used to exclude patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsParameters(IList<VmGuestPatchClassificationForWindows> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WindowsParameters(IList<VmGuestPatchClassificationForWindows> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, IList<string> patchNameMasksToInclude, IList<string> patchNameMasksToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassificationsToInclude = classificationsToInclude;
             KbNumbersToInclude = kbNumbersToInclude;
             KbNumbersToExclude = kbNumbersToExclude;
             ExcludeKbsRequiringReboot = excludeKbsRequiringReboot;
             MaxPatchPublishOn = maxPatchPublishOn;
+            PatchNameMasksToInclude = patchNameMasksToInclude;
+            PatchNameMasksToExclude = patchNameMasksToExclude;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,5 +86,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ExcludeKbsRequiringReboot { get; set; }
         /// <summary> This is used to install patches that were published on or before this given max published date. </summary>
         public DateTimeOffset? MaxPatchPublishOn { get; set; }
+        /// <summary> This is used to include patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </summary>
+        public IList<string> PatchNameMasksToInclude { get; }
+        /// <summary> This is used to exclude patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </summary>
+        public IList<string> PatchNameMasksToExclude { get; }
     }
 }

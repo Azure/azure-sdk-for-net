@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -33,8 +31,8 @@ namespace Azure.ResourceManager.Quota
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _currentUsagesBaseUsagesClientDiagnostics;
-        private readonly UsagesRestOperations _currentUsagesBaseUsagesRestClient;
+        private readonly ClientDiagnostics _currentUsagesBaseCurrentUsagesBasesClientDiagnostics;
+        private readonly CurrentUsagesBasesRestOperations _currentUsagesBaseCurrentUsagesBasesRestClient;
         private readonly CurrentUsagesBaseData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +57,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CurrentUsagesBaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _currentUsagesBaseUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string currentUsagesBaseUsagesApiVersion);
-            _currentUsagesBaseUsagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseUsagesApiVersion);
+            _currentUsagesBaseCurrentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string currentUsagesBaseCurrentUsagesBasesApiVersion);
+            _currentUsagesBaseCurrentUsagesBasesRestClient = new CurrentUsagesBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseCurrentUsagesBasesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +95,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +110,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CurrentUsagesBaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseResource.Get");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _currentUsagesBaseUsagesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _currentUsagesBaseCurrentUsagesBasesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +135,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <description>CurrentUsagesBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +150,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CurrentUsagesBaseResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseResource.Get");
+            using var scope = _currentUsagesBaseCurrentUsagesBasesClientDiagnostics.CreateScope("CurrentUsagesBaseResource.Get");
             scope.Start();
             try
             {
-                var response = _currentUsagesBaseUsagesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _currentUsagesBaseCurrentUsagesBasesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());

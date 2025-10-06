@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -83,20 +82,28 @@ namespace Azure.ResourceManager.Resources
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The subscription ID. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> The subscription display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The subscription tenant ID. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
+        [WirePath("state")]
         public SubscriptionState? State { get; }
         /// <summary> The subscription policies. </summary>
+        [WirePath("subscriptionPolicies")]
         public SubscriptionPolicies SubscriptionPolicies { get; }
         /// <summary> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </summary>
+        [WirePath("authorizationSource")]
         public string AuthorizationSource { get; }
         /// <summary> An array containing the tenants managing the subscription. </summary>
+        [WirePath("managedByTenants")]
         public IReadOnlyList<ManagedByTenant> ManagedByTenants { get; }
         /// <summary> The tags attached to the subscription. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

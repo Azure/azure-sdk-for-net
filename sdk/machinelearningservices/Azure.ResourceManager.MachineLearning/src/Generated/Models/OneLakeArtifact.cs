@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -61,13 +60,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
-        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
+        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OneLakeArtifact(string artifactName, OneLakeArtifactType artifactType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OneLakeArtifact(OneLakeArtifactType artifactType, string artifactName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ArtifactName = artifactName;
             ArtifactType = artifactType;
+            ArtifactName = artifactName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,9 +75,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> [Required] OneLake artifact name. </summary>
-        public string ArtifactName { get; set; }
         /// <summary> [Required] OneLake artifact type. </summary>
         internal OneLakeArtifactType ArtifactType { get; set; }
+        /// <summary> [Required] OneLake artifact name. </summary>
+        [WirePath("artifactName")]
+        public string ArtifactName { get; set; }
     }
 }

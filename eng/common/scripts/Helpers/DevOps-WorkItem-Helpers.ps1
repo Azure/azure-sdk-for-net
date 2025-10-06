@@ -5,18 +5,14 @@ $ReleaseDevOpsCommonParametersWithProject = $ReleaseDevOpsCommonParameters + @("
 
 function Get-DevOpsRestHeaders()
 {
-  $headers = $null
-  if (Get-Variable -Name "devops_pat" -ValueOnly -ErrorAction "Ignore")
-  {
-    $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
-    $headers = @{ Authorization = "Basic $encodedToken" }
+  # Get a temp access token from the logged in az cli user for azure devops resource
+  $headerAccessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
+
+  if ([System.String]::IsNullOrEmpty($headerAccessToken)) {
+    throw "Unable to create the DevOpsRestHeader due to access token being null or empty. The caller needs to be logged in with az login to an account with enough permissions to edit work items in the azure-sdk Release team project."
   }
-  else
-  {
-    # Get a temp access token from the logged in az cli user for azure devops resource
-    $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
-    $headers = @{ Authorization = "Bearer $jwt_accessToken" }
-  }
+
+  $headers = @{ Authorization = "Bearer $headerAccessToken" }
 
   return $headers
 }
@@ -59,7 +55,7 @@ function Invoke-Query($fields, $wiql, $output = $true)
   }
 
   $response = Invoke-RestMethod -Method POST `
-    -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?`$top=10000&api-version=6.0" `
+    -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?`$top=100000&api-version=6.0" `
     -Headers (Get-DevOpsRestHeaders) -Body $body -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
 
   if ($response -isnot [HashTable] -or !$response.ContainsKey("workItems") -or $response.workItems.Count -eq 0) {
@@ -101,15 +97,6 @@ function Invoke-Query($fields, $wiql, $output = $true)
   }
 
   return $workItems
-}
-
-function LoginToAzureDevops([string]$devops_pat)
-{
-  if (!$devops_pat) {
-    return
-  }
-  # based on the docs at https://aka.ms/azure-devops-cli-auth the recommendation is to set this env variable to login
-  $env:AZURE_DEVOPS_EXT_PAT = $devops_pat
 }
 
 function BuildHashKeyNoNull()
@@ -374,7 +361,7 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   {
     CreateWorkItemRelation $workItemId $parentId "parent" $outputCommand
   }
-  
+
   # Add a work item as related if given.
   if ($relatedId)
   {
@@ -542,7 +529,7 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
 {
   $existingItem = FindParentWorkItem $serviceName $packageDisplayName -outputCommand $outputCommand -ignoreReleasePlannerTests $ignoreReleasePlannerTests -tag $tag
   if ($existingItem) {
-    Write-Host "Found existing product work item [$($existingItem.id)]"
+    Write-Verbose "Found existing product work item [$($existingItem.id)]"
     $newparentItem = FindOrCreateServiceParent $serviceName -outputCommand $outputCommand -ignoreReleasePlannerTests $ignoreReleasePlannerTests -tag $tag
     UpdateWorkItemParent $existingItem $newParentItem
     return $existingItem
@@ -565,7 +552,7 @@ function FindOrCreateServiceParent($serviceName, $outputCommand = $true, $ignore
 {
   $serviceParent = FindParentWorkItem $serviceName -packageDisplayName $null -outputCommand $outputCommand -ignoreReleasePlannerTests $ignoreReleasePlannerTests -tag $tag
   if ($serviceParent) {
-    Write-Host "Found existing service work item [$($serviceParent.id)]"
+    Write-Verbose "Found existing service work item [$($serviceParent.id)]"
     return $serviceParent
   }
 
@@ -985,4 +972,145 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     -Uri "https://dev.azure.com/azure-sdk/_apis/wit/workitems/${id}?api-version=6.0" `
     -Headers (Get-DevOpsRestHeaders) -Body $body -ContentType "application/json-patch+json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
   return $response
+}
+
+function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $PipelineUrl)
+{
+    $pkgName = $pkgValidationDetails.Name
+    $versionString = $pkgValidationDetails.Version
+
+    $parsedNewVersion = [AzureEngSemanticVersion]::new($versionString)
+    $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
+    $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $pkgName -version $versionMajorMinor -includeClosed $true -outputCommand $false
+
+    if (!$workItem)
+    {
+        Write-Host"No work item found for package [$pkgName]."
+        return $false
+    }
+
+    $changeLogStatus = $pkgValidationDetails.ChangeLogValidation.Status
+    $changeLogDetails  = $pkgValidationDetails.ChangeLogValidation.Message
+    $apiReviewStatus = $pkgValidationDetails.APIReviewValidation.Status
+    $apiReviewDetails = $pkgValidationDetails.APIReviewValidation.Message
+    $packageNameStatus = $pkgValidationDetails.PackageNameValidation.Status
+    $packageNameDetails = $pkgValidationDetails.PackageNameValidation.Message
+
+    $fields = @()
+    $fields += "`"PackageVersion=${versionString}`""
+    $fields += "`"ChangeLogStatus=${changeLogStatus}`""
+    $fields += "`"ChangeLogValidationDetails=${changeLogDetails}`""
+    $fields += "`"APIReviewStatus=${apiReviewStatus}`""
+    $fields += "`"APIReviewStatusDetails=${apiReviewDetails}`""
+    $fields += "`"PackageNameApprovalStatus=${packageNameStatus}`""
+    $fields += "`"PackageNameApprovalDetails=${packageNameDetails}`""
+    if ($BuildDefinition) {
+        $fields += "`"PipelineDefinition=$BuildDefinition`""
+    }
+    if ($PipelineUrl) {
+        $fields += "`"LatestPipelineRun=$PipelineUrl`""
+    }
+
+    $workItem = UpdateWorkItem -id $workItem.id -fields $fields
+    Write-Host "[$($workItem.id)]$LanguageDisplayName - $pkgName($versionMajorMinor) - Updated"
+    return $true
+}
+
+
+function Get-LanguageDevOpsName($LanguageShort)
+{
+    switch ($LanguageShort.ToLower()) 
+    {
+        "net" { return "Dotnet" }
+        "js" { return "JavaScript" }
+        "java" { return "Java" }
+        "go" { return "Go" }
+        "python" { return "Python" }
+        default { return $null }
+    }
+}
+
+function Get-ReleasePlanForPackage($packageName)
+{
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+        return $null
+    }
+
+    $prStatusFieldName = "SDKPullRequestStatusFor$($devopsFieldLanguage)"
+    $packageNameFieldName = "$($devopsFieldLanguage) Package Name"
+    $fields = @()
+    $fields += "System.ID"
+    $fields += "System.State"
+    $fields += "System.AssignedTo"
+    $fields += "System.Parent"
+    $fields += "System.Tags"
+
+    $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+    $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [${packageNameFieldName}] = '${packageName}'"
+    $query += " AND [${prStatusFieldName}] = 'merged'"
+    $query += " AND [System.State] IN ('In Progress')"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+    $workItems = Invoke-Query $fields $query
+    return $workItems
+}
+
+function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $version)
+{  
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+        return $null
+    }
+
+    $fields = @()
+    $fields += "`"ReleaseStatusFor$($devopsFieldLanguage)=$status`""
+    $fields += "`"ReleasedVersionFor$($devopsFieldLanguage)=$version`""
+
+    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
+}
+
+function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl, $status, $languageName)
+{
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $languageName
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to update release plan, language [$languageName]"
+        return $null
+    }
+
+    $fields = @()
+    if ($pullRequestUrl)
+    {
+        $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    }
+    $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
+
+    Write-Host "Updating release plan [$releasePlanWorkItemId] with pull request details for language [$languageName]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated pull request details for [$languageName] in release plan [$releasePlanWorkItemId]"
+}
+
+function Get-ReleasePlan-Link($releasePlanWorkItemId)
+{
+  $fields = @()
+  $fields += "System.Id"
+  $fields += "System.Title"
+  $fields += "Custom.ReleasePlanLink"
+  $fields += "Custom.ReleasePlanSubmittedby"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"
+  $workItem = Invoke-Query $fields $query
+  if (!$workItem)
+  {
+      Write-Host "Release plan with ID $releasePlanWorkItemId not found."
+      return $null
+  }
+  return $workItem["fields"]
 }

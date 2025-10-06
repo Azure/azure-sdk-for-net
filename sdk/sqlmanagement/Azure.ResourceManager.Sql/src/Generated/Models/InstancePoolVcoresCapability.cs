@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The virtual cores identifier. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The virtual cores value. </summary>
+        [WirePath("value")]
         public int? Value { get; }
         /// <summary> Storage limit. </summary>
+        [WirePath("storageLimit")]
         public MaxSizeCapability StorageLimit { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

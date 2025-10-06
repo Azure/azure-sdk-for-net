@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Gee.External.Capstone.M68K;
 using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
@@ -81,39 +82,16 @@ namespace Azure.Identity.Tests
             _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
 
             var token = Guid.NewGuid().ToString();
-            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
-            var mockTransport = new MockTransport(req =>
+            TransportConfig transportConfig = new()
             {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
-                {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
-                }
-
-                return response;
-            });
+                TokenFactory = req => token
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
                 IsUnsafeSupportLoggingEnabled = isSupportLoggingEnabled
@@ -123,12 +101,61 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
             }
-            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
             Assert.AreEqual(token, actualToken.Token);
             string expectedPrefix = isSupportLoggingEnabled ? "True" : "False";
             Assert.True(_listener.EventData.Any(d => d.Payload.Any(p => p.ToString().StartsWith($"{expectedPrefix} MSAL"))));
+        }
+
+        [Test]
+        [TestCase(EventLevel.Informational)]
+        [TestCase(EventLevel.Verbose)]
+        public async Task ListenerEventLevelControlsMsalLogLevel(EventLevel eventLevel)
+        {
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, eventLevel);
+
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                IsUnsafeSupportLoggingEnabled = true
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+
+            Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
+
+            switch (eventLevel)
+            {
+                case EventLevel.Informational:
+                    Assert.False(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    break;
+                case EventLevel.Verbose:
+                    Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    break;
+                default:
+                    Assert.Fail("Unexpected event level");
+                    break;
+            }
         }
 
         [Test]
@@ -144,50 +171,28 @@ namespace Azure.Identity.Tests
             // Clear instance discovery cache
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
 
-            // Configure the transport
             var token = Guid.NewGuid().ToString();
-            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
-            var mockTransport = new MockTransport(req =>
+            // Configure the transport
+            TransportConfig transportConfig = new()
             {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
-                {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
-                }
-
-                return response;
-            });
+                TokenFactory = req => token
+            };
+            transportConfig.RequestValidator = req => transportConfig.CalledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 DisableInstanceDiscovery = disable,
                 Transport = mockTransport,
                 TenantId = TenantId,
             };
             var credential = GetTokenCredential(config);
-            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreNotEqual(disable, calledDiscoveryEndpoint);
+            Assert.AreNotEqual(disable, transportConfig.CalledDiscoveryEndpoint);
             Assert.AreEqual(token, actualToken.Token);
         }
 
@@ -197,40 +202,17 @@ namespace Azure.Identity.Tests
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             string resolvedTenantId = TenantId;
-            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", resolvedTenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
-            var mockTransport = new MockTransport(req =>
+            TransportConfig transportConfig = new()
             {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
-                {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, resolvedTenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
-                }
-
-                return response;
-            });
+                TokenFactory = req => token
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
 
             var mockResolver = new Mock<TenantIdResolverBase>() { CallBase = true };
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
                 RequestContext = new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()),
@@ -239,7 +221,7 @@ namespace Azure.Identity.Tests
             };
             var credential = GetTokenCredential(config);
 
-            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // Assert that Resolver is called and that the resolved tenant is the expected tenant
             mockResolver.Setup(r => r.Resolve(It.IsAny<string>(), It.IsAny<TokenRequestContext>(), It.IsAny<string[]>())).Callback<string, TokenRequestContext, IList<string>>((tenantId, context, additionalTenants) =>
@@ -255,35 +237,13 @@ namespace Azure.Identity.Tests
         {
             // Configure the transport
             var token = Guid.NewGuid().ToString();
-            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
             bool observedCae = false;
             bool observedNoCae = false;
-
-            var mockTransport = new MockTransport(req =>
+            TransportConfig transportConfig = new()
             {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
+                TokenFactory = req => token,
+                RequestValidator = req =>
                 {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
                     if (req.Content != null)
                     {
                         var stream = new MemoryStream();
@@ -311,12 +271,13 @@ namespace Azure.Identity.Tests
                         }
                     }
                 }
-
-                return response;
-            });
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
             };
@@ -325,7 +286,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
             }
-            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // First call with EnableCae = false
             using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
@@ -353,6 +314,226 @@ namespace Azure.Identity.Tests
             }
             Assert.True(observedCae);
             Assert.True(observedNoCae);
+        }
+
+        [Test]
+        public async Task ClaimsSetCorrectlyOnRequest()
+        {
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            const string Claims = "myClaims";
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token,
+                RequestValidator = req =>
+                {
+                    if (req.Content != null)
+                    {
+                        var stream = new MemoryStream();
+                        req.Content.WriteTo(stream, default);
+                        var content = new BinaryData(stream.ToArray()).ToString();
+                        var queryString = Uri.UnescapeDataString(content)
+                            .Split('&')
+                            .Select(q => q.Split('='))
+                            .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
+                        bool containsClaims = queryString.TryGetValue("claims", out var claimsJson);
+
+                        if (req.ClientRequestId == "NoClaims")
+                        {
+                            Assert.False(containsClaims, "(NoClaims) Claims should not be present. Claims=" + claimsJson);
+                        }
+                        if (req.ClientRequestId == "WithClaims")
+                        {
+                            Assert.True(containsClaims, "(WithClaims) Claims should be present");
+                            Assert.AreEqual(Claims, claimsJson, "(WithClaims) Claims should match");
+                        }
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                RedirectUri = new Uri("http://localhost:8400/")
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+
+            using (HttpPipeline.CreateClientRequestIdScope("NoClaims"))
+            {
+                // First call to populate the account record for confidential client creds
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+                var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+            using (HttpPipeline.CreateClientRequestIdScope("WithClaims"))
+            {
+                var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate2, claims: Claims), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task TokenContainsRefreshOn()
+        {
+            // Skip test if the credential does not support disabling instance discovery
+            if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(typeof(TCredOptions)))
+            {
+                // Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsDisableInstanceDiscovery)}");
+            }
+
+            // Clear instance discovery cache
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
+
+            var token = Guid.NewGuid().ToString();
+            // Configure the transport
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token
+            };
+            transportConfig.RequestValidator = req => transportConfig.CalledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+            Assert.IsNotNull(actualToken.RefreshOn);
+        }
+
+        [Test]
+        public async Task CachingOptionsAreRespected()
+        {
+            // Skip test if the credential does not support caching options
+            if (!typeof(ISupportsTokenCachePersistenceOptions).IsAssignableFrom(typeof(TCredOptions)))
+            {
+                Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsTokenCachePersistenceOptions)}");
+            }
+
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => Guid.NewGuid().ToString()
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+            var cache = new MemoryTokenCache();
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                TokenCachePersistenceOptions = cache,
+                AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{TenantId}", TenantId, ClientId),
+            };
+
+            // Handle credentials that need to be initialized with a cache
+            if (typeof(TCredOptions) == typeof(InteractiveBrowserCredentialOptions) || typeof(TCredOptions) == typeof(SharedTokenCacheCredentialOptions))
+            {
+                cache.Data = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
+            }
+
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+
+            // Fetch a token to populate the cache
+            AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            // Create a new credential sharing the same cache
+            var credential2 = GetTokenCredential(config);
+            AccessToken actualToken2 = await credential2.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(actualToken1.Token, actualToken2.Token);
+        }
+
+        [Test]
+        public async Task AuthorityHostConfigSupportsdStS()
+        {
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token,
+                RequestValidator = req =>
+                {
+                    if (req.Uri.Path.EndsWith("/token"))
+                    {
+                        Assert.AreEqual("usnorth-passive-dsts.dsts.core.windows.net", req.Uri.Host);
+                        Assert.AreEqual($"/dstsv2/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                AuthorityHost = new("https://usnorth-passive-dsts.dsts.core.windows.net/dstsv2"),
+                RedirectUri = new Uri("http://localhost:8400/")
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("AuthorityHostConfigSupportsdStS tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+
+            // First call to populate the account record for confidential client creds
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+            Assert.AreEqual(token, actualToken.Token);
+        }
+
+        public class MemoryTokenCache : UnsafeTokenCacheOptions
+        {
+            public ReadOnlyMemory<byte> Data { get; set; } = new ReadOnlyMemory<byte>();
+            public int CacheReadCount;
+            public int CacheUpdatedCount;
+
+            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            {
+                CacheReadCount++;
+                Console.WriteLine("     *********  RefreshCacheAsync");
+                return Task.FromResult(Data);
+            }
+
+            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            {
+                CacheUpdatedCount++;
+                Data = tokenCacheUpdatedArgs.UnsafeCacheData;
+                // convert the Data byte array to a string
+                var str = Encoding.UTF8.GetString(Data.Span.ToArray());
+                Console.WriteLine(str);
+                return Task.CompletedTask;
+            }
         }
 
         [Test]
@@ -420,8 +601,15 @@ namespace Azure.Identity.Tests
                     claimsIsVerified = true;
                     return new ValueTask<AuthenticationResult>(result);
                 });
+
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token,
+            };
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 TenantId = TenantId,
                 MockPublicMsalClient = msalPub,
                 MockConfidentialMsalClient = msalConf,
@@ -438,6 +626,57 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
             Assert.True(claimsIsVerified);
+        }
+
+        public class TransportConfig
+        {
+            public bool CalledDiscoveryEndpoint { get; set; }
+            public bool IsPubClient { get; set; }
+            public Action<MockRequest> RequestValidator { get; set; }
+            public Func<MockRequest, string> TokenFactory { get; set; }
+            public Action<MockRequest, MockResponse> ResponseHandler { get; set; }
+        }
+
+        public static Func<MockRequest, MockResponse> MockTokenTransportFactory(TransportConfig transportConfig)
+        {
+            return req =>
+            {
+                MockResponse response = new(200);
+                if (req.Uri.Path.EndsWith("/devicecode"))
+                {
+                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
+                }
+                else if (req.Uri.Path.Contains("/userrealm/"))
+                {
+                    response.SetContent(UserrealmResponse);
+                }
+                else if (req.Uri.Path.Contains("/common/discovery/instance"))
+                {
+                    transportConfig.CalledDiscoveryEndpoint = true;
+                    response.SetContent(CredentialTestHelpers.CreateMockInstanceDiscoveryResponse());
+                }
+                else if (req.Uri.Path.EndsWith("/token"))
+                {
+                    if (transportConfig.IsPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
+                    {
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString(), TenantId, ExpectedUsername, ObjectId);
+                    }
+                    else
+                    {
+                        response.SetContent($$"""{"token_type": "Bearer","expires_in": 9999,"ext_expires_in": 9999, "refresh_in": 9999,"access_token": "{{transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}}" }""");
+                    }
+                }
+                else if (transportConfig.ResponseHandler != null)
+                {
+                    transportConfig.ResponseHandler(req, response);
+                }
+
+                if (transportConfig.RequestValidator != null)
+                {
+                    transportConfig.RequestValidator(req);
+                }
+                return response;
+            };
         }
 
         public class AllowedTenantsTestParameters
@@ -618,12 +857,21 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public static Action<object> GetExceptionAction(Exception exceptionToThrow)
+        {
+            return (p) => throw exceptionToThrow;
+        }
+
         public class CommonCredentialTestConfig : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsDisableInstanceDiscovery
         {
             public bool DisableInstanceDiscovery { get; set; }
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
             public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
+            public Uri RedirectUri { get; set; }
+            public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+            public AuthenticationRecord AuthenticationRecord { get; set; }
+            public TransportConfig TransportConfig { get; set; }
             internal TenantIdResolverBase TestTentantIdResolver { get; set; }
             internal MockMsalConfidentialClient MockConfidentialMsalClient { get; set; }
             internal MockMsalPublicClient MockPublicMsalClient { get; set; }

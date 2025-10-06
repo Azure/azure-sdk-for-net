@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Customer Key vault properties. </summary>
+    /// <summary> The MachineLearningEncryptionKeyVaultProperties. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties
     {
         /// <summary>
@@ -48,31 +47,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
-        /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
-        /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> or <paramref name="keyVaultArmId"/> is null. </exception>
-        public MachineLearningEncryptionKeyVaultProperties(string keyIdentifier, ResourceIdentifier keyVaultArmId)
+        /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
+        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultArmId"/> or <paramref name="keyIdentifier"/> is null. </exception>
+        public MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier)
         {
-            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
+            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
 
-            KeyIdentifier = keyIdentifier;
             KeyVaultArmId = keyVaultArmId;
+            KeyIdentifier = keyIdentifier;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
-        /// <param name="identityClientId">
-        /// Currently, we support only SystemAssigned MSI.
-        /// We need this when we support UserAssignedIdentities
-        /// </param>
-        /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
-        /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
+        /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
+        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
+        /// <param name="identityClientId"> For future use - The client id of the identity which will be used to access key vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEncryptionKeyVaultProperties(string identityClientId, string keyIdentifier, ResourceIdentifier keyVaultArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier, string identityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IdentityClientId = identityClientId;
-            KeyIdentifier = keyIdentifier;
             KeyVaultArmId = keyVaultArmId;
+            KeyIdentifier = keyIdentifier;
+            IdentityClientId = identityClientId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,14 +77,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// Currently, we support only SystemAssigned MSI.
-        /// We need this when we support UserAssignedIdentities
-        /// </summary>
-        public string IdentityClientId { get; set; }
-        /// <summary> KeyVault key identifier to encrypt the data. </summary>
-        public string KeyIdentifier { get; set; }
-        /// <summary> KeyVault Arm Id that contains the data encryption key. </summary>
+        /// <summary> The ArmId of the keyVault where the customer owned encryption key is present. </summary>
+        [WirePath("keyVaultArmId")]
         public ResourceIdentifier KeyVaultArmId { get; set; }
+        /// <summary> Key vault uri to access the encryption key. </summary>
+        [WirePath("keyIdentifier")]
+        public string KeyIdentifier { get; set; }
+        /// <summary> For future use - The client id of the identity which will be used to access key vault. </summary>
+        [WirePath("identityClientId")]
+        public string IdentityClientId { get; set; }
     }
 }

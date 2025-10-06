@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The API Management service region from where to start the connectivity check operation. </summary>
+        [WirePath("region")]
         public string Region { get; }
         /// <summary> The particular VMSS instance from which to fire the request. </summary>
+        [WirePath("instance")]
         public long? Instance { get; set; }
     }
 }

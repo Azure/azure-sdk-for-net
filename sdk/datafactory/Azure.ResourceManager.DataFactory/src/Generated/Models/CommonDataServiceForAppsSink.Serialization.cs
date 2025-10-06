@@ -11,23 +11,31 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class CommonDataServiceForAppsSink : IUtf8JsonSerializable, IJsonModel<CommonDataServiceForAppsSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDataServiceForAppsSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDataServiceForAppsSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommonDataServiceForAppsSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommonDataServiceForAppsSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
             if (Optional.IsDefined(IgnoreNullValues))
@@ -40,37 +48,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("alternateKeyName"u8);
                 JsonSerializer.Serialize(writer, AlternateKeyName);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Optional.IsDefined(BypassBusinessLogicExecution))
             {
-                writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
+                writer.WritePropertyName("bypassBusinessLogicExecution"u8);
+                JsonSerializer.Serialize(writer, BypassBusinessLogicExecution);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Optional.IsDefined(BypassPowerAutomateFlows))
             {
-                writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                writer.WritePropertyName("bypassPowerAutomateFlows"u8);
+                JsonSerializer.Serialize(writer, BypassPowerAutomateFlows);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -78,13 +64,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         CommonDataServiceForAppsSink IJsonModel<CommonDataServiceForAppsSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonDataServiceForAppsSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CommonDataServiceForAppsSink DeserializeCommonDataServiceForAppsSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,6 +95,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DynamicsSinkWriteBehavior writeBehavior = default;
             DataFactoryElement<bool> ignoreNullValues = default;
             DataFactoryElement<string> alternateKeyName = default;
+            DataFactoryElement<string> bypassBusinessLogicExecution = default;
+            DataFactoryElement<bool> bypassPowerAutomateFlows = default;
             string type = default;
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
@@ -142,6 +129,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     alternateKeyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("bypassBusinessLogicExecution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassBusinessLogicExecution = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("bypassPowerAutomateFlows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassPowerAutomateFlows = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -217,7 +222,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 writeBehavior,
                 ignoreNullValues,
-                alternateKeyName);
+                alternateKeyName,
+                bypassBusinessLogicExecution,
+                bypassPowerAutomateFlows);
         }
 
         BinaryData IPersistableModel<CommonDataServiceForAppsSink>.Write(ModelReaderWriterOptions options)
@@ -227,9 +234,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,11 +248,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCommonDataServiceForAppsSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support reading '{options.Format}' format.");
             }
         }
 

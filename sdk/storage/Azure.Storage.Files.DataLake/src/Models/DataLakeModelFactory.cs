@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -13,6 +14,34 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public static partial class DataLakeModelFactory
     {
+        #region DataLakeFileReadResult
+        /// <summary>
+        /// Creates a new <see cref="DataLakeFileReadResult"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileReadResult DataLakeFileReadResult(
+            BinaryData content,
+            FileDownloadDetails details)
+            => new DataLakeFileReadResult()
+            {
+                Content = content,
+                Details = details
+            };
+        #endregion DataLakeFileReadResult
+
+        #region DataLakeFileReadStreamingResult
+        /// <summary>
+        /// Creates a new <see cref="DataLakeFileReadStreamingResult"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileReadStreamingResult DataLakeFileReadStreamingResult(
+            Stream content,
+            FileDownloadDetails details)
+            => new DataLakeFileReadStreamingResult()
+            {
+                Content = content,
+                Details = details
+            };
+        #endregion DataLakeFileReadStreamingResult
+
         #region FileDownloadDetails
         /// <summary>
         /// Creates a new FileDownloadDetails instance for mocking.
@@ -235,6 +264,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new <see cref="FileDownloadInfo"/> instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileDownloadInfo FileDownloadInfo(
             long contentLength,
             Stream content,
@@ -920,5 +950,18 @@ namespace Azure.Storage.Files.DataLake.Models
                 Position = position
             };
         #endregion DataLakeQueryError
+
+        #region GetPathTagResult
+        /// <summary>
+        /// Creates a new GetPathTagResult for mocking.
+        /// </summary>
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal static GetPathTagResult GetPathTagResult(
+            Tags tags)
+            => new GetPathTagResult()
+            {
+                Tags = tags
+            };
+        #endregion GetPathTagResult
     }
 }

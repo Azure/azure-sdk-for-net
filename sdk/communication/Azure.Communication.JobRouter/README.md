@@ -157,10 +157,10 @@ foreach (EventGridEvent egEvent in egEvents)
     switch (egEvent.EventType)
     {
         case "Microsoft.Communication.WorkerOfferIssued":
-            AcsRouterWorkerOfferIssuedEventData deserializedEventData =
+            AcsRouterWorkerOfferIssuedEventData? deserializedEventData =
                 egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
-            Console.Write(deserializedEventData.OfferId); // Offer Id
-            offerId = deserializedEventData.OfferId;
+            Console.Write(deserializedEventData?.OfferId); // Offer Id
+            offerId = deserializedEventData?.OfferId ?? string.Empty;
             break;
         // Handle any other custom event type
         default:
@@ -258,18 +258,18 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc_contact]: mailto:opencode@microsoft.com
 [nuget]: https://www.nuget.org/
 [netstandars2mappings]:https://github.com/dotnet/standard/blob/master/docs/versions.md
-[useraccesstokens]:https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
-[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
-[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[nextsteps]:https://docs.microsoft.com/azure/communication-services/concepts/router/concepts
+[useraccesstokens]:https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://learn.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[nextsteps]:https://learn.microsoft.com/azure/communication-services/concepts/router/concepts
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/src
-[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
-[classification_concepts]: https://docs.microsoft.com/azure/communication-services/concepts/router/classification-concepts
-[subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
-[offer_issued_event_schema]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
+[product_docs]: https://learn.microsoft.com/azure/communication-services/overview
+[classification_concepts]: https://learn.microsoft.com/azure/communication-services/concepts/router/classification-concepts
+[subscribe_events]: https://learn.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://learn.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
 [deserialize_event_grid_event_data]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid#receiving-and-deserializing-events
-[event_grid_event_handlers]: https://docs.microsoft.com/azure/event-grid/event-handlers
-[webhook_event_grid_event_delivery]: https://docs.microsoft.com/azure/event-grid/webhook-event-delivery
+[event_grid_event_handlers]: https://learn.microsoft.com/azure/event-grid/event-handlers
+[webhook_event_grid_event_delivery]: https://learn.microsoft.com/azure/event-grid/webhook-event-delivery
 [nuget_link]: https://www.nuget.org

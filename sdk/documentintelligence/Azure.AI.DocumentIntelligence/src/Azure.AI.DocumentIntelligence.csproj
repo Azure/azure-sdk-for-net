@@ -2,10 +2,13 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.DocumentIntelligence client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Azure.AI.DocumentIntelligence for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Document Intelligence Cognitive Services Applied AI Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,8 +18,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

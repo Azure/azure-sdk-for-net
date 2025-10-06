@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownStoreReadSettings. </summary>
+    /// <summary> Unknown version of StoreReadSettings. </summary>
     internal partial class UnknownStoreReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/>. </summary>

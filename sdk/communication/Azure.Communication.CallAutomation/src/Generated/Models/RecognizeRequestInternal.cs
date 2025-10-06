@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,12 +22,14 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(recognizeOptions, nameof(recognizeOptions));
 
             RecognizeInputType = recognizeInputType;
+            PlayPrompts = new ChangeTrackingList<PlaySourceInternal>();
             RecognizeOptions = recognizeOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="playPrompt"> The source of the audio to be played for recognition. </param>
+        /// <param name="playPrompts"> The source of the audio to be played for recognition. </param>
         /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
@@ -34,10 +37,11 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string operationCallbackUri)
+        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, IList<PlaySourceInternal> playPrompts, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string operationCallbackUri)
         {
             RecognizeInputType = recognizeInputType;
             PlayPrompt = playPrompt;
+            PlayPrompts = playPrompts;
             InterruptCallMediaOperation = interruptCallMediaOperation;
             RecognizeOptions = recognizeOptions;
             OperationContext = operationContext;

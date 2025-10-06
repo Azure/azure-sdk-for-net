@@ -3,6 +3,9 @@
 
 using System;
 using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,100 +15,143 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class TransferProgressTracker
     {
-        private readonly ProgressHandlerOptions _options;
+        internal class ProgressEventArgs
+        {
+            public int CompletedChange { get; set; } = 0;
+            public int SkippedChange { get; set; } = 0;
+            public int FailedChange { get; set; } = 0;
+            public int InProgressChange { get; set; } = 0;
+            public int QueuedChange { get; set; } = 0;
+            public long BytesChange { get; set; } = 0;
+        }
 
+        private readonly TransferProgressHandlerOptions _options;
+
+        private IProcessor<ProgressEventArgs> _progressProcessor;
         private long _completedCount = 0;
         private long _skippedCount = 0;
         private long _failedCount = 0;
         private long _inProgressCount = 0;
         private long _queuedCount = 0;
         private long _bytesTransferred = 0;
-        private object _bytesTransferredLock = new();
 
-        public TransferProgressTracker(ProgressHandlerOptions options)
+        public TransferProgressTracker(TransferProgressHandlerOptions options)
         {
             _options = options;
+            _progressProcessor = ChannelProcessing.NewProcessor<ProgressEventArgs>(readers: 1);
+            _progressProcessor.Process = ProcessProgressEvent;
         }
 
-        /// <summary>
-        /// Atomically increments completed files, decrements in-progress files and reports progress.
-        /// </summary>
-        public void IncrementCompletedFiles()
+        internal TransferProgressTracker(IProcessor<ProgressEventArgs> progressProcessor, TransferProgressHandlerOptions options)
         {
-            Interlocked.Decrement(ref _inProgressCount);
-            Interlocked.Increment(ref _completedCount);
-            _options?.ProgressHandler?.Report(GetTransferProgress());
+            _options = options;
+            _progressProcessor = progressProcessor;
+            _progressProcessor.Process = ProcessProgressEvent;
         }
 
-        /// <summary>
-        /// Atomically increments skipped files, decrements in-progress files and reports progress.
-        /// </summary>
-        public void IncrementSkippedFiles()
+        public async Task CleanUpAsync()
         {
-            Interlocked.Decrement(ref _inProgressCount);
-            Interlocked.Increment(ref _skippedCount);
-            _options?.ProgressHandler?.Report(GetTransferProgress());
+            // This will close the channel and block on all pending items being processed
+            await _progressProcessor.CleanUpAsync().ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Atomically increments failed files, decrements in-progress files and reports progress.
-        /// </summary>
-        public void IncrementFailedFiles()
+        public async ValueTask IncrementCompletedFilesAsync(CancellationToken cancellationToken)
         {
-            Interlocked.Decrement(ref _inProgressCount);
-            Interlocked.Increment(ref _failedCount);
-            _options?.ProgressHandler?.Report(GetTransferProgress());
-        }
-
-        /// <summary>
-        /// Atomically increments in-progress files, decrements queued files and reports progress.
-        /// </summary>
-        public void IncrementInProgressFiles()
-        {
-            Interlocked.Decrement(ref _queuedCount);
-            Interlocked.Increment(ref _inProgressCount);
-            _options?.ProgressHandler?.Report(GetTransferProgress());
-        }
-
-        /// <summary>
-        /// Atomically increments queued files and reports progress.
-        /// </summary>
-        public void IncrementQueuedFiles()
-        {
-            Interlocked.Increment(ref _queuedCount);
-            _options?.ProgressHandler?.Report(GetTransferProgress());
-        }
-
-        /// <summary>
-        /// Increments the number of bytes transferred by the given amount and reports progress.
-        /// </summary>
-        /// <param name="bytesTransferred"></param>
-        public void IncrementBytesTransferred(long bytesTransferred)
-        {
-            if (_options != default)
+            await QueueProgressEvent(new ProgressEventArgs()
             {
-                if ((bool)(_options?.TrackBytesTransferred))
+                InProgressChange = -1,
+                CompletedChange = 1,
+            },
+            cancellationToken).ConfigureAwait(false);
+        }
+
+        public async ValueTask IncrementSkippedFilesAsync(CancellationToken cancellationToken)
+        {
+            await QueueProgressEvent(new ProgressEventArgs()
+            {
+                InProgressChange = -1,
+                SkippedChange = 1,
+            },
+            cancellationToken).ConfigureAwait(false);
+        }
+
+        public async ValueTask IncrementFailedFilesAsync(CancellationToken cancellationToken)
+        {
+            await QueueProgressEvent(new ProgressEventArgs()
+            {
+                InProgressChange = -1,
+                FailedChange = 1,
+            },
+            cancellationToken).ConfigureAwait(false);
+        }
+
+        public async ValueTask IncrementInProgressFilesAsync(CancellationToken cancellationToken)
+        {
+            await QueueProgressEvent(new ProgressEventArgs()
+            {
+                QueuedChange = -1,
+                InProgressChange = 1,
+            },
+            cancellationToken).ConfigureAwait(false);
+        }
+
+        public async ValueTask IncrementQueuedFilesAsync(CancellationToken cancellationToken)
+        {
+            await QueueProgressEvent(new ProgressEventArgs()
+            {
+                QueuedChange = 1,
+            },
+            cancellationToken).ConfigureAwait(false);
+        }
+
+        public async ValueTask IncrementBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
+        {
+            if (_options?.TrackBytesTransferred == true)
+            {
+                await QueueProgressEvent(new ProgressEventArgs()
                 {
-                    lock (_bytesTransferredLock)
-                    {
-                        _bytesTransferred += bytesTransferred;
-                        _options?.ProgressHandler?.Report(GetTransferProgress());
-                    }
-                }
+                    BytesChange = bytesTransferred,
+                },
+                cancellationToken).ConfigureAwait(false);
             }
         }
 
-        private DataTransferProgress GetTransferProgress()
+        private async ValueTask QueueProgressEvent(ProgressEventArgs args, CancellationToken cancellationToken)
         {
-            return new DataTransferProgress()
+            try
+            {
+                await _progressProcessor.QueueAsync(args, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex) when (ex is ChannelClosedException || ex is OperationCanceledException)
+            {
+                // The only time we should get these exceptions is if the job is being
+                // disposed, either by pause or failure, in which case its safe to ignore these.
+            }
+        }
+
+        private Task ProcessProgressEvent(ProgressEventArgs args)
+        {
+            // Only ever one thread processing at a time so its safe to update these
+            // Changes can be negative
+            _completedCount += args.CompletedChange;
+            _skippedCount += args.SkippedChange;
+            _failedCount += args.FailedChange;
+            _inProgressCount += args.InProgressChange;
+            _queuedCount += args.QueuedChange;
+            _bytesTransferred += args.BytesChange;
+
+            TransferProgress progress = new()
             {
                 CompletedCount = _completedCount,
                 SkippedCount = _skippedCount,
                 FailedCount = _failedCount,
                 InProgressCount = _inProgressCount,
                 QueuedCount = _queuedCount,
-                BytesTransferred = _options.TrackBytesTransferred ? _bytesTransferred : null
+                BytesTransferred = _options?.TrackBytesTransferred == true ? _bytesTransferred : null
             };
+            _options?.ProgressHandler?.Report(progress);
+
+            return Task.CompletedTask;
         }
     }
 }

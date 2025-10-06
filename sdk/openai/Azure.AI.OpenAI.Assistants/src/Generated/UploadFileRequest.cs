@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The UploadFileRequest. </summary>
-    internal partial class UploadFileRequest
+    public partial class UploadFileRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,7 +50,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="data"> The file data (not filename) to upload. </param>
         /// <param name="purpose"> The intended purpose of the file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose)
+        public UploadFileRequest(Stream data, OpenAIFilePurpose purpose)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -62,7 +63,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="purpose"> The intended purpose of the file. </param>
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UploadFileRequest(Stream data, OpenAIFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
             Purpose = purpose;
@@ -75,23 +76,8 @@ namespace Azure.AI.OpenAI.Assistants
         {
         }
 
-        /// <summary>
-        /// The file data (not filename) to upload.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Data { get; }
+        /// <summary> The file data (not filename) to upload. </summary>
+        public Stream Data { get; }
         /// <summary> The intended purpose of the file. </summary>
         public OpenAIFilePurpose Purpose { get; }
         /// <summary> A filename to associate with the uploaded data. </summary>

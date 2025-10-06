@@ -209,12 +209,11 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(AuthorizationRule other)
         {
-            if (!(other is SharedAccessAuthorizationRule))
+            if (other is not SharedAccessAuthorizationRule comparand)
             {
                 return false;
             }
 
-            SharedAccessAuthorizationRule comparand = (SharedAccessAuthorizationRule)other;
             if (!string.Equals(KeyName, comparand.KeyName, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(PrimaryKey, comparand.PrimaryKey, StringComparison.Ordinal) ||
                 !string.Equals(SecondaryKey, comparand.SecondaryKey, StringComparison.Ordinal))
@@ -268,9 +267,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         private static string GenerateRandomKey()
         {
             byte[] key256 = new byte[32];
-            using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
-                rngCryptoServiceProvider.GetBytes(key256);
+                rng.GetBytes(key256);
             }
 
             return Convert.ToBase64String(key256);

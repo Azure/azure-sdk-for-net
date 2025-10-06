@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("keys")]
         public IDictionary<string, string> Keys { get; }
     }
 }

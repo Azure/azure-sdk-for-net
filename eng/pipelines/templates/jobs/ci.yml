@@ -1,245 +1,159 @@
 parameters:
-- name: Artifacts
-  type: object
-  default: []
-- name: TestPipeline
-  type: boolean
-  default: false
-- name: ArtifactName
-  type: string
-  default: packages
-- name: SDKType
-  type: string
-  default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: BuildSnippets
-  type: boolean
-  default: true
-- name: CheckAOTCompat
-  type: boolean
-  default: false
-- name: AOTTestInputs
-  type: object
-  default: []
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: TestTimeoutInMinutes
-  type: number
-- name: MatrixConfigs
-  type: object
-- name: AdditionalMatrixConfigs
-  type: object
-  default: []
-- name: MatrixFilters
-  type: object
-  default: []
-- name: MatrixReplace
-  type: object
-  default: []
-- name: TestDependsOnDependency
-  type: string
-  default: not-specified
-- name: LimitForPullRequest
-  type: boolean
-  default: false
+  - name: Artifacts
+    type: object
+    default: []
+  - name: TestPipeline
+    type: boolean
+    default: false
+  - name: ArtifactName
+    type: string
+    default: packages
+  - name: SDKType
+    type: string
+    default: all
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: BuildSnippets
+    type: boolean
+    default: true
+  - name: CheckAOTCompat
+    type: boolean
+    default: false
+  - name: AOTTestInputs
+    type: object
+    default: []
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: TestTimeoutInMinutes
+    type: number
+  - name: MatrixConfigs
+    type: object
+  - name: AdditionalMatrixConfigs
+    type: object
+    default: []
+  - name: MatrixFilters
+    type: object
+    default: []
+  - name: MatrixReplace
+    type: object
+    default: []
+  - name: TestDependsOnDependency
+    type: string
+    default: not-specified
+  - name: LimitForPullRequest
+    type: boolean
+    default: false
+  - name: ExcludePaths
+    type: object
+    default: []
 
 jobs:
-  - job: Build
-    pool:
-      name: azsdk-pool-mms-win-2022-general
-      vmImage: windows-2022
-
-    variables:
-      Codeql.Enabled: true
-      Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
-      Codeql.SkipTaskAutoInjection: false
-
-    steps:
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
-        parameters:
-          PackageName: "Azure.Template"
-          ServiceDirectory: "template"
-          TestPipeline: ${{ parameters.TestPipeline }}
-      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-      - pwsh: |
-          echo "##vso[build.addbuildtag]Scheduled"
-        displayName: "Tag scheduled builds"
-        condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
-      # Both 'Dump property properties' and 'Update package properties with dev version' serve the same purpose of generating package json.
-      # We decided to only run the later one (update properties) in all pipelines for the following reasons:
-      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step.
-      # 2. We did not find any usage of package json before 'update properties' in .NET, so it is safe to skip the 'dump properties' for now.
-      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
-      - pwsh: |
-          $skipDevBuildNumber = "false"
-          # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
-          # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
-          if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
-            $skipDevBuildNumber = "true"
-          }
-          $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
-          echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
-        displayName: "Setup .NET specific versioning properties"
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.9'
-        inputs:
-          versionSpec: '3.9'
-      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
-        parameters:
-          LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
-      - script: >-
-          dotnet pack eng/service.proj -warnaserror
-          /p:ValidateRunApiCompat=true
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludeTests=false
-          /p:PublicSign=false $(VersioningProperties)
-          /p:Configuration=$(BuildConfiguration)
-          /p:CommitSHA=$(Build.SourceVersion)
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-          $(DiagnosticArguments)
-        displayName: "Build and Package"
-
-      - task: Powershell@2
-        inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
-          arguments: >
-            -ServiceDirectory ${{parameters.ServiceDirectory}}
-            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-            -AddDevVersion:$$(SetDevVersion)
-          pwsh: true
-          workingDirectory: $(Pipeline.Workspace)
-        displayName: Update package properties with dev version
-
-      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
-        parameters:
-          Artifacts: ${{parameters.Artifacts}}
-
-      - template: ../steps/archetype-sdk-docs.yml
-        parameters:
-          ServiceDirectory: ${{parameters.ServiceDirectory}}
-          Artifacts: ${{parameters.Artifacts}}
-          DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
-          LibType: 'client'
-
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'packages'
-
-      - ${{if eq(variables['System.TeamProject'], 'internal') }}:
-        - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-          displayName: 'Upload Package SBOM'
-          condition: succeededOrFailed()
-          inputs:
-            BuildDropPath: $(Build.ArtifactStagingDirectory)
-
-        - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-          parameters:
-            ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
-            ArtifactName: 'manifest'
-
-      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
-        parameters:
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_build_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
+        MatrixConfigs:
+        - Name: NET_ci_build_base
+          Path: eng/pipelines/templates/stages/build-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 10
+        AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
-      
-      - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-        - template: /eng/pipelines/templates/steps/aot-compatibility.yml
+          TestPipeline: ${{ parameters.TestPipeline }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+          AOTTestInputs: ${{ parameters.AOTTestInputs }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
+        PreGenerationSteps:
+          - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+            parameters:
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PublishingArtifactName: BuildPackagesArtifact
+              ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
+
+  - ${{ else }}:
+    - job: Build
+      pool:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
+
+      variables:
+      - name: SDKType
+        value: ${{ parameters.SDKType }}
+
+      # Only run CG and codeql on internal build job
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        templateContext:
+          sdl:
+            componentgovernance:
+              enabled: true
+            codeql:
+              # Need to specify the language because we clone after the codeql initialize step
+              language: csharp, javascript
+              compiled:
+                enabled: true
+
+      steps:
+        - template: /eng/pipelines/templates/steps/build.yml
           parameters:
+            Artifacts: ${{ parameters.Artifacts }}
+            TestPipeline: ${{ parameters.TestPipeline }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-        inputs:
-          ignoreDirectories: '.nuget'
+    - job: "Analyze"
+      timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+      condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+      templateContext:
+        outputs:
+          - output: pipelineArtifact
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'verify'
 
-  - job: "Analyze"
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-    pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: MMSUbuntu20.04
-    steps:
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+
+      steps:
+        - template: /eng/pipelines/templates/steps/analyze.yml
           parameters:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-
-      - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
-
-      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
-      - template: /eng/common/pipelines/templates/steps/verify-readme.yml
-        parameters:
-          ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
-
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 18.x
-        displayName: 'Use Node 18.x'
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-
-      - task: DotNetCoreCLI@2
-        displayName: 'Install Snippet Generator Tool'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'restore'
-          workingDirectory: '$(Agent.BuildDirectory)'
-
-      - task: PowerShell@2
-        displayName: "Verify generated code"
-        env:
-          EnableSourceLink: false
-        inputs:
-          filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: >
-           -ServiceDirectory ${{ parameters.ServiceDirectory }}
-           -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface
-          pwsh: true
-          failOnStderr: false
-
-      - script: >-
-          dotnet build eng/service.proj -warnaserror
-          /t:rebuild
-          /p:DebugType=none
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludePerf=false
-          /p:IncludeStress=false
-          /p:PublicSign=false
-          /p:Configuration=$(BuildConfiguration)
-          /p:EnableSourceLink=false
-          /p:BuildSnippets=true
-        displayName: Build snippets
-        condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+            Artifacts: ${{ parameters.Artifacts }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            BuildSnippets: ${{ parameters.BuildSnippets }}
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
     - job: Compliance
       pool:
-        name: azsdk-pool-mms-win-2022-general
-        vmImage: windows-2022
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
       steps:
         - task: UsePythonVersion@0
-          displayName: "Use Python 3.9"
+          displayName: "Use Python 3.11"
           inputs:
-            versionSpec: "3.9"
+            versionSpec: "3.11"
 
         - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
@@ -260,12 +174,7 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
-    - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
@@ -274,44 +183,61 @@ jobs:
         MatrixReplace: ${{ parameters.MatrixReplace }}
         CloudConfig:
           Cloud: public
+        ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+          SparseCheckoutPaths:
+            - "/*"
+            - "!SessionRecords"
+          EnablePRGeneration: true
+          PRMatrixSetting: ProjectNames
+          PRJobBatchSize: 20
+          PRMatrixIndirectFilters:
+            - 'AdditionalTestArguments=.*true'
+            - 'Pool=.*LinuxPool$'
+          PreGenerationSteps:
+            - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+              parameters:
+                ServiceDirectory: ${{ parameters.ServiceDirectory }}
+                PublishingArtifactName: TestPackagesArtifact
+                ExcludePaths: ${{ parameters.ExcludePaths }}
+
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
-    - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
-      - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
-        parameters:
-          GenerateJobName: generate_target_dependencies_test_matrix
-          JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-          MatrixConfigs: ${{ parameters.MatrixConfigs }}
-          MatrixFilters: ${{ parameters.MatrixFilters }}
-          MatrixReplace:
-            # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
-            - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
-            - ${{ each matrixReplace in parameters.MatrixReplace }}:
+  - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_target_dependencies_test_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+        MatrixConfigs: ${{ parameters.MatrixConfigs }}
+        MatrixFilters: ${{ parameters.MatrixFilters }}
+        MatrixReplace:
+          # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+          - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+          - ${{ each matrixReplace in parameters.MatrixReplace }}:
               - ${{ matrixReplace }}
-          CloudConfig:
-            Cloud: public
-          SparseCheckoutPaths:
-            - "/*"
-            - "!/sdk/*/**/SessionRecords/*"
-          PreGenerationSteps:
+        CloudConfig:
+          Cloud: public
+        SparseCheckoutPaths:
+          - /*
+          - '!/sdk/*/**/SessionRecords/*'
+        PreGenerationSteps:
           - ${{ each config in parameters.MatrixConfigs }}:
-            - template: /eng/pipelines/templates/steps/dependency.tests.yml
-              parameters:
-                TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-                # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-                ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-                ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-                ExcludeTargetTestProjects: true
-                ServiceDirectory: ${{ parameters.ServiceDirectory }}
-                MatrixConfigsFile: ${{ config.Path }}
-          AdditionalParameters:
-            SDKType: ${{ parameters.SDKType }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            TestSetupSteps: ${{ parameters.TestSetupSteps }}
-            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-            # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
-            ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+              - template: /eng/pipelines/templates/steps/dependency.tests.yml
+                parameters:
+                  TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+                  # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+                  ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+                  ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+                  ExcludeTargetTestProjects: true
+                  ServiceDirectory: ${{ parameters.ServiceDirectory }}
+                  MatrixConfigsFile: ${{ config.Path }}
+        AdditionalParameters:
+          SDKType: ${{ parameters.SDKType }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          TestSetupSteps: ${{ parameters.TestSetupSteps }}
+          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+          ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'

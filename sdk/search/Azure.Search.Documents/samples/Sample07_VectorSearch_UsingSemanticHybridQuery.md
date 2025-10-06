@@ -95,11 +95,11 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
     AzureKeyCredential credential = new AzureKeyCredential(key);
 
-    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+    AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
+    EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
-    return embeddings.Data[0].Embedding;
+    OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input);
+    return embedding.ToFloats();
 }
 ```
 

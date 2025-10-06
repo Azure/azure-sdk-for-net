@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="signatureId"> The ID of the signature. </param>
         /// <param name="mode"> The current mode enforced, 0 - Disabled, 1 - Alert, 2 -Deny. </param>
         /// <param name="severity"> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </param>
-        /// <param name="direction"> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound. </param>
+        /// <param name="direction"> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound, 5 - InternalInbound. </param>
         /// <param name="group"> Describes the groups the signature belongs to. </param>
         /// <param name="description"> Describes what is the signature enforces. </param>
         /// <param name="protocol"> Describes the protocol the signatures is being enforced in. </param>
@@ -83,26 +82,37 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the signature. </summary>
+        [WirePath("signatureId")]
         public int? SignatureId { get; }
         /// <summary> The current mode enforced, 0 - Disabled, 1 - Alert, 2 -Deny. </summary>
+        [WirePath("mode")]
         public FirewallPolicyIdpsSignatureMode? Mode { get; }
         /// <summary> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </summary>
+        [WirePath("severity")]
         public FirewallPolicyIdpsSignatureSeverity? Severity { get; }
-        /// <summary> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound. </summary>
+        /// <summary> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound, 5 - InternalInbound. </summary>
+        [WirePath("direction")]
         public FirewallPolicyIdpsSignatureDirection? Direction { get; }
         /// <summary> Describes the groups the signature belongs to. </summary>
+        [WirePath("group")]
         public string Group { get; }
         /// <summary> Describes what is the signature enforces. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Describes the protocol the signatures is being enforced in. </summary>
+        [WirePath("protocol")]
         public string Protocol { get; }
         /// <summary> Describes the list of source ports related to this signature. </summary>
+        [WirePath("sourcePorts")]
         public IReadOnlyList<string> SourcePorts { get; }
         /// <summary> Describes the list of destination ports related to this signature. </summary>
+        [WirePath("destinationPorts")]
         public IReadOnlyList<string> DestinationPorts { get; }
         /// <summary> Describes the last updated time of the signature (provided from 3rd party vendor). </summary>
+        [WirePath("lastUpdated")]
         public string LastUpdated { get; }
         /// <summary> Describes if this override is inherited from base policy or not. </summary>
+        [WirePath("inheritedFromParentPolicy")]
         public bool? InheritedFromParentPolicy { get; }
     }
 }

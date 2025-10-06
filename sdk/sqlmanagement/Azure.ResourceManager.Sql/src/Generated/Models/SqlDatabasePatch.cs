@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
         /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
         /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </param>
-        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
         /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </param>
         /// <param name="currentSku"> The name and tier of the SKU. </param>
         /// <param name="autoPauseDelay"> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </param>
@@ -199,10 +199,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name and tier of the SKU. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> Database identity. </summary>
+        [WirePath("identity")]
         public DatabaseIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// Specifies the mode of database creation.
@@ -223,88 +226,130 @@ namespace Azure.ResourceManager.Sql.Models
         ///
         /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
         /// </summary>
+        [WirePath("properties.createMode")]
         public SqlDatabaseCreateMode? CreateMode { get; set; }
         /// <summary> The collation of the database. </summary>
+        [WirePath("properties.collation")]
         public string Collation { get; set; }
         /// <summary> The max size of the database expressed in bytes. </summary>
+        [WirePath("properties.maxSizeBytes")]
         public long? MaxSizeBytes { get; set; }
         /// <summary> The name of the sample schema to apply when creating this database. </summary>
+        [WirePath("properties.sampleName")]
         public SampleSchemaName? SampleName { get; set; }
         /// <summary> The resource identifier of the elastic pool containing this database. </summary>
+        [WirePath("properties.elasticPoolId")]
         public ResourceIdentifier ElasticPoolId { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
+        [WirePath("properties.sourceDatabaseId")]
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The status of the database. </summary>
+        [WirePath("properties.status")]
         public SqlDatabaseStatus? Status { get; }
         /// <summary> The ID of the database. </summary>
+        [WirePath("properties.databaseId")]
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current service level objective name of the database. </summary>
+        [WirePath("properties.currentServiceObjectiveName")]
         public string CurrentServiceObjectiveName { get; }
         /// <summary> The requested service level objective name of the database. </summary>
+        [WirePath("properties.requestedServiceObjectiveName")]
         public string RequestedServiceObjectiveName { get; }
         /// <summary> The default secondary region for this database. </summary>
+        [WirePath("properties.defaultSecondaryLocation")]
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
+        [WirePath("properties.failoverGroupId")]
         public ResourceIdentifier FailoverGroupId { get; }
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        [WirePath("properties.restorePointInTime")]
         public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
+        [WirePath("properties.sourceDatabaseDeletionDate")]
         public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
+        [WirePath("properties.recoveryServicesRecoveryPointId")]
         public ResourceIdentifier RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>
+        [WirePath("properties.longTermRetentionBackupResourceId")]
         public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
+        [WirePath("properties.recoverableDatabaseId")]
         public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The resource identifier of the restorable dropped database associated with create operation of this database. </summary>
+        [WirePath("properties.restorableDroppedDatabaseId")]
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
         /// <summary> Collation of the metadata catalog. </summary>
+        [WirePath("properties.catalogCollation")]
         public CatalogCollationType? CatalogCollation { get; set; }
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </summary>
+        [WirePath("properties.licenseType")]
         public DatabaseLicenseType? LicenseType { get; set; }
         /// <summary> The max log size for this database. </summary>
+        [WirePath("properties.maxLogSizeBytes")]
         public long? MaxLogSizeBytes { get; }
         /// <summary> This records the earliest start date and time that restore is available for this database (ISO8601 format). </summary>
+        [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </summary>
+        [WirePath("properties.readScale")]
         public DatabaseReadScale? ReadScale { get; set; }
-        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
+        /// <summary> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
+        [WirePath("properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>
+        [WirePath("properties.secondaryType")]
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
+        [WirePath("properties.currentSku")]
         public SqlSku CurrentSku { get; }
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
+        [WirePath("properties.autoPauseDelay")]
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>
+        [WirePath("properties.currentBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
         /// <summary> The storage account type to be used to store backups for this database. </summary>
+        [WirePath("properties.requestedBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
+        [WirePath("properties.minCapacity")]
         public double? MinCapacity { get; set; }
         /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>
+        [WirePath("properties.pausedDate")]
         public DateTimeOffset? PausedOn { get; }
         /// <summary> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </summary>
+        [WirePath("properties.resumedDate")]
         public DateTimeOffset? ResumedOn { get; }
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
+        [WirePath("properties.maintenanceConfigurationId")]
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
+        [WirePath("properties.isLedgerOn")]
         public bool? IsLedgerOn { get; set; }
         /// <summary> Infra encryption is enabled for this database. </summary>
+        [WirePath("properties.isInfraEncryptionEnabled")]
         public bool? IsInfraEncryptionEnabled { get; }
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
+        [WirePath("properties.federatedClientId")]
         public Guid? FederatedClientId { get; set; }
         /// <summary> The resource ids of the user assigned identities to use. </summary>
+        [WirePath("properties.keys")]
         public IDictionary<string, SqlDatabaseKey> Keys { get; }
         /// <summary> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </summary>
+        [WirePath("properties.encryptionProtector")]
         public string EncryptionProtector { get; set; }
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
+        [WirePath("properties.preferredEnclaveType")]
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
         /// <summary> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </summary>
+        [WirePath("properties.useFreeLimit")]
         public bool? UseFreeLimit { get; set; }
         /// <summary>
         /// Specifies the behavior when monthly free limits are exhausted for the free database.
@@ -313,6 +358,7 @@ namespace Azure.ResourceManager.Sql.Models
         ///
         /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
         /// </summary>
+        [WirePath("properties.freeLimitExhaustionBehavior")]
         public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior { get; set; }
         /// <summary>
         /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
@@ -323,6 +369,7 @@ namespace Azure.ResourceManager.Sql.Models
         ///
         /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
         /// </summary>
+        [WirePath("properties.manualCutover")]
         public bool? ManualCutover { get; set; }
         /// <summary>
         /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
@@ -333,8 +380,10 @@ namespace Azure.ResourceManager.Sql.Models
         ///
         /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
         /// </summary>
+        [WirePath("properties.performCutover")]
         public bool? PerformCutover { get; set; }
         /// <summary> The flag to enable or disable auto rotation of database encryption protector AKV key. </summary>
+        [WirePath("properties.encryptionProtectorAutoRotation")]
         public bool? EncryptionProtectorAutoRotation { get; set; }
     }
 }

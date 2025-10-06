@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Redis.Models
     public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteRdbBackupMaxSnapshotCount(Utf8JsonWriter writer)
+        internal void WriteRdbBackupMaxSnapshotCount(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (RdbBackupMaxSnapshotCount == null)
                 return;

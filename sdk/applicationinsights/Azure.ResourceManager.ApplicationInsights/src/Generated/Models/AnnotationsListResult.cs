@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -49,19 +48,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="AnnotationsListResult"/>. </summary>
         internal AnnotationsListResult()
         {
-            Value = new ChangeTrackingList<Annotation>();
+            Value = new ChangeTrackingList<ApplicationInsightsAnnotation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AnnotationsListResult"/>. </summary>
         /// <param name="value"> An array of annotations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnnotationsListResult(IReadOnlyList<Annotation> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnnotationsListResult(IReadOnlyList<ApplicationInsightsAnnotation> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of annotations. </summary>
-        public IReadOnlyList<Annotation> Value { get; }
+        public IReadOnlyList<ApplicationInsightsAnnotation> Value { get; }
     }
 }

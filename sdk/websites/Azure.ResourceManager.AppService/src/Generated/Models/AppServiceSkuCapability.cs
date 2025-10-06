@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the SKU capability. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Value of the SKU capability. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Reason of the SKU capability. </summary>
+        [WirePath("reason")]
         public string Reason { get; set; }
     }
 }

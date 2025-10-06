@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
 
         MobileNetworkSimResource IOperationSource<MobileNetworkSimResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MobileNetworkSimData.DeserializeMobileNetworkSimData(document.RootElement);
+            var data = ModelReaderWriter.Read<MobileNetworkSimData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
             return new MobileNetworkSimResource(_client, data);
         }
 
         async ValueTask<MobileNetworkSimResource> IOperationSource<MobileNetworkSimResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MobileNetworkSimData.DeserializeMobileNetworkSimData(document.RootElement);
-            return new MobileNetworkSimResource(_client, data);
+            var data = ModelReaderWriter.Read<MobileNetworkSimData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            return await Task.FromResult(new MobileNetworkSimResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The collection of timer triggers. </summary>
+        [WirePath("timerTriggers")]
         public IList<ContainerRegistryTimerTrigger> TimerTriggers { get; }
         /// <summary> The collection of triggers based on source code repository. </summary>
+        [WirePath("sourceTriggers")]
         public IList<ContainerRegistrySourceTrigger> SourceTriggers { get; }
         /// <summary> The trigger based on base image dependencies. </summary>
+        [WirePath("baseImageTrigger")]
         public ContainerRegistryBaseImageTrigger BaseImageTrigger { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     [DataContract]
     [JsonConverter(typeof(ConnectEventRequestJsonConverter))]
-    public sealed class ConnectEventRequest : WebPubSubEventRequest
+    public class ConnectEventRequest : WebPubSubEventRequest
     {
         internal const string ClaimsProperty = "claims";
         internal const string QueryProperty = "query";
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
         /// <returns>A error response to return caller and will drop connection.</returns>
-        public EventErrorResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
+        public virtual EventErrorResponse CreateErrorResponse(WebPubSubErrorCode code, string message)
         {
             return new EventErrorResponse(code, message);
         }

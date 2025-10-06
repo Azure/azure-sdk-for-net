@@ -2,11 +2,11 @@
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
-    <Version>0.1.0-preview.33</Version>
+    <Version>0.1.0-preview.38</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net6.0</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

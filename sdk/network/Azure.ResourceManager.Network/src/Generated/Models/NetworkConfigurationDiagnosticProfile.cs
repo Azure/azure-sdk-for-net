@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -90,14 +89,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The direction of the traffic. </summary>
+        [WirePath("direction")]
         public NetworkTrafficDirection Direction { get; set; }
         /// <summary> Protocol to be verified on. Accepted values are '*', TCP, UDP. </summary>
+        [WirePath("protocol")]
         public string Protocol { get; set; }
         /// <summary> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
         /// <summary> Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
         /// <summary> Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535). </summary>
+        [WirePath("destinationPort")]
         public string DestinationPort { get; set; }
     }
 }

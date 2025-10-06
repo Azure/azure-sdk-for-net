@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -24,14 +23,14 @@ namespace Azure.Communication.CallAutomation
             IReadOnlyList<CommunicationIdentifierModel> targets = default;
             CallConnectionState? callConnectionState = default;
             string callbackUri = default;
-            string mediaSubscriptionId = default;
-            string dataSubscriptionId = default;
             PhoneNumberIdentifierModel sourceCallerIdNumber = default;
             string sourceDisplayName = default;
             CommunicationIdentifierModel source = default;
             string correlationId = default;
             CommunicationUserIdentifierModel answeredBy = default;
-            PhoneNumberIdentifierModel originalPstnTarget = default;
+            MediaStreamingSubscriptionInternal mediaStreamingSubscription = default;
+            TranscriptionSubscriptionInternal transcriptionSubscription = default;
+            PhoneNumberIdentifierModel answeredFor = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -72,16 +71,6 @@ namespace Azure.Communication.CallAutomation
                     callbackUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mediaSubscriptionId"u8))
-                {
-                    mediaSubscriptionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSubscriptionId"u8))
-                {
-                    dataSubscriptionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("sourceCallerIdNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,13 +108,31 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("originalPstnTarget"u8))
+                if (property.NameEquals("mediaStreamingSubscription"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    originalPstnTarget = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    mediaStreamingSubscription = MediaStreamingSubscriptionInternal.DeserializeMediaStreamingSubscriptionInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("transcriptionSubscription"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transcriptionSubscription = TranscriptionSubscriptionInternal.DeserializeTranscriptionSubscriptionInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("answeredFor"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    answeredFor = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
             }
@@ -135,14 +142,22 @@ namespace Azure.Communication.CallAutomation
                 targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
                 callConnectionState,
                 callbackUri,
-                mediaSubscriptionId,
-                dataSubscriptionId,
                 sourceCallerIdNumber,
                 sourceDisplayName,
                 source,
                 correlationId,
                 answeredBy,
-                originalPstnTarget);
+                mediaStreamingSubscription,
+                transcriptionSubscription,
+                answeredFor);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CallConnectionPropertiesInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCallConnectionPropertiesInternal(document.RootElement);
         }
     }
 }

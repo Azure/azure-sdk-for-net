@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> Username to connect to the WebProxy server. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
         /// <summary> Password to connect to the WebProxy Server. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
     }
 }

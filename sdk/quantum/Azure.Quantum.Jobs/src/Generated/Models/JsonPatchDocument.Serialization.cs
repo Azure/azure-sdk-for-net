@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Quantum.Jobs.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<object>(Value);
             }
             if (Optional.IsDefined(From))
             {
@@ -31,6 +30,14 @@ namespace Azure.Quantum.Jobs.Models
                 writer.WriteStringValue(From);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

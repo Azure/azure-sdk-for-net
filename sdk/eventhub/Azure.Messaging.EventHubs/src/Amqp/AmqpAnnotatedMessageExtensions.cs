@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         public static void PopulateFromEventProperties(this AmqpAnnotatedMessage instance,
                                                        IDictionary<string, object> properties = null,
                                                        long? sequenceNumber = null,
-                                                       long? offset = null,
+                                                       string offset = null,
                                                        DateTimeOffset? enqueuedTime = null,
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
-                                                       long? lastPartitionOffset = null,
+                                                       string lastPartitionOffset = null,
                                                        DateTimeOffset? lastPartitionEnqueuedTime = null,
                                                        DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
         {
@@ -51,9 +51,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.MessageAnnotations[AmqpProperty.SequenceNumber.ToString()] = sequenceNumber.Value;
            }
 
-           if (offset.HasValue)
+           if (!string.IsNullOrEmpty(offset))
            {
-               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset.Value;
+               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset;
            }
 
            if (enqueuedTime.HasValue)
@@ -71,9 +71,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString()] = lastPartitionSequenceNumber.Value;
            }
 
-           if (lastPartitionOffset.HasValue)
+           if (!string.IsNullOrEmpty(lastPartitionOffset))
            {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset.Value;
+               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset;
            }
 
            if (lastPartitionEnqueuedTime.HasValue)
@@ -173,7 +173,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.SequenceNumber.ToString(), out var value)))
             {
-                return (long)value;
+                return value switch
+                {
+                    string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue) => longValue,
+                    long longValue => longValue,
+                    int intValue => intValue,
+                    _ => (long)value
+                };
             }
 
             return defaultValue;
@@ -188,13 +194,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long GetOffset(this AmqpAnnotatedMessage instance,
-                                     long defaultValue = long.MinValue)
+        public static string GetOffset(this AmqpAnnotatedMessage instance,
+                                       string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.Offset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;
@@ -215,7 +221,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.EnqueuedTime.ToString(), out var value)))
             {
-                return (DateTimeOffset)value;
+                return value switch
+                {
+                    DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
+                    long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
+                    DateTimeOffset dateTimeOffsetValue => dateTimeOffsetValue,
+                    _ => (DateTimeOffset)value
+                };
             }
 
             return defaultValue;
@@ -231,7 +243,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public static void SetEnqueuedTime(this AmqpAnnotatedMessage instance,
                                            DateTimeOffset enqueueTime)
         {
-            instance.MessageAnnotations[AmqpProperty.EnqueuedTime.ToString()] = enqueueTime;
+            instance.MessageAnnotations[AmqpProperty.EnqueuedTime.ToString()] = enqueueTime.UtcDateTime;
         }
 
         /// <summary>
@@ -283,7 +295,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(), out var value)))
             {
-                return (long)value;
+                return value switch
+                {
+                    string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue) => longValue,
+                    long longValue => longValue,
+                    _ => (long)value
+                };
             }
 
             return defaultValue;
@@ -298,13 +315,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset of the last event published to the partition, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long? GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
-                                                   long? defaultValue = default)
+        public static string GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
+                                                    string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;
@@ -325,7 +342,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedTimeUtc.ToString(), out var value)))
             {
-                return (DateTimeOffset)value;
+                return value switch
+                {
+                    DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
+                    long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
+                    DateTimeOffset dateTimeOffsetValue => dateTimeOffsetValue,
+                    _ => (DateTimeOffset)value
+                };
             }
 
             return defaultValue;
@@ -346,10 +369,48 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc.ToString(), out var value)))
             {
-                return (DateTimeOffset)value;
+                return value switch
+                {
+                    DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
+                    long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
+                    DateTimeOffset dateTimeOffsetValue => dateTimeOffsetValue,
+                    _ => (DateTimeOffset)value
+                };
             }
 
             return defaultValue;
+        }
+
+        /// <summary>
+        ///   Retrieves the value for a specific message annotation of an <see cref="AmqpAnnotatedMessage" />
+        ///   in normalized form.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        /// <param name="key">The key of the message annotation value to retrieve.</param>
+        ///
+        /// <returns>The normalized value for the specified <paramref name="key"/>, if present in the <paramref name="instance"/>; otherwise, the default value for the key.</returns>
+        ///
+        public static object GetMessageAnnotationNormalizedValue(this AmqpAnnotatedMessage instance,
+                                                                 string key)
+        {
+            if (!instance.HasSection(AmqpMessageSection.MessageAnnotations))
+            {
+                return null;
+            }
+
+            return key switch
+            {
+                _ when key == AmqpProperty.EnqueuedTime.ToString() => GetEnqueuedTime(instance, default),
+                _ when key == AmqpProperty.SequenceNumber.ToString() => GetSequenceNumber(instance, default),
+                _ when instance.MessageAnnotations.TryGetValue(key, out var value) => value switch
+                {
+                    AmqpMessageId id => id.ToString(),
+                    AmqpAddress address => address.ToString(),
+                    _ => value
+                },
+                _ => null
+            };
         }
 
         /// <summary>

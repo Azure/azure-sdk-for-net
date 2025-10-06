@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -70,30 +69,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="location"> The location. </param>
         /// <param name="migrationId"> ID for migration, a GUID. </param>
         /// <param name="currentStatus"> Current status of migration. </param>
+        /// <param name="migrationInstanceResourceId"> ResourceId of the private endpoint migration instance. </param>
         /// <param name="migrationMode"> There are two types of migration modes Online and Offline. </param>
+        /// <param name="migrationOption"> This indicates the supported Migration option for the migration. </param>
+        /// <param name="sourceType"> migration source server type : OnPremises, AWS, GCP, AzureVM, PostgreSQLSingleServer, AWS_RDS, AWS_AURORA, AWS_EC2, GCP_CloudSQL, GCP_AlloyDB, GCP_Compute, or EDB. </param>
+        /// <param name="sslMode"> SSL modes for migration. Default SSL mode for PostgreSQLSingleServer is VerifyFull and Prefer for other source types. </param>
         /// <param name="sourceDbServerMetadata"> Metadata of the source database server. </param>
         /// <param name="targetDbServerMetadata"> Metadata of the target database server. </param>
-        /// <param name="sourceDbServerResourceId"> ResourceId of the source database server. </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName"> Source server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </param>
+        /// <param name="sourceDbServerResourceId"> ResourceId of the source database server in case the sourceType is PostgreSQLSingleServer. For other source types this should be ipaddress:port@username or hostname:port@username. </param>
+        /// <param name="sourceDbServerFullyQualifiedDomainName"> Source server fully qualified domain name (FQDN) or IP address. It is a optional value, if customer provide it, migration service will always use it for connection. </param>
         /// <param name="targetDbServerResourceId"> ResourceId of the source database server. </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName"> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </param>
+        /// <param name="targetDbServerFullyQualifiedDomainName"> Target server fully qualified domain name (FQDN) or IP address. It is a optional value, if customer provide it, migration service will always use it for connection. </param>
         /// <param name="secretParameters"> Migration secret parameters. </param>
         /// <param name="dbsToMigrate"> Number of databases to migrate. </param>
         /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </param>
         /// <param name="overwriteDbsInTarget"> Indicates whether the databases on the target server can be overwritten, if already present. If set to False, the migration workflow will wait for a confirmation, if it detects that the database already exists. </param>
         /// <param name="migrationWindowStartTimeInUtc"> Start time in UTC for migration window. </param>
         /// <param name="migrationWindowEndTimeInUtc"> End time in UTC for migration window. </param>
+        /// <param name="migrateRoles"> To migrate roles and permissions we need to send this flag as True. </param>
         /// <param name="startDataMigration"> Indicates whether the data migration should start right away. </param>
         /// <param name="triggerCutover"> To trigger cutover for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </param>
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, PostgreSqlMigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, ResourceIdentifier migrationInstanceResourceId, PostgreSqlMigrationMode? migrationMode, MigrationOption? migrationOption, PostgreSqlFlexibleServersSourceType? sourceType, PostgreSqlFlexibleServersSslMode? sslMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, MigrateRolesEnum? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             MigrationId = migrationId;
             CurrentStatus = currentStatus;
+            MigrationInstanceResourceId = migrationInstanceResourceId;
             MigrationMode = migrationMode;
+            MigrationOption = migrationOption;
+            SourceType = sourceType;
+            SslMode = sslMode;
             SourceDbServerMetadata = sourceDbServerMetadata;
             TargetDbServerMetadata = targetDbServerMetadata;
             SourceDbServerResourceId = sourceDbServerResourceId;
@@ -106,6 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             OverwriteDbsInTarget = overwriteDbsInTarget;
             MigrationWindowStartTimeInUtc = migrationWindowStartTimeInUtc;
             MigrationWindowEndTimeInUtc = migrationWindowEndTimeInUtc;
+            MigrateRoles = migrateRoles;
             StartDataMigration = startDataMigration;
             TriggerCutover = triggerCutover;
             DbsToTriggerCutoverOn = dbsToTriggerCutoverOn;
@@ -120,44 +129,79 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> ID for migration, a GUID. </summary>
+        [WirePath("properties.migrationId")]
         public string MigrationId { get; }
         /// <summary> Current status of migration. </summary>
+        [WirePath("properties.currentStatus")]
         public PostgreSqlMigrationStatus CurrentStatus { get; }
+        /// <summary> ResourceId of the private endpoint migration instance. </summary>
+        [WirePath("properties.migrationInstanceResourceId")]
+        public ResourceIdentifier MigrationInstanceResourceId { get; set; }
         /// <summary> There are two types of migration modes Online and Offline. </summary>
+        [WirePath("properties.migrationMode")]
         public PostgreSqlMigrationMode? MigrationMode { get; set; }
+        /// <summary> This indicates the supported Migration option for the migration. </summary>
+        [WirePath("properties.migrationOption")]
+        public MigrationOption? MigrationOption { get; set; }
+        /// <summary> migration source server type : OnPremises, AWS, GCP, AzureVM, PostgreSQLSingleServer, AWS_RDS, AWS_AURORA, AWS_EC2, GCP_CloudSQL, GCP_AlloyDB, GCP_Compute, or EDB. </summary>
+        [WirePath("properties.sourceType")]
+        public PostgreSqlFlexibleServersSourceType? SourceType { get; set; }
+        /// <summary> SSL modes for migration. Default SSL mode for PostgreSQLSingleServer is VerifyFull and Prefer for other source types. </summary>
+        [WirePath("properties.sslMode")]
+        public PostgreSqlFlexibleServersSslMode? SslMode { get; set; }
         /// <summary> Metadata of the source database server. </summary>
+        [WirePath("properties.sourceDbServerMetadata")]
         public PostgreSqlServerMetadata SourceDbServerMetadata { get; }
         /// <summary> Metadata of the target database server. </summary>
+        [WirePath("properties.targetDbServerMetadata")]
         public PostgreSqlServerMetadata TargetDbServerMetadata { get; }
-        /// <summary> ResourceId of the source database server. </summary>
+        /// <summary> ResourceId of the source database server in case the sourceType is PostgreSQLSingleServer. For other source types this should be ipaddress:port@username or hostname:port@username. </summary>
+        [WirePath("properties.sourceDbServerResourceId")]
         public ResourceIdentifier SourceDbServerResourceId { get; set; }
-        /// <summary> Source server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
+        /// <summary> Source server fully qualified domain name (FQDN) or IP address. It is a optional value, if customer provide it, migration service will always use it for connection. </summary>
+        [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
         public string SourceDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> ResourceId of the source database server. </summary>
+        [WirePath("properties.targetDbServerResourceId")]
         public ResourceIdentifier TargetDbServerResourceId { get; }
-        /// <summary> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
+        /// <summary> Target server fully qualified domain name (FQDN) or IP address. It is a optional value, if customer provide it, migration service will always use it for connection. </summary>
+        [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
         public string TargetDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> Migration secret parameters. </summary>
+        [WirePath("properties.secretParameters")]
         public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
         /// <summary> Number of databases to migrate. </summary>
+        [WirePath("properties.dbsToMigrate")]
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </summary>
+        [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
         public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
         /// <summary> Indicates whether the databases on the target server can be overwritten, if already present. If set to False, the migration workflow will wait for a confirmation, if it detects that the database already exists. </summary>
+        [WirePath("properties.overwriteDbsInTarget")]
         public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
         /// <summary> Start time in UTC for migration window. </summary>
+        [WirePath("properties.migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
         /// <summary> End time in UTC for migration window. </summary>
+        [WirePath("properties.migrationWindowEndTimeInUtc")]
         public DateTimeOffset? MigrationWindowEndTimeInUtc { get; set; }
+        /// <summary> To migrate roles and permissions we need to send this flag as True. </summary>
+        [WirePath("properties.migrateRoles")]
+        public MigrateRolesEnum? MigrateRoles { get; set; }
         /// <summary> Indicates whether the data migration should start right away. </summary>
+        [WirePath("properties.startDataMigration")]
         public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
         /// <summary> To trigger cutover for entire migration we need to send this flag as True. </summary>
+        [WirePath("properties.triggerCutover")]
         public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
         /// <summary> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </summary>
+        [WirePath("properties.dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn { get; }
         /// <summary> To trigger cancel for entire migration we need to send this flag as True. </summary>
+        [WirePath("properties.cancel")]
         public PostgreSqlMigrationCancel? Cancel { get; set; }
         /// <summary> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </summary>
+        [WirePath("properties.dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn { get; }
     }
 }

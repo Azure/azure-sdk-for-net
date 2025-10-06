@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Configuration for HTTP or HTTPS requests. </summary>
+        [WirePath("HTTPConfiguration")]
         public ConnectivityCheckRequestHttpConfiguration HttpConfiguration { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput. </summary>
+    /// <summary> Unknown version of MigrateMySqlAzureDbForMySqlOfflineTaskOutput. </summary>
     internal partial class UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput : MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput"/>. </summary>

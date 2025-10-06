@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -92,30 +91,43 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The time the bookmark was created. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Describes a user that created the bookmark. </summary>
+        [WirePath("properties.createdBy")]
         public SecurityInsightsUserInfo CreatedBy { get; set; }
         /// <summary> The display name of the bookmark. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The time of the event. </summary>
+        [WirePath("properties.eventTime")]
         public DateTimeOffset? EventOn { get; set; }
         /// <summary> List of labels relevant to this bookmark. </summary>
+        [WirePath("properties.labels")]
         public IList<string> Labels { get; }
         /// <summary> The notes of the bookmark. </summary>
+        [WirePath("properties.notes")]
         public string Notes { get; set; }
         /// <summary> The query of the bookmark. </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
         /// <summary> The query result of the bookmark. </summary>
+        [WirePath("properties.queryResult")]
         public string QueryResult { get; set; }
         /// <summary> The last time the bookmark was updated. </summary>
+        [WirePath("properties.updated")]
         public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Describes a user that updated the bookmark. </summary>
+        [WirePath("properties.updatedBy")]
         public SecurityInsightsUserInfo UpdatedBy { get; set; }
         /// <summary> Describes an incident that relates to bookmark. </summary>
+        [WirePath("properties.incidentInfo")]
         public SecurityInsightsBookmarkIncidentInfo IncidentInfo { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -72,14 +71,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="functionName"> The function name in the function app. </param>
         /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="managedIdentity"> The principal id of the managed identity. The value can be "None", "SystemAssigned". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema, string managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FunctionAppResourceId = functionAppResourceId;
             FunctionName = functionName;
             HttpTriggerUri = httpTriggerUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            ManagedIdentity = managedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -98,5 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public Uri HttpTriggerUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
+        /// <summary> The principal id of the managed identity. The value can be "None", "SystemAssigned". </summary>
+        public string ManagedIdentity { get; set; }
     }
 }

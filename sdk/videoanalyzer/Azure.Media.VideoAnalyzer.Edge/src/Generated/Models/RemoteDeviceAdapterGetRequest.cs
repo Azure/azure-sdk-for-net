@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {

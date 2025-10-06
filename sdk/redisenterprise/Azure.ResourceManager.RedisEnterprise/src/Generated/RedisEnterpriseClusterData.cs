@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
     /// A class representing the RedisEnterpriseCluster data model.
-    /// Describes the RedisEnterprise cluster
+    /// Describes the Redis Enterprise cluster
     /// </summary>
     public partial class RedisEnterpriseClusterData : TrackedResourceData
     {
@@ -71,26 +71,32 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="kind"> Distinguishes the kind of cluster. Read-only. </param>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="zones"> The Availability Zones where this cluster will be deployed. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
+        /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </param>
         /// <param name="encryption"> Encryption-at-rest configuration for the cluster. </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
+        /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </param>
         /// <param name="resourceState"> Current resource status of the cluster. </param>
         /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified RedisEnterprise cluster. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseSku sku, IList<string> zones, ManagedServiceIdentity identity, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IList<string> zones, ManagedServiceIdentity identity, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Kind = kind;
             Sku = sku;
             Zones = zones;
             Identity = identity;
+            HighAvailability = highAvailability;
             MinimumTlsVersion = minimumTlsVersion;
             Encryption = encryption;
             HostName = hostName;
             ProvisioningState = provisioningState;
+            RedundancyMode = redundancyMode;
             ResourceState = resourceState;
             RedisVersion = redisVersion;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -102,17 +108,28 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
         }
 
+        /// <summary> Distinguishes the kind of cluster. Read-only. </summary>
+        [WirePath("kind")]
+        public RedisEnterpriseKind? Kind { get; }
         /// <summary> The SKU to create, which affects price, performance, and features. </summary>
+        [WirePath("sku")]
         public RedisEnterpriseSku Sku { get; set; }
         /// <summary> The Availability Zones where this cluster will be deployed. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+        /// <summary> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </summary>
+        [WirePath("properties.highAvailability")]
+        public RedisEnterpriseHighAvailability? HighAvailability { get; set; }
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </summary>
+        [WirePath("properties.minimumTlsVersion")]
         public RedisEnterpriseTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Encryption-at-rest configuration for the cluster. </summary>
         internal ClusterPropertiesEncryption Encryption { get; set; }
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("properties.encryption.customerManagedKeyEncryption")]
         public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
@@ -125,14 +142,22 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> DNS name of the cluster endpoint. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> Current provisioning status of the cluster. </summary>
+        [WirePath("properties.provisioningState")]
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
+        /// <summary> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </summary>
+        [WirePath("properties.redundancyMode")]
+        public RedisEnterpriseRedundancyMode? RedundancyMode { get; }
         /// <summary> Current resource status of the cluster. </summary>
+        [WirePath("properties.resourceState")]
         public RedisEnterpriseClusterResourceState? ResourceState { get; }
         /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
+        [WirePath("properties.redisVersion")]
         public string RedisVersion { get; }
-        /// <summary> List of private endpoint connections associated with the specified RedisEnterprise cluster. </summary>
+        /// <summary> List of private endpoint connections associated with the specified Redis Enterprise cluster. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

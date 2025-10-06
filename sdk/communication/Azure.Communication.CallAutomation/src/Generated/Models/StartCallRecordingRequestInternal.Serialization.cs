@@ -15,8 +15,16 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
+            if (Optional.IsDefined(CallLocator))
+            {
+                writer.WritePropertyName("callLocator"u8);
+                writer.WriteObjectValue(CallLocator);
+            }
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
@@ -57,17 +65,25 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExternalStorage))
-            {
-                writer.WritePropertyName("externalStorage"u8);
-                writer.WriteObjectValue(ExternalStorage);
-            }
             if (Optional.IsDefined(PauseOnStart))
             {
                 writer.WritePropertyName("pauseOnStart"u8);
                 writer.WriteBooleanValue(PauseOnStart.Value);
             }
+            if (Optional.IsDefined(ExternalStorage))
+            {
+                writer.WritePropertyName("externalStorage"u8);
+                writer.WriteObjectValue(ExternalStorage);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

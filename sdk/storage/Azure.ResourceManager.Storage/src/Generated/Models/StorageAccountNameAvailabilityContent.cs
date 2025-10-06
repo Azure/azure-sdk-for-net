@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The storage account name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -78,12 +77,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource id of the Virtual Network. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Name of the Virtual Network (read-only). </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type of the Virtual Network (read-only). </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> Subnet within the Virtual Network. </summary>
+        [WirePath("subnet")]
         public string Subnet { get; set; }
     }
 }

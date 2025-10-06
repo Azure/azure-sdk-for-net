@@ -6,27 +6,1123 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchAccountPoolCollection
     {
-        // ListPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolCustomImage()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_SharedImageGallery.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
+                }, "batch.node.ubuntu 18.04"),
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolFullVirtualMachineConfiguration()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2016-Datacenter-SmallDisk",
+                    Version = "latest",
+                }, "batch.node.windows amd64")
+                {
+                    IsAutomaticUpdateEnabled = false,
+                    DataDisks = {new BatchVmDataDisk(0, 30)
+{
+Caching = BatchDiskCachingType.ReadWrite,
+StorageAccountType = BatchStorageAccountType.PremiumLrs,
+}, new BatchVmDataDisk(1, 200)
+{
+Caching = BatchDiskCachingType.None,
+StorageAccountType = BatchStorageAccountType.StandardLrs,
+}},
+                    LicenseType = "Windows_Server",
+                    DiskEncryptionTargets = { BatchDiskEncryptionTarget.OSDisk, BatchDiskEncryptionTarget.TemporaryDisk },
+                    NodePlacementPolicy = BatchNodePlacementPolicyType.Zonal,
+                    OSDisk = new BatchOSDisk
+                    {
+                        EphemeralOSDiskPlacement = BatchDiffDiskPlacement.CacheDisk,
+                    },
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
+                    {
+                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
+                    },
+                },
+                NetworkConfiguration = new BatchNetworkConfiguration
+                {
+                    EndpointInboundNatPools = {new BatchInboundNatPool("testnat", BatchInboundEndpointProtocol.Tcp, 12001, 15000, 15100)
+{
+NetworkSecurityGroupRules = {new BatchNetworkSecurityGroupRule(150, BatchNetworkSecurityGroupRuleAccess.Allow, "192.100.12.45")
+{
+SourcePortRanges = {"1", "2"},
+}, new BatchNetworkSecurityGroupRule(3500, BatchNetworkSecurityGroupRuleAccess.Deny, "*")
+{
+SourcePortRanges = {"*"},
+}},
+}},
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolMinimalVirtualMachineConfiguration()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_MinimalVirtualMachineConfiguration.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18.04-LTS",
+                    Version = "latest",
+                }, "batch.node.ubuntu 18.04"),
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
+                    {
+                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolNoPublicIP()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_NoPublicIPAddresses.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
+                }, "batch.node.ubuntu 18.04"),
+                NetworkConfiguration = new BatchNetworkConfiguration
+                {
+                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
+                    PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration
+                    {
+                        Provision = BatchIPAddressProvisioningType.NoPublicIPAddresses,
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolPublicIPs()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_PublicIPs.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
+                }, "batch.node.ubuntu 18.04"),
+                NetworkConfiguration = new BatchNetworkConfiguration
+                {
+                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
+                    PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration
+                    {
+                        Provision = BatchIPAddressProvisioningType.UserManaged,
+                        IPAddressIds = { new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Microsoft.Network/publicIPAddresses/ip135") },
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolResourceTags()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_ResourceTags.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_d4s_v3",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18_04-lts-gen2",
+                    Version = "latest",
+                }, "batch.node.ubuntu 18.04"),
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 1,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+                ResourceTags =
+{
+["TagName1"] = "TagValue1",
+["TagName2"] = "TagValue2"
+},
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolSecurityProfile()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_SecurityProfile.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_d4s_v3",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18_04-lts-gen2",
+                    Version = "latest",
+                }, "batch.node.ubuntu 18.04")
+                {
+                    SecurityProfile = new BatchSecurityProfile
+                    {
+                        SecurityType = BatchSecurityType.TrustedLaunch,
+                        EncryptionAtHost = true,
+                        UefiSettings = new BatchUefiSettings
+                        {
+                            IsSecureBootEnabled = default,
+                            IsVTpmEnabled = false,
+                        },
+                    },
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 1,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolTags()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_Tags.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_d4s_v3",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "0001-com-ubuntu-server-jammy",
+                    Sku = "22_04-lts",
+                    Version = "latest",
+                }, "batch.node.ubuntu 22.04"),
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 1,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+                Tags =
+{
+["TagName1"] = "TagValue1",
+["TagName2"] = "TagValue2"
+},
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolUpgradePolicy()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_UpgradePolicy.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_d4s_v3",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2019-datacenter-smalldisk",
+                    Version = "latest",
+                }, "batch.node.windows amd64")
+                {
+                    IsAutomaticUpdateEnabled = false,
+                    NodePlacementPolicy = BatchNodePlacementPolicyType.Zonal,
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 2,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+                UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                {
+                    AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy
+                    {
+                        DisableAutomaticRollback = true,
+                        EnableAutomaticOSUpgrade = true,
+                        UseRollingUpgradePolicy = true,
+                        OSRollingUpgradeDeferral = true,
+                    },
+                    RollingUpgradePolicy = new RollingUpgradePolicy
+                    {
+                        EnableCrossZoneUpgrade = true,
+                        MaxBatchInstancePercent = 20,
+                        MaxUnhealthyInstancePercent = 20,
+                        MaxUnhealthyUpgradedInstancePercent = 20,
+                        PauseTimeBetweenBatches = "PT0S",
+                        PrioritizeUnhealthyInstances = false,
+                        RollbackFailedInstancesOnPolicyBreach = false,
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolUserAssignedIdentities()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_UserAssignedIdentities.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
+},
+                },
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "UbuntuServer",
+                    Sku = "18.04-LTS",
+                    Version = "latest",
+                }, "batch.node.ubuntu 18.04"),
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
+                    {
+                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationExtensions()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_Extensions.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D4",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "Canonical",
+                    Offer = "0001-com-ubuntu-server-focal",
+                    Sku = "20_04-lts",
+                }, "batch.node.ubuntu 20.04")
+                {
+                    Extensions = {new BatchVmExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
+{
+TypeHandlerVersion = "2.0",
+AutoUpgradeMinorVersion = true,
+EnableAutomaticUpgrade = true,
+Settings = BinaryData.FromObjectAsJson(new
+{
+authenticationSettingsKey = "authenticationSettingsValue",
+secretsManagementSettingsKey = "secretsManagementSettingsValue",
+}),
+}},
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
+                    {
+                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
+                    },
+                },
+                TargetNodeCommunicationMode = NodeCommunicationMode.Default,
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationOSDisk()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_ManagedOSDisk.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_d2s_v3",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "microsoftwindowsserver",
+                    Offer = "windowsserver",
+                    Sku = "2022-datacenter-smalldisk",
+                }, "batch.node.windows amd64")
+                {
+                    OSDisk = new BatchOSDisk
+                    {
+                        Caching = BatchDiskCachingType.ReadWrite,
+                        ManagedDisk = new ManagedDisk
+                        {
+                            StorageAccountType = BatchStorageAccountType.StandardSsdLrs,
+                        },
+                        DiskSizeGB = 100,
+                        IsWriteAcceleratorEnabled = false,
+                    },
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 1,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationServiceArtifactReference()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "Standard_d4s_v3",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2019-datacenter-smalldisk",
+                    Version = "latest",
+                }, "batch.node.windows amd64")
+                {
+                    IsAutomaticUpdateEnabled = false,
+                    ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/galleries/myGallery/serviceArtifacts/myServiceArtifact/vmArtifactsProfiles/vmArtifactsProfile"),
+                },
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 2,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+                UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                {
+                    AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy
+                    {
+                        EnableAutomaticOSUpgrade = true,
+                    },
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePoolAcceleratedNetworking()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_AcceleratedNetworking.json
+            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolData data = new BatchAccountPoolData
+            {
+                VmSize = "STANDARD_D1_V2",
+                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2016-datacenter-smalldisk",
+                    Version = "latest",
+                }, "batch.node.windows amd64"),
+                ScaleSettings = new BatchAccountPoolScaleSettings
+                {
+                    FixedScale = new BatchAccountFixedScaleSettings
+                    {
+                        TargetDedicatedNodes = 1,
+                        TargetLowPriorityNodes = 0,
+                    },
+                },
+                NetworkConfiguration = new BatchNetworkConfiguration
+                {
+                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
+                    EnableAcceleratedNetworking = true,
+                },
+            };
+            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            BatchAccountPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPool()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPoolAcceleratedNetworking()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPoolSecurityProfile()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPoolUpgradePolicy()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPoolVirtualMachineConfigurationExtensions()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPoolVirtualMachineConfigurationOSDisk()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetPoolVirtualMachineConfigurationServiceArtifactReference()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolList.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolList.json
             // this example is just showing the usage of "Pool_ListByBatchAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,15 +1151,14 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListPoolWithFilter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPoolWithFilter()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolListWithFilter.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolListWithFilter.json
             // this example is just showing the usage of "Pool_ListByBatchAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,766 +1189,14 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CreatePool - Custom Image
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolCustomImage()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_SharedImageGallery.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                    }, "batch.node.ubuntu 18.04"),
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - Full CloudServiceConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolFullCloudServiceConfiguration()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_CloudServiceConfiguration.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                DisplayName = "my-pool-name",
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    CloudServiceConfiguration = new BatchCloudServiceConfiguration("4")
-                    {
-                        OSVersion = "WA-GUEST-OS-4.45_201708-01",
-                    },
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    FixedScale = new BatchAccountFixedScaleSettings()
-                    {
-                        ResizeTimeout = XmlConvert.ToTimeSpan("PT8M"),
-                        TargetDedicatedNodes = 6,
-                        TargetLowPriorityNodes = 28,
-                        NodeDeallocationOption = BatchNodeDeallocationOption.TaskCompletion,
-                    },
-                },
-                InterNodeCommunication = InterNodeCommunicationState.Enabled,
-                NetworkConfiguration = new BatchNetworkConfiguration()
-                {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
-                    PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration()
-                    {
-                        Provision = BatchIPAddressProvisioningType.UserManaged,
-                        IPAddressIds =
-{
-new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Microsoft.Network/publicIPAddresses/ip135"),new ResourceIdentifier("/subscriptions/subid2/resourceGroups/rg24/providers/Microsoft.Network/publicIPAddresses/ip268")
-},
-                    },
-                },
-                TaskSlotsPerNode = 13,
-                TaskSchedulingNodeFillType = BatchNodeFillType.Pack,
-                UserAccounts =
-{
-new BatchUserAccount("username1","<ExamplePassword>")
-{
-ElevationLevel = BatchUserAccountElevationLevel.Admin,
-LinuxUserConfiguration = new BatchLinuxUserConfiguration()
-{
-Uid = 1234,
-Gid = 4567,
-SshPrivateKey = "sshprivatekeyvalue",
-},
-}
-},
-                Metadata =
-{
-new BatchAccountPoolMetadataItem("metadata-1","value-1"),new BatchAccountPoolMetadataItem("metadata-2","value-2")
-},
-                StartTask = new BatchAccountPoolStartTask()
-                {
-                    CommandLine = "cmd /c SET",
-                    ResourceFiles =
-{
-new BatchResourceFile()
-{
-HttpUri = new Uri("https://testaccount.blob.core.windows.net/example-blob-file"),
-FilePath = "c:\\temp\\gohere",
-FileMode = "777",
-}
-},
-                    EnvironmentSettings =
-{
-new BatchEnvironmentSetting("MYSET")
-{
-Value = "1234",
-}
-},
-                    UserIdentity = new BatchUserIdentity()
-                    {
-                        AutoUser = new BatchAutoUserSpecification()
-                        {
-                            Scope = BatchAutoUserScope.Pool,
-                            ElevationLevel = BatchUserAccountElevationLevel.Admin,
-                        },
-                    },
-                    MaxTaskRetryCount = 6,
-                    WaitForSuccess = true,
-                },
-                Certificates =
-{
-new BatchCertificateReference(new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Batch/batchAccounts/sampleacct/pools/testpool/certificates/sha1-1234567"))
-{
-StoreLocation = BatchCertificateStoreLocation.LocalMachine,
-StoreName = "MY",
-Visibility =
-{
-BatchCertificateVisibility.RemoteUser
-},
-}
-},
-                ApplicationPackages =
-{
-new BatchApplicationPackageReference(new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Batch/batchAccounts/sampleacct/pools/testpool/applications/app_1234"))
-{
-Version = "asdf",
-}
-},
-                ApplicationLicenses =
-{
-"app-license0","app-license1"
-},
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - Full VirtualMachineConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolFullVirtualMachineConfiguration()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_VirtualMachineConfiguration.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Publisher = "MicrosoftWindowsServer",
-                        Offer = "WindowsServer",
-                        Sku = "2016-Datacenter-SmallDisk",
-                        Version = "latest",
-                    }, "batch.node.windows amd64")
-                    {
-                        IsAutomaticUpdateEnabled = false,
-                        DataDisks =
-{
-new BatchVmDataDisk(0,30)
-{
-Caching = BatchDiskCachingType.ReadWrite,
-StorageAccountType = BatchStorageAccountType.PremiumLrs,
-},new BatchVmDataDisk(1,200)
-{
-Caching = BatchDiskCachingType.None,
-StorageAccountType = BatchStorageAccountType.StandardLrs,
-}
-},
-                        LicenseType = "Windows_Server",
-                        DiskEncryptionTargets =
-{
-BatchDiskEncryptionTarget.OSDisk,BatchDiskEncryptionTarget.TemporaryDisk
-},
-                        NodePlacementPolicy = BatchNodePlacementPolicyType.Zonal,
-                        EphemeralOSDiskPlacement = BatchDiffDiskPlacement.CacheDisk,
-                    },
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
-                    {
-                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
-                    },
-                },
-                NetworkConfiguration = new BatchNetworkConfiguration()
-                {
-                    EndpointInboundNatPools =
-{
-new BatchInboundNatPool("testnat",BatchInboundEndpointProtocol.Tcp,12001,15000,15100)
-{
-NetworkSecurityGroupRules =
-{
-new BatchNetworkSecurityGroupRule(150,BatchNetworkSecurityGroupRuleAccess.Allow,"192.100.12.45")
-{
-SourcePortRanges =
-{
-"1","2"
-},
-},new BatchNetworkSecurityGroupRule(3500,BatchNetworkSecurityGroupRuleAccess.Deny,"*")
-{
-SourcePortRanges =
-{
-"*"
-},
-}
-},
-}
-},
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - Minimal CloudServiceConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolMinimalCloudServiceConfiguration()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_MinimalCloudServiceConfiguration.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    CloudServiceConfiguration = new BatchCloudServiceConfiguration("5"),
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    FixedScale = new BatchAccountFixedScaleSettings()
-                    {
-                        TargetDedicatedNodes = 3,
-                    },
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - Minimal VirtualMachineConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolMinimalVirtualMachineConfiguration()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_MinimalVirtualMachineConfiguration.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Publisher = "Canonical",
-                        Offer = "UbuntuServer",
-                        Sku = "18.04-LTS",
-                        Version = "latest",
-                    }, "batch.node.ubuntu 18.04"),
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
-                    {
-                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
-                    },
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - No public IP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolNoPublicIP()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_NoPublicIPAddresses.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                    }, "batch.node.ubuntu 18.04"),
-                },
-                NetworkConfiguration = new BatchNetworkConfiguration()
-                {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
-                    PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration()
-                    {
-                        Provision = BatchIPAddressProvisioningType.NoPublicIPAddresses,
-                    },
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - Public IPs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolPublicIPs()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_PublicIPs.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                    }, "batch.node.ubuntu 18.04"),
-                },
-                NetworkConfiguration = new BatchNetworkConfiguration()
-                {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
-                    PublicIPAddressConfiguration = new BatchPublicIPAddressConfiguration()
-                    {
-                        Provision = BatchIPAddressProvisioningType.UserManaged,
-                        IPAddressIds =
-{
-new ResourceIdentifier("/subscriptions/subid1/resourceGroups/rg13/providers/Microsoft.Network/publicIPAddresses/ip135")
-},
-                    },
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - UserAssignedIdentities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolUserAssignedIdentities()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_UserAssignedIdentities.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity(),
-},
-                },
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Publisher = "Canonical",
-                        Offer = "UbuntuServer",
-                        Sku = "18.04-LTS",
-                        Version = "latest",
-                    }, "batch.node.ubuntu 18.04"),
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
-                    {
-                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
-                    },
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationExtensions()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_VirtualMachineConfiguration_Extensions.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D4",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Publisher = "Canonical",
-                        Offer = "0001-com-ubuntu-server-focal",
-                        Sku = "20_04-lts",
-                    }, "batch.node.ubuntu 20.04")
-                    {
-                        Extensions =
-{
-new BatchVmExtension("batchextension1","Microsoft.Azure.KeyVault","KeyVaultForLinux")
-{
-TypeHandlerVersion = "2.0",
-AutoUpgradeMinorVersion = true,
-EnableAutomaticUpgrade = true,
-Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["authenticationSettingsKey"] = "authenticationSettingsValue",
-["secretsManagementSettingsKey"] = "secretsManagementSettingsValue"}),
-}
-},
-                    },
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
-                    {
-                        EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
-                    },
-                },
-                TargetNodeCommunicationMode = NodeCommunicationMode.Default,
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CreatePool - accelerated networking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatePoolAcceleratedNetworking()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolCreate_AcceleratedNetworking.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData()
-            {
-                VmSize = "STANDARD_D1_V2",
-                DeploymentConfiguration = new BatchDeploymentConfiguration()
-                {
-                    VmConfiguration = new BatchVmConfiguration(new BatchImageReference()
-                    {
-                        Publisher = "MicrosoftWindowsServer",
-                        Offer = "WindowsServer",
-                        Sku = "2016-datacenter-smalldisk",
-                        Version = "latest",
-                    }, "batch.node.windows amd64"),
-                },
-                ScaleSettings = new BatchAccountPoolScaleSettings()
-                {
-                    FixedScale = new BatchAccountFixedScaleSettings()
-                    {
-                        TargetDedicatedNodes = 1,
-                        TargetLowPriorityNodes = 0,
-                    },
-                },
-                NetworkConfiguration = new BatchNetworkConfiguration()
-                {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
-                    EnableAcceleratedNetworking = true,
-                },
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetPool()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolGet.json
-            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolResource result = await collection.GetAsync(poolName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -879,47 +1222,11 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - AcceleratedNetworking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetPoolAcceleratedNetworking()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolGet_AcceleratedNetworking.json
-            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolResource result = await collection.GetAsync(poolName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetPool - AcceleratedNetworking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolAcceleratedNetworking()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolGet_AcceleratedNetworking.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -945,12 +1252,11 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetPoolVirtualMachineConfigurationExtensions()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetPoolSecurityProfile()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -971,21 +1277,46 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // invoke the operation
             string poolName = "testpool";
-            BatchAccountPoolResource result = await collection.GetAsync(poolName);
+            bool result = await collection.ExistsAsync(poolName);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPool - VirtualMachineConfiguration Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetPoolUpgradePolicy()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            bool result = await collection.ExistsAsync(poolName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationExtensions()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1009,6 +1340,360 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             bool result = await collection.ExistsAsync(poolName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetPoolVirtualMachineConfigurationOSDisk()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            bool result = await collection.ExistsAsync(poolName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetPoolVirtualMachineConfigurationServiceArtifactReference()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            bool result = await collection.ExistsAsync(poolName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPool()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPoolAcceleratedNetworking()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPoolSecurityProfile()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPoolUpgradePolicy()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPoolVirtualMachineConfigurationExtensions()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPoolVirtualMachineConfigurationOSDisk()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetPoolVirtualMachineConfigurationServiceArtifactReference()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchAccountPoolResource
+            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
+
+            // invoke the operation
+            string poolName = "testpool";
+            NullableResponse<BatchAccountPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            BatchAccountPoolResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountPoolData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

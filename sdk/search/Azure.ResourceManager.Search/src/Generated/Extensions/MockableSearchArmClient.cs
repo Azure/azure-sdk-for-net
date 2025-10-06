@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Mocking
 {
@@ -70,6 +68,18 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             SharedSearchServicePrivateLinkResource.ValidateResourceId(id);
             return new SharedSearchServicePrivateLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual SearchServiceNetworkSecurityPerimeterConfigurationResource GetSearchServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            SearchServiceNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

@@ -5,36 +5,34 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Configuration of Media streaming. </summary>
-    internal partial class MediaStreamingOptionsInternal
+    /// <summary>
+    /// Options for media streaming.
+    /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
+    /// </summary>
+    internal abstract partial class MediaStreamingOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
-        /// <param name="transportUrl"> Transport URL for media streaming. </param>
-        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
-        /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
-        /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
-        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
+        /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
+        protected MediaStreamingOptionsInternal(MediaStreamingAudioChannel audioChannelType)
         {
-            Argument.AssertNotNull(transportUrl, nameof(transportUrl));
-
-            TransportUrl = transportUrl;
-            TransportType = transportType;
-            ContentType = contentType;
             AudioChannelType = audioChannelType;
         }
 
-        /// <summary> Transport URL for media streaming. </summary>
-        public string TransportUrl { get; }
-        /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransport TransportType { get; }
-        /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContent ContentType { get; }
-        /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
+        /// <param name="transportType"> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </param>
+        /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
+        internal MediaStreamingOptionsInternal(StreamingTransport transportType, MediaStreamingAudioChannel audioChannelType)
+        {
+            TransportType = transportType;
+            AudioChannelType = audioChannelType;
+        }
+
+        /// <summary> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </summary>
+        internal StreamingTransport TransportType { get; set; }
+        /// <summary> The audio channel type to stream, e.g., unmixed audio, mixed audio. </summary>
         public MediaStreamingAudioChannel AudioChannelType { get; }
     }
 }

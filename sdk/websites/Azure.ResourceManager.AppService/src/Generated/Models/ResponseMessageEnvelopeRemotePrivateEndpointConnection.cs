@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -86,22 +84,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Tags associated with resource. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Azure resource manager plan. </summary>
+        [WirePath("plan")]
         public AppServiceArmPlan Plan { get; }
         /// <summary> Resource specific properties. </summary>
+        [WirePath("properties")]
         public RemotePrivateEndpointConnection Properties { get; }
         /// <summary> SKU description of the resource. </summary>
+        [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; }
         /// <summary> Azure-AsyncOperation Status info. </summary>
+        [WirePath("status")]
         public string Status { get; }
-        /// <summary> Azure-AsyncOperation Error info. </summary>
-        public ResponseError Error { get; }
         /// <summary> MSI resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
         /// <summary> Logical Availability Zones the service is hosted in. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }
 }

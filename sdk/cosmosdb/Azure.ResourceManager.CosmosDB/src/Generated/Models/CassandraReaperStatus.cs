@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the is healthy. </summary>
+        [WirePath("healthy")]
         public bool? IsHealthy { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("repairRunIds")]
         public IReadOnlyDictionary<string, string> RepairRunIds { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("repairSchedules")]
         public IReadOnlyDictionary<string, string> RepairSchedules { get; }
     }
 }

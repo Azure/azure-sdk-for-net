@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        [WirePath("enableFullTextQuery")]
         public EnableFullTextQuery? EnableFullTextQuery { get; set; }
     }
 }

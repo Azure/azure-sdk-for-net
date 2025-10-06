@@ -3,19 +3,22 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Castle.Components.DictionaryAdapter;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Azure.ResourceManager.TestFramework
 {
     public class AddDeleteAfterTagPolicy : HttpPipelineSynchronousPolicy
     {
         private DateTime RemoveDate { get; set; }
-        private Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/resourcegroups/([^?/]+)\?api-version");
+        private static readonly Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/resourcegroups/([^?/]+)\?api-version");
 
         public AddDeleteAfterTagPolicy(DateTimeOffset dateTimeOffset)
         {
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.TestFramework
                         var newContent = new Utf8JsonRequestContent();
                         Utf8JsonWriter utf8JsonWriter = newContent.JsonWriter;
                         var stream = new MemoryStream();
-                        message.Request.Content.WriteTo(stream, System.Threading.CancellationToken.None);
+                        message.Request.Content.WriteTo(stream, CancellationToken.None);
                         stream.Position = 0;
                         using (JsonDocument jsonDocument = JsonDocument.Parse(stream))
                         {
@@ -87,6 +90,47 @@ namespace Azure.ResourceManager.TestFramework
                         message.Request.Content = newContent;
                     }
                 }
+            }
+        }
+
+        // since we removed Utf8JsonRequestContent in the shared code, but this class needs it, therefore we temporarily add it back in this way here
+        private class Utf8JsonRequestContent : RequestContent
+        {
+            private readonly MemoryStream _stream;
+            private readonly RequestContent _content;
+
+            public Utf8JsonRequestContent()
+            {
+                _stream = new MemoryStream();
+                _content = Create(_stream);
+                JsonWriter = new Utf8JsonWriter(_stream);
+            }
+
+            public Utf8JsonWriter JsonWriter { get; }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+            {
+                await JsonWriter.FlushAsync().ConfigureAwait(false);
+                await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
+            {
+                JsonWriter.Flush();
+                _content.WriteTo(stream, cancellationToken);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
+                return true;
+            }
+
+            public override void Dispose()
+            {
+                JsonWriter.Dispose();
+                _content.Dispose();
+                _stream.Dispose();
             }
         }
     }

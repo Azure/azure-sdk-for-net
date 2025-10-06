@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Start Packet capture parameters on vpn connection. </summary>
+        [WirePath("filterData")]
         public string FilterData { get; set; }
         /// <summary> List of site link connection names. </summary>
+        [WirePath("linkConnectionNames")]
         public IList<string> LinkConnectionNames { get; }
     }
 }

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
@@ -35,8 +33,8 @@ namespace Azure.ResourceManager.RecoveryServices
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics;
+        private readonly PrivateLinkResourceOperationGroupRestOperations _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient;
         private readonly RecoveryServicesPrivateLinkResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +59,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecoveryServicesPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recoveryServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupApiVersion);
+            _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient = new PrivateLinkResourceOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,11 +97,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,11 +112,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RecoveryServicesPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResource.Get");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -139,11 +137,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -154,11 +152,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecoveryServicesPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResource.Get");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());

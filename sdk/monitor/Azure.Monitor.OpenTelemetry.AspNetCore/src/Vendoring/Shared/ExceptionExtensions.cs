@@ -1,8 +1,5 @@
-// <copyright file="ExceptionExtensions.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
-
-#nullable enable
 
 using System.Globalization;
 

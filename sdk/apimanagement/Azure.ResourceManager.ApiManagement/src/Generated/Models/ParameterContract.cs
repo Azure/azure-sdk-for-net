@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -93,22 +91,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Parameter name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Parameter description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Parameter type. </summary>
+        [WirePath("type")]
         public string ParameterContractType { get; set; }
         /// <summary> Default parameter value. </summary>
+        [WirePath("defaultValue")]
         public string DefaultValue { get; set; }
         /// <summary> Specifies whether parameter is required or not. </summary>
+        [WirePath("required")]
         public bool? IsRequired { get; set; }
         /// <summary> Parameter values. </summary>
+        [WirePath("values")]
         public IList<string> Values { get; }
         /// <summary> Schema identifier. </summary>
+        [WirePath("schemaId")]
         public string SchemaId { get; set; }
         /// <summary> Type name defined by the schema. </summary>
+        [WirePath("typeName")]
         public string TypeName { get; set; }
         /// <summary> Exampled defined for the parameter. </summary>
+        [WirePath("examples")]
         public IDictionary<string, ParameterExampleContract> Examples { get; }
     }
 }

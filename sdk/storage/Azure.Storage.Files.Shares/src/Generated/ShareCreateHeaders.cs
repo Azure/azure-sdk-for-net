@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
@@ -22,5 +21,15 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        /// <summary> Returns the current share quota in GB. </summary>
+        public long? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out long? value) ? value : null;
+        /// <summary> The provisioned IOPS of the share. </summary>
+        public long? ShareProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out long? value) ? value : null;
+        /// <summary> The provisioned throughput of the share. </summary>
+        public long? ShareProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out long? value) ? value : null;
+        /// <summary> Returns the calculated burst IOPS of the share. </summary>
+        public long? ShareIncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
+        /// <summary> Returned the calculated maximum burst credits. </summary>
+        public long? MaxBurstCreditsForIops => _response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? value) ? value : null;
     }
 }

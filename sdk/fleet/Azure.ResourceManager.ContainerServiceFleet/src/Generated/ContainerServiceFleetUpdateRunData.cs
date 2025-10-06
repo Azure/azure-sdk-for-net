@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
@@ -85,8 +84,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
+        /// <param name="autoUpgradeProfileId"> AutoUpgradeProfileId is the id of an auto upgrade profile resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpdateRunStrategy strategy, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpdateRunStrategy strategy, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status, ResourceIdentifier autoUpgradeProfileId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -94,6 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Strategy = strategy;
             ManagedClusterUpdate = managedClusterUpdate;
             Status = status;
+            AutoUpgradeProfileId = autoUpgradeProfileId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -133,5 +134,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         public ContainerServiceFleetManagedClusterUpdate ManagedClusterUpdate { get; set; }
         /// <summary> The status of the UpdateRun. </summary>
         public ContainerServiceFleetUpdateRunStatus Status { get; }
+        /// <summary> AutoUpgradeProfileId is the id of an auto upgrade profile resource. </summary>
+        public ResourceIdentifier AutoUpgradeProfileId { get; }
     }
 }

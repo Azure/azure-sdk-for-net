@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -67,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP address or FQDN of backend server. </summary>
+        [WirePath("address")]
         public string Address { get; }
         /// <summary> Reference to IP configuration of backend server. </summary>
+        [WirePath("ipConfiguration")]
         public NetworkInterfaceIPConfigurationData IPConfiguration { get; }
         /// <summary> Health of backend server. </summary>
+        [WirePath("health")]
         public ApplicationGatewayBackendHealthServerHealth? Health { get; }
         /// <summary> Health Probe Log. </summary>
+        [WirePath("healthProbeLog")]
         public string HealthProbeLog { get; }
     }
 }

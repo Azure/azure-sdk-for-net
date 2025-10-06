@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(EventGridSkuName left, EventGridSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridSkuName"/> values are not the same. </summary>
         public static bool operator !=(EventGridSkuName left, EventGridSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGridSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridSkuName"/>. </summary>
         public static implicit operator EventGridSkuName(string value) => new EventGridSkuName(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

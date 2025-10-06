@@ -45,5 +45,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return new GetOperationsResponse(value, nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GetOperationsResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGetOperationsResponse(document.RootElement);
+        }
     }
 }

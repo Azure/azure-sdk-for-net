@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EnergyServices;
 using Azure.ResourceManager.EnergyServices.Models;
 
 namespace Azure.ResourceManager.EnergyServices.Mocking
@@ -60,10 +57,6 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-04-preview</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
@@ -97,10 +90,6 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-04-preview</description>
         /// </item>
         /// </list>
         /// </summary>

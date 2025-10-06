@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -17,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("group"u8);
-            writer.WriteObjectValue(SeriesGroupKey);
+            writer.WriteObjectValue<DimensionKey>(SeriesGroupKey);
             if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("conditionOperator"u8);
@@ -26,17 +25,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(SmartDetectionCondition))
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
-                writer.WriteObjectValue(SmartDetectionCondition);
+                writer.WriteObjectValue<SmartDetectionCondition>(SmartDetectionCondition);
             }
             if (Optional.IsDefined(HardThresholdCondition))
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
-                writer.WriteObjectValue(HardThresholdCondition);
+                writer.WriteObjectValue<HardThresholdCondition>(HardThresholdCondition);
             }
             if (Optional.IsDefined(ChangeThresholdCondition))
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
-                writer.WriteObjectValue(ChangeThresholdCondition);
+                writer.WriteObjectValue<ChangeThresholdCondition>(ChangeThresholdCondition);
             }
             writer.WriteEndObject();
         }
@@ -97,6 +96,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new MetricSeriesGroupDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition, group);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MetricSeriesGroupDetectionCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetricSeriesGroupDetectionCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

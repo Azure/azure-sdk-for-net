@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Channel affinity for a participant. </summary>

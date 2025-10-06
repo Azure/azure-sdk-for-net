@@ -1,57 +1,65 @@
 parameters:
-- name: PreSteps
-  type: object
-  default: []
-- name: PostSteps
-  type: object
-  default: []
-- name: EnvVars
-  type: object
-  default: {}
-- name: MaxParallel
-  type: number
-  default: 0
-- name: BuildInParallel
-  type: boolean
-  default: true
-- name: TimeoutInMinutes
-  type: number
-  default: 60
-- name: Location
-  type: string
-  default: ''
-- name: SDKType
-  type: string
-  default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: TestResourceDirectories
-  type: object
-  default:
-- name: Project
-  type: string
-  default: '**'
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: DeployTestResources
-  type: boolean
-  default: true
-- name: CloudConfig
-  type: object
-  default: {}
-- name: Platforms
-  type: object
-  default: {}
-- name: Matrix
-  type: string
-- name: DependsOn
-  type: string
-  default: ''
-- name: UsePlatformContainer
-  type: boolean
-  default: false
+  - name: PreSteps
+    type: object
+    default: []
+  - name: PostSteps
+    type: object
+    default: []
+  - name: EnvVars
+    type: object
+    default: {}
+  - name: MaxParallel
+    type: number
+    default: 0
+  - name: BuildInParallel
+    type: boolean
+    default: true
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
+  - name: Location
+    type: string
+    default: ''
+  - name: SDKType
+    type: string
+    default: all
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: TestResourceDirectories
+    type: object
+    default:
+  - name: Project
+    type: string
+    default: '**'
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: DeployTestResources
+    type: boolean
+    default: true
+  - name: CloudConfig
+    type: object
+    default: {}
+  - name: Platforms
+    type: object
+    default: {}
+  - name: Matrix
+    type: string
+  - name: DependsOn
+    type: string
+    default: ''
+  - name: UsePlatformContainer
+    type: boolean
+    default: false
+  - name: OSName
+    type: string
+  - name: UseFederatedAuth
+    type: boolean
+    default: true
+  - name: PersistOidcToken
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -75,8 +83,14 @@ jobs:
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     pool:
+      # 1es pipeline templates converts `image` to demands: ImageOverride under the hood
+      # which is incompatible with image selection in the default non-1es hosted pools
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(OSVmImage)
+      ${{ else }}:
+        image: $(OSVmImage)
       name: $(Pool)
-      vmImage: $(OSVmImage)
+      os: ${{ parameters.OSName }}
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
       # Add a default so the job doesn't fail when the matrix is empty
@@ -94,7 +108,7 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
-          AgentImage: $(OSVmImage)
+          AgentImage: ${{ parameters.OSName }}
 
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
@@ -104,38 +118,33 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
-          EnvVars: ${{ parameters.EnvVars }}
+          ${{ if parameters.UseFederatedAuth }}:
+            SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          EnvVars:
+            Pool: $(Pool)
+            ${{ insert }}: ${{ parameters.EnvVars }}
 
-      - pwsh: |
-          $project = "${{ parameters.Project }}"
-          $directory = "${{ parameters.ServiceDirectory }}"
-          if ($project -and $project -ne "**" -and (Test-Path "$(Build.SourcesDirectory)/sdk/$directory/$project/test-resources.*")) {
-            $directory = "$directory/$project"
-          }
-          Write-Host "Setting TestResourcesDirectory to '$directory'"
-          Write-Host "##vso[task.setvariable variable=TestResourcesDirectory]$directory"
-        displayName: Set TestResources Location
+      # Install dotnet before resource deployment so the pre/post scripts can run dotnet commands.
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          Container: ${{ parameters.UsePlatformContainer }}
 
       - ${{ if parameters.DeployTestResources }}:
-        - ${{ if parameters.TestResourceDirectories }}:
-          - ${{ each directory in parameters.TestResourceDirectories }}:
-            - template: /eng/common/TestResources/deploy-test-resources.yml
-              parameters:
-                ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
-                  Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-                ServiceDirectory: '${{ directory }}'
-                TestResourcesDirectory: '$(TestResourcesDirectory)'
-                SubscriptionConfiguration: $(SubscriptionConfiguration)
-                ArmTemplateParameters: $(ArmTemplateParameters)
-        - ${{ if not(parameters.TestResourceDirectories) }}:
+        - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
               ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
                 Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-              ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-              TestResourcesDirectory: '$(TestResourcesDirectory)'
+              ServiceDirectory: '${{ directory }}'
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
+              UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+              PersistOidcToken: ${{ parameters.PersistOidcToken }}
+              ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+              EnvVars:
+                Pool: $(Pool)
+                ${{ insert }}: ${{ parameters.EnvVars }}
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -143,43 +152,85 @@ jobs:
             Write-Host "##vso[task.setvariable variable=TestMode]Record"
           }
         displayName: Set Test Mode
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          Container: ${{ parameters.UsePlatformContainer }}
-      - script: >
-          dotnet test eng/service.proj
-          --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-          --logger "trx"
-          --logger:"console;verbosity=normal"
-          --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:Project=${{ parameters.Project }}
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-          /p:BuildInParallel=${{ parameters.BuildInParallel }}
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
-          /p:EnableSourceLink=false
-          $(AdditionalTestArguments)
 
-        displayName: "Build & Test (all tests for $(TestTargetFramework))"
-        env:
-          AZURE_TEST_MODE: $(TestMode)
-          ${{ each var in parameters.EnvVars }}:
-            ${{ var.key }}: ${{ var.value }}
+      - ${{ if eq('true', parameters.UseFederatedAuth) }}:
+        - task: AzurePowerShell@5
+          displayName: "Build & Test (all tests for $(TestTargetFramework)) - Federated Auth"
+          inputs:
+            azureSubscription: ${{ parameters.CloudConfig.ServiceConnection }}
+            azurePowerShellVersion: LatestVersion
+            pwsh: true
+            ScriptType: InlineScript
+            Inline: >-
+              . ./eng/common/TestResources/SubConfig-Helpers.ps1
+              $serviceDirectoryPrefix = BuildServiceDirectoryPrefix ${{ parameters.ServiceDirectory }};
+              $account = (Get-AzContext).Account;
+              $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
+              $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id);
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants);
+
+              dotnet test eng/service.proj
+              --framework $(TestTargetFramework)
+              --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+              --logger "trx"
+              --logger:"console;verbosity=normal"
+              --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
+              /p:SDKType=${{ parameters.SDKType }}
+              /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+              /p:Project=${{ parameters.Project }}
+              /p:IncludeSrc=false
+              /p:IncludeSamples=false
+              /p:IncludePerf=false
+              /p:IncludeStress=false
+              /p:BuildInParallel=${{ parameters.BuildInParallel }}
+              /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+              /p:EnableSourceLink=false
+              $(AdditionalTestArguments);
+              Write-Host "Last exit code: $LASTEXITCODE";
+              exit $LASTEXITCODE;
+          env:
+            AZURE_TEST_MODE: $(TestMode)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+            ${{ if parameters.PersistOidcToken }}:
+              ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+            ${{ each var in parameters.EnvVars }}:
+              ${{ var.key }}: ${{ var.value }}
+
+      - ${{ else }}:
+        - script: >-
+            dotnet test eng/service.proj
+            --framework $(TestTargetFramework)
+            --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+            --logger "trx"
+            --logger:"console;verbosity=normal"
+            --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+            /p:Project=${{ parameters.Project }}
+            /p:IncludeSrc=false
+            /p:IncludeSamples=false
+            /p:IncludePerf=false
+            /p:IncludeStress=false
+            /p:BuildInParallel=${{ parameters.BuildInParallel }}
+            /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+            /p:EnableSourceLink=false
+            $(AdditionalTestArguments)
+          displayName: "Build & Test (all tests for $(TestTargetFramework)) - Client Secret Auth"
+          env:
+            AZURE_TEST_MODE: $(TestMode)
+            ${{ each var in parameters.EnvVars }}:
+              ${{ var.key }}: ${{ var.value }}
 
       - ${{ if parameters.DeployTestResources }}:
-        - ${{ if parameters.TestResourceDirectories }}:
-          - ${{ each directory in parameters.TestResourceDirectories }}:
-            - template: /eng/common/TestResources/remove-test-resources.yml
-              parameters:
-                ServiceDirectory: '${{ directory }}'
-                SubscriptionConfiguration: $(SubscriptionConfiguration)
-        - ${{ if not(parameters.TestResourceDirectories) }}:
-            - template: /eng/common/TestResources/remove-test-resources.yml
-              parameters:
-                ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-                SubscriptionConfiguration: $(SubscriptionConfiguration)
+        - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:
+          - template: /eng/common/TestResources/remove-test-resources.yml
+            parameters:
+              ServiceDirectory: '${{ directory }}'
+              SubscriptionConfiguration: $(SubscriptionConfiguration)
+              UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+              ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
       - task: PublishTestResults@2
         condition: always()
@@ -202,11 +253,11 @@ jobs:
           filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
           verbosity: Verbose
 
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Publish Code Coverage Reports
         inputs:
-          codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
 
       - ${{ parameters.PostSteps }}
+

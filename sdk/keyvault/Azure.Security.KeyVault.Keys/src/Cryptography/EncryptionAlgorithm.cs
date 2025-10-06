@@ -24,7 +24,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string A128CbcPadValue = "A128CBCPAD";
         internal const string A192CbcPadValue = "A192CBCPAD";
         internal const string A256CbcPadValue = "A256CBCPAD";
-
         private readonly string _value;
 
         /// <summary>
@@ -37,12 +36,26 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
+        /// <para>
+        /// <b>[Not recommended]</b>
         /// Gets an RSA1_5 <see cref="EncryptionAlgorithm"/>.
+        /// </para><para>
+        /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
+        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.Rsa15"/>, which is included solely for backwards compatibility.
+        /// Cryptographic standards no longer consider RSA with the PKCS#1 v1.5 padding scheme secure for encryption.
+        /// </para>
         /// </summary>
         public static EncryptionAlgorithm Rsa15 { get; } = new EncryptionAlgorithm(Rsa15Value);
 
         /// <summary>
+        /// <para>
+        /// <b>[Not recommended]</b>
         /// Gets an RSA-OAEP <see cref="EncryptionAlgorithm"/>.
+        /// </para><para>
+        /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
+        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.RsaOaep"/>, which is included solely for backwards compatibility.
+        /// <see cref="EncryptionAlgorithm.RsaOaep"/> utilizes SHA1, which has known collision problems.
+        /// </para>
         /// </summary>
         public static EncryptionAlgorithm RsaOaep { get; } = new EncryptionAlgorithm(RsaOaepValue);
 

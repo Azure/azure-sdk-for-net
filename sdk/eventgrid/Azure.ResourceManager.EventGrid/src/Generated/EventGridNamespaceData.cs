@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace resource. </param>
         /// <param name="topicsConfiguration"> Topics configuration information for the namespace resource. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Represents available Sku pricing tiers. </summary>
+        [WirePath("sku")]
         public NamespaceSku Sku { get; set; }
         /// <summary> Identity information for the Namespace resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the namespace resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NamespaceProvisioningState? ProvisioningState { get; }
         /// <summary> Topics configuration information for the namespace resource. </summary>
-        internal TopicsConfiguration TopicsConfiguration { get; set; }
-        /// <summary> The hostname for the topics configuration. This is a read-only property. </summary>
-        public string TopicsHostname
-        {
-            get => TopicsConfiguration is null ? default : TopicsConfiguration.Hostname;
-        }
-
+        [WirePath("properties.topicsConfiguration")]
+        public TopicsConfiguration TopicsConfiguration { get; set; }
         /// <summary> Topic spaces configuration information for the namespace resource. </summary>
+        [WirePath("properties.topicSpacesConfiguration")]
         public TopicSpacesConfiguration TopicSpacesConfiguration { get; set; }
         /// <summary>
         /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
@@ -131,15 +131,19 @@ namespace Azure.ResourceManager.EventGrid
         ///     b. For non-Availability Zones enabled regions - The default property value would be false.
         /// Once specified, this property cannot be updated.
         /// </summary>
+        [WirePath("properties.isZoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules" /&gt;
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
+        [WirePath("properties.inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
         /// <summary> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </summary>
+        [WirePath("properties.minimumTlsVersionAllowed")]
         public TlsVersion? MinimumTlsVersionAllowed { get; set; }
     }
 }

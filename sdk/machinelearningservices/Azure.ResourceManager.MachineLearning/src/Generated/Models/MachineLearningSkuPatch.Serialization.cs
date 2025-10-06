@@ -10,47 +10,54 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningSkuPatch : IUtf8JsonSerializable, IJsonModel<MachineLearningSkuPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSkuPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSkuPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningSkuPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
-            {
-                writer.WritePropertyName("capacity"u8);
-                writer.WriteNumberValue(Capacity.Value);
-            }
-            if (Optional.IsDefined(Family))
-            {
-                writer.WritePropertyName("family"u8);
-                writer.WriteStringValue(Family);
-            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier.Value.ToSerialString());
             }
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Family))
             {
-                writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier.Value.ToSerialString());
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteNumberValue(Capacity.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,14 +67,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningSkuPatch IJsonModel<MachineLearningSkuPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,43 +90,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSkuPatch DeserializeMachineLearningSkuPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? capacity = default;
-            string family = default;
             string name = default;
-            string size = default;
             MachineLearningSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacity = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("family"u8))
-                {
-                    family = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("size"u8))
-                {
-                    size = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tier"u8))
@@ -132,18 +119,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tier = property.Value.GetString().ToMachineLearningSkuTier();
                     continue;
                 }
+                if (property.NameEquals("size"u8))
+                {
+                    size = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("family"u8))
+                {
+                    family = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("capacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacity = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningSkuPatch(
-                capacity,
-                family,
                 name,
-                size,
                 tier,
+                size,
+                family,
+                capacity,
                 serializedAdditionalRawData);
         }
 
@@ -154,9 +160,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,11 +174,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningSkuPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

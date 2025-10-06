@@ -1,16 +1,30 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.3 (2025-08-07)
+
+### Bugs Fixed
+
+- Added missing long running operation header for Grafana Update operation.
+
+## 1.2.0-beta.2 (2025-08-04)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Grafana` AOT-compatible
+
+## 1.2.0-beta.1 (2025-06-24)
+
+### Features Added
+
+- Upgraded API version to 2024-11-01-preview.
+
+## 1.1.1 (2025-03-11)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+- Customization for TSP Generation to keep `public IList<string> RequiredZoneNames { get; }`.
 
 ## 1.1.0 (2023-11-29)
 
@@ -25,15 +39,17 @@
 ## 1.1.0-beta.2 (2023-11-15)
 
 ### Features Added
-- Configure grafana enterprise
-- Configure SMTP
-- Configure grafana plugins
-- Configure grafana major version
-- Specify SKU (pricing plan)
-- Support for private endpoint and managed private endpoint
+
+- Configure grafana enterprise.
+- Configure SMTP.
+- Configure grafana plugins.
+- Configure grafana major version.
+- Specify SKU (pricing plan).
+- Support for private endpoint and managed private endpoint.
 
 ### Other Changes
-- Upgraded API version to 2023-09-01
+
+- Upgraded API version to 2023-09-01.
 
 ## 1.1.0-beta.1 (2023-05-30)
 
@@ -65,15 +81,15 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 
 ### Other Changes
 
-- Upgraded dependent `Azure.ResourceManager` to 1.3.0
+- Upgraded dependent `Azure.ResourceManager` to 1.3.0.
 
 ## 1.0.0-beta.2 (2022-07-12)
 
@@ -83,8 +99,8 @@ Polishing since last public beta release:
 
 ### Other Changes
 
-- Upgraded dependent `Azure.ResourceManager` to 1.2.0
-- Upgraded dependent `Azure.Core` to 1.25.0
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0.
+- Upgraded dependent `Azure.Core` to 1.25.0.
 
 ## 1.0.0-beta.1 (2022-04-14)
 
@@ -100,4 +116,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

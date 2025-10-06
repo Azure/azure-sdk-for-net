@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(FirewallLogOption left, FirewallLogOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallLogOption"/> values are not the same. </summary>
         public static bool operator !=(FirewallLogOption left, FirewallLogOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallLogOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallLogOption"/>. </summary>
         public static implicit operator FirewallLogOption(string value) => new FirewallLogOption(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

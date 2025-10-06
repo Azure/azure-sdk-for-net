@@ -23,7 +23,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (AssetDimensionsWrapper != null)
                 {
                     writer.WritePropertyName("dimensions"u8);
-                    writer.WriteObjectValue(AssetDimensionsWrapper);
+                    writer.WriteObjectValue<Vector3>(AssetDimensionsWrapper);
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (BoundingBoxCenterWrapper != null)
                 {
                     writer.WritePropertyName("boundingBoxCenter"u8);
-                    writer.WriteObjectValue(BoundingBoxCenterWrapper);
+                    writer.WriteObjectValue<Vector3>(BoundingBoxCenterWrapper);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
             }
             writer.WritePropertyName("gravity"u8);
-            writer.WriteObjectValue(GravityWrapper);
+            writer.WriteObjectValue<Vector3>(GravityWrapper);
             if (Common.Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 if (KeyFrameIndexes != null)
@@ -67,7 +67,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WriteStartArray();
                 foreach (var item in GroundTruthTrajectoryCameraPoses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrajectoryPose>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (PrincipalAxisWrapper != null)
                 {
                     writer.WritePropertyName("principalAxis"u8);
-                    writer.WriteObjectValue(PrincipalAxisWrapper);
+                    writer.WriteObjectValue<Quaternion>(PrincipalAxisWrapper);
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (SupportingPlaneWrapper != null)
                 {
                     writer.WritePropertyName("supportingPlane"u8);
-                    writer.WriteObjectValue(SupportingPlaneWrapper);
+                    writer.WriteObjectValue<Vector4>(SupportingPlaneWrapper);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WriteStartArray();
                 foreach (var item in TestTrajectoryCameraPoses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrajectoryPose>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -243,6 +243,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 disableDetectScaleUnits,
                 supportingPlane,
                 testTrajectory ?? new Common.ChangeTrackingList<TrajectoryPose>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAssetConversionConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -34,5 +34,13 @@ namespace Azure.Communication.PhoneNumbers
             }
             return new PhoneNumberCountry(localizedName, countryCode);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumberCountry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePhoneNumberCountry(document.RootElement);
+        }
     }
 }

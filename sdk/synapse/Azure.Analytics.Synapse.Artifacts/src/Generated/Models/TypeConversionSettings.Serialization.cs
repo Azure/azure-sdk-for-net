@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,32 +21,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
-                writer.WriteObjectValue(AllowDataTruncation);
+                writer.WriteObjectValue<object>(AllowDataTruncation);
             }
             if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
-                writer.WriteObjectValue(TreatBooleanAsNumber);
+                writer.WriteObjectValue<object>(TreatBooleanAsNumber);
             }
             if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
-                writer.WriteObjectValue(DateTimeFormat);
+                writer.WriteObjectValue<object>(DateTimeFormat);
             }
             if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
-                writer.WriteObjectValue(DateTimeOffsetFormat);
+                writer.WriteObjectValue<object>(DateTimeOffsetFormat);
             }
             if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
-                writer.WriteObjectValue(TimeSpanFormat);
+                writer.WriteObjectValue<object>(TimeSpanFormat);
+            }
+            if (Optional.IsDefined(TimeFormat))
+            {
+                writer.WritePropertyName("timeFormat"u8);
+                writer.WriteObjectValue<object>(TimeFormat);
+            }
+            if (Optional.IsDefined(DateFormat))
+            {
+                writer.WritePropertyName("dateFormat"u8);
+                writer.WriteObjectValue<object>(DateFormat);
             }
             if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
-                writer.WriteObjectValue(Culture);
+                writer.WriteObjectValue<object>(Culture);
             }
             writer.WriteEndObject();
         }
@@ -63,6 +72,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object dateTimeFormat = default;
             object dateTimeOffsetFormat = default;
             object timeSpanFormat = default;
+            object timeFormat = default;
+            object dateFormat = default;
             object culture = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -111,6 +122,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     timeSpanFormat = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("timeFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeFormat = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("dateFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dateFormat = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("culture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -127,7 +156,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 dateTimeFormat,
                 dateTimeOffsetFormat,
                 timeSpanFormat,
+                timeFormat,
+                dateFormat,
                 culture);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TypeConversionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTypeConversionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>
@@ -136,6 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override TypeConversionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

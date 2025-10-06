@@ -6,7 +6,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Storage.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -14,8 +19,6 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests.Shared;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Rest;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -29,7 +32,8 @@ namespace Azure.Storage.Blobs.Test
 
         // The container is shared by all tests in this class
         private string _containerName;
-        private StorageManagementClient _storageManagementClient;
+        private BlobContainerResource _container;
+        //private StorageManagementClient _storageManagementClient;
 
         private BlobContainerClient _containerClient;
 
@@ -39,21 +43,28 @@ namespace Azure.Storage.Blobs.Test
             if (Mode != RecordedTestMode.Playback)
             {
                 _containerName = Guid.NewGuid().ToString();
-                var configuration = TestConfigurations.DefaultTargetOAuthTenant;
+                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
 
-                string subscriptionId = configuration.SubscriptionId;
-                string[] scopes = new string[] { "https://management.azure.com/.default" };
-                string token = await GetAuthToken(scopes, configuration);
-                TokenCredentials tokenCredentials = new TokenCredentials(token);
-                _storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
-
-                await _storageManagementClient.BlobContainers.CreateAsync(
-                    resourceGroupName: configuration.ResourceGroupName,
-                    accountName: configuration.AccountName,
-                    containerName: _containerName,
-                    new Microsoft.Azure.Management.Storage.Models.BlobContainer(
-                        publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
-                        immutableStorageWithVersioning: new Microsoft.Azure.Management.Storage.Models.ImmutableStorageWithVersioning(true)));
+                try
+                {
+                    ArmClient armClient = new ArmClient(TestEnvironment.Credential);
+                    SubscriptionResource subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{configuration.SubscriptionId}"));
+                    ResourceGroupResource resourceGroup = await subscription.GetResourceGroupAsync(configuration.ResourceGroupName);
+                    StorageAccountResource storageAccount = await resourceGroup.GetStorageAccountAsync(configuration.AccountName);
+                    BlobServiceResource blobService = storageAccount.GetBlobService();
+                    BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+                    BlobContainerData blobContainerData = new BlobContainerData();
+                    blobContainerData.ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
+                    {
+                        IsEnabled = true
+                    };
+                    ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, blobContainerData);
+                    _container = blobContainerCreateOperation.Value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
                 return;
             }
         }
@@ -70,13 +81,19 @@ namespace Azure.Storage.Blobs.Test
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                var configuration = TestConfigurations.DefaultTargetOAuthTenant;
-                var containerClient = new BlobServiceClient(
+                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
+                BlobContainerClient containerClient = new BlobServiceClient(
                     new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
                     Tenants.TestConfigOAuth.AccountKey))
                     .GetBlobContainerClient(_containerName);
-                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
+
+                GetBlobsOptions options = new GetBlobsOptions
+                {
+                    Traits = BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold,
+                };
+
+                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(options))
                 {
                     BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
 
@@ -93,10 +110,7 @@ namespace Azure.Storage.Blobs.Test
                     await blobClient.DeleteIfExistsAsync();
                 }
 
-                await _storageManagementClient.BlobContainers.DeleteAsync(
-                     resourceGroupName: configuration.ResourceGroupName,
-                     accountName: configuration.AccountName,
-                     containerName: _containerName);
+                await _container.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -135,7 +149,14 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy, prefix: blob.Name))
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.ImmutabilityPolicy,
+                Prefix = blob.Name
+            };
+
+            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
@@ -476,7 +497,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiresOn = Recording.UtcNow.AddSeconds(1),
+                ExpiresOn = Recording.UtcNow.AddMinutes(5),
                 PolicyMode = BlobImmutabilityPolicyMode.Locked
             };
 
@@ -490,7 +511,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.SetImmutabilityPolicyAsync(
                     immutabilityPolicy: immutabilityPolicy,
                     conditions: conditions),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -557,6 +578,92 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetDeleteImmutibilityPolicyAsync_Snapshot()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            Response<BlobSnapshotInfo> createSnapshotResponse = await blob.CreateSnapshotAsync();
+            BlobBaseClient snapshotClient = blob.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+            try
+            {
+                BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+                {
+                    ExpiresOn = Recording.UtcNow.AddSeconds(5),
+                    PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+                };
+
+                // Act
+                await snapshotClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+                // Assert that the base blob does not have an immutability policy.
+                Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+                // Assert that the blob snapshot has an immuability policy.
+                propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+                await snapshotClient.DeleteImmutabilityPolicyAsync();
+
+                // Assert
+                propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            }
+            finally
+            {
+                await snapshotClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetDeleteImmutibilityPolicyAsync_BlobVersion()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Create Blob Version
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionClient = blob.WithVersion(setMetadataResponse.Value.VersionId);
+
+            // Create another blob Version
+            await blob.SetMetadataAsync(new Dictionary<string, string>());
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiresOn = Recording.UtcNow.AddSeconds(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+            };
+
+            // Act
+            await versionClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+            // Assert that the base blob does not have an immutability policy
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+            // Assert that the blob version does have an immutability policy
+            propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+            await versionClient.DeleteImmutabilityPolicyAsync();
+
+            // Assert blob version does not have an immutability policy
+            propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
             // Arrange
@@ -591,7 +698,14 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.LegalHold, prefix: blob.Name))
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.LegalHold,
+                Prefix = blob.Name,
+            };
+
+            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
@@ -612,6 +726,67 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(response.Value.HasLegalHold);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetLegalHoldAsync_Snapshot()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            Response<BlobSnapshotInfo> createSnapshotResponse = await blob.CreateSnapshotAsync();
+            BlobBaseClient snapshotClient = blob.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+
+            try
+            {
+                // Act
+                await snapshotClient.SetLegalHoldAsync(true);
+
+                // Assert the blob snapshot has a legal hold
+                Response<BlobProperties> propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+                // Assert the base blob does not have a legal hold
+                propertiesResponse = await blob.GetPropertiesAsync();
+                Assert.IsFalse(propertiesResponse.Value.HasLegalHold);
+
+                await snapshotClient.SetLegalHoldAsync(false);
+            }
+            finally
+            {
+                await snapshotClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetLegalHoldAsync_BlobVersion()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Create Blob Version
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionClient = blob.WithVersion(setMetadataResponse.Value.VersionId);
+
+            // Create another blob Version
+            await blob.SetMetadataAsync(new Dictionary<string, string>());
+
+            // Act
+            await versionClient.SetLegalHoldAsync(true);
+
+            // Assert the blob version has a legal hold
+            Response<BlobProperties> propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Assert the base blob does not have a legal hold
+            propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsFalse(propertiesResponse.Value.HasLegalHold);
+
+            await versionClient.SetLegalHoldAsync(false);
         }
 
         [Test]
@@ -825,7 +1000,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+            await destBlob.SyncCopyFromUriAsync(
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                options);
 
             // Assert
             Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();

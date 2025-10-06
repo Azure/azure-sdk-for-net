@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result of the request to list rules. It contains a list of rule objects and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list rules. It contains a list of rule objects and a URL link to get the next set of results.
+    /// Serialized Name: RuleListResult
+    /// </summary>
     internal partial class RuleListResult
     {
         /// <summary>
@@ -53,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RuleListResult"/>. </summary>
-        /// <param name="value"> List of AzureFrontDoor rules within a rule set. </param>
-        /// <param name="nextLink"> URL to get the next set of rule objects if there are any. </param>
+        /// <param name="value">
+        /// List of AzureFrontDoor rules within a rule set.
+        /// Serialized Name: RuleListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of rule objects if there are any.
+        /// Serialized Name: RuleListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RuleListResult(IReadOnlyList<FrontDoorRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of AzureFrontDoor rules within a rule set. </summary>
+        /// <summary>
+        /// List of AzureFrontDoor rules within a rule set.
+        /// Serialized Name: RuleListResult.value
+        /// </summary>
         public IReadOnlyList<FrontDoorRuleData> Value { get; }
-        /// <summary> URL to get the next set of rule objects if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of rule objects if there are any.
+        /// Serialized Name: RuleListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

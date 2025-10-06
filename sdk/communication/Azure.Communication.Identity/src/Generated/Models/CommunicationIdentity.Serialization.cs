@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Communication.Identity.Models
@@ -17,16 +18,40 @@ namespace Azure.Communication.Identity.Models
             {
                 return null;
             }
+            string customId = default;
+            DateTimeOffset? lastTokenIssuedAt = default;
             string id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("customId"u8))
+                {
+                    customId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastTokenIssuedAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastTokenIssuedAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new CommunicationIdentity(id);
+            return new CommunicationIdentity(customId, lastTokenIssuedAt, id);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCommunicationIdentity(document.RootElement);
         }
     }
 }

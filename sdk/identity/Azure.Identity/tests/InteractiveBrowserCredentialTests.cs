@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
         {
             // Configure mock cache to return a token for the expected user
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
-            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken", config.AuthorityHost.Host);
             var tokenCacheOptions = new MockTokenCache(
                 () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
                 args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
@@ -37,10 +37,19 @@ namespace Azure.Identity.Tests
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
                 options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
@@ -269,7 +278,7 @@ namespace Azure.Identity.Tests
 
             public bool IsProofOfPossessionRequired { get; set; }
 
-            public bool UseOperatingSystemAccount { get; set; }
+            public bool UseDefaultBrokerAccount { get; set; }
 
             Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
         }
@@ -301,13 +310,38 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void FailsWithCredentialUnavailableExceptionWhenChainedInBrokerMode()
+        {
+            bool beforeBuildClientInvoked = false;
+
+            var cancelSource = new CancellationTokenSource(2000);
+
+            var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
+            {
+                Assert.NotNull(builder);
+                beforeBuildClientInvoked = true;
+                cancelSource.Cancel();
+            });
+            options.UseDefaultBrokerAccount = true;
+            options.IsChainedCredential = true;
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(options));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+
+            Assert.True(beforeBuildClientInvoked);
+        }
+
+        [Test]
         public async Task BrowserCustomizationsHtmlMessage([Values(null, "<p> Login Successfully.</p>")] string htmlMessageSuccess, [Values(null, "<p> An error occured: {0}. Details {1}</p>")] string htmlMessageError)
         {
             var mockMsalClient = new MockMsalPublicClient
             {
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     Assert.AreEqual(false, browserOptions.UseEmbeddedWebView);
+#pragma warning restore CS0618 // Type or member is obsolete
                     Assert.AreEqual(htmlMessageSuccess, browserOptions.SuccessMessage);
                     Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
@@ -317,7 +351,9 @@ namespace Azure.Identity.Tests
             {
                 BrowserCustomization = new BrowserCustomizationOptions()
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     UseEmbeddedWebView = false,
+#pragma warning restore CS0618 // Type or member is obsolete
                     SuccessMessage = htmlMessageSuccess,
                     ErrorMessage = htmlMessageError
                 }
@@ -335,7 +371,9 @@ namespace Azure.Identity.Tests
             {
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     Assert.AreEqual(useEmbeddedWebView, browserOptions.UseEmbeddedWebView);
+#pragma warning restore CS0618 // Type or member is obsolete
                     Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
@@ -344,7 +382,9 @@ namespace Azure.Identity.Tests
             {
                 BrowserCustomization = new BrowserCustomizationOptions()
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     UseEmbeddedWebView = useEmbeddedWebView,
+#pragma warning restore CS0618 // Type or member is obsolete
                     ErrorMessage = htmlMessageError
                 }
             };

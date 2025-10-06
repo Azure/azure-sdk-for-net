@@ -30,7 +30,7 @@ public class FilesTests : AssistantsTestBase
         using (TestRecording.DisableRecordingScope disableBodyRecordingScope = Recording.DisableRequestBodyRecording())
         {
             Response<OpenAIFile> uploadFileResponse = await client.UploadFileAsync(
-                BinaryData.FromString("Hello, world! This is a test."),
+                BinaryData.FromString("Hello, world! This is a test.").ToStream(),
                 OpenAIFilePurpose.Assistants);
             AssertSuccessfulResponse(uploadFileResponse);
             EnsuredFileDeletions.Add((client, uploadFileResponse.Value.Id));

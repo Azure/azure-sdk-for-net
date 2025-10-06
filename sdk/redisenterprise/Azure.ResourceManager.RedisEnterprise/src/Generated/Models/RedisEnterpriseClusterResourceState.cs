@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string DisabledValue = "Disabled";
         private const string ScalingValue = "Scaling";
         private const string ScalingFailedValue = "ScalingFailed";
+        private const string MovingValue = "Moving";
 
         /// <summary> Running. </summary>
         public static RedisEnterpriseClusterResourceState Running { get; } = new RedisEnterpriseClusterResourceState(RunningValue);
@@ -65,11 +66,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseClusterResourceState Scaling { get; } = new RedisEnterpriseClusterResourceState(ScalingValue);
         /// <summary> ScalingFailed. </summary>
         public static RedisEnterpriseClusterResourceState ScalingFailed { get; } = new RedisEnterpriseClusterResourceState(ScalingFailedValue);
+        /// <summary> Moving. </summary>
+        public static RedisEnterpriseClusterResourceState Moving { get; } = new RedisEnterpriseClusterResourceState(MovingValue);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusterResourceState left, RedisEnterpriseClusterResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseClusterResourceState left, RedisEnterpriseClusterResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
         public static implicit operator RedisEnterpriseClusterResourceState(string value) => new RedisEnterpriseClusterResourceState(value);
 
         /// <inheritdoc />
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.AppConfiguration
 
         AppConfigurationStoreResource IOperationSource<AppConfigurationStoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppConfigurationStoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppConfigurationContext.Default);
             return new AppConfigurationStoreResource(_client, data);
         }
 
         async ValueTask<AppConfigurationStoreResource> IOperationSource<AppConfigurationStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement);
-            return new AppConfigurationStoreResource(_client, data);
+            var data = ModelReaderWriter.Read<AppConfigurationStoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppConfigurationContext.Default);
+            return await Task.FromResult(new AppConfigurationStoreResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

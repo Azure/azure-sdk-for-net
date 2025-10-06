@@ -2,51 +2,34 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class TransferValidationTests : DataMovementTestBase
+    public class TransferValidationTests
     {
-        public TransferValidationTests(bool async) : base(async, default)
-        {
-        }
-
         [Test, Pairwise]
         public async Task LargeSingleFile(
             [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection,
-            [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
+            [Values(TransferOrder.Sequential, TransferOrder.Unordered)] TransferOrder transferOrder)
         {
             long fileSize = 4L * Constants.GB;
             Uri localUri = new(@"C:\Sample\test.txt");
             Uri remoteUri = new("https://example.com");
-
-            StorageResourceItem srcResource;
-            StorageResourceItem dstResource;
-            if (transferDirection == TransferDirection.Copy)
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: remoteUri);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder);
-            }
-            else if (transferDirection == TransferDirection.Upload)
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: localUri);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder);
-            }
-            else // transferType == TransferDirection.Download
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: remoteUri);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: localUri, transferOrder: transferOrder);
-            }
+            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResourceItem.GetMockTransferResources(
+                transferDirection,
+                transferOrder,
+                fileSize);
 
             TransferManager transferManager = new();
-            DataTransferOptions options = new();
+            TransferOptions options = new();
             TestEventsRaised events = new(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+            TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
@@ -57,76 +40,123 @@ namespace Azure.Storage.DataMovement.Tests
         [Test, Pairwise]
         public async Task LargeSingleFile_Fail_Source(
             [Values(TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection,
-            [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
+            [Values(TransferOrder.Sequential, TransferOrder.Unordered)] TransferOrder transferOrder)
         {
             long fileSize = 4L * Constants.GB;
-            Uri localUri = new(@"C:\Sample\test.txt");
-            Uri remoteUri = new("https://example.com");
-
-            StorageResourceItem srcResource;
-            StorageResourceItem dstResource;
-            if (transferDirection == TransferDirection.Upload)
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: localUri, failAfter: 10);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder);
-            }
-            else // transferType == TransferDirection.Download
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: remoteUri, failAfter: 10);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: localUri, transferOrder: transferOrder);
-            }
+            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResourceItem.GetMockTransferResources(
+                transferDirection,
+                transferOrder,
+                fileSize,
+                sourceFailAfter: 10);
 
             TransferManager transferManager = new();
-            DataTransferOptions options = new();
+            TransferOptions options = new();
             TestEventsRaised events = new(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+            TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
-            Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
+            Assert.That(events.FailedEvents.First().Exception.Message, Does.Contain("Intentionally failing"));
         }
 
         [Test, Pairwise]
         public async Task LargeSingleFile_Fail_Destination(
             [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection,
-            [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
+            [Values(TransferOrder.Sequential, TransferOrder.Unordered)] TransferOrder transferOrder)
         {
             long fileSize = 4L * Constants.GB;
-            Uri localUri = new(@"C:\Sample\test.txt");
-            Uri remoteUri = new("https://example.com");
-
-            StorageResourceItem srcResource;
-            StorageResourceItem dstResource;
-            if (transferDirection == TransferDirection.Copy)
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: remoteUri);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder, failAfter: 10);
-            }
-            else if (transferDirection == TransferDirection.Upload)
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: localUri);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder, failAfter: 10);
-            }
-            else // transferType == TransferDirection.Download
-            {
-                srcResource = MockStorageResource.MakeSourceResource(fileSize, uri: remoteUri);
-                dstResource = MockStorageResource.MakeDestinationResource(uri: localUri, transferOrder: transferOrder, failAfter: 10);
-            }
+            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResourceItem.GetMockTransferResources(
+                transferDirection,
+                transferOrder,
+                fileSize,
+                destinationFailAfter: 10);
 
             TransferManager transferManager = new();
-            DataTransferOptions options = new();
+            TransferOptions options = new();
             TestEventsRaised events = new(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+            TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
-            Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
+            Assert.That(events.FailedEvents.First().Exception.Message, Does.Contain("Intentionally failing"));
+        }
+
+        [Test]
+        public void InvalidTransferOptions()
+        {
+            StorageResourceItem srcResource = MockStorageResourceItem.MakeSourceResource(1024);
+            StorageResourceItem dstResource = MockStorageResourceItem.MakeDestinationResource();
+            TransferManager transferManager = new();
+
+            TransferOptions options = new()
+            {
+                InitialTransferSize = 0,
+            };
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                await transferManager.StartTransferAsync(srcResource, dstResource, options));
+
+            options = new()
+            {
+                MaximumTransferChunkSize = 0,
+            };
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                await transferManager.StartTransferAsync(srcResource, dstResource, options));
+        }
+
+        [TestCase(Constants.GB, 4 * Constants.MB, 4000L * Constants.MB, 50000)]
+        [TestCase(500L * Constants.GB, 16 * Constants.MB, 4000L * Constants.MB, 50000)]
+        [TestCase(500L * Constants.GB, 4 * Constants.MB, 4 * Constants.MB, int.MaxValue)]
+        public async Task ResourceChunkSizeAndCount(long size, long chunkSize, long maxChunkSize, int maxChunkCount)
+        {
+            StorageResourceItem srcResource = MockStorageResourceItem.MakeSourceResource(size);
+            StorageResourceItem dstResource = MockStorageResourceItem.MakeDestinationResource(
+                maxSupportedChunkSize: maxChunkSize,
+                maxSupportChunkCount: maxChunkCount);
+
+            TransferManager transferManager = new();
+            TransferOptions options = new()
+            {
+                MaximumTransferChunkSize = chunkSize
+            };
+            TestEventsRaised events = new(options);
+            TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
+
+            Assert.That(transfer.HasCompleted, Is.True);
+            events.AssertUnexpectedFailureCheck();
+            await events.AssertSingleCompletedCheck();
+        }
+
+        [TestCase(500L * Constants.GB, 4 * Constants.MB, 4000L * Constants.MB, 50000)]
+        public async Task ResourceChunkSizeAndCount_Error(long size, long chunkSize, long maxChunkSize, int maxChunkCount)
+        {
+            StorageResourceItem srcResource = MockStorageResourceItem.MakeSourceResource(size);
+            StorageResourceItem dstResource = MockStorageResourceItem.MakeDestinationResource(
+                maxSupportedChunkSize: maxChunkSize,
+                maxSupportChunkCount: maxChunkCount);
+
+            TransferManager transferManager = new();
+            TransferOptions options = new()
+            {
+                MaximumTransferChunkSize = chunkSize
+            };
+            TestEventsRaised events = new(options);
+            TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
+
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(events.FailedEvents, Is.Not.Empty);
+            Assert.That(events.FailedEvents.First().Exception.Message, Does.StartWith($"Cannot transfer {size} bytes"));
         }
     }
 }

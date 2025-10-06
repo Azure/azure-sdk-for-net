@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-02-11)
+
+### Other Changes
+
+- Updated dependencies to ensure they are up-to-date with the latest targets and trimming from built-in dependencies.
+
+## 1.3.2 (2024-08-16)
+
+### Other Changes
+
+- Updated reference to `Azure.Security.KeyVault.Secrets` v4.6.0 to mitigate a reported SSRF vulnerability.
 
 ## 1.3.1 (2024-02-12)
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -109,46 +108,67 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> State of the Key Vault secret. </summary>
+        [WirePath("properties.certificates")]
         public IDictionary<string, AppServiceCertificateProperties> Certificates { get; }
         /// <summary> Certificate distinguished name. </summary>
+        [WirePath("properties.distinguishedName")]
         public string DistinguishedName { get; set; }
         /// <summary> Domain verification token. </summary>
+        [WirePath("properties.domainVerificationToken")]
         public string DomainVerificationToken { get; }
         /// <summary> Duration in years (must be 1). </summary>
+        [WirePath("properties.validityInYears")]
         public int? ValidityInYears { get; set; }
         /// <summary> Certificate key size. </summary>
+        [WirePath("properties.keySize")]
         public int? KeySize { get; set; }
         /// <summary> Certificate product type. </summary>
+        [WirePath("properties.productType")]
         public CertificateProductType? ProductType { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.autoRenew")]
         public bool? IsAutoRenew { get; set; }
         /// <summary> Status of certificate order. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Current order status. </summary>
+        [WirePath("properties.status")]
         public CertificateOrderStatus? Status { get; }
         /// <summary> Signed certificate. </summary>
+        [WirePath("properties.signedCertificate")]
         public AppServiceCertificateDetails SignedCertificate { get; }
         /// <summary> Last CSR that was created for this order. </summary>
+        [WirePath("properties.csr")]
         public string Csr { get; set; }
         /// <summary> Intermediate certificate. </summary>
+        [WirePath("properties.intermediate")]
         public AppServiceCertificateDetails Intermediate { get; }
         /// <summary> Root certificate. </summary>
+        [WirePath("properties.root")]
         public AppServiceCertificateDetails Root { get; }
         /// <summary> Current serial number of the certificate. </summary>
+        [WirePath("properties.serialNumber")]
         public string SerialNumber { get; }
         /// <summary> Certificate last issuance time. </summary>
+        [WirePath("properties.lastCertificateIssuanceTime")]
         public DateTimeOffset? LastCertificateIssuanceOn { get; }
         /// <summary> Certificate expiration time. </summary>
+        [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isPrivateKeyExternal")]
         public bool? IsPrivateKeyExternal { get; }
         /// <summary> Reasons why App Service Certificate is not renewable at the current moment. </summary>
+        [WirePath("properties.appServiceCertificateNotRenewableReasons")]
         public IReadOnlyList<AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get; }
         /// <summary> Time stamp when the certificate would be auto renewed next. </summary>
+        [WirePath("properties.nextAutoRenewalTimeStamp")]
         public DateTimeOffset? NextAutoRenewalTimeStamp { get; }
         /// <summary> Contact info. </summary>
+        [WirePath("properties.contact")]
         public CertificateOrderContact Contact { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

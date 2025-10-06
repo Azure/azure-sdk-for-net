@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfo"> Information for connecting to PostgreSQL source. </param>
         /// <param name="selectedDatabases"> List of PostgreSQL databases for which to collect tables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public GetUserTablesPostgreSqlTaskInput(PostgreSqlConnectionInfo connectionInfo, IEnumerable<string> selectedDatabases)
+        public GetUserTablesPostgreSqlTaskInput(DataMigrationPostgreSqlConnectionInfo connectionInfo, IEnumerable<string> selectedDatabases)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfo"> Information for connecting to PostgreSQL source. </param>
         /// <param name="selectedDatabases"> List of PostgreSQL databases for which to collect tables. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesPostgreSqlTaskInput(PostgreSqlConnectionInfo connectionInfo, IList<string> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesPostgreSqlTaskInput(DataMigrationPostgreSqlConnectionInfo connectionInfo, IList<string> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfo = connectionInfo;
             SelectedDatabases = selectedDatabases;
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information for connecting to PostgreSQL source. </summary>
-        public PostgreSqlConnectionInfo ConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo ConnectionInfo { get; set; }
         /// <summary> List of PostgreSQL databases for which to collect tables. </summary>
         public IList<string> SelectedDatabases { get; }
     }

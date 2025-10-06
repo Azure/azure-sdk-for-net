@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> List of managed rule set definitions available for use in a policy. </summary>
+    /// <summary>
+    /// List of managed rule set definitions available for use in a policy.
+    /// Serialized Name: ManagedRuleSetDefinitionList
+    /// </summary>
     internal partial class ManagedRuleSetDefinitionList
     {
         /// <summary>
@@ -53,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinitionList"/>. </summary>
-        /// <param name="value"> List of managed rule set definitions. </param>
-        /// <param name="nextLink"> URL to retrieve next set of managed rule set definitions. </param>
+        /// <param name="value">
+        /// List of managed rule set definitions.
+        /// Serialized Name: ManagedRuleSetDefinitionList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve next set of managed rule set definitions.
+        /// Serialized Name: ManagedRuleSetDefinitionList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleSetDefinitionList(IReadOnlyList<ManagedRuleSetDefinition> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of managed rule set definitions. </summary>
+        /// <summary>
+        /// List of managed rule set definitions.
+        /// Serialized Name: ManagedRuleSetDefinitionList.value
+        /// </summary>
         public IReadOnlyList<ManagedRuleSetDefinition> Value { get; }
-        /// <summary> URL to retrieve next set of managed rule set definitions. </summary>
+        /// <summary>
+        /// URL to retrieve next set of managed rule set definitions.
+        /// Serialized Name: ManagedRuleSetDefinitionList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

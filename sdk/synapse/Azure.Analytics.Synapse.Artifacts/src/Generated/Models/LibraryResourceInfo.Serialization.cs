@@ -93,12 +93,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 artifactId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LibraryResourceInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLibraryResourceInfo(document.RootElement);
+        }
+
         internal partial class LibraryResourceInfoConverter : JsonConverter<LibraryResourceInfo>
         {
             public override void Write(Utf8JsonWriter writer, LibraryResourceInfo model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override LibraryResourceInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

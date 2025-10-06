@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var azureBlobStorageLinkedServiceName = Recording.GenerateAssetName("LinkedService");
             var azureBlobStorageLinkedService = await CreateAzureBlobStorageLinkedService(dataFactory, azureBlobStorageLinkedServiceName, connectionString);
 
-            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, azureBlobStorageLinkedServiceName);
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, azureBlobStorageLinkedServiceName);
             DelimitedTextDataset delimitedTextDataset = new DelimitedTextDataset(dataFactoryLinkedServiceReference)
             {
                 Schema = new List<DatasetSchemaDataElement>()
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(azureKeyVaultLinkedService);
             var resultAKV = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(Azure.WaitUntil.Completed, linkedServiceAKVName, data);
 
-            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceAKVName);
-            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "AzureSDKTest");
-            var service = new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference));
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceAKVName);
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "AzureSDKTest");
+            var service = new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference));
             DataFactoryLinkedServiceData data1 = new DataFactoryLinkedServiceData(service);
             var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(Azure.WaitUntil.Completed, linkedServiceAzureSQLName, data1);
             var response = linkedService.WaitForCompletionResponseAsync().Result.Content.ToString();

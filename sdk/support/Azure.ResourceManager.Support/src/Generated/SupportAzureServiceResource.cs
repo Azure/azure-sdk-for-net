@@ -9,12 +9,9 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
@@ -36,8 +33,6 @@ namespace Azure.ResourceManager.Support
 
         private readonly ClientDiagnostics _supportAzureServiceServicesClientDiagnostics;
         private readonly ServicesRestOperations _supportAzureServiceServicesRestClient;
-        private readonly ClientDiagnostics _problemClassificationsNoSubscriptionClientDiagnostics;
-        private readonly ProblemClassificationsNoSubscriptionRestOperations _problemClassificationsNoSubscriptionRestClient;
         private readonly SupportAzureServiceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -65,8 +60,6 @@ namespace Azure.ResourceManager.Support
             _supportAzureServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string supportAzureServiceServicesApiVersion);
             _supportAzureServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportAzureServiceServicesApiVersion);
-            _problemClassificationsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _problemClassificationsNoSubscriptionRestClient = new ProblemClassificationsNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -113,7 +106,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +137,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +168,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +208,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -234,82 +227,6 @@ namespace Azure.ResourceManager.Support
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Classify the right problem classifications (categories) available for a specific Azure service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassificationsNoSubscription_classifyProblems</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyServiceProblem");
-            scope.Start();
-            try
-            {
-                var response = await _problemClassificationsNoSubscriptionRestClient.ClassifyProblemsAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Classify the right problem classifications (categories) available for a specific Azure service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassificationsNoSubscription_classifyProblems</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyServiceProblem");
-            scope.Start();
-            try
-            {
-                var response = _problemClassificationsNoSubscriptionRestClient.ClassifyProblems(Id.Name, content, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

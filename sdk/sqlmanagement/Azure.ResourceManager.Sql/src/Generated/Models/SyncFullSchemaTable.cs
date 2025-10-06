@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> List of columns in the table of database full schema. </summary>
+        [WirePath("columns")]
         public IReadOnlyList<SyncFullSchemaTableColumn> Columns { get; }
         /// <summary> Error id of the table. </summary>
+        [WirePath("errorId")]
         public string ErrorId { get; }
         /// <summary> If there is error in the table. </summary>
+        [WirePath("hasError")]
         public bool? HasError { get; }
         /// <summary> Name of the table. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Quoted name of the table. </summary>
+        [WirePath("quotedName")]
         public string QuotedName { get; }
     }
 }

@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIntegrationRuntimeListResponse(document.RootElement);
+        }
+
         internal partial class IntegrationRuntimeListResponseConverter : JsonConverter<IntegrationRuntimeListResponse>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeListResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override IntegrationRuntimeListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -31,6 +31,12 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public QueryCaption QueryCaption { get; set; }
 
+        /// <summary>
+        /// This parameter is only valid if the query type is `semantic`. When QueryRewrites is set to `generative`, the query terms are sent to a
+        /// generate model which will produce 10 (default) rewrites to help increase the recall of the request. The requested count can be configured
+        /// by appending the pipe character `|` followed by the `count-&lt;number of rewrites&gt;` option, such as `generative|count-3`. Defaults to `None`. </summary>
+        public QueryRewrites QueryRewrites { get; set; }
+
         /// <summary> The list of field names used for semantic search. </summary>
         public IList<string> SemanticFields { get; internal set; } = new List<string>();
 
@@ -38,14 +44,11 @@ namespace Azure.Search.Documents.Models
         internal string SemanticFieldsRaw
         {
             get => SemanticFields.CommaJoin();
-            set => SemanticFields = SearchExtensions.CommaSplit(value);
+            set => SemanticFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </summary>
         public string SemanticQuery { get; set; }
-
-        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
-        public QueryDebugMode? Debug { get; set; }
 
         /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
         public SemanticErrorMode? ErrorMode { get; set; }

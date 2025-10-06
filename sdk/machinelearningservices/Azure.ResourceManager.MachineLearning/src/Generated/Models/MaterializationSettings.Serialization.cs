@@ -8,31 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MaterializationSettings : IUtf8JsonSerializable, IJsonModel<MaterializationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaterializationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaterializationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaterializationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MaterializationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(StoreType))
+            {
+                writer.WritePropertyName("storeType"u8);
+                writer.WriteStringValue(StoreType.Value.ToString());
+            }
+            if (Optional.IsDefined(Schedule))
+            {
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule");
+                }
+            }
             if (Optional.IsDefined(Notification))
             {
                 if (Notification != null)
                 {
                     writer.WritePropertyName("notification"u8);
-                    writer.WriteObjectValue(Notification);
+                    writer.WriteObjectValue(Notification, options);
                 }
                 else
                 {
@@ -44,23 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resource != null)
                 {
                     writer.WritePropertyName("resource"u8);
-                    writer.WriteObjectValue(Resource);
+                    writer.WriteObjectValue(Resource, options);
                 }
                 else
                 {
                     writer.WriteNull("resource");
-                }
-            }
-            if (Optional.IsDefined(Schedule))
-            {
-                if (Schedule != null)
-                {
-                    writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
-                }
-                else
-                {
-                    writer.WriteNull("schedule");
                 }
             }
             if (Optional.IsCollectionDefined(SparkConfiguration))
@@ -81,11 +95,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sparkConfiguration");
                 }
             }
-            if (Optional.IsDefined(StoreType))
-            {
-                writer.WritePropertyName("storeType"u8);
-                writer.WriteStringValue(StoreType.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,14 +103,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MaterializationSettings IJsonModel<MaterializationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -109,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaterializationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,21 +126,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MaterializationSettings DeserializeMaterializationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            MaterializationStoreType? storeType = default;
+            MachineLearningRecurrenceTrigger schedule = default;
             NotificationSetting notification = default;
             MaterializationComputeResource resource = default;
-            MachineLearningRecurrenceTrigger schedule = default;
             IDictionary<string, string> sparkConfiguration = default;
-            MaterializationStoreType? storeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("storeType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storeType = new MaterializationStoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("schedule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        schedule = null;
+                        continue;
+                    }
+                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("notification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -153,16 +180,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("schedule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        schedule = null;
-                        continue;
-                    }
-                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("sparkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -178,28 +195,134 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sparkConfiguration = dictionary;
                     continue;
                 }
-                if (property.NameEquals("storeType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storeType = new MaterializationStoreType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MaterializationSettings(
+                storeType,
+                schedule,
                 notification,
                 resource,
-                schedule,
                 sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
-                storeType,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StoreType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StoreType))
+                {
+                    builder.Append("  storeType: ");
+                    builder.AppendLine($"'{StoreType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schedule), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  schedule: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Schedule))
+                {
+                    builder.Append("  schedule: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Schedule, options, 2, false, "  schedule: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Notification), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notification: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Notification))
+                {
+                    builder.Append("  notification: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Notification, options, 2, false, "  notification: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ResourceInstanceType", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resource: ");
+                builder.AppendLine("{");
+                builder.Append("    instanceType: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Resource))
+                {
+                    builder.Append("  resource: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Resource, options, 2, false, "  resource: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SparkConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sparkConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SparkConfiguration))
+                {
+                    if (SparkConfiguration.Any())
+                    {
+                        builder.Append("  sparkConfiguration: ");
+                        builder.AppendLine("{");
+                        foreach (var item in SparkConfiguration)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MaterializationSettings>.Write(ModelReaderWriterOptions options)
@@ -209,9 +332,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,11 +348,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMaterializationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

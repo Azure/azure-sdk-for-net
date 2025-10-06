@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningRegistryDataContainerResource IOperationSource<MachineLearningRegistryDataContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MachineLearningDataContainerData.DeserializeMachineLearningDataContainerData(document.RootElement);
+            var data = ModelReaderWriter.Read<MachineLearningDataContainerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearningRegistryDataContainerResource(_client, data);
         }
 
         async ValueTask<MachineLearningRegistryDataContainerResource> IOperationSource<MachineLearningRegistryDataContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MachineLearningDataContainerData.DeserializeMachineLearningDataContainerData(document.RootElement);
-            return new MachineLearningRegistryDataContainerResource(_client, data);
+            var data = ModelReaderWriter.Read<MachineLearningDataContainerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
+            return await Task.FromResult(new MachineLearningRegistryDataContainerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> List of tags to be appended. </summary>
+        [WirePath("threatIntelligenceTags")]
         public IList<string> ThreatIntelligenceTags { get; }
     }
 }

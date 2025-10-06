@@ -89,22 +89,31 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>
+        [WirePath("properties.id")]
         public Guid? ApplicationId { get; }
         /// <summary> Unique display name for your query within the Query Pack. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Creation Date for the Log Analytics Query, in ISO 8601 format. </summary>
+        [WirePath("properties.timeCreated")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last modified date of the Log Analytics Query, in ISO 8601 format. </summary>
+        [WirePath("properties.timeModified")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Object Id of user creating the query. </summary>
+        [WirePath("properties.author")]
         public string Author { get; }
         /// <summary> Description of the query. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Body of the query. </summary>
+        [WirePath("properties.body")]
         public string Body { get; set; }
         /// <summary> The related metadata items for the function. </summary>
+        [WirePath("properties.related")]
         public LogAnalyticsQueryRelatedMetadata Related { get; set; }
         /// <summary> Tags associated with the query. </summary>
+        [WirePath("properties.tags")]
         public IDictionary<string, IList<string>> Tags { get; }
         /// <summary>
         /// Additional properties that can be set for the query.
@@ -136,6 +145,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.properties")]
         public BinaryData Properties { get; set; }
     }
 }

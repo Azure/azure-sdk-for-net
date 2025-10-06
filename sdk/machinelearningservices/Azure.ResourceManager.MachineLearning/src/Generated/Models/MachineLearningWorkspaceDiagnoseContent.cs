@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseContent"/>. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> Value of Parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningWorkspaceDiagnoseContent(MachineLearningWorkspaceDiagnoseProperties value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the value. </summary>
+        /// <summary> Value of Parameters. </summary>
+        [WirePath("value")]
         public MachineLearningWorkspaceDiagnoseProperties Value { get; set; }
     }
 }

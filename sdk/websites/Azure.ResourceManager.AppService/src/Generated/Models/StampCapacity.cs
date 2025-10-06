@@ -88,16 +88,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the stamp. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Available capacity (# of machines, bytes of storage etc...). </summary>
+        [WirePath("availableCapacity")]
         public long? AvailableCapacity { get; }
         /// <summary> Total capacity (# of machines, bytes of storage etc...). </summary>
+        [WirePath("totalCapacity")]
         public long? TotalCapacity { get; }
         /// <summary> Name of the unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Shared/dedicated workers. </summary>
+        [WirePath("computeMode")]
         public ComputeModeOption? ComputeMode { get; }
         /// <summary> Size of the machines. </summary>
+        [WirePath("workerSize")]
         public WorkerSizeOption? WorkerSize { get; }
         /// <summary>
         /// Size ID of machines:
@@ -105,17 +111,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// 1 - Medium
         /// 2 - Large
         /// </summary>
+        [WirePath("workerSizeId")]
         public int? WorkerSizeId { get; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
         /// </summary>
+        [WirePath("excludeFromCapacityAllocation")]
         public bool? ExcludeFromCapacityAllocation { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isApplicableForAllComputeModes")]
         public bool? IsApplicableForAllComputeModes { get; }
         /// <summary> Shared or Dedicated. </summary>
+        [WirePath("siteMode")]
         public string SiteMode { get; }
         /// <summary> Is this a linux stamp capacity. </summary>
+        [WirePath("isLinux")]
         public bool? IsLinux { get; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Communication
 
         CommunicationDomainResource IOperationSource<CommunicationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<CommunicationDomainResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
             return new CommunicationDomainResource(_client, data);
         }
 
         async ValueTask<CommunicationDomainResource> IOperationSource<CommunicationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(document.RootElement);
-            return new CommunicationDomainResource(_client, data);
+            var data = ModelReaderWriter.Read<CommunicationDomainResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
+            return await Task.FromResult(new CommunicationDomainResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

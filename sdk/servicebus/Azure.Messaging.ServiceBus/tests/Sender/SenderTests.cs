@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
@@ -117,9 +116,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
-            var sender = new ServiceBusClient(connString).CreateSender(queueName);
+            var sender = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>()).CreateSender(queueName);
             Assert.AreEqual(queueName, sender.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             Assert.IsNotNull(sender.Identifier);
@@ -130,9 +128,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>(), null);
 
             Assert.That(() => client.CreateSender(queueName), Throws.Nothing);
         }
@@ -172,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", mockConnection.Object, new ServiceBusSenderOptions());
+            var sender = new ServiceBusSender("dummy", mockConnection.Object);
             var sendTask = sender.SendMessagesAsync(batch);
 
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
@@ -281,7 +278,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                         It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
-            var sender = new ServiceBusSender("fake", mockConnection.Object, new ServiceBusSenderOptions());
+            var sender = new ServiceBusSender("fake", mockConnection.Object);
             await sender.CloseAsync(cts.Token);
             mockTransportSender.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -82,16 +81,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Definitions about the connectivity check origin. </summary>
+        [WirePath("source")]
         public ConnectivityCheckRequestSource Source { get; }
         /// <summary> The connectivity check operation destination. </summary>
+        [WirePath("destination")]
         public ConnectivityCheckRequestDestination Destination { get; }
         /// <summary> The IP version to be used. Only IPv4 is supported for now. </summary>
+        [WirePath("preferredIPVersion")]
         public PreferredIPVersion? PreferredIPVersion { get; set; }
         /// <summary> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
+        [WirePath("protocol")]
         public ConnectivityCheckProtocol? Protocol { get; set; }
         /// <summary> Protocol-specific configuration. </summary>
         internal ConnectivityCheckRequestProtocolConfiguration ProtocolConfiguration { get; set; }
         /// <summary> Configuration for HTTP or HTTPS requests. </summary>
+        [WirePath("protocolConfiguration.HTTPConfiguration")]
         public ConnectivityCheckRequestHttpConfiguration ProtocolHttpConfiguration
         {
             get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpConfiguration;

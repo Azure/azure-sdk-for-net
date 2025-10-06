@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Peering.Models;
@@ -35,6 +34,26 @@ namespace Azure.ResourceManager.Peering
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
+            uri.AppendPath(peeringServiceName, true);
+            uri.AppendPath("/prefixes/", false);
+            uri.AppendPath(prefixName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName, string expand)
@@ -86,7 +105,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringServicePrefixData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringServicePrefixData.DeserializePeeringServicePrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,7 +139,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringServicePrefixData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringServicePrefixData.DeserializePeeringServicePrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,6 +148,22 @@ namespace Azure.ResourceManager.Peering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName, PeeringServicePrefixData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
+            uri.AppendPath(peeringServiceName, true);
+            uri.AppendPath("/prefixes/", false);
+            uri.AppendPath(prefixName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName, PeeringServicePrefixData data)
@@ -151,7 +186,7 @@ namespace Azure.ResourceManager.Peering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -182,7 +217,7 @@ namespace Azure.ResourceManager.Peering
                 case 201:
                     {
                         PeeringServicePrefixData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringServicePrefixData.DeserializePeeringServicePrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -216,13 +251,29 @@ namespace Azure.ResourceManager.Peering
                 case 201:
                     {
                         PeeringServicePrefixData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringServicePrefixData.DeserializePeeringServicePrefixData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
+            uri.AppendPath(peeringServiceName, true);
+            uri.AppendPath("/prefixes/", false);
+            uri.AppendPath(prefixName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName)
@@ -301,6 +352,25 @@ namespace Azure.ResourceManager.Peering
             }
         }
 
+        internal RequestUriBuilder CreateListByPeeringServiceRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
+            uri.AppendPath(peeringServiceName, true);
+            uri.AppendPath("/prefixes", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByPeeringServiceRequest(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -347,7 +417,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringServicePrefixListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,13 +447,21 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringServicePrefixListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPeeringServiceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPeeringServiceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
@@ -423,7 +501,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringServicePrefixListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +533,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringServicePrefixListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

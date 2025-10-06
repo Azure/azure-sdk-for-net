@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.SecurityCenter
 
         DevOpsRepositoryResource IOperationSource<DevOpsRepositoryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DevOpsRepositoryData.DeserializeDevOpsRepositoryData(document.RootElement);
+            var data = ModelReaderWriter.Read<DevOpsRepositoryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
             return new DevOpsRepositoryResource(_client, data);
         }
 
         async ValueTask<DevOpsRepositoryResource> IOperationSource<DevOpsRepositoryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DevOpsRepositoryData.DeserializeDevOpsRepositoryData(document.RootElement);
-            return new DevOpsRepositoryResource(_client, data);
+            var data = ModelReaderWriter.Read<DevOpsRepositoryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
+            return await Task.FromResult(new DevOpsRepositoryResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

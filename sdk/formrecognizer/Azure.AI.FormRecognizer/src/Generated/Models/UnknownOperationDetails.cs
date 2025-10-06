@@ -12,7 +12,7 @@ using Azure.AI.FormRecognizer.DocumentAnalysis;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    /// <summary> The UnknownOperationDetails. </summary>
+    /// <summary> Unknown version of OperationDetails. </summary>
     internal partial class UnknownOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOperationDetails"/>. </summary>

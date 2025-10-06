@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string TimeValue = "time";
         private const string PhoneNumberValue = "phoneNumber";
         private const string DoubleValue = "number";
-        private const string LongValue = "integer";
+        private const string Int64Value = "integer";
         private const string SelectionMarkValue = "selectionMark";
         private const string CountryRegionValue = "countryRegion";
         private const string SignatureValue = "signature";
@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Floating point number, normalized to double precision floating point. </summary>
         public static DocumentFieldType Double { get; } = new DocumentFieldType(DoubleValue);
         /// <summary> Integer number, normalized to 64-bit signed integer. </summary>
-        public static DocumentFieldType Long { get; } = new DocumentFieldType(LongValue);
+        public static DocumentFieldType Int64 { get; } = new DocumentFieldType(Int64Value);
         /// <summary> Is field selected?. </summary>
         public static DocumentFieldType SelectionMark { get; } = new DocumentFieldType(SelectionMarkValue);
         /// <summary> Country/region, normalized to ISO 3166-1 alpha-3 format (ex. USA). </summary>
@@ -72,7 +72,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(DocumentFieldType left, DocumentFieldType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are not the same. </summary>
         public static bool operator !=(DocumentFieldType left, DocumentFieldType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentFieldType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFieldType"/>. </summary>
         public static implicit operator DocumentFieldType(string value) => new DocumentFieldType(value);
 
         /// <inheritdoc />
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

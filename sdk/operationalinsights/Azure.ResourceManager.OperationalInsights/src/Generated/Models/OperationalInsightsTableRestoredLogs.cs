@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The timestamp to start the restore from (UTC). </summary>
+        [WirePath("startRestoreTime")]
         public DateTimeOffset? StartRestoreOn { get; set; }
         /// <summary> The timestamp to end the restore by (UTC). </summary>
+        [WirePath("endRestoreTime")]
         public DateTimeOffset? EndRestoreOn { get; set; }
         /// <summary> The table to restore data from. </summary>
+        [WirePath("sourceTable")]
         public string SourceTable { get; set; }
         /// <summary> Search results table async operation id. </summary>
+        [WirePath("azureAsyncOperationId")]
         public Guid? AzureAsyncOperationId { get; }
     }
 }

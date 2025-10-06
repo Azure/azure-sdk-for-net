@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
             try
             {
                 List<EventWrittenEventArgs> events = new();
-                using var listener = new AzureEventSourceListener((args, s) => events.Add(args), EventLevel.Verbose);
+                using var listener = new AzureEventSourceListener(events.Add, EventLevel.Verbose);
 
                 alc.LoadFromAssemblyPath(typeof(TestEventSource).Assembly.Location);
                 alc2.LoadFromAssemblyPath(typeof(TestEventSource).Assembly.Location);

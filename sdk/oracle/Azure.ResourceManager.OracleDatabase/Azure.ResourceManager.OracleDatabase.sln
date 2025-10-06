@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{37791A51-5A07-4271-B105-B1E2B71CE7D5}") = "Azure.ResourceManager.OracleDatabase", "src\Azure.ResourceManager.OracleDatabase.csproj", "{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}"
+EndProject
+Project("{37791A51-5A07-4271-B105-B1E2B71CE7D5}") = "Azure.ResourceManager.OracleDatabase.Tests", "tests\Azure.ResourceManager.OracleDatabase.Tests.csproj", "{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7715D61-A164-41C5-97E4-5D061BCBB646}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Debug|x64.Build.0 = Debug|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Debug|x86.Build.0 = Debug|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Release|x64.ActiveCfg = Release|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Release|x64.Build.0 = Release|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Release|x86.ActiveCfg = Release|Any CPU
+		{78F50A8C-BEAC-4F43-92CB-D9C4DCBF7C7D}.Release|x86.Build.0 = Release|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Debug|x64.Build.0 = Debug|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Debug|x86.Build.0 = Debug|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x64.ActiveCfg = Release|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x64.Build.0 = Release|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

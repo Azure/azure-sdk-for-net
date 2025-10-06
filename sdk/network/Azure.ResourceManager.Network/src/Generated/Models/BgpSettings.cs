@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The BGP speaker's ASN. </summary>
+        [WirePath("asn")]
         public long? Asn { get; set; }
         /// <summary> The BGP peering address and BGP identifier of this BGP speaker. </summary>
+        [WirePath("bgpPeeringAddress")]
         public string BgpPeeringAddress { get; set; }
         /// <summary> The weight added to routes learned from this BGP speaker. </summary>
+        [WirePath("peerWeight")]
         public int? PeerWeight { get; set; }
         /// <summary> BGP peering address with IP configuration ID for virtual network gateway. </summary>
+        [WirePath("bgpPeeringAddresses")]
         public IList<NetworkIPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; }
     }
 }

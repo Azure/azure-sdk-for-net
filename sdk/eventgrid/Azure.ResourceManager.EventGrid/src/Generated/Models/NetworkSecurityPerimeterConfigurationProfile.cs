@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Nsp configuration profile name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Access rules version number for nsp profile. </summary>
+        [WirePath("accessRulesVersion")]
         public string AccessRulesVersion { get; set; }
         /// <summary> List of inbound or outbound access rule setup on the nsp profile. </summary>
+        [WirePath("accessRules")]
         public IList<NetworkSecurityPerimeterProfileAccessRule> AccessRules { get; }
         /// <summary> Diagnostic settings version number for nsp profile. </summary>
+        [WirePath("diagnosticSettingsVersion")]
         public string DiagnosticSettingsVersion { get; set; }
         /// <summary> Enabled log categories for nsp profile. </summary>
+        [WirePath("enabledLogCategories")]
         public IList<string> EnabledLogCategories { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
+        [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
     }
 }

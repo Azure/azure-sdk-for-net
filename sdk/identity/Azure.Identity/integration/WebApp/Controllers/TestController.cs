@@ -1,19 +1,25 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
 using Integration.Identity.Common;
 
 namespace WebApp.Controllers
 {
-
+    /// <summary>
+    /// Controller to test Managed Identity authentication.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class TestController : ControllerBase
     {
-
+        /// <summary>
+        /// Endpoint to test Managed Identity authentication.
+        /// </summary>
         [HttpGet(Name = "GetTest")]
         public IActionResult Get()
         {

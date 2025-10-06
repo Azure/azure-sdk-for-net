@@ -138,7 +138,42 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2024-05-04 service version.
             /// </summary>
-            V2024_05_04 = 22
+            V2024_05_04 = 22,
+
+            /// <summary>
+            /// The 2024-08-04 service version.
+            /// </summary>
+            V2024_08_04 = 23,
+
+            /// <summary>
+            /// The 2024-11-04 service version.
+            /// </summary>
+            V2024_11_04 = 24,
+
+            /// <summary>
+            /// The 2025-01-05 service version.
+            /// </summary>
+            V2025_01_05 = 25,
+
+            /// <summary>
+            /// The 2025-05-05 service version.
+            /// </summary>
+            V2025_05_05 = 26,
+
+            /// <summary>
+            /// The 2025-07-05 service version.
+            /// </summary>
+            V2025_07_05 = 27,
+
+            /// <summary>
+            /// The 2025-11-05 service version.
+            /// </summary>
+            V2025_11_05 = 28,
+
+            /// <summary>
+            /// The 2026-02-06 service version.
+            /// </summary>
+            V2026_02_06 = 29
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -259,6 +294,8 @@ namespace Azure.Storage.Files.Shares
             Diagnostics.LoggedHeaderNames.Add("x-ms-share-quota");
             Diagnostics.LoggedHeaderNames.Add("x-ms-type");
             Diagnostics.LoggedHeaderNames.Add("x-ms-write");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-error-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-status-code");
 
             Diagnostics.LoggedQueryParameters.Add("comp");
             Diagnostics.LoggedQueryParameters.Add("maxresults");

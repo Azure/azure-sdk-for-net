@@ -22,7 +22,7 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     [ClientTestFixture(
         serviceVersions: default,
-        additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
+        additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD, TableEndpointType.CosmosTableAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default, bool enableTenantDiscovery = false) : base(isAsync, recordedTestMode)
@@ -31,7 +31,7 @@ namespace Azure.Data.Tables.Tests
             _enableTenantDiscovery = enableTenantDiscovery;
             SanitizedHeaders.Add("My-Custom-Auth-Header");
             UriRegexSanitizers.Add(
-                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)")
                 {
                     GroupForReplace = "group"
                 });
@@ -72,12 +72,15 @@ namespace Azure.Data.Tables.Tests
             { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
             { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
             { "GetEntityAllowsEmptyRowKey", "Empty RowKey values are not supported by Cosmos." },
-            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
+            { "ValidateSasCredentialsWith,GenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" },
+            { "EnableTenantDiscoveryDoesNotFailAuth", "Tenant discovery is not supported by Cosmos endpoints." },
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()
         {
-            { "GetAccessPoliciesReturnsPolicies", "https://github.com/Azure/azure-sdk-for-net/issues/21913" }
+            { "GetAccessPoliciesReturnsPolicies", "https://github.com/Azure/azure-sdk-for-net/issues/21913" },
+            { "DeleteEntityWithConnectionStringCtor", "Connection string specific test."},
+            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "Not Entra ID related."}
         };
 
         /// <summary>
@@ -88,8 +91,11 @@ namespace Azure.Data.Tables.Tests
         public async Task TablesTestSetup()
         {
             // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
-            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason) ||
-                _endpointType == TableEndpointType.StorageAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason))
+            if (
+                _endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason) ||
+                _endpointType == TableEndpointType.CosmosTableAAD && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason) ||
+                _endpointType == TableEndpointType.StorageAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason) ||
+                _endpointType == TableEndpointType.CosmosTableAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason))
             {
                 Assert.Ignore(ignoreReason);
             }
@@ -97,18 +103,21 @@ namespace Azure.Data.Tables.Tests
             ServiceUri = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
+                TableEndpointType.CosmosTableAAD => TestEnvironment.CosmosUri,
                 _ => TestEnvironment.StorageUri,
             };
 
             AccountName = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
+                TableEndpointType.CosmosTableAAD => TestEnvironment.CosmosAccountName,
                 _ => TestEnvironment.StorageAccountName,
             };
 
             AccountKey = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
+                TableEndpointType.CosmosTableAAD => TestEnvironment.PrimaryCosmosAccountKey,
                 _ => TestEnvironment.PrimaryStorageAccountKey,
             };
 
@@ -135,6 +144,11 @@ namespace Azure.Data.Tables.Tests
             return _endpointType switch
             {
                 TableEndpointType.StorageAAD => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        TestEnvironment.Credential,
+                        options)),
+                TableEndpointType.CosmosTableAAD => InstrumentClient(
                     new TableServiceClient(
                         new Uri(serviceUri),
                         TestEnvironment.Credential,
@@ -295,6 +309,7 @@ namespace Azure.Data.Tables.Tests
                             LongPrimitive = (long)int.MaxValue + n,
                             LongPrimitiveN = (long)int.MaxValue + n,
                             RenamableStringProperty = string.Format("{0:0000}", n),
+                            DataMemberImplictNameProperty = string.Format("{0:0000}", n)
                         };
                     })
                 .ToList();
@@ -406,6 +421,15 @@ namespace Azure.Data.Tables.Tests
             public ETag ETag { get; set; }
         }
 
+        public class TimeSpanTestEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public TimeSpan? TimespanProperty { get; set; }
+        }
+
         public class ComplexEntity : ITableEntity
         {
             public const int NumberOfNonNullProperties = 28;
@@ -487,6 +511,9 @@ namespace Azure.Data.Tables.Tests
 
             [DataMember(Name = "SomeNewName")]
             public string RenamableStringProperty { get; set; }
+
+            [DataMember]
+            public string DataMemberImplictNameProperty { get; set; }
 
             public Guid? GuidNull
             {

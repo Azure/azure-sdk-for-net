@@ -37,8 +37,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The start IP address of the firewall rule. Must be IPv6 format. </summary>
+        [WirePath("properties.startIPv6Address")]
         public string StartIPv6Address { get; set; }
         /// <summary> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </summary>
+        [WirePath("properties.endIPv6Address")]
         public string EndIPv6Address { get; set; }
     }
 }

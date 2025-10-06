@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The UnknownMethodRequest. </summary>
+    /// <summary> Unknown version of MethodRequest. </summary>
     internal partial class UnknownMethodRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMethodRequest"/>. </summary>

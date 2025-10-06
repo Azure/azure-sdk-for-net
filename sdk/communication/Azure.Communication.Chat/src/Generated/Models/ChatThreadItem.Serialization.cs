@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -55,6 +54,14 @@ namespace Azure.Communication.Chat
                 }
             }
             return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatThreadItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeChatThreadItem(document.RootElement);
         }
     }
 }

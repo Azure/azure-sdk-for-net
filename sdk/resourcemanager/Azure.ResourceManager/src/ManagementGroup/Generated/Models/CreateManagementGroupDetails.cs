@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The version number of the object. </summary>
+        [WirePath("version")]
         public int? Version { get; }
         /// <summary> The date and time when this object was last updated. </summary>
+        [WirePath("updatedTime")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The identity of the principal or process that updated the object. </summary>
+        [WirePath("updatedBy")]
         public string UpdatedBy { get; }
         /// <summary> (Optional) The ID of the parent management group used during creation. </summary>
+        [WirePath("parent")]
         public ManagementGroupParentCreateOptions Parent { get; set; }
     }
 }

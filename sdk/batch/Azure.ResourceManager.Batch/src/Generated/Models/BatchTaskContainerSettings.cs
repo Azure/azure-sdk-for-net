@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
             Argument.AssertNotNull(imageName, nameof(imageName));
 
             ImageName = imageName;
+            ContainerHostBatchBindMounts = new ChangeTrackingList<ContainerHostBatchBindMountEntry>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
@@ -61,13 +61,15 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <param name="registry"> This setting can be omitted if was already provided at pool creation. </param>
         /// <param name="workingDirectory"> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </param>
+        /// <param name="containerHostBatchBindMounts"> If this array is null or be not present, container task will mount entire temporary disk drive in windows (or AZ_BATCH_NODE_ROOT_DIR in Linux). It won't' mount any data paths into container if this array is set as empty. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskContainerSettings(string containerRunOptions, string imageName, BatchVmContainerRegistry registry, BatchContainerWorkingDirectory? workingDirectory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTaskContainerSettings(string containerRunOptions, string imageName, BatchVmContainerRegistry registry, BatchContainerWorkingDirectory? workingDirectory, IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerRunOptions = containerRunOptions;
             ImageName = imageName;
             Registry = registry;
             WorkingDirectory = workingDirectory;
+            ContainerHostBatchBindMounts = containerHostBatchBindMounts;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,5 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchVmContainerRegistry Registry { get; set; }
         /// <summary> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </summary>
         public BatchContainerWorkingDirectory? WorkingDirectory { get; set; }
+        /// <summary> If this array is null or be not present, container task will mount entire temporary disk drive in windows (or AZ_BATCH_NODE_ROOT_DIR in Linux). It won't' mount any data paths into container if this array is set as empty. </summary>
+        public IList<ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts { get; }
     }
 }

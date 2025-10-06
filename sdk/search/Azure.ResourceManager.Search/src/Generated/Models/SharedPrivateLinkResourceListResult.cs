@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing a list of Shared Private Link Resources. </summary>
+    /// <summary> Response containing a list of shared private link resources. </summary>
     internal partial class SharedPrivateLinkResourceListResult
     {
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> The list of Shared Private Link Resources. </param>
+        /// <param name="value"> The list of shared private link resources. </param>
         /// <param name="nextLink"> The URL to get the next set of shared private link resources, if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SharedPrivateLinkResourceListResult(IReadOnlyList<SharedSearchServicePrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Shared Private Link Resources. </summary>
+        /// <summary> The list of shared private link resources. </summary>
         public IReadOnlyList<SharedSearchServicePrivateLinkResourceData> Value { get; }
         /// <summary> The URL to get the next set of shared private link resources, if there are any. </summary>
         public string NextLink { get; }

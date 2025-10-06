@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ApiManagementPrivateLinkResourceData> Value { get; }
     }
 }

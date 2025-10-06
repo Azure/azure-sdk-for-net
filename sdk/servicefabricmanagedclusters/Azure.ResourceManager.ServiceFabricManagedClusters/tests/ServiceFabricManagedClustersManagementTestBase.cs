@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,6 +11,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ManagedServiceIdentities;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         public async Task CreateCommonClient()
         {
             ArmClientOptions options = new ArmClientOptions();
-            options.SetApiVersion(UserAssignedIdentityResource.ResourceType, "2018-11-30");
+            options.SetApiVersion(UserAssignedIdentityResource.ResourceType, "2024-11-01-preview");
 
             Client = GetArmClient(options);
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         protected async Task<ServiceFabricManagedClusterResource> CreateServiceFabricManagedCluster(ResourceGroupResource resourceGroup, string clusterName)
         {
-            string dnsName = Recording.GenerateAssetName("sfmcnetsdk");
+            string dnsName = Recording.GenerateAssetName("netsdk");
             var data = new ServiceFabricManagedClusterData(DefaultLocation)
             {
                 Sku = new ServiceFabricManagedClustersSku("Standard"),
@@ -89,6 +90,33 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     }
                 }
             };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
+            var clusterLro = await resourceGroup.GetServiceFabricManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            return clusterLro.Value;
+        }
+
+        protected async Task<ServiceFabricManagedClusterResource> CreateServiceFabricManagedClusterZoneResilient(ResourceGroupResource resourceGroup, string clusterName)
+        {
+            string dnsName = Recording.GenerateAssetName("netsdk");
+            var data = new ServiceFabricManagedClusterData(DefaultLocation)
+            {
+                Sku = new ServiceFabricManagedClustersSku("Standard"),
+                DnsName = dnsName,
+                ClientConnectionPort = 19000,
+                HttpGatewayConnectionPort = 19080,
+                ClusterUpgradeMode = ManagedClusterUpgradeMode.Automatic,
+                HasZoneResiliency = true,
+                AdminUserName = "vmadmin",
+                AdminPassword = "Password123!@#",
+                Clients =
+                {
+                    new ManagedClusterClientCertificate(true)
+                    {
+                        Thumbprint = BinaryData.FromString("\"123BDACDCDFB2C7B250192C6078E47D1E1DB119B\""),
+                    }
+                }
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
             var clusterLro = await resourceGroup.GetServiceFabricManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             return clusterLro.Value;
         }
@@ -105,7 +133,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 IsPrimary = isPrimaryNode,
                 VmImageOffer = "WindowsServer",
                 VmImagePublisher = "MicrosoftWindowsServer",
-                VmImageSku = "2019-Datacenter",
+                VmImageSku = "2022-Datacenter",
                 VmImageVersion = "latest",
                 VmInstanceCount = 6,
                 VmSize = "Standard_D2_v2"

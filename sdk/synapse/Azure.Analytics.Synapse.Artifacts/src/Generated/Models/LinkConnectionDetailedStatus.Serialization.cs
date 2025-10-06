@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -132,12 +131,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 landingZoneCredentialExpireTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionDetailedStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLinkConnectionDetailedStatus(document.RootElement);
+        }
+
         internal partial class LinkConnectionDetailedStatusConverter : JsonConverter<LinkConnectionDetailedStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionDetailedStatus model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override LinkConnectionDetailedStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

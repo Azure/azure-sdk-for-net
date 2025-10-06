@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
+    /// <summary>
+    /// Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings.
+    /// Serialized Name: AfdQueryStringCachingBehavior
+    /// </summary>
     public readonly partial struct FrontDoorQueryStringCachingBehavior : IEquatable<FrontDoorQueryStringCachingBehavior>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string IgnoreSpecifiedQueryStringsValue = "IgnoreSpecifiedQueryStrings";
         private const string IncludeSpecifiedQueryStringsValue = "IncludeSpecifiedQueryStrings";
 
-        /// <summary> IgnoreQueryString. </summary>
+        /// <summary>
+        /// IgnoreQueryString
+        /// Serialized Name: AfdQueryStringCachingBehavior.IgnoreQueryString
+        /// </summary>
         public static FrontDoorQueryStringCachingBehavior IgnoreQueryString { get; } = new FrontDoorQueryStringCachingBehavior(IgnoreQueryStringValue);
-        /// <summary> UseQueryString. </summary>
+        /// <summary>
+        /// UseQueryString
+        /// Serialized Name: AfdQueryStringCachingBehavior.UseQueryString
+        /// </summary>
         public static FrontDoorQueryStringCachingBehavior UseQueryString { get; } = new FrontDoorQueryStringCachingBehavior(UseQueryStringValue);
-        /// <summary> IgnoreSpecifiedQueryStrings. </summary>
+        /// <summary>
+        /// IgnoreSpecifiedQueryStrings
+        /// Serialized Name: AfdQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings
+        /// </summary>
         public static FrontDoorQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get; } = new FrontDoorQueryStringCachingBehavior(IgnoreSpecifiedQueryStringsValue);
-        /// <summary> IncludeSpecifiedQueryStrings. </summary>
+        /// <summary>
+        /// IncludeSpecifiedQueryStrings
+        /// Serialized Name: AfdQueryStringCachingBehavior.IncludeSpecifiedQueryStrings
+        /// </summary>
         public static FrontDoorQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get; } = new FrontDoorQueryStringCachingBehavior(IncludeSpecifiedQueryStringsValue);
         /// <summary> Determines if two <see cref="FrontDoorQueryStringCachingBehavior"/> values are the same. </summary>
         public static bool operator ==(FrontDoorQueryStringCachingBehavior left, FrontDoorQueryStringCachingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorQueryStringCachingBehavior"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorQueryStringCachingBehavior left, FrontDoorQueryStringCachingBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorQueryStringCachingBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorQueryStringCachingBehavior"/>. </summary>
         public static implicit operator FrontDoorQueryStringCachingBehavior(string value) => new FrontDoorQueryStringCachingBehavior(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -62,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -82,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +209,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PipelineResource.DeserializePipelineResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +239,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PipelineResource.DeserializePipelineResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -428,7 +427,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         content.JsonWriter.WriteNullValue();
                         continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
+                    content.JsonWriter.WriteObjectValue<object>(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -458,7 +457,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 202:
                     {
                         CreateRunResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +488,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 202:
                     {
                         CreateRunResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -529,7 +528,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -556,7 +555,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         PipelineListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

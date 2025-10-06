@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,12 +73,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The iteration number. </summary>
+        [WirePath("changeNumber")]
         public string ChangeNumber { get; }
         /// <summary> The name of the cloud. </summary>
+        [WirePath("cloud")]
         public string Cloud { get; }
         /// <summary> The list of service tag information resources. </summary>
+        [WirePath("values")]
         public IReadOnlyList<ServiceTagInformation> Values { get; }
         /// <summary> The URL to get next page of service tag information resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

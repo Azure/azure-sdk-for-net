@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -31,30 +29,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
+        /// <param name="alerts"> Alerts data type connection. </param>
         /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
-        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, DataConnectorDataTypeCommon alerts, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
-            DataTypes = dataTypes;
+            Alerts = alerts;
             SubscriptionId = subscriptionId;
             Kind = kind;
         }
 
-        /// <summary> The available data types for the connector. </summary>
-        internal SecurityInsightsAlertsDataTypeOfDataConnector DataTypes { get; set; }
+        /// <summary> Alerts data type connection. </summary>
+        internal DataConnectorDataTypeCommon Alerts { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        [WirePath("properties.alerts.state")]
         public SecurityInsightsDataTypeConnectionState? AlertsState
         {
-            get => DataTypes is null ? default : DataTypes.AlertsState;
+            get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
             set
             {
-                if (DataTypes is null)
-                    DataTypes = new SecurityInsightsAlertsDataTypeOfDataConnector();
-                DataTypes.AlertsState = value;
+                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
 
         /// <summary> The subscription id to connect to, and get the data from. </summary>
+        [WirePath("properties.subscriptionId")]
         public string SubscriptionId { get; set; }
     }
 }

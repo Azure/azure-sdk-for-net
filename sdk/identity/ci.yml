@@ -34,4 +34,6 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Identity
-      ExpectedWarningsFilepath: /Azure.Identity/tests/compatibility/ExpectedAotWarnings.txt
+      ExpectedWarningsFilepath: None
+    - ArtifactName: Azure.Identity.Broker
+      ExpectedWarningsFilepath: "Azure.Identity.Broker/tests/compatibility/ExpectedWarnings.txt"

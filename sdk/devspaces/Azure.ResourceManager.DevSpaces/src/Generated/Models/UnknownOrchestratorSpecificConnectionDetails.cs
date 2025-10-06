@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    /// <summary> The UnknownOrchestratorSpecificConnectionDetails. </summary>
+    /// <summary> Unknown version of OrchestratorSpecificConnectionDetails. </summary>
     internal partial class UnknownOrchestratorSpecificConnectionDetails : OrchestratorSpecificConnectionDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOrchestratorSpecificConnectionDetails"/>. </summary>

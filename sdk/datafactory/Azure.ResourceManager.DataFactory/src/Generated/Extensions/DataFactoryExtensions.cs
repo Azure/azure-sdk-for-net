@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Mocking;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
@@ -207,22 +205,22 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryManagedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryManagedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataFactoryServiceCredentialResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryServiceCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryServiceCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataFactoryArmClient.GetDataFactoryManagedIdentityCredentialResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataFactoryArmClient.GetDataFactoryServiceCredentialResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryManagedIdentityCredentialResource"/> object. </returns>
-        public static DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryServiceCredentialResource"/> object. </returns>
+        public static DataFactoryServiceCredentialResource GetDataFactoryServiceCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataFactoryArmClient(client).GetDataFactoryManagedIdentityCredentialResource(id);
+            return GetMockableDataFactoryArmClient(client).GetDataFactoryServiceCredentialResource(id);
         }
 
         /// <summary>

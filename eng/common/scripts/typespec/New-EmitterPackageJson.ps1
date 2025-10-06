@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 [CmdletBinding()]
 param (
     [parameter(Mandatory = $true)]
@@ -18,24 +19,29 @@ param (
 $packageJson = Get-Content $PackageJsonPath | ConvertFrom-Json -AsHashtable
 
 # If we provide OverridesPath, use that to load a hashtable of version overrides
-$overrides = @{}
+$overrides = [ordered]@{}
 
 if ($OverridesPath) {
     Write-Host "Using overrides from $OverridesPath`:`n"
-    $overrides = Get-Content $OverridesPath | ConvertFrom-Json -AsHashtable
+    $overridesJson = Get-Content $OverridesPath | ConvertFrom-Json -AsHashtable
+    foreach ($key in $overridesJson.Keys | Sort-Object) {
+        $overrides[$key] = $overridesJson[$key]
+    }
     Write-Host ($overrides | ConvertTo-Json)
     Write-Host ""
 }
 
-
 # If there's a peer dependency and a dev dependency for the same package, carry the
 # dev dependency forward into emitter-package.json
 
-$devDependencies = @{}
+$devDependencies = [ordered]@{}
 
-foreach ($package in $packageJson.peerDependencies.Keys) {
+$possiblyPinnedPackages = $packageJson['azure-sdk/emitter-package-json-pinning'] ?? $packageJson.peerDependencies.Keys;
+
+foreach ($package in $possiblyPinnedPackages | Sort-Object) {
     $pinnedVersion = $packageJson.devDependencies[$package]
     if ($pinnedVersion -and -not $overrides[$package]) {
+        #We have a dev pinned version that isn't overridden by the overrides.json file
         Write-Host "Pinning $package to $pinnedVersion"
         $devDependencies[$package] = $pinnedVersion
     }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownDeleteOption. </summary>
+    /// <summary> Unknown version of DeleteOption. </summary>
     internal partial class UnknownDeleteOption : DataProtectionBackupDeleteSetting
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeleteOption"/>. </summary>

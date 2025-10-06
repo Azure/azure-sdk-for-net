@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="conditions">
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
+        /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAutomationRuleTriggeringLogic(bool isEnabled, DateTimeOffset? expireOn, TriggersOn triggersOn, TriggersWhen triggersWhen, IList<SecurityInsightsAutomationRuleCondition> conditions, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -85,18 +84,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Determines whether the automation rule is enabled or disabled. </summary>
+        [WirePath("isEnabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Determines when the automation rule should automatically expire and be disabled. </summary>
+        [WirePath("expirationTimeUtc")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Gets or sets the triggers on. </summary>
+        [WirePath("triggersOn")]
         public TriggersOn TriggersOn { get; set; }
         /// <summary> Gets or sets the triggers when. </summary>
+        [WirePath("triggersWhen")]
         public TriggersWhen TriggersWhen { get; set; }
         /// <summary>
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
+        /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </summary>
+        [WirePath("conditions")]
         public IList<SecurityInsightsAutomationRuleCondition> Conditions { get; }
     }
 }

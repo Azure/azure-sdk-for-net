@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Script execution logs in text format. </summary>
+        [WirePath("properties.log")]
         public string Log { get; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlDatabaseResource IOperationSource<PostgreSqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(document.RootElement);
+            var data = ModelReaderWriter.Read<PostgreSqlDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlDatabaseResource(_client, data);
         }
 
         async ValueTask<PostgreSqlDatabaseResource> IOperationSource<PostgreSqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(document.RootElement);
-            return new PostgreSqlDatabaseResource(_client, data);
+            var data = ModelReaderWriter.Read<PostgreSqlDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            return await Task.FromResult(new PostgreSqlDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

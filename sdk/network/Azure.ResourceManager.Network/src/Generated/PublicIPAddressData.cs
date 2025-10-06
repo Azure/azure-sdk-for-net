@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -79,30 +78,42 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the public ip address. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The public IP address SKU. </summary>
+        [WirePath("sku")]
         public PublicIPAddressSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The public IP address allocation method. </summary>
+        [WirePath("properties.publicIPAllocationMethod")]
         public NetworkIPAllocationMethod? PublicIPAllocationMethod { get; set; }
         /// <summary> The public IP address version. </summary>
+        [WirePath("properties.publicIPAddressVersion")]
         public NetworkIPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The IP configuration associated with the public IP address. </summary>
+        [WirePath("properties.ipConfiguration")]
         public NetworkIPConfiguration IPConfiguration { get; }
         /// <summary> The FQDN of the DNS record associated with the public IP address. </summary>
+        [WirePath("properties.dnsSettings")]
         public PublicIPAddressDnsSettings DnsSettings { get; set; }
         /// <summary> The DDoS protection custom policy associated with the public IP address. </summary>
+        [WirePath("properties.ddosSettings")]
         public DdosSettings DdosSettings { get; set; }
         /// <summary> The list of tags associated with the public IP address. </summary>
+        [WirePath("properties.ipTags")]
         public IList<IPTag> IPTags { get; }
         /// <summary> The IP address associated with the public IP address resource. </summary>
+        [WirePath("properties.ipAddress")]
         public string IPAddress { get; set; }
         /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>
         internal WritableSubResource PublicIPPrefix { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.publicIPPrefix.id")]
         public ResourceIdentifier PublicIPPrefixId
         {
             get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
@@ -115,20 +126,28 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The idle timeout of the public IP address. </summary>
+        [WirePath("properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The resource GUID property of the public IP address resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP address resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The service public IP address of the public IP address resource. </summary>
+        [WirePath("properties.servicePublicIPAddress")]
         public PublicIPAddressData ServicePublicIPAddress { get; set; }
         /// <summary> The NatGateway for the Public IP address. </summary>
+        [WirePath("properties.natGateway")]
         public NatGatewayData NatGateway { get; set; }
         /// <summary> Migration phase of Public IP Address. </summary>
+        [WirePath("properties.migrationPhase")]
         public PublicIPAddressMigrationPhase? MigrationPhase { get; set; }
         /// <summary> The linked public IP address of the public IP address resource. </summary>
+        [WirePath("properties.linkedPublicIPAddress")]
         public PublicIPAddressData LinkedPublicIPAddress { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM using it is deleted. </summary>
+        [WirePath("properties.deleteOption")]
         public IPAddressDeleteOption? DeleteOption { get; set; }
     }
 }

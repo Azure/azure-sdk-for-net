@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
 {
@@ -46,6 +44,30 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         {
             ContainerServiceFleetResource.ValidateResourceId(id);
             return new ContainerServiceFleetResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutoUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutoUpgradeProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutoUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoUpgradeProfileResource"/> object. </returns>
+        public virtual AutoUpgradeProfileResource GetAutoUpgradeProfileResource(ResourceIdentifier id)
+        {
+            AutoUpgradeProfileResource.ValidateResourceId(id);
+            return new AutoUpgradeProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceFleetGateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetGateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetGateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
+        public virtual ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(ResourceIdentifier id)
+        {
+            ContainerServiceFleetGateResource.ValidateResourceId(id);
+            return new ContainerServiceFleetGateResource(Client, id);
         }
 
         /// <summary>

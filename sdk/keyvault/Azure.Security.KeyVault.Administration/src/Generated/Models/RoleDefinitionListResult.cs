@@ -5,14 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Role definition list operation result. </summary>
     internal partial class RoleDefinitionListResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="RoleDefinitionListResult"/>. </summary>
         internal RoleDefinitionListResult()
         {
@@ -22,14 +25,17 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of <see cref="RoleDefinitionListResult"/>. </summary>
         /// <param name="value"> Role definition list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleDefinitionListResult(IReadOnlyList<KeyVaultRoleDefinition> value, string nextLink)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleDefinitionListResult(IList<KeyVaultRoleDefinition> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Role definition list. </summary>
-        public IReadOnlyList<KeyVaultRoleDefinition> Value { get; }
+        public IList<KeyVaultRoleDefinition> Value { get; }
+
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

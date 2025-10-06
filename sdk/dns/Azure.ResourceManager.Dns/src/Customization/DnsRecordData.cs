@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
@@ -61,6 +62,9 @@ namespace Azure.ResourceManager.Dns
             DnsSrvRecords = new ChangeTrackingList<DnsSrvRecordInfo>();
             DnsTxtRecords = new ChangeTrackingList<DnsTxtRecordInfo>();
             DnsCaaRecords = new ChangeTrackingList<DnsCaaRecordInfo>();
+            DnsDSRecords = new ChangeTrackingList<DnsDSRecordInfo>();
+            DnsTlsaRecords = new ChangeTrackingList<DnsTlsaRecordInfo>();
+            DnsNaptrRecords = new ChangeTrackingList<DnsNaptrRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
@@ -84,8 +89,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cnameRecordInfo"> The CNAME record in the  record set. </param>
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
+        /// <param name="dsRecords"> The list of DS records in the record set. </param>
+        /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
+        /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, serializedAdditionalRawData)
+        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, trafficManagementProfile, serializedAdditionalRawData)
         {
             DnsARecords = aRecords;
             DnsAaaaRecords = aaaaRecords;
@@ -97,6 +105,9 @@ namespace Azure.ResourceManager.Dns
             DnsCnameRecordInfo = cnameRecordInfo;
             DnsSoaRecordInfo = soaRecordInfo;
             DnsCaaRecords = caaRecords;
+            DnsDSRecords = dsRecords;
+            DnsTlsaRecords = tlsaRecords;
+            DnsNaptrRecords = naptrRecords;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -132,5 +143,21 @@ namespace Azure.ResourceManager.Dns
         public DnsSoaRecordInfo DnsSoaRecordInfo { get; set; }
         /// <summary> The list of CAA records in the record set. </summary>
         public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
+        /// <summary> The list of DS records in the record set. </summary>
+        public IList<DnsDSRecordInfo> DnsDSRecords { get; }
+        /// <summary> The list of TLSA records in the record set. </summary>
+        public IList<DnsTlsaRecordInfo> DnsTlsaRecords { get; }
+        /// <summary> The list of NAPTR records in the record set. </summary>
+        public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; }
+        /// <summary> The DnsRecordType in the record set. </summary>
+        public DnsRecordType RecordType
+        {
+            get
+            {
+                var resourceTypeString = base.ResourceType.Type.Split('/').Where(part => !string.IsNullOrEmpty(part)).LastOrDefault();
+                DnsRecordType recordType = DnsRecordTypeExtensions.ToDnsRecordType(resourceTypeString);
+                return recordType;
+            }
+        }
     }
 }

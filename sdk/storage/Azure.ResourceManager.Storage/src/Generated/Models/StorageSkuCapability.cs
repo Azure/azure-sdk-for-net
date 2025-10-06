@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> A string value to indicate states of given capability. Possibly 'true' or 'false'. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

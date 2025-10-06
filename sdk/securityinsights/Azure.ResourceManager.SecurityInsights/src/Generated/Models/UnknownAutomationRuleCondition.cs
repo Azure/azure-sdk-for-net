@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownAutomationRuleCondition. </summary>
+    /// <summary> Unknown version of AutomationRuleCondition. </summary>
     internal partial class UnknownAutomationRuleCondition : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleCondition"/>. </summary>

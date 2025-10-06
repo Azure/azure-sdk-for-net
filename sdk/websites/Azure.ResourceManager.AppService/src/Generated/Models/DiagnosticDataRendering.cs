@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Rendering Type. </summary>
+        [WirePath("type")]
         public DiagnosticDataRenderingType? RenderingType { get; set; }
         /// <summary> Title of data. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
         /// <summary> Description of the data that will help it be interpreted. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

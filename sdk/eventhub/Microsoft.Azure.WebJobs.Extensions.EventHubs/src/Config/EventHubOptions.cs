@@ -100,6 +100,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// <summary>
         /// Gets or sets the number of batches to process before creating an EventHub cursor checkpoint. Default 1.
         /// </summary>
+        /// <remarks>If <see cref="EnableCheckpointing"/> is set to <c>false</c>, this value is ignored.</remarks>
         public int BatchCheckpointFrequency
         {
             get => _batchCheckpointFrequency;
@@ -218,6 +219,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// </summary>
         public InitialOffsetOptions InitialOffsetOptions { get; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the trigger will create
+        /// checkpoints as events are being processed.  The default value is <c>true</c>.
+        /// </summary>
+        /// <value><c>true</c> if checkpoints will be written; otherwise, <c>false</c>.</value>
+        /// <remarks>
+        /// This value takes precedence over <see cref="BatchCheckpointFrequency"/>, which will be
+        /// ignored if this property is set to <c>false</c>.
+        /// </remarks>
+        public bool EnableCheckpointing { get; set; } = true;
+
         /// <inheritdoc cref="EventProcessorOptions.TrackLastEnqueuedEventProperties"/>
         public bool TrackLastEnqueuedEventProperties
         {
@@ -282,6 +294,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(PartitionOwnershipExpirationInterval), PartitionOwnershipExpirationInterval },
                     { nameof(LoadBalancingUpdateInterval), LoadBalancingUpdateInterval },
                     { nameof(InitialOffsetOptions), ConstructInitialOffsetOptions() },
+                    { nameof(EnableCheckpointing), EnableCheckpointing },
                 };
             // Only include if not null since it would otherwise not round-trip correctly due to
             // https://github.com/dotnet/runtime/issues/36510. Once this issue is fixed, it can be included

@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("properties.domainName")]
         public string DomainName { get; }
         /// <summary> The date and time on which the custom domain was created for the static site. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The status of the custom domain. </summary>
+        [WirePath("properties.status")]
         public CustomDomainStatus? Status { get; }
         /// <summary> The TXT record validation token. </summary>
+        [WirePath("properties.validationToken")]
         public string ValidationToken { get; }
         /// <summary> Gets the error message. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             Assert.IsFalse(flag);
         }
 
+        [RecordedTest]
         [TestCase(false)]
-        [PlaybackOnly("Need manually upload a .sfpkg file to StorageAccount")]
+        [PlaybackOnlyAttribute("Need manually upload a .sfpkg file to StorageAccount")]
         //[TestCase(null)] // The HTTP method 'GET' is not supported at scope 'Microsoft.ServiceFabric/managedclusters/sfmctest1063/applications/application5675'.
         //[TestCase(true)] // The HTTP method 'GET' is not supported at scope 'Microsoft.ServiceFabric/managedclusters/sfmctest1063/applications/application5675'.
         public async Task AddRemoveTag(bool? useTagResource)

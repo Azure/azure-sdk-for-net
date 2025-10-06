@@ -49,33 +49,32 @@ namespace Azure.AI.Translation.Text
         /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="translations"> List of languages with alterative translations and examples for the query expressed in the source language. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="nativeName"/>, <paramref name="dir"/> or <paramref name="translations"/> is null. </exception>
-        internal SourceDictionaryLanguage(string name, string nativeName, string dir, IEnumerable<TargetDictionaryLanguage> translations)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="translations"/> is null. </exception>
+        internal SourceDictionaryLanguage(string name, string nativeName, LanguageDirectionality directionality, IEnumerable<TargetDictionaryLanguage> translations)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(nativeName, nameof(nativeName));
-            Argument.AssertNotNull(dir, nameof(dir));
             Argument.AssertNotNull(translations, nameof(translations));
 
             Name = name;
             NativeName = nativeName;
-            Dir = dir;
+            Directionality = directionality;
             Translations = translations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="translations"> List of languages with alterative translations and examples for the query expressed in the source language. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceDictionaryLanguage(string name, string nativeName, string dir, IReadOnlyList<TargetDictionaryLanguage> translations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceDictionaryLanguage(string name, string nativeName, LanguageDirectionality directionality, IReadOnlyList<TargetDictionaryLanguage> translations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             NativeName = nativeName;
-            Dir = dir;
+            Directionality = directionality;
             Translations = translations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -90,7 +89,7 @@ namespace Azure.AI.Translation.Text
         /// <summary> Display name of the language in the locale native for this language. </summary>
         public string NativeName { get; }
         /// <summary> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </summary>
-        public string Dir { get; }
+        public LanguageDirectionality Directionality { get; }
         /// <summary> List of languages with alterative translations and examples for the query expressed in the source language. </summary>
         public IReadOnlyList<TargetDictionaryLanguage> Translations { get; }
     }

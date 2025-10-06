@@ -80,26 +80,37 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Job ID. </summary>
+        [WirePath("web_job_id")]
         public string WebJobId { get; set; }
         /// <summary> Job name. </summary>
+        [WirePath("web_job_name")]
         public string WebJobName { get; set; }
         /// <summary> Job status. </summary>
+        [WirePath("status")]
         public TriggeredWebJobStatus? Status { get; set; }
         /// <summary> Start time. </summary>
+        [WirePath("start_time")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time. </summary>
+        [WirePath("end_time")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Job duration. </summary>
+        [WirePath("duration")]
         public TimeSpan? Duration { get; set; }
         /// <summary> Output URL. </summary>
+        [WirePath("output_url")]
         public Uri OutputUri { get; set; }
         /// <summary> Error URL. </summary>
+        [WirePath("error_url")]
         public Uri ErrorUri { get; set; }
         /// <summary> Job URL. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> Job name. </summary>
+        [WirePath("job_name")]
         public string JobName { get; set; }
         /// <summary> Job trigger. </summary>
+        [WirePath("trigger")]
         public string Trigger { get; set; }
     }
 }

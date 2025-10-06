@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Quota;
 using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota.Mocking
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// List all the operations supported by the Microsoft.Quota resource provider.
+        /// List the operations for the provider
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// List all the operations supported by the Microsoft.Quota resource provider.
+        /// List the operations for the provider
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -82,7 +79,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// </summary>

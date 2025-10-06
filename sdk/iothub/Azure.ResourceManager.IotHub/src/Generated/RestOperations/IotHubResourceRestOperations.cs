@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.IotHub.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.IotHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -77,7 +90,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +121,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -117,6 +130,20 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionData data, string ifMatch)
@@ -141,7 +168,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -203,6 +230,20 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -221,7 +262,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -277,6 +318,20 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -353,6 +408,17 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -386,7 +452,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,13 +477,26 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -457,7 +536,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -484,13 +563,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStatsRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/IotHubStats", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStatsRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -534,7 +628,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubRegistryStatistics value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubRegistryStatistics.DeserializeIotHubRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,13 +657,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubRegistryStatistics value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubRegistryStatistics.DeserializeIotHubRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetValidSkusRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetValidSkusRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -613,7 +722,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,13 +751,30 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListEventHubConsumerGroupsRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/eventHubEndpoints/", false);
+            uri.AppendPath(eventHubEndpointName, true);
+            uri.AppendPath("/ConsumerGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListEventHubConsumerGroupsRequest(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName)
@@ -696,7 +822,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -727,13 +853,31 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEventHubConsumerGroupRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/eventHubEndpoints/", false);
+            uri.AppendPath(eventHubEndpointName, true);
+            uri.AppendPath("/ConsumerGroups/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetEventHubConsumerGroupRequest(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
@@ -784,7 +928,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -819,7 +963,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -828,6 +972,24 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateEventHubConsumerGroupRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/eventHubEndpoints/", false);
+            uri.AppendPath(eventHubEndpointName, true);
+            uri.AppendPath("/ConsumerGroups/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateEventHubConsumerGroupRequest(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content)
@@ -852,7 +1014,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -884,7 +1046,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,13 +1081,31 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteEventHubConsumerGroupRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/eventHubEndpoints/", false);
+            uri.AppendPath(eventHubEndpointName, true);
+            uri.AppendPath("/ConsumerGroups/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteEventHubConsumerGroupRequest(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
@@ -1008,6 +1188,21 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
+        internal RequestUriBuilder CreateListJobsRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListJobsRequest(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -1049,7 +1244,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1078,13 +1273,29 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetJobRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetJobRequest(string subscriptionId, string resourceGroupName, string resourceName, string jobId)
@@ -1131,7 +1342,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1162,13 +1373,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetQuotaMetricsRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/quotaMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetQuotaMetricsRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -1212,7 +1438,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1241,13 +1467,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEndpointHealthRequestUri(string subscriptionId, string resourceGroupName, string iotHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(iotHubName, true);
+            uri.AppendPath("/routingEndpointsHealth", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetEndpointHealthRequest(string subscriptionId, string resourceGroupName, string iotHubName)
@@ -1291,7 +1532,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1320,13 +1561,24 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, IotHubNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Devices/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, IotHubNameAvailabilityContent content)
@@ -1344,7 +1596,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1368,7 +1620,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubNameAvailabilityResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubNameAvailabilityResponse.DeserializeIotHubNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1395,13 +1647,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubNameAvailabilityResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubNameAvailabilityResponse.DeserializeIotHubNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestAllRoutesRequestUri(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(iotHubName, true);
+            uri.AppendPath("/routing/routes/$testall", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestAllRoutesRequest(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content)
@@ -1423,7 +1690,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1451,7 +1718,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestAllRoutesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubTestAllRoutesResult.DeserializeIotHubTestAllRoutesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1482,13 +1749,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestAllRoutesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubTestAllRoutesResult.DeserializeIotHubTestAllRoutesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestRouteRequestUri(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(iotHubName, true);
+            uri.AppendPath("/routing/routes/$testnew", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestRouteRequest(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content)
@@ -1510,7 +1792,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1538,7 +1820,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestRouteResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubTestRouteResult.DeserializeIotHubTestRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1569,13 +1851,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestRouteResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubTestRouteResult.DeserializeIotHubTestRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListKeysRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/listkeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -1619,7 +1916,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1648,13 +1945,30 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetKeysForKeyNameRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string keyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/IotHubKeys/", false);
+            uri.AppendPath(keyName, true);
+            uri.AppendPath("/listkeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetKeysForKeyNameRequest(string subscriptionId, string resourceGroupName, string resourceName, string keyName)
@@ -1702,7 +2016,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRule value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1733,13 +2047,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRule value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExportDevicesRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/exportDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExportDevicesRequest(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content)
@@ -1761,7 +2090,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1789,7 +2118,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1820,13 +2149,28 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateImportDevicesRequestUri(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/importDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateImportDevicesRequest(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content)
@@ -1848,7 +2192,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1876,7 +2220,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1907,13 +2251,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -1948,7 +2300,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1975,13 +2327,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -2018,7 +2378,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2047,13 +2407,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetValidSkusNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetValidSkusNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
@@ -2092,7 +2460,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2123,13 +2491,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListEventHubConsumerGroupsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListEventHubConsumerGroupsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName)
@@ -2170,7 +2546,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2203,13 +2579,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListJobsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListJobsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
@@ -2248,7 +2632,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2279,13 +2663,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetQuotaMetricsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetQuotaMetricsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
@@ -2324,7 +2716,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2355,13 +2747,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEndpointHealthNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetEndpointHealthNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName)
@@ -2400,7 +2800,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2431,13 +2831,21 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListKeysNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListKeysNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
@@ -2476,7 +2884,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2507,7 +2915,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

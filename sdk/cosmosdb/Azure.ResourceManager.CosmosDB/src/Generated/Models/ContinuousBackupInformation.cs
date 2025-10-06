@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The latest restorable timestamp for a resource. </summary>
+        [WirePath("latestRestorableTimestamp")]
         public DateTimeOffset? LatestRestorableTimestamp { get; }
     }
 }

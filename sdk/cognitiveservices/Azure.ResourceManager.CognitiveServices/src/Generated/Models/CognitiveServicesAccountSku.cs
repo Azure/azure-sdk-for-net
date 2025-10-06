@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource Namespace and Type. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
         /// <summary> The SKU of Cognitive Services account. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; }
     }
 }

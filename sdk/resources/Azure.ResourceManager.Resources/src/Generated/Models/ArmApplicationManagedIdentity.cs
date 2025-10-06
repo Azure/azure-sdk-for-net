@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The principal ID of resource identity. </summary>
+        [WirePath("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The tenant ID of resource. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The identity type. </summary>
+        [WirePath("type")]
         public ArmApplicationManagedIdentityType? IdentityType { get; set; }
         /// <summary> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, ArmApplicationUserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

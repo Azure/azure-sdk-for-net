@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -78,10 +77,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> The actions required for private link service connection. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; }
     }
 }

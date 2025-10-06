@@ -48,14 +48,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="DocumentAdministrativeMetadata"/>. </summary>
         public DocumentAdministrativeMetadata()
         {
-            OrderedProcedures = new ChangeTrackingList<FhirR4Extendible>();
+            OrderedProcedures = new ChangeTrackingList<OrderedProcedure>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentAdministrativeMetadata"/>. </summary>
         /// <param name="orderedProcedures"> List of procedure information associated with the document. </param>
         /// <param name="encounterId"> Reference to the encounter associated with the document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAdministrativeMetadata(IList<FhirR4Extendible> orderedProcedures, string encounterId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentAdministrativeMetadata(IList<OrderedProcedure> orderedProcedures, string encounterId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OrderedProcedures = orderedProcedures;
             EncounterId = encounterId;
@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> List of procedure information associated with the document. </summary>
-        public IList<FhirR4Extendible> OrderedProcedures { get; }
+        public IList<OrderedProcedure> OrderedProcedures { get; }
         /// <summary> Reference to the encounter associated with the document. </summary>
         public string EncounterId { get; set; }
     }

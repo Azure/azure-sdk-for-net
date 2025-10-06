@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -124,58 +123,85 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The File entity ids of this mail message's attachments. </summary>
+        [WirePath("properties.fileEntityIds")]
         public IReadOnlyList<string> FileEntityIds { get; }
         /// <summary> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </summary>
+        [WirePath("properties.recipient")]
         public string Recipient { get; }
         /// <summary> The Urls contained in this mail message. </summary>
+        [WirePath("properties.urls")]
         public IReadOnlyList<Uri> Uris { get; }
         /// <summary> The threats of this mail message. </summary>
+        [WirePath("properties.threats")]
         public IReadOnlyList<string> Threats { get; }
         /// <summary> The p1 sender's email address. </summary>
+        [WirePath("properties.p1Sender")]
         public string P1Sender { get; }
         /// <summary> The p1 sender's display name. </summary>
+        [WirePath("properties.p1SenderDisplayName")]
         public string P1SenderDisplayName { get; }
         /// <summary> The p1 sender's domain. </summary>
+        [WirePath("properties.p1SenderDomain")]
         public string P1SenderDomain { get; }
         /// <summary> The sender's IP address. </summary>
+        [WirePath("properties.senderIP")]
         public IPAddress SenderIP { get; }
         /// <summary> The p2 sender's email address. </summary>
+        [WirePath("properties.p2Sender")]
         public string P2Sender { get; }
         /// <summary> The p2 sender's display name. </summary>
+        [WirePath("properties.p2SenderDisplayName")]
         public string P2SenderDisplayName { get; }
         /// <summary> The p2 sender's domain. </summary>
+        [WirePath("properties.p2SenderDomain")]
         public string P2SenderDomain { get; }
         /// <summary> The receive date of this message. </summary>
+        [WirePath("properties.receiveDate")]
         public DateTimeOffset? ReceiveOn { get; }
         /// <summary> The network message id of this mail message. </summary>
+        [WirePath("properties.networkMessageId")]
         public Guid? NetworkMessageId { get; }
         /// <summary> The internet message id of this mail message. </summary>
+        [WirePath("properties.internetMessageId")]
         public string InternetMessageId { get; }
         /// <summary> The subject of this mail message. </summary>
+        [WirePath("properties.subject")]
         public string Subject { get; }
         /// <summary> The language of this mail message. </summary>
+        [WirePath("properties.language")]
         public string Language { get; }
         /// <summary> The threat detection methods. </summary>
+        [WirePath("properties.threatDetectionMethods")]
         public IReadOnlyList<string> ThreatDetectionMethods { get; }
         /// <summary> The bodyFingerprintBin1. </summary>
+        [WirePath("properties.bodyFingerprintBin1")]
         public int? BodyFingerprintBin1 { get; set; }
         /// <summary> The bodyFingerprintBin2. </summary>
+        [WirePath("properties.bodyFingerprintBin2")]
         public int? BodyFingerprintBin2 { get; set; }
         /// <summary> The bodyFingerprintBin3. </summary>
+        [WirePath("properties.bodyFingerprintBin3")]
         public int? BodyFingerprintBin3 { get; set; }
         /// <summary> The bodyFingerprintBin4. </summary>
+        [WirePath("properties.bodyFingerprintBin4")]
         public int? BodyFingerprintBin4 { get; set; }
         /// <summary> The bodyFingerprintBin5. </summary>
+        [WirePath("properties.bodyFingerprintBin5")]
         public int? BodyFingerprintBin5 { get; set; }
         /// <summary> The directionality of this mail message. </summary>
+        [WirePath("properties.antispamDirection")]
         public AntispamMailDirection? AntispamDirection { get; set; }
         /// <summary> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </summary>
+        [WirePath("properties.deliveryAction")]
         public SecurityInsightsMailMessageDeliveryAction? DeliveryAction { get; set; }
         /// <summary> The delivery location of this mail message like Inbox, JunkFolder etc. </summary>
+        [WirePath("properties.deliveryLocation")]
         public SecurityInsightsMailMessageDeliveryLocation? DeliveryLocation { get; set; }
     }
 }

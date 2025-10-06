@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -25,8 +24,6 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
-        /// <param name="dataSubscriptionId"> SubscriptionId for transcription. </param>
         /// <param name="sourceCallerIdNumber">
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
@@ -35,22 +32,24 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        /// <param name="originalPstnTarget"> The original PSTN target of the incoming Call. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel originalPstnTarget)
+        /// <param name="mediaStreamingSubscription"> The state of media streaming subscription for the call. </param>
+        /// <param name="transcriptionSubscription"> Transcription Subscription. </param>
+        /// <param name="answeredFor"> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription, TranscriptionSubscriptionInternal transcriptionSubscription, PhoneNumberIdentifierModel answeredFor)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             Targets = targets;
             CallConnectionState = callConnectionState;
             CallbackUri = callbackUri;
-            MediaSubscriptionId = mediaSubscriptionId;
-            DataSubscriptionId = dataSubscriptionId;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
             Source = source;
             CorrelationId = correlationId;
             AnsweredBy = answeredBy;
-            OriginalPstnTarget = originalPstnTarget;
+            MediaStreamingSubscription = mediaStreamingSubscription;
+            TranscriptionSubscription = transcriptionSubscription;
+            AnsweredFor = answeredFor;
         }
 
         /// <summary> The call connection id. </summary>
@@ -63,10 +62,6 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionState? CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
-        /// <summary> SubscriptionId for media streaming. </summary>
-        public string MediaSubscriptionId { get; }
-        /// <summary> SubscriptionId for transcription. </summary>
-        public string DataSubscriptionId { get; }
         /// <summary>
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
@@ -80,7 +75,11 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
-        /// <summary> The original PSTN target of the incoming Call. </summary>
-        public PhoneNumberIdentifierModel OriginalPstnTarget { get; }
+        /// <summary> The state of media streaming subscription for the call. </summary>
+        public MediaStreamingSubscriptionInternal MediaStreamingSubscription { get; }
+        /// <summary> Transcription Subscription. </summary>
+        public TranscriptionSubscriptionInternal TranscriptionSubscription { get; }
+        /// <summary> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </summary>
+        public PhoneNumberIdentifierModel AnsweredFor { get; }
     }
 }

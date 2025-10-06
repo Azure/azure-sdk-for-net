@@ -10,21 +10,30 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="WorkloadIdentityCredential"/>.
     /// </summary>
-    public class WorkloadIdentityCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class WorkloadIdentityCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         /// <summary>
-        /// The tenant ID of the service principal. Defaults to the value of the environment variable AZURE_TENANT_ID.
+        /// The tenant ID of the service principal.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_TENANT_ID</c>.
+        /// </remarks>
         public string TenantId { get; set; } = EnvironmentVariables.TenantId;
 
         /// <summary>
-        /// The client (application) ID of the service principal. Defaults to the value of the environment variable AZURE_CLIENT_ID.
+        /// The client (application) ID of the service principal.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_CLIENT_ID</c>.
+        /// </remarks>
         public string ClientId { get; set; } = EnvironmentVariables.ClientId;
 
         /// <summary>
-        /// The path to a file containing the workload identity token. Defaults to the value of the environment variable AZURE_FEDERATED_TOKEN_FILE.
+        /// The path to a file containing the workload identity token.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_FEDERATED_TOKEN_FILE</c>.
+        /// </remarks>
         public string TokenFilePath { get; set; } = EnvironmentVariables.AzureFederatedTokenFile;
 
         /// <inheritdoc />
@@ -34,8 +43,10 @@ namespace Azure.Identity
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
-        /// Defaults to the value of the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_ADDITIONALLY_ALLOWED_TENANTS</c>.
+        /// </remarks>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
 
         internal CredentialPipeline Pipeline { get; set; }

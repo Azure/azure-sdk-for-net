@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,6 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -54,18 +58,121 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue(ConnectionString);
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                writer.WriteObjectValue<object>(Server);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteObjectValue<object>(Database);
+            }
+            if (Optional.IsDefined(Encrypt))
+            {
+                writer.WritePropertyName("encrypt"u8);
+                writer.WriteObjectValue<object>(Encrypt);
+            }
+            if (Optional.IsDefined(TrustServerCertificate))
+            {
+                writer.WritePropertyName("trustServerCertificate"u8);
+                writer.WriteObjectValue<object>(TrustServerCertificate);
+            }
+            if (Optional.IsDefined(HostNameInCertificate))
+            {
+                writer.WritePropertyName("hostNameInCertificate"u8);
+                writer.WriteObjectValue<object>(HostNameInCertificate);
+            }
+            if (Optional.IsDefined(ApplicationIntent))
+            {
+                writer.WritePropertyName("applicationIntent"u8);
+                writer.WriteObjectValue<object>(ApplicationIntent);
+            }
+            if (Optional.IsDefined(ConnectTimeout))
+            {
+                writer.WritePropertyName("connectTimeout"u8);
+                writer.WriteObjectValue<object>(ConnectTimeout);
+            }
+            if (Optional.IsDefined(ConnectRetryCount))
+            {
+                writer.WritePropertyName("connectRetryCount"u8);
+                writer.WriteObjectValue<object>(ConnectRetryCount);
+            }
+            if (Optional.IsDefined(ConnectRetryInterval))
+            {
+                writer.WritePropertyName("connectRetryInterval"u8);
+                writer.WriteObjectValue<object>(ConnectRetryInterval);
+            }
+            if (Optional.IsDefined(LoadBalanceTimeout))
+            {
+                writer.WritePropertyName("loadBalanceTimeout"u8);
+                writer.WriteObjectValue<object>(LoadBalanceTimeout);
+            }
+            if (Optional.IsDefined(CommandTimeout))
+            {
+                writer.WritePropertyName("commandTimeout"u8);
+                writer.WriteObjectValue<object>(CommandTimeout);
+            }
+            if (Optional.IsDefined(IntegratedSecurity))
+            {
+                writer.WritePropertyName("integratedSecurity"u8);
+                writer.WriteObjectValue<object>(IntegratedSecurity);
+            }
+            if (Optional.IsDefined(FailoverPartner))
+            {
+                writer.WritePropertyName("failoverPartner"u8);
+                writer.WriteObjectValue<object>(FailoverPartner);
+            }
+            if (Optional.IsDefined(MaxPoolSize))
+            {
+                writer.WritePropertyName("maxPoolSize"u8);
+                writer.WriteObjectValue<object>(MaxPoolSize);
+            }
+            if (Optional.IsDefined(MinPoolSize))
+            {
+                writer.WritePropertyName("minPoolSize"u8);
+                writer.WriteObjectValue<object>(MinPoolSize);
+            }
+            if (Optional.IsDefined(MultipleActiveResultSets))
+            {
+                writer.WritePropertyName("multipleActiveResultSets"u8);
+                writer.WriteObjectValue<object>(MultipleActiveResultSets);
+            }
+            if (Optional.IsDefined(MultiSubnetFailover))
+            {
+                writer.WritePropertyName("multiSubnetFailover"u8);
+                writer.WriteObjectValue<object>(MultiSubnetFailover);
+            }
+            if (Optional.IsDefined(PacketSize))
+            {
+                writer.WritePropertyName("packetSize"u8);
+                writer.WriteObjectValue<object>(PacketSize);
+            }
+            if (Optional.IsDefined(Pooling))
+            {
+                writer.WritePropertyName("pooling"u8);
+                writer.WriteObjectValue<object>(Pooling);
+            }
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteObjectValue<object>(ConnectionString);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
             if (Optional.IsDefined(Password))
             {
@@ -75,7 +182,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             if (Optional.IsDefined(AlwaysEncryptedSettings))
             {
@@ -86,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -98,11 +205,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
+            object server = default;
+            object database = default;
+            object encrypt = default;
+            object trustServerCertificate = default;
+            object hostNameInCertificate = default;
+            object applicationIntent = default;
+            object connectTimeout = default;
+            object connectRetryCount = default;
+            object connectRetryInterval = default;
+            object loadBalanceTimeout = default;
+            object commandTimeout = default;
+            object integratedSecurity = default;
+            object failoverPartner = default;
+            object maxPoolSize = default;
+            object minPoolSize = default;
+            object multipleActiveResultSets = default;
+            object multiSubnetFailover = default;
+            object packetSize = default;
+            object pooling = default;
             object connectionString = default;
+            AmazonRdsForSqlServerAuthenticationType? authenticationType = default;
             object userName = default;
             SecretBase password = default;
             object encryptedCredential = default;
@@ -114,6 +242,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -174,9 +307,193 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("encrypt"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encrypt = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("trustServerCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trustServerCertificate = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostNameInCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hostNameInCertificate = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("applicationIntent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationIntent = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectTimeout = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectRetryCount"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectRetryCount = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectRetryInterval"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectRetryInterval = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("loadBalanceTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            loadBalanceTimeout = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("commandTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            commandTimeout = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("integratedSecurity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            integratedSecurity = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("failoverPartner"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            failoverPartner = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxPoolSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxPoolSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("minPoolSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minPoolSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("multipleActiveResultSets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            multipleActiveResultSets = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("multiSubnetFailover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            multiSubnetFailover = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("packetSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            packetSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("pooling"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pooling = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("connectionString"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             connectionString = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationType = new AmazonRdsForSqlServerAuthenticationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -223,16 +540,53 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonRdsForSqlServerLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
+                server,
+                database,
+                encrypt,
+                trustServerCertificate,
+                hostNameInCertificate,
+                applicationIntent,
+                connectTimeout,
+                connectRetryCount,
+                connectRetryInterval,
+                loadBalanceTimeout,
+                commandTimeout,
+                integratedSecurity,
+                failoverPartner,
+                maxPoolSize,
+                minPoolSize,
+                multipleActiveResultSets,
+                multiSubnetFailover,
+                packetSize,
+                pooling,
                 connectionString,
+                authenticationType,
                 userName,
                 password,
                 encryptedCredential,
                 alwaysEncryptedSettings);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AmazonRdsForSqlServerLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAmazonRdsForSqlServerLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AmazonRdsForSqlServerLinkedServiceConverter : JsonConverter<AmazonRdsForSqlServerLinkedService>
@@ -241,6 +595,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AmazonRdsForSqlServerLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

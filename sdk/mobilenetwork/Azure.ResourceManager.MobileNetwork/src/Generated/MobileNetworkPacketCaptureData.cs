@@ -88,22 +88,31 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the packet capture session resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the packet capture session. </summary>
+        [WirePath("properties.status")]
         public MobileNetworkPacketCaptureStatus? Status { get; }
         /// <summary> The reason the current packet capture session state. </summary>
+        [WirePath("properties.reason")]
         public string Reason { get; }
         /// <summary> The start time of the packet capture session. </summary>
+        [WirePath("properties.captureStartTime")]
         public DateTimeOffset? CaptureStartOn { get; }
         /// <summary> List of network interfaces to capture on. </summary>
+        [WirePath("properties.networkInterfaces")]
         public IList<string> NetworkInterfaces { get; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. The default "0" means the entire packet is captured. </summary>
+        [WirePath("properties.bytesToCapturePerPacket")]
         public long? BytesToCapturePerPacket { get; set; }
         /// <summary> Maximum size of the capture output. </summary>
+        [WirePath("properties.totalBytesPerSession")]
         public long? TotalBytesPerSession { get; set; }
         /// <summary> Maximum duration of the capture session in seconds. </summary>
+        [WirePath("properties.timeLimitInSeconds")]
         public int? TimeLimitInSeconds { get; set; }
         /// <summary> The list of output files of a packet capture session. </summary>
+        [WirePath("properties.outputFiles")]
         public IReadOnlyList<string> OutputFiles { get; }
     }
 }

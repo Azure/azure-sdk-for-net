@@ -1,0 +1,42 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/storage/ci.webjobs.yml
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: functions
+    ServiceDirectory: storage
+    BuildSnippets: false
+    ArtifactName: packages
+    Artifacts:
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage
+      safeName: MicrosoftAzureWebJobsExtensionsStorage
+      skipSmokeTests: true
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+      safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
+      skipSmokeTests: true
+      triggeringPaths:
+      - /sdk/storage/Azure.Storage.Blobs/
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
+      safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
+      skipSmokeTests: true
+      triggeringPaths:
+      - /sdk/storage/Azure.Storage.Queues/
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml

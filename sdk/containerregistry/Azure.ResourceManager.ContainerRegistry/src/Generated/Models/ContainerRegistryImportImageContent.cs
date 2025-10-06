@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -79,12 +78,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The source of the image. </summary>
+        [WirePath("source")]
         public ContainerRegistryImportSource Source { get; }
         /// <summary> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </summary>
+        [WirePath("targetTags")]
         public IList<string> TargetTags { get; }
         /// <summary> List of strings of repository names to do a manifest only copy. No tag will be created. </summary>
+        [WirePath("untaggedTargetRepositories")]
         public IList<string> UntaggedTargetRepositories { get; }
         /// <summary> When Force, any existing target tags will be overwritten. When NoForce, any existing target tags will fail the operation before any copying begins. </summary>
+        [WirePath("mode")]
         public ContainerRegistryImportMode? Mode { get; set; }
     }
 }

@@ -48,26 +48,46 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRules"/>. </summary>
         public InboundSecurityRules()
         {
+            DestinationPortRanges = new ChangeTrackingList<string>();
+            AppliesOn = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRules"/>. </summary>
+        /// <param name="name"> Name of the rule. </param>
         /// <param name="protocol"> Protocol. This should be either TCP or UDP. </param>
-        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed. </param>
+        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. </param>
         /// <param name="destinationPortRange"> NVA port ranges to be opened up. One needs to provide specific ports. </param>
+        /// <param name="destinationPortRanges"> NVA port ranges to be opened up. One can provide a range of ports. Allowed port value between 0 and 65535. </param>
+        /// <param name="appliesOn"> Public IP name in case of Permanent Rule type &amp; Interface Name in case of Auto Expire Rule type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InboundSecurityRules(InboundSecurityRulesProtocol? protocol, string sourceAddressPrefix, int? destinationPortRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InboundSecurityRules(string name, InboundSecurityRulesProtocol? protocol, string sourceAddressPrefix, int? destinationPortRange, IList<string> destinationPortRanges, IList<string> appliesOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Name = name;
             Protocol = protocol;
             SourceAddressPrefix = sourceAddressPrefix;
             DestinationPortRange = destinationPortRange;
+            DestinationPortRanges = destinationPortRanges;
+            AppliesOn = appliesOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Name of the rule. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> Protocol. This should be either TCP or UDP. </summary>
+        [WirePath("protocol")]
         public InboundSecurityRulesProtocol? Protocol { get; set; }
-        /// <summary> The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed. </summary>
+        /// <summary> The CIDR or source IP range. </summary>
+        [WirePath("sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
         /// <summary> NVA port ranges to be opened up. One needs to provide specific ports. </summary>
+        [WirePath("destinationPortRange")]
         public int? DestinationPortRange { get; set; }
+        /// <summary> NVA port ranges to be opened up. One can provide a range of ports. Allowed port value between 0 and 65535. </summary>
+        [WirePath("destinationPortRanges")]
+        public IList<string> DestinationPortRanges { get; }
+        /// <summary> Public IP name in case of Permanent Rule type &amp; Interface Name in case of Auto Expire Rule type. </summary>
+        [WirePath("appliesOn")]
+        public IList<string> AppliesOn { get; }
     }
 }

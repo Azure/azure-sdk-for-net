@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownCodec. </summary>
+    /// <summary> Unknown version of Codec. </summary>
     internal partial class UnknownCodec : MediaCodecBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCodec"/>. </summary>

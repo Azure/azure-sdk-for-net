@@ -1,15 +1,56 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Enable national cloud support for US Gov and China clouds
 
 ### Other Changes
+
+## 1.7.1 (2025-08-12)
+
+### Other Changes
+- Updated internal serialization paths to use an AOT-friendly approach.  The package now fully supports AOT and is trimmable.
+
+## 1.7.0 (2025-06-26)
+
+### Features Added
+
+- Added support for the `2024-02-01` metric namespaces service version to `MetricsQueryClient`.
+
+## 1.6.0 (2024-12-03)
+
+### Features Added
+- Add 'StartTime' and 'EndTime' parameters to 'MetricsQueryResourcesOptions' to allow for querying a specific time range
+### Bugs Fixed
+- Fix bug in 'MetricsClient' QueryResourceAsync method where the 'QueryTimeRange' parameter was incorrectly set
+
+## 1.5.0 (2024-08-21)
+### Bugs Fixed
+- Fix bug in `LogsQueryClient` that defaulted to `Azure.PublicCloud`. `Audience` is now determined from the `endpoint` parameter.
+
+## 1.4.0 (2024-06-12)
+
+### Features Added
+- Add sovereign cloud support to `MetricsClient` for US Gov and China clouds
+
+## 1.3.1 (2024-04-03)
+
+### Bugs Fixed
+- Fix bug in `LogsQueryClient` constructor where a `NullReferenceException` would be thrown when an options instance isn't passed.
+- Fix bug in `MetricsQueryClient` constructor where a `NullReferenceException` would be thrown when an options instance isn't passed.
+
+## 1.3.0 (2024-03-28)
+
+### Other Changes
+- Enable national cloud support for US Gov and China clouds
+- `MetricsBatchQueryClient` renamed to `MetricsClient`
+- `QueryBatch` renamed to `QueryResources` in `MetricsClient`
+- `MetricsBatchResult` renamed to `MetricsQueryResourcesResult` in `MetricsClient`
+- Added `MetricsClientBuilderExtensions` methods
 
 ## 1.3.0-beta.2 (2023-12-05)
 

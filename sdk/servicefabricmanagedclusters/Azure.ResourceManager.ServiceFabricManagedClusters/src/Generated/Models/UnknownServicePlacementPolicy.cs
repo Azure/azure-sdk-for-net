@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The UnknownServicePlacementPolicy. </summary>
+    /// <summary> Unknown version of ManagedServicePlacementPolicy. </summary>
     internal partial class UnknownServicePlacementPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicy"/>. </summary>
-        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="type"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownServicePlacementPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(servicePlacementPolicyType, serializedAdditionalRawData)
+        internal UnknownServicePlacementPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
-            ServicePlacementPolicyType = servicePlacementPolicyType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicy"/> for deserialization. </summary>

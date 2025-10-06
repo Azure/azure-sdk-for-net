@@ -46,5 +46,13 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new KeysResult(clusters);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeysResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKeysResult(document.RootElement);
+        }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,11 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("store"u8);
             writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName"u8);
-            writer.WriteObjectValue(SecretName);
+            writer.WriteObjectValue<object>(SecretName);
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
-                writer.WriteObjectValue(SecretVersion);
+                writer.WriteObjectValue<object>(SecretVersion);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -73,12 +72,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureKeyVaultSecretReference(type, store, secretName, secretVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureKeyVaultSecretReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzureKeyVaultSecretReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureKeyVaultSecretReferenceConverter : JsonConverter<AzureKeyVaultSecretReference>
         {
             public override void Write(Utf8JsonWriter writer, AzureKeyVaultSecretReference model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzureKeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

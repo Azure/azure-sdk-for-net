@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The port an endpoint is connected to. </summary>
+        [WirePath("port")]
         public int? Port { get; }
         /// <summary> The region of the dependency. </summary>
+        [WirePath("region")]
         public string Region { get; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Analytics.Synapse.Spark;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
@@ -131,6 +130,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

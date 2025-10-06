@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string AutomaticRepairsValue = "AutomaticRepairs";
+        private const string AutomaticZoneRebalancingValue = "AutomaticZoneRebalancing";
 
         /// <summary> AutomaticRepairs. </summary>
         public static OrchestrationServiceName AutomaticRepairs { get; } = new OrchestrationServiceName(AutomaticRepairsValue);
+        /// <summary> AutomaticZoneRebalancing orchestration service. </summary>
+        public static OrchestrationServiceName AutomaticZoneRebalancing { get; } = new OrchestrationServiceName(AutomaticZoneRebalancingValue);
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are the same. </summary>
         public static bool operator ==(OrchestrationServiceName left, OrchestrationServiceName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are not the same. </summary>
         public static bool operator !=(OrchestrationServiceName left, OrchestrationServiceName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OrchestrationServiceName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OrchestrationServiceName"/>. </summary>
         public static implicit operator OrchestrationServiceName(string value) => new OrchestrationServiceName(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

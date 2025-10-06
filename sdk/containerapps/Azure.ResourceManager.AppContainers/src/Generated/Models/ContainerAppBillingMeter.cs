@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Region for the billing meter. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Revision resource specific properties. </summary>
+        [WirePath("properties")]
         public ContainerAppBillingMeterProperties Properties { get; set; }
     }
 }

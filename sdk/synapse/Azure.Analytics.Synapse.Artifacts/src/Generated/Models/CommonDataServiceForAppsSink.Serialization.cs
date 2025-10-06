@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -25,44 +24,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                writer.WriteObjectValue(IgnoreNullValues);
+                writer.WriteObjectValue<object>(IgnoreNullValues);
             }
             if (Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
-                writer.WriteObjectValue(AlternateKeyName);
+                writer.WriteObjectValue<object>(AlternateKeyName);
+            }
+            if (Optional.IsDefined(BypassBusinessLogicExecution))
+            {
+                writer.WritePropertyName("bypassBusinessLogicExecution"u8);
+                writer.WriteObjectValue<object>(BypassBusinessLogicExecution);
+            }
+            if (Optional.IsDefined(BypassPowerAutomateFlows))
+            {
+                writer.WritePropertyName("bypassPowerAutomateFlows"u8);
+                writer.WriteObjectValue<object>(BypassPowerAutomateFlows);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -76,6 +85,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DynamicsSinkWriteBehavior writeBehavior = default;
             object ignoreNullValues = default;
             object alternateKeyName = default;
+            object bypassBusinessLogicExecution = default;
+            object bypassPowerAutomateFlows = default;
             string type = default;
             object writeBatchSize = default;
             object writeBatchTimeout = default;
@@ -107,6 +118,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     alternateKeyName = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("bypassBusinessLogicExecution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassBusinessLogicExecution = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("bypassPowerAutomateFlows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassPowerAutomateFlows = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -172,7 +201,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties,
                 writeBehavior,
                 ignoreNullValues,
-                alternateKeyName);
+                alternateKeyName,
+                bypassBusinessLogicExecution,
+                bypassPowerAutomateFlows);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CommonDataServiceForAppsSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCommonDataServiceForAppsSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class CommonDataServiceForAppsSinkConverter : JsonConverter<CommonDataServiceForAppsSink>
@@ -181,6 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CommonDataServiceForAppsSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

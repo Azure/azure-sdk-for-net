@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownFactoryRepoConfiguration. </summary>
+    /// <summary> Unknown version of FactoryRepoConfiguration. </summary>
     internal partial class UnknownFactoryRepoConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFactoryRepoConfiguration"/>. </summary>

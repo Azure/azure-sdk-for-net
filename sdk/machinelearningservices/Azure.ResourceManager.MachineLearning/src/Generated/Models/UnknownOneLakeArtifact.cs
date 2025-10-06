@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownOneLakeArtifact. </summary>
+    /// <summary> Unknown version of OneLakeArtifact. </summary>
     internal partial class UnknownOneLakeArtifact : OneLakeArtifact
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOneLakeArtifact"/>. </summary>
-        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
+        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOneLakeArtifact(string artifactName, OneLakeArtifactType artifactType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(artifactName, artifactType, serializedAdditionalRawData)
+        internal UnknownOneLakeArtifact(OneLakeArtifactType artifactType, string artifactName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(artifactType, artifactName, serializedAdditionalRawData)
         {
             ArtifactType = artifactType;
         }

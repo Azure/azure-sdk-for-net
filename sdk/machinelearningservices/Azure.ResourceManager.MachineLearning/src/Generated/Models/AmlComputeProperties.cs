@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -95,14 +94,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Compute OS Type. </summary>
+        [WirePath("osType")]
         public MachineLearningOSType? OSType { get; set; }
         /// <summary> Virtual Machine Size. </summary>
+        [WirePath("vmSize")]
         public string VmSize { get; set; }
         /// <summary> Virtual Machine priority. </summary>
+        [WirePath("vmPriority")]
         public MachineLearningVmPriority? VmPriority { get; set; }
         /// <summary> Virtual Machine image for AML Compute - windows only. </summary>
         internal VirtualMachineImage VirtualMachineImage { get; set; }
         /// <summary> Virtual Machine image path. </summary>
+        [WirePath("virtualMachineImage.id")]
         public string VirtualMachineImageId
         {
             get => VirtualMachineImage is null ? default : VirtualMachineImage.Id;
@@ -110,14 +113,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Network is isolated or not. </summary>
+        [WirePath("isolatedNetwork")]
         public bool? IsolatedNetwork { get; set; }
         /// <summary> Scale settings for AML Compute. </summary>
+        [WirePath("scaleSettings")]
         public AmlComputeScaleSettings ScaleSettings { get; set; }
         /// <summary> Credentials for an administrator user account that will be created on each compute node. </summary>
+        [WirePath("userAccountCredentials")]
         public MachineLearningUserAccountCredentials UserAccountCredentials { get; set; }
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
         internal ResourceId Subnet { get; set; }
         /// <summary> The ID of the resource. </summary>
+        [WirePath("subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -125,20 +132,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </summary>
+        [WirePath("remoteLoginPortPublicAccess")]
         public MachineLearningRemoteLoginPortPublicAccess? RemoteLoginPortPublicAccess { get; set; }
         /// <summary> Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute. </summary>
+        [WirePath("allocationState")]
         public MachineLearningAllocationState? AllocationState { get; }
         /// <summary> The time at which the compute entered its current allocation state. </summary>
+        [WirePath("allocationStateTransitionTime")]
         public DateTimeOffset? AllocationStateTransitionOn { get; }
         /// <summary> Collection of errors encountered by various compute nodes during node setup. </summary>
+        [WirePath("errors")]
         public IReadOnlyList<MachineLearningError> Errors { get; }
         /// <summary> The number of compute nodes currently assigned to the compute. </summary>
+        [WirePath("currentNodeCount")]
         public int? CurrentNodeCount { get; }
         /// <summary> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </summary>
+        [WirePath("targetNodeCount")]
         public int? TargetNodeCount { get; }
         /// <summary> Counts of various node states on the compute. </summary>
+        [WirePath("nodeStateCounts")]
         public MachineLearningNodeStateCounts NodeStateCounts { get; }
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
+        [WirePath("enableNodePublicIp")]
         public bool? EnableNodePublicIP { get; set; }
         /// <summary>
         /// A property bag containing additional properties.
@@ -170,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("propertyBag")]
         public BinaryData PropertyBag { get; set; }
     }
 }

@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the data network resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> An optional description for this data network. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
     }
 }

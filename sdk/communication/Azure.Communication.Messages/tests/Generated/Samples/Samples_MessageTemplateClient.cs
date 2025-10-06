@@ -8,8 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Communication.Messages;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -109,7 +107,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (MessageTemplateItem item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxpagesize: 1234))
+            foreach (MessageTemplateItem item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxPageSize: 1234))
             {
             }
         }
@@ -120,7 +118,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (MessageTemplateItem item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxpagesize: 1234))
+            await foreach (MessageTemplateItem item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxPageSize: 1234))
             {
             }
         }

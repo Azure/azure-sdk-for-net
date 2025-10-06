@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; set; }
         /// <summary> The ports used when connecting to DomainName. </summary>
+        [WirePath("endpointDetails")]
         public IList<EndpointDetail> EndpointDetails { get; }
     }
 }

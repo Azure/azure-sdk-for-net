@@ -22,20 +22,39 @@ namespace Azure.Messaging.EventHubs
     public static class EventHubsModelFactory
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubs.EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="name">The name of the Event Hub.</param>
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubProperties EventHubProperties(string name,
                                                             DateTimeOffset createdOn,
                                                             string[] partitionIds) =>
-           new EventHubProperties(name, createdOn, partitionIds);
+           new EventHubProperties(name, createdOn, partitionIds, false);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubs.EventHubProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="name">The name of the Event Hub.</param>
+        /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
+        /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
+        /// <param name="isGeoReplicationEnabled">A flag indicating whether or not the Event Hubs namespace has geo-replication enabled.</param>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EventHubProperties EventHubProperties(string name,
+                                                            DateTimeOffset createdOn,
+                                                            string[] partitionIds,
+                                                            bool isGeoReplicationEnabled) =>
+           new EventHubProperties(name, createdOn, partitionIds, isGeoReplicationEnabled);
+
+        /// <summary>
+        ///   Obsolete.
+        ///
+        ///   Initializes a new instance of the <see cref="EventHubs.PartitionProperties"/> class.
         /// </summary>
         ///
         /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
@@ -46,6 +65,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
+        /// <remarks>
+        ///   This method is obsolete and should no longer be used.  Please use the overload with a string-based offset instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PartitionProperties PartitionProperties(string eventHubName,
                                                               string partitionId,
                                                               bool isEmpty,
@@ -53,10 +78,31 @@ namespace Azure.Messaging.EventHubs
                                                               long lastSequenceNumber,
                                                               long lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
-            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, (lastOffset > long.MinValue) ? lastOffset.ToString(CultureInfo.InvariantCulture) : null, lastEnqueuedTime);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubs.PartitionProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffsetString">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        ///
+        public static PartitionProperties PartitionProperties(string eventHubName,
+                                                              string partitionId,
+                                                              bool isEmpty,
+                                                              long beginningSequenceNumber,
+                                                              long lastSequenceNumber,
+                                                              string lastOffsetString,
+                                                              DateTimeOffset lastEnqueuedTime) =>
+            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffsetString, lastEnqueuedTime);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Producer.PartitionPublishingProperties"/> class.
         /// </summary>
         ///
         /// <param name="isIdempotentPublishingEnabled">Indicates whether idempotent publishing is enabled.</param>
@@ -71,8 +117,8 @@ namespace Azure.Messaging.EventHubs
                                                                                     int? lastPublishedSequenceNumber) =>
             new PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
+                /// <summary>
+        ///   Initializes a new instance of the <see cref="Consumer.LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
@@ -80,11 +126,28 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
                                                                               long? lastOffset,
                                                                               DateTimeOffset? lastEnqueuedTime,
                                                                               DateTimeOffset? lastReceivedTime) =>
-            new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset, lastEnqueuedTime, lastReceivedTime);
+            new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset?.ToString(CultureInfo.InvariantCulture), lastEnqueuedTime, lastReceivedTime);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Consumer.LastEnqueuedEventProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffsetString">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
+        ///
+        public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
+                                                                              string lastOffsetString,
+                                                                              DateTimeOffset? lastEnqueuedTime,
+                                                                              DateTimeOffset? lastReceivedTime) =>
+            new LastEnqueuedEventProperties(lastSequenceNumber, lastOffsetString, lastEnqueuedTime, lastReceivedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Consumer.PartitionContext"/> class.
@@ -116,7 +179,9 @@ namespace Azure.Messaging.EventHubs
             new FactoryPartitionContext("<< NULL >>", "<< NULL >>", "<< NULL >>", partitionId, lastEnqueuedEventProperties);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        ///   Obsolete.
+        ///
+        ///   Initializes a new instance of the <see cref="EventHubs.EventData"/> class.
         /// </summary>
         ///
         /// <param name="eventBody">The data to use as the body of the event.</param>
@@ -127,6 +192,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         ///
+        /// <remarks>
+        ///   This method is obsolete and should no longer be used.  Please use the overload with a string-based offset instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventData EventData(BinaryData eventBody,
                                           IDictionary<string, object> properties = null,
                                           IReadOnlyDictionary<string, object> systemProperties = null,
@@ -134,7 +205,28 @@ namespace Azure.Messaging.EventHubs
                                           long sequenceNumber = long.MinValue,
                                           long offset = long.MinValue,
                                           DateTimeOffset enqueuedTime = default) =>
-             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
+            EventData(eventBody, properties, systemProperties, partitionKey, sequenceNumber, (offset > long.MinValue) ? offset.ToString(CultureInfo.InvariantCulture) : null, enqueuedTime);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubs.EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties that accompany events read from the Event Hubs service.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offsetString">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        ///
+        public static EventData EventData(BinaryData eventBody,
+                                          IDictionary<string, object> properties = null,
+                                          IReadOnlyDictionary<string, object> systemProperties = null,
+                                          string partitionKey = null,
+                                          long sequenceNumber = long.MinValue,
+                                          string offsetString = default,
+                                          DateTimeOffset enqueuedTime = default) =>
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, offsetString, enqueuedTime, partitionKey);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch" /> class.

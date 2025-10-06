@@ -167,6 +167,8 @@ Response response = await client.UploadAsync(
 
 You can also upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method in which  logs are passed in a generic `IEnumerable` type along with an optional `LogsUploadOptions` parameter. The `LogsUploadOptions` parameter includes a serializer, concurrency, and an EventHandler.
 
+When uploading custom logs as an `IEnumerable` of an application model type, the `LogsIngestionClient` will perform serialization on your behalf, using either the [ObjectSerializer](https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet) registered with your `LogsUploadOptions` or the serializer used by [BinaryData.FromObjectAsJson](https://learn.microsoft.com/dotnet/api/system.binarydata.fromobjectasjson). Both approaches use a serialization path that is not compatible with [ahead-of-time compilation (AOT)](https://learn.microsoft.com/dotnet/core/deploying/native-aot).
+
 ```C# Snippet:UploadLogDataIEnumerableAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
 var ruleId = "<data_collection_rule_id>";
@@ -187,6 +189,42 @@ for (int i = 0; i < 100; i++)
             AdditionalContext = i
         }
     );
+}
+
+// Upload our logs
+Response response = await client.UploadAsync(ruleId, streamName, entries).ConfigureAwait(false);
+```
+
+To upload custom logs in an AOT environment, your application must take ownership of serialization and use the `LogsIngestionClient.Upload` or `LogsIngestionClient.UploadAsync` overload that accepts an `IEnumerable<BinaryData>`.   
+
+For example, if you have the following custom type and AOT serialization context:
+```C# Snippet:IngestionAotSerializationTypes
+public record Person(string Name, string Department, int EmployeeNumber)
+{
+}
+
+[JsonSerializable(typeof(Person))]
+public partial class ExampleDeserializationContext : JsonSerializerContext
+{
+}
+```
+
+The Ingestion upload is identical, other than serializing prior to the call:
+```C# Snippet:UploadLogDataIEnumerableAsyncAot
+var endpoint = new Uri("<data_collection_endpoint_uri>");
+var ruleId = "<data_collection_rule_id>";
+var streamName = "<stream_name>";
+
+var credential = new DefaultAzureCredential();
+LogsIngestionClient client = new(endpoint, credential);
+
+DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+var entries = new List<BinaryData>();
+for (int i = 0; i < 100; i++)
+{
+    entries.Add(BinaryData.FromBytes(
+        JsonSerializer.SerializeToUtf8Bytes(new Person($"Person{i}", "Department{i}", i))));
 }
 
 // Upload our logs
@@ -284,5 +322,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [data_collection_endpoint]: https://learn.microsoft.com/azure/azure-monitor/essentials/data-collection-endpoint-overview
 [data_collection_rule]: https://learn.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview
 [logging]: https://learn.microsoft.com/dotnet/azure/sdk/logging
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/monitor/Azure.Monitor.Ingestion/README.png)

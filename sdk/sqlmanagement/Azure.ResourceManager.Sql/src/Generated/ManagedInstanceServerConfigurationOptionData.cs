@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Value of the server configuration option. </summary>
+        [WirePath("properties.serverConfigurationOptionValue")]
         public int? ServerConfigurationOptionValue { get; set; }
         /// <summary> Provisioning state of server configuration option. </summary>
+        [WirePath("properties.provisioningState")]
         public JobExecutionProvisioningState? ProvisioningState { get; }
     }
 }

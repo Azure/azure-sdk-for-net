@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -82,10 +81,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The unique name for the routing policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> List of all destinations which this routing policy is applicable to (for example: Internet, PrivateTraffic). </summary>
+        [WirePath("destinations")]
         public IList<string> Destinations { get; }
         /// <summary> The next hop resource id on which this routing policy is applicable to. </summary>
+        [WirePath("nextHop")]
         public string NextHop { get; set; }
     }
 }

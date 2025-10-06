@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The Key being regenerated. </summary>
+        [WirePath("keyType")]
         public GatewayRegenerateKeyType KeyType { get; }
     }
 }

@@ -22,24 +22,24 @@ namespace Azure.AI.DocumentIntelligence
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UrlValue = "url";
-        private const string Base64Value = "base64";
-        private const string AzureBlobValue = "azureBlob";
-        private const string AzureBlobFileListValue = "azureBlobFileList";
+        private const string UriValue = "url";
+        private const string BytesValue = "base64";
+        private const string BlobValue = "azureBlob";
+        private const string BlobFileListValue = "azureBlobFileList";
 
         /// <summary> Content at a specific URL. </summary>
-        public static ContentSourceKind Url { get; } = new ContentSourceKind(UrlValue);
+        public static ContentSourceKind Uri { get; } = new ContentSourceKind(UriValue);
         /// <summary> Content represented via Base64 encoding. </summary>
-        public static ContentSourceKind Base64 { get; } = new ContentSourceKind(Base64Value);
+        public static ContentSourceKind Bytes { get; } = new ContentSourceKind(BytesValue);
         /// <summary> Files in a path within an Azure Blob Storage container. </summary>
-        public static ContentSourceKind AzureBlob { get; } = new ContentSourceKind(AzureBlobValue);
+        public static ContentSourceKind Blob { get; } = new ContentSourceKind(BlobValue);
         /// <summary> A file list specifying individual files in an Azure Blob Storage container. </summary>
-        public static ContentSourceKind AzureBlobFileList { get; } = new ContentSourceKind(AzureBlobFileListValue);
+        public static ContentSourceKind BlobFileList { get; } = new ContentSourceKind(BlobFileListValue);
         /// <summary> Determines if two <see cref="ContentSourceKind"/> values are the same. </summary>
         public static bool operator ==(ContentSourceKind left, ContentSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentSourceKind"/> values are not the same. </summary>
         public static bool operator !=(ContentSourceKind left, ContentSourceKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentSourceKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentSourceKind"/>. </summary>
         public static implicit operator ContentSourceKind(string value) => new ContentSourceKind(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

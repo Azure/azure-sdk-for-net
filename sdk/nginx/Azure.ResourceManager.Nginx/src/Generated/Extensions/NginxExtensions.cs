@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Nginx.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -32,6 +30,25 @@ namespace Azure.ResourceManager.Nginx
         private static MockableNginxSubscriptionResource GetMockableNginxSubscriptionResource(ArmResource resource)
         {
             return resource.GetCachedClient(client => new MockableNginxSubscriptionResource(client, resource.Id));
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NginxDeploymentApiKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxDeploymentApiKeyResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentApiKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNginxArmClient.GetNginxDeploymentApiKeyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NginxDeploymentApiKeyResource"/> object. </returns>
+        public static NginxDeploymentApiKeyResource GetNginxDeploymentApiKeyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNginxArmClient(client).GetNginxDeploymentApiKeyResource(id);
         }
 
         /// <summary>
@@ -121,7 +138,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,7 +176,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,7 +214,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -233,7 +250,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

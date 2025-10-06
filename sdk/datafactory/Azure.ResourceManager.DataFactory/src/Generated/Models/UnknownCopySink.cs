@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCopySink. </summary>
+    /// <summary> Unknown version of CopySink. </summary>
     internal partial class UnknownCopySink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopySink"/>. </summary>

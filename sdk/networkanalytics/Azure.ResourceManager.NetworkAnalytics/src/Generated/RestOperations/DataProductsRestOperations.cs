@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkAnalytics.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-11-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,26 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -141,7 +164,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,13 +191,27 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string dataProductName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string dataProductName)
@@ -217,7 +254,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductData.DeserializeDataProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +285,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductData.DeserializeDataProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,6 +294,20 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, DataProductData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string dataProductName, DataProductData data)
@@ -277,7 +328,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -337,6 +388,20 @@ namespace Azure.ResourceManager.NetworkAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, DataProductPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dataProductName, DataProductPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -355,7 +420,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -413,6 +478,20 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string dataProductName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string dataProductName)
@@ -485,6 +564,21 @@ namespace Azure.ResourceManager.NetworkAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateAddUserRoleRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, RoleAssignmentCommonProperties body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendPath("/addUserRole", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAddUserRoleRequest(string subscriptionId, string resourceGroupName, string dataProductName, RoleAssignmentCommonProperties body)
         {
             var message = _pipeline.CreateMessage();
@@ -504,7 +598,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -532,7 +626,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentDetail value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentDetail.DeserializeRoleAssignmentDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,13 +657,28 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentDetail value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentDetail.DeserializeRoleAssignmentDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGenerateStorageAccountSasTokenRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, AccountSasContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendPath("/generateStorageAccountSasToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateStorageAccountSasTokenRequest(string subscriptionId, string resourceGroupName, string dataProductName, AccountSasContent content)
@@ -591,7 +700,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -619,7 +728,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         AccountSasToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccountSasToken.DeserializeAccountSasToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -650,13 +759,28 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         AccountSasToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccountSasToken.DeserializeAccountSasToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRolesAssignmentsRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, BinaryData body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendPath("/listRolesAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRolesAssignmentsRequest(string subscriptionId, string resourceGroupName, string dataProductName, BinaryData body)
@@ -681,7 +805,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(body);
 #else
-            using (JsonDocument document = JsonDocument.Parse(body))
+            using (JsonDocument document = JsonDocument.Parse(body, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
@@ -713,7 +837,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -744,13 +868,28 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRemoveUserRoleRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, RoleAssignmentDetail body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendPath("/removeUserRole", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRemoveUserRoleRequest(string subscriptionId, string resourceGroupName, string dataProductName, RoleAssignmentDetail body)
@@ -772,7 +911,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -830,6 +969,21 @@ namespace Azure.ResourceManager.NetworkAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateRotateKeyRequestUri(string subscriptionId, string resourceGroupName, string dataProductName, NetworkAnalyticsKeyVaultContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendPath("/rotateKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRotateKeyRequest(string subscriptionId, string resourceGroupName, string dataProductName, NetworkAnalyticsKeyVaultContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -849,7 +1003,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -907,6 +1061,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -939,7 +1101,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -966,13 +1128,21 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1009,7 +1179,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1038,7 +1208,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

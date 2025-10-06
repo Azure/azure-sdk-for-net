@@ -7,7 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
+using System.Linq;
+using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -34,6 +35,19 @@ namespace Azure.DigitalTwins.Core
                 uploadedOn,
                 decommissioned,
                 dtdlModel);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Core.ErrorInformation"/>. </summary>
+        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="details"> Internal error details. </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <returns> A new <see cref="Core.ErrorInformation"/> instance for mocking. </returns>
+        public static ErrorInformation ErrorInformation(string code = null, string message = null, IEnumerable<ErrorInformation> details = null, InnerError innererror = null)
+        {
+            details ??= new List<ErrorInformation>();
+
+            return new ErrorInformation(code, message, details?.ToList(), innererror);
         }
 
         /// <summary> Initializes a new instance of <see cref="Core.IncomingRelationship"/>. </summary>
@@ -77,6 +91,25 @@ namespace Azure.DigitalTwins.Core
                 status,
                 createdDateTime,
                 lastActionDateTime,
+                finishedDateTime,
+                purgeDateTime,
+                error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeleteJob"/>. </summary>
+        /// <param name="id"> The identifier of the delete job. </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="createdDateTime"> Start time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
+        /// <returns> A new <see cref="Models.DeleteJob"/> instance for mocking. </returns>
+        public static DeleteJob DeleteJob(string id = null, DeleteJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ErrorInformation error = null)
+        {
+            return new DeleteJob(
+                id,
+                status,
+                createdDateTime,
                 finishedDateTime,
                 purgeDateTime,
                 error);

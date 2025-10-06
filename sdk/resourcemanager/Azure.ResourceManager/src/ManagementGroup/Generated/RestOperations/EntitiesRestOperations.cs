@@ -9,10 +9,8 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 
 namespace Azure.ResourceManager.ManagementGroups
@@ -36,6 +34,47 @@ namespace Azure.ResourceManager.ManagementGroups
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/getEntities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("$search", search.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (view != null)
+            {
+                uri.AppendQuery("$view", view.Value.ToString(), true);
+            }
+            if (groupName != null)
+            {
+                uri.AppendQuery("groupName", groupName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
@@ -123,7 +162,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         EntityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityListResult.DeserializeEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,13 +205,21 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         EntityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityListResult.DeserializeEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
@@ -231,7 +278,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         EntityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityListResult.DeserializeEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +325,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         EntityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityListResult.DeserializeEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

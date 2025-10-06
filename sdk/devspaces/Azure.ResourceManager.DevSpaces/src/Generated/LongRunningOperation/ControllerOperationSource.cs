@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevSpaces
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DevSpaces
 
         ControllerResource IOperationSource<ControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ControllerData.DeserializeControllerData(document.RootElement);
+            var data = ModelReaderWriter.Read<ControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevSpacesContext.Default);
             return new ControllerResource(_client, data);
         }
 
         async ValueTask<ControllerResource> IOperationSource<ControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ControllerData.DeserializeControllerData(document.RootElement);
-            return new ControllerResource(_client, data);
+            var data = ModelReaderWriter.Read<ControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevSpacesContext.Default);
+            return await Task.FromResult(new ControllerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

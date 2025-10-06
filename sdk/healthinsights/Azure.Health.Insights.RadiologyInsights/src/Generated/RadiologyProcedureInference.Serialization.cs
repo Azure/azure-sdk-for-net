@@ -9,31 +9,39 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class RadiologyProcedureInference : IUtf8JsonSerializable, IJsonModel<RadiologyProcedureInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyProcedureInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyProcedureInference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RadiologyProcedureInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RadiologyProcedureInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ProcedureCodes))
             {
                 writer.WritePropertyName("procedureCodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProcedureCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -41,39 +49,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in ImagingProcedures)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("orderedProcedure"u8);
-            writer.WriteObjectValue(OrderedProcedure);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            if (Optional.IsCollectionDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extension)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(OrderedProcedure, options);
         }
 
         RadiologyProcedureInference IJsonModel<RadiologyProcedureInference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -81,7 +61,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<RadiologyProcedureInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +70,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static RadiologyProcedureInference DeserializeRadiologyProcedureInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,11 +78,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             IReadOnlyList<FhirR4CodeableConcept> procedureCodes = default;
             IReadOnlyList<ImagingProcedure> imagingProcedures = default;
-            FhirR4Extendible orderedProcedure = default;
-            string kind = default;
+            OrderedProcedure orderedProcedure = default;
+            RadiologyInsightsInferenceType kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("procedureCodes"u8))
@@ -131,12 +111,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("orderedProcedure"u8))
                 {
-                    orderedProcedure = FhirR4Extendible.DeserializeFhirR4Extendible(property.Value, options);
+                    orderedProcedure = OrderedProcedure.DeserializeOrderedProcedure(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -155,10 +135,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RadiologyProcedureInference(
                 kind,
                 extension ?? new ChangeTrackingList<FhirR4Extension>(),
@@ -175,9 +155,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,11 +169,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRadiologyProcedureInference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RadiologyProcedureInference)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -203,15 +183,15 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new RadiologyProcedureInference FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRadiologyProcedureInference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

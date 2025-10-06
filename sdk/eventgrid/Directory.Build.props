@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Import parent Directory.Build.props -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <!-- Add shared EventGrid properties -->
+  <PropertyGroup>
+    <AzureEventGridSharedSources>$(MSBuildThisFileDirectory)Azure.Messaging.EventGrid\src\Shared\</AzureEventGridSharedSources>
+  </PropertyGroup>
+
+</Project>

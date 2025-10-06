@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownSsisObjectMetadata. </summary>
+    /// <summary> Unknown version of SsisObjectMetadata. </summary>
     internal partial class UnknownSsisObjectMetadata : SynapseSsisObjectMetadata
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSsisObjectMetadata"/>. </summary>

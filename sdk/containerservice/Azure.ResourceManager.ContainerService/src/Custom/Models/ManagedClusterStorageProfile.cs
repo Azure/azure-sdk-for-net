@@ -14,8 +14,6 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterStorageProfile
     {
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
-        [Obsolete("This property is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsDiskCsiDriverEnabled
         {
             get => DiskCsiDriver is null ? default : DiskCsiDriver.IsEnabled;
@@ -28,7 +26,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsFileCsiDriverEnabled
         {
             get => FileCsiDriver is null ? default : FileCsiDriver.IsEnabled;
@@ -41,7 +38,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsSnapshotControllerEnabled
         {
             get => SnapshotController is null ? default : SnapshotController.IsEnabled;
@@ -54,7 +50,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsBlobCsiDriverEnabled
         {
             get => BlobCsiDriver is null ? default : BlobCsiDriver.IsEnabled;

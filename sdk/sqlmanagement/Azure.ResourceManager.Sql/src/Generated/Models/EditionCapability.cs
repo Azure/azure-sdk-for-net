@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -59,34 +58,46 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="readScale"> The read scale capability for the edition. </param>
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
+        /// <param name="zonePinning"> Whether or not zone pinning is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
             IsZoneRedundant = isZoneRedundant;
             ReadScale = readScale;
             SupportedStorageCapabilities = supportedStorageCapabilities;
+            ZonePinning = zonePinning;
             Status = status;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported service objectives for the edition. </summary>
+        [WirePath("supportedServiceLevelObjectives")]
         public IReadOnlyList<ServiceObjectiveCapability> SupportedServiceLevelObjectives { get; }
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> The read scale capability for the edition. </summary>
+        [WirePath("readScale")]
         public ReadScaleCapability ReadScale { get; }
         /// <summary> The list of supported storage capabilities for this edition. </summary>
+        [WirePath("supportedStorageCapabilities")]
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
+        /// <summary> Whether or not zone pinning is supported for the edition. </summary>
+        [WirePath("zonePinning")]
+        public bool? ZonePinning { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

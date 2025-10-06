@@ -1,0 +1,14 @@
+apiVersion: v2
+name: net-stgdm-blobs
+version: 0.1.0
+description: Stress tests for Storage Data Movement Blobs for .NET
+
+dependencies:
+- name: stress-test-addons
+  version: ~0.3.0
+  repository: https://stresstestcharts.blob.core.windows.net/helm/
+
+annotations:
+  stressTest: 'true'
+  namespace: 'net'
+  environment: 'storage'

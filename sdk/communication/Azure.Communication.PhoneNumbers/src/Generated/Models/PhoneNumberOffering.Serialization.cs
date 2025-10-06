@@ -58,5 +58,13 @@ namespace Azure.Communication.PhoneNumbers
             }
             return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumberOffering FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePhoneNumberOffering(document.RootElement);
+        }
     }
 }

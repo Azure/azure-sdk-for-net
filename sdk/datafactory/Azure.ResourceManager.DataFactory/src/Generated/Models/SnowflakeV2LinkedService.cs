@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -34,6 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -51,8 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scope"> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
         /// <param name="privateKey"> The Azure key vault secret reference of privateKey for KeyPair auth. </param>
         /// <param name="privateKeyPassphrase"> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </param>
+        /// <param name="role"> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </param>
+        /// <param name="host"> The host name of the Snowflake account. Type: string (or Expression with resultType string). </param>
+        /// <param name="schema"> Schema name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SnowflakeV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecretBaseDefinition password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecretBaseDefinition privateKey, DataFactorySecretBaseDefinition privateKeyPassphrase, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SnowflakeV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecret privateKey, DataFactorySecret privateKeyPassphrase, DataFactoryElement<string> role, DataFactoryElement<string> host, DataFactoryElement<string> schema, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountIdentifier = accountIdentifier;
             User = user;
@@ -66,6 +69,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Scope = scope;
             PrivateKey = privateKey;
             PrivateKeyPassphrase = privateKeyPassphrase;
+            Role = role;
+            Host = host;
+            Schema = schema;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "SnowflakeV2";
         }
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of the Snowflake user. </summary>
         public DataFactoryElement<string> User { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The name of the Snowflake database. </summary>
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The name of the Snowflake warehouse. </summary>
@@ -90,15 +96,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </summary>
-        public DataFactorySecretBaseDefinition ClientSecret { get; set; }
+        public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> TenantId { get; set; }
         /// <summary> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> Scope { get; set; }
         /// <summary> The Azure key vault secret reference of privateKey for KeyPair auth. </summary>
-        public DataFactorySecretBaseDefinition PrivateKey { get; set; }
+        public DataFactorySecret PrivateKey { get; set; }
         /// <summary> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </summary>
-        public DataFactorySecretBaseDefinition PrivateKeyPassphrase { get; set; }
+        public DataFactorySecret PrivateKeyPassphrase { get; set; }
+        /// <summary> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Role { get; set; }
+        /// <summary> The host name of the Snowflake account. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Host { get; set; }
+        /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Schema { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

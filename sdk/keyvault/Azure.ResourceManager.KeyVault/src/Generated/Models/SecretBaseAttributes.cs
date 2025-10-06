@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Determines whether the object is enabled. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
         /// <summary> Not before date in seconds since 1970-01-01T00:00:00Z. </summary>
+        [WirePath("nbf")]
         public DateTimeOffset? NotBefore { get; set; }
         /// <summary> Expiry date in seconds since 1970-01-01T00:00:00Z. </summary>
+        [WirePath("exp")]
         public DateTimeOffset? Expires { get; set; }
         /// <summary> Creation time in seconds since 1970-01-01T00:00:00Z. </summary>
+        [WirePath("created")]
         public DateTimeOffset? Created { get; }
         /// <summary> Last updated time in seconds since 1970-01-01T00:00:00Z. </summary>
+        [WirePath("updated")]
         public DateTimeOffset? Updated { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,19 +48,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ValidateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         internal ValidateOracleAzureDBPostgreSqlSyncTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateOracleAzureDBPostgreSqlSyncTaskOutput(IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateOracleAzureDBPostgreSqlSyncTaskOutput(IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationErrors = validationErrors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Errors associated with a selected database object. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

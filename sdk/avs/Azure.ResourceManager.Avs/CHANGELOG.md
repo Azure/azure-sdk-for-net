@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2025-07-02)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09-01' to 'package-2024-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/802ded7f507321d74f4594edf2a78732b83edda6/specification/vmware/resource-manager/readme.md.
+- Added Host, Provisioned Network, Pure Storage Policy Resource and Collection classes
+
+### Other Changes
+
+- Generated using typespec
+
+## 1.4.0 (2024-10-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-03-01' to 'package-2023-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/e19b5771846718774c0452800b9a42c251319f48/specification/vmware/resource-manager/readme.md.
+    - WorkloadNetworkResource is now a singleton resource
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.3.0 (2024-01-22)
 
@@ -94,4 +113,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

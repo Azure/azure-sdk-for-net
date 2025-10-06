@@ -1,8 +1,8 @@
 # Introduction
 
-Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://docs.microsoft.com/azure/digital-twins/overview). 
+Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://learn.microsoft.com/azure/digital-twins/overview). 
 
-For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
+For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://learn.microsoft.com/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://learn.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://learn.microsoft.com/azure/digital-twins/tutorial-end-to-end).
 
 The guides mentioned above can help you get started with key elements of Azure Digital Twins, such as creating Azure Digital Twins instances, models, twin graphs, etc. Use this samples guide below to familiarize yourself with the various APIs that help you program against Azure Digital Twins.
 
@@ -26,7 +26,7 @@ The samples project demonstrates the following:
 
 To create a new digital twins client, you need the endpoint to an Azure Digital Twin instance and credentials.
 In the sample below, you can set `AdtEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
-The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+The client requires an instance of [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
 In this samples, we illustrate how to use one derived class: ClientSecretCredential.
 
 > Note: In order to access the data plane for the Digital Twins service, the entity must be given permissions.
@@ -57,15 +57,15 @@ It provides an opportunity to override default behavior including:
 #### Object serializer
 
 The digital twins client has methods that will serialize your custom digital twins and relationship types for transport, and deserialize the response back to a type specified by you.
-The default object serializer, [JsonObjectSerializer](https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet),
+The default object serializer, [JsonObjectSerializer](https://learn.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet),
 works using the `System.Text.Json` library.
-It uses a default [JsonSerializerOptions](https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions?view=net-5.0) instance.
+It uses a default [JsonSerializerOptions](https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions?view=net-5.0) instance.
 
 Set the `Serializer` property to a custom instance of `JsonObjectSerializer` or your own implementation that inherits from
-[ObjectSerializer](https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
+[ObjectSerializer](https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
 
 One reason for customizing would be to provide custom de/serialization settings, for example setting the `IgnoreNullValues` property to `true`.
-See more examples and options of working with `JsonSerializerOptions` [here](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0#ignore-all-null-value-properties).
+See more examples and options of working with `JsonSerializerOptions` [here](https://learn.microsoft.com/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0#ignore-all-null-value-properties).
 This would prevent unset properties on your digital twin or relationship from being included in the payload sent to the service.
 
 ## Create, list, decommission, and delete models
@@ -265,7 +265,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
 
 ### Query digital twins
 
-Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
+Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.learn.microsoft.com/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging

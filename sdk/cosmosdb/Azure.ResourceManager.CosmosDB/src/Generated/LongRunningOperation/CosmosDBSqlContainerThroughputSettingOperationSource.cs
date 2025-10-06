@@ -5,13 +5,11 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -34,16 +32,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlContainerThroughputSettingResource IOperationSource<CosmosDBSqlContainerThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return new CosmosDBSqlContainerThroughputSettingResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlContainerThroughputSettingResource> IOperationSource<CosmosDBSqlContainerThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
-            return new CosmosDBSqlContainerThroughputSettingResource(_client, data);
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
+            return await Task.FromResult(new CosmosDBSqlContainerThroughputSettingResource(_client, data)).ConfigureAwait(false);
         }
 
         private ThroughputSettingData ScrubId(ThroughputSettingData data)

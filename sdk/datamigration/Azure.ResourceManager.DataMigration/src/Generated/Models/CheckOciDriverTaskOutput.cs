@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskOutput"/>. </summary>
         internal CheckOciDriverTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskOutput"/>. </summary>
         /// <param name="installedDriver"> Information about the installed driver if found and valid. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckOciDriverTaskOutput(OracleOciDriverInfo installedDriver, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckOciDriverTaskOutput(DataMigrationOracleOciDriverInfo installedDriver, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstalledDriver = installedDriver;
             ValidationErrors = validationErrors;
@@ -64,8 +63,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information about the installed driver if found and valid. </summary>
-        public OracleOciDriverInfo InstalledDriver { get; }
+        public DataMigrationOracleOciDriverInfo InstalledDriver { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

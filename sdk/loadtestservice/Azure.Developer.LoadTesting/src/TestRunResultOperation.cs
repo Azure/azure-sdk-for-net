@@ -21,7 +21,7 @@ namespace Azure.Developer.LoadTesting
         private BinaryData _value;
         private readonly string _testRunId;
         private readonly LoadTestRunClient _client;
-        private readonly List<string> _terminalStatus = new()
+        private readonly List<string> _terminalStatuses = new()
             {
                 "DONE",
                 "FAILED",
@@ -29,11 +29,15 @@ namespace Azure.Developer.LoadTesting
             };
 
         /// <summary>
-        /// Value.
+        /// Final result of the long-running operation.
         /// </summary>
+        /// <remarks>
+        /// This property can be accessed only after the operation completes successfully (HasValue is true).
+        /// </remarks>
         public override BinaryData Value
         {
-            get {
+            get
+            {
                 if (HasCompleted && !HasValue)
                 {
                     throw new InvalidOperationException("The operation is not complete.");
@@ -46,33 +50,40 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// HasValue
+        /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public override bool HasValue => _completed;
 
         /// <summary>
-        /// Id.
+        /// Gets an ID representing the operation that can be used to poll for the status
+        /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
 
         /// <summary>
-        /// HasCompleted
+        /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _completed;
 
         /// <summary>
-        /// FileUploadOperation.
+        /// Initializes a new instance of the <see cref="TestRunResultOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         protected TestRunResultOperation() { }
 
         /// <summary>
-        /// FileUploadOperation.
+        /// Initializes a new instance of the <see cref="TestRunResultOperation"/> class which
+        /// tracks the status of a long-running operation for uploading a file to a test.
         /// </summary>
+        /// <param name="testRunId">The ID of the test run.</param>
+        /// <param name="client">An instance of the Load Test Run Client.</param>
+        /// <param name="initialResponse">The initial response from the server.</param>
         public TestRunResultOperation(string testRunId, LoadTestRunClient client, Response initialResponse = null)
         {
             _testRunId = Id = testRunId;
             _client = client;
             _completed = false;
+
             if (initialResponse != null)
             {
                 _response = initialResponse;
@@ -82,16 +93,26 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// GetRawResponse.
+        /// The last HTTP response received from the server.
         /// </summary>
+        /// <remarks>
+        /// The last response returned from the server during the lifecycle of this instance.
+        /// An instance of <see cref="TestRunResultOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// Responses from these requests can be accessed using GetRawResponse.
+        /// </remarks>
         public override Response GetRawResponse()
         {
             return _response;
         }
 
         /// <summary>
-        /// UpdateStatus.
+        /// Calls the server to get updated status of the long-running operation.
         /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// </remarks>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             if (_completed)
@@ -99,15 +120,20 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestRun(_testRunId);
+            _response = _client.GetTestRun(_testRunId).GetRawResponse();
             _value = _response.Content;
 
             return GetCompletionResponse();
         }
 
         /// <summary>
-        /// UpdateStatusAsync.
+        /// Calls the server to get updated status of the long-running operation.
         /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// </remarks>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             if (_completed)
@@ -117,7 +143,8 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                var initialResponse = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                _response = initialResponse.GetRawResponse();
                 _value = _response.Content;
             }
             catch
@@ -139,7 +166,7 @@ namespace Azure.Developer.LoadTesting
             }
             catch (Exception e)
             {
-                throw new RequestFailedException("Unable to parse JOSN: " + e.Message);
+                throw new RequestFailedException("Unable to parse JSON: " + e.Message, e);
             }
 
             try
@@ -148,10 +175,10 @@ namespace Azure.Developer.LoadTesting
             }
             catch
             {
-                throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
+                throw new RequestFailedException("No property status in response JSON: " + _value.ToString());
             }
 
-            if (_terminalStatus.Contains(testRunStatus))
+            if (_terminalStatuses.Contains(testRunStatus))
             {
                 _completed = true;
             }

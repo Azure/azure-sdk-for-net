@@ -92,28 +92,40 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Database type of the sync member. </summary>
+        [WirePath("properties.databaseType")]
         public SyncMemberDbType? DatabaseType { get; set; }
         /// <summary> ARM resource id of the sync agent in the sync member. </summary>
+        [WirePath("properties.syncAgentId")]
         public ResourceIdentifier SyncAgentId { get; set; }
         /// <summary> SQL Server database id of the sync member. </summary>
+        [WirePath("properties.sqlServerDatabaseId")]
         public Guid? SqlServerDatabaseId { get; set; }
         /// <summary> ARM resource id of the sync member logical database, for sync members in Azure. </summary>
+        [WirePath("properties.syncMemberAzureDatabaseResourceId")]
         public ResourceIdentifier SyncMemberAzureDatabaseResourceId { get; set; }
         /// <summary> Whether to use private link connection. </summary>
+        [WirePath("properties.usePrivateLinkConnection")]
         public bool? UsePrivateLinkConnection { get; set; }
         /// <summary> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </summary>
+        [WirePath("properties.privateEndpointName")]
         public string PrivateEndpointName { get; }
         /// <summary> Server name of the member database in the sync member. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; set; }
         /// <summary> Database name of the member database in the sync member. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> User name of the member database in the sync member. </summary>
+        [WirePath("properties.userName")]
         public string UserName { get; set; }
         /// <summary> Password of the member database in the sync member. </summary>
+        [WirePath("properties.password")]
         public string Password { get; set; }
         /// <summary> Sync direction of the sync member. </summary>
+        [WirePath("properties.syncDirection")]
         public SyncDirection? SyncDirection { get; set; }
         /// <summary> Sync state of the sync member. </summary>
+        [WirePath("properties.syncState")]
         public SyncMemberState? SyncState { get; }
     }
 }

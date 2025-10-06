@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -27,18 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTable"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
-        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
         /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
-        /// <param name="intellectualProperty"> Intellectual Property details. Used if data is an Intellectual Property. </param>
-        /// <param name="stage"> Stage in the data lifecycle assigned to this data asset. </param>
         /// <param name="referencedUris"> Uris referenced in the MLTable definition (required for lineage). </param>
-        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IntellectualProperty intellectualProperty, string stage, IList<Uri> referencedUris) : base(description, properties, tags, serializedAdditionalRawData, autoDeleteSetting, isAnonymous, isArchived, dataType, dataUri, intellectualProperty, stage)
+        internal MachineLearningTable(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, MachineLearningDataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous, dataType, dataUri)
         {
             ReferencedUris = referencedUris;
             DataType = dataType;
@@ -50,6 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Uris referenced in the MLTable definition (required for lineage). </summary>
+        [WirePath("referencedUris")]
         public IList<Uri> ReferencedUris { get; set; }
     }
 }

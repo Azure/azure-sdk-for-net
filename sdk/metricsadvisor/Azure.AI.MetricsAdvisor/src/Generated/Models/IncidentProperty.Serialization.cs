@@ -51,5 +51,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, expectedValueOfRootNode);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IncidentProperty FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIncidentProperty(document.RootElement);
+        }
     }
 }

@@ -38,5 +38,15 @@ extends:
     Artifacts:
     - name: Azure.Messaging.EventHubs
       safeName: AzureMessagingEventHubs
+      triggeringPaths:
+      - Azure.Messaging.EventHubs.Shared
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
+      triggeringPaths:
+      - Azure.Messaging.EventHubs.Shared
+    CheckAotCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Messaging.EventHubs
+      ExpectedWarningsFilepath: Azure.Messaging.EventHubs/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Messaging.EventHubs.Processor
+      ExpectedWarningsFilepath: Azure.Messaging.EventHubs.Processor/tests/compatibility/ExpectedWarnings.txt

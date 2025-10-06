@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -82,16 +81,22 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The Kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Properties of Cognitive Services account commitment plan. </summary>
+        [WirePath("properties")]
         public CommitmentPlanProperties Properties { get; set; }
     }
 }

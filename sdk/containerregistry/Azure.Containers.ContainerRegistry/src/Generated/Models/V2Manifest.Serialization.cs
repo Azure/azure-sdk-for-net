@@ -64,5 +64,13 @@ namespace Azure.Containers.ContainerRegistry
             }
             return new V2Manifest(schemaVersion, mediaType, config, layers ?? new ChangeTrackingList<OciDescriptor>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new V2Manifest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeV2Manifest(document.RootElement);
+        }
     }
 }

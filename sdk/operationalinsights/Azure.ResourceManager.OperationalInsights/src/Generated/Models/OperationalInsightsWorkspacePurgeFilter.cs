@@ -66,8 +66,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The column of the table over which the given query should run. </summary>
+        [WirePath("column")]
         public string Column { get; set; }
         /// <summary> A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query. </summary>
+        [WirePath("operator")]
         public string Operator { get; set; }
         /// <summary>
         /// the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= '2017-09-01') or array of values.
@@ -99,8 +101,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; set; }
         /// <summary> When filtering over custom dimensions, this key will be used as the name of the custom dimension. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

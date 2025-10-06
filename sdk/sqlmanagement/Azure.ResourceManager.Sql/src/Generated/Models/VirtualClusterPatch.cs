@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -70,12 +69,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
+        [WirePath("properties.subnetId")]
         public ResourceIdentifier SubnetId { get; }
         /// <summary> Virtual cluster version. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
+        [WirePath("properties.childResources")]
         public IReadOnlyList<string> ChildResources { get; }
     }
 }

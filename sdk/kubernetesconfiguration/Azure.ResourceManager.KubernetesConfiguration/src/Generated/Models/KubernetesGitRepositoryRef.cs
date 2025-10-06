@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The git repository branch name to checkout. </summary>
+        [WirePath("branch")]
         public string Branch { get; set; }
         /// <summary> The git repository tag name to checkout. This takes precedence over branch. </summary>
+        [WirePath("tag")]
         public string Tag { get; set; }
         /// <summary> The semver range used to match against git repository tags. This takes precedence over tag. </summary>
+        [WirePath("semver")]
         public string Semver { get; set; }
         /// <summary> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </summary>
+        [WirePath("commit")]
         public string Commit { get; set; }
     }
 }

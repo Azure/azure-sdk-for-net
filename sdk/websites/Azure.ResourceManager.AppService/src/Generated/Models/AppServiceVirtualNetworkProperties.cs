@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -78,21 +77,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The Virtual Network's resource ID. </summary>
+        [WirePath("vnetResourceId")]
         public ResourceIdentifier VnetResourceId { get; }
         /// <summary> The client certificate thumbprint. </summary>
+        [WirePath("certThumbprint")]
         public string CertThumbprintString { get; }
         /// <summary>
         /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </summary>
+        [WirePath("certBlob")]
         public string CertBlob { get; }
         /// <summary> The routes that this Virtual Network connection uses. </summary>
+        [WirePath("routes")]
         public IReadOnlyList<AppServiceVirtualNetworkRoute> Routes { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("resyncRequired")]
         public bool? IsResyncRequired { get; }
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
+        [WirePath("dnsServers")]
         public string DnsServers { get; }
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>
+        [WirePath("isSwift")]
         public bool? IsSwift { get; }
     }
 }

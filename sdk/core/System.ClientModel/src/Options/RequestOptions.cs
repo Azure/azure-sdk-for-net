@@ -16,6 +16,7 @@ public class RequestOptions
 
     private CancellationToken _cancellationToken = CancellationToken.None;
     private ClientErrorBehaviors _errorOptions = ClientErrorBehaviors.Default;
+    private bool _bufferResponse = true;
 
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
@@ -28,6 +29,19 @@ public class RequestOptions
     /// </summary>
     public RequestOptions()
     {
+    }
+
+    internal static RequestOptions? FromCancellationToken(CancellationToken cancellationToken)
+    {
+        if (cancellationToken == default)
+        {
+            return null;
+        }
+
+        return new RequestOptions()
+        {
+            CancellationToken = cancellationToken
+        };
     }
 
     /// <summary>
@@ -57,6 +71,26 @@ public class RequestOptions
             AssertNotFrozen();
 
             _errorOptions = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the response content should be
+    /// buffered in-memory by the pipeline. This value defaults to <c>true</c>.
+    /// </summary>
+    /// <remarks>Please note that setting this value to <c>false</c> will result
+    /// in the <see cref="PipelineResponse.ContentStream"/> obtained from
+    /// <see cref="ClientResult.GetRawResponse"/> holding a live network stream.
+    /// It is the responsibility of the caller to ensure the stream is disposed.
+    /// </remarks>
+    public bool BufferResponse
+    {
+        get => _bufferResponse;
+        set
+        {
+            AssertNotFrozen();
+
+            _bufferResponse = value;
         }
     }
 
@@ -136,6 +170,8 @@ public class RequestOptions
     /// options to.</param>
     protected internal virtual void Apply(PipelineMessage message)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         Freeze();
 
         // Set the cancellation token on the message so pipeline policies
@@ -148,6 +184,9 @@ public class RequestOptions
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
+
+        // Tell transport whether or not to buffer response content.
+        message.BufferResponse = BufferResponse;
 
         // Apply adds and sets to request headers if applicable.
         if (_headersUpdates is not null)

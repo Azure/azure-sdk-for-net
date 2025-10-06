@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //Set and validated
             var data = new FileServiceData()
             {
-                ProtocolSettings = new ProtocolSettings()
+                ProtocolSettings = new FileServiceProtocolSettings()
                 {
                     SmbSetting = new SmbSetting()
                     {
@@ -486,6 +486,162 @@ namespace Azure.ResourceManager.Storage.Tests
                 Assert.AreEqual(putRule.ExposedHeaders, getRule.ExposedHeaders);
                 Assert.AreEqual(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
             }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task ProvisionV2FileStorageAccount()
+        {
+            // Create PV2 account
+            string accountName = await CreateValidAccountNameAsync("teststoragemgmtpv2");
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed,
+                accountName,
+                GetDefaultStorageAccountParameters(
+                    sku: new StorageSku(StorageSkuName.StandardV2Lrs),
+                    StorageKind.FileStorage,
+                    AzureLocation.WestUS2)))
+                    //"eastus2euap")))
+                .Value;
+            _fileService = _storageAccount.GetFileService();
+            _fileService = await _fileService.GetAsync();
+            _fileShareCollection = _fileService.GetFileShares();
+
+            // Get share usage
+            var usage = (_fileService.GetFileServiceUsage()).GetAsync().Result.Value.Data;
+            Assert.IsNotNull(usage.Properties.FileShareLimits);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedIops.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedIops.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value > 0);
+            Assert.IsNotNull(usage.Properties.BurstingConstants);
+            Assert.IsTrue(usage.Properties.FileShareRecommendations.BandwidthScalar.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareRecommendations.BaseBandwidthMiBPerSec.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareRecommendations.BaseIops.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareRecommendations.IoScalar.Value > 0);
+            Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxFileShares.Value > 0);
+            Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0);
+            Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedIops.Value > 0);
+            Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedStorageGiB.Value > 0);
+            Assert.IsNotNull(usage.Properties.StorageAccountUsage);
+
+            //create file share
+            string fileShareName = Recording.GenerateAssetName("testfileshare");
+            var data = new FileShareData()
+            {
+                ProvisionedBandwidthMibps = usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value - 1,
+                ProvisionedIops = usage.Properties.FileShareLimits.MaxProvisionedIops.Value - 1,
+                ShareQuota = usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value - 1
+            };
+            FileShareResource share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
+            Assert.AreEqual(share1.Id.Name, fileShareName);
+            Assert.AreEqual(data.ProvisionedBandwidthMibps, share1.Data.ProvisionedBandwidthMibps);
+            Assert.AreEqual(data.ProvisionedIops, share1.Data.ProvisionedIops);
+            Assert.AreEqual(data.ShareQuota, share1.Data.ShareQuota);
+
+            //validate if created successfully
+            FileShareResource share2 = await _fileShareCollection.GetAsync(fileShareName);
+            Assert.AreEqual(share1.Data.ProvisionedBandwidthMibps, share2.Data.ProvisionedBandwidthMibps);
+            Assert.AreEqual(share1.Data.ProvisionedIops, share2.Data.ProvisionedIops);
+            Assert.AreEqual(share1.Data.ShareQuota, share2.Data.ShareQuota);
+
+            // Update File share
+            data.ProvisionedBandwidthMibps = usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value + 1;
+            data.ProvisionedIops = usage.Properties.FileShareLimits.MinProvisionedIops.Value + 1;
+            data.ShareQuota = usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value + 1;
+
+            share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
+            Assert.AreEqual(share1.Id.Name, fileShareName);
+            Assert.AreEqual(data.ProvisionedBandwidthMibps, share1.Data.ProvisionedBandwidthMibps);
+            Assert.AreEqual(data.ProvisionedIops, share1.Data.ProvisionedIops);
+            Assert.AreEqual(data.ShareQuota, share1.Data.ShareQuota);
+
+            share2 = (await _fileShareCollection.GetAsync(fileShareName)).Value;
+            Assert.AreEqual(share1.Data.ProvisionedBandwidthMibps, share2.Data.ProvisionedBandwidthMibps);
+            Assert.AreEqual(share1.Data.ProvisionedIops, share2.Data.ProvisionedIops);
+            Assert.AreEqual(share1.Data.ShareQuota, share2.Data.ShareQuota);
+
+            //delete file share
+            await share1.DeleteAsync(WaitUntil.Completed);
+
+            //validate if deleted successfully
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task PaidBursting()
+        {
+            // Create account
+            string accountName = Recording.GenerateAssetName("account");
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLrs), StorageKind.FileStorage, "eastus2euap");
+            var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
+
+            //create file share
+            _fileShareCollection = (await account.GetFileService().GetAsync()).Value.GetFileShares();
+            string fileShareName = Recording.GenerateAssetName("testfileshare");
+            var data = new FileShareData();
+            data.FileSharePaidBursting = new FileSharePropertiesFileSharePaidBursting()
+            {
+                PaidBurstingEnabled = true,
+                PaidBurstingMaxBandwidthMibps = 129,
+                PaidBurstingMaxIops = 3230
+            };
+            FileShareResource share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
+            Assert.AreEqual(share1.Id.Name, fileShareName);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingEnabled, share1.Data.FileSharePaidBursting.PaidBurstingEnabled);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, share1.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxIops, share1.Data.FileSharePaidBursting.PaidBurstingMaxIops);
+
+            //validate if created successfully
+            FileShareResource share2 = await _fileShareCollection.GetAsync(fileShareName);
+            AssertFileShareEqual(share1, share2);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingEnabled, share2.Data.FileSharePaidBursting.PaidBurstingEnabled);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, share2.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxIops, share2.Data.FileSharePaidBursting.PaidBurstingMaxIops);
+
+            // update file share - disable PaidBursting
+            data = new FileShareData();
+            data.FileSharePaidBursting = new FileSharePropertiesFileSharePaidBursting()
+            {
+                PaidBurstingEnabled = false
+            };
+            share1 = (await share1.UpdateAsync(data)).Value;
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingEnabled, share1.Data.FileSharePaidBursting.PaidBurstingEnabled);
+
+            share2 = (await _fileShareCollection.GetAsync(fileShareName)).Value;
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingEnabled, share2.Data.FileSharePaidBursting.PaidBurstingEnabled);
+
+            // update file share - enable PaidBursting
+            data.FileSharePaidBursting = new FileSharePropertiesFileSharePaidBursting()
+            {
+                PaidBurstingEnabled = true,
+                PaidBurstingMaxBandwidthMibps = 128,
+                PaidBurstingMaxIops = 3229
+            };
+            share1 = (await share1.UpdateAsync(data)).Value;
+            Assert.AreEqual(share1.Id.Name, fileShareName);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingEnabled, share1.Data.FileSharePaidBursting.PaidBurstingEnabled);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, share1.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxIops, share1.Data.FileSharePaidBursting.PaidBurstingMaxIops);
+
+            share2 = await _fileShareCollection.GetAsync(fileShareName);
+            AssertFileShareEqual(share1, share2);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingEnabled, share2.Data.FileSharePaidBursting.PaidBurstingEnabled);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, share2.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps);
+            Assert.AreEqual(data.FileSharePaidBursting.PaidBurstingMaxIops, share2.Data.FileSharePaidBursting.PaidBurstingMaxIops);
+
+            //delete file share
+            await share1.DeleteAsync(WaitUntil.Completed);
+
+            //validate if deleted successfully
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
     }
 }

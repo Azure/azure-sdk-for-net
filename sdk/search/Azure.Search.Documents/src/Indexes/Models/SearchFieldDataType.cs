@@ -19,6 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("EdmSByte")]
         public static SearchFieldDataType SByte { get; } = new SearchFieldDataType(SByteValue);
 
+        /// <summary> Indicates that a field contains a 8-bit unsigned integer. This is only valid when used with Collection(Edm.Byte). </summary>
+        [CodeGenMember("EdmByte")]
+        public static SearchFieldDataType Byte { get; } = new SearchFieldDataType(ByteValue);
+
         /// <summary> Indicates that a field contains a 16-bit signed integer. This is only valid when used with Collection(Edm.Int16). </summary>
         [CodeGenMember("EdmInt16")]
         public static SearchFieldDataType Int16 { get; } = new SearchFieldDataType(Int16Value);

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Resource ID  of Azure Event Hub to send packet core events to. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> The duration (in seconds) between UE usage reports. </summary>
+        [WirePath("reportingInterval")]
         public int? ReportingInterval { get; set; }
     }
 }

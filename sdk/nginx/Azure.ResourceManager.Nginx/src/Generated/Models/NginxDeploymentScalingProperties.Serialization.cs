@@ -10,28 +10,48 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxDeploymentScalingProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentScalingProperties>
+    public partial class NginxDeploymentScalingProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentScalingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentScalingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentScalingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentScalingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            writer.WritePropertyName("autoScaleSettings"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Profiles))
+            {
+                writer.WritePropertyName("profiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in Profiles)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -40,14 +60,13 @@ namespace Azure.ResourceManager.Nginx.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxDeploymentScalingProperties IJsonModel<NginxDeploymentScalingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -55,7 +74,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,15 +83,16 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentScalingProperties DeserializeNginxDeploymentScalingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? capacity = default;
+            IList<NginxScaleProfile> profiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"u8))
@@ -84,13 +104,39 @@ namespace Azure.ResourceManager.Nginx.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("autoScaleSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("profiles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NginxScaleProfile> array = new List<NginxScaleProfile>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NginxScaleProfile.DeserializeNginxScaleProfile(item, options));
+                            }
+                            profiles = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentScalingProperties(capacity, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NginxDeploymentScalingProperties(capacity, profiles ?? new ChangeTrackingList<NginxScaleProfile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentScalingProperties>.Write(ModelReaderWriterOptions options)
@@ -100,9 +146,9 @@ namespace Azure.ResourceManager.Nginx.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,11 +160,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxDeploymentScalingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

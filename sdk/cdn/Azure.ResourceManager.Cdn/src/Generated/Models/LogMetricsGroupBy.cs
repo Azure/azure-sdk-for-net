@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The LogMetricsGroupBy. </summary>
+    /// <summary>
+    /// The LogMetricsGroupBy.
+    /// Serialized Name: LogMetricsGroupBy
+    /// </summary>
     public readonly partial struct LogMetricsGroupBy : IEquatable<LogMetricsGroupBy>
     {
         private readonly string _value;
@@ -28,21 +31,36 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CountryOrRegionValue = "countryOrRegion";
         private const string CustomDomainValue = "customDomain";
 
-        /// <summary> httpStatusCode. </summary>
+        /// <summary>
+        /// httpStatusCode
+        /// Serialized Name: LogMetricsGroupBy.httpStatusCode
+        /// </summary>
         public static LogMetricsGroupBy HttpStatusCode { get; } = new LogMetricsGroupBy(HttpStatusCodeValue);
-        /// <summary> protocol. </summary>
+        /// <summary>
+        /// protocol
+        /// Serialized Name: LogMetricsGroupBy.protocol
+        /// </summary>
         public static LogMetricsGroupBy Protocol { get; } = new LogMetricsGroupBy(ProtocolValue);
-        /// <summary> cacheStatus. </summary>
+        /// <summary>
+        /// cacheStatus
+        /// Serialized Name: LogMetricsGroupBy.cacheStatus
+        /// </summary>
         public static LogMetricsGroupBy CacheStatus { get; } = new LogMetricsGroupBy(CacheStatusValue);
-        /// <summary> countryOrRegion. </summary>
+        /// <summary>
+        /// countryOrRegion
+        /// Serialized Name: LogMetricsGroupBy.countryOrRegion
+        /// </summary>
         public static LogMetricsGroupBy CountryOrRegion { get; } = new LogMetricsGroupBy(CountryOrRegionValue);
-        /// <summary> customDomain. </summary>
+        /// <summary>
+        /// customDomain
+        /// Serialized Name: LogMetricsGroupBy.customDomain
+        /// </summary>
         public static LogMetricsGroupBy CustomDomain { get; } = new LogMetricsGroupBy(CustomDomainValue);
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are the same. </summary>
         public static bool operator ==(LogMetricsGroupBy left, LogMetricsGroupBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are not the same. </summary>
         public static bool operator !=(LogMetricsGroupBy left, LogMetricsGroupBy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogMetricsGroupBy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetricsGroupBy"/>. </summary>
         public static implicit operator LogMetricsGroupBy(string value) => new LogMetricsGroupBy(value);
 
         /// <inheritdoc />
@@ -53,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

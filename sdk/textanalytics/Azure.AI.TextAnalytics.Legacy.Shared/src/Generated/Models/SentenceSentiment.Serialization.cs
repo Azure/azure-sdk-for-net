@@ -91,5 +91,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                 targets ?? new ChangeTrackingList<SentenceTarget>(),
                 assessments ?? new ChangeTrackingList<SentenceAssessment>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SentenceSentiment FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSentenceSentiment(document.RootElement);
+        }
     }
 }

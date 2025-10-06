@@ -29,9 +29,6 @@ parameters:
   - name: PackageSourceOverride
     type: string
     default: ''
-  - name: DocValidationImageId
-    type: string
-    default: ''
 steps:
   - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
     - pwsh: |
@@ -83,13 +80,6 @@ steps:
         parameters:
           WorkingDirectory: $(DocRepoLocation)
           DefaultBranchVariableName: TargetBranchName
-    # Pull and build the docker image.
-    - ${{ if ne(parameters.DocValidationImageId, '') }}:
-      - template: /eng/common/pipelines/templates/steps/docker-pull-image.yml
-        parameters:
-          ContainerRegistryClientId: $(azuresdkimages-cr-clientid)
-          ContainerRegistryClientSecret: $(azuresdkimages-cr-clientsecret)
-          ImageId: '${{ parameters.DocValidationImageId }}'
     - pwsh: |
         $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
         # Without -NoEnumerate, a single element array[T] gets unwrapped as a single item T.
@@ -99,7 +89,6 @@ steps:
           -DocRepoLocation "$(DocRepoLocation)" `
           -Language '${{parameters.Language}}' `
           -RepoId '${{ parameters.RepoId }}' `
-          -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
           -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
       displayName: Apply Documentation Updates
 

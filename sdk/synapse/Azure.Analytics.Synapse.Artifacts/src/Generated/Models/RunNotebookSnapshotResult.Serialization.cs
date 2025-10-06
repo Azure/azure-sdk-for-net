@@ -79,12 +79,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sparkPool);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RunNotebookSnapshotResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRunNotebookSnapshotResult(document.RootElement);
+        }
+
         internal partial class RunNotebookSnapshotResultConverter : JsonConverter<RunNotebookSnapshotResult>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookSnapshotResult model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override RunNotebookSnapshotResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

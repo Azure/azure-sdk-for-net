@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownTrackBase. </summary>
+    /// <summary> Unknown version of TrackBase. </summary>
     internal partial class UnknownTrackBase : MediaAssetTrackBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTrackBase"/>. </summary>

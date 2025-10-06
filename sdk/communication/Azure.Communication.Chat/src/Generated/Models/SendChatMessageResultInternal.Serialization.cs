@@ -28,5 +28,13 @@ namespace Azure.Communication.Chat
             }
             return new SendChatMessageResultInternal(id);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SendChatMessageResultInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSendChatMessageResultInternal(document.RootElement);
+        }
     }
 }

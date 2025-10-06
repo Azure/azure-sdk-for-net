@@ -8,25 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningContainerResourceSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningContainerResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningContainerResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningContainerResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningContainerResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
                 if (Cpu != null)
@@ -37,18 +45,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("cpu");
-                }
-            }
-            if (Optional.IsDefined(Gpu))
-            {
-                if (Gpu != null)
-                {
-                    writer.WritePropertyName("gpu"u8);
-                    writer.WriteStringValue(Gpu);
-                }
-                else
-                {
-                    writer.WriteNull("gpu");
                 }
             }
             if (Optional.IsDefined(Memory))
@@ -63,6 +59,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("memory");
                 }
             }
+            if (Optional.IsDefined(Gpu))
+            {
+                if (Gpu != null)
+                {
+                    writer.WritePropertyName("gpu"u8);
+                    writer.WriteStringValue(Gpu);
+                }
+                else
+                {
+                    writer.WriteNull("gpu");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,14 +79,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningContainerResourceSettings IJsonModel<MachineLearningContainerResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -86,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,17 +102,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningContainerResourceSettings DeserializeMachineLearningContainerResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string cpu = default;
-            string gpu = default;
             string memory = default;
+            string gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -118,16 +125,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpu"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        gpu = null;
-                        continue;
-                    }
-                    gpu = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -138,13 +135,107 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     memory = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("gpu"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gpu = null;
+                        continue;
+                    }
+                    gpu = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningContainerResourceSettings(cpu, gpu, memory, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningContainerResourceSettings(cpu, memory, gpu, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cpu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cpu))
+                {
+                    builder.Append("  cpu: ");
+                    if (Cpu.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Cpu}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Cpu}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Memory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Memory))
+                {
+                    builder.Append("  memory: ");
+                    if (Memory.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Memory}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Memory}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gpu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gpu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Gpu))
+                {
+                    builder.Append("  gpu: ");
+                    if (Gpu.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Gpu}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Gpu}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningContainerResourceSettings>.Write(ModelReaderWriterOptions options)
@@ -154,9 +245,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,11 +261,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningContainerResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -51,10 +50,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit. </summary>
         internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.expressRouteCircuitPeering.id")]
         public ResourceIdentifier ExpressRouteCircuitPeeringId
         {
             get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
         internal WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.peerExpressRouteCircuitPeering.id")]
         public ResourceIdentifier PeerExpressRouteCircuitPeeringId
         {
             get => PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
@@ -81,14 +83,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
+        [WirePath("properties.addressPrefix")]
         public string AddressPrefix { get; set; }
         /// <summary> Express Route Circuit connection state. </summary>
+        [WirePath("properties.circuitConnectionStatus")]
         public CircuitConnectionStatus? CircuitConnectionStatus { get; }
         /// <summary> The name of the express route circuit connection resource. </summary>
+        [WirePath("properties.connectionName")]
         public string ConnectionName { get; set; }
         /// <summary> The resource guid of the authorization used for the express route circuit connection. </summary>
+        [WirePath("properties.authResourceGuid")]
         public Guid? AuthResourceGuid { get; set; }
         /// <summary> The provisioning state of the peer express route circuit connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

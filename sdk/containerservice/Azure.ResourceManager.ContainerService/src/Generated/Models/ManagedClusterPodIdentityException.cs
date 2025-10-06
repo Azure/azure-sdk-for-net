@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -81,10 +80,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The name of the pod identity exception. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The namespace of the pod identity exception. </summary>
+        [WirePath("namespace")]
         public string Namespace { get; set; }
         /// <summary> The pod labels to match. </summary>
+        [WirePath("podLabels")]
         public IDictionary<string, string> PodLabels { get; }
     }
 }

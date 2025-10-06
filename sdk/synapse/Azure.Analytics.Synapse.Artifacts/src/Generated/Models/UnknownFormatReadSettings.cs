@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownFormatReadSettings. </summary>
+    /// <summary> Unknown version of FormatReadSettings. </summary>
     internal partial class UnknownFormatReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFormatReadSettings"/>. </summary>

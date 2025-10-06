@@ -18,16 +18,19 @@
            Text="Api Compat cannot be disabled."/>
   </Target>
 
+  <PropertyGroup>
+    <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
+  </PropertyGroup>
+
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
   <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
     <Error Condition="'$(IsClientLibrary)' == 'true' and '$(PackageReleaseNotes)' != ''" Text="Do NOT set PackageReleaseNotes property in the project. Release notes are added automatically from package changelog" />
     <PropertyGroup>
-      <PackageRootPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))</PackageRootPath>
-      <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
-      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <DirectoryPartofPath>$(PackageRootDirectory.Replace($(RepoRoot), ''))</DirectoryPartofPath>
+      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)/README.md).Uri)</PackageProjectUrl>
+      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)/README.md).Uri)</PackageProjectUrl>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)/CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)/CHANGELOG.md).Uri)</PackageReleaseNotes>
     </PropertyGroup>
   </Target>
 
@@ -35,7 +38,7 @@
   <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingLibrary)' == 'true'" >
     <PropertyGroup>
       <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
-      <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
+      <ChangeLogPath>$(PackageRootDirectory)/CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
     <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
@@ -52,7 +55,7 @@
   </Target>
 
   <PropertyGroup>
-    <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
+    <OriginalReadmeMdPath>$(PackageRootDirectory)/README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
     <EnableNuGetReadmeMd Condition="'$(DesignTimeBuild)' != 'true' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
     <PackageReadmeFile Condition="'$(EnableNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
@@ -86,7 +89,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
@@ -98,10 +101,23 @@
 
   </ItemGroup>
 
+  <!-- Remove packages built into the .NET 6+ runtime -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+    <PackageReference Remove="System.Buffers" />
+    <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
+    <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Numerics.Vectors" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
+    <PackageReference Remove="System.Text.Json" />
+    <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
-    <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
+    <None Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md')" Include="$(PackageRootDirectory)/CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <!-- Add App.config to enable server GC in net462 perf and stress projects -->
@@ -157,7 +173,7 @@
 
   <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
-  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
+  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
 
@@ -170,7 +186,7 @@
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
     <!-- Find all non-management projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->
@@ -183,6 +199,15 @@
 
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
+
+    <!-- Add System.ClientModel.SourceGeneration project reference if System.ClientModel was contained in ProjectsToConvert -->
+    <_DependsOnSystemClientModel Include="@(ProjectsToConvert)" Exclude="System.ClientModel" />
+    <_DependsOnAzureCore Include="@(ProjectsToConvert)" Exclude="Azure.Core" />
+    <ProjectReference
+      Condition="'@(_DependsOnSystemClientModel)' != '@(ProjectsToConvert)' or '@(_DependsOnAzureCore)' != '@(ProjectsToConvert)'"
+      Include="$(RepoRoot)\sdk\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
   </ItemGroup>
 
   <!--TODO: update build targets - ADO 5668-->
@@ -202,7 +227,6 @@
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
@@ -214,7 +238,6 @@
     <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IXmlSerializable.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
@@ -237,20 +260,14 @@
     <Compile Include="$(AzureCoreSharedSources)StringRequestContent.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonRequestContent.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)XmlWriterContent.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.ClientModel" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
@@ -312,17 +329,6 @@
     <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
-  <!-- Validates that all the mgmt libraries have a trigger path in the core resourcemanager pipeline -->
-  <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
-    <PropertyGroup>
-      <_ResourceManagerCIFile>$(RepoRoot)/sdk/resourcemanager/ci.mgmt.yml</_ResourceManagerCIFile>
-      <_ResourceManagerCIFileContents>$([System.IO.File]::ReadAllText($(_ResourceManagerCIFile)))</_ResourceManagerCIFileContents>
-      <_ContainsTrigger>$([System.Text.RegularExpressions.Regex]::IsMatch($(_ResourceManagerCIFileContents), `- sdk/.*/$(MSBuildProjectName)\W+`))</_ContainsTrigger>
-    </PropertyGroup>
-
-    <Error Condition="'$(_ContainsTrigger)' != 'true'" Text="The core resourcemanager pipeline ['$(_ResourceManagerCIFile)'] does not contain a trigger path for your library please run 'eng/scripts/Update-Mgmt-CI.ps1' to add the correct trigger paths." />
-  </Target>
-
   <!-- InheritDoc-->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
     <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
@@ -359,7 +365,7 @@
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
   </Target>
 
-  <Target Name="GetPackageInfo">
+  <Target Name="GetPackageInfo" Returns="@(PackageInfoLine)">
     <PropertyGroup>
       <PackageIsNewSdk>false</PackageIsNewSdk>
       <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true' or '$(IsFunctionsLibrary)' == 'true'">true</PackageIsNewSdk>
@@ -369,17 +375,20 @@
       <PackageSdkType Condition="'$(IsFunctionsLibrary)' == 'true'">functions</PackageSdkType>
       <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
 
-      <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
-
       <!-- If the AddDevVersion property is true this will output the generated dev version (e.g. 1.0.0-alpha.20210921.1) -->
       <VersionForProperties>$(_VersionInProject)</VersionForProperties>
       <VersionForProperties Condition="'$(AddDevVersion)' == 'true'">$(Version)</VersionForProperties>
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
+      
+      <!-- Format package info line for output -->
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'</PackageInfoText>
     </PropertyGroup>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
+    <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
+      <PackageInfoLine Include="$(PackageInfoText)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
@@ -407,12 +416,18 @@
 
   <Target Name="ProjectDependsOnInner" DependsOnTargets="ResolveReferences" Returns="@(ProjectsToInclude)">
     <ItemGroup>
+      <_TestDependsOnDendencies Include="$(TestDependsOnDependency.Split(' '))" />
       <_LibrariesReferenced Include="@(ReferencePath -> '%(Filename)')"/>
-      <_DependsOnGiven Include="@(_LibrariesReferenced)" Condition="'%(Identity)' == '$(TestDependsOnDependency)'" />
+      <_DependsOnGiven Include="@(_TestDependsOnDendencies)" Exclude="@(_LibrariesReferenced)'" />
     </ItemGroup>
 
-    <ItemGroup Condition="'@(_DependsOnGiven)' != '' and '$(IsClientLibrary)' == 'true'" >
-      <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
+    <PropertyGroup>
+      <_ProjectName>%24%28RepoRoot%29$(MSBuildProjectFullPath.Replace($(RepoRoot), ''))</_ProjectName>
+      <_ProjectName Condition="'$(TestDependsIncludePackageRootDirectoryOnly)' == 'true'">$(PackageRootDirectory)</_ProjectName>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true'" >
+      <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
   </Target>
 

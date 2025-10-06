@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,39 +19,6 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobsStorageResourceProvider : StorageResourceProvider
     {
-        /// <summary>
-        /// Delegate for fetching a shared key credential for a given URI.
-        /// </summary>
-        /// <param name="uri">
-        /// URI of resource to fetch credential for.
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether the permission can be read-only.
-        /// </param>
-        public delegate StorageSharedKeyCredential GetStorageSharedKeyCredential(Uri uri, bool readOnly);
-
-        /// <summary>
-        /// Delegate for fetching a token credential for a given URI.
-        /// </summary>
-        /// <param name="uri">
-        /// URI of resource to fetch credential for.
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether the permission can be read-only.
-        /// </param>
-        public delegate TokenCredential GetTokenCredential(Uri uri, bool readOnly);
-
-        /// <summary>
-        /// Delegate for fetching a SAS credential for a given URI.
-        /// </summary>
-        /// <param name="uri">
-        /// URI of resource to fetch credential for.
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether the permission can be read-only.
-        /// </param>
-        public delegate AzureSasCredential GetAzureSasCredential(Uri uri, bool readOnly);
-
         private enum ResourceType
         {
             Unknown = 0,
@@ -71,12 +40,20 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ProviderId => "blob";
 
         private readonly CredentialType _credentialType;
-        private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
-        private readonly GetTokenCredential _getTokenCredential;
-        private readonly GetAzureSasCredential _getAzureSasCredential;
+        private readonly TokenCredential _tokenCredential;
+        private readonly Func<Uri, CancellationToken, ValueTask<StorageSharedKeyCredential>> _getStorageSharedKeyCredential;
+        private readonly Func<Uri, CancellationToken, ValueTask<AzureSasCredential>> _getAzureSasCredential;
 
         /// <summary>
-        /// Default constructor.
+        /// <para>
+        /// Constructs this provider to use no credentials when making a new Blob Storage
+        /// <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will NOT use any credential when constructing the underlying
+        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, BlobClientOptions)"/>.
+        /// This is for the purpose of either anonymous access when constructing the client.
+        /// </para>
         /// </summary>
         public BlobsStorageResourceProvider()
         {
@@ -102,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(StorageSharedKeyCredential credential)
         {
             _credentialType = CredentialType.SharedKey;
-            _getStorageSharedKeyCredential = (_, _) => credential;
+            _getStorageSharedKeyCredential = (_, _) => new ValueTask<StorageSharedKeyCredential>(credential);
         }
 
         /// <summary>
@@ -124,7 +101,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(TokenCredential credential)
         {
             _credentialType = CredentialType.Token;
-            _getTokenCredential = (_, _) => credential;
+            _tokenCredential = credential;
         }
 
         /// <summary>
@@ -148,7 +125,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(AzureSasCredential credential)
         {
             _credentialType = CredentialType.Sas;
-            _getAzureSasCredential = (_, _) => credential;
+            _getAzureSasCredential = (_, _) => new ValueTask<AzureSasCredential>(credential);
         }
 
         /// <summary>
@@ -157,18 +134,18 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Storage <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetStorageSharedKeyCredential"/> to fetch a credential
+        /// This instance will use the given callback to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
         /// <see cref="BlockBlobClient(Uri, StorageSharedKeyCredential, BlobClientOptions)"/>.
-        /// The delegate will only be used when the provider needs to construct a client in the first place. It will
+        /// The callback will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
         /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
         /// </para>
         /// </summary>
         /// <param name="getStorageSharedKeyCredentialAsync">
-        /// Delegate for acquiring a credential.
+        /// Callback for acquiring a credential for the given Uri.
         /// </param>
-        public BlobsStorageResourceProvider(GetStorageSharedKeyCredential getStorageSharedKeyCredentialAsync)
+        public BlobsStorageResourceProvider(Func<Uri, CancellationToken, ValueTask<StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync)
         {
             _credentialType = CredentialType.SharedKey;
             _getStorageSharedKeyCredential = getStorageSharedKeyCredentialAsync;
@@ -176,34 +153,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
+        /// Constructs this provider to use the given callback for acquiring a credential when making a new Blob
         /// Storage <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetTokenCredential"/> to fetch a credential
-        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
-        /// <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
-        /// The delegate will only be used when the provider needs to construct a client in the first place. It will
-        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
-        /// </para>
-        /// </summary>
-        /// <param name="getTokenCredentialAsync">
-        /// Delegate for acquiring a credential.
-        /// </param>
-        public BlobsStorageResourceProvider(GetTokenCredential getTokenCredentialAsync)
-        {
-            _credentialType = CredentialType.SharedKey;
-            _getTokenCredential = getTokenCredentialAsync;
-        }
-
-        /// <summary>
-        /// <para>
-        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
-        /// Storage <see cref="StorageResource"/>.
-        /// </para>
-        /// <para>
-        /// This instance will use the given <see cref="GetAzureSasCredential"/> to fetch a credential
+        /// This instance will use the given callback to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
         /// <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
@@ -214,64 +168,69 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </para>
         /// </summary>
         /// <param name="getAzureSasCredentialAsync">
-        /// Delegate for acquiring a credential.
+        /// Callback for acquiring a credential for the given Uri and required set of permissions.
         /// </param>
-        public BlobsStorageResourceProvider(GetAzureSasCredential getAzureSasCredentialAsync)
+        public BlobsStorageResourceProvider(Func<Uri, CancellationToken, ValueTask<AzureSasCredential>> getAzureSasCredentialAsync)
         {
-            _credentialType = CredentialType.SharedKey;
+            _credentialType = CredentialType.Sas;
             _getAzureSasCredential = getAzureSasCredentialAsync;
         }
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(properties, getSource: true, cancellationToken));
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override async ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
+            => await FromTransferPropertiesAsync(properties, getSource: true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(properties, getSource: false, cancellationToken));
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override async ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
+            => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
 
-        private StorageResource FromTransferProperties(
-            DataTransferProperties properties,
+        private async ValueTask<StorageResource> FromTransferPropertiesAsync(
+            TransferProperties properties,
             bool getSource,
             CancellationToken cancellationToken)
         {
-            BlobCheckpointData checkpointData = properties.GetCheckpointData(getSource);
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            StorageResourceCheckpointDetails checkpointDetails = properties.GetCheckpointDetails(getSource);
 
-            ResourceType type = GetType(checkpointData.BlobType, properties.IsContainer);
+            ResourceType type = GetType(checkpointDetails, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
-            IBlobResourceRehydrator rehydrator = type switch
-            {
-                ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
-                ResourceType.PageBlob => new PageBlobResourceRehydrator(),
-                ResourceType.AppendBlob => new AppendBlobResourceRehydrator(),
-                ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
-                _ => throw BadResourceTypeException(type)
-            };
+            IBlobResourceRehydrator rehydrator = getSource ?
+                type == ResourceType.BlobContainer ? new BlobContainerResourceRehydrator() : new BlockBlobResourceRehydrator()
+                : type switch
+                {
+                    ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
+                    ResourceType.PageBlob => new PageBlobResourceRehydrator(),
+                    ResourceType.AppendBlob => new AppendBlobResourceRehydrator(),
+                    ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
+                    _ => throw BadResourceTypeException(type)
+                };
             return _credentialType switch
             {
                 CredentialType.None => rehydrator.Rehydrate(
                     properties,
-                    checkpointData as BlobDestinationCheckpointData,
+                    checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
                     cancellationToken),
                 CredentialType.SharedKey => rehydrator.Rehydrate(
                     properties,
-                    checkpointData as BlobDestinationCheckpointData,
+                    checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
-                    _getStorageSharedKeyCredential(uri, getSource),
+                    await _getStorageSharedKeyCredential(uri, cancellationToken).ConfigureAwait(false),
                     cancellationToken),
                 CredentialType.Token => rehydrator.Rehydrate(
                     properties,
-                    checkpointData as BlobDestinationCheckpointData,
+                    checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
-                    _getTokenCredential(uri, getSource),
+                    _tokenCredential,
                     cancellationToken),
                 CredentialType.Sas => rehydrator.Rehydrate(
                     properties,
-                    checkpointData as BlobDestinationCheckpointData,
+                    checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
-                    _getAzureSasCredential(uri, getSource),
+                    await _getAzureSasCredential(uri, cancellationToken).ConfigureAwait(false),
                     cancellationToken),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
@@ -279,19 +238,19 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromSourceAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromSourceAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromSourceInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromSourceAsync(props, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromDestinationAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromDestinationAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromDestinationInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromDestinationAsync(props, cancellationToken).ConfigureAwait(false);
         #endregion
@@ -306,17 +265,26 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options">
         /// Options for creating the storage resource.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)
+        public async ValueTask<StorageResource> FromContainerAsync(
+            Uri containerUri,
+            BlobStorageResourceContainerOptions options = default,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            BlobClientOptions clientOptions = GetUserAgentClientOptions();
             BlobContainerClient client = _credentialType switch
             {
-                CredentialType.None => new BlobContainerClient(new Uri(containerUri)),
-                CredentialType.SharedKey => new BlobContainerClient(new Uri(containerUri), _getStorageSharedKeyCredential(new Uri(containerUri), false)),
-                CredentialType.Token => new BlobContainerClient(new Uri(containerUri), _getTokenCredential(new Uri(containerUri), false)),
-                CredentialType.Sas => new BlobContainerClient(new Uri(containerUri), _getAzureSasCredential(new Uri(containerUri), false)),
+                CredentialType.None => new BlobContainerClient(containerUri, clientOptions),
+                CredentialType.SharedKey => new BlobContainerClient(containerUri, await _getStorageSharedKeyCredential(containerUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Token => new BlobContainerClient(containerUri, _tokenCredential, clientOptions),
+                CredentialType.Sas => new BlobContainerClient(containerUri, await _getAzureSasCredential(containerUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlobStorageResourceContainer(client, options);
@@ -342,19 +310,28 @@ namespace Azure.Storage.DataMovement.Blobs
         /// blob type of the destination. If only the base options type is
         /// provided, block blob will be the default used.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromBlob(string blobUri, BlobStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromBlobAsync(
+            Uri blobUri,
+            BlobStorageResourceOptions options = default,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            BlobClientOptions clientOptions = GetUserAgentClientOptions();
             if (options is BlockBlobStorageResourceOptions)
             {
                 BlockBlobClient blockClient = _credentialType switch
                 {
-                    CredentialType.None => new BlockBlobClient(new Uri(blobUri)),
-                    CredentialType.SharedKey => new BlockBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                    CredentialType.Token => new BlockBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                    CredentialType.Sas => new BlockBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                    CredentialType.None => new BlockBlobClient(blobUri, clientOptions),
+                    CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                    CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential, clientOptions),
+                    CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new BlockBlobStorageResource(blockClient, options as BlockBlobStorageResourceOptions);
@@ -363,10 +340,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 PageBlobClient pageClient = _credentialType switch
                 {
-                    CredentialType.None => new PageBlobClient(new Uri(blobUri)),
-                    CredentialType.SharedKey => new PageBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                    CredentialType.Token => new PageBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                    CredentialType.Sas => new PageBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                    CredentialType.None => new PageBlobClient(blobUri, clientOptions),
+                    CredentialType.SharedKey => new PageBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                    CredentialType.Token => new PageBlobClient(blobUri, _tokenCredential, clientOptions),
+                    CredentialType.Sas => new PageBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new PageBlobStorageResource(pageClient, options as PageBlobStorageResourceOptions);
@@ -375,20 +352,20 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 AppendBlobClient appendClient = _credentialType switch
                 {
-                    CredentialType.None => new AppendBlobClient(new Uri(blobUri)),
-                    CredentialType.SharedKey => new AppendBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                    CredentialType.Token => new AppendBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                    CredentialType.Sas => new AppendBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                    CredentialType.None => new AppendBlobClient(blobUri, clientOptions),
+                    CredentialType.SharedKey => new AppendBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                    CredentialType.Token => new AppendBlobClient(blobUri, _tokenCredential, clientOptions),
+                    CredentialType.Sas => new AppendBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new AppendBlobStorageResource(appendClient, options as AppendBlobStorageResourceOptions);
             }
             BlockBlobClient client = _credentialType switch
             {
-                CredentialType.None => new BlockBlobClient(new Uri(blobUri)),
-                CredentialType.SharedKey => new BlockBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                CredentialType.Token => new BlockBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                CredentialType.Sas => new BlockBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                CredentialType.None => new BlockBlobClient(blobUri, clientOptions),
+                CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential, clientOptions),
+                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions    ),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
@@ -401,6 +378,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="BlobClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
@@ -408,7 +387,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             BlobContainerClient client,
             BlobStorageResourceContainerOptions options = default)
         {
@@ -420,6 +399,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="BlobClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
@@ -427,7 +408,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             BlockBlobClient client,
             BlockBlobStorageResourceOptions options = default)
         {
@@ -439,6 +420,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="BlobClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
@@ -446,7 +429,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             PageBlobClient client,
             PageBlobStorageResourceOptions options = default)
         {
@@ -458,6 +441,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="BlobClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
@@ -465,7 +450,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             AppendBlobClient client,
             AppendBlobStorageResourceOptions options = default)
         {
@@ -481,25 +466,25 @@ namespace Azure.Storage.DataMovement.Blobs
         private interface IBlobResourceRehydrator
         {
             StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken);
@@ -508,8 +493,8 @@ namespace Azure.Storage.DataMovement.Blobs
         private class BlobContainerResourceRehydrator : IBlobResourceRehydrator
         {
             private BlobStorageResourceContainerOptions GetOptions(
-                DataTransferProperties transferProperties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties transferProperties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource)
             {
                 Argument.AssertNotNull(transferProperties, nameof(transferProperties));
@@ -518,217 +503,223 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     return new BlobStorageResourceContainerOptions()
                     {
-                        BlobDirectoryPrefix = GetPrefix(transferProperties, isSource)
+                        BlobPrefix = GetPrefix(transferProperties, isSource)
                     };
                 }
                 else
                 {
-                    return destinationCheckpointData.GetBlobContainerOptions(GetPrefix(transferProperties, isSource));
+                    return destinationCheckpointDetails.GetBlobContainerOptions(GetPrefix(transferProperties, isSource));
                 }
             }
 
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
-            private string GetPrefix(DataTransferProperties properties, bool getSource)
+            private string GetPrefix(TransferProperties properties, bool getSource)
                 => new BlobUriBuilder(GetUri(properties, getSource)).BlobName;
 
-            private Uri GetContainerUri(DataTransferProperties properties, bool getSource)
+            private Uri GetContainerUri(TransferProperties properties, bool getSource)
                 => new BlobUriBuilder(GetUri(properties, getSource))
                 {
                     BlobName = ""
                 }.ToUri();
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource)),
-                    GetOptions(properties, destinationCheckpointData, isSource));
+                    GetOptions(properties, destinationCheckpointDetails, isSource));
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    GetOptions(properties, destinationCheckpointData, isSource));
+                    GetOptions(properties, destinationCheckpointDetails, isSource));
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    GetOptions(properties, destinationCheckpointData, isSource));
+                    GetOptions(properties, destinationCheckpointDetails, isSource));
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    GetOptions(properties, destinationCheckpointData, isSource));
+                    GetOptions(properties, destinationCheckpointDetails, isSource));
         }
 
         private class BlockBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource)),
-                    !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
         }
 
         private class PageBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource)),
-                    !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
         }
 
         private class AppendBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource)),
-                    !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
-                BlobDestinationCheckpointData destinationCheckpointData,
+                TransferProperties properties,
+                BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
+                    !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
         }
         #endregion
 
-        private static ResourceType GetType(BlobType blobType, bool isContainer)
+        private static ResourceType GetType(StorageResourceCheckpointDetails checkpointDetails, bool isContainer)
         {
             if (isContainer)
             {
                 return ResourceType.BlobContainer;
             }
 
-            return blobType switch
+            BlobDestinationCheckpointDetails destinationCheckpointDetails = checkpointDetails as BlobDestinationCheckpointDetails;
+
+            if (null != destinationCheckpointDetails && destinationCheckpointDetails.BlobType != default)
             {
-                BlobType.Block => ResourceType.BlockBlob,
-                BlobType.Page => ResourceType.PageBlob,
-                BlobType.Append => ResourceType.AppendBlob,
-                _ => ResourceType.Unknown
-            };
+                return destinationCheckpointDetails.BlobType switch
+                {
+                    BlobType.Block => ResourceType.BlockBlob,
+                    BlobType.Page => ResourceType.PageBlob,
+                    BlobType.Append => ResourceType.AppendBlob,
+                    _ => ResourceType.Unknown
+                };
+            }
+            return ResourceType.Unknown;
         }
 
         private static ArgumentException BadResourceTypeException(ResourceType resourceType)
@@ -738,5 +729,24 @@ namespace Azure.Storage.DataMovement.Blobs
         private static ArgumentException BadCredentialTypeException(CredentialType credentialType)
             => new ArgumentException(
                 $"No support for credential type {Enum.GetName(typeof(CredentialType), credentialType)}.");
+
+        private static BlobClientOptions GetUserAgentClientOptions()
+        {
+            BlobClientOptions options = new BlobClientOptions();
+
+            // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
+            // From there we can grab the version of the Assembly.
+            Assembly assembly = typeof(BlobsStorageResourceProvider).Assembly;
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
+            {
+                throw Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
+            }
+            // Now using a policy, update the user agent string with the version and add the policy
+            // to the client options.
+            DataMovementUserAgentPolicy policy = new(versionAttribute.InformationalVersion);
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            return options;
+        }
     }
 }

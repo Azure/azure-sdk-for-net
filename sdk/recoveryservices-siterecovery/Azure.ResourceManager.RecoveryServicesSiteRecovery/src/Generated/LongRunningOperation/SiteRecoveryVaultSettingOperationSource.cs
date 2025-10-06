@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         SiteRecoveryVaultSettingResource IOperationSource<SiteRecoveryVaultSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(document.RootElement);
+            var data = ModelReaderWriter.Read<SiteRecoveryVaultSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return new SiteRecoveryVaultSettingResource(_client, data);
         }
 
         async ValueTask<SiteRecoveryVaultSettingResource> IOperationSource<SiteRecoveryVaultSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(document.RootElement);
-            return new SiteRecoveryVaultSettingResource(_client, data);
+            var data = ModelReaderWriter.Read<SiteRecoveryVaultSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            return await Task.FromResult(new SiteRecoveryVaultSettingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

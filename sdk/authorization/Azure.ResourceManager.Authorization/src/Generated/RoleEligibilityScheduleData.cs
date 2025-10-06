@@ -96,32 +96,46 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> The role eligibility schedule scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> The role definition ID. </summary>
+        [WirePath("properties.roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> The principal ID. </summary>
+        [WirePath("properties.principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
+        [WirePath("properties.principalType")]
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> The id of roleEligibilityScheduleRequest used to create this roleAssignmentSchedule. </summary>
+        [WirePath("properties.roleEligibilityScheduleRequestId")]
         public ResourceIdentifier RoleEligibilityScheduleRequestId { get; }
         /// <summary> Membership type of the role eligibility schedule. </summary>
+        [WirePath("properties.memberType")]
         public RoleManagementScheduleMemberType? MemberType { get; }
         /// <summary> The status of the role eligibility schedule. </summary>
+        [WirePath("properties.status")]
         public RoleManagementScheduleStatus? Status { get; }
         /// <summary> Start DateTime when role eligibility schedule. </summary>
+        [WirePath("properties.startDateTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End DateTime when role eligibility schedule. </summary>
+        [WirePath("properties.endDateTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
+        [WirePath("properties.condition")]
         public string Condition { get; }
         /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
+        [WirePath("properties.conditionVersion")]
         public string ConditionVersion { get; }
         /// <summary> DateTime when role eligibility schedule was created. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> DateTime when role eligibility schedule was modified. </summary>
+        [WirePath("properties.updatedOn")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
+        [WirePath("properties.expandedProperties")]
         public RoleManagementExpandedProperties ExpandedProperties { get; }
     }
 }

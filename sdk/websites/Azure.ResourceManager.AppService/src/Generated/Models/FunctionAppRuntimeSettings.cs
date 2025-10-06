@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -90,32 +88,46 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Function App stack minor version (runtime only). </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("remoteDebuggingSupported")]
         public bool? IsRemoteDebuggingSupported { get; }
         /// <summary> Application Insights settings associated with the minor version. </summary>
+        [WirePath("appInsightsSettings")]
         public AppInsightsWebAppStackSettings AppInsightsSettings { get; }
         /// <summary> GitHub Actions settings associated with the minor version. </summary>
+        [WirePath("gitHubActionSettings")]
         public GitHubActionWebAppStackSettings GitHubActionSettings { get; }
         /// <summary> Application settings associated with the minor version. </summary>
+        [WirePath("appSettingsDictionary")]
         public IReadOnlyDictionary<string, string> AppSettingsDictionary { get; }
         /// <summary> Configuration settings associated with the minor version. </summary>
+        [WirePath("siteConfigPropertiesDictionary")]
         public SiteConfigPropertiesDictionary SiteConfigPropertiesDictionary { get; }
         /// <summary> List of supported Functions extension versions. </summary>
+        [WirePath("supportedFunctionsExtensionVersions")]
         public IReadOnlyList<string> SupportedFunctionsExtensionVersions { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; }
         /// <summary> End-of-life date for the minor version. </summary>
+        [WirePath("endOfLifeDate")]
         public DateTimeOffset? EndOfLifeOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isAutoUpdate")]
         public bool? IsAutoUpdate { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isEarlyAccess")]
         public bool? IsEarlyAccess { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; }
     }
 }

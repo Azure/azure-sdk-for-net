@@ -1,27 +1,29 @@
 parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
-  Artifacts: []
   ArtifactName: 'packages'
+  RepoRoot: $(Build.SourcesDirectory)
+  Condition: true
 
 steps:
-  - pwsh: |
-      $apiChangeDetectRequestUrl = "https://apiview.dev/PullRequest/DetectApiChanges"
-      echo "##vso[task.setvariable variable=ApiChangeDetectRequestUrl]$apiChangeDetectRequestUrl"
-    displayName: "Set API change detect request URL"
-    condition: eq(variables['ApiChangeDetectRequestUrl'], '')
+  - ${{ if eq(variables['Build.Reason'],'PullRequest') }}:
+    - pwsh: |
+        $apiChangeDetectRequestUrl = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges"
+        echo "##vso[task.setvariable variable=ApiChangeDetectRequestUrl]$apiChangeDetectRequestUrl"
+      displayName: "Set API change detect request URL"
+      condition: and(succeeded(), ${{ parameters.Condition}}, eq(variables['ApiChangeDetectRequestUrl'], ''))
 
-  - task: Powershell@2
-    inputs:
-      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Detect-Api-Changes.ps1
-      arguments: >
-        -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
-        -ArtifactPath ${{parameters.ArtifactPath}}
-        -CommitSha '$(Build.SourceVersion)'
-        -BuildId $(Build.BuildId)
-        -PullRequestNumber $(System.PullRequest.PullRequestNumber)
-        -RepoFullName $(Build.Repository.Name)
-        -APIViewUri $(ApiChangeDetectRequestUrl)
-        -ArtifactName ${{ parameters.ArtifactName }}
-      pwsh: true
-    displayName: Detect API changes
-    condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))
+    - task: Powershell@2
+      inputs:
+        filePath: ${{ parameters.RepoRoot }}/eng/common/scripts/Detect-Api-Changes.ps1
+        arguments: >
+          -ArtifactPath ${{parameters.ArtifactPath}}
+          -CommitSha '$(System.PullRequest.SourceCommitId)'
+          -BuildId $(Build.BuildId)
+          -PullRequestNumber $(System.PullRequest.PullRequestNumber)
+          -RepoFullName $(Build.Repository.Name)
+          -APIViewUri $(ApiChangeDetectRequestUrl)
+          -ArtifactName ${{ parameters.ArtifactName }}
+          -DevopsProject $(System.TeamProject)
+        pwsh: true
+      displayName: Create APIView if API has changes
+      condition: and(${{ parameters.Condition }}, succeededOrFailed())

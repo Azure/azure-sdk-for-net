@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -54,12 +52,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkConnectionQueryTableStatus(value ?? new ChangeTrackingList<LinkTableStatus>(), continuationToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionQueryTableStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLinkConnectionQueryTableStatus(document.RootElement);
+        }
+
         internal partial class LinkConnectionQueryTableStatusConverter : JsonConverter<LinkConnectionQueryTableStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionQueryTableStatus model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override LinkConnectionQueryTableStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

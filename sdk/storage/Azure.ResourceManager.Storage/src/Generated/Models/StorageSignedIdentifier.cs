@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An unique identifier of the stored access policy. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Access policy. </summary>
+        [WirePath("accessPolicy")]
         public StorageServiceAccessPolicy AccessPolicy { get; set; }
     }
 }

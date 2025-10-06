@@ -185,7 +185,7 @@ public partial class ClientPipeline
 
         private bool TryGetFixedPerTransportPolicy(int index, out PipelinePolicy policy)
         {
-            if (index < _perTryIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)
+            if (index < _beforeTransportIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)
             {
                 policy = _fixedPolicies.Span[index - (_customPerCallPolicies.Length + _customPerTryPolicies.Length)];
                 return true;
@@ -197,7 +197,7 @@ public partial class ClientPipeline
 
         private bool TryGetCustomBeforeTransportPolicy(int index, out PipelinePolicy policy)
         {
-            if (index < _perTryIndex +
+            if (index < _beforeTransportIndex +
                            _customPerCallPolicies.Length +
                            _customPerTryPolicies.Length +
                            _customBeforeTransportPolicies.Length)

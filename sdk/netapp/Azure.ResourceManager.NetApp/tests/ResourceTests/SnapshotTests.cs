@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName));
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName); });
             Assert.AreEqual(404, exception.Status);
+            await LiveDelay(10000);
         }
 
         [RecordedTest]
@@ -139,13 +140,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
             snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1);
             snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2);
-
+            await LiveDelay(20000);
             //Check deletion
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(20000);
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName2));
             snapshotList = await _snapshotCollection.GetAllAsync().ToEnumerableAsync();
             snapshotList.Should().HaveCount(1);
+            await LiveDelay(20000);
         }
 
         [RecordedTest]
@@ -181,6 +183,41 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [RecordedTest]
+        public async Task CreateShortTermCloneVolumeFromSnapshot()
+        {
+            //create snapshot
+            string snapshotName = Recording.GenerateAssetName("snapshot-");
+            string newVolumeName = Recording.GenerateAssetName("volume-");
+            await SetUp();
+            NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
+            NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
+            Assert.IsNotNull(snapshotResource1);
+            Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
+
+            // get and check the snapshot
+            NetAppVolumeSnapshotResource snapshotResource2 = await _snapshotCollection.GetAsync(snapshotName);
+            Assert.IsNotNull(snapshotResource1);
+            Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
+
+            //create new clone volume from snapshot, we do this by calling create volume with a snapshotId
+            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id, volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
+            await LiveDelay(8000);
+            //Validate
+            NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
+            Assert.IsNotNull(newVolumeResource2);
+            Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name.Split('/').Last());
+            //check if exists
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsTrue(await _snapshotCollection.ExistsAsync(snapshotName));
+            Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName + "1"));
+
+            // invoke the SplitCloneFromParentAsync operation
+            await newVolumeResource2.SplitCloneFromParentAsync(WaitUntil.Completed);
+            await LiveDelay(60000);
+        }
+
+        [RecordedTest]
         public async Task RevertVolumeToSnapshot()
         {
             //create snapshot
@@ -204,6 +241,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             ArmOperation revertOperation = (await _volumeResource.RevertAsync(WaitUntil.Completed, body));
             Assert.IsTrue(revertOperation.HasCompleted);
+            await LiveDelay(40000);
         }
 
         [RecordedTest]

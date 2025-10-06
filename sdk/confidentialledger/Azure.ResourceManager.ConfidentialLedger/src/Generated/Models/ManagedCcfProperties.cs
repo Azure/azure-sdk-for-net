@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -58,18 +57,22 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
         /// <param name="memberIdentityCertificates"> List of member identity certificates for  Managed CCF. </param>
         /// <param name="deploymentType"> Deployment Type of Managed CCF. </param>
-        /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
+        /// <param name="runningState"> Object representing RunningState for Managed CCF. </param>
+        /// <param name="provisioningState"> Provisioning state of Managed CCF Resource. </param>
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
+        /// <param name="enclavePlatform"> Enclave platform of Managed CCF. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, ConfidentialLedgerEnclavePlatform? enclavePlatform, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppName = appName;
             AppUri = appUri;
             IdentityServiceUri = identityServiceUri;
             MemberIdentityCertificates = memberIdentityCertificates;
             DeploymentType = deploymentType;
+            RunningState = runningState;
             ProvisioningState = provisioningState;
             NodeCount = nodeCount;
+            EnclavePlatform = enclavePlatform;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,9 +86,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public IList<ConfidentialLedgerMemberIdentityCertificate> MemberIdentityCertificates { get; }
         /// <summary> Deployment Type of Managed CCF. </summary>
         public ConfidentialLedgerDeploymentType DeploymentType { get; set; }
-        /// <summary> Provisioning state of Ledger Resource. </summary>
+        /// <summary> Object representing RunningState for Managed CCF. </summary>
+        public ConfidentialLedgerRunningState? RunningState { get; set; }
+        /// <summary> Provisioning state of Managed CCF Resource. </summary>
         public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
         /// <summary> Number of CCF nodes in the Managed CCF. </summary>
         public int? NodeCount { get; set; }
+        /// <summary> Enclave platform of Managed CCF. </summary>
+        public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; set; }
     }
 }

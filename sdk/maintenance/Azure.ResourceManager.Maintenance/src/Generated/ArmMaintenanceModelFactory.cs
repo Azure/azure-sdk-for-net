@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance.Models
@@ -16,6 +15,14 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMaintenanceModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledEventApproveResult"/>. </summary>
+        /// <param name="value"> Successfully Approved. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventApproveResult"/> instance for mocking. </returns>
+        public static ScheduledEventApproveResult ScheduledEventApproveResult(string value = null)
+        {
+            return new ScheduledEventApproveResult(value, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

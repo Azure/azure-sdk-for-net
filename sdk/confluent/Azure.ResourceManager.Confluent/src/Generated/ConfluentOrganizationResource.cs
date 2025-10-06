@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
 
@@ -736,7 +734,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_CreateAPIKey</description>
+        /// <description>Organization_CreateApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -783,7 +781,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_CreateAPIKey</description>
+        /// <description>Organization_CreateApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -830,7 +828,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_DeleteClusterAPIKey</description>
+        /// <description>Organization_DeleteClusterApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -873,7 +871,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_DeleteClusterAPIKey</description>
+        /// <description>Organization_DeleteClusterApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -916,7 +914,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_GetClusterAPIKey</description>
+        /// <description>Organization_GetClusterApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -959,7 +957,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_GetClusterAPIKey</description>
+        /// <description>Organization_GetClusterApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

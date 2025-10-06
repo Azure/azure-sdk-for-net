@@ -1,0 +1,89 @@
+﻿{
+  "default": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini",
+    "resource_group": "Sanitized",
+    "subscription_id": "Sanitized"
+  },
+  "assistant": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini"
+  },
+  "audio": {
+    "deployment": "whisper"
+  },
+  "batch": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini-global-batch"
+  },
+  "chat": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-0806"
+  },
+  "chat_audio": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-audio-preview"
+  },
+  "chat_audio_tip": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "audiopreviewtest03"
+  },
+  "chat_o1": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "o1"
+  },
+  "chat_o3-mini": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "o3-mini"
+  },
+  "chat_with_async_filter": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini-async-block-banana"
+  },
+  "embedding": {
+    "deployment": "text-embedding-ada-002"
+  },
+  "fine_tuning": {
+    "deployment": "gpt-35-turbo-0613",
+    "fine_tuned_model": "gpt-35-turbo-0613.ft-53f9c10199f84dfea3ec772341862ff5-azure-ai-openai-integration-test"
+  },
+  "image": {
+    "deployment": "dall-e-3"
+  },
+  "rate_limited_chat": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-35-turbo-low-quota"
+  },
+  "response": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini"
+  },
+  "responses": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized"
+  },
+  "search": {
+    "endpoint": "https://Sanitized.search.windows.net/",
+    "key": "Sanitized",
+    "index": "openai-readmes-index"
+  },
+  "tts": {
+    "deployment": "tts"
+  },
+  "vision": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini"
+  }
+}

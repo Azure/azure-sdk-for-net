@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,6 +20,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -53,14 +57,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -85,22 +89,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureBatch": return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element);
                     case "AzureBlobFS": return AzureBlobFSLinkedService.DeserializeAzureBlobFSLinkedService(element);
                     case "AzureBlobStorage": return AzureBlobStorageLinkedService.DeserializeAzureBlobStorageLinkedService(element);
+                    case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element);
+                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element);
                     case "AzureDataExplorer": return AzureDataExplorerLinkedService.DeserializeAzureDataExplorerLinkedService(element);
                     case "AzureDataLakeAnalytics": return AzureDataLakeAnalyticsLinkedService.DeserializeAzureDataLakeAnalyticsLinkedService(element);
                     case "AzureDataLakeStore": return AzureDataLakeStoreLinkedService.DeserializeAzureDataLakeStoreLinkedService(element);
-                    case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element);
-                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element);
                     case "AzureFileStorage": return AzureFileStorageLinkedService.DeserializeAzureFileStorageLinkedService(element);
                     case "AzureFunction": return AzureFunctionLinkedService.DeserializeAzureFunctionLinkedService(element);
                     case "AzureKeyVault": return AzureKeyVaultLinkedService.DeserializeAzureKeyVaultLinkedService(element);
+                    case "AzureMariaDB": return AzureMariaDBLinkedService.DeserializeAzureMariaDBLinkedService(element);
                     case "AzureML": return AzureMLLinkedService.DeserializeAzureMLLinkedService(element);
                     case "AzureMLService": return AzureMLServiceLinkedService.DeserializeAzureMLServiceLinkedService(element);
-                    case "AzureMariaDB": return AzureMariaDBLinkedService.DeserializeAzureMariaDBLinkedService(element);
                     case "AzureMySql": return AzureMySqlLinkedService.DeserializeAzureMySqlLinkedService(element);
                     case "AzurePostgreSql": return AzurePostgreSqlLinkedService.DeserializeAzurePostgreSqlLinkedService(element);
                     case "AzureSearch": return AzureSearchLinkedService.DeserializeAzureSearchLinkedService(element);
-                    case "AzureSqlDW": return AzureSqlDWLinkedService.DeserializeAzureSqlDWLinkedService(element);
                     case "AzureSqlDatabase": return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element);
+                    case "AzureSqlDW": return AzureSqlDWLinkedService.DeserializeAzureSqlDWLinkedService(element);
                     case "AzureSqlMI": return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element);
                     case "AzureStorage": return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element);
                     case "AzureSynapseArtifacts": return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element);
@@ -123,19 +127,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "FtpServer": return FtpServerLinkedService.DeserializeFtpServerLinkedService(element);
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element);
+                    case "GoogleBigQueryV2": return GoogleBigQueryV2LinkedService.DeserializeGoogleBigQueryV2LinkedService(element);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element);
                     case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element);
                     case "HBase": return HBaseLinkedService.DeserializeHBaseLinkedService(element);
+                    case "Hdfs": return HdfsLinkedService.DeserializeHdfsLinkedService(element);
                     case "HDInsight": return HDInsightLinkedService.DeserializeHDInsightLinkedService(element);
                     case "HDInsightOnDemand": return HDInsightOnDemandLinkedService.DeserializeHDInsightOnDemandLinkedService(element);
-                    case "Hdfs": return HdfsLinkedService.DeserializeHdfsLinkedService(element);
                     case "Hive": return HiveLinkedService.DeserializeHiveLinkedService(element);
                     case "HttpServer": return HttpLinkedService.DeserializeHttpLinkedService(element);
                     case "Hubspot": return HubspotLinkedService.DeserializeHubspotLinkedService(element);
                     case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element);
                     case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element);
                     case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element);
+                    case "Lakehouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element);
                     case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element);
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element);
@@ -153,15 +159,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element);
                     case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element);
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element);
+                    case "PostgreSqlV2": return PostgreSqlV2LinkedService.DeserializePostgreSqlV2LinkedService(element);
                     case "PowerBIWorkspace": return PowerBIWorkspaceLinkedService.DeserializePowerBIWorkspaceLinkedService(element);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element);
-                    case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element);
                     case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element);
+                    case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element);
                     case "Responsys": return ResponsysLinkedService.DeserializeResponsysLinkedService(element);
                     case "RestService": return RestServiceLinkedService.DeserializeRestServiceLinkedService(element);
                     case "Salesforce": return SalesforceLinkedService.DeserializeSalesforceLinkedService(element);
                     case "SalesforceMarketingCloud": return SalesforceMarketingCloudLinkedService.DeserializeSalesforceMarketingCloudLinkedService(element);
                     case "SalesforceServiceCloud": return SalesforceServiceCloudLinkedService.DeserializeSalesforceServiceCloudLinkedService(element);
+                    case "SalesforceServiceCloudV2": return SalesforceServiceCloudV2LinkedService.DeserializeSalesforceServiceCloudV2LinkedService(element);
+                    case "SalesforceV2": return SalesforceV2LinkedService.DeserializeSalesforceV2LinkedService(element);
                     case "SapBW": return SapBWLinkedService.DeserializeSapBWLinkedService(element);
                     case "SapCloudForCustomer": return SapCloudForCustomerLinkedService.DeserializeSapCloudForCustomerLinkedService(element);
                     case "SapEcc": return SapEccLinkedService.DeserializeSapEccLinkedService(element);
@@ -170,11 +179,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element);
+                    case "ServiceNowV2": return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
                     case "Smartsheet": return SmartsheetLinkedService.DeserializeSmartsheetLinkedService(element);
                     case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element);
+                    case "SnowflakeV2": return SnowflakeV2LinkedService.DeserializeSnowflakeV2LinkedService(element);
                     case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element);
                     case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element);
                     case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element);
@@ -183,6 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Teradata": return TeradataLinkedService.DeserializeTeradataLinkedService(element);
                     case "Twilio": return TwilioLinkedService.DeserializeTwilioLinkedService(element);
                     case "Vertica": return VerticaLinkedService.DeserializeVerticaLinkedService(element);
+                    case "Warehouse": return WarehouseLinkedService.DeserializeWarehouseLinkedService(element);
                     case "Web": return WebLinkedService.DeserializeWebLinkedService(element);
                     case "Xero": return XeroLinkedService.DeserializeXeroLinkedService(element);
                     case "Zendesk": return ZendeskLinkedService.DeserializeZendeskLinkedService(element);
@@ -192,12 +204,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownLinkedService.DeserializeUnknownLinkedService(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LinkedServiceConverter : JsonConverter<LinkedService>
         {
             public override void Write(Utf8JsonWriter writer, LinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The available location of the SKU. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
         /// <summary> The available zone of the SKU. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Gets details of capabilities available to a SKU in specific zones. </summary>
+        [WirePath("zoneDetails")]
         public IReadOnlyList<KustoResourceSkuZoneDetails> ZoneDetails { get; }
     }
 }

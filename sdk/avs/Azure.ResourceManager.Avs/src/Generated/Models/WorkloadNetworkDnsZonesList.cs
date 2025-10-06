@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A list of NSX DNS Zones. </summary>
+    /// <summary> The response of a WorkloadNetworkDnsZone list operation. </summary>
     internal partial class WorkloadNetworkDnsZonesList
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZonesList"/>. </summary>
-        internal WorkloadNetworkDnsZonesList()
+        /// <param name="value"> The WorkloadNetworkDnsZone items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal WorkloadNetworkDnsZonesList(IEnumerable<WorkloadNetworkDnsZoneData> value)
         {
-            Value = new ChangeTrackingList<WorkloadNetworkDnsZoneData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZonesList"/>. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> URL to get the next page if any. </param>
+        /// <param name="value"> The WorkloadNetworkDnsZone items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsZonesList(IReadOnlyList<WorkloadNetworkDnsZoneData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkDnsZonesList(IReadOnlyList<WorkloadNetworkDnsZoneData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The items on the page. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZonesList"/> for deserialization. </summary>
+        internal WorkloadNetworkDnsZonesList()
+        {
+        }
+
+        /// <summary> The WorkloadNetworkDnsZone items on this page. </summary>
         public IReadOnlyList<WorkloadNetworkDnsZoneData> Value { get; }
-        /// <summary> URL to get the next page if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

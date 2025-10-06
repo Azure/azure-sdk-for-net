@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
+        [WirePath("properties.functionAppResourceId")]
         public ResourceIdentifier FunctionAppResourceId { get; set; }
         /// <summary> The region of the function app registered with the static site. </summary>
+        [WirePath("properties.functionAppRegion")]
         public string FunctionAppRegion { get; set; }
         /// <summary> The date and time on which the function app was registered with the static site. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 {
     public class RedisEnterpriseManagementTestBase : ManagementRecordedTestBase<RedisEnterpriseManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => "centraluseuap";
 
         protected ArmClient Client { get; private set; }
 

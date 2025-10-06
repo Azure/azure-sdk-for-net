@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -53,14 +52,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> VirtualRouter ASN. </summary>
+        [WirePath("properties.virtualRouterAsn")]
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>
+        [WirePath("properties.virtualRouterIps")]
         public IList<string> VirtualRouterIPs { get; }
         /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
         internal WritableSubResource HostedSubnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.hostedSubnet.id")]
         public ResourceIdentifier HostedSubnetId
         {
             get => HostedSubnet is null ? default : HostedSubnet.Id;
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Gateway on which VirtualRouter is hosted. </summary>
         internal WritableSubResource HostedGateway { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.hostedGateway.id")]
         public ResourceIdentifier HostedGatewayId
         {
             get => HostedGateway is null ? default : HostedGateway.Id;
@@ -87,8 +91,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of references to VirtualRouterPeerings. </summary>
+        [WirePath("properties.peerings")]
         public IReadOnlyList<WritableSubResource> Peerings { get; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

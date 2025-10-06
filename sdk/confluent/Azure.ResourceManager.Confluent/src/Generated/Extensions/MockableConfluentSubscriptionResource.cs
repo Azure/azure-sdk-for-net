@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent.Mocking

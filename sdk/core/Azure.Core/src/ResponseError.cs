@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -14,11 +15,16 @@ namespace Azure
     /// <summary>
     /// Represents an error returned by an Azure Service.
     /// </summary>
-    [JsonConverter(typeof(Converter))]
-    [TypeReferenceType(true, new string[] { nameof(Target), nameof(Details) })]
-    public sealed class ResponseError
+    public sealed partial class ResponseError
     {
         private readonly JsonElement _element;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="ResponseError"/>.
+        /// </summary>
+        public ResponseError() : this(null, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ResponseError"/>.
@@ -74,71 +80,6 @@ namespace Azure
         /// Gets the list of related errors.
         /// </summary>
         internal IReadOnlyList<ResponseError> Details { get; }
-
-        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
-        internal class Converter : JsonConverter<ResponseError?>
-        {
-            public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                var element = document.RootElement;
-                return Read(element);
-            }
-
-            private static ResponseError? Read(JsonElement element)
-            {
-                if (element.ValueKind == JsonValueKind.Null)
-                {
-                    return null;
-                }
-
-                string? code = null;
-                if (element.TryGetProperty("code", out var property))
-                {
-                    code = property.GetString();
-                }
-
-                string? message = null;
-                if (element.TryGetProperty("message", out property))
-                {
-                    message = property.GetString();
-                }
-
-                string? target = null;
-                if (element.TryGetProperty("target", out property))
-                {
-                    target = property.GetString();
-                }
-
-                ResponseInnerError? innererror = null;
-                if (element.TryGetProperty("innererror", out property))
-                {
-                    innererror = ResponseInnerError.Converter.Read(property);
-                }
-
-                List<ResponseError>? details = null;
-                if (element.TryGetProperty("details", out property) &&
-                    property.ValueKind == JsonValueKind.Array)
-                {
-                    foreach (var item in property.EnumerateArray())
-                    {
-                        var detail = Read(item);
-                        if (detail != null)
-                        {
-                            details ??= new();
-                            details.Add(detail);
-                        }
-                    }
-                }
-
-                return new ResponseError(code, message, target, element.Clone(), innererror, details);
-            }
-
-            public override void Write(Utf8JsonWriter writer, ResponseError? value, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         /// <inheritdoc />
         public override string ToString()

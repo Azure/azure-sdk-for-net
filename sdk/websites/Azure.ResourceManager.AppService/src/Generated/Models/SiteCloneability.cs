@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -73,15 +72,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of app. </summary>
+        [WirePath("result")]
         public CloneAbilityResult? Result { get; }
         /// <summary> List of features enabled on app that prevent cloning. </summary>
+        [WirePath("blockingFeatures")]
         public IReadOnlyList<SiteCloneabilityCriterion> BlockingFeatures { get; }
         /// <summary>
         /// List of features enabled on app that are non-blocking but cannot be cloned. The app can still be cloned
         /// but the features in this list will not be set up on cloned app.
         /// </summary>
+        [WirePath("unsupportedFeatures")]
         public IReadOnlyList<SiteCloneabilityCriterion> UnsupportedFeatures { get; }
         /// <summary> List of blocking application characteristics. </summary>
+        [WirePath("blockingCharacteristics")]
         public IReadOnlyList<SiteCloneabilityCriterion> BlockingCharacteristics { get; }
     }
 }

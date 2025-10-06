@@ -8,11 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The main origin of CDN content which is added when creating a CDN endpoint. </summary>
+    /// <summary>
+    /// The main origin of CDN content which is added when creating a CDN endpoint.
+    /// Serialized Name: DeepCreatedOrigin
+    /// </summary>
     public partial class DeepCreatedOrigin
     {
         /// <summary>
@@ -48,7 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/>. </summary>
-        /// <param name="name"> Origin name which must be unique within the endpoint. </param>
+        /// <param name="name">
+        /// Origin name which must be unique within the endpoint.
+        /// Serialized Name: DeepCreatedOrigin.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeepCreatedOrigin(string name)
         {
@@ -58,19 +63,58 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/>. </summary>
-        /// <param name="name"> Origin name which must be unique within the endpoint. </param>
-        /// <param name="hostName"> The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint. </param>
-        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
-        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </param>
-        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
-        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
-        /// <param name="enabled"> Origin is enabled for load balancing or not. By default, origin is always enabled. </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
-        /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
-        /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
+        /// <param name="name">
+        /// Origin name which must be unique within the endpoint.
+        /// Serialized Name: DeepCreatedOrigin.name
+        /// </param>
+        /// <param name="hostName">
+        /// The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint.
+        /// Serialized Name: DeepCreatedOrigin.properties.hostName
+        /// </param>
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: DeepCreatedOrigin.properties.httpPort
+        /// </param>
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: DeepCreatedOrigin.properties.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+        /// Serialized Name: DeepCreatedOrigin.properties.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
+        /// Serialized Name: DeepCreatedOrigin.properties.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: DeepCreatedOrigin.properties.weight
+        /// </param>
+        /// <param name="enabled">
+        /// Origin is enabled for load balancing or not. By default, origin is always enabled.
+        /// Serialized Name: DeepCreatedOrigin.properties.enabled
+        /// </param>
+        /// <param name="privateLinkAlias">
+        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkAlias
+        /// </param>
+        /// <param name="privateLinkResourceId">
+        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkResourceId
+        /// </param>
+        /// <param name="privateLinkLocation">
+        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkLocation
+        /// </param>
+        /// <param name="privateLinkApprovalMessage">
+        /// A custom message to be included in the approval request to connect to the Private Link.
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkApprovalMessage
+        /// </param>
+        /// <param name="privateEndpointStatus">
+        /// The approval status for the connection to the Private Link
+        /// Serialized Name: DeepCreatedOrigin.properties.privateEndpointStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,31 +139,70 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Origin name which must be unique within the endpoint. </summary>
+        /// <summary>
+        /// Origin name which must be unique within the endpoint.
+        /// Serialized Name: DeepCreatedOrigin.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint. </summary>
+        /// <summary>
+        /// The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint.
+        /// Serialized Name: DeepCreatedOrigin.properties.hostName
+        /// </summary>
         public string HostName { get; set; }
-        /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        /// <summary>
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: DeepCreatedOrigin.properties.httpPort
+        /// </summary>
         public int? HttpPort { get; set; }
-        /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        /// <summary>
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: DeepCreatedOrigin.properties.httpsPort
+        /// </summary>
         public int? HttpsPort { get; set; }
-        /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </summary>
+        /// <summary>
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+        /// Serialized Name: DeepCreatedOrigin.properties.originHostHeader
+        /// </summary>
         public string OriginHostHeader { get; set; }
-        /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        /// <summary>
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
+        /// Serialized Name: DeepCreatedOrigin.properties.priority
+        /// </summary>
         public int? Priority { get; set; }
-        /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        /// <summary>
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: DeepCreatedOrigin.properties.weight
+        /// </summary>
         public int? Weight { get; set; }
-        /// <summary> Origin is enabled for load balancing or not. By default, origin is always enabled. </summary>
+        /// <summary>
+        /// Origin is enabled for load balancing or not. By default, origin is always enabled.
+        /// Serialized Name: DeepCreatedOrigin.properties.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </summary>
+        /// <summary>
+        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkAlias
+        /// </summary>
         public string PrivateLinkAlias { get; set; }
-        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
+        /// <summary>
+        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkResourceId
+        /// </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
+        /// <summary>
+        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkLocation
+        /// </summary>
         public string PrivateLinkLocation { get; set; }
-        /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
+        /// <summary>
+        /// A custom message to be included in the approval request to connect to the Private Link.
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkApprovalMessage
+        /// </summary>
         public string PrivateLinkApprovalMessage { get; set; }
-        /// <summary> The approval status for the connection to the Private Link. </summary>
+        /// <summary>
+        /// The approval status for the connection to the Private Link
+        /// Serialized Name: DeepCreatedOrigin.properties.privateEndpointStatus
+        /// </summary>
         public PrivateEndpointStatus? PrivateEndpointStatus { get; }
     }
 }

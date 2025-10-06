@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -71,8 +70,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The default action of allow or deny when no other rules match. </summary>
+        [WirePath("defaultAction")]
         public ContainerRegistryNetworkRuleDefaultAction DefaultAction { get; set; }
         /// <summary> The IP ACL rules. </summary>
+        [WirePath("ipRules")]
         public IList<ContainerRegistryIPRule> IPRules { get; }
     }
 }

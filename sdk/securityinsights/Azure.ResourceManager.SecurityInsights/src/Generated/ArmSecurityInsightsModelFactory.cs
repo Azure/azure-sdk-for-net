@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -24,17 +23,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleData"/> instance for mocking. </returns>
-        public static SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityInsightsAlertRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new AlertRuleKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -44,20 +43,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag of the action. </param>
         /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
         /// <param name="workflowId"> The name of the logic app's workflow. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/> instance for mocking. </returns>
-        public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier logicAppResourceId = null, string workflowId = null)
+        public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier logicAppResourceId = null, string workflowId = null, ETag? etag = null)
         {
             return new SecurityInsightsAlertRuleActionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
                 logicAppResourceId,
                 workflowId,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -88,16 +87,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleTemplateData"/> instance for mocking. </returns>
-        public static SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new SecurityInsightsAlertRuleTemplateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new AlertRuleKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="actions">
         /// The actions to execute when the automation rule is triggered.
         /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
+        /// The available derived classes include <see cref="AutomationRuleAddIncidentTaskAction"/>, <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </param>
         /// <param name="lastModifiedOn"> The last time the automation rule was updated. </param>
         /// <param name="createdOn"> The time the automation rule was created. </param>
@@ -141,15 +140,43 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsClientInfo"/>. </summary>
-        /// <param name="email"> The email of the client. </param>
-        /// <param name="name"> The name of the client. </param>
-        /// <param name="objectId"> The object id of the client. </param>
-        /// <param name="userPrincipalName"> The user principal name of the client. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsClientInfo"/> instance for mocking. </returns>
-        public static SecurityInsightsClientInfo SecurityInsightsClientInfo(string email = null, string name = null, Guid? objectId = null, string userPrincipalName = null)
+        /// <summary> Initializes a new instance of <see cref="Models.EntityManualTriggerRequestContent"/>. </summary>
+        /// <param name="incidentArmId"> Incident ARM id. </param>
+        /// <param name="tenantId"> The tenant id of the playbook resource. </param>
+        /// <param name="logicAppsResourceId"> The resource id of the playbook resource. </param>
+        /// <returns> A new <see cref="Models.EntityManualTriggerRequestContent"/> instance for mocking. </returns>
+        public static EntityManualTriggerRequestContent EntityManualTriggerRequestContent(ResourceIdentifier incidentArmId = null, Guid? tenantId = null, ResourceIdentifier logicAppsResourceId = null)
         {
-            return new SecurityInsightsClientInfo(email, name, objectId, userPrincipalName, serializedAdditionalRawData: null);
+            return new EntityManualTriggerRequestContent(incidentArmId, tenantId, logicAppsResourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManualTriggerRequestBody"/>. </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="logicAppsResourceId"></param>
+        /// <returns> A new <see cref="Models.ManualTriggerRequestBody"/> instance for mocking. </returns>
+        public static ManualTriggerRequestBody ManualTriggerRequestBody(Guid? tenantId = null, string logicAppsResourceId = null)
+        {
+            return new ManualTriggerRequestBody(tenantId, logicAppsResourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsBillingStatisticData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The kind of the billing statistic. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsBillingStatisticData"/> instance for mocking. </returns>
+        public static SecurityInsightsBillingStatisticData SecurityInsightsBillingStatisticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new UnknownBillingStatistic(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new BillingStatisticKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsBookmarkData"/>. </summary>
@@ -170,11 +197,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="queryStartOn"> The start time for the query. </param>
         /// <param name="queryEndOn"> The end time for the query. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
+        /// <param name="entityMappings"> Describes the entity mappings of the bookmark. </param>
+        /// <param name="tactics"> A list of relevant mitre attacks. </param>
+        /// <param name="techniques"> A list of relevant mitre techniques. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsBookmarkData"/> instance for mocking. </returns>
-        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, SecurityInsightsUserInfo createdBy = null, string displayName = null, IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo updatedBy = null, DateTimeOffset? eventOn = null, DateTimeOffset? queryStartOn = null, DateTimeOffset? queryEndOn = null, SecurityInsightsBookmarkIncidentInfo incidentInfo = null, ETag? etag = null)
+        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, SecurityInsightsUserInfo createdBy = null, string displayName = null, IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo updatedBy = null, DateTimeOffset? eventOn = null, DateTimeOffset? queryStartOn = null, DateTimeOffset? queryEndOn = null, SecurityInsightsBookmarkIncidentInfo incidentInfo = null, IEnumerable<BookmarkEntityMappings> entityMappings = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, ETag? etag = null)
         {
             labels ??= new List<string>();
+            entityMappings ??= new List<BookmarkEntityMappings>();
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
 
             return new SecurityInsightsBookmarkData(
                 id,
@@ -194,6 +227,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 queryStartOn,
                 queryEndOn,
                 incidentInfo,
+                entityMappings?.ToList(),
+                tactics?.ToList(),
+                techniques?.ToList(),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -208,22 +244,1046 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsUserInfo(email, name, objectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="relatedResourceId"> The resource ID of the related resource. </param>
+        /// <param name="relatedResourceName"> The name of the related resource. </param>
+        /// <param name="relatedResourceType"> The resource type of the related resource. </param>
+        /// <param name="relatedResourceKind"> The resource kind of the related resource. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/> instance for mocking. </returns>
-        public static SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/> instance for mocking. </returns>
+        public static SecurityInsightsIncidentRelationData SecurityInsightsIncidentRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, ResourceType? relatedResourceType = null, string relatedResourceKind = null, ETag? etag = null)
         {
-            return new SecurityInsightsDataConnectorData(
+            return new SecurityInsightsIncidentRelationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                relatedResourceId,
+                relatedResourceName,
+                relatedResourceType,
+                relatedResourceKind,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BookmarkExpandResult"/>. </summary>
+        /// <param name="metaDataAggregations"> The metadata from the expansion operation results. </param>
+        /// <param name="value"> The expansion result values. </param>
+        /// <returns> A new <see cref="Models.BookmarkExpandResult"/> instance for mocking. </returns>
+        public static BookmarkExpandResult BookmarkExpandResult(IEnumerable<ExpansionResultAggregation> metaDataAggregations = null, BookmarkExpandResponseValue value = null)
+        {
+            metaDataAggregations ??= new List<ExpansionResultAggregation>();
+
+            return new BookmarkExpandResult(metaDataAggregations != null ? new ExpansionResultsMetadata(metaDataAggregations?.ToList(), serializedAdditionalRawData: null) : null, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExpansionResultAggregation"/>. </summary>
+        /// <param name="aggregationType"> The common type of the aggregation. (for e.g. entity field name). </param>
+        /// <param name="count"> Total number of aggregations of the given kind (and aggregationType if given) in the expansion result. </param>
+        /// <param name="displayName"> The display name of the aggregation by type. </param>
+        /// <param name="entityKind"> The kind of the aggregated entity. </param>
+        /// <returns> A new <see cref="Models.ExpansionResultAggregation"/> instance for mocking. </returns>
+        public static ExpansionResultAggregation ExpansionResultAggregation(string aggregationType = null, int count = default, string displayName = null, SecurityInsightsEntityKind entityKind = default)
+        {
+            return new ExpansionResultAggregation(aggregationType, count, displayName, entityKind, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BookmarkExpandResponseValue"/>. </summary>
+        /// <param name="entities">
+        /// Array of the expansion result entities.
+        /// Please note <see cref="Models.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
+        /// </param>
+        /// <param name="edges"> Array of expansion result connected entities. </param>
+        /// <returns> A new <see cref="Models.BookmarkExpandResponseValue"/> instance for mocking. </returns>
+        public static BookmarkExpandResponseValue BookmarkExpandResponseValue(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<BookmarkConnectedEntity> edges = null)
+        {
+            entities ??= new List<SecurityInsightsEntity>();
+            edges ??= new List<BookmarkConnectedEntity>();
+
+            return new BookmarkExpandResponseValue(entities?.ToList(), edges?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsEntity"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The kind of the entity. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsEntity"/> instance for mocking. </returns>
+        public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        {
+            return new SecurityInsightsEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new SecurityInsightsEntityKind(kind),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BookmarkConnectedEntity"/>. </summary>
+        /// <param name="targetEntityId"> Entity Id of the connected entity. </param>
+        /// <param name="additionalData"> key-value pairs for a connected entity mapping. </param>
+        /// <returns> A new <see cref="Models.BookmarkConnectedEntity"/> instance for mocking. </returns>
+        public static BookmarkConnectedEntity BookmarkConnectedEntity(string targetEntityId = null, BinaryData additionalData = null)
+        {
+            return new BookmarkConnectedEntity(targetEntityId, additionalData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsPackageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentId"> The content id of the package. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </param>
+        /// <param name="contentKind"> The package kind. </param>
+        /// <param name="contentSchemaVersion"> The version of the content schema. </param>
+        /// <param name="isNew"> Flag indicates if this is a newly published package. </param>
+        /// <param name="isPreview"> Flag indicates if this package is in preview. </param>
+        /// <param name="isFeatured"> Flag indicates if this package is among the featured list. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="version"> the latest version number of the package. </param>
+        /// <param name="displayName"> The display name of the package. </param>
+        /// <param name="description"> The description of the package. </param>
+        /// <param name="publisherDisplayName"> The publisher display name of the package. </param>
+        /// <param name="source"> The source of the package. </param>
+        /// <param name="author"> The author of the package. </param>
+        /// <param name="support"> The support tier of the package. </param>
+        /// <param name="dependencies"> The support tier of the package. </param>
+        /// <param name="providers"> Providers for the package item. </param>
+        /// <param name="firstPublishOn"> first publish date package item. </param>
+        /// <param name="lastPublishOn"> last publish date for the package item. </param>
+        /// <param name="categories"> The categories of the package. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsPackageData"/> instance for mocking. </returns>
+        public static SecurityInsightsPackageData SecurityInsightsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, SecurityInsightsMetadataPackageKind? contentKind = null, string contentSchemaVersion = null, SecurityInsightsMetadataFlag? isNew = null, SecurityInsightsMetadataFlag? isPreview = null, SecurityInsightsMetadataFlag? isFeatured = null, SecurityInsightsMetadataFlag? isDeprecated = null, string version = null, string displayName = null, string description = null, string publisherDisplayName = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, string icon = null, ETag? etag = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+
+            return new SecurityInsightsPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId,
+                contentProductId,
+                contentKind,
+                contentSchemaVersion,
+                isNew,
+                isPreview,
+                isFeatured,
+                isDeprecated,
+                version,
+                displayName,
+                description,
+                publisherDisplayName,
+                source,
+                author,
+                support,
+                dependencies,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                categories,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                icon,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsProductPackageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentId"> The content id of the package. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </param>
+        /// <param name="contentKind"> The package kind. </param>
+        /// <param name="contentSchemaVersion"> The version of the content schema. </param>
+        /// <param name="isNew"> Flag indicates if this is a newly published package. </param>
+        /// <param name="isPreview"> Flag indicates if this package is in preview. </param>
+        /// <param name="isFeatured"> Flag indicates if this package is among the featured list. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="version"> the latest version number of the package. </param>
+        /// <param name="displayName"> The display name of the package. </param>
+        /// <param name="description"> The description of the package. </param>
+        /// <param name="publisherDisplayName"> The publisher display name of the package. </param>
+        /// <param name="source"> The source of the package. </param>
+        /// <param name="author"> The author of the package. </param>
+        /// <param name="support"> The support tier of the package. </param>
+        /// <param name="dependencies"> The support tier of the package. </param>
+        /// <param name="providers"> Providers for the package item. </param>
+        /// <param name="firstPublishOn"> first publish date package item. </param>
+        /// <param name="lastPublishOn"> last publish date for the package item. </param>
+        /// <param name="categories"> The categories of the package. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="installedVersion"> The version of the installed package, null or absent means not installed. </param>
+        /// <param name="metadataResourceId"> The metadata resource id. </param>
+        /// <param name="packagedContent"> The json of the ARM template to deploy. Expandable. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsProductPackageData"/> instance for mocking. </returns>
+        public static SecurityInsightsProductPackageData SecurityInsightsProductPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, SecurityInsightsMetadataPackageKind? contentKind = null, string contentSchemaVersion = null, SecurityInsightsMetadataFlag? isNew = null, SecurityInsightsMetadataFlag? isPreview = null, SecurityInsightsMetadataFlag? isFeatured = null, SecurityInsightsMetadataFlag? isDeprecated = null, string version = null, string displayName = null, string description = null, string publisherDisplayName = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, string icon = null, string installedVersion = null, ResourceIdentifier metadataResourceId = null, BinaryData packagedContent = null, ETag? etag = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+
+            return new SecurityInsightsProductPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId,
+                contentProductId,
+                contentKind,
+                contentSchemaVersion,
+                isNew,
+                isPreview,
+                isFeatured,
+                isDeprecated,
+                version,
+                displayName,
+                description,
+                publisherDisplayName,
+                source,
+                author,
+                support,
+                dependencies,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                categories,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                icon,
+                installedVersion,
+                metadataResourceId,
+                packagedContent,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsProductTemplateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
+        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="displayName"> The display name of the template. </param>
+        /// <param name="contentKind"> The kind of content the template is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the template - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the item. </param>
+        /// <param name="providers"> Providers for the content item. </param>
+        /// <param name="firstPublishOn"> first publish date content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="packageId"> the package Id contains this template. </param>
+        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
+        /// <param name="packageName"> the name of the package contains this template. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="packagedContent"> The json of the ARM template to deploy. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsProductTemplateData"/> instance for mocking. </returns>
+        public static SecurityInsightsProductTemplateData SecurityInsightsProductTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null, BinaryData packagedContent = null, ETag? etag = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+            previewImages ??= new List<string>();
+            previewImagesDark ??= new List<string>();
+
+            return new SecurityInsightsProductTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId,
+                contentProductId,
+                packageVersion,
+                version,
+                displayName,
+                contentKind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                previewImages?.ToList(),
+                previewImagesDark?.ToList(),
+                packageId,
+                packageKind,
+                packageName,
+                isDeprecated,
+                packagedContent,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateBaseProperties"/>. </summary>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
+        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="displayName"> The display name of the template. </param>
+        /// <param name="contentKind"> The kind of content the template is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the template - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the item. </param>
+        /// <param name="providers"> Providers for the content item. </param>
+        /// <param name="firstPublishOn"> first publish date content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="packageId"> the package Id contains this template. </param>
+        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
+        /// <param name="packageName"> the name of the package contains this template. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <returns> A new <see cref="Models.TemplateBaseProperties"/> instance for mocking. </returns>
+        public static TemplateBaseProperties TemplateBaseProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+            previewImages ??= new List<string>();
+            previewImagesDark ??= new List<string>();
+
+            return new TemplateBaseProperties(
+                contentId,
+                contentProductId,
+                packageVersion,
+                version,
+                displayName,
+                contentKind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                previewImages?.ToList(),
+                previewImagesDark?.ToList(),
+                packageId,
+                packageKind,
+                packageName,
+                isDeprecated,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsTemplateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
+        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="displayName"> The display name of the template. </param>
+        /// <param name="contentKind"> The kind of content the template is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the template - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the item. </param>
+        /// <param name="providers"> Providers for the content item. </param>
+        /// <param name="firstPublishOn"> first publish date content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="packageId"> the package Id contains this template. </param>
+        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
+        /// <param name="packageName"> the name of the package contains this template. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
+        /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsTemplateData"/> instance for mocking. </returns>
+        public static SecurityInsightsTemplateData SecurityInsightsTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null, BinaryData mainTemplate = null, IEnumerable<TemplateProperties> dependantTemplates = null, ETag? etag = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+            previewImages ??= new List<string>();
+            previewImagesDark ??= new List<string>();
+            dependantTemplates ??= new List<TemplateProperties>();
+
+            return new SecurityInsightsTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId,
+                contentProductId,
+                packageVersion,
+                version,
+                displayName,
+                contentKind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                previewImages?.ToList(),
+                previewImagesDark?.ToList(),
+                packageId,
+                packageKind,
+                packageName,
+                isDeprecated,
+                mainTemplate,
+                dependantTemplates?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateProperties"/>. </summary>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
+        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="displayName"> The display name of the template. </param>
+        /// <param name="contentKind"> The kind of content the template is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the template - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the item. </param>
+        /// <param name="providers"> Providers for the content item. </param>
+        /// <param name="firstPublishOn"> first publish date content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="packageId"> the package Id contains this template. </param>
+        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
+        /// <param name="packageName"> the name of the package contains this template. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
+        /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
+        /// <returns> A new <see cref="Models.TemplateProperties"/> instance for mocking. </returns>
+        public static TemplateProperties TemplateProperties(string contentId = null, string contentProductId = null, string packageVersion = null, string version = null, string displayName = null, SecurityInsightsKind? contentKind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, string packageId = null, SecurityInsightsMetadataPackageKind? packageKind = null, string packageName = null, SecurityInsightsMetadataFlag? isDeprecated = null, BinaryData mainTemplate = null, IEnumerable<TemplateProperties> dependantTemplates = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+            previewImages ??= new List<string>();
+            previewImagesDark ??= new List<string>();
+            dependantTemplates ??= new List<TemplateProperties>();
+
+            return new TemplateProperties(
+                contentId,
+                contentProductId,
+                packageVersion,
+                version,
+                displayName,
+                contentKind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                previewImages?.ToList(),
+                previewImagesDark?.ToList(),
+                packageId,
+                packageKind,
+                packageName,
+                isDeprecated,
+                serializedAdditionalRawData: null,
+                mainTemplate,
+                dependantTemplates?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnrichmentIPGeodata"/>. </summary>
+        /// <param name="asn"> The autonomous system number associated with this IP address. </param>
+        /// <param name="carrier"> The name of the carrier for this IP address. </param>
+        /// <param name="city"> The city this IP address is located in. </param>
+        /// <param name="cityCf"> A numeric rating of confidence that the value in the 'city' field is correct, on a scale of 0-100. </param>
+        /// <param name="continent"> The continent this IP address is located on. </param>
+        /// <param name="country"> The county this IP address is located in. </param>
+        /// <param name="countryCf"> A numeric rating of confidence that the value in the 'country' field is correct on a scale of 0-100. </param>
+        /// <param name="ipAddr"> The dotted-decimal or colon-separated string representation of the IP address. </param>
+        /// <param name="ipRoutingType"> A description of the connection type of this IP address. </param>
+        /// <param name="latitude"> The latitude of this IP address. </param>
+        /// <param name="longitude"> The longitude of this IP address. </param>
+        /// <param name="organization"> The name of the organization for this IP address. </param>
+        /// <param name="organizationType"> The type of the organization for this IP address. </param>
+        /// <param name="region"> The geographic region this IP address is located in. </param>
+        /// <param name="state"> The state this IP address is located in. </param>
+        /// <param name="stateCf"> A numeric rating of confidence that the value in the 'state' field is correct on a scale of 0-100. </param>
+        /// <param name="stateCode"> The abbreviated name for the state this IP address is located in. </param>
+        /// <returns> A new <see cref="Models.EnrichmentIPGeodata"/> instance for mocking. </returns>
+        public static EnrichmentIPGeodata EnrichmentIPGeodata(string asn = null, string carrier = null, string city = null, int? cityCf = null, string continent = null, string country = null, int? countryCf = null, string ipAddr = null, string ipRoutingType = null, string latitude = null, string longitude = null, string organization = null, string organizationType = null, string region = null, string state = null, int? stateCf = null, string stateCode = null)
+        {
+            return new EnrichmentIPGeodata(
+                asn,
+                carrier,
+                city,
+                cityCf,
+                continent,
+                country,
+                countryCf,
+                ipAddr,
+                ipRoutingType,
+                latitude,
+                longitude,
+                organization,
+                organizationType,
+                region,
+                state,
+                stateCf,
+                stateCode,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnrichmentDomainWhois"/>. </summary>
+        /// <param name="domain"> The domain for this whois record. </param>
+        /// <param name="server"> The hostname of this registrar's whois server. </param>
+        /// <param name="created"> The timestamp at which this record was created. </param>
+        /// <param name="updatedOn"> The timestamp at which this record was last updated. </param>
+        /// <param name="expireOn"> The timestamp at which this record will expire. </param>
+        /// <param name="parsedWhois"> The whois record for a given domain. </param>
+        /// <returns> A new <see cref="Models.EnrichmentDomainWhois"/> instance for mocking. </returns>
+        public static EnrichmentDomainWhois EnrichmentDomainWhois(string domain = null, string server = null, DateTimeOffset? created = null, DateTimeOffset? updatedOn = null, DateTimeOffset? expireOn = null, EnrichmentDomainWhoisDetails parsedWhois = null)
+        {
+            return new EnrichmentDomainWhois(
+                domain,
+                server,
+                created,
+                updatedOn,
+                expireOn,
+                parsedWhois,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnrichmentDomainWhoisDetails"/>. </summary>
+        /// <param name="registrar"> The registrar associated with this domain. </param>
+        /// <param name="contacts"> The set of contacts associated with this domain. </param>
+        /// <param name="nameServers"> A list of name servers associated with this domain. </param>
+        /// <param name="statuses"> The set of status flags for this whois record. </param>
+        /// <returns> A new <see cref="Models.EnrichmentDomainWhoisDetails"/> instance for mocking. </returns>
+        public static EnrichmentDomainWhoisDetails EnrichmentDomainWhoisDetails(EnrichmentDomainWhoisRegistrarDetails registrar = null, EnrichmentDomainWhoisContacts contacts = null, IEnumerable<string> nameServers = null, IEnumerable<string> statuses = null)
+        {
+            nameServers ??= new List<string>();
+            statuses ??= new List<string>();
+
+            return new EnrichmentDomainWhoisDetails(registrar, contacts, nameServers?.ToList(), statuses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnrichmentDomainWhoisRegistrarDetails"/>. </summary>
+        /// <param name="name"> The name of this registrar. </param>
+        /// <param name="abuseContactEmail"> This registrar's abuse contact email. </param>
+        /// <param name="abuseContactPhone"> This registrar's abuse contact phone number. </param>
+        /// <param name="ianaId"> This registrar's Internet Assigned Numbers Authority id. </param>
+        /// <param name="uri"> This registrar's URL. </param>
+        /// <param name="whoisServer"> The hostname of this registrar's whois server. </param>
+        /// <returns> A new <see cref="Models.EnrichmentDomainWhoisRegistrarDetails"/> instance for mocking. </returns>
+        public static EnrichmentDomainWhoisRegistrarDetails EnrichmentDomainWhoisRegistrarDetails(string name = null, string abuseContactEmail = null, string abuseContactPhone = null, string ianaId = null, Uri uri = null, string whoisServer = null)
+        {
+            return new EnrichmentDomainWhoisRegistrarDetails(
+                name,
+                abuseContactEmail,
+                abuseContactPhone,
+                ianaId,
+                uri,
+                whoisServer,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnrichmentDomainWhoisContacts"/>. </summary>
+        /// <param name="admin"> The admin contact for this whois record. </param>
+        /// <param name="billing"> The billing contact for this whois record. </param>
+        /// <param name="registrant"> The registrant contact for this whois record. </param>
+        /// <param name="tech"> The technical contact for this whois record. </param>
+        /// <returns> A new <see cref="Models.EnrichmentDomainWhoisContacts"/> instance for mocking. </returns>
+        public static EnrichmentDomainWhoisContacts EnrichmentDomainWhoisContacts(EnrichmentDomainWhoisContact admin = null, EnrichmentDomainWhoisContact billing = null, EnrichmentDomainWhoisContact registrant = null, EnrichmentDomainWhoisContact tech = null)
+        {
+            return new EnrichmentDomainWhoisContacts(admin, billing, registrant, tech, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnrichmentDomainWhoisContact"/>. </summary>
+        /// <param name="name"> The name of this contact. </param>
+        /// <param name="org"> The organization for this contact. </param>
+        /// <param name="street"> A list describing the street address for this contact. </param>
+        /// <param name="city"> The city for this contact. </param>
+        /// <param name="state"> The state for this contact. </param>
+        /// <param name="postal"> The postal code for this contact. </param>
+        /// <param name="country"> The country for this contact. </param>
+        /// <param name="phone"> The phone number for this contact. </param>
+        /// <param name="fax"> The fax number for this contact. </param>
+        /// <param name="email"> The email address for this contact. </param>
+        /// <returns> A new <see cref="Models.EnrichmentDomainWhoisContact"/> instance for mocking. </returns>
+        public static EnrichmentDomainWhoisContact EnrichmentDomainWhoisContact(string name = null, string org = null, IEnumerable<string> street = null, string city = null, string state = null, string postal = null, string country = null, string phone = null, string fax = null, string email = null)
+        {
+            street ??= new List<string>();
+
+            return new EnrichmentDomainWhoisContact(
+                name,
+                org,
+                street?.ToList(),
+                city,
+                state,
+                postal,
+                country,
+                phone,
+                fax,
+                email,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceEnrichmentIPGeodata"/>. </summary>
+        /// <param name="asn"> The autonomous system number associated with this IP address. </param>
+        /// <param name="carrier"> The name of the carrier for this IP address. </param>
+        /// <param name="city"> The city this IP address is located in. </param>
+        /// <param name="cityConfidenceFactor"> A numeric rating of confidence that the value in the 'city' field is correct, on a scale of 0-100. </param>
+        /// <param name="continent"> The continent this IP address is located on. </param>
+        /// <param name="country"> The county this IP address is located in. </param>
+        /// <param name="countryConfidenceFactor"> A numeric rating of confidence that the value in the 'country' field is correct on a scale of 0-100. </param>
+        /// <param name="ipAddr"> The dotted-decimal or colon-separated string representation of the IP address. </param>
+        /// <param name="ipRoutingType"> A description of the connection type of this IP address. </param>
+        /// <param name="latitude"> The latitude of this IP address. </param>
+        /// <param name="longitude"> The longitude of this IP address. </param>
+        /// <param name="organization"> The name of the organization for this IP address. </param>
+        /// <param name="organizationType"> The type of the organization for this IP address. </param>
+        /// <param name="region"> The geographic region this IP address is located in. </param>
+        /// <param name="state"> The state this IP address is located in. </param>
+        /// <param name="stateConfidenceFactor"> A numeric rating of confidence that the value in the 'state' field is correct on a scale of 0-100. </param>
+        /// <param name="stateCode"> The abbreviated name for the state this IP address is located in. </param>
+        /// <returns> A new <see cref="Models.WorkspaceEnrichmentIPGeodata"/> instance for mocking. </returns>
+        public static WorkspaceEnrichmentIPGeodata WorkspaceEnrichmentIPGeodata(string asn = null, string carrier = null, string city = null, int? cityConfidenceFactor = null, string continent = null, string country = null, int? countryConfidenceFactor = null, string ipAddr = null, string ipRoutingType = null, string latitude = null, string longitude = null, string organization = null, string organizationType = null, string region = null, string state = null, int? stateConfidenceFactor = null, string stateCode = null)
+        {
+            return new WorkspaceEnrichmentIPGeodata(
+                asn,
+                carrier,
+                city,
+                cityConfidenceFactor,
+                continent,
+                country,
+                countryConfidenceFactor,
+                ipAddr,
+                ipRoutingType,
+                latitude,
+                longitude,
+                organization,
+                organizationType,
+                region,
+                state,
+                stateConfidenceFactor,
+                stateCode,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResult"/>. </summary>
+        /// <param name="metaDataAggregations"> The metadata from the expansion operation results. </param>
+        /// <param name="value"> The expansion result values. </param>
+        /// <returns> A new <see cref="Models.EntityExpandResult"/> instance for mocking. </returns>
+        public static EntityExpandResult EntityExpandResult(IEnumerable<ExpansionResultAggregation> metaDataAggregations = null, EntityExpandResponseValue value = null)
+        {
+            metaDataAggregations ??= new List<ExpansionResultAggregation>();
+
+            return new EntityExpandResult(metaDataAggregations != null ? new ExpansionResultsMetadata(metaDataAggregations?.ToList(), serializedAdditionalRawData: null) : null, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResponseValue"/>. </summary>
+        /// <param name="entities">
+        /// Array of the expansion result entities.
+        /// Please note <see cref="Models.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
+        /// </param>
+        /// <param name="edges"> Array of edges that connects the entity to the list of entities. </param>
+        /// <returns> A new <see cref="Models.EntityExpandResponseValue"/> instance for mocking. </returns>
+        public static EntityExpandResponseValue EntityExpandResponseValue(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<EntityEdges> edges = null)
+        {
+            entities ??= new List<SecurityInsightsEntity>();
+            edges ??= new List<EntityEdges>();
+
+            return new EntityExpandResponseValue(entities?.ToList(), edges?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityEdges"/>. </summary>
+        /// <param name="targetEntityId"> The target entity Id. </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <returns> A new <see cref="Models.EntityEdges"/> instance for mocking. </returns>
+        public static EntityEdges EntityEdges(string targetEntityId = null, IReadOnlyDictionary<string, BinaryData> additionalData = null)
+        {
+            additionalData ??= new Dictionary<string, BinaryData>();
+
+            return new EntityEdges(targetEntityId, additionalData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityTimelineContent"/>. </summary>
+        /// <param name="kinds"> Array of timeline Item kinds. </param>
+        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="numberOfBucket"> The number of bucket for timeline queries aggregation. </param>
+        /// <returns> A new <see cref="Models.EntityTimelineContent"/> instance for mocking. </returns>
+        public static EntityTimelineContent EntityTimelineContent(IEnumerable<EntityTimelineKind> kinds = null, DateTimeOffset startOn = default, DateTimeOffset endOn = default, int? numberOfBucket = null)
+        {
+            kinds ??= new List<EntityTimelineKind>();
+
+            return new EntityTimelineContent(kinds?.ToList(), startOn, endOn, numberOfBucket, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityQueryItem"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The kind of the entity query. </param>
+        /// <returns> A new <see cref="Models.EntityQueryItem"/> instance for mocking. </returns>
+        public static EntityQueryItem EntityQueryItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        {
+            return new UnknownEntityQueryItem(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new EntityQueryKind(kind),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityGetInsightsContent"/>. </summary>
+        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="isDefaultExtendedTimeRangeAdded"> Indicates if query time range should be extended with default time range of the query. Default value is false. </param>
+        /// <param name="insightQueryIds"> List of Insights Query Id. If empty, default value is all insights of this entity. </param>
+        /// <returns> A new <see cref="Models.EntityGetInsightsContent"/> instance for mocking. </returns>
+        public static EntityGetInsightsContent EntityGetInsightsContent(DateTimeOffset startOn = default, DateTimeOffset endOn = default, bool? isDefaultExtendedTimeRangeAdded = null, IEnumerable<Guid> insightQueryIds = null)
+        {
+            insightQueryIds ??= new List<Guid>();
+
+            return new EntityGetInsightsContent(startOn, endOn, isDefaultExtendedTimeRangeAdded, insightQueryIds?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityInsightItem"/>. </summary>
+        /// <param name="queryId"> The query id of the insight. </param>
+        /// <param name="queryTimeInterval"> The Time interval that the query actually executed on. </param>
+        /// <param name="tableQueryResults"> Query results for table insights query. </param>
+        /// <param name="chartQueryResults"> Query results for table insights query. </param>
+        /// <returns> A new <see cref="Models.EntityInsightItem"/> instance for mocking. </returns>
+        public static EntityInsightItem EntityInsightItem(string queryId = null, EntityInsightItemQueryTimeInterval queryTimeInterval = null, InsightsTableResult tableQueryResults = null, IEnumerable<InsightsTableResult> chartQueryResults = null)
+        {
+            chartQueryResults ??= new List<InsightsTableResult>();
+
+            return new EntityInsightItem(queryId, queryTimeInterval, tableQueryResults, chartQueryResults?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityInsightItemQueryTimeInterval"/>. </summary>
+        /// <param name="startOn"> Insight query start time. </param>
+        /// <param name="endOn"> Insight query end time. </param>
+        /// <returns> A new <see cref="Models.EntityInsightItemQueryTimeInterval"/> instance for mocking. </returns>
+        public static EntityInsightItemQueryTimeInterval EntityInsightItemQueryTimeInterval(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
+        {
+            return new EntityInsightItemQueryTimeInterval(startOn, endOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightsTableResult"/>. </summary>
+        /// <param name="columns"> Columns Metadata of the table. </param>
+        /// <param name="rows"> Rows data of the table. </param>
+        /// <returns> A new <see cref="Models.InsightsTableResult"/> instance for mocking. </returns>
+        public static InsightsTableResult InsightsTableResult(IEnumerable<InsightsTableResultColumnsItem> columns = null, IEnumerable<IList<string>> rows = null)
+        {
+            columns ??= new List<InsightsTableResultColumnsItem>();
+            rows ??= new List<IList<string>>();
+
+            return new InsightsTableResult(columns?.ToList(), rows?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightsTableResultColumnsItem"/>. </summary>
+        /// <param name="insightsTableResultColumnsItemType"> the type of the colum. </param>
+        /// <param name="name"> the name of the colum. </param>
+        /// <returns> A new <see cref="Models.InsightsTableResultColumnsItem"/> instance for mocking. </returns>
+        public static InsightsTableResultColumnsItem InsightsTableResultColumnsItem(string insightsTableResultColumnsItemType = null, string name = null)
+        {
+            return new InsightsTableResultColumnsItem(insightsTableResultColumnsItemType, name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsEntityQueryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> the entity query kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsEntityQueryData"/> instance for mocking. </returns>
+        public static SecurityInsightsEntityQueryData SecurityInsightsEntityQueryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new UnknownEntityQuery(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new EntityQueryKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsEntityQueryCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> the entity query kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsEntityQueryCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static SecurityInsightsEntityQueryCreateOrUpdateContent SecurityInsightsEntityQueryCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new UnknownCustomEntityQuery(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new CustomEntityQueryKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsEntityQueryTemplateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> the entity query template kind. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsEntityQueryTemplateData"/> instance for mocking. </returns>
+        public static SecurityInsightsEntityQueryTemplateData SecurityInsightsEntityQueryTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        {
+            return new UnknownEntityQueryTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new EntityQueryTemplateKind(kind),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsFileImportData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="ingestionMode"> Describes how to ingest the records in the file. </param>
+        /// <param name="contentType"> The content type of this file. </param>
+        /// <param name="createdOn"> The time the file was imported. </param>
+        /// <param name="errorFile"> Represents the error file (if the import was ingested with errors or failed the validation). </param>
+        /// <param name="errorsPreview"> An ordered list of some of the errors that were encountered during validation. </param>
+        /// <param name="importFile"> Represents the imported file. </param>
+        /// <param name="ingestedRecordCount"> The number of records that have been successfully ingested. </param>
+        /// <param name="source"> The source for the data in the file. </param>
+        /// <param name="state"> The state of the file import. </param>
+        /// <param name="totalRecordCount"> The number of records in the file. </param>
+        /// <param name="validRecordCount"> The number of records that have passed validation. </param>
+        /// <param name="filesValidUntil"> The time the files associated with this import are deleted from the storage account. </param>
+        /// <param name="importValidUntil"> The time the file import record is soft deleted from the database and history. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsFileImportData"/> instance for mocking. </returns>
+        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IngestionMode? ingestionMode = null, SecurityInsightsFileImportContentType? contentType = null, DateTimeOffset? createdOn = null, SecurityInsightsFileMetadata errorFile = null, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = null, SecurityInsightsFileMetadata importFile = null, int? ingestedRecordCount = null, string source = null, SecurityInsightsFileImportState? state = null, int? totalRecordCount = null, int? validRecordCount = null, DateTimeOffset? filesValidUntil = null, DateTimeOffset? importValidUntil = null)
+        {
+            errorsPreview ??= new List<SecurityInsightsFileValidationError>();
+
+            return new SecurityInsightsFileImportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ingestionMode,
+                contentType,
+                createdOn,
+                errorFile,
+                errorsPreview?.ToList(),
+                importFile,
+                ingestedRecordCount,
+                source,
+                state,
+                totalRecordCount,
+                validRecordCount,
+                filesValidUntil,
+                importValidUntil,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFileMetadata"/>. </summary>
+        /// <param name="fileFormat"> The format of the file. </param>
+        /// <param name="fileName"> The name of the file. </param>
+        /// <param name="fileSize"> The size of the file. </param>
+        /// <param name="fileContentUri"> A URI with a valid SAS token to allow uploading / downloading the file. </param>
+        /// <param name="deleteStatus"> Indicates whether the file was deleted from the storage account. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsFileMetadata"/> instance for mocking. </returns>
+        public static SecurityInsightsFileMetadata SecurityInsightsFileMetadata(SecurityInsightsFileFormat? fileFormat = null, string fileName = null, int? fileSize = null, Uri fileContentUri = null, SecurityInsightsFileDeleteStatus? deleteStatus = null)
+        {
+            return new SecurityInsightsFileMetadata(
+                fileFormat,
+                fileName,
+                fileSize,
+                fileContentUri,
+                deleteStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFileValidationError"/>. </summary>
+        /// <param name="recordIndex"> The number of the record that has the error. </param>
+        /// <param name="errorMessages"> A list of descriptions of the error. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsFileValidationError"/> instance for mocking. </returns>
+        public static SecurityInsightsFileValidationError SecurityInsightsFileValidationError(int? recordIndex = null, IEnumerable<string> errorMessages = null)
+        {
+            errorMessages ??= new List<string>();
+
+            return new SecurityInsightsFileValidationError(recordIndex, errorMessages?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> The display name of the hunt. </param>
+        /// <param name="description"> The description of the hunt. </param>
+        /// <param name="status"> The status of the hunt. </param>
+        /// <param name="hypothesisStatus"> The hypothesis status of the hunt. </param>
+        /// <param name="attackTactics"> A list of mitre attack tactics the hunt is associated with. </param>
+        /// <param name="attackTechniques"> A list of a mitre attack techniques the hunt is associated with. </param>
+        /// <param name="labels"> List of labels relevant to this hunt. </param>
+        /// <param name="owner"> Describes a user that the hunt is assigned to. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntData"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntData SecurityInsightsHuntData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, HuntStatus? status = null, HypothesisStatus? hypothesisStatus = null, IEnumerable<SecurityInsightsAttackTactic> attackTactics = null, IEnumerable<string> attackTechniques = null, IEnumerable<string> labels = null, SecurityInsightsHuntOwner owner = null, ETag? etag = null)
+        {
+            attackTactics ??= new List<SecurityInsightsAttackTactic>();
+            attackTechniques ??= new List<string>();
+            labels ??= new List<string>();
+
+            return new SecurityInsightsHuntData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                description,
+                status,
+                hypothesisStatus,
+                attackTactics?.ToList(),
+                attackTechniques?.ToList(),
+                labels?.ToList(),
+                owner,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntRelationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="relatedResourceId"> The id of the related resource. </param>
+        /// <param name="relatedResourceName"> The name of the related resource. </param>
+        /// <param name="relationType"> The type of the hunt relation. </param>
+        /// <param name="relatedResourceKind"> The resource that the relation is related to. </param>
+        /// <param name="labels"> List of labels relevant to this hunt. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntRelationData"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntRelationData SecurityInsightsHuntRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, string relationType = null, string relatedResourceKind = null, IEnumerable<string> labels = null, ETag? etag = null)
+        {
+            labels ??= new List<string>();
+
+            return new SecurityInsightsHuntRelationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                relatedResourceId,
+                relatedResourceName,
+                relationType,
+                relatedResourceKind,
+                labels?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntCommentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="message"> The message for the comment. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntCommentData"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntCommentData SecurityInsightsHuntCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string message = null, ETag? etag = null)
+        {
+            return new SecurityInsightsHuntCommentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                message,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -233,26 +1293,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="additionalInfo"> Additional data on the incident. </param>
-        /// <param name="classification"> The reason the incident was closed. </param>
-        /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
-        /// <param name="classificationReason"> The classification reason the incident was closed with. </param>
-        /// <param name="createdOn"> The time the incident was created. </param>
+        /// <param name="title"> The title of the incident. </param>
         /// <param name="description"> The description of the incident. </param>
-        /// <param name="firstActivityOn"> The time of the first activity in the incident. </param>
-        /// <param name="incidentUri"> The deep-link url to the incident in Azure portal. </param>
-        /// <param name="incidentNumber"> A sequential number. </param>
-        /// <param name="labels"> List of labels relevant to this incident. </param>
-        /// <param name="lastActivityOn"> The time of the last activity in the incident. </param>
-        /// <param name="lastModifiedOn"> The last time the incident was updated. </param>
-        /// <param name="owner"> Describes a user that the incident is assigned to. </param>
-        /// <param name="relatedAnalyticRuleIds"> List of resource ids of Analytic rules related to the incident. </param>
         /// <param name="severity"> The severity of the incident. </param>
         /// <param name="status"> The status of the incident. </param>
-        /// <param name="title"> The title of the incident. </param>
+        /// <param name="classification"> The reason the incident was closed. </param>
+        /// <param name="classificationReason"> The classification reason the incident was closed with. </param>
+        /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
+        /// <param name="owner"> Describes a user that the incident is assigned to. </param>
+        /// <param name="labels"> List of labels relevant to this incident. </param>
+        /// <param name="firstActivityOn"> The time of the first activity in the incident. </param>
+        /// <param name="lastActivityOn"> The time of the last activity in the incident. </param>
+        /// <param name="lastModifiedOn"> The last time the incident was updated. </param>
+        /// <param name="createdOn"> The time the incident was created. </param>
+        /// <param name="incidentNumber"> A sequential number. </param>
+        /// <param name="additionalInfo"> Additional data on the incident. </param>
+        /// <param name="relatedAnalyticRuleIds"> List of resource ids of Analytic rules related to the incident. </param>
+        /// <param name="incidentUri"> The deep-link url to the incident in Azure portal. </param>
+        /// <param name="providerName"> The name of the source provider that generated the incident. </param>
+        /// <param name="providerIncidentId"> The incident ID assigned by the incident provider. </param>
+        /// <param name="teamInformation"> Describes a team for the incident. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentData"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentData SecurityInsightsIncidentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityInsightsIncidentAdditionalInfo additionalInfo = null, SecurityInsightsIncidentClassification? classification = null, string classificationComment = null, SecurityInsightsIncidentClassificationReason? classificationReason = null, DateTimeOffset? createdOn = null, string description = null, DateTimeOffset? firstActivityOn = null, Uri incidentUri = null, int? incidentNumber = null, IEnumerable<SecurityInsightsIncidentLabel> labels = null, DateTimeOffset? lastActivityOn = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsIncidentOwnerInfo owner = null, IEnumerable<ResourceIdentifier> relatedAnalyticRuleIds = null, SecurityInsightsIncidentSeverity? severity = null, SecurityInsightsIncidentStatus? status = null, string title = null, ETag? etag = null)
+        public static SecurityInsightsIncidentData SecurityInsightsIncidentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, SecurityInsightsIncidentSeverity? severity = null, SecurityInsightsIncidentStatus? status = null, SecurityInsightsIncidentClassification? classification = null, SecurityInsightsIncidentClassificationReason? classificationReason = null, string classificationComment = null, SecurityInsightsIncidentOwnerInfo owner = null, IEnumerable<SecurityInsightsIncidentLabel> labels = null, DateTimeOffset? firstActivityOn = null, DateTimeOffset? lastActivityOn = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, int? incidentNumber = null, SecurityInsightsIncidentAdditionalInfo additionalInfo = null, IEnumerable<ResourceIdentifier> relatedAnalyticRuleIds = null, Uri incidentUri = null, string providerName = null, string providerIncidentId = null, TeamInformation teamInformation = null, ETag? etag = null)
         {
             labels ??= new List<SecurityInsightsIncidentLabel>();
             relatedAnalyticRuleIds ??= new List<ResourceIdentifier>();
@@ -262,45 +1325,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                additionalInfo,
-                classification,
-                classificationComment,
-                classificationReason,
-                createdOn,
+                title,
                 description,
-                firstActivityOn,
-                incidentUri,
-                incidentNumber,
-                labels?.ToList(),
-                lastActivityOn,
-                lastModifiedOn,
-                owner,
-                relatedAnalyticRuleIds?.ToList(),
                 severity,
                 status,
-                title,
+                classification,
+                classificationReason,
+                classificationComment,
+                owner,
+                labels?.ToList(),
+                firstActivityOn,
+                lastActivityOn,
+                lastModifiedOn,
+                createdOn,
+                incidentNumber,
+                additionalInfo,
+                relatedAnalyticRuleIds?.ToList(),
+                incidentUri,
+                providerName,
+                providerIncidentId,
+                teamInformation,
                 etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/>. </summary>
-        /// <param name="alertsCount"> The number of alerts in the incident. </param>
-        /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
-        /// <param name="commentsCount"> The number of comments in the incident. </param>
-        /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
-        /// <param name="tactics"> The tactics associated with incident. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount = null, int? bookmarksCount = null, int? commentsCount = null, IEnumerable<string> alertProductNames = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null)
-        {
-            alertProductNames ??= new List<string>();
-            tactics ??= new List<SecurityInsightsAttackTactic>();
-
-            return new SecurityInsightsIncidentAdditionalInfo(
-                alertsCount,
-                bookmarksCount,
-                commentsCount,
-                alertProductNames?.ToList(),
-                tactics?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -311,6 +1356,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsIncidentLabel SecurityInsightsIncidentLabel(string labelName = null, SecurityInsightsIncidentLabelType? labelType = null)
         {
             return new SecurityInsightsIncidentLabel(labelName, labelType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/>. </summary>
+        /// <param name="alertsCount"> The number of alerts in the incident. </param>
+        /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
+        /// <param name="commentsCount"> The number of comments in the incident. </param>
+        /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
+        /// <param name="tactics"> The tactics associated with incident. </param>
+        /// <param name="techniques"> The techniques associated with incident's tactics. </param>
+        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/> instance for mocking. </returns>
+        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount = null, int? bookmarksCount = null, int? commentsCount = null, IEnumerable<string> alertProductNames = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, Uri providerIncidentUri = null)
+        {
+            alertProductNames ??= new List<string>();
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+
+            return new SecurityInsightsIncidentAdditionalInfo(
+                alertsCount,
+                bookmarksCount,
+                commentsCount,
+                alertProductNames?.ToList(),
+                tactics?.ToList(),
+                techniques?.ToList(),
+                providerIncidentUri,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TeamInformation"/>. </summary>
+        /// <param name="teamId"> Team ID. </param>
+        /// <param name="primaryChannelUri"> The primary channel URL of the team. </param>
+        /// <param name="teamCreationTimeUtc"> The time the team was created. </param>
+        /// <param name="name"> The name of the team. </param>
+        /// <param name="description"> The description of the team. </param>
+        /// <returns> A new <see cref="Models.TeamInformation"/> instance for mocking. </returns>
+        public static TeamInformation TeamInformation(string teamId = null, Uri primaryChannelUri = null, DateTimeOffset? teamCreationTimeUtc = null, string name = null, string description = null)
+        {
+            return new TeamInformation(
+                teamId,
+                primaryChannelUri,
+                teamCreationTimeUtc,
+                name,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAlert"/>. </summary>
@@ -399,24 +1488,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsAlertConfidenceReason(reason, reasonType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
-        {
-            return new SecurityInsightsEntity(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsHuntingBookmark"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -468,22 +1539,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="message"> The comment message. </param>
         /// <param name="createdOn"> The time the comment was created. </param>
         /// <param name="lastModifiedOn"> The time the comment was updated. </param>
-        /// <param name="message"> The comment message. </param>
         /// <param name="author"> Describes the client that created the comment. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string message = null, SecurityInsightsClientInfo author = null, ETag? etag = null)
+        public static SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string message = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsClientInfo author = null, ETag? etag = null)
         {
             return new SecurityInsightsIncidentCommentData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                message,
                 createdOn,
                 lastModifiedOn,
-                message,
                 author,
                 etag,
                 serializedAdditionalRawData: null);
@@ -493,7 +1564,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="entities">
         /// Array of the incident related entities.
         /// Please note <see cref="Models.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
+        /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="metaData"> The metadata from the incident related entities results. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIncidentEntitiesResult"/> instance for mocking. </returns>
@@ -506,37 +1577,187 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
-        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
         /// <param name="entityKind"> The kind of the aggregated entity. </param>
+        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(int count = default, SecurityInsightsEntityKind entityKind = default)
+        public static SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(SecurityInsightsEntityKind entityKind = default, int count = default)
         {
-            return new SecurityInsightsIncidentEntitiesMetadata(count, entityKind, serializedAdditionalRawData: null);
+            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="relatedResourceId"> The resource ID of the related resource. </param>
-        /// <param name="relatedResourceName"> The name of the related resource. </param>
-        /// <param name="relatedResourceType"> The resource type of the related resource. </param>
-        /// <param name="relatedResourceKind"> The resource kind of the related resource. </param>
+        /// <param name="title"> The title of the task. </param>
+        /// <param name="description"> The description of the task. </param>
+        /// <param name="status"></param>
+        /// <param name="createdOn"> The time the task was created. </param>
+        /// <param name="lastModifiedOn"> The last time the task was updated. </param>
+        /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
+        /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentRelationData SecurityInsightsIncidentRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, ResourceType? relatedResourceType = null, string relatedResourceKind = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentTaskData"/> instance for mocking. </returns>
+        public static SecurityInsightsIncidentTaskData SecurityInsightsIncidentTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, IncidentTaskStatus status = default, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsClientInfo createdBy = null, SecurityInsightsClientInfo lastModifiedBy = null, ETag? etag = null)
         {
-            return new SecurityInsightsIncidentRelationData(
+            return new SecurityInsightsIncidentTaskData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                relatedResourceId,
-                relatedResourceName,
-                relatedResourceType,
-                relatedResourceKind,
+                title,
+                description,
+                status,
+                createdOn,
+                lastModifiedOn,
+                createdBy,
+                lastModifiedBy,
                 etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsMetadataData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="parentId"> Full parent resource ID of the content item the metadata is for.  This is the full resource ID including the scope (subscription and resource group). </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM template best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="kind"> The kind of content the metadata is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the metadata - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the solution content item. </param>
+        /// <param name="providers"> Providers for the solution content item. </param>
+        /// <param name="firstPublishOn"> first publish date solution content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the solution content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the solution template. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsMetadataData"/> instance for mocking. </returns>
+        public static SecurityInsightsMetadataData SecurityInsightsMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string parentId = null, string version = null, string kind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, ETag? etag = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+            previewImages ??= new List<string>();
+            previewImagesDark ??= new List<string>();
+
+            return new SecurityInsightsMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId,
+                parentId,
+                version,
+                kind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                previewImages?.ToList(),
+                previewImagesDark?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsMetadataPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="parentId"> Full parent resource ID of the content item the metadata is for.  This is the full resource ID including the scope (subscription and resource group). </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM template best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="kind"> The kind of content the metadata is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the metadata - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the solution content item. </param>
+        /// <param name="providers"> Providers for the solution content item. </param>
+        /// <param name="firstPublishOn"> first publish date solution content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the solution content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the solution template. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsMetadataPatch"/> instance for mocking. </returns>
+        public static SecurityInsightsMetadataPatch SecurityInsightsMetadataPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentId = null, string parentId = null, string version = null, string kind = null, SecurityInsightsMetadataSource source = null, SecurityInsightsMetadataAuthor author = null, SecurityInsightsMetadataSupport support = null, SecurityInsightsMetadataDependencies dependencies = null, SecurityInsightsMetadataCategories categories = null, IEnumerable<string> providers = null, DateTimeOffset? firstPublishOn = null, DateTimeOffset? lastPublishOn = null, string customVersion = null, string contentSchemaVersion = null, string icon = null, IEnumerable<string> threatAnalysisTactics = null, IEnumerable<string> threatAnalysisTechniques = null, IEnumerable<string> previewImages = null, IEnumerable<string> previewImagesDark = null, ETag? etag = null)
+        {
+            providers ??= new List<string>();
+            threatAnalysisTactics ??= new List<string>();
+            threatAnalysisTechniques ??= new List<string>();
+            previewImages ??= new List<string>();
+            previewImagesDark ??= new List<string>();
+
+            return new SecurityInsightsMetadataPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId,
+                parentId,
+                version,
+                kind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                providers?.ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                threatAnalysisTactics?.ToList(),
+                threatAnalysisTechniques?.ToList(),
+                previewImages?.ToList(),
+                previewImagesDark?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsOfficeConsentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> The tenantId of the Office365 with the consent. </param>
+        /// <param name="consentId"> Help to easily cascade among the data layers. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsOfficeConsentData"/> instance for mocking. </returns>
+        public static SecurityInsightsOfficeConsentData SecurityInsightsOfficeConsentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string consentId = null)
+        {
+            return new SecurityInsightsOfficeConsentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId,
+                consentId,
                 serializedAdditionalRawData: null);
         }
 
@@ -560,6 +1781,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsRecommendationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="recommendationTypeId"> Id of the recommendation type. </param>
+        /// <param name="state"> State of the recommendation. </param>
+        /// <param name="title"> Title of the recommendation. </param>
+        /// <param name="description"> Description of the recommendation. </param>
+        /// <param name="createdOn"> The time stamp (UTC) when the recommendation was created. </param>
+        /// <param name="lastEvaluatedOn"> The time stamp (UTC) when the recommendation was last evaluated. </param>
+        /// <param name="lastModifiedOn"> The time stamp (UTC) when the recommendation was last modified. </param>
+        /// <param name="suggestions"> List of suggestions to take for this recommendation. </param>
+        /// <param name="resourceId"> Id of the resource this recommendation refers to. </param>
+        /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsRecommendationData"/> instance for mocking. </returns>
+        public static SecurityInsightsRecommendationData SecurityInsightsRecommendationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string recommendationTypeId = null, RecommendationState? state = null, string title = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastEvaluatedOn = null, DateTimeOffset? lastModifiedOn = null, IEnumerable<RecommendedSuggestion> suggestions = null, string resourceId = null, IDictionary<string, string> additionalProperties = null, ETag? etag = null)
+        {
+            suggestions ??= new List<RecommendedSuggestion>();
+            additionalProperties ??= new Dictionary<string, string>();
+
+            return new SecurityInsightsRecommendationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                recommendationTypeId,
+                state,
+                title,
+                description,
+                createdOn,
+                lastEvaluatedOn,
+                lastModifiedOn,
+                suggestions?.ToList(),
+                resourceId,
+                additionalProperties,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReevaluateResult"/>. </summary>
+        /// <param name="lastEvaluatedOn"> The time stamp (UTC) when the recommendation was last evaluated. </param>
+        /// <returns> A new <see cref="Models.ReevaluateResult"/> instance for mocking. </returns>
+        public static ReevaluateResult ReevaluateResult(DateTimeOffset? lastEvaluatedOn = null)
+        {
+            return new ReevaluateResult(lastEvaluatedOn, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -568,16 +1838,222 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of security ML Analytics Settings. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/> instance for mocking. </returns>
-        public static SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityMLAnalyticsSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new SecurityMLAnalyticsSettingsKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The kind of the setting. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSettingData"/> instance for mocking. </returns>
+        public static SecurityInsightsSettingData SecurityInsightsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new UnknownSettings(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new SettingKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RepositoryAccessProperties"/>. </summary>
+        /// <param name="kind"> The kind of repository access credentials. </param>
+        /// <param name="code"> OAuth Code. Required when `kind` is `OAuth`. </param>
+        /// <param name="state"> OAuth State. Required when `kind` is `OAuth`. </param>
+        /// <param name="clientId"> OAuth ClientId. Required when `kind` is `OAuth`. </param>
+        /// <param name="token"> Personal Access Token. Required when `kind` is `PAT`. </param>
+        /// <param name="installationId"> Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only. </param>
+        /// <returns> A new <see cref="Models.RepositoryAccessProperties"/> instance for mocking. </returns>
+        public static RepositoryAccessProperties RepositoryAccessProperties(RepositoryAccessKind kind = default, string code = null, string state = null, string clientId = null, string token = null, string installationId = null)
+        {
+            return new RepositoryAccessProperties(
+                kind,
+                code,
+                state,
+                clientId,
+                token,
+                installationId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlRepo"/>. </summary>
+        /// <param name="uri"> The url to access the repository. </param>
+        /// <param name="fullName"> The name of the repository. </param>
+        /// <param name="installationId"> The installation id of the repository. </param>
+        /// <param name="branches"> Array of branches. </param>
+        /// <returns> A new <see cref="Models.SourceControlRepo"/> instance for mocking. </returns>
+        public static SourceControlRepo SourceControlRepo(Uri uri = null, string fullName = null, long? installationId = null, IEnumerable<string> branches = null)
+        {
+            branches ??= new List<string>();
+
+            return new SourceControlRepo(uri, fullName, installationId, branches?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsSourceControlData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sourceControlId"> The id (a Guid) of the source control. </param>
+        /// <param name="version"> The version number associated with the source control. </param>
+        /// <param name="displayName"> The display name of the source control. </param>
+        /// <param name="description"> A description of the source control. </param>
+        /// <param name="repoType"> The repository type of the source control. </param>
+        /// <param name="contentTypes"> Array of source control content types. </param>
+        /// <param name="repository"> Repository metadata. </param>
+        /// <param name="servicePrincipal"> Service principal metadata. </param>
+        /// <param name="repositoryAccess"> Repository access credentials. This is write-only object and it never returns back to a user. </param>
+        /// <param name="repositoryResourceInfo"> Information regarding the resources created in user's repository. </param>
+        /// <param name="lastDeploymentInfo"> Information regarding the latest deployment for the source control. </param>
+        /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSourceControlData"/> instance for mocking. </returns>
+        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? sourceControlId = null, SourceControlVersion? version = null, string displayName = null, string description = null, SourceControlRepoType repoType = default, IEnumerable<SourceControlContentType> contentTypes = null, SourceControlRepository repository = null, SourceControlServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, SourceControlDeploymentInfo lastDeploymentInfo = null, PullRequestInfo pullRequest = null, ETag? etag = null)
+        {
+            contentTypes ??= new List<SourceControlContentType>();
+
+            return new SecurityInsightsSourceControlData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sourceControlId,
+                version,
+                displayName,
+                description,
+                repoType,
+                contentTypes?.ToList(),
+                repository,
+                servicePrincipal,
+                repositoryAccess,
+                repositoryResourceInfo,
+                lastDeploymentInfo,
+                pullRequest,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlRepository"/>. </summary>
+        /// <param name="uri"> Url of repository. </param>
+        /// <param name="branch"> Branch name of repository. </param>
+        /// <param name="displayUri"> Display url of repository. </param>
+        /// <param name="deploymentLogsUri"> Url to access repository action logs. </param>
+        /// <returns> A new <see cref="Models.SourceControlRepository"/> instance for mocking. </returns>
+        public static SourceControlRepository SourceControlRepository(Uri uri = null, string branch = null, Uri displayUri = null, Uri deploymentLogsUri = null)
+        {
+            return new SourceControlRepository(uri, branch, displayUri, deploymentLogsUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlServicePrincipal"/>. </summary>
+        /// <param name="id"> Id of service principal. </param>
+        /// <param name="tenantId"> Tenant id of service principal. </param>
+        /// <param name="appId"> App id of service principal. </param>
+        /// <param name="credentialsExpireOn"> Expiration time of service principal credentials. </param>
+        /// <returns> A new <see cref="Models.SourceControlServicePrincipal"/> instance for mocking. </returns>
+        public static SourceControlServicePrincipal SourceControlServicePrincipal(string id = null, Guid? tenantId = null, string appId = null, DateTimeOffset? credentialsExpireOn = null)
+        {
+            return new SourceControlServicePrincipal(id, tenantId, appId, credentialsExpireOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RepositoryResourceInfo"/>. </summary>
+        /// <param name="webhook"> The webhook object created for the source-control. </param>
+        /// <param name="gitHubResourceInfoAppInstallationId"> Resources created in GitHub for this source-control. </param>
+        /// <param name="azureDevOpsResourceInfo"> Resources created in Azure DevOps for this source-control. </param>
+        /// <returns> A new <see cref="Models.RepositoryResourceInfo"/> instance for mocking. </returns>
+        public static RepositoryResourceInfo RepositoryResourceInfo(SourceControlWebhook webhook = null, string gitHubResourceInfoAppInstallationId = null, AzureDevOpsResourceInfo azureDevOpsResourceInfo = null)
+        {
+            return new RepositoryResourceInfo(webhook, gitHubResourceInfoAppInstallationId != null ? new GitHubResourceInfo(gitHubResourceInfoAppInstallationId, serializedAdditionalRawData: null) : null, azureDevOpsResourceInfo, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlWebhook"/>. </summary>
+        /// <param name="webhookId"> Unique identifier for the webhook. </param>
+        /// <param name="webhookUri"> URL that gets invoked by the webhook. </param>
+        /// <param name="webhookSecretUpdateOn"> Time when the webhook secret was updated. </param>
+        /// <param name="isWebhookSecretRotated"> A flag to instruct the backend service to rotate webhook secret. </param>
+        /// <returns> A new <see cref="Models.SourceControlWebhook"/> instance for mocking. </returns>
+        public static SourceControlWebhook SourceControlWebhook(string webhookId = null, Uri webhookUri = null, DateTimeOffset? webhookSecretUpdateOn = null, bool? isWebhookSecretRotated = null)
+        {
+            return new SourceControlWebhook(webhookId, webhookUri, webhookSecretUpdateOn, isWebhookSecretRotated, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureDevOpsResourceInfo"/>. </summary>
+        /// <param name="pipelineId"> Id of the pipeline created for the source-control. </param>
+        /// <param name="serviceConnectionId"> Id of the service-connection created for the source-control. </param>
+        /// <returns> A new <see cref="Models.AzureDevOpsResourceInfo"/> instance for mocking. </returns>
+        public static AzureDevOpsResourceInfo AzureDevOpsResourceInfo(string pipelineId = null, string serviceConnectionId = null)
+        {
+            return new AzureDevOpsResourceInfo(pipelineId, serviceConnectionId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlDeploymentInfo"/>. </summary>
+        /// <param name="deploymentFetchStatus"> Status while fetching the last deployment. </param>
+        /// <param name="deployment"> Deployment information. </param>
+        /// <param name="message"> Additional details about the deployment that can be shown to the user. </param>
+        /// <returns> A new <see cref="Models.SourceControlDeploymentInfo"/> instance for mocking. </returns>
+        public static SourceControlDeploymentInfo SourceControlDeploymentInfo(SourceControlDeploymentFetchStatus? deploymentFetchStatus = null, SourceControlDeployment deployment = null, string message = null)
+        {
+            return new SourceControlDeploymentInfo(deploymentFetchStatus, deployment, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlDeployment"/>. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="deploymentState"> Current status of the deployment. </param>
+        /// <param name="deploymentResult"> The outcome of the deployment. </param>
+        /// <param name="deploymentOn"> The time when the deployment finished. </param>
+        /// <param name="deploymentLogsUri"> Url to access repository action logs. </param>
+        /// <returns> A new <see cref="Models.SourceControlDeployment"/> instance for mocking. </returns>
+        public static SourceControlDeployment SourceControlDeployment(string deploymentId = null, SourceControlDeploymentState? deploymentState = null, SourceControlDeploymentResult? deploymentResult = null, DateTimeOffset? deploymentOn = null, Uri deploymentLogsUri = null)
+        {
+            return new SourceControlDeployment(
+                deploymentId,
+                deploymentState,
+                deploymentResult,
+                deploymentOn,
+                deploymentLogsUri,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PullRequestInfo"/>. </summary>
+        /// <param name="uri"> URL of pull request. </param>
+        /// <param name="state"> State of the pull request. </param>
+        /// <returns> A new <see cref="Models.PullRequestInfo"/> instance for mocking. </returns>
+        public static PullRequestInfo PullRequestInfo(Uri uri = null, RecommendationState? state = null)
+        {
+            return new PullRequestInfo(uri, state, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlOperationWarning"/>. </summary>
+        /// <param name="warning"> Warning data. </param>
+        /// <returns> A new <see cref="Models.SourceControlOperationWarning"/> instance for mocking. </returns>
+        public static SourceControlOperationWarning SourceControlOperationWarning(SourceControlOperationWarningBody warning = null)
+        {
+            return new SourceControlOperationWarning(warning, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlOperationWarningBody"/>. </summary>
+        /// <param name="code"> An identifier for the warning. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <param name="message"> A message describing the warning, intended to be suitable for display in a user interface. </param>
+        /// <param name="details"></param>
+        /// <returns> A new <see cref="Models.SourceControlOperationWarningBody"/> instance for mocking. </returns>
+        public static SourceControlOperationWarningBody SourceControlOperationWarningBody(SourceControlOperationWarningCode? code = null, string message = null, IEnumerable<SourceControlOperationWarningBody> details = null)
+        {
+            details ??= new List<SourceControlOperationWarningBody>();
+
+            return new SourceControlOperationWarningBody(code, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
@@ -588,14 +2064,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/> instance for mocking. </returns>
-        public static SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityInsightsThreatIntelligenceIndicatorBaseData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new ThreatIntelligenceResourceInnerKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -723,6 +2199,129 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new ThreatIntelligenceMetricEntity(metricName, metricValue, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceQueryConditionProperties"/>. </summary>
+        /// <param name="stixObjectType"> The STIX type for the objects returned by this query. </param>
+        /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
+        /// <param name="conditionConnective"> The top level connective operator for this condition. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceQueryConditionProperties"/> instance for mocking. </returns>
+        public static ThreatIntelligenceQueryConditionProperties ThreatIntelligenceQueryConditionProperties(string stixObjectType = null, IEnumerable<ThreatIntelligenceQueryConditionClause> clauses = null, ThreatIntelligenceQueryConnective? conditionConnective = null)
+        {
+            clauses ??= new List<ThreatIntelligenceQueryConditionClause>();
+
+            return new ThreatIntelligenceQueryConditionProperties(stixObjectType, clauses?.ToList(), conditionConnective, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceQueryConditionClause"/>. </summary>
+        /// <param name="clauseConnective"> The connective used to join all values in this ConditionClause. </param>
+        /// <param name="field"> The name of the field that is evaluated. </param>
+        /// <param name="operator"> Represents an operator in a ConditionClause. </param>
+        /// <param name="values"> The top level connective operator for this condition. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceQueryConditionClause"/> instance for mocking. </returns>
+        public static ThreatIntelligenceQueryConditionClause ThreatIntelligenceQueryConditionClause(ThreatIntelligenceQueryConnective? clauseConnective = null, string field = null, ThreatIntelligenceQueryOperator @operator = default, IEnumerable<string> values = null)
+        {
+            values ??= new List<string>();
+
+            return new ThreatIntelligenceQueryConditionClause(clauseConnective, field, @operator, values?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceCount"/>. </summary>
+        /// <param name="count"> Count of all the threat intelligence objects on the workspace that match the provided query. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceCount"/> instance for mocking. </returns>
+        public static ThreatIntelligenceCount ThreatIntelligenceCount(int count = default)
+        {
+            return new ThreatIntelligenceCount(count, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceObject"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The kind of the TI object. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceObject"/> instance for mocking. </returns>
+        public static ThreatIntelligenceObject ThreatIntelligenceObject(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        {
+            data ??= new Dictionary<string, BinaryData>();
+            relationshipHints ??= new List<RelationshipHint>();
+
+            return new UnknownTIObject(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new TIObjectKind(kind),
+                data,
+                createdBy,
+                source,
+                firstIngestedOn,
+                lastIngestedOn,
+                ingestionRulesVersion,
+                lastUpdateMethod,
+                lastModifiedBy,
+                lastUpdatedOn,
+                relationshipHints?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceUserInfo"/>. </summary>
+        /// <param name="objectId"> The user's object ID. </param>
+        /// <param name="email"> The user's email address. </param>
+        /// <param name="name"> The user's name. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceUserInfo"/> instance for mocking. </returns>
+        public static ThreatIntelligenceUserInfo ThreatIntelligenceUserInfo(Guid? objectId = null, string email = null, string name = null)
+        {
+            return new ThreatIntelligenceUserInfo(objectId, email, name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RelationshipHint"/>. </summary>
+        /// <param name="fieldName"></param>
+        /// <param name="source"></param>
+        /// <returns> A new <see cref="Models.RelationshipHint"/> instance for mocking. </returns>
+        public static RelationshipHint RelationshipHint(string fieldName = null, string source = null)
+        {
+            return new RelationshipHint(fieldName, source, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.TriggeredAnalyticsRuleRunData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="executeOn"></param>
+        /// <param name="ruleId"></param>
+        /// <param name="triggeredAnalyticsRuleRunId"></param>
+        /// <param name="provisioningState"> The triggered analytics rule run provisioning state. </param>
+        /// <param name="ruleRunAdditionalData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.TriggeredAnalyticsRuleRunData"/> instance for mocking. </returns>
+        public static TriggeredAnalyticsRuleRunData TriggeredAnalyticsRuleRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset executeOn = default, string ruleId = null, string triggeredAnalyticsRuleRunId = null, TriggeredAnalyticsRuleRunProvisioningState provisioningState = default, IDictionary<string, BinaryData> ruleRunAdditionalData = null, ETag? etag = null)
+        {
+            ruleRunAdditionalData ??= new Dictionary<string, BinaryData>();
+
+            return new TriggeredAnalyticsRuleRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                executeOn,
+                ruleId,
+                triggeredAnalyticsRuleRunId,
+                provisioningState,
+                ruleRunAdditionalData,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -731,7 +2330,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="watchlistId"> The id (a Guid) of the watchlist. </param>
         /// <param name="displayName"> The display name of the watchlist. </param>
         /// <param name="provider"> The provider of the watchlist. </param>
-        /// <param name="source"> The source of the watchlist. </param>
+        /// <param name="sourceString"> The filename of the watchlist, called 'source'. </param>
+        /// <param name="sourceType"> The sourceType of the watchlist. </param>
         /// <param name="createdOn"> The time the watchlist was created. </param>
         /// <param name="updatedOn"> The last time the watchlist was updated. </param>
         /// <param name="createdBy"> Describes a user that created the watchlist. </param>
@@ -743,18 +2343,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="labels"> List of labels relevant to this watchlist. </param>
         /// <param name="defaultDuration"> The default duration of a watchlist (in ISO 8601 duration format). </param>
         /// <param name="tenantId"> The tenantId where the watchlist belongs to. </param>
-        /// <param name="numberOfLinesToSkip"> The number of lines in a csv content to skip before the header. </param>
-        /// <param name="rawContent">
-        /// The raw content that represents to watchlist items to create. Example : This line will be skipped
-        /// header1,header2
-        /// value1,value2
-        /// </param>
+        /// <param name="numberOfLinesToSkip"> The number of lines in a csv/tsv content to skip before the header. </param>
+        /// <param name="rawContent"> The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint. </param>
         /// <param name="itemsSearchKey"> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </param>
-        /// <param name="contentType"> The content type of the raw content. For now, only text/csv is valid. </param>
-        /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. **Note** : When a Watchlist upload status is InProgress, the Watchlist cannot be deleted. </param>
+        /// <param name="contentType"> The content type of the raw content. Example : text/csv or text/tsv. </param>
+        /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistData"/> instance for mocking. </returns>
-        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, Source? source = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
+        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, string sourceString = null, WatchlistSourceType? sourceType = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
         {
             labels ??= new List<string>();
 
@@ -766,7 +2362,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 watchlistId,
                 displayName,
                 provider,
-                source,
+                sourceString,
+                sourceType,
                 createdOn,
                 updatedOn,
                 createdBy,
@@ -800,12 +2397,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the watchlist item was updated. </param>
         /// <param name="createdBy"> Describes a user that created the watchlist item. </param>
         /// <param name="updatedBy"> Describes a user that updated the watchlist item. </param>
-        /// <param name="itemsKeyValue"> key-value pairs for a watchlist item. </param>
-        /// <param name="entityMapping"> key-value pairs for a watchlist item entity mapping. </param>
+        /// <param name="itemsKeyValueDictionary"> key-value pairs for a watchlist item. </param>
+        /// <param name="entityMappingDictionary"> key-value pairs for a watchlist item entity mapping. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/> instance for mocking. </returns>
-        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, Guid? tenantId = null, bool? isDeleted = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, BinaryData itemsKeyValue = null, BinaryData entityMapping = null, ETag? etag = null)
+        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, Guid? tenantId = null, bool? isDeleted = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, IDictionary<string, BinaryData> itemsKeyValueDictionary = null, IDictionary<string, BinaryData> entityMappingDictionary = null, ETag? etag = null)
         {
+            itemsKeyValueDictionary ??= new Dictionary<string, BinaryData>();
+            entityMappingDictionary ??= new Dictionary<string, BinaryData>();
+
             return new SecurityInsightsWatchlistItemData(
                 id,
                 name,
@@ -819,10 +2419,280 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 updatedOn,
                 createdBy,
                 updatedBy,
-                itemsKeyValue,
-                entityMapping,
+                itemsKeyValueDictionary,
+                entityMappingDictionary,
                 etag,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.WorkspaceManagerAssignmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="targetResourceName"> The resource name of the workspace manager group targeted by the workspace manager assignment. </param>
+        /// <param name="lastJobEndOn"> The time the last job associated to this assignment ended at. </param>
+        /// <param name="lastJobProvisioningState"> State of the last job associated to this assignment. </param>
+        /// <param name="items"> List of resources included in this workspace manager assignment. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentData"/> instance for mocking. </returns>
+        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetResourceName = null, DateTimeOffset? lastJobEndOn = null, TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState = null, IEnumerable<WorkspaceManagerAssignmentItem> items = null, ETag? etag = null)
+        {
+            items ??= new List<WorkspaceManagerAssignmentItem>();
+
+            return new WorkspaceManagerAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                targetResourceName,
+                lastJobEndOn,
+                lastJobProvisioningState,
+                items?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.WorkspaceManagerAssignmentJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="endOn"> The time the job completed. </param>
+        /// <param name="items"> List of items published by the job. </param>
+        /// <param name="provisioningState"> State of the job. </param>
+        /// <param name="startOn"> The time the job started. </param>
+        /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentJobData"/> instance for mocking. </returns>
+        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? endOn = null, IEnumerable<JobItem> items = null, TriggeredAnalyticsRuleRunProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string errorMessage = null, ETag? etag = null)
+        {
+            items ??= new List<JobItem>();
+
+            return new WorkspaceManagerAssignmentJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                endOn,
+                items?.ToList(),
+                provisioningState,
+                startOn,
+                errorMessage,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.JobItem"/>. </summary>
+        /// <param name="resourceId"> The resource id of the content item. </param>
+        /// <param name="status"> Status of the item publication. </param>
+        /// <param name="executionOn"> The time the item publishing was completed. </param>
+        /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
+        /// <returns> A new <see cref="Models.JobItem"/> instance for mocking. </returns>
+        public static JobItem JobItem(ResourceIdentifier resourceId = null, PublicationStatus? status = null, DateTimeOffset? executionOn = null, IEnumerable<PublicationFailedError> errors = null)
+        {
+            errors ??= new List<PublicationFailedError>();
+
+            return new JobItem(resourceId, status, executionOn, errors?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.WorkspaceManagerConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="mode"> The current mode of the workspace manager configuration. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerConfigurationData"/> instance for mocking. </returns>
+        public static WorkspaceManagerConfigurationData WorkspaceManagerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkspaceManagerConfigurationMode? mode = null, ETag? etag = null)
+        {
+            return new WorkspaceManagerConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                mode,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.WorkspaceManagerGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> The description of the workspace manager group. </param>
+        /// <param name="displayName"> The display name of the workspace manager group. </param>
+        /// <param name="memberResourceNames"> The names of the workspace manager members participating in this group. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerGroupData"/> instance for mocking. </returns>
+        public static WorkspaceManagerGroupData WorkspaceManagerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string displayName = null, IEnumerable<string> memberResourceNames = null, ETag? etag = null)
+        {
+            memberResourceNames ??= new List<string>();
+
+            return new WorkspaceManagerGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                displayName,
+                memberResourceNames?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.WorkspaceManagerMemberData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="targetWorkspaceResourceId"> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
+        /// <param name="targetWorkspaceTenantId"> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerMemberData"/> instance for mocking. </returns>
+        public static WorkspaceManagerMemberData WorkspaceManagerMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetWorkspaceResourceId = null, string targetWorkspaceTenantId = null, ETag? etag = null)
+        {
+            return new WorkspaceManagerMemberData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                targetWorkspaceResourceId,
+                targetWorkspaceTenantId,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsDataConnectorDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsDataConnectorDefinitionData"/> instance for mocking. </returns>
+        public static SecurityInsightsDataConnectorDefinitionData SecurityInsightsDataConnectorDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new UnknownDataConnectorDefinition(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new DataConnectorDefinitionKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/> instance for mocking. </returns>
+        public static SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        {
+            return new SecurityInsightsDataConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new DataConnectorKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataConnectorRequirementsState"/>. </summary>
+        /// <param name="authorizationState"> Authorization state for this connector. </param>
+        /// <param name="licenseState"> License state for this connector. </param>
+        /// <returns> A new <see cref="Models.DataConnectorRequirementsState"/> instance for mocking. </returns>
+        public static DataConnectorRequirementsState DataConnectorRequirementsState(DataConnectorAuthorizationState? authorizationState = null, DataConnectorLicenseState? licenseState = null)
+        {
+            return new DataConnectorRequirementsState(authorizationState, licenseState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MLBehaviorAnalyticsAlertRule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        /// <returns> A new <see cref="Models.MLBehaviorAnalyticsAlertRule"/> instance for mocking. </returns>
+        public static MLBehaviorAnalyticsAlertRule MLBehaviorAnalyticsAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsAlertSeverity? severity = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null)
+        {
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
+
+            return new MLBehaviorAnalyticsAlertRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.MLBehaviorAnalytics,
+                etag,
+                serializedAdditionalRawData: null,
+                alertRuleTemplateName,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                severity,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                subTechniques?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MLBehaviorAnalyticsAlertRuleTemplate"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <returns> A new <see cref="Models.MLBehaviorAnalyticsAlertRuleTemplate"/> instance for mocking. </returns>
+        public static MLBehaviorAnalyticsAlertRuleTemplate MLBehaviorAnalyticsAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? createdOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, SecurityInsightsAlertSeverity? severity = null)
+        {
+            requiredDataConnectors ??= new List<AlertRuleTemplateDataSource>();
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+
+            return new MLBehaviorAnalyticsAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.MLBehaviorAnalytics,
+                serializedAdditionalRawData: null,
+                alertRulesCreatedByTemplateCount,
+                lastUpdatedOn,
+                createdOn,
+                description,
+                displayName,
+                requiredDataConnectors?.ToList(),
+                status,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                severity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFusionAlertRule"/>. </summary>
@@ -835,15 +2705,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
         /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="sourceSettings"> Configuration for all supported source signals in fusion detection. </param>
+        /// <param name="scenarioExclusionPatterns"> Configuration to exclude scenarios in fusion detection. </param>
         /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsFusionAlertRule"/> instance for mocking. </returns>
-        public static SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsAlertSeverity? severity = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null)
+        public static SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = null, IEnumerable<FusionSourceSettings> sourceSettings = null, IEnumerable<FusionScenarioExclusionPattern> scenarioExclusionPatterns = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsAlertSeverity? severity = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null)
         {
+            sourceSettings ??= new List<FusionSourceSettings>();
+            scenarioExclusionPatterns ??= new List<FusionScenarioExclusionPattern>();
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
 
             return new SecurityInsightsFusionAlertRule(
                 id,
@@ -857,10 +2733,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 description,
                 displayName,
                 isEnabled,
+                sourceSettings?.ToList(),
+                scenarioExclusionPatterns?.ToList(),
                 lastModifiedOn,
                 severity,
                 tactics?.ToList(),
-                techniques?.ToList());
+                techniques?.ToList(),
+                subTechniques?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FusionSourceSubTypeSetting"/>. </summary>
+        /// <param name="isEnabled"> Determines whether this source subtype under source signal is enabled or disabled in Fusion detection. </param>
+        /// <param name="sourceSubTypeName"> The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values. </param>
+        /// <param name="sourceSubTypeDisplayName"> The display name of source subtype under a source signal consumed in Fusion detection. </param>
+        /// <param name="severityFilters"> Severity configuration for a source subtype consumed in fusion detection. </param>
+        /// <returns> A new <see cref="Models.FusionSourceSubTypeSetting"/> instance for mocking. </returns>
+        public static FusionSourceSubTypeSetting FusionSourceSubTypeSetting(bool isEnabled = default, string sourceSubTypeName = null, string sourceSubTypeDisplayName = null, FusionSubTypeSeverityFilter severityFilters = null)
+        {
+            return new FusionSourceSubTypeSetting(isEnabled, sourceSubTypeName, sourceSubTypeDisplayName, severityFilters, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FusionSubTypeSeverityFilter"/>. </summary>
+        /// <param name="isSupported"> Determines whether this source subtype supports severity configuration or not. </param>
+        /// <param name="filters"> Individual Severity configuration settings for a given source subtype consumed in Fusion detection. </param>
+        /// <returns> A new <see cref="Models.FusionSubTypeSeverityFilter"/> instance for mocking. </returns>
+        public static FusionSubTypeSeverityFilter FusionSubTypeSeverityFilter(bool? isSupported = null, IEnumerable<FusionSubTypeSeverityFiltersItem> filters = null)
+        {
+            filters ??= new List<FusionSubTypeSeverityFiltersItem>();
+
+            return new FusionSubTypeSeverityFilter(isSupported, filters?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFusionAlertRuleTemplate"/>. </summary>
@@ -877,13 +2778,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="status"> The alert rule template status. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule template. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        /// <param name="sourceSettings"> All supported source signal configurations consumed in fusion detection. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsFusionAlertRuleTemplate"/> instance for mocking. </returns>
-        public static SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, SecurityInsightsAlertSeverity? severity = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null)
+        public static SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, SecurityInsightsAlertSeverity? severity = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null, IEnumerable<FusionTemplateSourceSetting> sourceSettings = null)
         {
             requiredDataConnectors ??= new List<AlertRuleTemplateDataSource>();
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
+            sourceSettings ??= new List<FusionTemplateSourceSetting>();
 
             return new SecurityInsightsFusionAlertRuleTemplate(
                 id,
@@ -901,7 +2806,101 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 status,
                 severity,
                 tactics?.ToList(),
-                techniques?.ToList());
+                techniques?.ToList(),
+                subTechniques?.ToList(),
+                sourceSettings?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FusionTemplateSourceSubType"/>. </summary>
+        /// <param name="sourceSubTypeName"> The name of source subtype under a source signal consumed in Fusion detection. </param>
+        /// <param name="sourceSubTypeDisplayName"> The display name of source subtype under a source signal consumed in Fusion detection. </param>
+        /// <param name="severityFilter"> Severity configuration available for a source subtype consumed in fusion detection. </param>
+        /// <returns> A new <see cref="Models.FusionTemplateSourceSubType"/> instance for mocking. </returns>
+        public static FusionTemplateSourceSubType FusionTemplateSourceSubType(string sourceSubTypeName = null, string sourceSubTypeDisplayName = null, FusionTemplateSubTypeSeverityFilter severityFilter = null)
+        {
+            return new FusionTemplateSourceSubType(sourceSubTypeName, sourceSubTypeDisplayName, severityFilter, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceAlertRule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceAlertRule"/> instance for mocking. </returns>
+        public static ThreatIntelligenceAlertRule ThreatIntelligenceAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = null, DateTimeOffset? lastModifiedOn = null, SecurityInsightsAlertSeverity? severity = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null)
+        {
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
+
+            return new ThreatIntelligenceAlertRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.ThreatIntelligence,
+                etag,
+                serializedAdditionalRawData: null,
+                alertRuleTemplateName,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                severity,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                subTechniques?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceAlertRuleTemplate"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceAlertRuleTemplate"/> instance for mocking. </returns>
+        public static ThreatIntelligenceAlertRuleTemplate ThreatIntelligenceAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? createdOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, SecurityInsightsAlertSeverity? severity = null)
+        {
+            requiredDataConnectors ??= new List<AlertRuleTemplateDataSource>();
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+
+            return new ThreatIntelligenceAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.ThreatIntelligence,
+                serializedAdditionalRawData: null,
+                alertRulesCreatedByTemplateCount,
+                lastUpdatedOn,
+                createdOn,
+                description,
+                displayName,
+                requiredDataConnectors?.ToList(),
+                status,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                severity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
@@ -951,18 +2950,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
-        /// <param name="lastUpdatedOn"> The time that this alert rule template was last updated. </param>
         /// <param name="description"> The description of the alert rule template. </param>
         /// <param name="displayName"> The display name for alert rule template. </param>
-        /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
         /// <param name="status"> The alert rule template status. </param>
         /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
         /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
         /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
         /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
-        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, IEnumerable<string> displayNamesFilter = null, IEnumerable<string> displayNamesExcludeFilter = null, MicrosoftSecurityProductName? productFilter = null, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = null)
+        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? createdOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, IEnumerable<string> displayNamesFilter = null, IEnumerable<string> displayNamesExcludeFilter = null, MicrosoftSecurityProductName? productFilter = null, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = null)
         {
             requiredDataConnectors ??= new List<AlertRuleTemplateDataSource>();
             displayNamesFilter ??= new List<string>();
@@ -977,8 +2976,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 AlertRuleKind.MicrosoftSecurityIncidentCreation,
                 serializedAdditionalRawData: null,
                 alertRulesCreatedByTemplateCount,
-                createdOn,
                 lastUpdatedOn,
+                createdOn,
                 description,
                 displayName,
                 requiredDataConnectors?.ToList(),
@@ -987,72 +2986,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 displayNamesExcludeFilter?.ToList(),
                 productFilter,
                 severitiesFilter?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsScheduledAlertRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="query"> The query that creates alerts for this rule. </param>
-        /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>
-        /// <param name="queryPeriod"> The period (in ISO 8601 duration format) that this alert rule looks at. </param>
-        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
-        /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
-        /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
-        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
-        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
-        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
-        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
-        /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
-        /// <param name="description"> The description of the alert rule. </param>
-        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
-        /// <param name="suppressionDuration"> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </param>
-        /// <param name="isSuppressionEnabled"> Determines whether the suppression for this alert rule is enabled or disabled. </param>
-        /// <param name="tactics"> The tactics of the alert rule. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
-        /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsScheduledAlertRule"/> instance for mocking. </returns>
-        public static SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string query = null, TimeSpan? queryFrequency = null, TimeSpan? queryPeriod = null, SecurityInsightsAlertSeverity? severity = null, SecurityInsightsAlertRuleTriggerOperator? triggerOperator = null, int? triggerThreshold = null, EventGroupingAggregationKind? eventGroupingAggregationKind = null, IDictionary<string, string> customDetails = null, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = null, SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, string alertRuleTemplateName = null, string templateVersion = null, string description = null, string displayName = null, bool? isEnabled = null, DateTimeOffset? lastModifiedOn = null, TimeSpan? suppressionDuration = null, bool? isSuppressionEnabled = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, SecurityInsightsIncidentConfiguration incidentConfiguration = null)
-        {
-            customDetails ??= new Dictionary<string, string>();
-            entityMappings ??= new List<SecurityInsightsAlertRuleEntityMapping>();
-            tactics ??= new List<SecurityInsightsAttackTactic>();
-            techniques ??= new List<string>();
-
-            return new SecurityInsightsScheduledAlertRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                AlertRuleKind.Scheduled,
-                etag,
-                serializedAdditionalRawData: null,
-                query,
-                queryFrequency,
-                queryPeriod,
-                severity,
-                triggerOperator,
-                triggerThreshold,
-                eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
-                customDetails,
-                entityMappings?.ToList(),
-                alertDetailsOverride,
-                alertRuleTemplateName,
-                templateVersion,
-                description,
-                displayName,
-                isEnabled,
-                lastModifiedOn,
-                suppressionDuration,
-                isSuppressionEnabled,
-                tactics?.ToList(),
-                techniques?.ToList(),
-                incidentConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScheduledAlertRuleTemplate"/>. </summary>
@@ -1074,20 +3007,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
         /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule template. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
         /// <param name="version"> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </param>
         /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
         /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
         /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
         /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
         /// <returns> A new <see cref="Models.ScheduledAlertRuleTemplate"/> instance for mocking. </returns>
-        public static ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? createdDateUTC = null, DateTimeOffset? lastUpdatedDateUTC = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, string query = null, TimeSpan? queryFrequency = null, TimeSpan? queryPeriod = null, SecurityInsightsAlertSeverity? severity = null, SecurityInsightsAlertRuleTriggerOperator? triggerOperator = null, int? triggerThreshold = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, string version = null, EventGroupingAggregationKind? eventGroupingAggregationKind = null, IDictionary<string, string> customDetails = null, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = null, SecurityInsightsAlertDetailsOverride alertDetailsOverride = null)
+        public static ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? createdDateUTC = null, DateTimeOffset? lastUpdatedDateUTC = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, string query = null, TimeSpan? queryFrequency = null, TimeSpan? queryPeriod = null, SecurityInsightsAlertSeverity? severity = null, SecurityInsightsAlertRuleTriggerOperator? triggerOperator = null, int? triggerThreshold = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null, string version = null, EventGroupingAggregationKind? eventGroupingAggregationKind = null, IDictionary<string, string> customDetails = null, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = null, SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, IEnumerable<SentinelEntityMapping> sentinelEntitiesMappings = null)
         {
             requiredDataConnectors ??= new List<AlertRuleTemplateDataSource>();
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
             customDetails ??= new Dictionary<string, string>();
             entityMappings ??= new List<SecurityInsightsAlertRuleEntityMapping>();
+            sentinelEntitiesMappings ??= new List<SentinelEntityMapping>();
 
             return new ScheduledAlertRuleTemplate(
                 id,
@@ -1111,197 +3048,643 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 triggerThreshold,
                 tactics?.ToList(),
                 techniques?.ToList(),
+                subTechniques?.ToList(),
                 version,
                 eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
                 customDetails,
                 entityMappings?.ToList(),
-                alertDetailsOverride);
+                alertDetailsOverride,
+                sentinelEntitiesMappings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAadDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NrtAlertRuleTemplate"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="query"> The query that creates alerts for this rule. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="version"> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </param>
+        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
+        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
+        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
+        /// <returns> A new <see cref="Models.NrtAlertRuleTemplate"/> instance for mocking. </returns>
+        public static NrtAlertRuleTemplate NrtAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? createdOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, string query = null, SecurityInsightsAlertSeverity? severity = null, string version = null, IDictionary<string, string> customDetails = null, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = null, SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, EventGroupingAggregationKind? eventGroupingAggregationKind = null, IEnumerable<SentinelEntityMapping> sentinelEntitiesMappings = null)
+        {
+            requiredDataConnectors ??= new List<AlertRuleTemplateDataSource>();
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+            customDetails ??= new Dictionary<string, string>();
+            entityMappings ??= new List<SecurityInsightsAlertRuleEntityMapping>();
+            sentinelEntitiesMappings ??= new List<SentinelEntityMapping>();
+
+            return new NrtAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.NRT,
+                serializedAdditionalRawData: null,
+                alertRulesCreatedByTemplateCount,
+                lastUpdatedOn,
+                createdOn,
+                description,
+                displayName,
+                requiredDataConnectors?.ToList(),
+                status,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                query,
+                severity,
+                version,
+                customDetails,
+                entityMappings?.ToList(),
+                alertDetailsOverride,
+                eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
+                sentinelEntitiesMappings?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsScheduledAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alertsState"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAadDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsAadDataConnector SecurityInsightsAadDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        /// <param name="query"> The query that creates alerts for this rule. </param>
+        /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>
+        /// <param name="queryPeriod"> The period (in ISO 8601 duration format) that this alert rule looks at. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
+        /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
+        /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
+        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
+        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
+        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
+        /// <param name="suppressionDuration"> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </param>
+        /// <param name="isSuppressionEnabled"> Determines whether the suppression for this alert rule is enabled or disabled. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsScheduledAlertRule"/> instance for mocking. </returns>
+        public static SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string query = null, TimeSpan? queryFrequency = null, TimeSpan? queryPeriod = null, SecurityInsightsAlertSeverity? severity = null, SecurityInsightsAlertRuleTriggerOperator? triggerOperator = null, int? triggerThreshold = null, EventGroupingAggregationKind? eventGroupingAggregationKind = null, IDictionary<string, string> customDetails = null, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = null, SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, IEnumerable<SentinelEntityMapping> sentinelEntitiesMappings = null, string alertRuleTemplateName = null, string templateVersion = null, string description = null, string displayName = null, bool? isEnabled = null, DateTimeOffset? lastModifiedOn = null, TimeSpan? suppressionDuration = null, bool? isSuppressionEnabled = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null, SecurityInsightsIncidentConfiguration incidentConfiguration = null)
         {
-            return new SecurityInsightsAadDataConnector(
+            customDetails ??= new Dictionary<string, string>();
+            entityMappings ??= new List<SecurityInsightsAlertRuleEntityMapping>();
+            sentinelEntitiesMappings ??= new List<SentinelEntityMapping>();
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
+
+            return new SecurityInsightsScheduledAlertRule(
                 id,
                 name,
                 resourceType,
                 systemData,
-                DataConnectorKind.AzureActiveDirectory,
+                AlertRuleKind.Scheduled,
                 etag,
                 serializedAdditionalRawData: null,
-                tenantId,
-                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
+                customDetails,
+                entityMappings?.ToList(),
+                alertDetailsOverride,
+                sentinelEntitiesMappings?.ToList(),
+                alertRuleTemplateName,
+                templateVersion,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                suppressionDuration,
+                isSuppressionEnabled,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                subTechniques?.ToList(),
+                incidentConfiguration);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAatpDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NrtAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alertsState"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAatpDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsAatpDataConnector SecurityInsightsAatpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="query"> The query that creates alerts for this rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
+        /// <param name="suppressionDuration"> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </param>
+        /// <param name="isSuppressionEnabled"> Determines whether the suppression for this alert rule is enabled or disabled. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
+        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
+        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
+        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
+        /// <returns> A new <see cref="Models.NrtAlertRule"/> instance for mocking. </returns>
+        public static NrtAlertRule NrtAlertRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string alertRuleTemplateName = null, string templateVersion = null, string description = null, string query = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, IEnumerable<string> techniques = null, IEnumerable<string> subTechniques = null, string displayName = null, bool? isEnabled = null, DateTimeOffset? lastModifiedOn = null, TimeSpan? suppressionDuration = null, bool? isSuppressionEnabled = null, SecurityInsightsAlertSeverity? severity = null, SecurityInsightsIncidentConfiguration incidentConfiguration = null, IDictionary<string, string> customDetails = null, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = null, SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, EventGroupingAggregationKind? eventGroupingAggregationKind = null, IEnumerable<SentinelEntityMapping> sentinelEntitiesMappings = null)
         {
-            return new SecurityInsightsAatpDataConnector(
+            tactics ??= new List<SecurityInsightsAttackTactic>();
+            techniques ??= new List<string>();
+            subTechniques ??= new List<string>();
+            customDetails ??= new Dictionary<string, string>();
+            entityMappings ??= new List<SecurityInsightsAlertRuleEntityMapping>();
+            sentinelEntitiesMappings ??= new List<SentinelEntityMapping>();
+
+            return new NrtAlertRule(
                 id,
                 name,
                 resourceType,
                 systemData,
-                DataConnectorKind.AzureAdvancedThreatProtection,
+                AlertRuleKind.NRT,
                 etag,
                 serializedAdditionalRawData: null,
-                tenantId,
-                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+                alertRuleTemplateName,
+                templateVersion,
+                description,
+                query,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                subTechniques?.ToList(),
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                suppressionDuration,
+                isSuppressionEnabled,
+                severity,
+                incidentConfiguration,
+                customDetails,
+                entityMappings?.ToList(),
+                alertDetailsOverride,
+                eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
+                sentinelEntitiesMappings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAscDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapSolutionUsageStatistic"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="activeSystemIdCount"> The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage. </param>
+        /// <returns> A new <see cref="Models.SapSolutionUsageStatistic"/> instance for mocking. </returns>
+        public static SapSolutionUsageStatistic SapSolutionUsageStatistic(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, long? activeSystemIdCount = null)
+        {
+            return new SapSolutionUsageStatistic(
+                id,
+                name,
+                resourceType,
+                systemData,
+                BillingStatisticKind.SapSolutionUsage,
+                etag,
+                serializedAdditionalRawData: null,
+                activeSystemIdCount);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ActivityTimelineItem"/>. </summary>
+        /// <param name="queryId"> The activity query id. </param>
+        /// <param name="bucketStartOn"> The grouping bucket start time. </param>
+        /// <param name="bucketEndOn"> The grouping bucket end time. </param>
+        /// <param name="firstActivityOn"> The time of the first activity in the grouping bucket. </param>
+        /// <param name="lastActivityOn"> The time of the last activity in the grouping bucket. </param>
+        /// <param name="content"> The activity timeline content. </param>
+        /// <param name="title"> The activity timeline title. </param>
+        /// <returns> A new <see cref="Models.ActivityTimelineItem"/> instance for mocking. </returns>
+        public static ActivityTimelineItem ActivityTimelineItem(string queryId = null, DateTimeOffset bucketStartOn = default, DateTimeOffset bucketEndOn = default, DateTimeOffset firstActivityOn = default, DateTimeOffset lastActivityOn = default, string content = null, string title = null)
+        {
+            return new ActivityTimelineItem(
+                EntityTimelineKind.Activity,
+                serializedAdditionalRawData: null,
+                queryId,
+                bucketStartOn,
+                bucketEndOn,
+                firstActivityOn,
+                lastActivityOn,
+                content,
+                title);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BookmarkTimelineItem"/>. </summary>
+        /// <param name="azureResourceId"> The bookmark azure resource id. </param>
+        /// <param name="displayName"> The bookmark display name. </param>
+        /// <param name="notes"> The notes of the bookmark. </param>
+        /// <param name="endOn"> The bookmark end time. </param>
+        /// <param name="startOn"> The bookmark start time. </param>
+        /// <param name="eventOn"> The bookmark event time. </param>
+        /// <param name="createdBy"> Describes a user that created the bookmark. </param>
+        /// <param name="labels"> List of labels relevant to this bookmark. </param>
+        /// <returns> A new <see cref="Models.BookmarkTimelineItem"/> instance for mocking. </returns>
+        public static BookmarkTimelineItem BookmarkTimelineItem(ResourceIdentifier azureResourceId = null, string displayName = null, string notes = null, DateTimeOffset? endOn = null, DateTimeOffset? startOn = null, DateTimeOffset? eventOn = null, SecurityInsightsUserInfo createdBy = null, IEnumerable<string> labels = null)
+        {
+            labels ??= new List<string>();
+
+            return new BookmarkTimelineItem(
+                EntityTimelineKind.Bookmark,
+                serializedAdditionalRawData: null,
+                azureResourceId,
+                displayName,
+                notes,
+                endOn,
+                startOn,
+                eventOn,
+                createdBy,
+                labels?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AnomalyTimelineItem"/>. </summary>
+        /// <param name="azureResourceId"> The anomaly azure resource id. </param>
+        /// <param name="productName"> The anomaly product name. </param>
+        /// <param name="description"> The anomaly description. </param>
+        /// <param name="displayName"> The anomaly name. </param>
+        /// <param name="endOn"> The anomaly end time. </param>
+        /// <param name="startOn"> The anomaly start time. </param>
+        /// <param name="generatedOn"> The anomaly generated time. </param>
+        /// <param name="vendor"> The name of the anomaly vendor. </param>
+        /// <param name="intent"> The intent of the anomaly. </param>
+        /// <param name="techniques"> The techniques of the anomaly. </param>
+        /// <param name="reasons"> The reasons that cause the anomaly. </param>
+        /// <returns> A new <see cref="Models.AnomalyTimelineItem"/> instance for mocking. </returns>
+        public static AnomalyTimelineItem AnomalyTimelineItem(ResourceIdentifier azureResourceId = null, string productName = null, string description = null, string displayName = null, DateTimeOffset endOn = default, DateTimeOffset startOn = default, DateTimeOffset generatedOn = default, string vendor = null, string intent = null, IEnumerable<string> techniques = null, IEnumerable<string> reasons = null)
+        {
+            techniques ??= new List<string>();
+            reasons ??= new List<string>();
+
+            return new AnomalyTimelineItem(
+                EntityTimelineKind.Anomaly,
+                serializedAdditionalRawData: null,
+                azureResourceId,
+                productName,
+                description,
+                displayName,
+                endOn,
+                startOn,
+                generatedOn,
+                vendor,
+                intent,
+                techniques?.ToList(),
+                reasons?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityQueryItemProperties"/>. </summary>
+        /// <param name="dataTypes"> Data types for template. </param>
+        /// <param name="inputEntityType"> The type of the entity. </param>
+        /// <param name="requiredInputFieldsSets"> Data types for template. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <returns> A new <see cref="Models.EntityQueryItemProperties"/> instance for mocking. </returns>
+        public static EntityQueryItemProperties EntityQueryItemProperties(IEnumerable<EntityQueryItemPropertiesDataTypesItem> dataTypes = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, BinaryData entitiesFilter = null)
+        {
+            dataTypes ??= new List<EntityQueryItemPropertiesDataTypesItem>();
+            requiredInputFieldsSets ??= new List<IList<string>>();
+
+            return new EntityQueryItemProperties(dataTypes?.ToList(), inputEntityType, requiredInputFieldsSets?.ToList(), entitiesFilter, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityQueryItemPropertiesDataTypesItem"/>. </summary>
+        /// <param name="dataType"> Data type name. </param>
+        /// <returns> A new <see cref="Models.EntityQueryItemPropertiesDataTypesItem"/> instance for mocking. </returns>
+        public static EntityQueryItemPropertiesDataTypesItem EntityQueryItemPropertiesDataTypesItem(string dataType = null)
+        {
+            return new EntityQueryItemPropertiesDataTypesItem(dataType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItem"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Properties bag for InsightQueryItem. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItem"/> instance for mocking. </returns>
+        public static InsightQueryItem InsightQueryItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InsightQueryItemProperties properties = null)
+        {
+            return new InsightQueryItem(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new EntityQueryKind("Insight"),
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemProperties"/>. </summary>
+        /// <param name="dataTypes"> Data types for template. </param>
+        /// <param name="inputEntityType"> The type of the entity. </param>
+        /// <param name="requiredInputFieldsSets"> Data types for template. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <param name="displayName"> The insight display name. </param>
+        /// <param name="description"> The insight description. </param>
+        /// <param name="baseQuery"> The base query of the insight. </param>
+        /// <param name="tableQuery"> The insight table query. </param>
+        /// <param name="chartQuery"> The insight chart query. </param>
+        /// <param name="additionalQuery"> The activity query definitions. </param>
+        /// <param name="defaultTimeRange"> The insight chart query. </param>
+        /// <param name="beforeRange"> The insight chart query. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemProperties"/> instance for mocking. </returns>
+        public static InsightQueryItemProperties InsightQueryItemProperties(IEnumerable<EntityQueryItemPropertiesDataTypesItem> dataTypes = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, BinaryData entitiesFilter = null, string displayName = null, string description = null, string baseQuery = null, InsightQueryItemPropertiesTableQuery tableQuery = null, BinaryData chartQuery = null, InsightQueryItemPropertiesAdditionalQuery additionalQuery = null, InsightQueryItemPropertiesDefaultTimeRange defaultTimeRange = null, string beforeRange = null)
+        {
+            dataTypes ??= new List<EntityQueryItemPropertiesDataTypesItem>();
+            requiredInputFieldsSets ??= new List<IList<string>>();
+
+            return new InsightQueryItemProperties(
+                dataTypes?.ToList(),
+                inputEntityType,
+                requiredInputFieldsSets?.ToList(),
+                entitiesFilter,
+                serializedAdditionalRawData: null,
+                displayName,
+                description,
+                baseQuery,
+                tableQuery,
+                chartQuery,
+                additionalQuery,
+                defaultTimeRange,
+                beforeRange != null ? new InsightQueryItemPropertiesReferenceTimeRange(beforeRange, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemPropertiesTableQuery"/>. </summary>
+        /// <param name="columnsDefinitions"> List of insight column definitions. </param>
+        /// <param name="queriesDefinitions"> List of insight queries definitions. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemPropertiesTableQuery"/> instance for mocking. </returns>
+        public static InsightQueryItemPropertiesTableQuery InsightQueryItemPropertiesTableQuery(IEnumerable<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem> columnsDefinitions = null, IEnumerable<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem> queriesDefinitions = null)
+        {
+            columnsDefinitions ??= new List<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem>();
+            queriesDefinitions ??= new List<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem>();
+
+            return new InsightQueryItemPropertiesTableQuery(columnsDefinitions?.ToList(), queriesDefinitions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem"/>. </summary>
+        /// <param name="header"> Insight column header. </param>
+        /// <param name="outputType"> Insights Column type. </param>
+        /// <param name="isDeepLinkSupported"> Is query supports deep-link. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem"/> instance for mocking. </returns>
+        public static InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(string header = null, InsightsColumnOutputType? outputType = null, bool? isDeepLinkSupported = null)
+        {
+            return new InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem(header, outputType, isDeepLinkSupported, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem"/>. </summary>
+        /// <param name="filter"> Insight column header. </param>
+        /// <param name="summarize"> Insight column header. </param>
+        /// <param name="project"> Insight column header. </param>
+        /// <param name="linkColumnsDefinitions"> Insight column header. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem"/> instance for mocking. </returns>
+        public static InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem(string filter = null, string summarize = null, string project = null, IEnumerable<InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem> linkColumnsDefinitions = null)
+        {
+            linkColumnsDefinitions ??= new List<InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem>();
+
+            return new InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem(filter, summarize, project, linkColumnsDefinitions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem"/>. </summary>
+        /// <param name="projectedName"> Insight Link Definition Projected Name. </param>
+        /// <param name="query"> Insight Link Definition Query. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem"/> instance for mocking. </returns>
+        public static InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem(string projectedName = null, string query = null)
+        {
+            return new InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem(projectedName, query, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemPropertiesAdditionalQuery"/>. </summary>
+        /// <param name="query"> The insight query. </param>
+        /// <param name="text"> The insight text. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemPropertiesAdditionalQuery"/> instance for mocking. </returns>
+        public static InsightQueryItemPropertiesAdditionalQuery InsightQueryItemPropertiesAdditionalQuery(string query = null, string text = null)
+        {
+            return new InsightQueryItemPropertiesAdditionalQuery(query, text, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InsightQueryItemPropertiesDefaultTimeRange"/>. </summary>
+        /// <param name="beforeRange"> The padding for the start time of the query. </param>
+        /// <param name="afterRange"> The padding for the end time of the query. </param>
+        /// <returns> A new <see cref="Models.InsightQueryItemPropertiesDefaultTimeRange"/> instance for mocking. </returns>
+        public static InsightQueryItemPropertiesDefaultTimeRange InsightQueryItemPropertiesDefaultTimeRange(string beforeRange = null, string afterRange = null)
+        {
+            return new InsightQueryItemPropertiesDefaultTimeRange(beforeRange, afterRange, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertTimelineItem"/>. </summary>
+        /// <param name="azureResourceId"> The alert azure resource id. </param>
+        /// <param name="productName"> The alert product name. </param>
+        /// <param name="description"> The alert description. </param>
+        /// <param name="displayName"> The alert name. </param>
+        /// <param name="severity"> The alert severity. </param>
+        /// <param name="endOn"> The alert end time. </param>
+        /// <param name="startOn"> The alert start time. </param>
+        /// <param name="generatedOn"> The alert generated time. </param>
+        /// <param name="alertType"> The name of the alert type. </param>
+        /// <param name="intent"> The intent of the alert. </param>
+        /// <param name="techniques"> The techniques of the alert. </param>
+        /// <returns> A new <see cref="Models.SecurityAlertTimelineItem"/> instance for mocking. </returns>
+        public static SecurityAlertTimelineItem SecurityAlertTimelineItem(ResourceIdentifier azureResourceId = null, string productName = null, string description = null, string displayName = null, SecurityInsightsAlertSeverity severity = default, DateTimeOffset endOn = default, DateTimeOffset startOn = default, DateTimeOffset generatedOn = default, string alertType = null, SecurityInsightsKillChainIntent? intent = null, IEnumerable<string> techniques = null)
+        {
+            techniques ??= new List<string>();
+
+            return new SecurityAlertTimelineItem(
+                EntityTimelineKind.SecurityAlert,
+                serializedAdditionalRawData: null,
+                azureResourceId,
+                productName,
+                description,
+                displayName,
+                severity,
+                endOn,
+                startOn,
+                generatedOn,
+                alertType,
+                intent,
+                techniques?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExpansionEntityQuery"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="alertsState"> The available data types for the connector. </param>
-        /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAscDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsAscDataConnector SecurityInsightsAscDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, SecurityInsightsDataTypeConnectionState? alertsState = null, string subscriptionId = null)
+        /// <param name="dataSources"> List of the data sources that are required to run the query. </param>
+        /// <param name="displayName"> The query display name. </param>
+        /// <param name="inputEntityType"> The type of the query's source entity. </param>
+        /// <param name="inputFields"> List of the fields of the source entity that are required to run the query. </param>
+        /// <param name="outputEntityTypes"> List of the desired output types to be constructed from the result. </param>
+        /// <param name="queryTemplate"> The template query string to be parsed and formatted. </param>
+        /// <returns> A new <see cref="Models.ExpansionEntityQuery"/> instance for mocking. </returns>
+        public static ExpansionEntityQuery ExpansionEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IEnumerable<string> dataSources = null, string displayName = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<string> inputFields = null, IEnumerable<SecurityInsightsEntityType> outputEntityTypes = null, string queryTemplate = null)
         {
-            return new SecurityInsightsAscDataConnector(
+            dataSources ??= new List<string>();
+            inputFields ??= new List<string>();
+            outputEntityTypes ??= new List<SecurityInsightsEntityType>();
+
+            return new ExpansionEntityQuery(
                 id,
                 name,
                 resourceType,
                 systemData,
-                DataConnectorKind.AzureSecurityCenter,
+                EntityQueryKind.Expansion,
                 etag,
                 serializedAdditionalRawData: null,
-                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
-                subscriptionId);
+                dataSources?.ToList(),
+                displayName,
+                inputEntityType,
+                inputFields?.ToList(),
+                outputEntityTypes?.ToList(),
+                queryTemplate);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActivityEntityQuery"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="awsRoleArn"> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </param>
-        /// <param name="logsState"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAwsCloudTrailDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsAwsCloudTrailDataConnector SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string awsRoleArn = null, SecurityInsightsDataTypeConnectionState? logsState = null)
+        /// <param name="title"> The entity query title. </param>
+        /// <param name="content"> The entity query content to display in timeline. </param>
+        /// <param name="description"> The entity query description. </param>
+        /// <param name="query"> The Activity query definitions. </param>
+        /// <param name="inputEntityType"> The type of the query's source entity. </param>
+        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <param name="templateName"> The template id this activity was created from. </param>
+        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
+        /// <param name="createdOn"> The time the activity was created. </param>
+        /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
+        /// <returns> A new <see cref="Models.ActivityEntityQuery"/> instance for mocking. </returns>
+        public static ActivityEntityQuery ActivityEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new SecurityInsightsAwsCloudTrailDataConnector(
+            requiredInputFieldsSets ??= new List<IList<string>>();
+            entitiesFilter ??= new Dictionary<string, IList<string>>();
+
+            return new ActivityEntityQuery(
                 id,
                 name,
                 resourceType,
                 systemData,
-                DataConnectorKind.AmazonWebServicesCloudTrail,
+                EntityQueryKind.Activity,
                 etag,
                 serializedAdditionalRawData: null,
-                awsRoleArn,
-                logsState != null ? new AwsCloudTrailDataConnectorDataTypes(new AwsCloudTrailDataConnectorDataTypesLogs(logsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+                title,
+                content,
+                description,
+                query != null ? new ActivityEntityQueriesPropertiesQueryDefinitions(query, serializedAdditionalRawData: null) : null,
+                inputEntityType,
+                requiredInputFieldsSets?.ToList(),
+                entitiesFilter,
+                templateName,
+                isEnabled,
+                createdOn,
+                lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.McasDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActivityCustomEntityQuery"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.McasDataConnector"/> instance for mocking. </returns>
-        public static McasDataConnector McasDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, McasDataConnectorDataTypes dataTypes = null)
+        /// <param name="title"> The entity query title. </param>
+        /// <param name="content"> The entity query content to display in timeline. </param>
+        /// <param name="description"> The entity query description. </param>
+        /// <param name="query"> The Activity query definitions. </param>
+        /// <param name="inputEntityType"> The type of the query's source entity. </param>
+        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <param name="templateName"> The template id this activity was created from. </param>
+        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
+        /// <param name="createdOn"> The time the activity was created. </param>
+        /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
+        /// <returns> A new <see cref="Models.ActivityCustomEntityQuery"/> instance for mocking. </returns>
+        public static ActivityCustomEntityQuery ActivityCustomEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new McasDataConnector(
+            requiredInputFieldsSets ??= new List<IList<string>>();
+            entitiesFilter ??= new Dictionary<string, IList<string>>();
+
+            return new ActivityCustomEntityQuery(
                 id,
                 name,
                 resourceType,
                 systemData,
-                DataConnectorKind.MicrosoftCloudAppSecurity,
+                CustomEntityQueryKind.Activity,
                 etag,
                 serializedAdditionalRawData: null,
-                tenantId,
-                dataTypes);
+                title,
+                content,
+                description,
+                query != null ? new ActivityEntityQueriesPropertiesQueryDefinitions(query, serializedAdditionalRawData: null) : null,
+                inputEntityType,
+                requiredInputFieldsSets?.ToList(),
+                entitiesFilter,
+                templateName,
+                isEnabled,
+                createdOn,
+                lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MdatpDataConnector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActivityEntityQueryTemplate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alertsState"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.MdatpDataConnector"/> instance for mocking. </returns>
-        public static MdatpDataConnector MdatpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        /// <param name="title"> The entity query title. </param>
+        /// <param name="content"> The entity query content to display in timeline. </param>
+        /// <param name="description"> The entity query description. </param>
+        /// <param name="queryDefinitions"> The Activity query definitions. </param>
+        /// <param name="dataTypes"> List of required data types for the given entity query template. </param>
+        /// <param name="inputEntityType"> The type of the query's source entity. </param>
+        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <returns> A new <see cref="Models.ActivityEntityQueryTemplate"/> instance for mocking. </returns>
+        public static ActivityEntityQueryTemplate ActivityEntityQueryTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string content = null, string description = null, ActivityEntityQueryDefinition queryDefinitions = null, IEnumerable<DataTypeDefinitions> dataTypes = null, SecurityInsightsEntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null)
         {
-            return new MdatpDataConnector(
-                id,
-                name,
-                resourceType,
-                systemData,
-                DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection,
-                etag,
-                serializedAdditionalRawData: null,
-                tenantId,
-                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
-        }
+            dataTypes ??= new List<DataTypeDefinitions>();
+            requiredInputFieldsSets ??= new List<IList<string>>();
+            entitiesFilter ??= new Dictionary<string, IList<string>>();
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsTIDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="tipLookbackOn"> The lookback period for the feed to be imported. </param>
-        /// <param name="indicatorsState"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsTIDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsTIDataConnector SecurityInsightsTIDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, DateTimeOffset? tipLookbackOn = null, SecurityInsightsDataTypeConnectionState? indicatorsState = null)
-        {
-            return new SecurityInsightsTIDataConnector(
+            return new ActivityEntityQueryTemplate(
                 id,
                 name,
                 resourceType,
                 systemData,
-                DataConnectorKind.ThreatIntelligence,
-                etag,
+                EntityQueryTemplateKind.Activity,
                 serializedAdditionalRawData: null,
-                tenantId,
-                tipLookbackOn,
-                indicatorsState != null ? new TIDataConnectorDataTypes(new TIDataConnectorDataTypesIndicators(indicatorsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsOfficeDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsOfficeDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsOfficeDataConnector SecurityInsightsOfficeDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsOfficeDataConnectorDataTypes dataTypes = null)
-        {
-            return new SecurityInsightsOfficeDataConnector(
-                id,
-                name,
-                resourceType,
-                systemData,
-                DataConnectorKind.Office365,
-                etag,
-                serializedAdditionalRawData: null,
-                tenantId,
-                dataTypes);
+                title,
+                content,
+                description,
+                queryDefinitions,
+                dataTypes?.ToList(),
+                inputEntityType,
+                requiredInputFieldsSets?.ToList(),
+                entitiesFilter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnomalySecurityMLAnalyticsSettings"/>. </summary>
@@ -1355,6 +3738,905 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 settingsDefinitionId);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsSettingAnomaliesKind"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="isEnabled"> Determines whether the setting is enable or disabled. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsSettingAnomaliesKind"/> instance for mocking. </returns>
+        public static SecurityInsightsSettingAnomaliesKind SecurityInsightsSettingAnomaliesKind(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, bool? isEnabled = null)
+        {
+            return new SecurityInsightsSettingAnomaliesKind(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SettingKind.Anomalies,
+                etag,
+                serializedAdditionalRawData: null,
+                isEnabled);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsEyesOn"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="isEnabled"> Determines whether the setting is enable or disabled. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsEyesOn"/> instance for mocking. </returns>
+        public static SecurityInsightsEyesOn SecurityInsightsEyesOn(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, bool? isEnabled = null)
+        {
+            return new SecurityInsightsEyesOn(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SettingKind.EyesOn,
+                etag,
+                serializedAdditionalRawData: null,
+                isEnabled);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EntityAnalytics"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="entityProviders"> The relevant entity providers that are synced. </param>
+        /// <returns> A new <see cref="Models.EntityAnalytics"/> instance for mocking. </returns>
+        public static EntityAnalytics EntityAnalytics(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IEnumerable<EntityProvider> entityProviders = null)
+        {
+            entityProviders ??= new List<EntityProvider>();
+
+            return new EntityAnalytics(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SettingKind.EntityAnalytics,
+                etag,
+                serializedAdditionalRawData: null,
+                entityProviders?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UebaSettings"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="dataSources"> The relevant data sources that enriched by ueba. </param>
+        /// <returns> A new <see cref="Models.UebaSettings"/> instance for mocking. </returns>
+        public static UebaSettings UebaSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IEnumerable<UebaDataSource> dataSources = null)
+        {
+            dataSources ??= new List<UebaDataSource>();
+
+            return new UebaSettings(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SettingKind.Ueba,
+                etag,
+                serializedAdditionalRawData: null,
+                dataSources?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceThreatActor"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceThreatActor"/> instance for mocking. </returns>
+        public static ThreatIntelligenceThreatActor ThreatIntelligenceThreatActor(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        {
+            data ??= new Dictionary<string, BinaryData>();
+            relationshipHints ??= new List<RelationshipHint>();
+
+            return new ThreatIntelligenceThreatActor(
+                id,
+                name,
+                resourceType,
+                systemData,
+                TIObjectKind.ThreatActor,
+                data,
+                createdBy,
+                source,
+                firstIngestedOn,
+                lastIngestedOn,
+                ingestionRulesVersion,
+                lastUpdateMethod,
+                lastModifiedBy,
+                lastUpdatedOn,
+                relationshipHints?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceAttackPattern"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceAttackPattern"/> instance for mocking. </returns>
+        public static ThreatIntelligenceAttackPattern ThreatIntelligenceAttackPattern(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        {
+            data ??= new Dictionary<string, BinaryData>();
+            relationshipHints ??= new List<RelationshipHint>();
+
+            return new ThreatIntelligenceAttackPattern(
+                id,
+                name,
+                resourceType,
+                systemData,
+                TIObjectKind.AttackPattern,
+                data,
+                createdBy,
+                source,
+                firstIngestedOn,
+                lastIngestedOn,
+                ingestionRulesVersion,
+                lastUpdateMethod,
+                lastModifiedBy,
+                lastUpdatedOn,
+                relationshipHints?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceIdentity"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceIdentity"/> instance for mocking. </returns>
+        public static ThreatIntelligenceIdentity ThreatIntelligenceIdentity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        {
+            data ??= new Dictionary<string, BinaryData>();
+            relationshipHints ??= new List<RelationshipHint>();
+
+            return new ThreatIntelligenceIdentity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                TIObjectKind.Identity,
+                data,
+                createdBy,
+                source,
+                firstIngestedOn,
+                lastIngestedOn,
+                ingestionRulesVersion,
+                lastUpdateMethod,
+                lastModifiedBy,
+                lastUpdatedOn,
+                relationshipHints?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceRelationship"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceRelationship"/> instance for mocking. </returns>
+        public static ThreatIntelligenceRelationship ThreatIntelligenceRelationship(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null)
+        {
+            data ??= new Dictionary<string, BinaryData>();
+            relationshipHints ??= new List<RelationshipHint>();
+
+            return new ThreatIntelligenceRelationship(
+                id,
+                name,
+                resourceType,
+                systemData,
+                TIObjectKind.Relationship,
+                data,
+                createdBy,
+                source,
+                firstIngestedOn,
+                lastIngestedOn,
+                ingestionRulesVersion,
+                lastUpdateMethod,
+                lastModifiedBy,
+                lastUpdatedOn,
+                relationshipHints?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceIndicator"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
+        /// <param name="observables"> The observables of this indicator. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceIndicator"/> instance for mocking. </returns>
+        public static ThreatIntelligenceIndicator ThreatIntelligenceIndicator(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> data = null, ThreatIntelligenceUserInfo createdBy = null, string source = null, DateTimeOffset? firstIngestedOn = null, DateTimeOffset? lastIngestedOn = null, Guid? ingestionRulesVersion = null, string lastUpdateMethod = null, ThreatIntelligenceUserInfo lastModifiedBy = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<RelationshipHint> relationshipHints = null, IEnumerable<IndicatorObservablesItem> observables = null)
+        {
+            data ??= new Dictionary<string, BinaryData>();
+            relationshipHints ??= new List<RelationshipHint>();
+            observables ??= new List<IndicatorObservablesItem>();
+
+            return new ThreatIntelligenceIndicator(
+                id,
+                name,
+                resourceType,
+                systemData,
+                TIObjectKind.Indicator,
+                data,
+                createdBy,
+                source,
+                firstIngestedOn,
+                lastIngestedOn,
+                ingestionRulesVersion,
+                lastUpdateMethod,
+                lastModifiedBy,
+                lastUpdatedOn,
+                relationshipHints?.ToList(),
+                serializedAdditionalRawData: null,
+                observables?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomizableConnectorDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="createdOn"> Gets or sets the connector definition created date in UTC format. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the connector definition last modified date in UTC format. </param>
+        /// <param name="connectorUiConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
+        /// <param name="connectionsConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
+        /// <returns> A new <see cref="Models.CustomizableConnectorDefinitionData"/> instance for mocking. </returns>
+        public static CustomizableConnectorDefinitionData CustomizableConnectorDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, CustomizableConnectorUiConfig connectorUiConfig = null, CustomizableConnectionsConfig connectionsConfig = null)
+        {
+            return new CustomizableConnectorDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorDefinitionKind.Customizable,
+                etag,
+                serializedAdditionalRawData: null,
+                createdOn,
+                lastModifiedOn,
+                connectorUiConfig,
+                connectionsConfig);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAadDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsAadDataConnector"/> instance for mocking. </returns>
+        public static SecurityInsightsAadDataConnector SecurityInsightsAadDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        {
+            return new SecurityInsightsAadDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AzureActiveDirectory,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MstiDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="microsoftEmergingThreatFeedState"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
+        /// <returns> A new <see cref="Models.MstiDataConnector"/> instance for mocking. </returns>
+        public static MstiDataConnector MstiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? microsoftEmergingThreatFeedState = null)
+        {
+            return new MstiDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftThreatIntelligence,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                microsoftEmergingThreatFeedState.HasValue ? new DataConnectorDataTypeCommon(microsoftEmergingThreatFeedState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MtpDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="filteredProvidersAlerts"> The available filtered providers for the connector. </param>
+        /// <param name="incidentsState"> Incidents data type for Microsoft Threat Protection Platforms data connector. </param>
+        /// <param name="alertsState"> Alerts data type for Microsoft Threat Protection Platforms data connector. </param>
+        /// <returns> A new <see cref="Models.MtpDataConnector"/> instance for mocking. </returns>
+        public static MtpDataConnector MtpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, IEnumerable<MtpProvider> filteredProvidersAlerts = null, SecurityInsightsDataTypeConnectionState? incidentsState = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        {
+            filteredProvidersAlerts ??= new List<MtpProvider>();
+
+            return new MtpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftThreatProtection,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                filteredProvidersAlerts != null ? new MtpFilteredProviders(filteredProvidersAlerts?.ToList(), serializedAdditionalRawData: null) : null,
+                incidentsState.HasValue ? new DataConnectorDataTypeCommon(incidentsState.Value, serializedAdditionalRawData: null) : null,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAatpDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsAatpDataConnector"/> instance for mocking. </returns>
+        public static SecurityInsightsAatpDataConnector SecurityInsightsAatpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        {
+            return new SecurityInsightsAatpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AzureAdvancedThreatProtection,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAscDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsAscDataConnector"/> instance for mocking. </returns>
+        public static SecurityInsightsAscDataConnector SecurityInsightsAscDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, SecurityInsightsDataTypeConnectionState? alertsState = null, string subscriptionId = null)
+        {
+            return new SecurityInsightsAscDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AzureSecurityCenter,
+                etag,
+                serializedAdditionalRawData: null,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null,
+                subscriptionId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="awsRoleArn"> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </param>
+        /// <param name="logsState"> Logs data type. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsAwsCloudTrailDataConnector"/> instance for mocking. </returns>
+        public static SecurityInsightsAwsCloudTrailDataConnector SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string awsRoleArn = null, SecurityInsightsDataTypeConnectionState? logsState = null)
+        {
+            return new SecurityInsightsAwsCloudTrailDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AmazonWebServicesCloudTrail,
+                etag,
+                serializedAdditionalRawData: null,
+                awsRoleArn,
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AwsS3DataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="destinationTable"> The logs destination table name in LogAnalytics. </param>
+        /// <param name="sqsUrls"> The AWS sqs urls for the connector. </param>
+        /// <param name="roleArn"> The Aws Role Arn that is used to access the Aws account. </param>
+        /// <param name="logsState"> Logs data type. </param>
+        /// <returns> A new <see cref="Models.AwsS3DataConnector"/> instance for mocking. </returns>
+        public static AwsS3DataConnector AwsS3DataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string destinationTable = null, IEnumerable<string> sqsUrls = null, string roleArn = null, SecurityInsightsDataTypeConnectionState? logsState = null)
+        {
+            sqsUrls ??= new List<string>();
+
+            return new AwsS3DataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AmazonWebServicesS3,
+                etag,
+                serializedAdditionalRawData: null,
+                destinationTable,
+                sqsUrls?.ToList(),
+                roleArn,
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RestApiPollerDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="connectorDefinitionName"> The connector definition name (the dataConnectorDefinition resource id). </param>
+        /// <param name="auth">
+        /// The a authentication model.
+        /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GcpAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
+        /// </param>
+        /// <param name="request"> The request configuration. </param>
+        /// <param name="dcrConfig"> The DCR related properties. </param>
+        /// <param name="isActive"> Indicates whether the connector is active or not. </param>
+        /// <param name="dataType"> The Log Analytics table destination. </param>
+        /// <param name="response"> The response configuration. </param>
+        /// <param name="paging"> The paging configuration. </param>
+        /// <param name="addOnAttributes"> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </param>
+        /// <returns> A new <see cref="Models.RestApiPollerDataConnector"/> instance for mocking. </returns>
+        public static RestApiPollerDataConnector RestApiPollerDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, CcpAuthConfig auth = null, RestApiPollerRequestConfig request = null, DcrConfiguration dcrConfig = null, bool? isActive = null, string dataType = null, CcpResponseConfig response = null, RestApiPollerRequestPagingConfig paging = null, IDictionary<string, string> addOnAttributes = null)
+        {
+            addOnAttributes ??= new Dictionary<string, string>();
+
+            return new RestApiPollerDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.RestApiPoller,
+                etag,
+                serializedAdditionalRawData: null,
+                connectorDefinitionName,
+                auth,
+                request,
+                dcrConfig,
+                isActive,
+                dataType,
+                response,
+                paging,
+                addOnAttributes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GcpDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="connectorDefinitionName"> The name of the connector definition that represents the UI config. </param>
+        /// <param name="auth"> The auth section of the connector. </param>
+        /// <param name="request"> The request section of the connector. </param>
+        /// <param name="dcrConfig"> The configuration of the destination of the data. </param>
+        /// <returns> A new <see cref="Models.GcpDataConnector"/> instance for mocking. </returns>
+        public static GcpDataConnector GcpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string connectorDefinitionName = null, GcpAuthProperties auth = null, GcpRequestProperties request = null, DcrConfiguration dcrConfig = null)
+        {
+            return new GcpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.GCP,
+                etag,
+                serializedAdditionalRawData: null,
+                connectorDefinitionName,
+                auth,
+                request,
+                dcrConfig);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.McasDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        /// <returns> A new <see cref="Models.McasDataConnector"/> instance for mocking. </returns>
+        public static McasDataConnector McasDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, McasDataConnectorDataTypes dataTypes = null)
+        {
+            return new McasDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftCloudAppSecurity,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                dataTypes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Dynamics365DataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="dynamics365CdsActivitiesState"> Common Data Service data type connection. </param>
+        /// <returns> A new <see cref="Models.Dynamics365DataConnector"/> instance for mocking. </returns>
+        public static Dynamics365DataConnector Dynamics365DataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? dynamics365CdsActivitiesState = null)
+        {
+            return new Dynamics365DataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.Dynamics365,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                dynamics365CdsActivitiesState.HasValue ? new Dynamics365DataConnectorDataTypesDynamics365CdsActivities(dynamics365CdsActivitiesState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OfficeAtpDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <returns> A new <see cref="Models.OfficeAtpDataConnector"/> instance for mocking. </returns>
+        public static OfficeAtpDataConnector OfficeAtpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        {
+            return new OfficeAtpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.OfficeATP,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MicrosoftPurviewInformationProtectionDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="logsState"> Logs data type. </param>
+        /// <returns> A new <see cref="Models.MicrosoftPurviewInformationProtectionDataConnector"/> instance for mocking. </returns>
+        public static MicrosoftPurviewInformationProtectionDataConnector MicrosoftPurviewInformationProtectionDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? logsState = null)
+        {
+            return new MicrosoftPurviewInformationProtectionDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftPurviewInformationProtection,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Office365ProjectDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="logsState"> Logs data type. </param>
+        /// <returns> A new <see cref="Models.Office365ProjectDataConnector"/> instance for mocking. </returns>
+        public static Office365ProjectDataConnector Office365ProjectDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? logsState = null)
+        {
+            return new Office365ProjectDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.Office365Project,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OfficePowerBIDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="logsState"> Logs data type. </param>
+        /// <returns> A new <see cref="Models.OfficePowerBIDataConnector"/> instance for mocking. </returns>
+        public static OfficePowerBIDataConnector OfficePowerBIDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? logsState = null)
+        {
+            return new OfficePowerBIDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.OfficePowerBI,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                logsState.HasValue ? new DataConnectorDataTypeCommon(logsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OfficeIrmDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <returns> A new <see cref="Models.OfficeIrmDataConnector"/> instance for mocking. </returns>
+        public static OfficeIrmDataConnector OfficeIrmDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        {
+            return new OfficeIrmDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.OfficeIRM,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MdatpDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <returns> A new <see cref="Models.MdatpDataConnector"/> instance for mocking. </returns>
+        public static MdatpDataConnector MdatpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
+        {
+            return new MdatpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsOfficeDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsOfficeDataConnector"/> instance for mocking. </returns>
+        public static SecurityInsightsOfficeDataConnector SecurityInsightsOfficeDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsOfficeDataConnectorDataTypes dataTypes = null)
+        {
+            return new SecurityInsightsOfficeDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.Office365,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                dataTypes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsTIDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="tipLookbackOn"> The lookback period for the feed to be imported. </param>
+        /// <param name="indicatorsState"> Data type for indicators connection. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsTIDataConnector"/> instance for mocking. </returns>
+        public static SecurityInsightsTIDataConnector SecurityInsightsTIDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, DateTimeOffset? tipLookbackOn = null, SecurityInsightsDataTypeConnectionState? indicatorsState = null)
+        {
+            return new SecurityInsightsTIDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.ThreatIntelligence,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                tipLookbackOn,
+                indicatorsState.HasValue ? new TIDataConnectorDataTypesIndicators(indicatorsState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceTaxiiDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="workspaceId"> The workspace id. </param>
+        /// <param name="friendlyName"> The friendly name for the TAXII server. </param>
+        /// <param name="taxiiServer"> The API root for the TAXII server. </param>
+        /// <param name="collectionId"> The collection id of the TAXII server. </param>
+        /// <param name="userName"> The userName for the TAXII server. </param>
+        /// <param name="password"> The password for the TAXII server. </param>
+        /// <param name="taxiiLookbackPeriod"> The lookback period for the TAXII server. </param>
+        /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
+        /// <param name="taxiiClientState"> Data type for TAXII connector. </param>
+        /// <returns> A new <see cref="Models.ThreatIntelligenceTaxiiDataConnector"/> instance for mocking. </returns>
+        public static ThreatIntelligenceTaxiiDataConnector ThreatIntelligenceTaxiiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, string workspaceId = null, string friendlyName = null, string taxiiServer = null, string collectionId = null, string userName = null, string password = null, DateTimeOffset? taxiiLookbackPeriod = null, PollingFrequency? pollingFrequency = null, SecurityInsightsDataTypeConnectionState? taxiiClientState = null)
+        {
+            return new ThreatIntelligenceTaxiiDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.ThreatIntelligenceTaxii,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                workspaceId,
+                friendlyName,
+                taxiiServer,
+                collectionId,
+                userName,
+                password,
+                taxiiLookbackPeriod,
+                pollingFrequency,
+                taxiiClientState.HasValue ? new DataConnectorDataTypeCommon(taxiiClientState.Value, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="alertsState"> Alerts data type connection. </param>
+        /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
+        /// <returns> A new <see cref="Models.IotDataConnector"/> instance for mocking. </returns>
+        public static IotDataConnector IotDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, SecurityInsightsDataTypeConnectionState? alertsState = null, string subscriptionId = null)
+        {
+            return new IotDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.IOT,
+                etag,
+                serializedAdditionalRawData: null,
+                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null,
+                subscriptionId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CodelessUiDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="connectorUiConfig"> Config to describe the instructions blade. </param>
+        /// <returns> A new <see cref="Models.CodelessUiDataConnector"/> instance for mocking. </returns>
+        public static CodelessUiDataConnector CodelessUiDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CodelessUiConnectorConfigProperties connectorUiConfig = null)
+        {
+            return new CodelessUiDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.GenericUI,
+                etag,
+                serializedAdditionalRawData: null,
+                connectorUiConfig);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CodelessApiPollingDataConnector"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="connectorUiConfig"> Config to describe the instructions blade. </param>
+        /// <param name="pollingConfig"> Config to describe the polling instructions. </param>
+        /// <returns> A new <see cref="Models.CodelessApiPollingDataConnector"/> instance for mocking. </returns>
+        public static CodelessApiPollingDataConnector CodelessApiPollingDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CodelessUiConnectorConfigProperties connectorUiConfig = null, CodelessConnectorPollingConfigProperties pollingConfig = null)
+        {
+            return new CodelessApiPollingDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.APIPolling,
+                etag,
+                serializedAdditionalRawData: null,
+                connectorUiConfig,
+                pollingConfig);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAccountEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1368,7 +4650,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The display name of the account. </param>
         /// <param name="hostEntityId"> The Host entity id that contains the account in case it is a local account (not domain joined). </param>
         /// <param name="isDomainJoined"> Determines whether this is a domain account. </param>
-        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format - domain\username. Examples: NT AUTHORITY. </param>
+        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </param>
         /// <param name="objectGuid"> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="puid"> The Azure Active Directory Passport User ID. </param>
         /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
@@ -1549,28 +4831,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 hashValue);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIPEntityGeoLocation"/>. </summary>
-        /// <param name="asn"> Autonomous System Number. </param>
-        /// <param name="city"> City name. </param>
-        /// <param name="countryCode"> The country code according to ISO 3166 format. </param>
-        /// <param name="countryName"> Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name. </param>
-        /// <param name="latitude"> The longitude of the identified location, expressed as a floating point number with range of -180 to 180, with positive numbers representing East and negative numbers representing West. Latitude and longitude are derived from the city or postal code. </param>
-        /// <param name="longitude"> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90, with positive numbers representing North and negative numbers representing South. Latitude and longitude are derived from the city or postal code. </param>
-        /// <param name="state"> State name. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsIPEntityGeoLocation"/> instance for mocking. </returns>
-        public static SecurityInsightsIPEntityGeoLocation SecurityInsightsIPEntityGeoLocation(int? asn = null, string city = null, string countryCode = null, string countryName = null, double? latitude = null, double? longitude = null, string state = null)
-        {
-            return new SecurityInsightsIPEntityGeoLocation(
-                asn,
-                city,
-                countryCode,
-                countryName,
-                latitude,
-                longitude,
-                state,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsHostEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1636,12 +4896,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
+        /// <param name="owners"> A list of owners of the IoTDevice entity. </param>
+        /// <param name="nicEntityIds"> A list of Nic entity ids of the IoTDevice entity. </param>
+        /// <param name="site"> The site of the device. </param>
+        /// <param name="zone"> The zone location of the device within a site. </param>
+        /// <param name="sensor"> The sensor the device is monitored by. </param>
+        /// <param name="deviceSubType"> The subType of the device ('PLC', 'HMI', 'EWS', etc.). </param>
+        /// <param name="importance"> Device importance, determines if the device classified as 'crown jewel'. </param>
+        /// <param name="purdueLayer"> The Purdue Layer of the device. </param>
+        /// <param name="isAuthorized"> Determines whether the device classified as authorized device. </param>
+        /// <param name="isProgramming"> Determines whether the device classified as programming device. </param>
+        /// <param name="isScanner"> Is the device classified as a scanner device. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIotDeviceEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string deviceId = null, string deviceName = null, string source = null, Guid? iotSecurityAgentId = null, string deviceType = null, string vendor = null, string edgeId = null, string macAddress = null, string model = null, string serialNumber = null, string firmwareVersion = null, string operatingSystem = null, string iotHubEntityId = null, string hostEntityId = null, string ipAddressEntityId = null, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = null, IEnumerable<string> protocols = null)
+        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string deviceId = null, string deviceName = null, string source = null, Guid? iotSecurityAgentId = null, string deviceType = null, string vendor = null, string edgeId = null, string macAddress = null, string model = null, string serialNumber = null, string firmwareVersion = null, string operatingSystem = null, string iotHubEntityId = null, string hostEntityId = null, string ipAddressEntityId = null, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = null, IEnumerable<string> protocols = null, IEnumerable<string> owners = null, IEnumerable<string> nicEntityIds = null, string site = null, string zone = null, string sensor = null, string deviceSubType = null, DeviceImportance? importance = null, string purdueLayer = null, bool? isAuthorized = null, bool? isProgramming = null, bool? isScanner = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             threatIntelligence ??= new List<SecurityInsightsThreatIntelligence>();
             protocols ??= new List<string>();
+            owners ??= new List<string>();
+            nicEntityIds ??= new List<string>();
 
             return new SecurityInsightsIotDeviceEntity(
                 id,
@@ -1668,7 +4941,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 hostEntityId,
                 ipAddressEntityId,
                 threatIntelligence?.ToList(),
-                protocols?.ToList());
+                protocols?.ToList(),
+                owners?.ToList(),
+                nicEntityIds?.ToList(),
+                site,
+                zone,
+                sensor,
+                deviceSubType,
+                importance,
+                purdueLayer,
+                isAuthorized,
+                isProgramming,
+                isScanner);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligence"/>. </summary>
@@ -1719,6 +5003,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 address,
                 location,
                 threatIntelligence?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIPEntityGeoLocation"/>. </summary>
+        /// <param name="asn"> Autonomous System Number. </param>
+        /// <param name="city"> City name. </param>
+        /// <param name="countryCode"> The country code according to ISO 3166 format. </param>
+        /// <param name="countryName"> Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name. </param>
+        /// <param name="latitude"> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code. </param>
+        /// <param name="longitude"> The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code. </param>
+        /// <param name="state"> State name. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsIPEntityGeoLocation"/> instance for mocking. </returns>
+        public static SecurityInsightsIPEntityGeoLocation SecurityInsightsIPEntityGeoLocation(int? asn = null, string city = null, string countryCode = null, string countryName = null, double? latitude = null, double? longitude = null, string state = null)
+        {
+            return new SecurityInsightsIPEntityGeoLocation(
+                asn,
+                city,
+                countryCode,
+                countryName,
+                latitude,
+                longitude,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsMailboxEntity"/>. </summary>
@@ -2095,9 +5401,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="uri"> A full URL the entity points to. </param>
+        /// <param name="uriString"> A full URL the entity points to. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsUriEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Uri uri = null)
+        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string uriString = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -2110,7 +5416,246 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null,
                 additionalData,
                 friendlyName,
-                uri);
+                uriString);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NicEntity"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="macAddress"> The MAC address of this network interface. </param>
+        /// <param name="ipAddressEntityId"> The IP entity id of this network interface. </param>
+        /// <param name="vlans"> A list of VLANs of the network interface entity. </param>
+        /// <returns> A new <see cref="Models.NicEntity"/> instance for mocking. </returns>
+        public static NicEntity NicEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string macAddress = null, string ipAddressEntityId = null, IEnumerable<string> vlans = null)
+        {
+            additionalData ??= new Dictionary<string, BinaryData>();
+            vlans ??= new List<string>();
+
+            return new NicEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Nic,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                macAddress,
+                ipAddressEntityId,
+                vlans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> The time the bookmark was created. </param>
+        /// <param name="createdBy"> Describes a user that created the bookmark. </param>
+        /// <param name="displayName"> The display name of the bookmark. </param>
+        /// <param name="labels"> List of labels relevant to this bookmark. </param>
+        /// <param name="notes"> The notes of the bookmark. </param>
+        /// <param name="query"> The query of the bookmark. </param>
+        /// <param name="queryResult"> The query result of the bookmark. </param>
+        /// <param name="updatedOn"> The last time the bookmark was updated. </param>
+        /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
+        /// <param name="eventOn"> The bookmark event time. </param>
+        /// <param name="queryStartOn"> The start time for the query. </param>
+        /// <param name="queryEndOn"> The end time for the query. </param>
+        /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IEnumerable<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, ETag? etag)
+        {
+            return SecurityInsightsBookmarkData(id: id, name: name, resourceType: resourceType, systemData: systemData, createdOn: createdOn, createdBy: createdBy, displayName: displayName, labels: labels, notes: notes, query: query, queryResult: queryResult, updatedOn: updatedOn, updatedBy: updatedBy, eventOn: eventOn, queryStartOn: queryStartOn, queryEndOn: queryEndOn, incidentInfo: incidentInfo, entityMappings: default, tactics: default, techniques: default, etag: etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="additionalInfo"> Additional data on the incident. </param>
+        /// <param name="classification"> The reason the incident was closed. </param>
+        /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
+        /// <param name="classificationReason"> The classification reason the incident was closed with. </param>
+        /// <param name="createdOn"> The time the incident was created. </param>
+        /// <param name="description"> The description of the incident. </param>
+        /// <param name="firstActivityOn"> The time of the first activity in the incident. </param>
+        /// <param name="incidentUri"> The deep-link url to the incident in Azure portal. </param>
+        /// <param name="incidentNumber"> A sequential number. </param>
+        /// <param name="labels"> List of labels relevant to this incident. </param>
+        /// <param name="lastActivityOn"> The time of the last activity in the incident. </param>
+        /// <param name="lastModifiedOn"> The last time the incident was updated. </param>
+        /// <param name="owner"> Describes a user that the incident is assigned to. </param>
+        /// <param name="relatedAnalyticRuleIds"> List of resource ids of Analytic rules related to the incident. </param>
+        /// <param name="severity"> The severity of the incident. </param>
+        /// <param name="status"> The status of the incident. </param>
+        /// <param name="title"> The title of the incident. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsIncidentData SecurityInsightsIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsIncidentAdditionalInfo additionalInfo, SecurityInsightsIncidentClassification? classification, string classificationComment, SecurityInsightsIncidentClassificationReason? classificationReason, DateTimeOffset? createdOn, string description, DateTimeOffset? firstActivityOn, Uri incidentUri, int? incidentNumber, IEnumerable<SecurityInsightsIncidentLabel> labels, DateTimeOffset? lastActivityOn, DateTimeOffset? lastModifiedOn, SecurityInsightsIncidentOwnerInfo owner, IEnumerable<ResourceIdentifier> relatedAnalyticRuleIds, SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, string title, ETag? etag)
+        {
+            return SecurityInsightsIncidentData(id: id, name: name, resourceType: resourceType, systemData: systemData, title: title, description: description, severity: severity, status: status, classification: classification, classificationReason: classificationReason, classificationComment: classificationComment, owner: owner, labels: labels, firstActivityOn: firstActivityOn, lastActivityOn: lastActivityOn, lastModifiedOn: lastModifiedOn, createdOn: createdOn, incidentNumber: incidentNumber, additionalInfo: additionalInfo, relatedAnalyticRuleIds: relatedAnalyticRuleIds, incidentUri: incidentUri, providerName: default, providerIncidentId: default, teamInformation: default, etag: etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo" />. </summary>
+        /// <param name="alertsCount"> The number of alerts in the incident. </param>
+        /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
+        /// <param name="commentsCount"> The number of comments in the incident. </param>
+        /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
+        /// <param name="tactics"> The tactics associated with incident. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IEnumerable<string> alertProductNames, IEnumerable<SecurityInsightsAttackTactic> tactics)
+        {
+            return SecurityInsightsIncidentAdditionalInfo(alertsCount: alertsCount, bookmarksCount: bookmarksCount, commentsCount: commentsCount, alertProductNames: alertProductNames, tactics: tactics, techniques: default, providerIncidentUri: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRule" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRule" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques)
+        {
+            return SecurityInsightsFusionAlertRule(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, alertRuleTemplateName: alertRuleTemplateName, description: description, displayName: displayName, isEnabled: isEnabled, sourceSettings: default, scenarioExclusionPatterns: default, lastModifiedOn: lastModifiedOn, severity: severity, tactics: tactics, techniques: techniques, subTechniques: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRuleTemplate" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The time that this alert rule template was last updated. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule template. </param>
+        /// <param name="techniques"> The techniques of the alert rule template. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRuleTemplate" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques)
+        {
+            return SecurityInsightsFusionAlertRuleTemplate(id: id, name: name, resourceType: resourceType, systemData: systemData, alertRulesCreatedByTemplateCount: alertRulesCreatedByTemplateCount, createdOn: createdOn, lastUpdatedOn: lastUpdatedOn, description: description, displayName: displayName, requiredDataConnectors: requiredDataConnectors, status: status, severity: severity, tactics: tactics, techniques: techniques, subTechniques: default, sourceSettings: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="query"> The query that creates alerts for this rule. </param>
+        /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>
+        /// <param name="queryPeriod"> The period (in ISO 8601 duration format) that this alert rule looks at. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
+        /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
+        /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
+        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
+        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
+        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
+        /// <param name="suppressionDuration"> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </param>
+        /// <param name="isSuppressionEnabled"> Determines whether the suppression for this alert rule is enabled or disabled. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingAggregationKind? eventGroupingAggregationKind, IDictionary<string, string> customDetails, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, TimeSpan? suppressionDuration, bool? isSuppressionEnabled, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques, SecurityInsightsIncidentConfiguration incidentConfiguration)
+        {
+            return SecurityInsightsScheduledAlertRule(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, query: query, queryFrequency: queryFrequency, queryPeriod: queryPeriod, severity: severity, triggerOperator: triggerOperator, triggerThreshold: triggerThreshold, eventGroupingAggregationKind: eventGroupingAggregationKind, customDetails: customDetails, entityMappings: entityMappings, alertDetailsOverride: alertDetailsOverride, sentinelEntitiesMappings: default, alertRuleTemplateName: alertRuleTemplateName, templateVersion: templateVersion, description: description, displayName: displayName, isEnabled: isEnabled, lastModifiedOn: lastModifiedOn, suppressionDuration: suppressionDuration, isSuppressionEnabled: isSuppressionEnabled, tactics: tactics, techniques: techniques, subTechniques: default, incidentConfiguration: incidentConfiguration);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.Models.ScheduledAlertRuleTemplate" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
+        /// <param name="createdDateUTC"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedDateUTC"> The time that this alert rule template was last updated. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="query"> The query that creates alerts for this rule. </param>
+        /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>
+        /// <param name="queryPeriod"> The period (in ISO 8601 duration format) that this alert rule looks at. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
+        /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule template. </param>
+        /// <param name="techniques"> The techniques of the alert rule template. </param>
+        /// <param name="version"> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </param>
+        /// <param name="eventGroupingAggregationKind"> The event grouping settings. </param>
+        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
+        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
+        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.Models.ScheduledAlertRuleTemplate" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques, string version, EventGroupingAggregationKind? eventGroupingAggregationKind, IDictionary<string, string> customDetails, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride)
+        {
+            return ScheduledAlertRuleTemplate(id: id, name: name, resourceType: resourceType, systemData: systemData, alertRulesCreatedByTemplateCount: alertRulesCreatedByTemplateCount, createdDateUTC: createdDateUTC, lastUpdatedDateUTC: lastUpdatedDateUTC, description: description, displayName: displayName, requiredDataConnectors: requiredDataConnectors, status: status, query: query, queryFrequency: queryFrequency, queryPeriod: queryPeriod, severity: severity, triggerOperator: triggerOperator, triggerThreshold: triggerThreshold, tactics: tactics, techniques: techniques, subTechniques: default, version: version, eventGroupingAggregationKind: eventGroupingAggregationKind, customDetails: customDetails, entityMappings: entityMappings, alertDetailsOverride: alertDetailsOverride, sentinelEntitiesMappings: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIotDeviceEntity" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="deviceId"> The ID of the IoT Device in the IoT Hub. </param>
+        /// <param name="deviceName"> The friendly name of the device. </param>
+        /// <param name="source"> The source of the device. </param>
+        /// <param name="iotSecurityAgentId"> The ID of the security agent running on the device. </param>
+        /// <param name="deviceType"> The type of the device. </param>
+        /// <param name="vendor"> The vendor of the device. </param>
+        /// <param name="edgeId"> The ID of the edge device. </param>
+        /// <param name="macAddress"> The MAC address of the device. </param>
+        /// <param name="model"> The model of the device. </param>
+        /// <param name="serialNumber"> The serial number of the device. </param>
+        /// <param name="firmwareVersion"> The firmware version of the device. </param>
+        /// <param name="operatingSystem"> The operating system of the device. </param>
+        /// <param name="iotHubEntityId"> The AzureResource entity id of the IoT Hub. </param>
+        /// <param name="hostEntityId"> The Host entity id of this device. </param>
+        /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
+        /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
+        /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIotDeviceEntity" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence, IEnumerable<string> protocols)
+        {
+            return SecurityInsightsIotDeviceEntity(id: id, name: name, resourceType: resourceType, systemData: systemData, additionalData: additionalData, friendlyName: friendlyName, deviceId: deviceId, deviceName: deviceName, source: source, iotSecurityAgentId: iotSecurityAgentId, deviceType: deviceType, vendor: vendor, edgeId: edgeId, macAddress: macAddress, model: model, serialNumber: serialNumber, firmwareVersion: firmwareVersion, operatingSystem: operatingSystem, iotHubEntityId: iotHubEntityId, hostEntityId: hostEntityId, ipAddressEntityId: ipAddressEntityId, threatIntelligence: threatIntelligence, protocols: protocols, owners: default, nicEntityIds: default, site: default, zone: default, sensor: default, deviceSubType: default, importance: default, purdueLayer: default, isAuthorized: default, isProgramming: default, isScanner: default);
         }
     }
 }

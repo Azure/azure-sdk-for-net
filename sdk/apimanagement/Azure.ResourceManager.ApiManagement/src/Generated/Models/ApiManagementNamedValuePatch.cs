@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
+        [WirePath("properties.tags")]
         public IList<string> Tags { get; }
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
+        [WirePath("properties.secret")]
         public bool? IsSecret { get; set; }
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. </summary>
+        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> KeyVault location details of the namedValue. </summary>
+        [WirePath("properties.keyVault")]
         public KeyVaultContractCreateProperties KeyVault { get; set; }
     }
 }

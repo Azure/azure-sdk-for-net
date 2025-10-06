@@ -1,0 +1,7 @@
+﻿{
+    "location": "__Location__",
+    "properties": {
+        "migrateProjectId": "__MigrateProjectId__"
+    },
+    "tags": { "Testing": "CreateSapDiscoverySite" }
+}

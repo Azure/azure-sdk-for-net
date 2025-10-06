@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Unit of the usage. e.g. count. </summary>
+    /// <summary>
+    /// Unit of the usage. e.g. count.
+    /// Serialized Name: ResourceUsageUnit
+    /// </summary>
     public readonly partial struct CdnUsageUnit : IEquatable<CdnUsageUnit>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CountValue = "count";
 
-        /// <summary> count. </summary>
+        /// <summary>
+        /// count
+        /// Serialized Name: ResourceUsageUnit.count
+        /// </summary>
         public static CdnUsageUnit Count { get; } = new CdnUsageUnit(CountValue);
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are the same. </summary>
         public static bool operator ==(CdnUsageUnit left, CdnUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(CdnUsageUnit left, CdnUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CdnUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CdnUsageUnit"/>. </summary>
         public static implicit operator CdnUsageUnit(string value) => new CdnUsageUnit(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -87,16 +86,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Recurrence schedule for the maintenance window. </summary>
+        [WirePath("schedule")]
         public ContainerServiceMaintenanceSchedule Schedule { get; set; }
         /// <summary> Length of maintenance window range from 4 to 24 hours. </summary>
+        [WirePath("durationHours")]
         public int DurationHours { get; set; }
         /// <summary> The UTC offset in format +/-HH:mm. For example, '+05:30' for IST and '-07:00' for PST. If not specified, the default is '+00:00'. </summary>
+        [WirePath("utcOffset")]
         public string UtcOffset { get; set; }
         /// <summary> The date the maintenance window activates. If the current date is before this date, the maintenance window is inactive and will not be used for upgrades. If not specified, the maintenance window will be active right away. </summary>
+        [WirePath("startDate")]
         public string StartDate { get; set; }
         /// <summary> The start time of the maintenance window. Accepted values are from '00:00' to '23:59'. 'utcOffset' applies to this field. For example: '02:00' with 'utcOffset: +02:00' means UTC time '00:00'. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary> Date ranges on which upgrade is not allowed. 'utcOffset' applies to this field. For example, with 'utcOffset: +02:00' and 'dateSpan' being '2022-12-23' to '2023-01-03', maintenance will be blocked from '2022-12-22 22:00' to '2023-01-03 22:00' in UTC time. </summary>
+        [WirePath("notAllowedDates")]
         public IList<ContainerServiceDateSpan> NotAllowedDates { get; }
     }
 }

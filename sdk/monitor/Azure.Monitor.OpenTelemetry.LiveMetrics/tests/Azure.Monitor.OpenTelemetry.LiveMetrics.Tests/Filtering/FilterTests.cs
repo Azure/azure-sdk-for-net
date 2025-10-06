@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
     using Xunit;
 
@@ -27,18 +28,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         [Fact]
         public void FilterThrowsWhenComparandIsNull()
         {
-            // ARRANGE
-            var equalsValue = new FilterInfo("BooleanField", FilterInfoPredicate.Equal, null);
-
-            // ACT, ASSERT
-            Assert.Throws<ArgumentNullException>(() => new Filter<DocumentMock>(equalsValue));
+            Assert.Throws<ArgumentNullException>(() => new FilterInfo("BooleanField", PredicateType.Equal, null));
         }
 
         [Fact]
         public void FilterThrowsWhenFieldNameIsEmpty()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo(string.Empty, FilterInfoPredicate.Equal, "abc");
+            var equalsValue = new FilterInfo(string.Empty, PredicateType.Equal, "abc");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentNullException>(() => new Filter<DocumentMock>(equalsValue));
@@ -48,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterThrowsWhenFieldNameDoesNotExistInType()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NonExistentFieldName", FilterInfoPredicate.Equal, "abc");
+            var equalsValue = new FilterInfo("NonExistentFieldName", PredicateType.Equal, "abc");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -63,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterBooleanEqual()
         {
             // ARRANGE
-            var equalsTrue = new FilterInfo("BooleanField", FilterInfoPredicate.Equal, "true");
+            var equalsTrue = new FilterInfo("BooleanField", PredicateType.Equal, "true");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsTrue).Check(new DocumentMock() { BooleanField = true });
@@ -78,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterBooleanNotEqual()
         {
             // ARRANGE
-            var notEqualTrue = new FilterInfo("BooleanField", FilterInfoPredicate.NotEqual, "true");
+            var notEqualTrue = new FilterInfo("BooleanField", PredicateType.NotEqual, "true");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(notEqualTrue).Check(new DocumentMock() { BooleanField = true });
@@ -98,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         [InlineData(DoesNotContainValue)]
         public void FilterBoolean_InvalidPredicates(string predicateString)
         {
-            FilterInfoPredicate? predicate = new FilterInfoPredicate(predicateString);
+            PredicateType predicate = new PredicateType(predicateString);
             // ARRANGE
             var equalsValue = new FilterInfo("BooleanField", predicate, "true");
 
@@ -110,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterBooleanGarbageComparand()
         {
             // ARRANGE
-            var notEqualTrue = new FilterInfo("BooleanField", FilterInfoPredicate.Equal, "garbage");
+            var notEqualTrue = new FilterInfo("BooleanField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(notEqualTrue));
@@ -124,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableBooleanEqual()
         {
             // ARRANGE
-            var equalsTrue = new FilterInfo("NullableBooleanField", FilterInfoPredicate.Equal, "true");
+            var equalsTrue = new FilterInfo("NullableBooleanField", PredicateType.Equal, "true");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsTrue).Check(new DocumentMock() { NullableBooleanField = true });
@@ -141,7 +138,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableBooleanNotEqual()
         {
             // ARRANGE
-            var notEqualTrue = new FilterInfo("NullableBooleanField", FilterInfoPredicate.NotEqual, "true");
+            var notEqualTrue = new FilterInfo("NullableBooleanField", PredicateType.NotEqual, "true");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(notEqualTrue).Check(new DocumentMock() { NullableBooleanField = true });
@@ -163,7 +160,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         [InlineData(DoesNotContainValue)]
         public void FilterNullableBoolean_InvalidPredicates(string predicateString)
         {
-            FilterInfoPredicate? predicate = new FilterInfoPredicate(predicateString);
+            PredicateType predicate = new PredicateType(predicateString);
             // ARRANGE
             var equalsValue = new FilterInfo("NullableBooleanField", predicate, "true");
 
@@ -175,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableBooleanGarbageComparand()
         {
             // ARRANGE
-            var notEqualTrue = new FilterInfo("NullableBooleanField", FilterInfoPredicate.Equal, "garbage");
+            var notEqualTrue = new FilterInfo("NullableBooleanField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(notEqualTrue));
@@ -188,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.Equal, "123.0");
+            var equalsValue = new FilterInfo("IntField", PredicateType.Equal, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 123 });
@@ -203,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.NotEqual, "123.0");
+            var equalsValue = new FilterInfo("IntField", PredicateType.NotEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 123 });
@@ -218,7 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.GreaterThan, "123.0");
+            var equalsValue = new FilterInfo("IntField", PredicateType.GreaterThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 122 });
@@ -235,7 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.LessThan, "123.0");
+            var equalsValue = new FilterInfo("IntField", PredicateType.LessThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 122 });
@@ -252,7 +249,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.GreaterThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("IntField", PredicateType.GreaterThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 122 });
@@ -269,7 +266,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.LessThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("IntField", PredicateType.LessThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 122 });
@@ -286,7 +283,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.Contains, "2");
+            var equalsValue = new FilterInfo("IntField", PredicateType.Contains, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 152 });
@@ -301,7 +298,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.DoesNotContain, "2");
+            var equalsValue = new FilterInfo("IntField", PredicateType.DoesNotContain, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { IntField = 152 });
@@ -316,7 +313,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterIntGarbageComparand()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("IntField", FilterInfoPredicate.Equal, "garbage");
+            var equalsValue = new FilterInfo("IntField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -330,7 +327,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.Equal, "123.0");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.Equal, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 123 });
@@ -347,7 +344,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.NotEqual, "123.0");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.NotEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 123 });
@@ -364,7 +361,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.GreaterThan, "123.0");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.GreaterThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 122 });
@@ -383,7 +380,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.LessThan, "123.0");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.LessThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 122 });
@@ -402,7 +399,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.GreaterThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.GreaterThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 122 });
@@ -421,7 +418,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.LessThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.LessThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 122 });
@@ -440,7 +437,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.Contains, "2");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.Contains, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 152 });
@@ -457,7 +454,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.DoesNotContain, "2");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.DoesNotContain, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableIntField = 152 });
@@ -474,7 +471,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableIntGarbageComparand()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableIntField", FilterInfoPredicate.Equal, "garbage");
+            var equalsValue = new FilterInfo("NullableIntField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -488,7 +485,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.Equal, "123.0");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.Equal, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 123 });
@@ -503,7 +500,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.NotEqual, "123.0");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.NotEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 123 });
@@ -518,7 +515,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.GreaterThan, "123.0");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.GreaterThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 122.5 });
@@ -535,7 +532,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.LessThan, "123.0");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.LessThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 122.5 });
@@ -552,7 +549,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.GreaterThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.GreaterThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 122.5 });
@@ -569,7 +566,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.LessThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.LessThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 122.5 });
@@ -586,7 +583,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.Contains, "2");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.Contains, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 157.2 });
@@ -601,7 +598,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.DoesNotContain, "2");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.DoesNotContain, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { DoubleField = 157.2 });
@@ -616,7 +613,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDoubleGarbageComparand()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.Equal, "garbage");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -630,7 +627,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableNullableDoubleEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.Equal, "123.0");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.Equal, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 123 });
@@ -647,7 +644,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.NotEqual, "123.0");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.NotEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 123 });
@@ -664,7 +661,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.GreaterThan, "123.0");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.GreaterThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 122.5 });
@@ -683,7 +680,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.LessThan, "123.0");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.LessThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 122.5 });
@@ -702,7 +699,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.GreaterThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.GreaterThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 122.5 });
@@ -721,7 +718,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.LessThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.LessThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 122.5 });
@@ -740,7 +737,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.Contains, "2");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.Contains, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 157.2 });
@@ -757,7 +754,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.DoesNotContain, "2");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.DoesNotContain, "2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableDoubleField = 157.2 });
@@ -774,7 +771,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableDoubleGarbageComparand()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableDoubleField", FilterInfoPredicate.Equal, "garbage");
+            var equalsValue = new FilterInfo("NullableDoubleField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -788,7 +785,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.Equal, "123");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.Equal, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { TimeSpanField = TimeSpan.Parse("123", CultureInfo.InvariantCulture) });
@@ -803,7 +800,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.NotEqual, "123");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.NotEqual, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { TimeSpanField = TimeSpan.Parse("123", CultureInfo.InvariantCulture) });
@@ -818,7 +815,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.GreaterThan, "123");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.GreaterThan, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { TimeSpanField = TimeSpan.Parse("122.05:00", CultureInfo.InvariantCulture) });
@@ -835,7 +832,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.LessThan, "123");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.LessThan, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { TimeSpanField = TimeSpan.Parse("122.05:00", CultureInfo.InvariantCulture) });
@@ -852,7 +849,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.GreaterThanOrEqual, "123");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.GreaterThanOrEqual, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { TimeSpanField = TimeSpan.Parse("122.05:00", CultureInfo.InvariantCulture) });
@@ -869,7 +866,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.LessThanOrEqual, "123");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.LessThanOrEqual, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { TimeSpanField = TimeSpan.Parse("122.05:00", CultureInfo.InvariantCulture) });
@@ -886,7 +883,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.Contains, "2");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.Contains, "2");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -896,7 +893,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("TimeSpanField", FilterInfoPredicate.DoesNotContain, "2");
+            var equalsValue = new FilterInfo("TimeSpanField", PredicateType.DoesNotContain, "2");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -906,12 +903,26 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterTimeSpanGarbageComparand()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("DoubleField", FilterInfoPredicate.Equal, "garbage");
+            var equalsValue = new FilterInfo("DoubleField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
         }
 
+        [Fact]
+        public void FilterDurationAsString()
+        {
+            // ARRANGE
+            var equalsValue = new FilterInfo("Duration", PredicateType.Equal, "123");
+
+            // ACT
+            bool result1 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("123", CultureInfo.InvariantCulture).ToString()));
+            bool result2 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("124", CultureInfo.InvariantCulture).ToString()));
+
+            // ASSERT
+            Assert.True(result1);
+            Assert.False(result2);
+        }
         #endregion
 
         #region String
@@ -920,7 +931,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.Equal, "abc");
+            var equalsValue = new FilterInfo("StringField", PredicateType.Equal, "abc");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "abc" });
@@ -937,7 +948,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.NotEqual, "abc");
+            var equalsValue = new FilterInfo("StringField", PredicateType.NotEqual, "abc");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "abc" });
@@ -954,7 +965,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.GreaterThan, "123.0");
+            var equalsValue = new FilterInfo("StringField", PredicateType.GreaterThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "122.5" });
@@ -971,7 +982,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.LessThan, "123.0");
+            var equalsValue = new FilterInfo("StringField", PredicateType.LessThan, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "122.5" });
@@ -988,7 +999,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.GreaterThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("StringField", PredicateType.GreaterThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "122.5" });
@@ -1005,7 +1016,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.LessThanOrEqual, "123.0");
+            var equalsValue = new FilterInfo("StringField", PredicateType.LessThanOrEqual, "123.0");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "122.5" });
@@ -1022,7 +1033,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.Contains, "abc");
+            var equalsValue = new FilterInfo("StringField", PredicateType.Contains, "abc");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "1abc2" });
@@ -1039,7 +1050,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.DoesNotContain, "abc");
+            var equalsValue = new FilterInfo("StringField", PredicateType.DoesNotContain, "abc");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "1abc2" });
@@ -1056,7 +1067,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringGarbageFieldValue()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.LessThan, "123.0");
+            var equalsValue = new FilterInfo("StringField", PredicateType.LessThan, "123.0");
 
             // ACT
             bool result = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { StringField = "Not at all a number" });
@@ -1069,7 +1080,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterStringGarbageComparandValue()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("StringField", FilterInfoPredicate.LessThan, "Not a number at all");
+            var equalsValue = new FilterInfo("StringField", PredicateType.LessThan, "Not a number at all");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -1083,7 +1094,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.Equal, "http://microsoft.com/a");
+            var equalsValue = new FilterInfo("UriField", PredicateType.Equal, "http://microsoft.com/a");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { UriField = new Uri("http://microsoft.com/a") });
@@ -1100,7 +1111,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.NotEqual, "http://microsoft.com/a");
+            var equalsValue = new FilterInfo("UriField", PredicateType.NotEqual, "http://microsoft.com/a");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { UriField = new Uri("http://microsoft.com/a") });
@@ -1117,7 +1128,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.GreaterThan, "http://microsoft.com/a");
+            var equalsValue = new FilterInfo("UriField", PredicateType.GreaterThan, "http://microsoft.com/a");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -1127,7 +1138,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.LessThan, "http://microsoft.com/a");
+            var equalsValue = new FilterInfo("UriField", PredicateType.LessThan, "http://microsoft.com/a");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -1137,7 +1148,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.LessThanOrEqual, "http://microsoft.com/a");
+            var equalsValue = new FilterInfo("UriField", PredicateType.LessThanOrEqual, "http://microsoft.com/a");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -1147,7 +1158,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.GreaterThanOrEqual, "http://microsoft.com/a");
+            var equalsValue = new FilterInfo("UriField", PredicateType.GreaterThanOrEqual, "http://microsoft.com/a");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -1157,7 +1168,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.Contains, "microsoft");
+            var equalsValue = new FilterInfo("UriField", PredicateType.Contains, "microsoft");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { UriField = new Uri("http://microsoft.com/a") });
@@ -1174,7 +1185,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.DoesNotContain, "microsoft");
+            var equalsValue = new FilterInfo("UriField", PredicateType.DoesNotContain, "microsoft");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { UriField = new Uri("http://microsoft.com/a") });
@@ -1191,8 +1202,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriGarbageFieldValue()
         {
             // ARRANGE
-            var doesNotContainValue = new FilterInfo("UriField", FilterInfoPredicate.Contains, "microsoft");
-            var containsValue = new FilterInfo("UriField", FilterInfoPredicate.Contains, string.Empty);
+            var doesNotContainValue = new FilterInfo("UriField", PredicateType.Contains, "microsoft");
+            var containsValue = new FilterInfo("UriField", PredicateType.Contains, string.Empty);
 
             // ACT
             bool result1 = new Filter<DocumentMock>(doesNotContainValue).Check(new DocumentMock() { UriField = null });
@@ -1207,7 +1218,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterUriGarbageComparandValue()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("UriField", FilterInfoPredicate.Contains, "Not at all a URI");
+            var equalsValue = new FilterInfo("UriField", PredicateType.Contains, "Not at all a URI");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { UriField = new Uri("http://microsoft.com/a") });
@@ -1224,7 +1235,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.Equal, "Value1");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.Equal, "Value1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1239,7 +1250,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.NotEqual, "Value1");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.NotEqual, "Value1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1254,7 +1265,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.GreaterThan, "Value2");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.GreaterThan, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1271,7 +1282,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.LessThan, "Value2");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.LessThan, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1288,7 +1299,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.GreaterThanOrEqual, "Value2");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.GreaterThanOrEqual, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1305,7 +1316,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.LessThanOrEqual, "Value2");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.LessThanOrEqual, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1322,7 +1333,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.Contains, "1");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.Contains, "1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1337,7 +1348,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.DoesNotContain, "1");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.DoesNotContain, "1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { EnumField = DocumentMock.EnumType.Value1 });
@@ -1352,7 +1363,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterEnumGarbageComparand()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("EnumField", FilterInfoPredicate.Equal, "garbage");
+            var equalsValue = new FilterInfo("EnumField", PredicateType.Equal, "garbage");
 
             // ACT, ASSERT
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
@@ -1366,7 +1377,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.Equal, "Value1");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.Equal, "Value1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1383,7 +1394,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumNotEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.NotEqual, "Value1");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.NotEqual, "Value1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1400,7 +1411,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumGreaterThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.GreaterThan, "Value2");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.GreaterThan, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1419,7 +1430,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumLessThan()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.LessThan, "Value2");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.LessThan, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1438,7 +1449,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumGreaterThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.GreaterThanOrEqual, "Value2");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.GreaterThanOrEqual, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1457,7 +1468,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumLessThanOrEqual()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.LessThanOrEqual, "Value2");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.LessThanOrEqual, "Value2");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1476,7 +1487,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumContains()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.Contains, "1");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.Contains, "1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1493,7 +1504,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterNullableEnumDoesNotContain()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("NullableEnumField", FilterInfoPredicate.DoesNotContain, "1");
+            var equalsValue = new FilterInfo("NullableEnumField", PredicateType.DoesNotContain, "1");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { NullableEnumField = DocumentMock.EnumType.Value1 });
@@ -1508,14 +1519,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
 
         #endregion
 
-        //TODO: Removed TelemetryContext related tests. Confirm they are not needed.
-
         #region Custom dimensions
-        [Fact(Skip = "CustomDimensions not working yet.")]
+        [Fact]
         public void FilterCustomDimensions()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("CustomDimensions.Dimension.1", FilterInfoPredicate.Equal, "abc");
+            var equalsValue = new FilterInfo("CustomDimensions.Dimension.1", PredicateType.Equal, "abc");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Dimension.1", "abc") }));
@@ -1532,7 +1541,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterCustomMetrics()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("CustomMetrics.Metric.1", FilterInfoPredicate.Equal, "1.5");
+            var equalsValue = new FilterInfo("CustomMetrics.Metric.1", PredicateType.Equal, "1.5");
 
             // ACT
             bool result1 = new Filter<DocumentMock>(equalsValue).Check(new DocumentMock() { Metrics = { ["Metric.1"] = 1.5d } });
@@ -1558,8 +1567,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             {
                 try
                 {
-                    FilterInfoPredicate filterInfoPredicate = new FilterInfoPredicate(predicate.ToString());
-                    new Filter<DocumentMock>(new FilterInfo("*", filterInfoPredicate, "123"));
+                    PredicateType PredicateType = new PredicateType(predicate.ToString());
+                    new Filter<DocumentMock>(new FilterInfo("*", PredicateType, "123"));
 
                     acceptedPredicates.Add(predicate);
                 }
@@ -1578,7 +1587,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterAsteriskPropertyContains()
         {
             // ARRANGE
-            var filterInfo = new FilterInfo("*", FilterInfoPredicate.Contains, "123");
+            var filterInfo = new FilterInfo("*", PredicateType.Contains, "123");
             Filter<DocumentMock> filter = new Filter<DocumentMock>(filterInfo);
 
             // ACT
@@ -1612,7 +1621,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterAsteriskPropertyDoesNotContain()
         {
             // ARRANGE
-            var filterInfo = new FilterInfo("*", FilterInfoPredicate.DoesNotContain, "123");
+            var filterInfo = new FilterInfo("*", PredicateType.DoesNotContain, "123");
             Filter<DocumentMock> filter = new Filter<DocumentMock>(filterInfo);
 
             // ACT
@@ -1642,23 +1651,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.True(result9);
         }
 
-        [Fact(Skip = "Asterisk CustomDimensions not working yet.")]
+        [Fact]
         public void FilterAsteriskCustomDimensionContains()
         {
             // ARRANGE
-            var filterInfo = new FilterInfo("*", FilterInfoPredicate.Contains, "123");
+            var filterInfo = new FilterInfo("*", PredicateType.Contains, "123");
             Filter<DocumentMock> filter = new Filter<DocumentMock>(filterInfo);
 
             // ACT
             bool result1 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "1234") }));
             bool result2 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "12234") }));
-            bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) }));
+            // bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) })); // null is not supported in the new models.
             bool result4 = filter.Check(new DocumentMock());
 
             // ASSERT
             Assert.True(result1);
             Assert.False(result2);
-            Assert.False(result3);
+            //Assert.False(result3);
             Assert.False(result4);
         }
 
@@ -1666,7 +1675,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterAsteriskCustomMetricsContains()
         {
             // ARRANGE
-            var filterInfo = new FilterInfo("*", FilterInfoPredicate.Contains, "123");
+            var filterInfo = new FilterInfo("*", PredicateType.Contains, "123");
             Filter<DocumentMock> filter = new Filter<DocumentMock>(filterInfo);
 
             // ACT
@@ -1680,23 +1689,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.False(result3);
         }
 
-        [Fact(Skip = "Asterisk CustomDimensions not working yet.")]
+        [Fact]
         public void FilterAsteriskCustomDimensionDoesNotContain()
         {
             // ARRANGE
-            var filterInfo = new FilterInfo("*", FilterInfoPredicate.DoesNotContain, "123");
+            var filterInfo = new FilterInfo("*", PredicateType.DoesNotContain, "123");
             Filter<DocumentMock> filter = new Filter<DocumentMock>(filterInfo);
 
             // ACT
             bool result1 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "1234") }));
             bool result2 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "12234") }));
-            bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) }));
+            //bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) })); // null is not supported in the new models.
             bool result4 = filter.Check(new DocumentMock());
 
             // ASSERT
             Assert.False(result1);
             Assert.True(result2);
-            Assert.True(result3);
+            //Assert.True(result3);
             Assert.True(result4);
         }
 
@@ -1704,7 +1713,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterAsteriskCustomMetricsDoesNotContain()
         {
             // ARRANGE
-            var filterInfo = new FilterInfo("*", FilterInfoPredicate.DoesNotContain, "123");
+            var filterInfo = new FilterInfo("*", PredicateType.DoesNotContain, "123");
             Filter<DocumentMock> filter = new Filter<DocumentMock>(filterInfo);
 
             // ACT
@@ -1728,7 +1737,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterSupportsRequestTelemetry()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("Name", FilterInfoPredicate.Equal, "request name");
+            var equalsValue = new FilterInfo("Name", PredicateType.Equal, "request name");
 
             // ACT
             bool result = new Filter<Request>(equalsValue).Check(new Request() { Name = "request name" });
@@ -1738,5 +1747,35 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         }
 
         #endregion
+
+        [Fact]
+        public void GetFieldType_CorrectlyDiscoversNestedType()
+        {
+            // ARRANGE
+            string fieldName = "Parent.Child.GrandChild";
+
+            // ACT
+            Filter<DocumentMockWithNestedProperties>.FieldNameType fieldNameType;
+            Type result = Filter<DocumentMockWithNestedProperties>.GetFieldType(fieldName, out fieldNameType);
+
+            // ASSERT
+            Assert.Equal(typeof(string), result);
+            Assert.Equal(Filter<DocumentMockWithNestedProperties>.FieldNameType.FieldName, fieldNameType);
+        }
+
+        internal class DocumentMockWithNestedProperties : DocumentIngress
+        {
+            public ParentType Parent { get; set; } = new ParentType();
+
+            public class ParentType
+            {
+                public ChildType Child { get; set; } = new ChildType();
+
+                public class ChildType
+                {
+                    public string GrandChild { get; set; } = "TestValue";
+                }
+            }
+        }
     }
 }

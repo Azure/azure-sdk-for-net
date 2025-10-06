@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The minimum performance level per database. </summary>
+        [WirePath("limit")]
         public double? Limit { get; }
         /// <summary> Unit type used to measure performance level. </summary>
+        [WirePath("unit")]
         public PerformanceLevelUnit? Unit { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the list of Cognitive Services accounts and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CognitiveServicesAccountSku> Value { get; }
     }
 }

@@ -111,7 +111,7 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetPr
 Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateLedgerEntryAsync(RequestContent,string,RequestContext)">
+    <member name="CreateLedgerEntryAsync(RequestContent,string,string,RequestContext)">
       <example>
 This sample shows how to call CreateLedgerEntryAsync and parse the result.
 <code><![CDATA[
@@ -135,14 +135,42 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
+    preHooks = new object[]
+    {
+        new
+        {
+            functionId = "<functionId>",
+            properties = new
+            {
+                arguments = new object[]
+                {
+                    "<arguments>"
+                },
+                exportedFunctionName = "<exportedFunctionName>",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 1234L,
+                    max_execution_time_ms = 1234L,
+                    max_heap_bytes = 1234L,
+                    max_stack_bytes = 1234L,
+                    return_exception_details = true,
+                },
+            },
+        }
+    },
+    postHooks = new object[]
+    {
+        null
+    },
 });
-Response response = await client.CreateLedgerEntryAsync(content, collectionId: "<collectionId>");
+Response response = await client.CreateLedgerEntryAsync(content, collectionId: "<collectionId>", tags: "<tags>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateLedgerEntry(RequestContent,string,RequestContext)">
+    <member name="CreateLedgerEntry(RequestContent,string,string,RequestContext)">
       <example>
 This sample shows how to call CreateLedgerEntry and parse the result.
 <code><![CDATA[
@@ -166,8 +194,36 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
+    preHooks = new object[]
+    {
+        new
+        {
+            functionId = "<functionId>",
+            properties = new
+            {
+                arguments = new object[]
+                {
+                    "<arguments>"
+                },
+                exportedFunctionName = "<exportedFunctionName>",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 1234L,
+                    max_execution_time_ms = 1234L,
+                    max_heap_bytes = 1234L,
+                    max_stack_bytes = 1234L,
+                    return_exception_details = true,
+                },
+            },
+        }
+    },
+    postHooks = new object[]
+    {
+        null
+    },
 });
-Response response = client.CreateLedgerEntry(content, collectionId: "<collectionId>");
+Response response = client.CreateLedgerEntry(content, collectionId: "<collectionId>", tags: "<tags>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -197,6 +253,24 @@ Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("collectionId").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
 ]]></code></example>
     </member>
     <member name="GetLedgerEntry(string,string,RequestContext)">
@@ -223,6 +297,24 @@ Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("collectionId").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
 ]]></code></example>
     </member>
     <member name="GetReceiptAsync(string,RequestContext)">
@@ -246,6 +338,13 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 Response response = await client.GetReceiptAsync("<transactionId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("collectionId").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("contents").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("secretKey").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("protocol").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("claimsDigest").ToString());
@@ -282,6 +381,13 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 Response response = client.GetReceipt("<transactionId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("collectionId").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("contents").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("secretKey").ToString());
+Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("protocol").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("claimsDigest").ToString());
@@ -370,6 +476,24 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("collectionId").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
 ]]></code></example>
     </member>
     <member name="GetCurrentLedgerEntry(string,RequestContext)">
@@ -395,6 +519,24 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("collectionId").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteUserAsync(string,RequestContext)">
@@ -551,6 +693,1074 @@ Console.WriteLine(result.GetProperty("assignedRole").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 ]]></code></example>
     </member>
+    <member name="DeleteLedgerUserAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteLedgerUserAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.DeleteLedgerUserAsync("<userId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteLedgerUserAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.DeleteLedgerUserAsync("<userId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteLedgerUser(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteLedgerUser.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.DeleteLedgerUser("<userId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteLedgerUser with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.DeleteLedgerUser("<userId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetLedgerUserAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUserAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetLedgerUserAsync("<userId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code>
+This sample shows how to call GetLedgerUserAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetLedgerUserAsync("<userId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLedgerUser(string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUser and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetLedgerUser("<userId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code>
+This sample shows how to call GetLedgerUser with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetLedgerUser("<userId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateLedgerUserAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateLedgerUserAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRoles = new object[]
+    {
+        "Administrator"
+    },
+});
+Response response = await client.CreateOrUpdateLedgerUserAsync("<userId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateLedgerUserAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRoles = new object[]
+    {
+        "Administrator"
+    },
+});
+Response response = await client.CreateOrUpdateLedgerUserAsync("<userId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateLedgerUser(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateLedgerUser and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRoles = new object[]
+    {
+        "Administrator"
+    },
+});
+Response response = client.CreateOrUpdateLedgerUser("<userId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateLedgerUser with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRoles = new object[]
+    {
+        "Administrator"
+    },
+});
+Response response = client.CreateOrUpdateLedgerUser("<userId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+Console.WriteLine(result.GetProperty("userId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointAsync(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedEndpointAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("modules").ToString());
+]]></code>
+This sample shows how to call GetUserDefinedEndpointAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedEndpointAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("modules").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpoint(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpoint and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedEndpoint();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("modules").ToString());
+]]></code>
+This sample shows how to call GetUserDefinedEndpoint with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedEndpoint();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("authn_policies")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("forwarding_required").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_function").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_module").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("mode").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi_hidden").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("redirection_strategy").ToString());
+Console.WriteLine(result.GetProperty("modules").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedEndpointAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedEndpointAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        endpoints = new
+        {
+            key = new object(),
+        },
+    },
+    modules = new object(),
+});
+Response response = await client.CreateUserDefinedEndpointAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateUserDefinedEndpointAsync with all request content.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        endpoints = new
+        {
+            key = new
+            {
+                get = new
+                {
+                    authn_policies = new object[]
+                    {
+                        new object()
+                    },
+                    forwarding_required = "sometimes",
+                    interpreter_reuse = new
+                    {
+                        key = "<key>",
+                    },
+                    js_function = "<js_function>",
+                    js_module = "<js_module>",
+                    mode = "readwrite",
+                    openapi = new object(),
+                    openapi_hidden = true,
+                    redirection_strategy = "none",
+                },
+            },
+        },
+    },
+    modules = new object(),
+});
+Response response = await client.CreateUserDefinedEndpointAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedEndpoint(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedEndpoint.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        endpoints = new
+        {
+            key = new object(),
+        },
+    },
+    modules = new object(),
+});
+Response response = client.CreateUserDefinedEndpoint(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateUserDefinedEndpoint with all request content.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        endpoints = new
+        {
+            key = new
+            {
+                get = new
+                {
+                    authn_policies = new object[]
+                    {
+                        new object()
+                    },
+                    forwarding_required = "sometimes",
+                    interpreter_reuse = new
+                    {
+                        key = "<key>",
+                    },
+                    js_function = "<js_function>",
+                    js_module = "<js_module>",
+                    mode = "readwrite",
+                    openapi = new object(),
+                    openapi_hidden = true,
+                    redirection_strategy = "none",
+                },
+            },
+        },
+    },
+    modules = new object(),
+});
+Response response = client.CreateUserDefinedEndpoint(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetRuntimeOptionsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetRuntimeOptionsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetRuntimeOptionsAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetRuntimeOptionsAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetRuntimeOptionsAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRuntimeOptions(RequestContext)">
+      <example>
+This sample shows how to call GetRuntimeOptions and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetRuntimeOptions();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetRuntimeOptions with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetRuntimeOptions();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateRuntimeOptionsAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateRuntimeOptionsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateRuntimeOptionsAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call UpdateRuntimeOptionsAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    log_exception_details = true,
+    max_cached_interpreters = 1234L,
+    max_execution_time_ms = 1234L,
+    max_heap_bytes = 1234L,
+    max_stack_bytes = 1234L,
+    return_exception_details = true,
+});
+Response response = await client.UpdateRuntimeOptionsAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateRuntimeOptions(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateRuntimeOptions and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateRuntimeOptions(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call UpdateRuntimeOptions with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    log_exception_details = true,
+    max_cached_interpreters = 1234L,
+    max_execution_time_ms = 1234L,
+    max_heap_bytes = 1234L,
+    max_stack_bytes = 1234L,
+    return_exception_details = true,
+});
+Response response = client.UpdateRuntimeOptions(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointsModuleAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointsModuleAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedEndpointsModuleAsync("<moduleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetUserDefinedEndpointsModuleAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedEndpointsModuleAsync("<moduleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointsModule(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointsModule and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedEndpointsModule("<moduleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetUserDefinedEndpointsModule with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedEndpointsModule("<moduleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedFunctionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedFunctionAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.DeleteUserDefinedFunctionAsync("<functionId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteUserDefinedFunctionAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.DeleteUserDefinedFunctionAsync("<functionId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedFunction(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedFunction.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.DeleteUserDefinedFunction("<functionId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteUserDefinedFunction with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.DeleteUserDefinedFunction("<functionId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunctionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedFunctionAsync("<functionId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code>
+This sample shows how to call GetUserDefinedFunctionAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedFunctionAsync("<functionId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunction(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunction and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedFunction("<functionId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code>
+This sample shows how to call GetUserDefinedFunction with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedFunction("<functionId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedFunctionAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedFunctionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    code = "<code>",
+});
+Response response = await client.CreateUserDefinedFunctionAsync("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code>
+This sample shows how to call CreateUserDefinedFunctionAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    code = "<code>",
+});
+Response response = await client.CreateUserDefinedFunctionAsync("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedFunction(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedFunction and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    code = "<code>",
+});
+Response response = client.CreateUserDefinedFunction("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code>
+This sample shows how to call CreateUserDefinedFunction with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    code = "<code>",
+});
+Response response = client.CreateUserDefinedFunction("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="ExecuteUserDefinedFunctionAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ExecuteUserDefinedFunctionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = null;
+Response response = await client.ExecuteUserDefinedFunctionAsync("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call ExecuteUserDefinedFunctionAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    arguments = new object[]
+    {
+        "<arguments>"
+    },
+    exportedFunctionName = "<exportedFunctionName>",
+    runtimeOptions = new
+    {
+        log_exception_details = true,
+        max_cached_interpreters = 1234L,
+        max_execution_time_ms = 1234L,
+        max_heap_bytes = 1234L,
+        max_stack_bytes = 1234L,
+        return_exception_details = true,
+    },
+});
+Response response = await client.ExecuteUserDefinedFunctionAsync("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("returnValue").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="ExecuteUserDefinedFunction(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ExecuteUserDefinedFunction and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = null;
+Response response = client.ExecuteUserDefinedFunction("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call ExecuteUserDefinedFunction with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    arguments = new object[]
+    {
+        "<arguments>"
+    },
+    exportedFunctionName = "<exportedFunctionName>",
+    runtimeOptions = new
+    {
+        log_exception_details = true,
+        max_cached_interpreters = 1234L,
+        max_execution_time_ms = 1234L,
+        max_heap_bytes = 1234L,
+        max_stack_bytes = 1234L,
+        return_exception_details = true,
+    },
+});
+Response response = client.ExecuteUserDefinedFunction("<functionId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("returnValue").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedRoleAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedRoleAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedRoleAsync("<roleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code>
+This sample shows how to call GetUserDefinedRoleAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.GetUserDefinedRoleAsync("<roleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("roleName").ToString());
+Console.WriteLine(result[0].GetProperty("roleActions")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedRole(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedRole and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedRole("<roleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code>
+This sample shows how to call GetUserDefinedRole with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.GetUserDefinedRole("<roleName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("roleName").ToString());
+Console.WriteLine(result[0].GetProperty("roleActions")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedRoleAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedRoleAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new object()
+});
+Response response = await client.CreateUserDefinedRoleAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateUserDefinedRoleAsync with all request content.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        roleName = "<roleName>",
+        roleActions = new object[]
+        {
+            "<roleActions>"
+        },
+    }
+});
+Response response = await client.CreateUserDefinedRoleAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedRole(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedRole.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new object()
+});
+Response response = client.CreateUserDefinedRole(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateUserDefinedRole with all request content.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        roleName = "<roleName>",
+        roleActions = new object[]
+        {
+            "<roleActions>"
+        },
+    }
+});
+Response response = client.CreateUserDefinedRole(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateUserDefinedRoleAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateUserDefinedRoleAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new object()
+});
+Response response = await client.UpdateUserDefinedRoleAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdateUserDefinedRoleAsync with all request content.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        roleName = "<roleName>",
+        roleActions = new object[]
+        {
+            "<roleActions>"
+        },
+    }
+});
+Response response = await client.UpdateUserDefinedRoleAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateUserDefinedRole(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateUserDefinedRole.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new object()
+});
+Response response = client.UpdateUserDefinedRole(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdateUserDefinedRole with all request content.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        roleName = "<roleName>",
+        roleActions = new object[]
+        {
+            "<roleActions>"
+        },
+    }
+});
+Response response = client.UpdateUserDefinedRole(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedRoleAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedRoleAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.DeleteUserDefinedRoleAsync("<roleName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteUserDefinedRoleAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = await client.DeleteUserDefinedRoleAsync("<roleName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedRole(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedRole.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.DeleteUserDefinedRole("<roleName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteUserDefinedRole with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+Response response = client.DeleteUserDefinedRole("<roleName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
     <member name="GetConsortiumMembersAsync(RequestContext)">
       <example>
 This sample shows how to call GetConsortiumMembersAsync and parse the result.
@@ -655,7 +1865,7 @@ foreach (BinaryData item in client.GetCollections())
 }
 ]]></code></example>
     </member>
-    <member name="GetLedgerEntriesAsync(string,string,string,RequestContext)">
+    <member name="GetLedgerEntriesAsync(string,string,string,string,RequestContext)">
       <example>
 This sample shows how to call GetLedgerEntriesAsync and parse the result.
 <code><![CDATA[
@@ -673,16 +1883,34 @@ This sample shows how to call GetLedgerEntriesAsync with all parameters and pars
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
+await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>", tag: "<tag>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("contents").ToString());
     Console.WriteLine(result.GetProperty("collectionId").ToString());
     Console.WriteLine(result.GetProperty("transactionId").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
 }
 ]]></code></example>
     </member>
-    <member name="GetLedgerEntries(string,string,string,RequestContext)">
+    <member name="GetLedgerEntries(string,string,string,string,RequestContext)">
       <example>
 This sample shows how to call GetLedgerEntries and parse the result.
 <code><![CDATA[
@@ -700,12 +1928,186 @@ This sample shows how to call GetLedgerEntries with all parameters and parse the
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
+foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>", tag: "<tag>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("contents").ToString());
     Console.WriteLine(result.GetProperty("collectionId").ToString());
     Console.WriteLine(result.GetProperty("transactionId").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+    Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+    Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUsersAsync(RequestContext)">
+      <example>
+This sample shows how to call GetUsersAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+await foreach (BinaryData item in client.GetUsersAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRole").ToString());
+}
+]]></code>
+This sample shows how to call GetUsersAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+await foreach (BinaryData item in client.GetUsersAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRole").ToString());
+    Console.WriteLine(result.GetProperty("userId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUsers(RequestContext)">
+      <example>
+This sample shows how to call GetUsers and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+foreach (BinaryData item in client.GetUsers())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRole").ToString());
+}
+]]></code>
+This sample shows how to call GetUsers with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+foreach (BinaryData item in client.GetUsers())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRole").ToString());
+    Console.WriteLine(result.GetProperty("userId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerUsersAsync(RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUsersAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+await foreach (BinaryData item in client.GetLedgerUsersAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+}
+]]></code>
+This sample shows how to call GetLedgerUsersAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+await foreach (BinaryData item in client.GetLedgerUsersAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+    Console.WriteLine(result.GetProperty("userId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerUsers(RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUsers and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+foreach (BinaryData item in client.GetLedgerUsers())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+}
+]]></code>
+This sample shows how to call GetLedgerUsers with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+foreach (BinaryData item in client.GetLedgerUsers())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+    Console.WriteLine(result.GetProperty("userId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctionsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunctionsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("code").ToString());
+}
+]]></code>
+This sample shows how to call GetUserDefinedFunctionsAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctions(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunctions and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+foreach (BinaryData item in client.GetUserDefinedFunctions())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("code").ToString());
+}
+]]></code>
+This sample shows how to call GetUserDefinedFunctions with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+foreach (BinaryData item in client.GetUserDefinedFunctions())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code></example>
     </member>

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+// Ignore Spelling: Checkpointing Rebalancing
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Tests;
@@ -185,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(1))));
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo("123:1:11", 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(1))));
             partitionContext.ProcessorHost = processor.Object;
 
             var loggerMock = new Mock<ILogger>();
@@ -239,7 +242,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo("123", 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
             partitionContext.ProcessorHost = processor.Object;
 
             var loggerMock = new Mock<ILogger>();
@@ -291,7 +294,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo("123", 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
             partitionContext.ProcessorHost = processor.Object;
 
             // Because the first invocation will allow a partial batch due to the old checkpoint,
@@ -335,6 +338,97 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.NotNull(eventProcessor.CachedEventsManager);
             Assert.AreEqual(eventProcessor.CachedEventsManager.CachedEvents.Count, 0);
+        }
+
+        [TestCase(1)]
+        [TestCase(4)]
+        [TestCase(8)]
+        [TestCase(32)]
+        [TestCase(128)]
+        public async Task ProcessEvents_SingleDispatch_RespectsDisabledCheckpointing(int batchCheckpointFrequency)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions
+            {
+                EnableCheckpointing = false,
+                BatchCheckpointFrequency = batchCheckpointFrequency
+            };
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default, default);
+
+            for (int i = 0; i < 100; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
+
+                // This value should never be set.
+                Assert.False(partitionContext.PartitionContext.IsCheckpointingAfterInvocation);
+            }
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
+            processor.Verify(
+                p => p.CheckpointAsync(It.IsAny<string>(), It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [TestCase(1)]
+        [TestCase(4)]
+        [TestCase(8)]
+        [TestCase(32)]
+        [TestCase(128)]
+        public async Task ProcessEvents_MultipleDispatch_RespectsDisabledCheckpointing(int batchCheckpointFrequency)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions
+            {
+                EnableCheckpointing = false,
+                BatchCheckpointFrequency = batchCheckpointFrequency
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default, default);
+
+            for (int i = 0; i < 100; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData(new byte[0]), new EventData(new byte[0]), new EventData(new byte[0]) };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
+
+                // This value should never be set.
+                Assert.False(partitionContext.PartitionContext.IsCheckpointingAfterInvocation);
+            }
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
+            processor.Verify(
+                p => p.CheckpointAsync(It.IsAny<string>(), It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -611,7 +705,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public async Task ProcessErrorsAsync_LoggedAsError()
         {
-            var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
+            var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc");
             var options = new EventHubOptions();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
@@ -629,7 +723,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public async Task ProcessErrorsAsync_RebalancingExceptions_LoggedAsInformation()
         {
-            var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
+            var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc");
             var options = new EventHubOptions();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");

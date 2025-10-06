@@ -47,26 +47,6 @@ namespace Azure.Storage
         public Uri StorageAccountFileUri => new Uri(TestConfigurations.DefaultTargetTenant.FileServiceEndpoint);
 
         /// <summary>
-        /// Get an Active Directory Tenant ID to use from our test settings.
-        /// </summary>
-        public string ActiveDirectoryTenantId => TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryTenantId;
-
-        /// <summary>
-        /// Get an Active Directory Application ID to use from our test settings.
-        /// </summary>
-        public string ActiveDirectoryApplicationId => TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryApplicationId;
-
-        /// <summary>
-        /// Get an Active Directory Application Secret to use from our test settings.
-        /// </summary>
-        public string ActiveDirectoryApplicationSecret => TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryApplicationSecret;
-
-        /// <summary>
-        /// Get an Active Directory Auth Endpoint to use from our test settings.
-        /// </summary>
-        public Uri ActiveDirectoryAuthEndpoint => new Uri(TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryAuthEndpoint);
-
-        /// <summary>
         /// Get a blob endpoint associated with our AD application from our test settings.
         /// </summary>
         public Uri ActiveDirectoryBlobUri => new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint);

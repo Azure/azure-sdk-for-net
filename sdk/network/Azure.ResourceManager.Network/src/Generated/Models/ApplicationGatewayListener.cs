@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -49,10 +47,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Frontend IP configuration resource of an application gateway. </summary>
         internal WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.frontendIPConfiguration.id")]
         public ResourceIdentifier FrontendIPConfigurationId
         {
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Frontend port resource of an application gateway. </summary>
         internal WritableSubResource FrontendPort { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.frontendPort.id")]
         public ResourceIdentifier FrontendPortId
         {
             get => FrontendPort is null ? default : FrontendPort.Id;
@@ -79,10 +80,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Protocol of the listener. </summary>
+        [WirePath("properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> SSL certificate resource of an application gateway. </summary>
         internal WritableSubResource SslCertificate { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.sslCertificate.id")]
         public ResourceIdentifier SslCertificateId
         {
             get => SslCertificate is null ? default : SslCertificate.Id;
@@ -97,6 +100,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> SSL profile resource of the application gateway. </summary>
         internal WritableSubResource SslProfile { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.sslProfile.id")]
         public ResourceIdentifier SslProfileId
         {
             get => SslProfile is null ? default : SslProfile.Id;
@@ -109,8 +113,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the listener resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> List of Server Name Indications(SNI) for TLS Multi-site Listener that allows special wildcard characters as well. </summary>
+        [WirePath("properties.hostNames")]
         public IList<string> HostNames { get; }
     }
 }

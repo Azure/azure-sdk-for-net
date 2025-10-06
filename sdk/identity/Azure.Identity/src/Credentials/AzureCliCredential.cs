@@ -28,6 +28,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
+        internal const string ClaimsChallengeLoginFormat = "Azure CLI authentication requires multi-factor authentication or additional claims. Please run '{0}' to re-authenticate with the required claims. After completing login, retry the operation.";
         internal TimeSpan ProcessTimeout { get; private set; }
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
@@ -48,6 +49,7 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
+        internal string Subscription { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal bool _isChainedCredential;
         internal TenantIdResolverBase TenantIdResolver { get; }
@@ -75,6 +77,7 @@ namespace Azure.Identity
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
             TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
+            Subscription = options?.Subscription;
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
@@ -84,9 +87,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -95,9 +99,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure CLI service, using the access token to authenticate. This method id called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -114,7 +119,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 
@@ -126,9 +131,23 @@ namespace Azure.Identity
             Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
             ScopeUtilities.ValidateScope(resource);
 
-            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
+            // The Azure CLI cannot automatically satisfy an MFA or other claims challenge during non-interactive token acquisition.
+            // When a claims challenge is present we surface an AuthenticationFailedException instructing the user to re-authenticate
+            // with the provided claims using 'az login --claims-challenge'. This mirrors the cross-language guidance for CLI based auth.
+            // We purposefully do NOT translate this into a CredentialUnavailableException (even when part of a chain) so that callers
+            // receive the claims challenge context and can act on it rather than silently falling back to another credential.
+            if (!string.IsNullOrWhiteSpace(context.Claims))
+            {
+                string loginCommand = string.IsNullOrEmpty(tenantId)
+                    ? $"az login --claims-challenge {context.Claims}"
+                    : $"az login --tenant {tenantId} --claims-challenge {context.Claims}";
+
+                throw new AuthenticationFailedException(string.Format(CultureInfo.InvariantCulture, ClaimsChallengeLoginFormat, loginCommand));
+            }
+
+            GetFileNameAndArguments(resource, tenantId, Subscription, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, redirectStandardInput: true, cancellationToken);
 
             string output;
             try
@@ -207,13 +226,18 @@ namespace Azure.Identity
                 Environment = { { "PATH", _path } }
             };
 
-        private static void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
+        private static void GetFileNameAndArguments(string resource, string tenantId, string subscriptionId, out string fileName, out string argument)
         {
             string command = tenantId switch
             {
                 null => $"az account get-access-token --output json --resource {resource}",
                 _ => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}"
             };
+
+            if (!string.IsNullOrEmpty(subscriptionId))
+            {
+                command += $" --subscription \"{subscriptionId}\"";
+            }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

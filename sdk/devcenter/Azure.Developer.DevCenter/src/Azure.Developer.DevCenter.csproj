@@ -2,10 +2,13 @@
   <PropertyGroup>
     <Description>This is the DevCenter client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation DevCenter for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure DevCenter</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC003;AZC0034</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -16,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

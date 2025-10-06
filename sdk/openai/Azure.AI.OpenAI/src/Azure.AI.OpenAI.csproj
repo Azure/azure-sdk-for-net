@@ -1,34 +1,94 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>
-      Azure's official .NET library for OpenAI inference that supports Completions, Chat, and Embeddings.
-      Works with Azure OpenAI resources as well as the non-Azure OpenAI endpoint.
+      Azure OpenAI's official extension package for using OpenAI's .NET library with the Azure OpenAI Service.
     </Description>
-    <AssemblyTitle>Microsoft Azure.AI.OpenAI client library</AssemblyTitle>
-    <Version>1.0.0-beta.15</Version>
+    <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002;AOAI001</NoWarn>
+    <!-- Needs System.ClientModel 1.5.0 in order to add the context and use the new overloads -->
+    <!-- After this https://github.com/Azure/azure-sdk-for-net/issues/49916 we can remove this no warn -->
+    <NoWarn>$(NoWarn);AZC0150</NoWarn>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
+    <InternalsVisibleTo Include="Azure.AI.OpenAI.Tests">
+      <PublicKey>0024000004800000940000000602000000240000525341310004000001000100d15ddcb29688295338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593daa7b11b4</PublicKey>
+    </InternalsVisibleTo>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
-  </ItemGroup>
+  <Choose>
+    <When Condition="'$(GAServiceVersionLabel)' != ''">
+      <PropertyGroup>
+        <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
+        <VersionPrefix>2.1.0</VersionPrefix>
+        <VersionSuffix />
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <VersionPrefix>2.3.0</VersionPrefix>
+        <VersionSuffix>beta.2</VersionSuffix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
-  <ItemGroup>
-    <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
-  </ItemGroup>
+  <!-- Which Azure.Core library/code should we use? -->
+  <Choose>
+    <When Condition="'$(ExternalAzureCoreSource)' != ''">
+      <ItemGroup>
+        <ProjectReference Include="$(ExternalAzureCoreSource)" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(ExternalAzureCoreLibrary)' != ''">
+      <ItemGroup>
+        <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))" HintPath="$(ExternalAzureCoreLibrary)" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="Azure.Core" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <!-- Which OpenAI library/code should we use? -->
+  <Choose>
+    <When Condition="'$(ExternalOpenAISource)' != ''">
+      <ItemGroup>
+        <ProjectReference Include="$(ExternalOpenAISource)" />
+      </ItemGroup>
+      <PropertyGroup>
+        <NoWarn>$(NoWarn);NU5104</NoWarn>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(UseExternalOpenAILibrary)' != ''">
+      <PropertyGroup>
+          <ExternalSourceFramework>netstandard2.0</ExternalSourceFramework>
+          <ExternalSourceFramework Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">net8.0</ExternalSourceFramework>
+      </PropertyGroup>
+      <ItemGroup>
+        <Reference Include="$([System.IO.Path]::GetFileName('../../external/$(ExternalSourceFramework)/OpenAI.dll'))" HintPath="../../external/$(ExternalSourceFramework)/OpenAI.dll" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="OpenAI" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
 </Project>

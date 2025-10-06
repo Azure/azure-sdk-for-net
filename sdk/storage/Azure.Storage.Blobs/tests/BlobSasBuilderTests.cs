@@ -49,7 +49,13 @@ namespace Azure.Storage.Blobs.Test
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: false,
+                includeSnapshot: false,
+                includeDelegatedObjectId: false,
+                containerName,
+                blobName,
+                constants);
             var signature = BuildSignature(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
 
             // Act
@@ -78,11 +84,18 @@ namespace Azure.Storage.Blobs.Test
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: false,
+                includeSnapshot: false,
+                includeDelegatedObjectId: true,
+                containerName,
+                blobName,
+                constants);
             var signature = BuildIdentitySignature(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
+            string stringToSign = null;
 
             // Act
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account, out stringToSign);
 
             // Assert
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
@@ -101,8 +114,10 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
             Assert.AreEqual(Constants.Sas.Resource.Container, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
+            Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -113,11 +128,18 @@ namespace Azure.Storage.Blobs.Test
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: true,
+                includeSnapshot: false,
+                includeDelegatedObjectId: false,
+                containerName,
+                blobName,
+                constants);
             var signature = BuildSignature(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
+            string stringToSign = null;
 
             // Act
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out stringToSign);
 
             // Assert
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
@@ -132,17 +154,24 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public void ToSasQueryParameters_BlobIdentityTest()
         {
             // Arrange
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: true,
+                includeSnapshot: false,
+                includeDelegatedObjectId: true,
+                containerName,
+                blobName,
+                constants);
             var signature = BuildIdentitySignature(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
 
             // Act
@@ -165,6 +194,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
             Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
+            Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
         }
@@ -177,7 +207,13 @@ namespace Azure.Storage.Blobs.Test
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: true,
+                includeSnapshot: true,
+                includeDelegatedObjectId: false,
+                containerName,
+                blobName,
+                constants);
             var signature = BuildSignature(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
 
             // Act
@@ -206,8 +242,19 @@ namespace Azure.Storage.Blobs.Test
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
-            var signature = BuildIdentitySignature(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: true,
+                includeSnapshot: true,
+                includeDelegatedObjectId: true,
+                containerName,
+                blobName,
+                constants);
+            string signature = BuildIdentitySignature(
+                includeBlob: true,
+                includeSnapshot: true,
+                containerName,
+                blobName,
+                constants);
 
             // Act
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
@@ -229,6 +276,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
             Assert.AreEqual(Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
+            Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
         }
@@ -240,7 +288,13 @@ namespace Azure.Storage.Blobs.Test
             var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
-            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
+            BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(
+                includeBlob: true,
+                includeSnapshot: true,
+                includeDelegatedObjectId: false,
+                containerName,
+                blobName,
+                constants);
 
             // Act
             Assert.Throws<ArgumentNullException>(() => blobSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
@@ -449,7 +503,12 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        private BlobSasBuilder BuildBlobSasBuilder(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
+        private BlobSasBuilder BuildBlobSasBuilder(
+            bool includeBlob,
+            bool includeSnapshot,
+            bool includeDelegatedObjectId,
+            string containerName,
+            string blobName, TestConstants constants)
         {
             var builder = new BlobSasBuilder
             {
@@ -469,6 +528,12 @@ namespace Azure.Storage.Blobs.Test
                 ContentType = constants.Sas.ContentType,
                 EncryptionScope = constants.Sas.EncryptionScope
             };
+
+            if (includeDelegatedObjectId)
+            {
+                builder.DelegatedUserObjectId = constants.Sas.DelegatedObjectId;
+            }
+
             builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
             return builder;
         }
@@ -478,7 +543,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string preauthorizedAgentGuid = Recording.Random.NewGuid().ToString();
 
@@ -516,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_CorrelationId()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
@@ -548,6 +613,48 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Just make sure the call succeeds.
             }
+        }
+
+        [RecordedTest]
+        public async Task SasCredentialRequiresUriWithoutSasError_RedactedSasUri()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            string containerName = GetNewContainerName();
+
+            await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                BlobContainerName = containerName,
+            };
+
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey, test.Container.AccountName)
+            };
+
+            Uri sasUri = blobUriBuilder.ToUri();
+
+            UriBuilder uriBuilder = new UriBuilder(sasUri);
+            uriBuilder.Query = "[REDACTED]";
+            string redactedUri = uriBuilder.Uri.ToString();
+
+            ArgumentException ex = Errors.SasCredentialRequiresUriWithoutSas<BlobUriBuilder>(sasUri);
+
+            // Assert
+            Assert.IsTrue(ex.Message.Contains(redactedUri));
+            Assert.IsFalse(ex.Message.Contains("st="));
+            Assert.IsFalse(ex.Message.Contains("se="));
+            Assert.IsFalse(ex.Message.Contains("sig="));
         }
 
         private string BuildSignature(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
@@ -587,7 +694,12 @@ namespace Azure.Storage.Blobs.Test
             return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
 
-        private string BuildIdentitySignature(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
+        private string BuildIdentitySignature(
+            bool includeBlob,
+            bool includeSnapshot,
+            string containerName,
+            string blobName,
+            TestConstants constants)
         {
             var canonicalName = includeBlob ? $"/blob/{constants.Sas.Account}/{containerName}/{blobName}"
                 : $"/blob/{constants.Sas.Account}/{containerName}";
@@ -617,6 +729,8 @@ namespace Azure.Storage.Blobs.Test
                 null,
                 null,
                 null,
+                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 SasQueryParametersInternals.DefaultSasVersionInternal,

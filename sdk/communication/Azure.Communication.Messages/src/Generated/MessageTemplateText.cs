@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(text, nameof(text));
 
-            Kind = "text";
+            Kind = MessageTemplateValueKind.Text;
             Text = text;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>
-        internal MessageTemplateText(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateText(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(name, kind, serializedAdditionalRawData)
         {
             Text = text;
         }
@@ -42,6 +42,6 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The text value. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

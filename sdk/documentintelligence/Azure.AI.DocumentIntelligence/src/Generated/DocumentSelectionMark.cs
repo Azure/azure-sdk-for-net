@@ -52,11 +52,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="span"/> is null. </exception>
         internal DocumentSelectionMark(DocumentSelectionMarkState state, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(span, nameof(span));
-
             State = state;
             Polygon = new ChangeTrackingList<float>();
             Span = span;

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupFileShare"> Backup file share information for file share to be used for temporarily storing files. </param>
         /// <param name="selectedCertificates"> List containing certificate names and corresponding password to use for encrypting the exported certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/>, <paramref name="backupFileShare"/> or <paramref name="selectedCertificates"/> is null. </exception>
-        public GetTdeCertificatesSqlTaskInput(SqlConnectionInfo connectionInfo, FileShare backupFileShare, IEnumerable<SelectedCertificateInput> selectedCertificates)
+        public GetTdeCertificatesSqlTaskInput(DataMigrationSqlConnectionInfo connectionInfo, DataMigrationFileShareInfo backupFileShare, IEnumerable<SelectedCertificateInput> selectedCertificates)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
             Argument.AssertNotNull(backupFileShare, nameof(backupFileShare));
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupFileShare"> Backup file share information for file share to be used for temporarily storing files. </param>
         /// <param name="selectedCertificates"> List containing certificate names and corresponding password to use for encrypting the exported certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetTdeCertificatesSqlTaskInput(SqlConnectionInfo connectionInfo, FileShare backupFileShare, IList<SelectedCertificateInput> selectedCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetTdeCertificatesSqlTaskInput(DataMigrationSqlConnectionInfo connectionInfo, DataMigrationFileShareInfo backupFileShare, IList<SelectedCertificateInput> selectedCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfo = connectionInfo;
             BackupFileShare = backupFileShare;
@@ -82,9 +81,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for SQL Server. </summary>
-        public SqlConnectionInfo ConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo ConnectionInfo { get; set; }
         /// <summary> Backup file share information for file share to be used for temporarily storing files. </summary>
-        public FileShare BackupFileShare { get; set; }
+        public DataMigrationFileShareInfo BackupFileShare { get; set; }
         /// <summary> List containing certificate names and corresponding password to use for encrypting the exported certificate. </summary>
         public IList<SelectedCertificateInput> SelectedCertificates { get; }
     }

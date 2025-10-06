@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareResourcePoolResource IOperationSource<VMwareResourcePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VMwareResourcePoolData.DeserializeVMwareResourcePoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<VMwareResourcePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
             return new VMwareResourcePoolResource(_client, data);
         }
 
         async ValueTask<VMwareResourcePoolResource> IOperationSource<VMwareResourcePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VMwareResourcePoolData.DeserializeVMwareResourcePoolData(document.RootElement);
-            return new VMwareResourcePoolResource(_client, data);
+            var data = ModelReaderWriter.Read<VMwareResourcePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+            return await Task.FromResult(new VMwareResourcePoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

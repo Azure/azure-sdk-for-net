@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -92,34 +91,49 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Array of initial administrators object ids for this managed hsm pool. </summary>
+        [WirePath("initialAdminObjectIds")]
         public IList<string> InitialAdminObjectIds { get; }
         /// <summary> The URI of the managed hsm pool for performing operations on keys. </summary>
+        [WirePath("hsmUri")]
         public Uri HsmUri { get; }
         /// <summary> Property to specify whether the 'soft delete' functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </summary>
+        [WirePath("enableSoftDelete")]
         public bool? EnableSoftDelete { get; set; }
         /// <summary> Soft deleted data retention days. When you delete an HSM or a key, it will remain recoverable for the configured retention period or for a default period of 90 days. It accepts values between 7 and 90. </summary>
+        [WirePath("softDeleteRetentionInDays")]
         public int? SoftDeleteRetentionInDays { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. Enabling this functionality is irreversible. </summary>
+        [WirePath("enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
+        [WirePath("createMode")]
         public ManagedHsmCreateMode? CreateMode { get; set; }
         /// <summary> Resource Status Message. </summary>
+        [WirePath("statusMessage")]
         public string StatusMessage { get; }
         /// <summary> Provisioning state. </summary>
+        [WirePath("provisioningState")]
         public ManagedHsmProvisioningState? ProvisioningState { get; }
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
+        [WirePath("networkAcls")]
         public ManagedHsmNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> List of all regions associated with the managed hsm pool. </summary>
+        [WirePath("regions")]
         public IList<ManagedHsmGeoReplicatedRegion> Regions { get; }
         /// <summary> List of private endpoint connections associated with the managed hsm pool. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
         /// <summary> Control permission to the managed HSM from public networks. </summary>
+        [WirePath("publicNetworkAccess")]
         public ManagedHsmPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The scheduled purge date in UTC. </summary>
+        [WirePath("scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Managed HSM security domain properties. </summary>
+        [WirePath("securityDomainProperties")]
         public ManagedHSMSecurityDomainProperties SecurityDomainProperties { get; }
     }
 }

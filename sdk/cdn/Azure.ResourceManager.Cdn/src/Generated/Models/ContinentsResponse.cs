@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Continents Response. </summary>
+    /// <summary>
+    /// Continents Response
+    /// Serialized Name: ContinentsResponse
+    /// </summary>
     public partial class ContinentsResponse
     {
         /// <summary>
@@ -54,8 +56,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinentsResponse"/>. </summary>
-        /// <param name="continents"></param>
-        /// <param name="countryOrRegions"></param>
+        /// <param name="continents"> Serialized Name: ContinentsResponse.continents. </param>
+        /// <param name="countryOrRegions"> Serialized Name: ContinentsResponse.countryOrRegions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContinentsResponse(IReadOnlyList<ContinentsResponseContinentsItem> continents, IReadOnlyList<ContinentsResponseCountryOrRegionsItem> countryOrRegions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +66,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the continents. </summary>
+        /// <summary> Serialized Name: ContinentsResponse.continents. </summary>
         public IReadOnlyList<ContinentsResponseContinentsItem> Continents { get; }
-        /// <summary> Gets the country or regions. </summary>
+        /// <summary> Serialized Name: ContinentsResponse.countryOrRegions. </summary>
         public IReadOnlyList<ContinentsResponseCountryOrRegionsItem> CountryOrRegions { get; }
     }
 }

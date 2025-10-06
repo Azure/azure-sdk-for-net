@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -99,22 +98,31 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Mailing address. </summary>
+        [WirePath("addressMailing")]
         public RegistrationAddressInfo AddressMailing { get; set; }
         /// <summary> Email address. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
         /// <summary> Fax number. </summary>
+        [WirePath("fax")]
         public string Fax { get; set; }
         /// <summary> Job title. </summary>
+        [WirePath("jobTitle")]
         public string JobTitle { get; set; }
         /// <summary> First name. </summary>
+        [WirePath("nameFirst")]
         public string NameFirst { get; set; }
         /// <summary> Last name. </summary>
+        [WirePath("nameLast")]
         public string NameLast { get; set; }
         /// <summary> Middle name. </summary>
+        [WirePath("nameMiddle")]
         public string NameMiddle { get; set; }
         /// <summary> Organization contact belongs to. </summary>
+        [WirePath("organization")]
         public string Organization { get; set; }
         /// <summary> Phone number. </summary>
+        [WirePath("phone")]
         public string Phone { get; set; }
     }
 }

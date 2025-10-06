@@ -44,5 +44,13 @@ namespace Azure.Communication.CallingServer
             }
             return new AddParticipantsResponseInternal(participants ?? new ChangeTrackingList<AcsCallParticipantInternal>(), operationContext);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddParticipantsResponseInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAddParticipantsResponseInternal(document.RootElement);
+        }
     }
 }

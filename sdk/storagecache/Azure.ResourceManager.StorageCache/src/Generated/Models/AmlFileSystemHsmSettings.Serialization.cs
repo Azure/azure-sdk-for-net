@@ -10,23 +10,30 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class AmlFileSystemHsmSettings : IUtf8JsonSerializable, IJsonModel<AmlFileSystemHsmSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemHsmSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemHsmSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemHsmSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemHsmSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
             writer.WritePropertyName("loggingContainer"u8);
@@ -36,6 +43,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("importPrefix"u8);
                 writer.WriteStringValue(ImportPrefix);
             }
+            if (Optional.IsCollectionDefined(ImportPrefixesInitial))
+            {
+                writer.WritePropertyName("importPrefixesInitial"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImportPrefixesInitial)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -44,14 +61,13 @@ namespace Azure.ResourceManager.StorageCache.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AmlFileSystemHsmSettings IJsonModel<AmlFileSystemHsmSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,7 +75,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemHsmSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static AmlFileSystemHsmSettings DeserializeAmlFileSystemHsmSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,8 +93,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             string container = default;
             string loggingContainer = default;
             string importPrefix = default;
+            IList<string> importPrefixesInitial = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("container"u8))
@@ -96,13 +113,27 @@ namespace Azure.ResourceManager.StorageCache.Models
                     importPrefix = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("importPrefixesInitial"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    importPrefixesInitial = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, importPrefixesInitial ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemHsmSettings>.Write(ModelReaderWriterOptions options)
@@ -112,9 +143,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,11 +157,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAmlFileSystemHsmSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

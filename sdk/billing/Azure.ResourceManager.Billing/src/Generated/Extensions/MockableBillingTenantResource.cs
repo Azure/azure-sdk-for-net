@@ -6,18 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Billing;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing.Mocking
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableBillingTenantResource : ArmResource
     {
+        private ClientDiagnostics _addressClientDiagnostics;
+        private AddressRestOperations _addressRestClient;
+        private ClientDiagnostics _invoicesClientDiagnostics;
+        private InvoicesRestOperations _invoicesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableBillingTenantResource"/> class for mocking. </summary>
         protected MockableBillingTenantResource()
         {
@@ -30,158 +35,296 @@ namespace Azure.ResourceManager.Billing.Mocking
         {
         }
 
+        private ClientDiagnostics AddressClientDiagnostics => _addressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private AddressRestOperations AddressRestClient => _addressRestClient ??= new AddressRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics InvoicesClientDiagnostics => _invoicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private InvoicesRestOperations InvoicesRestClient => _invoicesRestClient ??= new InvoicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of BillingSubscriptionResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingAccountResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of BillingAccountResources and their operations over a BillingAccountResource. </returns>
+        public virtual BillingAccountCollection GetBillingAccounts()
+        {
+            return GetCachedClient(client => new BillingAccountCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a billing account by its ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingSubscriptionResources and their operations over a BillingSubscriptionResource. </returns>
-        public virtual BillingSubscriptionCollection GetBillingSubscriptions(string billingAccountName)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingAccountResource>> GetBillingAccountAsync(string billingAccountName, CancellationToken cancellationToken = default)
         {
-            return new BillingSubscriptionCollection(Client, Id, billingAccountName);
+            return await GetBillingAccounts().GetAsync(billingAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        /// Gets a billing account by its ID.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
+        /// <description>BillingAccounts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
+        /// <description><see cref="BillingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingSubscriptions(billingAccountName).GetAsync(billingSubscriptionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingSubscriptionResource> GetBillingSubscription(string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingSubscriptions(billingAccountName).Get(billingSubscriptionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingSubscriptionAliasResources in the TenantResource. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingSubscriptionAliasResources and their operations over a BillingSubscriptionAliasResource. </returns>
-        public virtual BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(string billingAccountName)
+        [ForwardsClientCalls]
+        public virtual Response<BillingAccountResource> GetBillingAccount(string billingAccountName, CancellationToken cancellationToken = default)
         {
-            return new BillingSubscriptionAliasCollection(Client, Id, billingAccountName);
+            return GetBillingAccounts().Get(billingAccountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingRequestResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of BillingRequestResources and their operations over a BillingRequestResource. </returns>
+        public virtual BillingRequestCollection GetBillingRequests()
+        {
+            return GetCachedClient(client => new BillingRequestCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
+        /// Gets a billing request by its ID.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <description>BillingRequests_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <description><see cref="BillingRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
+        /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingRequestResource>> GetBillingRequestAsync(string billingRequestName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingSubscriptionAliases(billingAccountName).GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingRequests().GetAsync(billingRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
+        /// Gets a billing request by its ID.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <description>BillingRequests_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <description><see cref="BillingRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
+        /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingRequestResource> GetBillingRequest(string billingRequestName, CancellationToken cancellationToken = default)
         {
-            return GetBillingSubscriptionAliases(billingAccountName).Get(aliasName, cancellationToken);
+            return GetBillingRequests().Get(billingRequestName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionBillingInvoiceResources in the TenantResource. </summary>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of SubscriptionBillingInvoiceResources and their operations over a SubscriptionBillingInvoiceResource. </returns>
+        public virtual SubscriptionBillingInvoiceCollection GetSubscriptionBillingInvoices(string subscriptionId)
+        {
+            return new SubscriptionBillingInvoiceCollection(Client, Id, subscriptionId);
+        }
+
+        /// <summary>
+        /// Gets an invoice by subscription ID and invoice ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_GetByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionBillingInvoiceResource>> GetSubscriptionBillingInvoiceAsync(string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionBillingInvoices(subscriptionId).GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an invoice by subscription ID and invoice ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_GetByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionBillingInvoiceResource> GetSubscriptionBillingInvoice(string subscriptionId, string invoiceName, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionBillingInvoices(subscriptionId).Get(invoiceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DefaultBillingInvoiceResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of DefaultBillingInvoiceResources and their operations over a DefaultBillingInvoiceResource. </returns>
+        public virtual DefaultBillingInvoiceCollection GetDefaultBillingInvoices()
+        {
+            return GetCachedClient(client => new DefaultBillingInvoiceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DefaultBillingInvoiceResource>> GetDefaultBillingInvoiceAsync(string invoiceName, CancellationToken cancellationToken = default)
+        {
+            return await GetDefaultBillingInvoices().GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DefaultBillingInvoiceResource> GetDefaultBillingInvoice(string invoiceName, CancellationToken cancellationToken = default)
+        {
+            return GetDefaultBillingInvoices().Get(invoiceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingPaymentMethodResources in the TenantResource. </summary>
@@ -204,7 +347,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,7 +378,7 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,155 +396,239 @@ namespace Azure.ResourceManager.Billing.Mocking
             return GetBillingPaymentMethods().Get(paymentMethodName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingAccountPaymentMethodResources in the TenantResource. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingAccountPaymentMethodResources and their operations over a BillingAccountPaymentMethodResource. </returns>
-        public virtual BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(string billingAccountName)
+        /// <summary> Gets a collection of RecipientTransferDetailResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of RecipientTransferDetailResources and their operations over a RecipientTransferDetailResource. </returns>
+        public virtual RecipientTransferDetailCollection GetRecipientTransferDetails()
         {
-            return new BillingAccountPaymentMethodCollection(Client, Id, billingAccountName);
+            return GetCachedClient(client => new RecipientTransferDetailCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Gets a transfer request by ID. The caller must be the recipient of the transfer request.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// <description>RecipientTransfers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
+        /// <description><see cref="RecipientTransferDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecipientTransferDetailResource>> GetRecipientTransferDetailAsync(string transferName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingAccountPaymentMethods(billingAccountName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetRecipientTransferDetails().GetAsync(transferName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Gets a transfer request by ID. The caller must be the recipient of the transfer request.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// <description>RecipientTransfers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
+        /// <description><see cref="RecipientTransferDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public virtual Response<RecipientTransferDetailResource> GetRecipientTransferDetail(string transferName, CancellationToken cancellationToken = default)
         {
-            return GetBillingAccountPaymentMethods(billingAccountName).Get(paymentMethodName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingPaymentMethodLinkResources in the TenantResource. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
-        public virtual BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(string billingAccountName, string billingProfileName)
-        {
-            return new BillingPaymentMethodLinkCollection(Client, Id, billingAccountName, billingProfileName);
+            return GetRecipientTransferDetails().Get(transferName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Validates an address. Use the operation to validate an address before using it as soldTo or a billTo address.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/validateAddress</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// <description>Address_Validate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual async Task<Response<BillingAddressValidationResult>> ValidateAddresAsync(BillingAddressDetails details, CancellationToken cancellationToken = default)
         {
-            return await GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(details, nameof(details));
+
+            using var scope = AddressClientDiagnostics.CreateScope("MockableBillingTenantResource.ValidateAddres");
+            scope.Start();
+            try
+            {
+                var response = await AddressRestClient.ValidateAsync(details, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Validates an address. Use the operation to validate an address before using it as soldTo or a billTo address.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// <description>/providers/Microsoft.Billing/validateAddress</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// <description>Address_Validate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="details"> Address details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual Response<BillingAddressValidationResult> ValidateAddres(BillingAddressDetails details, CancellationToken cancellationToken = default)
         {
-            return GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).Get(paymentMethodName, cancellationToken);
+            Argument.AssertNotNull(details, nameof(details));
+
+            using var scope = AddressClientDiagnostics.CreateScope("MockableBillingTenantResource.ValidateAddres");
+            scope.Start();
+            try
+            {
+                var response = AddressRestClient.Validate(details, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax receipts, credit notes) as a zip file. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/downloadDocuments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_DownloadDocumentsByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
+
+            using var scope = InvoicesClientDiagnostics.CreateScope("MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice");
+            scope.Start();
+            try
+            {
+                var response = await InvoicesRestClient.DownloadDocumentsByBillingSubscriptionAsync(subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), InvoicesClientDiagnostics, Pipeline, InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax receipts, credit notes) as a zip file. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/downloadDocuments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invoices_DownloadDocumentsByBillingSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arrayOfDocumentDownloadRequest"/> is null. </exception>
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
+
+            using var scope = InvoicesClientDiagnostics.CreateScope("MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice");
+            scope.Start();
+            try
+            {
+                var response = InvoicesRestClient.DownloadDocumentsByBillingSubscription(subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken);
+                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), InvoicesClientDiagnostics, Pipeline, InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, arrayOfDocumentDownloadRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

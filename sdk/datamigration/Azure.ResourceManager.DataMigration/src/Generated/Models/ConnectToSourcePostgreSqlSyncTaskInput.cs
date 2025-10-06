@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public ConnectToSourcePostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo)
+        public ConnectToSourcePostgreSqlSyncTaskInput(DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourcePostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourcePostgreSqlSyncTaskInput(DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +70,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for source PostgreSQL server. </summary>
-        public PostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
     }
 }

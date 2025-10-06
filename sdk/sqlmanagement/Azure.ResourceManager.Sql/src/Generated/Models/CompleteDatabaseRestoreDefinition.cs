@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The last backup name to apply. </summary>
+        [WirePath("lastBackupName")]
         public string LastBackupName { get; }
     }
 }

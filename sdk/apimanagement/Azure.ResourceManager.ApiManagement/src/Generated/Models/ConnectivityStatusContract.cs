@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -106,24 +105,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource Connectivity Status Type identifier. </summary>
+        [WirePath("status")]
         public ConnectivityStatusType Status { get; }
         /// <summary> Error details of the connectivity to the resource. </summary>
+        [WirePath("error")]
         public string Error { get; }
         /// <summary>
         /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset LastUpdatedOn { get; }
         /// <summary>
         /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
+        [WirePath("lastStatusChange")]
         public DateTimeOffset LastStatusChangedOn { get; }
         /// <summary> Resource Type. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> Whether this is optional. </summary>
+        [WirePath("isOptional")]
         public bool IsOptional { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -92,30 +91,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The name of SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
         /// <summary> The Size of the SKU. </summary>
+        [WirePath("size")]
         public string Size { get; }
         /// <summary> The Family of this particular SKU. </summary>
+        [WirePath("family")]
         public string Family { get; }
         /// <summary> The Kind of resources that are supported in this SKU. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
+        [WirePath("capacity")]
         public ApiManagementSkuCapacity Capacity { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
+        [WirePath("locationInfo")]
         public IReadOnlyList<ApiManagementSkuLocationInfo> LocationInfo { get; }
         /// <summary> The api versions that support this SKU. </summary>
+        [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Metadata for retrieving price info. </summary>
+        [WirePath("costs")]
         public IReadOnlyList<ApiManagementSkuCosts> Costs { get; }
         /// <summary> A name value pair to describe the capability. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyList<ApiManagementSkuCapabilities> Capabilities { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
+        [WirePath("restrictions")]
         public IReadOnlyList<ApiManagementSkuRestrictions> Restrictions { get; }
     }
 }

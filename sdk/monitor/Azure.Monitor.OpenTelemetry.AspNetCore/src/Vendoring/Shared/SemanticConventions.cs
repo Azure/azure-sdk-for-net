@@ -1,21 +1,18 @@
-// <copyright file="SemanticConventions.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
-
-#nullable enable
 
 namespace OpenTelemetry.Trace;
 
 /// <summary>
 /// Constants for semantic attribute names outlined by the OpenTelemetry specifications.
-/// <see href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/trace.md"/> and
-/// <see href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/metrics.md"/>.
+/// <see href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/README.md"/>.
 /// </summary>
 internal static class SemanticConventions
 {
     // The set of constants matches the specification as of this commit.
-    // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/trace.md
-    // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md
+    // https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/trace/semantic_conventions
+    // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/exceptions.md
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public const string AttributeNetTransport = "net.transport";
     public const string AttributeNetPeerIp = "net.peer.ip";
     public const string AttributeNetPeerPort = "net.peer.port";
@@ -56,7 +53,6 @@ internal static class SemanticConventions
     public const string AttributeDbStatement = "db.statement";
     public const string AttributeDbOperation = "db.operation";
     public const string AttributeDbInstance = "db.instance";
-    public const string AttributeDbUrl = "db.url";
     public const string AttributeDbCassandraKeyspace = "db.cassandra.keyspace";
     public const string AttributeDbHBaseNamespace = "db.hbase.namespace";
     public const string AttributeDbRedisDatabaseIndex = "db.redis.database_index";
@@ -101,22 +97,44 @@ internal static class SemanticConventions
     public const string AttributeErrorType = "error.type";
 
     // v1.21.0
-    // https://github.com/open-telemetry/semantic-conventions/blob/v1.21.0/docs/http/http-spans.md
-    // https://github.com/open-telemetry/semantic-conventions/blob/v1.21.0/docs/database/database-spans.md
-    // https://github.com/open-telemetry/semantic-conventions/blob/v1.21.0/docs/rpc/rpc-spans.md
-    public const string AttributeClientAddress = "client.address";
-    public const string AttributeClientPort = "client.port";
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.21.0/docs/http/http-metrics.md#http-server
     public const string AttributeHttpRequestMethod = "http.request.method"; // replaces: "http.method" (AttributeHttpMethod)
+    public const string AttributeHttpRequestMethodOriginal = "http.request.method_original";
     public const string AttributeHttpResponseStatusCode = "http.response.status_code"; // replaces: "http.status_code" (AttributeHttpStatusCode)
-    public const string AttributeNetworkProtocolVersion = "network.protocol.version"; // replaces: "http.flavor" (AttributeHttpFlavor)
-    public const string AttributeNetworkProtocolName = "network.protocol.name";
-    public const string AttributeServerAddress = "server.address"; // replaces: "net.host.name" (AttributeNetHostName) and "net.peer.name" (AttributeNetPeerName)
-    public const string AttributeServerPort = "server.port"; // replaces: "net.host.port" (AttributeNetHostPort) and "net.peer.port" (AttributeNetPeerPort)
-    public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
+    public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
     public const string AttributeUrlFull = "url.full"; // replaces: "http.url" (AttributeHttpUrl)
     public const string AttributeUrlPath = "url.path"; // replaces: "http.target" (AttributeHttpTarget)
-    public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
-    public const string AttributeUrlQuery = "url.query";
-    public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
-    public const string AttributeHttpRequestMethodOriginal = "http.request.method_original";
+    public const string AttributeUrlQuery = "url.query"; // replaces: "http.target" (AttributeHttpTarget)
+    public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
+
+    // v1.23.0
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.23.0/docs/http/http-metrics.md#http-server
+    public const string AttributeClientAddress = "client.address";
+    public const string AttributeClientPort = "client.port";
+    public const string AttributeNetworkProtocolVersion = "network.protocol.version"; // replaces: "http.flavor" (AttributeHttpFlavor)
+    public const string AttributeNetworkProtocolName = "network.protocol.name";
+    public const string AttributeServerAddress = "server.address"; // replaces: "net.host.name" (AttributeNetHostName)
+    public const string AttributeServerPort = "server.port"; // replaces: "net.host.port" (AttributeNetHostPort)
+    public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: http.user_agent (AttributeHttpUserAgent)
+
+    // v1.24.0 Messaging spans
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/messaging/messaging-spans.md
+    public const string AttributeMessagingClientId = "messaging.client_id";
+    public const string AttributeMessagingDestinationName = "messaging.destination.name";
+
+    // v1.24.0 Messaging metrics
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/messaging/messaging-metrics.md
+    public const string MetricMessagingPublishDuration = "messaging.publish.duration";
+    public const string MetricMessagingPublishMessages = "messaging.publish.messages";
+    public const string MetricMessagingReceiveDuration = "messaging.receive.duration";
+    public const string MetricMessagingReceiveMessages = "messaging.receive.messages";
+
+    // v1.24.0 Messaging (Kafka)
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/messaging/kafka.md
+    public const string AttributeMessagingKafkaConsumerGroup = "messaging.kafka.consumer.group";
+    public const string AttributeMessagingKafkaDestinationPartition = "messaging.kafka.destination.partition";
+    public const string AttributeMessagingKafkaMessageKey = "messaging.kafka.message.key";
+    public const string AttributeMessagingKafkaMessageOffset = "messaging.kafka.message.offset";
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

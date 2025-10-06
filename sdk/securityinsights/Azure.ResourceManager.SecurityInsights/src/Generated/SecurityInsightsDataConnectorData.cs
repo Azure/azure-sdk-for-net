@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -16,9 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing the SecurityInsightsDataConnector data model.
-    /// Data connector.
+    /// Data connector
     /// Please note <see cref="SecurityInsightsDataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/> and <see cref="SecurityInsightsTIDataConnector"/>.
+    /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IotDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MtpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/> and <see cref="ThreatIntelligenceTaxiiDataConnector"/>.
     /// </summary>
     public partial class SecurityInsightsDataConnectorData : ResourceData
     {
@@ -77,6 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> The data connector kind. </summary>
         internal DataConnectorKind Kind { get; set; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -39,12 +39,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
-                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
-                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
                     case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
+                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
+                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element);
+                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
                 }
             }
             return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FormatReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFormatReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class FormatReadSettingsConverter : JsonConverter<FormatReadSettings>
@@ -53,6 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override FormatReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

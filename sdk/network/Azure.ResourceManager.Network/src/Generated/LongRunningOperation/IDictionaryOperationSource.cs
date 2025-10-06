@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
     {
         IDictionary<string, IList<PeerRoute>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             Dictionary<string, IList<PeerRoute>> dictionary = new Dictionary<string, IList<PeerRoute>>();
             foreach (var property in document.RootElement.EnumerateObject())
             {
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.Network
 
         async ValueTask<IDictionary<string, IList<PeerRoute>>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             Dictionary<string, IList<PeerRoute>> dictionary = new Dictionary<string, IList<PeerRoute>>();
             foreach (var property in document.RootElement.EnumerateObject())
             {

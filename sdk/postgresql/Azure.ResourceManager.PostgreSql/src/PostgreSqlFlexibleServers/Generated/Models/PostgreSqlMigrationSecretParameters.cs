@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Admin credentials for source and target servers. </summary>
+        [WirePath("adminCredentials")]
         public PostgreSqlMigrationAdminCredentials AdminCredentials { get; set; }
         /// <summary> Gets or sets the username for the source server. This user need not be an admin. </summary>
+        [WirePath("sourceServerUsername")]
         public string SourceServerUsername { get; set; }
         /// <summary> Gets or sets the username for the target server. This user need not be an admin. </summary>
+        [WirePath("targetServerUsername")]
         public string TargetServerUsername { get; set; }
     }
 }

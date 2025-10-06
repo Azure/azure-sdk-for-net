@@ -8,29 +8,37 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentFeatureCapabilities : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentFeatureCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentFeatureCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentFeatureCapabilities>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentFeatureCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportExportData))
+            if (options.Format != "W" && Optional.IsDefined(IsExportDataSupported))
             {
                 writer.WritePropertyName("SupportExportData"u8);
-                writer.WriteBooleanValue(SupportExportData.Value);
+                writer.WriteBooleanValue(IsExportDataSupported.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BurstThrottlePolicy))
             {
@@ -115,14 +123,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApplicationInsightsComponentFeatureCapabilities IJsonModel<ApplicationInsightsComponentFeatureCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -130,7 +137,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +146,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentFeatureCapabilities DeserializeApplicationInsightsComponentFeatureCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +169,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             float? dailyCapResetTime = default;
             float? throttleRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("SupportExportData"u8))
@@ -295,10 +302,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentFeatureCapabilities(
                 supportExportData,
                 burstThrottlePolicy,
@@ -319,6 +326,302 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExportDataSupported), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  SupportExportData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsExportDataSupported))
+                {
+                    builder.Append("  SupportExportData: ");
+                    var boolValue = IsExportDataSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BurstThrottlePolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  BurstThrottlePolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BurstThrottlePolicy))
+                {
+                    builder.Append("  BurstThrottlePolicy: ");
+                    if (BurstThrottlePolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BurstThrottlePolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BurstThrottlePolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetadataClass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  MetadataClass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetadataClass))
+                {
+                    builder.Append("  MetadataClass: ");
+                    if (MetadataClass.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetadataClass}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetadataClass}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LiveStreamMetrics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  LiveStreamMetrics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LiveStreamMetrics))
+                {
+                    builder.Append("  LiveStreamMetrics: ");
+                    var boolValue = LiveStreamMetrics.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationMap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ApplicationMap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationMap))
+                {
+                    builder.Append("  ApplicationMap: ");
+                    var boolValue = ApplicationMap.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkItemIntegration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  WorkItemIntegration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkItemIntegration))
+                {
+                    builder.Append("  WorkItemIntegration: ");
+                    var boolValue = WorkItemIntegration.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PowerBIIntegration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  PowerBIIntegration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PowerBIIntegration))
+                {
+                    builder.Append("  PowerBIIntegration: ");
+                    var boolValue = PowerBIIntegration.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenSchema), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  OpenSchema: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OpenSchema))
+                {
+                    builder.Append("  OpenSchema: ");
+                    var boolValue = OpenSchema.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProactiveDetection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ProactiveDetection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProactiveDetection))
+                {
+                    builder.Append("  ProactiveDetection: ");
+                    var boolValue = ProactiveDetection.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnalyticsIntegration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  AnalyticsIntegration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AnalyticsIntegration))
+                {
+                    builder.Append("  AnalyticsIntegration: ");
+                    var boolValue = AnalyticsIntegration.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MultipleStepWebTest), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  MultipleStepWebTest: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MultipleStepWebTest))
+                {
+                    builder.Append("  MultipleStepWebTest: ");
+                    var boolValue = MultipleStepWebTest.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiAccessLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ApiAccessLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiAccessLevel))
+                {
+                    builder.Append("  ApiAccessLevel: ");
+                    if (ApiAccessLevel.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiAccessLevel}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiAccessLevel}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrackingType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  TrackingType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrackingType))
+                {
+                    builder.Append("  TrackingType: ");
+                    if (TrackingType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TrackingType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TrackingType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DailyCap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DailyCap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DailyCap))
+                {
+                    builder.Append("  DailyCap: ");
+                    builder.AppendLine($"'{DailyCap.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DailyCapResetTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DailyCapResetTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DailyCapResetTime))
+                {
+                    builder.Append("  DailyCapResetTime: ");
+                    builder.AppendLine($"'{DailyCapResetTime.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottleRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ThrottleRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThrottleRate))
+                {
+                    builder.Append("  ThrottleRate: ");
+                    builder.AppendLine($"'{ThrottleRate.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>)this).GetFormatFromOptions(options) : options.Format;
@@ -326,9 +629,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -340,11 +645,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplicationInsightsComponentFeatureCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

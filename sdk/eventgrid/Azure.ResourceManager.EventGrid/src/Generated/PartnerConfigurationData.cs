@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> The details of authorized partners. </summary>
+        [WirePath("properties.partnerAuthorization")]
         public PartnerAuthorization PartnerAuthorization { get; set; }
         /// <summary> Provisioning state of the partner configuration. </summary>
+        [WirePath("properties.provisioningState")]
         public PartnerConfigurationProvisioningState? ProvisioningState { get; set; }
     }
 }

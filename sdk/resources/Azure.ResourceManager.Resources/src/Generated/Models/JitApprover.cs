@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The approver service principal Id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The approver type. </summary>
+        [WirePath("type")]
         public JitApproverType? ApproverType { get; set; }
         /// <summary> The approver display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

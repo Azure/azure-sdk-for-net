@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
-        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
         /// <param name="entityKind"> The kind of the aggregated entity. </param>
-        internal SecurityInsightsIncidentEntitiesMetadata(int count, SecurityInsightsEntityKind entityKind)
+        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
+        internal SecurityInsightsIncidentEntitiesMetadata(SecurityInsightsEntityKind entityKind, int count)
         {
-            Count = count;
             EntityKind = entityKind;
+            Count = count;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
-        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
         /// <param name="entityKind"> The kind of the aggregated entity. </param>
+        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentEntitiesMetadata(int count, SecurityInsightsEntityKind entityKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsIncidentEntitiesMetadata(SecurityInsightsEntityKind entityKind, int count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Count = count;
             EntityKind = entityKind;
+            Count = count;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,9 +70,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Total number of aggregations of the given kind in the incident related entities result. </summary>
-        public int Count { get; }
         /// <summary> The kind of the aggregated entity. </summary>
+        [WirePath("entityKind")]
         public SecurityInsightsEntityKind EntityKind { get; }
+        /// <summary> Total number of aggregations of the given kind in the incident related entities result. </summary>
+        [WirePath("count")]
+        public int Count { get; }
     }
 }

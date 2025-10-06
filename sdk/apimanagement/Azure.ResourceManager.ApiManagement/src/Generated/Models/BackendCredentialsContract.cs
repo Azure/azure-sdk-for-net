@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -74,14 +72,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> List of Client Certificate Ids. </summary>
+        [WirePath("certificateIds")]
         public IList<string> CertificateIds { get; }
         /// <summary> List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided. </summary>
+        [WirePath("certificate")]
         public IList<string> Certificate { get; }
         /// <summary> Query Parameter description. </summary>
+        [WirePath("query")]
         public IDictionary<string, IList<string>> Query { get; }
         /// <summary> Header Parameter description. </summary>
+        [WirePath("header")]
         public IDictionary<string, IList<string>> Header { get; }
         /// <summary> Authorization header authentication. </summary>
+        [WirePath("authorization")]
         public BackendAuthorizationHeaderCredentials Authorization { get; set; }
     }
 }

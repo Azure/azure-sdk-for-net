@@ -44,5 +44,13 @@ namespace Azure.Containers.ContainerRegistry
             }
             return new Repositories(repositories ?? new ChangeTrackingList<string>(), link);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Repositories FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRepositories(document.RootElement);
+        }
     }
 }

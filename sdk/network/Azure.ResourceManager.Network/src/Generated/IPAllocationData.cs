@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -56,10 +55,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The Subnet that using the prefix of this IpAllocation resource. </summary>
         internal WritableSubResource Subnet { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet?.Id;
@@ -68,22 +69,29 @@ namespace Azure.ResourceManager.Network
         /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
         internal WritableSubResource VirtualNetwork { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualNetwork.id")]
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork?.Id;
         }
 
         /// <summary> The type for the IpAllocation. </summary>
+        [WirePath("properties.type")]
         public NetworkIPAllocationType? IPAllocationType { get; set; }
         /// <summary> The address prefix for the IpAllocation. </summary>
+        [WirePath("properties.prefix")]
         public string Prefix { get; set; }
         /// <summary> The address prefix length for the IpAllocation. </summary>
+        [WirePath("properties.prefixLength")]
         public int? PrefixLength { get; set; }
         /// <summary> The address prefix Type for the IpAllocation. </summary>
+        [WirePath("properties.prefixType")]
         public NetworkIPVersion? PrefixType { get; set; }
         /// <summary> The IPAM allocation ID. </summary>
+        [WirePath("properties.ipamAllocationId")]
         public string IpamAllocationId { get; set; }
         /// <summary> IpAllocation tags. </summary>
+        [WirePath("properties.allocationTags")]
         public IDictionary<string, string> AllocationTags { get; }
     }
 }

@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    internal static class Optional
+    internal static partial class Optional
     {
         public static bool IsCollectionDefined<T>(IEnumerable<T> collection)
         {
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Kubernetes
         }
 
         public static bool IsDefined<T>(T? value)
-        where T : struct
+            where T : struct
         {
             return value.HasValue;
         }
@@ -39,14 +38,14 @@ namespace Azure.ResourceManager.Kubernetes
             return value != null;
         }
 
-        public static bool IsDefined(JsonElement value)
-        {
-            return value.ValueKind != JsonValueKind.Undefined;
-        }
-
         public static bool IsDefined(string value)
         {
             return value != null;
+        }
+
+        public static bool IsDefined(JsonElement value)
+        {
+            return value.ValueKind != JsonValueKind.Undefined;
         }
     }
 }

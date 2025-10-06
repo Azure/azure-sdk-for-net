@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: PostArgsOperator
+    /// </summary>
     public readonly partial struct PostArgsOperator : IEquatable<PostArgsOperator>
     {
         private readonly string _value;
@@ -33,31 +36,61 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: PostArgsOperator.Any
+        /// </summary>
         public static PostArgsOperator Any { get; } = new PostArgsOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: PostArgsOperator.Equal
+        /// </summary>
         public static PostArgsOperator Equal { get; } = new PostArgsOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: PostArgsOperator.Contains
+        /// </summary>
         public static PostArgsOperator Contains { get; } = new PostArgsOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: PostArgsOperator.BeginsWith
+        /// </summary>
         public static PostArgsOperator BeginsWith { get; } = new PostArgsOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: PostArgsOperator.EndsWith
+        /// </summary>
         public static PostArgsOperator EndsWith { get; } = new PostArgsOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: PostArgsOperator.LessThan
+        /// </summary>
         public static PostArgsOperator LessThan { get; } = new PostArgsOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: PostArgsOperator.LessThanOrEqual
+        /// </summary>
         public static PostArgsOperator LessThanOrEqual { get; } = new PostArgsOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: PostArgsOperator.GreaterThan
+        /// </summary>
         public static PostArgsOperator GreaterThan { get; } = new PostArgsOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: PostArgsOperator.GreaterThanOrEqual
+        /// </summary>
         public static PostArgsOperator GreaterThanOrEqual { get; } = new PostArgsOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: PostArgsOperator.RegEx
+        /// </summary>
         public static PostArgsOperator RegEx { get; } = new PostArgsOperator(RegExValue);
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are the same. </summary>
         public static bool operator ==(PostArgsOperator left, PostArgsOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are not the same. </summary>
         public static bool operator !=(PostArgsOperator left, PostArgsOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostArgsOperator"/>. </summary>
         public static implicit operator PostArgsOperator(string value) => new PostArgsOperator(value);
 
         /// <inheritdoc />
@@ -68,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

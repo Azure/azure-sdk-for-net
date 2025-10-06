@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </summary>
+        [WirePath("resources")]
         public IList<string> Resources { get; }
         /// <summary> The export template options. A CSV-formatted list containing zero or more of the following: 'IncludeParameterDefaultValue', 'IncludeComments', 'SkipResourceNameParameterization', 'SkipAllParameterization'. </summary>
+        [WirePath("options")]
         public string Options { get; set; }
     }
 }

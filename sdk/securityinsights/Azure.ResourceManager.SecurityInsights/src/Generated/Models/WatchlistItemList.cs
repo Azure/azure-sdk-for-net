@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of watchlist items. </param>
+        /// <param name="nextLink"> URL to fetch the next set of watchlist item. </param>
         /// <param name="value"> Array of watchlist items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WatchlistItemList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistItemData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of watchlist items. </summary>
+        /// <summary> URL to fetch the next set of watchlist item. </summary>
         public string NextLink { get; }
         /// <summary> Array of watchlist items. </summary>
         public IReadOnlyList<SecurityInsightsWatchlistItemData> Value { get; }

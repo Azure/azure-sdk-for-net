@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.Maps.Search
 {
     /// <summary> The langauge of search result returned by the requests. </summary>
-    public readonly partial struct SearchLanguage : IEquatable<SearchLanguage>
+    public partial class SearchLanguage
     {
         private readonly string _value;
 
@@ -59,7 +59,7 @@ namespace Azure.Maps.Search
         private const string RomanianValue = "ro-RO";
         private const string RussianValue = "ru-RU";
         private const string SlovakValue = "sk-SK";
-        private const string SlovenianValue = "sl-SL";
+        private const string SlovenianValue = "sl-SI";
         private const string SerbianCyrillicValue = "sl-Cyrl-RS";
         private const string SwedishValue = "sv-SE";
         private const string ThaiValue = "th-TH";
@@ -147,7 +147,7 @@ namespace Azure.Maps.Search
         public static SearchLanguage Russian { get; } = new SearchLanguage(RussianValue);
         /// <summary> Return Slovak ("sk-SK"). </summary>
         public static SearchLanguage Slovak { get; } = new SearchLanguage(SlovakValue);
-        /// <summary> Return Slovenian ("sl-SL"). </summary>
+        /// <summary> Return Slovenian ("sl-SI"). </summary>
         public static SearchLanguage Slovenian { get; } = new SearchLanguage(SlovenianValue);
         /// <summary> Return Serbian (Cyrillic) ("sr-Cyrl-RS"). </summary>
         public static SearchLanguage SerbianCyrillic { get; } = new SearchLanguage(SerbianCyrillicValue);
@@ -165,18 +165,9 @@ namespace Azure.Maps.Search
         public static SearchLanguage SimplifiedChinese { get; } = new SearchLanguage(SimplifiedChineseValue);
         /// <summary> Return Traditional Chinese ("zh-TW"). </summary>
         public static SearchLanguage TraditionalChinese { get; } = new SearchLanguage(TraditionalChineseValue);
-        /// <summary> Determines if two <see cref="SearchLanguage"/> values are the same. </summary>
-        public static bool operator ==(SearchLanguage left, SearchLanguage right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SearchLanguage"/> values are not the same. </summary>
-        public static bool operator !=(SearchLanguage left, SearchLanguage right) => !left.Equals(right);
+
         /// <summary> Converts a string to a <see cref="SearchLanguage"/>. </summary>
         public static implicit operator SearchLanguage(string value) => new SearchLanguage(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SearchLanguage other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SearchLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

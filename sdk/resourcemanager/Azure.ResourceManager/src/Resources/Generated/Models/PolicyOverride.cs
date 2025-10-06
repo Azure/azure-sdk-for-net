@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The override kind. </summary>
+        [WirePath("kind")]
         public PolicyOverrideKind? Kind { get; set; }
         /// <summary> The value to override the policy property. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> The list of the selector expressions. </summary>
+        [WirePath("selectors")]
         public IList<ResourceSelectorExpression> Selectors { get; }
     }
 }

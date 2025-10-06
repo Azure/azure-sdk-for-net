@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -51,31 +52,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentModel"/>. </summary>
+        /// <param name="publisher"> Deployment model publisher. </param>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
         /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
+        /// <param name="sourceAccount"> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesAccountDeploymentModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Publisher = publisher;
             Format = format;
             Name = name;
             Version = version;
             Source = source;
+            SourceAccount = sourceAccount;
             CallRateLimit = callRateLimit;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Deployment model publisher. </summary>
+        [WirePath("publisher")]
+        public string Publisher { get; set; }
         /// <summary> Deployment model format. </summary>
+        [WirePath("format")]
         public string Format { get; set; }
         /// <summary> Deployment model name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Optional. Deployment model source ARM resource ID. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
+        /// <summary> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </summary>
+        [WirePath("sourceAccount")]
+        public ResourceIdentifier SourceAccount { get; set; }
         /// <summary> The call rate limit Cognitive Services account. </summary>
+        [WirePath("callRateLimit")]
         public ServiceAccountCallRateLimit CallRateLimit { get; }
     }
 }

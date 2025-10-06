@@ -69,7 +69,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
+        /// <param name="kind"> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </param>
         /// <param name="provisioningState"> Provisioning state of the Container App. </param>
+        /// <param name="runningStatus"> Running status of the Container App. </param>
         /// <param name="managedEnvironmentId"> Deprecated. Resource ID of the Container App's environment. </param>
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="workloadProfileName"> Workload profile name to pin for container app execution. </param>
@@ -82,12 +84,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="outboundIPAddressList"> Outbound IP Addresses for container app. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppKind? kind, ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
             ManagedBy = managedBy;
+            Kind = kind;
             ProvisioningState = provisioningState;
+            RunningStatus = runningStatus;
             ManagedEnvironmentId = managedEnvironmentId;
             EnvironmentId = environmentId;
             WorkloadProfileName = workloadProfileName;
@@ -108,34 +112,55 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> The complex type of the extended location. </summary>
+        [WirePath("extendedLocation")]
         public ContainerAppExtendedLocation ExtendedLocation { get; set; }
         /// <summary> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; set; }
+        /// <summary> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </summary>
+        [WirePath("kind")]
+        public ContainerAppKind? Kind { get; set; }
         /// <summary> Provisioning state of the Container App. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerAppProvisioningState? ProvisioningState { get; }
+        /// <summary> Running status of the Container App. </summary>
+        [WirePath("properties.runningStatus")]
+        public ContainerAppRunningStatus? RunningStatus { get; }
         /// <summary> Deprecated. Resource ID of the Container App's environment. </summary>
+        [WirePath("properties.managedEnvironmentId")]
         public ResourceIdentifier ManagedEnvironmentId { get; set; }
         /// <summary> Resource ID of environment. </summary>
+        [WirePath("properties.environmentId")]
         public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> Workload profile name to pin for container app execution. </summary>
+        [WirePath("properties.workloadProfileName")]
         public string WorkloadProfileName { get; set; }
         /// <summary> Name of the latest revision of the Container App. </summary>
+        [WirePath("properties.latestRevisionName")]
         public string LatestRevisionName { get; }
         /// <summary> Name of the latest ready revision of the Container App. </summary>
+        [WirePath("properties.latestReadyRevisionName")]
         public string LatestReadyRevisionName { get; }
         /// <summary> Fully Qualified Domain Name of the latest revision of the Container App. </summary>
+        [WirePath("properties.latestRevisionFqdn")]
         public string LatestRevisionFqdn { get; }
         /// <summary> Id used to verify domain name ownership. </summary>
+        [WirePath("properties.customDomainVerificationId")]
         public string CustomDomainVerificationId { get; }
         /// <summary> Non versioned Container App configuration properties. </summary>
+        [WirePath("properties.configuration")]
         public ContainerAppConfiguration Configuration { get; set; }
         /// <summary> Container App versioned application definition. </summary>
+        [WirePath("properties.template")]
         public ContainerAppTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses for container app. </summary>
+        [WirePath("properties.outboundIpAddresses")]
         public IReadOnlyList<IPAddress> OutboundIPAddressList { get; }
         /// <summary> The endpoint of the eventstream of the container app. </summary>
+        [WirePath("properties.eventStreamEndpoint")]
         public Uri EventStreamEndpoint { get; }
     }
 }

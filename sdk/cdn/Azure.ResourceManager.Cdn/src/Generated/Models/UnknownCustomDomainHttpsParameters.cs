@@ -10,13 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UnknownCustomDomainHttpsParameters. </summary>
+    /// <summary> Unknown version of CustomDomainHttpsParameters. </summary>
     internal partial class UnknownCustomDomainHttpsParameters : CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomDomainHttpsParameters"/>. </summary>
-        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
-        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="certificateSource">
+        /// Defines the source of the SSL certificate.
+        /// Serialized Name: CustomDomainHttpsParameters.certificateSource
+        /// </param>
+        /// <param name="protocolType">
+        /// Defines the TLS extension protocol that is used for secure delivery.
+        /// Serialized Name: CustomDomainHttpsParameters.protocolType
+        /// </param>
+        /// <param name="minimumTlsVersion">
+        /// TLS protocol version that will be used for Https
+        /// Serialized Name: CustomDomainHttpsParameters.minimumTlsVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownCustomDomainHttpsParameters(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData)
         {

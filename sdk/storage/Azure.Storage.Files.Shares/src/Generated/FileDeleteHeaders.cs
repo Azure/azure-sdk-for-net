@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
@@ -19,5 +18,7 @@ namespace Azure.Storage.Files.Shares
         }
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        /// <summary> NFS only. The link count of the file or directory. </summary>
+        public long? LinkCount => _response.Headers.TryGetValue("x-ms-link-count", out long? value) ? value : null;
     }
 }

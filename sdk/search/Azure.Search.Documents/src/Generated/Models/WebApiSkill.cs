@@ -8,11 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code. </summary>
+    /// <summary>
+    /// A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code.
+    /// Please note <see cref="WebApiSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ChatCompletionSkill"/>.
+    /// </summary>
     public partial class WebApiSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="WebApiSkill"/>. </summary>
@@ -38,6 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The url for the Web API. </param>
         /// <param name="httpHeaders"> The headers required to make the http request. </param>
         /// <param name="httpMethod"> The method for the http request. </param>
@@ -50,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity) : base(oDataType, name, description, context, inputs, outputs)
+        internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;
@@ -63,8 +67,10 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = oDataType ?? "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
-        /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
+        /// <summary> Initializes a new instance of <see cref="WebApiSkill"/> for deserialization. </summary>
+        internal WebApiSkill()
+        {
+        }
         /// <summary> The method for the http request. </summary>
         public string HttpMethod { get; set; }
         /// <summary> The desired timeout for the request. Default is 30 seconds. </summary>

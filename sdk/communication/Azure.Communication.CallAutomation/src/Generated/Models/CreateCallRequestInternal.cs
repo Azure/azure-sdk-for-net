@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -38,11 +37,19 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> The identifier of the source of the call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CustomCallingContextInternal customCallingContext)
+        /// <param name="mediaStreamingOptions">
+        /// Media Streaming Options.
+        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
+        /// </param>
+        /// <param name="transcriptionOptions">
+        /// Transcription Options.
+        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
+        /// </param>
+        /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -50,10 +57,10 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             OperationContext = operationContext;
             CallbackUri = callbackUri;
-            MediaStreamingConfiguration = mediaStreamingConfiguration;
-            TranscriptionConfiguration = transcriptionConfiguration;
             CallIntelligenceOptions = callIntelligenceOptions;
-            CustomCallingContext = customCallingContext;
+            MediaStreamingOptions = mediaStreamingOptions;
+            TranscriptionOptions = transcriptionOptions;
+            TeamsAppSource = teamsAppSource;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -71,13 +78,21 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
-        /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
-        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> Used by customer to send custom calling context to targets. </summary>
-        public CustomCallingContextInternal CustomCallingContext { get; set; }
+        /// <summary>
+        /// Media Streaming Options.
+        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
+        /// </summary>
+        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
+        /// <summary>
+        /// Transcription Options.
+        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
+        /// </summary>
+        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
+        public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
     }
 }

@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> The URL of the issuer to be trusted. </summary>
+        [WirePath("properties.issuer")]
         public Uri IssuerUri { get; set; }
         /// <summary> The identifier of the external identity. </summary>
+        [WirePath("properties.subject")]
         public string Subject { get; set; }
         /// <summary> The list of audiences that can appear in the issued token. </summary>
+        [WirePath("properties.audiences")]
         public IList<string> Audiences { get; }
     }
 }

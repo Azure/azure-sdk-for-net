@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -96,38 +94,55 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The request id of the search. </summary>
+        [WirePath("requestId")]
         public string SearchId { get; }
         /// <summary> The search result type. </summary>
+        [WirePath("resultType")]
         public string ResultType { get; }
         /// <summary> The total number of search results. </summary>
+        [WirePath("total")]
         public long? Total { get; }
         /// <summary> The number of top search results. </summary>
+        [WirePath("top")]
         public long? Top { get; }
         /// <summary> The id of the search results request. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The core summaries. </summary>
+        [WirePath("coreSummaries")]
         public IReadOnlyList<OperationalInsightsSearchCoreSummary> CoreSummaries { get; }
         /// <summary> The status of the search results. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> The start time for the search. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The time of last update. </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdated { get; }
         /// <summary> The ETag of the search results. </summary>
+        [WirePath("eTag")]
         public ETag? ETag { get; }
         /// <summary> How the results are sorted. </summary>
+        [WirePath("sort")]
         public IReadOnlyList<SearchSort> Sort { get; }
         /// <summary> The request time. </summary>
+        [WirePath("requestTime")]
         public long? RequestTime { get; }
         /// <summary> The aggregated value field. </summary>
+        [WirePath("aggregatedValueField")]
         public string AggregatedValueField { get; }
         /// <summary> The aggregated grouping fields. </summary>
+        [WirePath("aggregatedGroupingFields")]
         public string AggregatedGroupingFields { get; }
         /// <summary> The sum of all aggregates returned in the result set. </summary>
+        [WirePath("sum")]
         public long? Sum { get; }
         /// <summary> The max of all aggregates returned in the result set. </summary>
+        [WirePath("max")]
         public long? Max { get; }
         /// <summary> The schema. </summary>
+        [WirePath("schema")]
         public SearchMetadataSchema Schema { get; }
     }
 }

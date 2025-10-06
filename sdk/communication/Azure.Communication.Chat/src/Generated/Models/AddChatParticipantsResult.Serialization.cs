@@ -38,5 +38,13 @@ namespace Azure.Communication.Chat
             }
             return new AddChatParticipantsResult(invalidParticipants ?? new ChangeTrackingList<ChatError>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddChatParticipantsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAddChatParticipantsResult(document.RootElement);
+        }
     }
 }

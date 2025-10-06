@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
-            writer.WriteObjectValue(ReferenceName);
+            writer.WriteObjectValue<object>(ReferenceName);
             writer.WriteEndObject();
         }
 
@@ -49,12 +49,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SparkConfigurationParametrizationReference(type, referenceName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkConfigurationParametrizationReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkConfigurationParametrizationReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SparkConfigurationParametrizationReferenceConverter : JsonConverter<SparkConfigurationParametrizationReference>
         {
             public override void Write(Utf8JsonWriter writer, SparkConfigurationParametrizationReference model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SparkConfigurationParametrizationReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

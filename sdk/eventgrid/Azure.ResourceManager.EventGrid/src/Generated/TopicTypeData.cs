@@ -91,24 +91,34 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Namespace of the provider of the topic type. </summary>
+        [WirePath("properties.provider")]
         public string Provider { get; set; }
         /// <summary> Display Name for the topic type. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Description of the topic type. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Region type of the resource. </summary>
+        [WirePath("properties.resourceRegionType")]
         public EventGridResourceRegionType? ResourceRegionType { get; set; }
         /// <summary> Provisioning state of the topic type. </summary>
+        [WirePath("properties.provisioningState")]
         public TopicTypeProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of locations supported by this topic type. </summary>
+        [WirePath("properties.supportedLocations")]
         public IList<string> SupportedLocations { get; }
         /// <summary> Source resource format. </summary>
+        [WirePath("properties.sourceResourceFormat")]
         public string SourceResourceFormat { get; set; }
         /// <summary> Supported source scopes. </summary>
+        [WirePath("properties.supportedScopesForSource")]
         public IList<TopicTypeSourceScope> SupportedScopesForSource { get; }
         /// <summary> Flag to indicate that a topic type can support both regional or global system topics. </summary>
+        [WirePath("properties.areRegionalAndGlobalSourcesSupported")]
         public bool? AreRegionalAndGlobalSourcesSupported { get; set; }
         /// <summary> Permissions which are enforced for creating and updating system topics of this this topic type. </summary>
+        [WirePath("properties.additionalEnforcedPermissions")]
         public IList<TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions { get; }
     }
 }

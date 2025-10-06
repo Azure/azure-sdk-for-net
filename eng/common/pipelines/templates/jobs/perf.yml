@@ -112,7 +112,30 @@ jobs:
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
     parameters:
       AgentImage: $(OSVmImage)
-      
+
+  # Copied from eng/pipelines/templates/steps/install-dotnet.yml, but changed workingDirectory
+  - task: UseDotNet@2 # About UseDotNet@2 task: https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/use-dotnet-v2?view=azure-pipelines
+    displayName: "Use .NET SDK from global.json"
+    retryCountOnTaskFailure: 3
+    inputs:
+      useGlobalJson: true
+      workingDirectory: azure-sdk-tools
+
+  # Copied from eng/pipelines/templates/steps/install-dotnet.yml, but changed workingDirectory
+  - task: UseDotNet@2
+    displayName: "Use .NET SDK 8.0.x"
+    retryCountOnTaskFailure: 3
+    inputs:
+      # We must install sdk, not just runtime, as it is required by some of our tools, like test-proxy.
+      # Specifically, test-proxy requires asp.net core runtime, which is installed only when sdk option
+      # is selected, per: https://github.com/microsoft/azure-pipelines-tasks/issues/14405
+      packageType: sdk
+      version: 8.0.x
+      # performMultiLevelLookup comes into play when given .NET executable target runtime is different
+      # than the installed .NET SDK. Without this, such runtime would not be found.
+      performMultiLevelLookup: true
+      workingDirectory: azure-sdk-tools
+
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml
@@ -120,24 +143,36 @@ jobs:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
       Location: westus
       ResourceType: perf
+      ServiceConnection: azure-sdk-tests-public
 
-  - script: >-
-      dotnet run -- run
-      --language ${{ parameters.Language }}
-      --language-version ${{ parameters.LanguageVersion }}
-      --repo-root $(System.DefaultWorkingDirectory)
-      --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
-      --package-versions "${{ parameters.PackageVersions }}"
-      --tests "${{ parameters.Tests }}"
-      --arguments "${{ parameters.Arguments }}"
-      --iterations ${{ parameters.Iterations }}
-      $(Profile)
-      ${{ parameters.AdditionalArguments }}
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+  - task: AzurePowerShell@5
+    inputs:
+      azureSubscription: azure-sdk-tests-public
+      azurePowerShellVersion: LatestVersion
+      pwsh: true
+      ScriptType: InlineScript
+      Inline: >-
+        $account = (Get-AzContext).Account;
+        $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
+        $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+
+        dotnet run -- run
+        --language ${{ parameters.Language }}
+        --language-version ${{ parameters.LanguageVersion }}
+        --repo-root $(System.DefaultWorkingDirectory)
+        --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
+        --package-versions "${{ parameters.PackageVersions }}"
+        --tests "${{ parameters.Tests }}"
+        --arguments "${{ parameters.Arguments }}"
+        --iterations ${{ parameters.Iterations }}
+        $(Profile)
+        ${{ parameters.AdditionalArguments }}
+      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+    displayName: Run perf tests
     env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
       ${{ each var in parameters.EnvVars }}:
         ${{ var.key }}: ${{ var.value }}
-    displayName: Run perf tests
 
   - pwsh: |
       get-content results.txt
@@ -173,9 +208,10 @@ jobs:
     inputs:
       targetPath: $(System.DefaultWorkingDirectory)/${{ parameters.Language }}-profile.zip
       artifactName: ${{ parameters.Language }}-profile.zip
-    condition: ${{ parameters.Profile }}
+    condition: and(succeeded(), ${{ parameters.Profile }})
 
   - template: /eng/common/TestResources/remove-test-resources.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
       ResourceType: perf
+      ServiceConnection: azure-sdk-tests-public

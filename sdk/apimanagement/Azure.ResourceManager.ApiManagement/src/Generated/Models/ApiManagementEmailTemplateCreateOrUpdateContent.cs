@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subject of the Template. </summary>
+        [WirePath("properties.subject")]
         public string Subject { get; set; }
         /// <summary> Title of the Template. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Description of the Email Template. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
+        [WirePath("properties.body")]
         public string Body { get; set; }
         /// <summary> Email Template Parameter values. </summary>
+        [WirePath("properties.parameters")]
         public IList<EmailTemplateParametersContractProperties> Parameters { get; }
     }
 }

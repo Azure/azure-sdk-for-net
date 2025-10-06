@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -81,14 +80,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The type of the auto trigger for base image dependency updates. </summary>
+        [WirePath("baseImageTriggerType")]
         public ContainerRegistryBaseImageTriggerType BaseImageTriggerType { get; set; }
         /// <summary> The endpoint URL for receiving update triggers. </summary>
+        [WirePath("updateTriggerEndpoint")]
         public string UpdateTriggerEndpoint { get; set; }
         /// <summary> Type of Payload body for Base image update triggers. </summary>
+        [WirePath("updateTriggerPayloadType")]
         public ContainerRegistryUpdateTriggerPayloadType? UpdateTriggerPayloadType { get; set; }
         /// <summary> The current status of trigger. </summary>
+        [WirePath("status")]
         public ContainerRegistryTriggerStatus? Status { get; set; }
         /// <summary> The name of the trigger. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

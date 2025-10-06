@@ -6,11 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type 'semantic'.. </summary>
+    /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type `semantic`. </summary>
     public partial class QueryCaptionResult
     {
         /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>

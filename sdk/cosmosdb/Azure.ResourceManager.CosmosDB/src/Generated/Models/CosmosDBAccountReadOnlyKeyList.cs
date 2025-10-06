@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Base 64 encoded value of the primary read-only key. </summary>
+        [WirePath("primaryReadonlyMasterKey")]
         public string PrimaryReadonlyMasterKey { get; }
         /// <summary> Base 64 encoded value of the secondary read-only key. </summary>
+        [WirePath("secondaryReadonlyMasterKey")]
         public string SecondaryReadonlyMasterKey { get; }
     }
 }

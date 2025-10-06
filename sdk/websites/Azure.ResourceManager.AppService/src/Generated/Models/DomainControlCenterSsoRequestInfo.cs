@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL where the single sign-on request is to be made. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
         /// <summary> Post parameter key. </summary>
+        [WirePath("postParameterKey")]
         public string PostParameterKey { get; }
         /// <summary> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </summary>
+        [WirePath("postParameterValue")]
         public string PostParameterValue { get; }
     }
 }

@@ -10,23 +10,30 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerInstanceAzureFileVolume : IUtf8JsonSerializable, IJsonModel<ContainerInstanceAzureFileVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInstanceAzureFileVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInstanceAzureFileVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerInstanceAzureFileVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
             if (Optional.IsDefined(IsReadOnly))
@@ -41,6 +48,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
             }
+            if (Optional.IsDefined(StorageAccountKeyReference))
+            {
+                writer.WritePropertyName("storageAccountKeyReference"u8);
+                writer.WriteStringValue(StorageAccountKeyReference);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,14 +61,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerInstanceAzureFileVolume IJsonModel<ContainerInstanceAzureFileVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerInstanceAzureFileVolume DeserializeContainerInstanceAzureFileVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,8 +94,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             bool? readOnly = default;
             string storageAccountName = default;
             string storageAccountKey = default;
+            string storageAccountKeyReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareName"u8))
@@ -111,13 +123,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     storageAccountKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("storageAccountKeyReference"u8))
+                {
+                    storageAccountKeyReference = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceAzureFileVolume(shareName, readOnly, storageAccountName, storageAccountKey, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerInstanceAzureFileVolume(
+                shareName,
+                readOnly,
+                storageAccountName,
+                storageAccountKey,
+                storageAccountKeyReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceAzureFileVolume>.Write(ModelReaderWriterOptions options)
@@ -127,9 +150,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,11 +164,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerInstanceAzureFileVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

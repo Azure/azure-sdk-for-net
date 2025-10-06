@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The related metadata items for the table. </summary>
     internal partial class MetadataTableRelated
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetadataTableRelated"/>. </summary>
         internal MetadataTableRelated()
         {
@@ -31,7 +63,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="workspaces"> The related Log Analytics workspaces for the table. </param>
         /// <param name="functions"> The related functions for the table. </param>
         /// <param name="queries"> The related saved queries for the table. </param>
-        internal MetadataTableRelated(IReadOnlyList<string> categories, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> workspaces, IReadOnlyList<string> functions, IReadOnlyList<string> queries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataTableRelated(IReadOnlyList<string> categories, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> workspaces, IReadOnlyList<string> functions, IReadOnlyList<string> queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Categories = categories;
             Solutions = solutions;
@@ -39,6 +72,7 @@ namespace Azure.Monitor.Query.Models
             Workspaces = workspaces;
             Functions = functions;
             Queries = queries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The related categories for the table. </summary>

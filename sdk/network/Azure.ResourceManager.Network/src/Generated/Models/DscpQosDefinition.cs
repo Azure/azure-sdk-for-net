@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -76,16 +75,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of markings to be used in the configuration. </summary>
+        [WirePath("markings")]
         public IList<int> Markings { get; }
         /// <summary> Source IP ranges. </summary>
+        [WirePath("sourceIpRanges")]
         public IList<QosIPRange> SourceIPRanges { get; }
         /// <summary> Destination IP ranges. </summary>
+        [WirePath("destinationIpRanges")]
         public IList<QosIPRange> DestinationIPRanges { get; }
         /// <summary> Sources port ranges. </summary>
+        [WirePath("sourcePortRanges")]
         public IList<QosPortRange> SourcePortRanges { get; }
         /// <summary> Destination port ranges. </summary>
+        [WirePath("destinationPortRanges")]
         public IList<QosPortRange> DestinationPortRanges { get; }
         /// <summary> RNM supported protocol types. </summary>
+        [WirePath("protocol")]
         public ProtocolType? Protocol { get; set; }
     }
 }

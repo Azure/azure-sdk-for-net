@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Settings for overrides. </summary>
+        [WirePath("overrideSettings")]
         public UpgradeOverrideSettings OverrideSettings { get; set; }
     }
 }

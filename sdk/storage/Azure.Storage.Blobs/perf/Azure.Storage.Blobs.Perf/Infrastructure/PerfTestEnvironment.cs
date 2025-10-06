@@ -25,25 +25,38 @@ namespace Azure.Storage.Blobs.Perf
         /// The name of the Blob storage account to test against.
         /// </summary>
         /// <value>The Blob storage account name, read from the "AZURE_STORAGE_ACCOUNT_NAME" environment variable.</value>
-        public string BlobStorageAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
+        public string StorageAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
 
         /// <summary>
         /// The shared access key of the Blob storage account to test against.
         /// </summary>
         /// <value>The Blob storage account key, read from the "AZURE_STORAGE_ACCOUNT_KEY" environment variable.</value>
-        public string BlobStorageAccountKey => GetVariable("AZURE_STORAGE_ACCOUNT_KEY");
+        public string StorageAccountKey => GetOptionalVariable("AZURE_STORAGE_ACCOUNT_KEY");
+
+        public bool StorageUseManagedIdentity
+        {
+            get
+            {
+                string useManagedIdentity = GetOptionalVariable("AZURE_STORAGE_USE_MANAGED_IDENTITY");
+                if (bool.TryParse(useManagedIdentity, out bool result))
+                {
+                    return result;
+                }
+                return false;
+            }
+        }
 
         /// <summary>
-        /// The connection string for accessing the Blob storage account used for testing.
+        /// The Blob storage endpoint.
         /// </summary>
-        public string BlobStorageConnectionString { get; }
+        public Uri StorageEndpoint { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PerfTestEnvironment"/> class.
         /// </summary>
         public PerfTestEnvironment()
         {
-            BlobStorageConnectionString = $"DefaultEndpointsProtocol={Uri.UriSchemeHttps};AccountName={BlobStorageAccountName};AccountKey={BlobStorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
+            StorageEndpoint = new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}");
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An array of data actions that are allowed. </summary>
+        [WirePath("dataActions")]
         public IList<string> DataActions { get; }
         /// <summary> An array of data actions that are denied. </summary>
+        [WirePath("notDataActions")]
         public IList<string> NotDataActions { get; }
     }
 }

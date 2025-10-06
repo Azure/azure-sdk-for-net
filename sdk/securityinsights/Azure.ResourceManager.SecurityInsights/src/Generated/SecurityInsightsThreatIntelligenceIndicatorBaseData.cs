@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -77,6 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> The kind of the entity. </summary>
         internal ThreatIntelligenceResourceInnerKind Kind { get; set; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

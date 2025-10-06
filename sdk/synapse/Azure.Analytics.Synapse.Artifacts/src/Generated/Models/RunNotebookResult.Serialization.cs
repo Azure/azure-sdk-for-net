@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -91,12 +90,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 error);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RunNotebookResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRunNotebookResult(document.RootElement);
+        }
+
         internal partial class RunNotebookResultConverter : JsonConverter<RunNotebookResult>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookResult model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override RunNotebookResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

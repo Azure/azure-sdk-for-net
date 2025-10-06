@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("validateNonce")]
         public bool? ValidateNonce { get; set; }
         /// <summary> The time after the request is made when the nonce should expire. </summary>
+        [WirePath("nonceExpirationInterval")]
         public string NonceExpirationInterval { get; set; }
     }
 }

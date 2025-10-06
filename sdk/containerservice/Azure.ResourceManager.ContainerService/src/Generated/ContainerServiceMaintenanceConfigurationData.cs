@@ -76,10 +76,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </summary>
+        [WirePath("properties.timeInWeek")]
         public IList<ContainerServiceTimeInWeek> TimesInWeek { get; }
         /// <summary> Time slots on which upgrade is not allowed. </summary>
+        [WirePath("properties.notAllowedTime")]
         public IList<ContainerServiceTimeSpan> NotAllowedTimes { get; }
         /// <summary> Maintenance window for the maintenance configuration. </summary>
+        [WirePath("properties.maintenanceWindow")]
         public ContainerServiceMaintenanceWindow MaintenanceWindow { get; set; }
     }
 }

@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> The list of server versions supported by this server edition. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
+        [WirePath("supportedServerVersions")]
+        public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions =>
+            SupportedServerVersionsInternal;
+
+        internal IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersionsInternal { get; set; }
     }
 }

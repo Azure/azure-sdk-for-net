@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -53,27 +52,43 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
-        /// <param name="tags"> Update tags. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="autoScaleProperties"> Auto Scale Properties for Elastic San Appliance. </param>
+        /// <param name="tags"> Update tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanPatch(long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
             PublicNetworkAccess = publicNetworkAccess;
+            AutoScaleProperties = autoScaleProperties;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Update tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>
         public long? BaseSizeTiB { get; set; }
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
         public long? ExtendedCapacitySizeTiB { get; set; }
         /// <summary> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public ElasticSanPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Auto Scale Properties for Elastic San Appliance. </summary>
+        internal AutoScaleProperties AutoScaleProperties { get; set; }
+        /// <summary> Scale up settings on Elastic San Appliance. </summary>
+        public ElasticSanScaleUpProperties ScaleUpProperties
+        {
+            get => AutoScaleProperties is null ? default : AutoScaleProperties.ScaleUpProperties;
+            set
+            {
+                if (AutoScaleProperties is null)
+                    AutoScaleProperties = new AutoScaleProperties();
+                AutoScaleProperties.ScaleUpProperties = value;
+            }
+        }
+
+        /// <summary> Update tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

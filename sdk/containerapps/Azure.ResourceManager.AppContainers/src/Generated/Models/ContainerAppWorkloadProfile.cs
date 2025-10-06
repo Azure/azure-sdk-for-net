@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -80,12 +79,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Workload profile type for the workloads to run on. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Workload profile type for the workloads to run on. </summary>
+        [WirePath("workloadProfileType")]
         public string WorkloadProfileType { get; set; }
         /// <summary> The minimum capacity. </summary>
+        [WirePath("minimumCount")]
         public int? MinimumNodeCount { get; set; }
         /// <summary> The maximum capacity. </summary>
+        [WirePath("maximumCount")]
         public int? MaximumNodeCount { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of network interfaces on the specified VM. </summary>
+        [WirePath("networkInterfaces")]
         public IReadOnlyList<SecurityGroupNetworkInterface> NetworkInterfaces { get; }
     }
 }

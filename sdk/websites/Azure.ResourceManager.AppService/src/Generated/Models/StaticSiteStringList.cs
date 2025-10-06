@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -70,8 +69,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> List of string resources. </summary>
+        [WirePath("properties")]
         public IList<string> Properties { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

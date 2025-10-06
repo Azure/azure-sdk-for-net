@@ -32,7 +32,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SetRetentionPeriodUsingSetter()
         {
-            List<ConfigurationSettingsFilter> filters = new() { new ConfigurationSettingsFilter("key", "val") };
+            List<ConfigurationSettingsFilter> filters = new() { new ConfigurationSettingsFilter("key", "val", Array.Empty<string>()) };
 
             var settingSnapshot = new ConfigurationSnapshot(filters);
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);

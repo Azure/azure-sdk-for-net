@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -51,18 +50,25 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped. </summary>
+        [WirePath("properties.networkInterfaceTapConfigurations")]
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations { get; }
         /// <summary> The resource GUID property of the virtual network tap resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network tap resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The reference to the private IP Address of the collector nic that will receive the tap. </summary>
+        [WirePath("properties.destinationNetworkInterfaceIPConfiguration")]
         public NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration { get; set; }
         /// <summary> The reference to the private IP address on the internal Load Balancer that will receive the tap. </summary>
+        [WirePath("properties.destinationLoadBalancerFrontEndIPConfiguration")]
         public FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration { get; set; }
         /// <summary> The VXLAN destination port that will receive the tapped traffic. </summary>
+        [WirePath("properties.destinationPort")]
         public int? DestinationPort { get; set; }
     }
 }

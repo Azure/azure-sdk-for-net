@@ -1,14 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares;
+using DMShare::Azure.Storage.Files.Shares;
 using Moq;
 using NUnit.Framework;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -27,7 +31,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ExtensionMockTransferManager.Setup(tm => tm.StartTransferAsync(
                 It.IsAny<StorageResource>(),
                 It.IsAny<StorageResource>(),
-                It.IsAny<DataTransferOptions>(),
+                It.IsAny<TransferOptions>(),
                 It.IsAny<CancellationToken>()));
 
             _backupTransferManagerValue = (Lazy<TransferManager>)typeof(ShareDirectoryClientExtensions)
@@ -49,23 +53,32 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public async Task StartUploadDirectory([Values(true, false)] bool useOptions)
         {
             ShareFileStorageResourceOptions storageResourceOptions = new();
-            DataTransferOptions dataTransferOptions = new();
-            ShareDirectoryClientTransferOptions transferOptions = new()
+            TransferOptions transferOptions = new();
+            ShareDirectoryClientTransferOptions clientTransferOptions = new()
             {
                 ShareDirectoryOptions = storageResourceOptions,
-                TransferOptions = dataTransferOptions,
+                TransferOptions = transferOptions,
             };
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
 
-            await clientMock.Object.StartUploadDirectoryAsync(localPath, useOptions ? transferOptions : null);
+            await ShareDirectoryClientExtensions.UploadDirectoryAsync(
+                clientMock.Object,
+                WaitUntil.Started,
+                localPath,
+                useOptions ? clientTransferOptions : null);
 
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.IsAny<StorageResource>(),
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
                     (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock.Object &&
-                    (res as ShareDirectoryStorageResourceContainer).ResourceOptions == (useOptions ? storageResourceOptions : null)),
-                useOptions ? dataTransferOptions : null,
+                    (
+                        useOptions
+                            ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions
+                            : (res as ShareDirectoryStorageResourceContainer).ResourceOptions != null
+                    )
+                ),
+                useOptions ? transferOptions : null,
                 default), Times.Once);
             ExtensionMockTransferManager.VerifyNoOtherCalls();
         }
@@ -74,23 +87,32 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public async Task StartDownloadDirectory([Values(true, false)] bool useOptions)
         {
             ShareFileStorageResourceOptions storageResourceOptions = new();
-            DataTransferOptions dataTransferOptions = new();
-            ShareDirectoryClientTransferOptions transferOptions = new()
+            TransferOptions transferOptions = new();
+            ShareDirectoryClientTransferOptions clientTransferOptions = new()
             {
                 ShareDirectoryOptions = storageResourceOptions,
-                TransferOptions = dataTransferOptions,
+                TransferOptions = transferOptions,
             };
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
 
-            await clientMock.Object.StartDownloadToDirectoryAsync(localPath, useOptions ? transferOptions : null);
+            await ShareDirectoryClientExtensions.DownloadToDirectoryAsync(
+                clientMock.Object,
+                WaitUntil.Started,
+                localPath,
+                useOptions ? clientTransferOptions : null);
 
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
                     (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock.Object &&
-                    (res as ShareDirectoryStorageResourceContainer).ResourceOptions == (useOptions ? storageResourceOptions : null)),
+                    (
+                        useOptions
+                            ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions
+                            : (res as ShareDirectoryStorageResourceContainer).ResourceOptions != null
+                    )
+                ),
                 It.IsAny<StorageResource>(),
-                useOptions ? dataTransferOptions : null,
+                useOptions ? transferOptions : null,
                 default), Times.Once);
             ExtensionMockTransferManager.VerifyNoOtherCalls();
         }

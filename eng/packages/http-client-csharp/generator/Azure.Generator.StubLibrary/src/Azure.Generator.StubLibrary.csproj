@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>StubPlugin</PackageId>
+    <Version>1.0.0-beta.1</Version>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Generator\src\Azure.Generator.csproj" />
+  </ItemGroup>
+
+  <!-- Copy output to package dist path for local execution and  -->
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
+    <Message Text="Copying output to dist path" Importance="high" />
+    <ItemGroup>
+      <SourceDir Include="$(OutputPath)**\*Stub*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
+  </Target>
+
+</Project>

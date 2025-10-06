@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -84,24 +83,34 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Category of the tenant. </summary>
+        [WirePath("tenantCategory")]
         public TenantCategory? TenantCategory { get; }
         /// <summary> Country/region name of the address for the tenant. </summary>
+        [WirePath("country")]
         public string Country { get; }
         /// <summary> Country/region abbreviation for the tenant. </summary>
+        [WirePath("countryCode")]
         public string CountryCode { get; }
         /// <summary> The display name of the tenant. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The list of domains for the tenant. </summary>
+        [WirePath("domains")]
         public IReadOnlyList<string> Domains { get; }
         /// <summary> The default domain for the tenant. </summary>
+        [WirePath("defaultDomain")]
         public string DefaultDomain { get; }
         /// <summary> The tenant type. Only available for 'Home' tenant category. </summary>
+        [WirePath("tenantType")]
         public string TenantType { get; }
         /// <summary> The tenant's branding logo URL. Only available for 'Home' tenant category. </summary>
+        [WirePath("tenantBrandingLogoUrl")]
         public Uri TenantBrandingLogoUri { get; }
     }
 }

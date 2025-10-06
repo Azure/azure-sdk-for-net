@@ -50,7 +50,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             #region Snippet:SchemaRegistryJsonSerializeEventData
             // The serializer serializes into JSON by default
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
@@ -108,7 +108,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             #region Snippet:SchemaRegistryJsonSerializeEventDataGenerics
             // The serializer serializes into JSON by default
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
@@ -146,7 +146,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             #region Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
             // The serializer serializes into JSON by default
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -165,7 +165,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             {
                 Serializer = new NewtonsoftJsonObjectSerializer()
             };
-            var newtonsoftSerializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), newtonsoftSerializerOptions);
+            var newtonsoftSerializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName, newtonsoftSerializerOptions);
             #endregion
 
             #region Snippet:SchemaRegistryJsonSerializeDeserializeWithOptions
@@ -178,7 +178,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             {
                 Serializer = new JsonObjectSerializer(jsonSerializerOptions)
             };
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), serializerOptions);
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName, serializerOptions);
             #endregion
         }
 

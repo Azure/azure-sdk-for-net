@@ -20,12 +20,30 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
+            if (Optional.IsDefined(SpeechModelEndpointId))
+            {
+                writer.WritePropertyName("speechModelEndpointId"u8);
+                writer.WriteStringValue(SpeechModelEndpointId);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(OperationCallbackUri))
+            {
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Data in table form. </summary>
+        [WirePath("table")]
         public DataTableResponseObject Table { get; set; }
         /// <summary> Properties that describe how the table should be rendered. </summary>
+        [WirePath("renderingProperties")]
         public DiagnosticDataRendering RenderingProperties { get; set; }
     }
 }

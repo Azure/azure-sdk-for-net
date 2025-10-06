@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Region description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Display name for region. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> Display name for region. </summary>
+        [WirePath("properties.orgDomain")]
         public string OrgDomain { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

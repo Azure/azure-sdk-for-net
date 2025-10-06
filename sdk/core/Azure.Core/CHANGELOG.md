@@ -1,6 +1,6 @@
 # Release History
 
-## 1.39.0-beta.1 (Unreleased)
+## 1.50.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,154 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.49.0 (2025-09-22)
+
+### Features Added
+
+- Adopt System.ClientModel 1.7.0
+
+## 1.48.0 (2025-09-09)
+
+### Bugs Fixed
+
+- Fixed an issue that prevented unbranded generated clients from utilizing an instance of `TokenCredential` with APIs that accept `AuthenticationTokenProvider`.
+
+## 1.47.3 (2025-08-20)
+
+### Features Added
+
+- Adopt System.ClientModel 1.6.1
+
+## 1.47.2 (2025-08-11)
+
+### Features Added
+
+- Adopt System.ClientModel 1.6.0
+
+## 1.47.1 (2025-07-15)
+
+### Features Added
+
+- Adopt System.ClientModel 1.5.1
+
+## 1.47.0 (2025-07-09)
+
+### Features Added
+
+- Added `RequestContent.Create<T>(T model, ModelReaderWriterOptions? options = null)` overload that accepts `IPersistableModel<T>` types for improved performance and API consistency with `BinaryContent`.
+- Adopt System.ClientModel 1.5.0
+
+### Other Changes
+
+- Adjusted the options used for JSON serialization to relax encoding rules and reduce the cost and impact. ([#50885](https://github.com/Azure/azure-sdk-for-net/pull/50885))
+
+## 1.46.2 (2025-06-05)
+
+### Features Added
+
+- Adopt System.ClientModel 1.4.2
+
+## 1.46.1 (2025-05-09)
+
+### Features Added
+
+- Adopt System.ClientModel 1.4.1
+
+## 1.46.0 (2025-05-06)
+
+### Features Added
+
+- Adding AzureCoreContext to support AOT compatible reading and writing of types owned by Azure.Core through ModelReaderWriter
+
+## 1.45.0 (2025-02-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Azure.Core library better with their contributions to this release:
+
+- Jero Bado _([GitHub](https://github.com/jerobado))_
+
+### Features Added
+
+- Added `MexicoCentral` and `SpainCentral` locations to `AzureLocation` struct. This was a community contribution, courtesy of [jerobado](https://github.com/jerobado).  ([#47862](https://github.com/Azure/azure-sdk-for-net/pull/47862))
+
+### Bugs Fixed
+
+- Fixed an issue where `BearerTokenAuthenticationPolicy` throws `ArgumentOutOfRangeException` if the `ExpiresOn` property of the token is the default value. ([#47040](https://github.com/Azure/azure-sdk-for-net/pull/47040))
+
+### Other Changes
+
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content.
+
+## 1.44.1 (2024-10-09)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
+
+## 1.44.0 (2024-10-03)
+
+### Features Added
+
+- `TokenRequestContext` added the `IsProofOfPossessionEnabled`, `ResourceRequestMethod`, and `ResourceRequestUri` properties to support Proof of Possession tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- `AccessToken` added the `TokenType` property to support distinguishing Bearer tokens from Proof of Possession (PoP) tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- Moved implementation of `Azure.AzureKeyCredential` into `System.ClientModel.ApiKeyCredential` and made `ApiKeyCredential` the base type for `AzureKeyCredential` ([#46128](https://github.com/Azure/azure-sdk-for-net/pull/46128)).
+- `BearerTokenAuthenticationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default ([#46277](https://github.com/Azure/azure-sdk-for-net/pull/46277)).
+
+### Other Changes
+
+- Upgraded `System.Memory.Data` package dependency to 6.0.0 ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46134)).
+
+## 1.43.0 (2024-09-12)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
+- Added a new constructor on `AzureEventSourceListener` for callers that don't need the formatted message ([#45191](https://github.com/Azure/azure-sdk-for-net/pull/45191)).
+- Remove unused callback from `HttpRequestMessage` options in `HttpClientTransport` transport ([#45696](https://github.com/Azure/azure-sdk-for-net/pull/45696)).
+- Added `RequiresUnreferencedCode` and `RequiresDynamicCode` attributes to `ToDynamicFromJson` extension methods and `DynamicData` APIs to support AOT scenarios ([#45417](https://github.com/Azure/azure-sdk-for-net/pull/45417)).
+
+## 1.42.0 (2024-08-01)
+
+### Other Changes
+
+- Improved memory performance for Event Source formatting [#43947](https://github.com/Azure/azure-sdk-for-net/pull/43947)
+- Upgraded dependency on System.Text.Encodings.Web to 6.0.0
+- Upgraded dependency on Microsoft.Bcl.AsyncInterfaces to 6.0.0
+
+## 1.41.0 (2024-07-11)
+
+### Bugs Fixed
+
+- Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException` ([#44882](https://github.com/Azure/azure-sdk-for-net/pull/44882)).
+- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835)).
+
+## 1.40.0 (2024-06-06)
+
+### Features Added
+
+- Added `RefreshOn` property to `AccessToken` and updated `BearerTokenAuthenticationPolicy` to refresh long-lived credentials according to this value ([#43836](https://github.com/Azure/azure-sdk-for-net/issues/43836)).
+
+### Bugs Fixed
+
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters ([#44386](https://github.com/Azure/azure-sdk-for-net/pull/44386)).
+- Fixed case where Operation.Id was not being set for incomplete long-running operations ([#44098](https://github.com/Azure/azure-sdk-for-net/pull/44098)).
+
+### Other Changes
+
+- Improved memory performance for HTTP message sanitization ([#43818](https://github.com/Azure/azure-sdk-for-net/pull/43818)).
+- Added `DynamicallyAccessedMembers` attribute to type parameter in `Operation<T>.Rehydrate` method ([#44208](https://github.com/Azure/azure-sdk-for-net/pull/44208)).
+
+## 1.39.0 (2024-04-18)
+
+### Features Added
+
+- Add `Operation.Rehydrate` and `Operation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Other Changes
+
+- `RequestFailedException` will not include the response content or headers in the message when the `IsError` property of the response is `false`.
 
 ## 1.38.0 (2024-02-26)
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -84,12 +83,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource identifier of the target resource against which the action is to be performed. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The source IP address. </summary>
+        [WirePath("sourceIPAddress")]
         public string SourceIPAddress { get; }
         /// <summary> The destination IP address. </summary>
+        [WirePath("destinationIPAddress")]
         public string DestinationIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional). </summary>
+        [WirePath("targetNicResourceId")]
         public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Required CPU in cores, e.g. 0.5. </summary>
+        [WirePath("cpu")]
         public double? Cpu { get; set; }
         /// <summary> Required memory, e.g. "250Mb". </summary>
+        [WirePath("memory")]
         public string Memory { get; set; }
         /// <summary> Ephemeral Storage, e.g. "1Gi". </summary>
+        [WirePath("ephemeralStorage")]
         public string EphemeralStorage { get; }
     }
 }

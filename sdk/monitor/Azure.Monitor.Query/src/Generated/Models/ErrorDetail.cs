@@ -7,55 +7,77 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Error details. </summary>
+    /// <summary> The error detail. </summary>
     internal partial class ErrorDetail
     {
-        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
-        /// <param name="code"> The error's code. </param>
-        /// <param name="message"> A human readable error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal ErrorDetail(string code, string message)
-        {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(message, nameof(message));
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-            Code = code;
-            Message = message;
-            Resources = new ChangeTrackingList<string>();
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
+        internal ErrorDetail()
+        {
+            Details = new ChangeTrackingList<ErrorDetail>();
+            AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
-        /// <param name="code"> The error's code. </param>
-        /// <param name="message"> A human readable error message. </param>
-        /// <param name="target"> Indicates which property in the request is responsible for the error. </param>
-        /// <param name="value"> Indicates which value in 'target' is responsible for the error. </param>
-        /// <param name="resources"> Indicates resources which were responsible for the error. </param>
-        /// <param name="additionalProperties"> Additional properties that can be provided on the error details object. </param>
-        internal ErrorDetail(string code, string message, string target, string value, IReadOnlyList<string> resources, object additionalProperties)
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
-            Value = value;
-            Resources = resources;
-            AdditionalProperties = additionalProperties;
+            Details = details;
+            AdditionalInfo = additionalInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The error's code. </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary> A human readable error message. </summary>
+        /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary> Indicates which property in the request is responsible for the error. </summary>
+        /// <summary> The error target. </summary>
         public string Target { get; }
-        /// <summary> Indicates which value in 'target' is responsible for the error. </summary>
-        public string Value { get; }
-        /// <summary> Indicates resources which were responsible for the error. </summary>
-        public IReadOnlyList<string> Resources { get; }
-        /// <summary> Additional properties that can be provided on the error details object. </summary>
-        public object AdditionalProperties { get; }
+        /// <summary> The error details. </summary>
+        public IReadOnlyList<ErrorDetail> Details { get; }
+        /// <summary> The error additional info. </summary>
+        public IReadOnlyList<ErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

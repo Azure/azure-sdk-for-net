@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -77,18 +75,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Description of scaling plan. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> User friendly name of scaling plan. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Timezone of the scaling plan. </summary>
+        [WirePath("properties.timeZone")]
         public string TimeZone { get; set; }
         /// <summary> Exclusion tag for scaling plan. </summary>
+        [WirePath("properties.exclusionTag")]
         public string ExclusionTag { get; set; }
         /// <summary> List of ScalingSchedule definitions. </summary>
+        [WirePath("properties.schedules")]
         public IList<ScalingSchedule> Schedules { get; }
         /// <summary> List of ScalingHostPoolReference definitions. </summary>
+        [WirePath("properties.hostPoolReferences")]
         public IList<ScalingHostPoolReference> HostPoolReferences { get; }
     }
 }

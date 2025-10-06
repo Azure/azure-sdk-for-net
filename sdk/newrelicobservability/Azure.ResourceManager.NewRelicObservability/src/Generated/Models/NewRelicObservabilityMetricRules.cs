@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Flag specifying if metrics should be sent for the Monitor resource. </summary>
+        [WirePath("sendMetrics")]
         public NewRelicObservabilitySendMetricsStatus? SendMetrics { get; set; }
         /// <summary> List of filtering tags to be used for capturing metrics. </summary>
+        [WirePath("filteringTags")]
         public IList<NewRelicObservabilityFilteringTag> FilteringTags { get; }
         /// <summary> User Email. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; set; }
     }
 }

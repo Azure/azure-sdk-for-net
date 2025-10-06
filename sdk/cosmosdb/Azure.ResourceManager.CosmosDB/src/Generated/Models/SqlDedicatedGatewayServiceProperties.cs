@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -29,17 +28,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="sqlDedicatedGatewayEndpoint"> SqlDedicatedGateway endpoint for the service. </param>
+        /// <param name="dedicatedGatewayType"> DedicatedGatewayType for the service. </param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        internal SqlDedicatedGatewayServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string sqlDedicatedGatewayEndpoint, IReadOnlyList<SqlDedicatedGatewayRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
+        internal SqlDedicatedGatewayServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string sqlDedicatedGatewayEndpoint, DedicatedGatewayType? dedicatedGatewayType, IReadOnlyList<SqlDedicatedGatewayRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             SqlDedicatedGatewayEndpoint = sqlDedicatedGatewayEndpoint;
+            DedicatedGatewayType = dedicatedGatewayType;
             Locations = locations;
             ServiceType = serviceType;
         }
 
         /// <summary> SqlDedicatedGateway endpoint for the service. </summary>
+        [WirePath("sqlDedicatedGatewayEndpoint")]
         public string SqlDedicatedGatewayEndpoint { get; set; }
+        /// <summary> DedicatedGatewayType for the service. </summary>
+        [WirePath("dedicatedGatewayType")]
+        public DedicatedGatewayType? DedicatedGatewayType { get; set; }
         /// <summary> An array that contains all of the locations for the service. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<SqlDedicatedGatewayRegionalService> Locations { get; }
     }
 }

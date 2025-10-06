@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Secret key. </summary>
+        [WirePath("key")]
         public string Key { get; }
         /// <summary> Trigger URL. </summary>
+        [WirePath("trigger_url")]
         public Uri TriggerUri { get; }
     }
 }

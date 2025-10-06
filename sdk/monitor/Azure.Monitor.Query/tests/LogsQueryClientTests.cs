@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Monitor.Query.Models;
 using Moq;
 using NUnit.Framework;
@@ -98,7 +99,7 @@ namespace Azure.Monitor.Query.Tests
                 ""Age"": ""3"",
                 ""request-context"": ""appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297""
             },
-            ""body"": ""{\""tables\"":[{\""name\"":\""PrimaryResult\"",\""columns\"":[{\""name\"":\""TenantId\"",\""type\"":\""string\""},{\""name\"":\""SourceSystem\"",\""type\"":\""string\""},{\""name\"":\""MG\"",\""type\"":\""string\""},{\""name\"":\""ManagementGroupName\"",\""type\"":\""string\""},{\""name\"":\""TimeGenerated\"",\""type\"":\""datetime\""},{\""name\"":\""Computer\"",\""type\"":\""string\""},{\""name\"":\""RawData\"",\""type\"":\""string\""},{\""name\"":\""IntColumn_d\"",\""type\"":\""real\""},{\""name\"":\""StringColumn_s\"",\""type\"":\""string\""},{\""name\"":\""BoolColumn_b\"",\""type\"":\""bool\""},{\""name\"":\""FloatColumn_d\"",\""type\"":\""real\""},{\""name\"":\""Type\"",\""type\"":\""string\""},{\""name\"":\""_ResourceId\"",\""type\"":\""string\""}],\""rows\"":[[\""e7bf7412-576d-4978-b47c-2edf669e3e2a\"",\""RestAPI\"",\""\"",\""\"",\""2021-05-31T00:00:00Z\"",\""\"",\""\"",1,\""a\"",false,0,\""TableA1_151_CL\"",\""\""],[\""e7bf7412-576d-4978-b47c-2edf669e3e2a\"",\""RestAPI\"",\""\"",\""\"",\""2021-06-02T00:00:00Z\"",\""\"",\""\"",3,\""b\"",true,1.20000005,\""TableA1_151_CL\"",\""\""],[\""e7bf7412-576d-4978-b47c-2edf669e3e2a\"",\""RestAPI\"",\""\"",\""\"",\""2021-06-05T00:00:00Z\"",\""\"",\""\"",1,\""c\"",false,1.10000002,\""TableA1_151_CL\"",\""\""]]}]}""
+            ""body"": {""tables"":[{""name"":""PrimaryResult"",""columns"":[{""name"":""TenantId"",""type"":""string""},{""name"":""SourceSystem"",""type"":""string""},{""name"":""MG"",""type"":""string""},{""name"":""ManagementGroupName"",""type"":""string""},{""name"":""TimeGenerated"",""type"":""datetime""},{""name"":""Computer"",""type"":""string""},{""name"":""RawData"",""type"":""string""},{""name"":""IntColumn_d"",""type"":""real""},{""name"":""StringColumn_s"",""type"":""string""},{""name"":""BoolColumn_b"",""type"":""bool""},{""name"":""FloatColumn_d"",""type"":""real""},{""name"":""Type"",""type"":""string""},{""name"":""_ResourceId"",""type"":""string""}],""rows"":[[""e7bf7412-576d-4978-b47c-2edf669e3e2a"",""RestAPI"","""","""",""2021-05-31T00:00:00Z"","""","""",1,""a"",false,0,""TableA1_151_CL"",""""],[""e7bf7412-576d-4978-b47c-2edf669e3e2a"",""RestAPI"","""","""",""2021-06-02T00:00:00Z"","""","""",3,""b"",true,1.20000005,""TableA1_151_CL"",""""],[""e7bf7412-576d-4978-b47c-2edf669e3e2a"",""RestAPI"","""","""",""2021-06-05T00:00:00Z"","""","""",1,""c"",false,1.10000002,""TableA1_151_CL"",""""]]}]}
         }
     ]
 }
@@ -283,6 +284,87 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic(9).ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic("column9").ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetObject("column9").ToString());
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsAndEndpointIsNull_UsesDefaultEndpoint()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new LogsQueryClient(credential);
+            Assert.AreEqual(LogsQueryAudience.AzurePublicCloud.ToString(), client.Endpoint.OriginalString);
+        }
+
+        [Test]
+        public void Constructor_WhenEndpointIsNull_UsesOptionsAudience()
+        {
+            var credential = new DefaultAzureCredential();
+            var options = new LogsQueryClientOptions
+            {
+                Audience = "https://custom.audience"
+            };
+
+            var client = new LogsQueryClient(credential, options);
+
+            // When endpoint is not passed in, use Audience to contstruct the endpoint
+            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsDoesNotMatchAudience()
+        {
+            var endpoint = new Uri("https://custom.audience");
+            var credential = new DefaultAzureCredential();
+            var options = new LogsQueryClientOptions
+            {
+                Audience = "https://customs.audience"
+            };
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => new LogsQueryClient(endpoint, credential, options)));
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesEndpoint()
+        {
+            var endpoint = new Uri("https://custom.audience");
+            var credential = new DefaultAzureCredential();
+
+            var client = new LogsQueryClient(endpoint, credential);
+
+            Assert.AreEqual(new Uri("https://custom.audience"), client.Endpoint);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesEndpointSlash()
+        {
+            var endpoint = new Uri("https://custom.audience//");
+            var credential = new DefaultAzureCredential();
+
+            var client = new LogsQueryClient(endpoint, credential);
+
+            Assert.AreEqual("https://custom.audience//", client.Endpoint.AbsoluteUri);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsValid_UsesOptionsAsUri()
+        {
+            var credential = new DefaultAzureCredential();
+            var options = new LogsQueryClientOptions
+            {
+                Audience = LogsQueryAudience.AzureGovernment
+            };
+
+            var client = new LogsQueryClient(credential, options);
+
+            Assert.AreEqual(new Uri(LogsQueryAudience.AzureGovernment.ToString()), client.Endpoint);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_EndpointIsNull()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new LogsQueryClient(credential);
+
+            Assert.AreEqual(new Uri(LogsQueryAudience.AzurePublicCloud.ToString()), client.Endpoint);
         }
     }
 }

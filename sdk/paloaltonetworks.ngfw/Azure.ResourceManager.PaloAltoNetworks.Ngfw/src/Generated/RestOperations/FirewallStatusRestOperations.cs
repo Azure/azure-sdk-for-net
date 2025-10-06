@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFirewallsRequestUri(string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendPath("/statuses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFirewallsRequest(string subscriptionId, string resourceGroupName, string firewallName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,28 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendPath("/statuses/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string firewallName)
@@ -157,7 +186,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaloAltoNetworksFirewallStatusData.DeserializePaloAltoNetworksFirewallStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -188,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaloAltoNetworksFirewallStatusData.DeserializePaloAltoNetworksFirewallStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,6 +226,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFirewallsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFirewallsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string firewallName)
@@ -235,7 +272,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -266,7 +303,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

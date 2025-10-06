@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PrivateDns
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.PrivateDns
 
         VirtualNetworkLinkResource IOperationSource<VirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
+            var data = ModelReaderWriter.Read<VirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPrivateDnsContext.Default);
             return new VirtualNetworkLinkResource(_client, data);
         }
 
         async ValueTask<VirtualNetworkLinkResource> IOperationSource<VirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
-            return new VirtualNetworkLinkResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPrivateDnsContext.Default);
+            return await Task.FromResult(new VirtualNetworkLinkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

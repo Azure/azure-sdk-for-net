@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -76,10 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
+        /// <param name="upgradePreference"> Upgrade Preference. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
+        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
+        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -95,8 +98,12 @@ namespace Azure.ResourceManager.AppService.Models
             ClusterSettings = clusterSettings;
             UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
+            UpgradePreference = upgradePreference;
             DedicatedHostCount = dedicatedHostCount;
             IsZoneRedundant = isZoneRedundant;
+            CustomDnsSuffixConfiguration = customDnsSuffixConfiguration;
+            NetworkingConfiguration = networkingConfiguration;
+            UpgradeAvailability = upgradeAvailability;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -106,39 +113,67 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>
+        [WirePath("provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Current status of the App Service Environment. </summary>
+        [WirePath("status")]
         public HostingEnvironmentStatus? Status { get; }
         /// <summary> Description of the Virtual Network. </summary>
+        [WirePath("virtualNetwork")]
         public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
+        [WirePath("internalLoadBalancingMode")]
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
         /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
+        [WirePath("multiSize")]
         public string MultiSize { get; set; }
         /// <summary> Number of front-end instances. </summary>
+        [WirePath("multiRoleCount")]
         public int? MultiRoleCount { get; }
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
+        [WirePath("ipsslAddressCount")]
         public int? IPSslAddressCount { get; set; }
         /// <summary> DNS suffix of the App Service Environment. </summary>
+        [WirePath("dnsSuffix")]
         public string DnsSuffix { get; set; }
         /// <summary> Maximum number of VMs in the App Service Environment. </summary>
+        [WirePath("maximumNumberOfMachines")]
         public int? MaximumNumberOfMachines { get; }
         /// <summary> Scale factor for front-ends. </summary>
+        [WirePath("frontEndScaleFactor")]
         public int? FrontEndScaleFactor { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
         /// </summary>
+        [WirePath("suspended")]
         public bool? IsSuspended { get; }
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
+        [WirePath("clusterSettings")]
         public IList<AppServiceNameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
+        [WirePath("userWhitelistedIpRanges")]
         public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
+        [WirePath("hasLinuxWorkers")]
         public bool? HasLinuxWorkers { get; }
+        /// <summary> Upgrade Preference. </summary>
+        [WirePath("upgradePreference")]
+        public AppServiceEnvironmentUpgradePreference? UpgradePreference { get; set; }
         /// <summary> Dedicated Host Count. </summary>
+        [WirePath("dedicatedHostCount")]
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
+        /// <summary> Full view of the custom domain suffix configuration for ASEv3. </summary>
+        [WirePath("customDnsSuffixConfiguration")]
+        public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get; set; }
+        /// <summary> Full view of networking configuration for an ASE. </summary>
+        [WirePath("networkingConfiguration")]
+        public AseV3NetworkingConfigurationData NetworkingConfiguration { get; set; }
+        /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
+        [WirePath("upgradeAvailability")]
+        public AppServiceEnvironmentUpgradeAvailability? UpgradeAvailability { get; }
     }
 }

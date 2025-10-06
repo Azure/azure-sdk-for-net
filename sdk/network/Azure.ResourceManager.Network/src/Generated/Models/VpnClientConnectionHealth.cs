@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </summary>
+        [WirePath("totalIngressBytesTransferred")]
         public long? TotalIngressBytesTransferred { get; }
         /// <summary> Total of the Egress Bytes Transferred in this connection. </summary>
+        [WirePath("totalEgressBytesTransferred")]
         public long? TotalEgressBytesTransferred { get; }
         /// <summary> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </summary>
+        [WirePath("vpnClientConnectionsCount")]
         public int? VpnClientConnectionsCount { get; }
         /// <summary> List of allocated ip addresses to the connected p2s vpn clients. </summary>
+        [WirePath("allocatedIpAddresses")]
         public IReadOnlyList<string> AllocatedIPAddresses { get; }
     }
 }

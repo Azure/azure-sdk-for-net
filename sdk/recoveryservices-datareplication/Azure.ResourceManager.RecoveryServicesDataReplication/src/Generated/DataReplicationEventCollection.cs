@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -62,11 +60,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_Get</description>
+        /// <description>EventModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -107,11 +105,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_Get</description>
+        /// <description>EventModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +150,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_List</description>
+        /// <description>EventModel_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,14 +162,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Filter string. </param>
+        /// <param name="odataOptions"> OData options. </param>
         /// <param name="continuationToken"> Continuation token. </param>
+        /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataReplicationEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataReplicationEventResource> GetAllAsync(string filter = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataReplicationEventResource> GetAllAsync(string odataOptions = null, string continuationToken = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -184,11 +183,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_List</description>
+        /// <description>EventModel_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,14 +195,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Filter string. </param>
+        /// <param name="odataOptions"> OData options. </param>
         /// <param name="continuationToken"> Continuation token. </param>
+        /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataReplicationEventResource> GetAll(string filter = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataReplicationEventResource> GetAll(string odataOptions = null, string continuationToken = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEventEventRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEventEventRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEventResource(Client, DataReplicationEventData.DeserializeDataReplicationEventData(e)), _dataReplicationEventEventClientDiagnostics, Pipeline, "DataReplicationEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_Get</description>
+        /// <description>EventModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_Get</description>
+        /// <description>EventModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_Get</description>
+        /// <description>EventModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -347,11 +347,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_Get</description>
+        /// <description>EventModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

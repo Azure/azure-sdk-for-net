@@ -8,43 +8,55 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorCustomDomainHttpsContent : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainHttpsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainHttpsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorCustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
+            if (Optional.IsDefined(CipherSuiteSetType))
+            {
+                writer.WritePropertyName("cipherSuiteSetType"u8);
+                writer.WriteStringValue(CipherSuiteSetType.Value.ToString());
+            }
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
+            if (Optional.IsDefined(CustomizedCipherSuiteSet))
+            {
+                writer.WritePropertyName("customizedCipherSuiteSet"u8);
+                writer.WriteObjectValue(CustomizedCipherSuiteSet, options);
+            }
             if (Optional.IsDefined(Secret))
             {
-                if (Secret != null)
-                {
-                    writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue(Secret);
-                }
-                else
-                {
-                    writer.WriteNull("secret");
-                }
+                writer.WritePropertyName("secret"u8);
+                ((IJsonModel<WritableSubResource>)Secret).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,14 +66,13 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FrontDoorCustomDomainHttpsContent IJsonModel<FrontDoorCustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,22 +89,33 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorCustomDomainHttpsContent DeserializeFrontDoorCustomDomainHttpsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FrontDoorCertificateType certificateType = default;
+            AfdCipherSuiteSetType? cipherSuiteSetType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
-            FrontDoorCustomDomainHttpsContentSecret secret = default;
+            FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet = default;
+            WritableSubResource secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateType"u8))
                 {
                     certificateType = new FrontDoorCertificateType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("cipherSuiteSetType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cipherSuiteSetType = new AfdCipherSuiteSetType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("minimumTlsVersion"u8))
@@ -105,23 +127,37 @@ namespace Azure.ResourceManager.Cdn.Models
                     minimumTlsVersion = property.Value.GetString().ToFrontDoorMinimumTlsVersion();
                     continue;
                 }
+                if (property.NameEquals("customizedCipherSuiteSet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customizedCipherSuiteSet = FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet.DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("secret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secret = null;
                         continue;
                     }
-                    secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value, options);
+                    secret = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainHttpsContent(certificateType, minimumTlsVersion, secret, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorCustomDomainHttpsContent(
+                certificateType,
+                cipherSuiteSetType,
+                minimumTlsVersion,
+                customizedCipherSuiteSet,
+                secret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
@@ -131,9 +167,9 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,11 +181,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFrontDoorCustomDomainHttpsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

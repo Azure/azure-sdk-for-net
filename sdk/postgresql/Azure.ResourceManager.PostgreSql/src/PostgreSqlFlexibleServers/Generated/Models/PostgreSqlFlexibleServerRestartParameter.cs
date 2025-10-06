@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates whether to restart the server with failover. </summary>
+        [WirePath("restartWithFailover")]
         public bool? RestartWithFailover { get; set; }
         /// <summary> Failover mode. </summary>
+        [WirePath("failoverMode")]
         public PostgreSqlFlexibleServerFailoverMode? FailoverMode { get; set; }
     }
 }

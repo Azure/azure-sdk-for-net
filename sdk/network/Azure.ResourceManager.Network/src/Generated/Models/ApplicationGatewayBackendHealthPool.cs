@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendAddressPool resource. </summary>
+        [WirePath("backendAddressPool")]
         public ApplicationGatewayBackendAddressPool BackendAddressPool { get; }
         /// <summary> List of ApplicationGatewayBackendHealthHttpSettings resources. </summary>
+        [WirePath("backendHttpSettingsCollection")]
         public IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> BackendHttpSettingsCollection { get; }
     }
 }

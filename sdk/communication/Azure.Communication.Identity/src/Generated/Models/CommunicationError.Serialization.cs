@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.Identity;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -66,6 +65,14 @@ namespace Azure.Communication.Identity.Models
                 }
             }
             return new CommunicationError(code, message, target, details ?? new ChangeTrackingList<CommunicationError>(), innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCommunicationError(document.RootElement);
         }
     }
 }

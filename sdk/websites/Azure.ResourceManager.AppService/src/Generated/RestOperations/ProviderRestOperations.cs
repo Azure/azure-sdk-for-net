@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -33,8 +32,21 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetAvailableStacksRequestUri(ProviderOSTypeSelected? osTypeSelected)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
+            if (osTypeSelected != null)
+            {
+                uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAvailableStacksRequest(ProviderOSTypeSelected? osTypeSelected)
@@ -68,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -89,13 +101,26 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFunctionAppStacksRequestUri(ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Web/functionAppStacks", false);
+            if (stackOSType != null)
+            {
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetFunctionAppStacksRequest(ProviderStackOSType? stackOSType)
@@ -129,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -150,13 +175,28 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFunctionAppStacksForLocationRequestUri(AzureLocation location, ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/functionAppStacks", false);
+            if (stackOSType != null)
+            {
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetFunctionAppStacksForLocationRequest(AzureLocation location, ProviderStackOSType? stackOSType)
@@ -193,7 +233,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,13 +255,28 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWebAppStacksForLocationRequestUri(AzureLocation location, ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/webAppStacks", false);
+            if (stackOSType != null)
+            {
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetWebAppStacksForLocationRequest(AzureLocation location, ProviderStackOSType? stackOSType)
@@ -258,7 +313,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,13 +335,22 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOperationsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Web/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOperationsRequest()
@@ -315,7 +379,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,13 +399,26 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWebAppStacksRequestUri(ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Web/webAppStacks", false);
+            if (stackOSType != null)
+            {
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetWebAppStacksRequest(ProviderStackOSType? stackOSType)
@@ -375,7 +452,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,13 +473,28 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAvailableStacksOnPremRequestUri(string subscriptionId, ProviderOSTypeSelected? osTypeSelected)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
+            if (osTypeSelected != null)
+            {
+                uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAvailableStacksOnPremRequest(string subscriptionId, ProviderOSTypeSelected? osTypeSelected)
@@ -443,7 +535,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,13 +561,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAvailableStacksNextPageRequestUri(string nextLink, ProviderOSTypeSelected? osTypeSelected)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAvailableStacksNextPageRequest(string nextLink, ProviderOSTypeSelected? osTypeSelected)
@@ -508,7 +608,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,13 +633,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFunctionAppStacksNextPageRequestUri(string nextLink, ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetFunctionAppStacksNextPageRequest(string nextLink, ProviderStackOSType? stackOSType)
@@ -572,7 +680,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -597,13 +705,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFunctionAppStacksForLocationNextPageRequestUri(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetFunctionAppStacksForLocationNextPageRequest(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType)
@@ -637,7 +753,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -663,13 +779,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         FunctionAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FunctionAppStackListResult.DeserializeFunctionAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWebAppStacksForLocationNextPageRequestUri(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetWebAppStacksForLocationNextPageRequest(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType)
@@ -703,7 +827,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,13 +853,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOperationsNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOperationsNextPageRequest(string nextLink)
@@ -767,7 +899,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -791,13 +923,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWebAppStacksNextPageRequestUri(string nextLink, ProviderStackOSType? stackOSType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetWebAppStacksNextPageRequest(string nextLink, ProviderStackOSType? stackOSType)
@@ -830,7 +970,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -855,13 +995,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppStackListResult.DeserializeWebAppStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAvailableStacksOnPremNextPageRequestUri(string nextLink, string subscriptionId, ProviderOSTypeSelected? osTypeSelected)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAvailableStacksOnPremNextPageRequest(string nextLink, string subscriptionId, ProviderOSTypeSelected? osTypeSelected)
@@ -897,7 +1045,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -925,7 +1073,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ApplicationStackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationStackListResult.DeserializeApplicationStackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

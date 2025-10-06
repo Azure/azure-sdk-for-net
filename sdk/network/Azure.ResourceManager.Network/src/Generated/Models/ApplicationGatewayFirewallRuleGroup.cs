@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,10 +78,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the web application firewall rule group. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; set; }
         /// <summary> The description of the web application firewall rule group. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> The rules of the web application firewall rule group. </summary>
+        [WirePath("rules")]
         public IList<ApplicationGatewayFirewallRule> Rules { get; }
     }
 }

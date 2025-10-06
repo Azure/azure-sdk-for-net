@@ -2,8 +2,7 @@
 // Licensed under the MIT License.using System;
 
 using System;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -53,17 +52,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
         [Test]
         public void TestCreate()
         {
-            Assert.Throws<ArgumentNullException>(() => AuthenticationEventData.CreateInstance(null, null));
+            Assert.Throws<ArgumentNullException>(() => WebJobsAuthenticationEventData.CreateInstance(null, null));
 
-            Type type = typeof(TokenIssuanceStartData);
-            AuthenticationEventData data = AuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString()));
+            Type type = typeof(WebJobsTokenIssuanceStartData);
+            WebJobsAuthenticationEventData data = WebJobsAuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString()));
             Assert.AreEqual(TenantId, data.TenantId.ToString());
             Assert.AreEqual(AuthenticationEventListenerId, data.AuthenticationEventListenerId.ToString());
             Assert.AreEqual(CustomAuthenticationExtensionId, data.CustomAuthenticationExtensionId.ToString());
 
             var ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
                 () => Helpers.ValidateGraph(
-                    AuthenticationEventData.CreateInstance(
+                    WebJobsAuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasTenantIdKey: false)))));
 
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
                 () => Helpers.ValidateGraph(
-                    AuthenticationEventData.CreateInstance(
+                    WebJobsAuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasAuthenticationEventListenerIdKey: false)))));
 
@@ -79,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
                 () => Helpers.ValidateGraph(
-                    AuthenticationEventData.CreateInstance(
+                    WebJobsAuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasCustomAuthenticationExtensionIdKey: false)))));
 

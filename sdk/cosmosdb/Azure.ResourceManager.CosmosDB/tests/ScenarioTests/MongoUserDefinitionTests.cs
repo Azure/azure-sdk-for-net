@@ -47,15 +47,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_userDefinition != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                if (await MongoUserDefinitionCollection.ExistsAsync(this._userDefinitionId))
+                if (_userDefinition != null)
                 {
-                    await _userDefinition.DeleteAsync(WaitUntil.Completed);
+                    if (await MongoUserDefinitionCollection.ExistsAsync(this._userDefinitionId))
+                    {
+                        await _userDefinition.DeleteAsync(WaitUntil.Completed);
+                    }
                 }
+                await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
             }
-            await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

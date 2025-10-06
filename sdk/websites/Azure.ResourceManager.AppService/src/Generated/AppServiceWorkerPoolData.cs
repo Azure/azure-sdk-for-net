@@ -83,18 +83,25 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
+        [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; set; }
         /// <summary> Worker size ID for referencing this worker pool. </summary>
+        [WirePath("properties.workerSizeId")]
         public int? WorkerSizeId { get; set; }
         /// <summary> Shared or dedicated app hosting. </summary>
+        [WirePath("properties.computeMode")]
         public ComputeModeOption? ComputeMode { get; set; }
         /// <summary> VM size of the worker pool instances. </summary>
+        [WirePath("properties.workerSize")]
         public string WorkerSize { get; set; }
         /// <summary> Number of instances in the worker pool. </summary>
+        [WirePath("properties.workerCount")]
         public int? WorkerCount { get; set; }
         /// <summary> Names of all instances in the worker pool (read only). </summary>
+        [WirePath("properties.instanceNames")]
         public IReadOnlyList<string> InstanceNames { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

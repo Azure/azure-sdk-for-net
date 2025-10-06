@@ -51,6 +51,13 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             return containerGroup;
         }
 
+        protected async Task<ContainerGroupProfileResource> CreateContainerGroupProfileAsync(string containerGroupProfileName, ContainerGroupProfileData containerGroupProfileData, ResourceGroupResource rg)
+        {
+            var containerGroupProfiles = rg.GetContainerGroupProfiles();
+            ContainerGroupProfileResource containerGroupProfile = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName, containerGroupProfileData)).Value;
+            return containerGroupProfile;
+        }
+
         protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, string priority = null, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false)
         {
             var containers = new ContainerInstanceContainer[]
@@ -131,7 +138,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 return priorityContainerGroup;
             }
 
-            var confidentialComputeProperties = new ConfidentialComputeProperties();
             var sku = new ContainerGroupSku("Standard");
             if (isConfidentialSku)
             {
@@ -281,6 +287,312 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 		Assert.AreEqual(expected.Containers[0].SecurityContext?.IsPrivileged, actual.Containers[0].SecurityContext?.IsPrivileged);
 		Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
             }
+        }
+
+        protected static ContainerGroupProfileData CreateContainerGroupProfileData(string containerGroupProfileName, string priority = null, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false, bool doNotProvideCommand = false)
+        {
+            var containers = new ContainerInstanceContainer[]
+            {
+                new Models.ContainerInstanceContainer(
+                    name: containerGroupProfileName,
+                    image: "alpine",
+                    resources: new ContainerResourceRequirements(
+                        new ContainerResourceRequestsContent(
+                            memoryInGB: 1.5,
+                            cpu: 1.0))
+                )
+                {
+                    Ports =
+                    {
+                        new ContainerPort(80)
+                    },
+                    Command =
+                    {
+                        "/bin/sh", "-c", "while true; do sleep 10; done"
+                    },
+                    EnvironmentVariables =
+                    {
+                        new ContainerEnvironmentVariable("secretEnv")
+                        {
+                            SecureValue = "secretValue1"
+                        }
+                    },
+                    LivenessProbe = new ContainerProbe()
+                    {
+                        Exec = new ContainerExec()
+                        {
+                            Command =
+                            {
+                                "ls"
+                            }
+                        },
+                        PeriodInSeconds = 20,
+                    }
+                }
+            };
+
+            var noCommandContainers = new ContainerInstanceContainer[]
+            {
+                new Models.ContainerInstanceContainer(
+                    name: containerGroupProfileName,
+                    image: "alpine",
+                    resources: new ContainerResourceRequirements(
+                        new ContainerResourceRequestsContent(
+                            memoryInGB: 1.5,
+                            cpu: 1.0))
+                )
+                {
+                    Ports =
+                    {
+                        new ContainerPort(80)
+                    },
+                    EnvironmentVariables =
+                    {
+                        new ContainerEnvironmentVariable("secretEnv")
+                        {
+                            SecureValue = "secretValue1"
+                        }
+                    },
+                    LivenessProbe = new ContainerProbe()
+                    {
+                        Exec = new ContainerExec()
+                        {
+                            Command =
+                            {
+                                "ls"
+                            }
+                        },
+                        PeriodInSeconds = 20,
+                    }
+                }
+            };
+
+            var encryptionProps = doNotEncrypt ? null : new ContainerGroupEncryptionProperties(
+                vaultBaseUri: new Uri("https://cloudaci-cloudtest.vault.azure.net/"),
+                keyName: "testencryptionkey",
+                keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
+
+            if (priority == "Spot")
+            {
+                var priorityContainerGroupProfile = new ContainerGroupProfileData(
+                    location: "westus",
+                    containers: containers,
+                    osType: ContainerInstanceOperatingSystemType.Linux)
+                {
+                    RestartPolicy = ContainerGroupRestartPolicy.Never,
+                    InitContainers = {
+                        new InitContainerDefinitionContent($"{containerGroupProfileName}init")
+                        {
+                            Image = "alpine",
+                            Command =
+                            {
+                                "/bin/sh", "-c", "sleep 5"
+                            },
+                            EnvironmentVariables =
+                            {
+                                new ContainerEnvironmentVariable("secretEnv")
+                                {
+                                    SecureValue = "secretValue1"
+                                }
+                            },
+                        }
+                    },
+                    EncryptionProperties = encryptionProps,
+                    Priority = ContainerGroupPriority.Spot,
+                    Sku = ContainerGroupSku.Standard
+                };
+                return priorityContainerGroupProfile;
+            }
+
+            if (doNotProvideCommand)
+            {
+                var noCommandContainerGroupProfile = new ContainerGroupProfileData(
+                location: "westus",
+                containers: noCommandContainers,
+                osType: ContainerInstanceOperatingSystemType.Linux)
+                {
+                    IPAddress = new ContainerGroupIPAddress(
+                        ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
+                        addressType: ContainerGroupIPAddressType.Public),
+                    RestartPolicy = ContainerGroupRestartPolicy.Never,
+                    Diagnostics = new ContainerGroupDiagnostics(
+                        logAnalytics: new ContainerGroupLogAnalytics(
+                            workspaceId: "workspaceid",
+                            workspaceKey: "workspacekey"), null),
+                    InitContainers = {
+                    new InitContainerDefinitionContent($"{containerGroupProfileName}init")
+                    {
+                        Image = "alpine",
+                        Command =
+                        {
+                            "/bin/sh", "-c", "sleep 5"
+                        },
+                        EnvironmentVariables =
+                        {
+                            new ContainerEnvironmentVariable("secretEnv")
+                            {
+                                SecureValue = "secretValue1"
+                            }
+                        },
+                    }
+                    },
+                    EncryptionProperties = encryptionProps,
+                    Sku = ContainerGroupSku.Standard
+                };
+                return noCommandContainerGroupProfile;
+            }
+
+            var confidentialComputeProperties = new ConfidentialComputeProperties();
+            var sku = new ContainerGroupSku("Standard");
+            if (isConfidentialSku)
+            {
+                containers = new ContainerInstanceContainer[]
+                {
+                    new Models.ContainerInstanceContainer(
+                        name: containerGroupProfileName,
+                        image: "alpine",
+                        resources: new ContainerResourceRequirements(
+                          new ContainerResourceRequestsContent(
+                                memoryInGB: 1.5,
+                                cpu: 1.0))
+                    )
+                    {
+                    Ports =
+                        {
+                            new ContainerPort(80)
+                        },
+                        Command =
+                        {
+                            "/bin/sh", "-c", "while true; do sleep 10; done"
+                        },
+                        EnvironmentVariables =
+                        {
+                            new ContainerEnvironmentVariable("secretEnv")
+                            {
+                                SecureValue = "secretValue1"
+                            }
+                        },
+                        SecurityContext = new ContainerSecurityContextDefinition()
+                        {
+                            IsPrivileged = false
+                        }
+                    }
+                };
+
+                var confContainerGroupProfile = new ContainerGroupProfileData(
+                    location: "westus",
+                    containers: containers,
+                    osType: ContainerInstanceOperatingSystemType.Linux)
+                {
+                    IPAddress = new ContainerGroupIPAddress(
+                            ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
+                            addressType: ContainerGroupIPAddressType.Public),
+                    RestartPolicy = ContainerGroupRestartPolicy.Never,
+                    InitContainers = {
+                        new InitContainerDefinitionContent($"{containerGroupProfileName}init")
+                        {
+                            Image = "alpine",
+                            Command =
+                            {
+                                "/bin/sh", "-c", "sleep 5"
+                            },
+                            EnvironmentVariables =
+                            {
+                                new ContainerEnvironmentVariable("secretEnv")
+                                {
+                                    SecureValue = "secretValue1"
+                                }
+                            },
+                            SecurityContext = new ContainerSecurityContextDefinition()
+                            {
+                                IsPrivileged = false
+                            }
+                        }
+                    },
+                    Sku = ContainerGroupSku.Confidential,
+                    ConfidentialComputeProperties = new ConfidentialComputeProperties()
+                    {
+                        CcePolicy = "eyJhbGxvd19hbGwiOiB0cnVlLCAiY29udGFpbmVycyI6IHsibGVuZ3RoIjogMCwgImVsZW1lbnRzIjogbnVsbH19"
+                    }
+                };
+                return confContainerGroupProfile;
+            }
+
+            var containerGroupProfile = new ContainerGroupProfileData(
+                location: "westus",
+                containers: containers,
+                osType: ContainerInstanceOperatingSystemType.Linux)
+            {
+                IPAddress = new ContainerGroupIPAddress(
+                        ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
+                        addressType: ContainerGroupIPAddressType.Public),
+                RestartPolicy = ContainerGroupRestartPolicy.Never,
+                Diagnostics = new ContainerGroupDiagnostics(
+                        logAnalytics: new ContainerGroupLogAnalytics(
+                            workspaceId: "workspaceid",
+                            workspaceKey: "workspacekey"), null),
+                InitContainers = {
+                    new InitContainerDefinitionContent($"{containerGroupProfileName}init")
+                    {
+                        Image = "alpine",
+                        Command =
+                        {
+                            "/bin/sh", "-c", "sleep 5"
+                        },
+                        EnvironmentVariables =
+                        {
+                            new ContainerEnvironmentVariable("secretEnv")
+                            {
+                                SecureValue = "secretValue1"
+                            }
+                        },
+                    }
+                },
+                EncryptionProperties = encryptionProps,
+                Sku = ContainerGroupSku.Standard
+            };
+            return containerGroupProfile;
+        }
+
+        protected void VerifyContainerGroupProfileProperties(ContainerGroupProfileData expected, ContainerGroupProfileData actual)
+        {
+            Assert.NotNull(actual);
+            if (expected.Name != null)
+                Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Location, actual.Location);
+            Assert.AreEqual(expected.OSType, actual.OSType);
+            Assert.AreEqual(expected.RestartPolicy, actual.RestartPolicy);
+            Assert.AreEqual(expected.Sku, actual.Sku);
+            Assert.AreEqual(expected.Diagnostics?.LogAnalytics.WorkspaceId, actual.Diagnostics?.LogAnalytics.WorkspaceId);
+            Assert.NotNull(actual.Containers);
+            Assert.AreEqual(1, actual.Containers.Count);
+            if (expected.Priority != ContainerGroupPriority.Spot)
+            {
+                Assert.NotNull(actual.IPAddress);
+            }
+            Assert.AreEqual(expected.EncryptionProperties?.KeyName, actual.EncryptionProperties?.KeyName);
+            Assert.AreEqual(expected.EncryptionProperties?.KeyVersion, actual.EncryptionProperties?.KeyVersion);
+            Assert.AreEqual(expected.EncryptionProperties?.VaultBaseUri, actual.EncryptionProperties?.VaultBaseUri);
+            Assert.AreEqual(expected.Containers[0].Name, actual.Containers[0].Name);
+            Assert.AreEqual(expected.Containers[0].Image, actual.Containers[0].Image);
+            Assert.AreEqual(expected.Containers[0].LivenessProbe?.PeriodInSeconds, actual.Containers[0].LivenessProbe?.PeriodInSeconds);
+            Assert.AreEqual(expected.Containers[0].EnvironmentVariables[0].Name, actual.Containers[0].EnvironmentVariables[0].Name);
+            Assert.AreEqual(expected.Containers[0].Resources.Requests.Cpu, actual.Containers[0].Resources.Requests.Cpu);
+            Assert.AreEqual(expected.Containers[0].Resources.Requests.MemoryInGB, actual.Containers[0].Resources.Requests.MemoryInGB);
+            Assert.AreEqual(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
+            Assert.AreEqual(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
+            Assert.AreEqual(expected.Priority, actual.Priority);
+            if (expected.Sku == ContainerGroupSku.Confidential)
+            {
+                Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
+                Assert.AreEqual(expected.Containers[0].SecurityContext?.IsPrivileged, actual.Containers[0].SecurityContext?.IsPrivileged);
+                Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
+            }
+        }
+
+        protected void VerifyOperationCompletionStatus(bool operationCompleted)
+        {
+            Assert.IsTrue(operationCompleted);
         }
     }
 }

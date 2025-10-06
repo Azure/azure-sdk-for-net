@@ -8,19 +8,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The result data of a query. </summary>
     public partial class MetricResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
-        /// <param name="id"> the metric Id. </param>
-        /// <param name="resourceType"> the resource type of the metric resource. </param>
-        /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
+        /// <param name="id"> The metric Id. </param>
+        /// <param name="resourceType"> The resource type of the metric resource. </param>
+        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
+        /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceType"/>, <paramref name="localizedName"/> or <paramref name="timeSeries"/> is null. </exception>
         internal MetricResult(string id, string resourceType, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
@@ -37,15 +68,16 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
-        /// <param name="id"> the metric Id. </param>
-        /// <param name="resourceType"> the resource type of the metric resource. </param>
-        /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
+        /// <param name="id"> The metric Id. </param>
+        /// <param name="resourceType"> The resource type of the metric resource. </param>
+        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="description"> Detailed description of this metric. </param>
         /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        internal MetricResult(string id, string resourceType, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
+        /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricResult(string id, string resourceType, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceType = resourceType;
@@ -55,9 +87,15 @@ namespace Azure.Monitor.Query.Models
             ErrorMessage = errorMessage;
             Unit = unit;
             TimeSeries = timeSeries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> the metric Id. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResult"/> for deserialization. </summary>
+        internal MetricResult()
+        {
+        }
+
+        /// <summary> The metric Id. </summary>
         public string Id { get; }
         /// <summary> The unit of the metric. </summary>
         public MetricUnit Unit { get; }

@@ -96,30 +96,39 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> The role management policy scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; set; }
         /// <summary> The role management policy display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The role management policy description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The role management policy is default policy. </summary>
+        [WirePath("properties.isOrganizationDefault")]
         public bool? IsOrganizationDefault { get; set; }
         /// <summary> The name of the entity last modified it. </summary>
+        [WirePath("properties.lastModifiedBy")]
         public RoleManagementPrincipal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
+        [WirePath("properties.lastModifiedDateTime")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
         /// The rule applied to the policy.
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </summary>
+        [WirePath("properties.rules")]
         public IList<RoleManagementPolicyRule> Rules { get; }
         /// <summary>
         /// The readonly computed rule applied to the policy.
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </summary>
+        [WirePath("properties.effectiveRules")]
         public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; }
         /// <summary> Additional properties of scope. </summary>
+        [WirePath("properties.policyProperties")]
         public RoleManagementPolicyProperties PolicyProperties { get; }
     }
 }

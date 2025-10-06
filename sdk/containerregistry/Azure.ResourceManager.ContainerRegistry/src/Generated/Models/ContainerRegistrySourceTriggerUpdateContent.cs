@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -78,12 +77,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The properties that describes the source(code) for the task. </summary>
+        [WirePath("sourceRepository")]
         public SourceCodeRepoUpdateContent SourceRepository { get; set; }
         /// <summary> The source event corresponding to the trigger. </summary>
+        [WirePath("sourceTriggerEvents")]
         public IList<ContainerRegistrySourceTriggerEvent> SourceTriggerEvents { get; }
         /// <summary> The current status of trigger. </summary>
+        [WirePath("status")]
         public ContainerRegistryTriggerStatus? Status { get; set; }
         /// <summary> The name of the trigger. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

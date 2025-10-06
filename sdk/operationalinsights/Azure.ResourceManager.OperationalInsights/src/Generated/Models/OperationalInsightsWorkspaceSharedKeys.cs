@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The primary shared key of a workspace. </summary>
+        [WirePath("primarySharedKey")]
         public string PrimarySharedKey { get; }
         /// <summary> The secondary shared key of a workspace. </summary>
+        [WirePath("secondarySharedKey")]
         public string SecondarySharedKey { get; }
     }
 }

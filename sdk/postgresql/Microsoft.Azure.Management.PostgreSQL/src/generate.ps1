@@ -1,2 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "postgresql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\postgresql\Generated" -ConfigFileTag "package-2020-01-01" -Namespace "Microsoft.Azure.Management.PostgreSQL"
-Start-AutoRestCodeGeneration -ResourceProvider "postgresql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\postgresqlflexibleservers\Generated" -ConfigFileTag "package-flexibleserver-2021-06" -Namespace "Microsoft.Azure.Management.PostgreSQL.FlexibleServers" -ClearMetadataLog $false

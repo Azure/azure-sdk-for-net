@@ -18,13 +18,246 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="Messages.NotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="kind"> The type discriminator describing a notification type. </param>
+        /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <returns> A new <see cref="Messages.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string kind = "Unknown")
+        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string kind = null)
         {
             to ??= new List<string>();
 
-            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind, serializedAdditionalRawData: null);
+            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind == null ? default : new CommunicationMessageKind(kind), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.TextNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="content"> Message content. </param>
+        /// <returns> A new <see cref="Messages.TextNotificationContent"/> instance for mocking. </returns>
+        public static TextNotificationContent TextNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string content = null)
+        {
+            to ??= new List<string>();
+
+            return new TextNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Text, serializedAdditionalRawData: null, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ImageNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="caption"> Optional text content. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.ImageNotificationContent"/> instance for mocking. </returns>
+        public static ImageNotificationContent ImageNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string caption = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new ImageNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Image,
+                serializedAdditionalRawData: null,
+                caption,
+                mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.DocumentNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="caption"> Optional text content. </param>
+        /// <param name="fileName"> Optional name for the file. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.DocumentNotificationContent"/> instance for mocking. </returns>
+        public static DocumentNotificationContent DocumentNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string caption = null, string fileName = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new DocumentNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Document,
+                serializedAdditionalRawData: null,
+                caption,
+                fileName,
+                mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.VideoNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="caption"> Optional text content. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.VideoNotificationContent"/> instance for mocking. </returns>
+        public static VideoNotificationContent VideoNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string caption = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new VideoNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Video,
+                serializedAdditionalRawData: null,
+                caption,
+                mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.AudioNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.AudioNotificationContent"/> instance for mocking. </returns>
+        public static AudioNotificationContent AudioNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new AudioNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Audio, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ReactionNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="emoji"> emoji content like \uD83D\uDE00. </param>
+        /// <param name="messageId"> ID of the previous message you want to reply to. </param>
+        /// <returns> A new <see cref="Messages.ReactionNotificationContent"/> instance for mocking. </returns>
+        public static ReactionNotificationContent ReactionNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string emoji = null, string messageId = null)
+        {
+            to ??= new List<string>();
+
+            return new ReactionNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Reaction,
+                serializedAdditionalRawData: null,
+                emoji,
+                messageId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.StickerNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.StickerNotificationContent"/> instance for mocking. </returns>
+        public static StickerNotificationContent StickerNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new StickerNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Sticker, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.InteractiveNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="interactiveMessage"> The interactive message content. </param>
+        /// <returns> A new <see cref="Messages.InteractiveNotificationContent"/> instance for mocking. </returns>
+        public static InteractiveNotificationContent InteractiveNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, InteractiveMessage interactiveMessage = null)
+        {
+            to ??= new List<string>();
+
+            return new InteractiveNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Interactive, serializedAdditionalRawData: null, interactiveMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.InteractiveMessage"/>. </summary>
+        /// <param name="header">
+        /// Gets or Sets Header content. Supports the following types:text, images etc.
+        /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ButtonSetContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ActionGroupContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.TextMessageContent"/>, <see cref="Messages.LinkContent"/> and <see cref="Messages.VideoMessageContent"/>.
+        /// </param>
+        /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
+        /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
+        /// <param name="action">
+        /// The binding object to get or set Action which describes options user have to respond to message.
+        /// Please note <see cref="ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, <see cref="Models.Channels.WhatsAppListActionBindings"/> and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
+        /// </param>
+        /// <returns> A new <see cref="Messages.InteractiveMessage"/> instance for mocking. </returns>
+        public static InteractiveMessage InteractiveMessage(MessageContent header = null, TextMessageContent body = null, TextMessageContent footer = null, ActionBindings action = null)
+        {
+            return new InteractiveMessage(header, body, footer, action, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.TextMessageContent"/>. </summary>
+        /// <param name="text"> The text value. </param>
+        /// <returns> A new <see cref="Messages.TextMessageContent"/> instance for mocking. </returns>
+        public static TextMessageContent TextMessageContent(string text = null)
+        {
+            return new TextMessageContent(MessageContentKind.Text, serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.DocumentMessageContent"/>. </summary>
+        /// <param name="mediaUri"> MediaUri of the media content. </param>
+        /// <returns> A new <see cref="Messages.DocumentMessageContent"/> instance for mocking. </returns>
+        public static DocumentMessageContent DocumentMessageContent(Uri mediaUri = null)
+        {
+            return new DocumentMessageContent(MessageContentKind.Document, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ImageMessageContent"/>. </summary>
+        /// <param name="mediaUri"> MediaUri of the media content. </param>
+        /// <returns> A new <see cref="Messages.ImageMessageContent"/> instance for mocking. </returns>
+        public static ImageMessageContent ImageMessageContent(Uri mediaUri = null)
+        {
+            return new ImageMessageContent(MessageContentKind.Image, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.VideoMessageContent"/>. </summary>
+        /// <param name="mediaUri"> MediaUri of the media content. </param>
+        /// <returns> A new <see cref="Messages.VideoMessageContent"/> instance for mocking. </returns>
+        public static VideoMessageContent VideoMessageContent(Uri mediaUri = null)
+        {
+            return new VideoMessageContent(MessageContentKind.Video, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.LinkContent"/>. </summary>
+        /// <param name="title"> Title of the url content. </param>
+        /// <param name="uri"> The url in the content. </param>
+        /// <returns> A new <see cref="Messages.LinkContent"/> instance for mocking. </returns>
+        public static LinkContent LinkContent(string title = null, Uri uri = null)
+        {
+            return new LinkContent(MessageContentKind.Url, serializedAdditionalRawData: null, title, uri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ActionGroupContent"/>. </summary>
+        /// <param name="title"> Title of the actionGroup content. </param>
+        /// <param name="groups"> Set or group of actions. </param>
+        /// <returns> A new <see cref="Messages.ActionGroupContent"/> instance for mocking. </returns>
+        public static ActionGroupContent ActionGroupContent(string title = null, IEnumerable<ActionGroup> groups = null)
+        {
+            groups ??= new List<ActionGroup>();
+
+            return new ActionGroupContent(MessageContentKind.Group, serializedAdditionalRawData: null, title, groups?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppListActionBindings"/>. </summary>
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppListActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionGroupContent content = null)
+        {
+            return new WhatsAppListActionBindings(MessageActionBindingKind.WhatsAppListAction, serializedAdditionalRawData: null, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppButtonActionBindings"/>. </summary>
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetContent content = null)
+        {
+            return new WhatsAppButtonActionBindings(MessageActionBindingKind.WhatsAppButtonAction, serializedAdditionalRawData: null, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppUrlActionBindings"/>. </summary>
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(LinkContent content = null)
+        {
+            return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, serializedAdditionalRawData: null, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="template"> The template object used to create templates. </param>
+        /// <returns> A new <see cref="Messages.TemplateNotificationContent"/> instance for mocking. </returns>
+        public static TemplateNotificationContent TemplateNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, MessageTemplate template = null)
+        {
+            to ??= new List<string>();
+
+            return new TemplateNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Template, serializedAdditionalRawData: null, template);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
@@ -46,150 +279,25 @@ namespace Azure.Communication.Messages
             return new MessageReceipt(messageId, to, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Messages.ReadReceiptContent"/>. </summary>
+        /// <param name="messageId"> The id of the message this read receipt refers to. </param>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="typingIndicator"> Whether this status update includes a typing indicator. This field defaults to false when not provided. </param>
+        /// <returns> A new <see cref="Messages.ReadReceiptContent"/> instance for mocking. </returns>
+        public static ReadReceiptContent ReadReceiptContent(string messageId = null, Guid channelRegistrationId = default, bool? typingIndicator = null)
+        {
+            return new ReadReceiptContent(messageId, channelRegistrationId, typingIndicator, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = "Unknown")
+        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = null)
         {
-            return new UnknownMessageTemplateItem(name, language, status, kind, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.TextNotificationContent"/>. </summary>
-        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
-        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="content"> Message content. </param>
-        /// <returns> A new <see cref="Messages.TextNotificationContent"/> instance for mocking. </returns>
-        public static TextNotificationContent TextNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string content = null)
-        {
-            to ??= new List<string>();
-
-            return new TextNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Text, serializedAdditionalRawData: null, content);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MediaNotificationContent"/>. </summary>
-        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
-        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="content"> Optional text content. </param>
-        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        /// <returns> A new <see cref="Messages.MediaNotificationContent"/> instance for mocking. </returns>
-        public static MediaNotificationContent MediaNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string content = null, Uri mediaUri = null)
-        {
-            to ??= new List<string>();
-
-            return new MediaNotificationContent(
-                channelRegistrationId,
-                to?.ToList(),
-                CommunicationMessageKind.Image,
-                serializedAdditionalRawData: null,
-                content,
-                mediaUri);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>
-        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
-        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="template"> The template object used to create templates. </param>
-        /// <returns> A new <see cref="Messages.TemplateNotificationContent"/> instance for mocking. </returns>
-        public static TemplateNotificationContent TemplateNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, MessageTemplate template = null)
-        {
-            to ??= new List<string>();
-
-            return new TemplateNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Template, serializedAdditionalRawData: null, template);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplate"/>. </summary>
-        /// <param name="name"> Name of the template. </param>
-        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
-        /// <param name="values"> The template values. </param>
-        /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplate"/> instance for mocking. </returns>
-        public static MessageTemplate MessageTemplate(string name = null, string language = null, IEnumerable<MessageTemplateValue> values = null, MessageTemplateBindings bindings = null)
-        {
-            values ??= new List<MessageTemplateValue>();
-
-            return new MessageTemplate(name, language, values?.ToList(), bindings, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateValue"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="kind"> The type discriminator describing a template parameter type. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
-        public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = null)
-        {
-            return new UnknownMessageTemplateValue(name, kind, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateText"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="text"> The text value. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateText"/> instance for mocking. </returns>
-        public static MessageTemplateText MessageTemplateText(string name = null, string text = null)
-        {
-            return new MessageTemplateText(name, "text", serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateImage"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="uri"> The (public) URL of the media. </param>
-        /// <param name="caption"> The [optional] caption of the media object. </param>
-        /// <param name="fileName"> The [optional] filename of the media file. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateImage"/> instance for mocking. </returns>
-        public static MessageTemplateImage MessageTemplateImage(string name = null, Uri uri = null, string caption = null, string fileName = null)
-        {
-            return new MessageTemplateImage(
-                name,
-                "image",
-                serializedAdditionalRawData: null,
-                uri,
-                caption,
-                fileName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateDocument"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="uri"> The (public) URL of the media. </param>
-        /// <param name="caption"> The [optional] caption of the media object. </param>
-        /// <param name="fileName"> The [optional] filename of the media file. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateDocument"/> instance for mocking. </returns>
-        public static MessageTemplateDocument MessageTemplateDocument(string name = null, Uri uri = null, string caption = null, string fileName = null)
-        {
-            return new MessageTemplateDocument(
-                name,
-                "document",
-                serializedAdditionalRawData: null,
-                uri,
-                caption,
-                fileName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateVideo"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="uri"> The (public) URL of the media. </param>
-        /// <param name="caption"> The [optional] caption of the media object. </param>
-        /// <param name="fileName"> The [optional] filename of the media file. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateVideo"/> instance for mocking. </returns>
-        public static MessageTemplateVideo MessageTemplateVideo(string name = null, Uri uri = null, string caption = null, string fileName = null)
-        {
-            return new MessageTemplateVideo(
-                name,
-                "video",
-                serializedAdditionalRawData: null,
-                uri,
-                caption,
-                fileName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateQuickAction"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="text"> The [Optional] quick action text. </param>
-        /// <param name="payload"> The [Optional] quick action payload. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateQuickAction"/> instance for mocking. </returns>
-        public static MessageTemplateQuickAction MessageTemplateQuickAction(string name = null, string text = null, string payload = null)
-        {
-            return new MessageTemplateQuickAction(name, "quickAction", serializedAdditionalRawData: null, text, payload);
+            return new UnknownMessageTemplateItem(name, language, status, kind == null ? default : new CommunicationMessagesChannel(kind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
@@ -207,6 +315,156 @@ namespace Azure.Communication.Messages
                 CommunicationMessagesChannel.WhatsApp,
                 serializedAdditionalRawData: null,
                 content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.CommunicationConversation"/>. </summary>
+        /// <param name="id"> The conversation ID. </param>
+        /// <param name="topic"> The conversation topic. </param>
+        /// <param name="deliveryChannelIds"> List of delivery channel IDs. </param>
+        /// <param name="outboundDeliveryStrategy"> Outbound delivery strategy for the conversation. </param>
+        /// <param name="participants">
+        /// List of participants involved in the conversation.
+        /// Please note <see cref="Messages.ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Messages.ExternalConversationParticipant"/> and <see cref="Messages.InternalConversationParticipant"/>.
+        /// </param>
+        /// <returns> A new <see cref="Messages.CommunicationConversation"/> instance for mocking. </returns>
+        public static CommunicationConversation CommunicationConversation(string id = null, string topic = null, IEnumerable<string> deliveryChannelIds = null, OutboundDeliveryStrategyKind? outboundDeliveryStrategy = null, IEnumerable<ConversationParticipant> participants = null)
+        {
+            deliveryChannelIds ??= new List<string>();
+            participants ??= new List<ConversationParticipant>();
+
+            return new CommunicationConversation(
+                id,
+                topic,
+                deliveryChannelIds?.ToList(),
+                outboundDeliveryStrategy,
+                participants?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ConversationParticipant"/>. </summary>
+        /// <param name="id"> Participant Identifier. </param>
+        /// <param name="displayName"> Participant display name. </param>
+        /// <param name="kind"> The type discriminator describing a participant type. </param>
+        /// <returns> A new <see cref="Messages.ConversationParticipant"/> instance for mocking. </returns>
+        public static ConversationParticipant ConversationParticipant(string id = null, string displayName = null, string kind = null)
+        {
+            return new UnknownConversationParticipant(id, displayName, kind == null ? default : new ParticipantKind(kind), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.InternalConversationParticipant"/>. </summary>
+        /// <param name="id"> Participant Identifier. </param>
+        /// <param name="displayName"> Participant display name. </param>
+        /// <param name="contact">
+        /// The internal platform identifiers for the participant.
+        /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
+        /// </param>
+        /// <returns> A new <see cref="Messages.InternalConversationParticipant"/> instance for mocking. </returns>
+        public static InternalConversationParticipant InternalConversationParticipant(string id = null, string displayName = null, ConversationContact contact = null)
+        {
+            return new InternalConversationParticipant(id, displayName, ParticipantKind.Internal, serializedAdditionalRawData: null, contact);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ExternalConversationParticipant"/>. </summary>
+        /// <param name="id"> Participant Identifier. </param>
+        /// <param name="displayName"> Participant display name. </param>
+        /// <param name="contacts">
+        /// List of external platform identifiers for the participant.
+        /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
+        /// </param>
+        /// <returns> A new <see cref="Messages.ExternalConversationParticipant"/> instance for mocking. </returns>
+        public static ExternalConversationParticipant ExternalConversationParticipant(string id = null, string displayName = null, IEnumerable<ConversationContact> contacts = null)
+        {
+            contacts ??= new List<ConversationContact>();
+
+            return new ExternalConversationParticipant(id, displayName, ParticipantKind.External, serializedAdditionalRawData: null, contacts?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ConversationMessageItem"/>. </summary>
+        /// <param name="id"> Message ID. </param>
+        /// <param name="sequenceId"> Message sequence ID. </param>
+        /// <param name="message">
+        /// Payload of a threaded conversation message.
+        /// Please note <see cref="ConversationMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/> and <see cref="VideoConversationMessageContent"/>.
+        /// </param>
+        /// <param name="senderDisplayName"> The display name of the message sender. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the message sender. </param>
+        /// <param name="createdOn"> Timestamp when the message is sent. </param>
+        /// <returns> A new <see cref="Messages.ConversationMessageItem"/> instance for mocking. </returns>
+        public static ConversationMessageItem ConversationMessageItem(string id = null, long? sequenceId = null, ConversationMessageContent message = null, string senderDisplayName = null, string senderCommunicationIdentifier = null, DateTimeOffset createdOn = default)
+        {
+            return new ConversationMessageItem(
+                id,
+                sequenceId,
+                message,
+                senderDisplayName,
+                senderCommunicationIdentifier,
+                createdOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.AddParticipantsResult"/>. </summary>
+        /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
+        /// <returns> A new <see cref="Messages.AddParticipantsResult"/> instance for mocking. </returns>
+        public static AddParticipantsResult AddParticipantsResult(IEnumerable<UpdateParticipantsResult> invalidParticipants = null)
+        {
+            invalidParticipants ??= new List<UpdateParticipantsResult>();
+
+            return new AddParticipantsResult(invalidParticipants?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.UpdateParticipantsResult"/>. </summary>
+        /// <param name="id"> Participant User Id. </param>
+        /// <param name="error"> Error of the participant operation. </param>
+        /// <returns> A new <see cref="Messages.UpdateParticipantsResult"/> instance for mocking. </returns>
+        public static UpdateParticipantsResult UpdateParticipantsResult(string id = null, ResponseError error = null)
+        {
+            return new UpdateParticipantsResult(id, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.RemoveParticipantsResult"/>. </summary>
+        /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
+        /// <returns> A new <see cref="Messages.RemoveParticipantsResult"/> instance for mocking. </returns>
+        public static RemoveParticipantsResult RemoveParticipantsResult(IEnumerable<UpdateParticipantsResult> invalidParticipants = null)
+        {
+            invalidParticipants ??= new List<UpdateParticipantsResult>();
+
+            return new RemoveParticipantsResult(invalidParticipants?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.GetConversationThreadAnalysisResult"/>. </summary>
+        /// <param name="summary"> The AI summary of the conversation messages. </param>
+        /// <returns> A new <see cref="Messages.GetConversationThreadAnalysisResult"/> instance for mocking. </returns>
+        public static GetConversationThreadAnalysisResult GetConversationThreadAnalysisResult(string summary = null)
+        {
+            return new GetConversationThreadAnalysisResult(summary, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.SendConversationMessageOptions"/>. </summary>
+        /// <param name="request">
+        /// Details of a send conversation message request.
+        /// Please note <see cref="ConversationMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/> and <see cref="VideoConversationMessageContent"/>.
+        /// </param>
+        /// <param name="outboundDeliveryStrategy">
+        /// The options of the outbound delivery strategy for messages sent by participants in a conversation.
+        /// Supports internalOnly, allChannels.
+        /// </param>
+        /// <returns> A new <see cref="Messages.SendConversationMessageOptions"/> instance for mocking. </returns>
+        public static SendConversationMessageOptions SendConversationMessageOptions(ConversationMessageContent request = null, OutboundDeliveryStrategyKind? outboundDeliveryStrategy = null)
+        {
+            return new SendConversationMessageOptions(request, outboundDeliveryStrategy, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.SendConversationMessageResult"/>. </summary>
+        /// <param name="messageId"> A server-generated Advanced Messaging conversation message id. </param>
+        /// <returns> A new <see cref="Messages.SendConversationMessageResult"/> instance for mocking. </returns>
+        public static SendConversationMessageResult SendConversationMessageResult(string messageId = null)
+        {
+            return new SendConversationMessageResult(messageId, serializedAdditionalRawData: null);
         }
     }
 }

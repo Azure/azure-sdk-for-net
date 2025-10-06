@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -54,23 +53,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
-        /// <param name="location"> The location of the workspace ACR. </param>
+        /// <param name="location"></param>
+        /// <param name="username"></param>
         /// <param name="passwords"></param>
-        /// <param name="username"> The username of the workspace ACR. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, IReadOnlyList<MachineLearningPasswordDetail> passwords, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, string username, IReadOnlyList<MachineLearningPasswordDetail> passwords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
-            Passwords = passwords;
             Username = username;
+            Passwords = passwords;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The location of the workspace ACR. </summary>
+        /// <summary> Gets the location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Gets the passwords. </summary>
-        public IReadOnlyList<MachineLearningPasswordDetail> Passwords { get; }
-        /// <summary> The username of the workspace ACR. </summary>
+        /// <summary> Gets the username. </summary>
+        [WirePath("username")]
         public string Username { get; }
+        /// <summary> Gets the passwords. </summary>
+        [WirePath("passwords")]
+        public IReadOnlyList<MachineLearningPasswordDetail> Passwords { get; }
     }
 }

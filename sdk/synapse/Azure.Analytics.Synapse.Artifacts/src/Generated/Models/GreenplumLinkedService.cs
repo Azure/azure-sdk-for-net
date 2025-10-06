@@ -20,6 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="GreenplumLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -28,11 +29,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal GreenplumLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference pwd, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="authenticationType"> The authentication type to use. Type: string. Only used for V2. </param>
+        /// <param name="host"> Host name for connection. Type: string. Only used for V2. </param>
+        /// <param name="port"> The port for the connection. Type: integer. Only used for V2. </param>
+        /// <param name="username"> Username for authentication. Type: string. Only used for V2. </param>
+        /// <param name="database"> Database name for connection. Type: string. Only used for V2. </param>
+        /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. Only used for V2. </param>
+        /// <param name="connectionTimeout"> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </param>
+        /// <param name="commandTimeout"> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </param>
+        internal GreenplumLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference pwd, object encryptedCredential, GreenplumAuthenticationType? authenticationType, object host, object port, object username, object database, object sslMode, object connectionTimeout, object commandTimeout) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Pwd = pwd;
             EncryptedCredential = encryptedCredential;
+            AuthenticationType = authenticationType;
+            Host = host;
+            Port = port;
+            Username = username;
+            Database = database;
+            SslMode = sslMode;
+            ConnectionTimeout = connectionTimeout;
+            CommandTimeout = commandTimeout;
             Type = type ?? "Greenplum";
         }
 
@@ -42,5 +59,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public AzureKeyVaultSecretReference Pwd { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The authentication type to use. Type: string. Only used for V2. </summary>
+        public GreenplumAuthenticationType? AuthenticationType { get; set; }
+        /// <summary> Host name for connection. Type: string. Only used for V2. </summary>
+        public object Host { get; set; }
+        /// <summary> The port for the connection. Type: integer. Only used for V2. </summary>
+        public object Port { get; set; }
+        /// <summary> Username for authentication. Type: string. Only used for V2. </summary>
+        public object Username { get; set; }
+        /// <summary> Database name for connection. Type: string. Only used for V2. </summary>
+        public object Database { get; set; }
+        /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. Only used for V2. </summary>
+        public object SslMode { get; set; }
+        /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </summary>
+        public object ConnectionTimeout { get; set; }
+        /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </summary>
+        public object CommandTimeout { get; set; }
     }
 }

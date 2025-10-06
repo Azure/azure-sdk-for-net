@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -63,12 +62,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="description"> The free-form description for this user. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
+        /// <param name="userPrincipalName"> The user principal name (email format) used to validate this user's group membership. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeySetUser(string azureUserName, string description, NetworkCloudSshPublicKey sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeySetUser(string azureUserName, string description, NetworkCloudSshPublicKey sshPublicKey, string userPrincipalName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureUserName = azureUserName;
             Description = description;
             SshPublicKey = sshPublicKey;
+            UserPrincipalName = userPrincipalName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,5 +90,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             get => SshPublicKey is null ? default : SshPublicKey.KeyData;
             set => SshPublicKey = new NetworkCloudSshPublicKey(value);
         }
+
+        /// <summary> The user principal name (email format) used to validate this user's group membership. </summary>
+        public string UserPrincipalName { get; set; }
     }
 }

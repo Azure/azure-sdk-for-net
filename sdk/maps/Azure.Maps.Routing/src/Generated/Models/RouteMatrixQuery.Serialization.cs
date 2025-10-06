@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.Maps.Common;
+using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
 {
@@ -19,14 +20,22 @@ namespace Azure.Maps.Routing
             if (Common.Optional.IsDefined(GeoJsonMultiPointOrigins))
             {
                 writer.WritePropertyName("origins"u8);
-                writer.WriteObjectValue(GeoJsonMultiPointOrigins);
+                writer.WriteObjectValue<GeoJsonMultiPoint>(GeoJsonMultiPointOrigins);
             }
             if (Common.Optional.IsDefined(GeoJsonMultiPointDestinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue(GeoJsonMultiPointDestinations);
+                writer.WriteObjectValue<GeoJsonMultiPoint>(GeoJsonMultiPointDestinations);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

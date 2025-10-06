@@ -34,5 +34,13 @@ namespace Azure.Communication.Rooms
             }
             return new RoomParticipant(rawId, role);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RoomParticipant FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRoomParticipant(document.RootElement);
+        }
     }
 }

@@ -1,5 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
+parameters:
+  - name: ReleaseToDevOpsOnly
+    displayName: 'Release package to DevOps feed instead of Nuget.org'
+    type: boolean
+    default: false
+  - name: AutoApproveRelease
+    displayName: 'Automatically approve the release stage'
+    type: boolean
+    default: false
+
 trigger:
   branches:
     include:
@@ -33,22 +43,24 @@ pr:
     - eng/common/
 #endif
 
-parameters:
-- name: AllowFailingLiveTests
-  displayName: Allow release with failing live tests
-  type: boolean
-  default: false
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    ${{ if eq(parameters.ReleaseToDevOpsOnly, 'true') }}:
+      PublicFeed: 'public/storage-staging'
+    ${{ if eq(parameters.AutoApproveRelease, 'true') }}:
+      PublicPublishEnvironment: none
     ServiceDirectory: template
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
-    ReleaseDependsOnLiveTests: ${{ not(parameters.AllowFailingLiveTests) }}
-    LiveTestStages:
-      - template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
-        parameters:
-          ServiceDirectory: template
+      triggeringPaths:
+      - /.config
+      - /.devcontainer
+      - /.github
+      - /.vscode
+      - /common
+      - /doc
+      - /eng
+      - /samples

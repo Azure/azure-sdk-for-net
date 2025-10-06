@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
@@ -354,7 +352,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_getCounters</description>
+        /// <description>PreRules_GetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -393,7 +391,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_getCounters</description>
+        /// <description>PreRules_GetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -432,7 +430,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_refreshCounters</description>
+        /// <description>PreRules_RefreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -471,7 +469,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_refreshCounters</description>
+        /// <description>PreRules_RefreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -510,7 +508,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_resetCounters</description>
+        /// <description>PreRules_ResetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -549,7 +547,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_resetCounters</description>
+        /// <description>PreRules_ResetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

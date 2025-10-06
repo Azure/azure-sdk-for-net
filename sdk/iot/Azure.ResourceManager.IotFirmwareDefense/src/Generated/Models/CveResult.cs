@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> CVE analysis result resource. </summary>
+    /// <summary> The object representing a firmware analysis CVE result resource. </summary>
     public partial class CveResult : ResourceData
     {
         /// <summary>
@@ -51,6 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="CveResult"/>. </summary>
         public CveResult()
         {
+            CvssScores = new ChangeTrackingList<CvssScore>();
             Links = new ChangeTrackingList<CveLink>();
         }
 
@@ -60,50 +60,76 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="cveId"> ID of the CVE result. </param>
-        /// <param name="component"> The SBOM component for the CVE. </param>
+        /// <param name="componentId"> ID of the affected SBOM component. </param>
+        /// <param name="componentName"> Name of the affected SBOM component. </param>
+        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
         /// <param name="severity"> Severity of the CVE. </param>
-        /// <param name="namePropertiesName"> Name of the CVE. </param>
-        /// <param name="cvssScore"> A single CVSS score to represent the CVE. If a V3 score is specified, then it will use the V3 score. Otherwise if the V2 score is specified it will be the V2 score. </param>
-        /// <param name="cvssVersion"> CVSS version of the CVE. </param>
-        /// <param name="cvssV2Score"> CVSS V2 score of the CVE. </param>
-        /// <param name="cvssV3Score"> CVSS V3 score of the CVE. </param>
+        /// <param name="cveName"> Name of the CVE. </param>
+        /// <param name="component"> Legacy property for what is now componentName. </param>
+        /// <param name="cvssScore"> Legacy property for the effective CVE score. </param>
+        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. </param>
+        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. </param>
+        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property. </param>
+        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
+        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
+        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
         /// <param name="links"> The list of reference links for the CVE. </param>
         /// <param name="description"> The CVE description. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, CveComponent component, string severity, string namePropertiesName, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, IReadOnlyList<CveLink> links, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CveId = cveId;
-            Component = component;
+            ComponentId = componentId;
+            ComponentName = componentName;
+            ComponentVersion = componentVersion;
             Severity = severity;
-            NamePropertiesName = namePropertiesName;
+            CveName = cveName;
+            Component = component;
             CvssScore = cvssScore;
-            CvssVersion = cvssVersion;
             CvssV2Score = cvssV2Score;
             CvssV3Score = cvssV3Score;
+            CvssVersion = cvssVersion;
+            EffectiveCvssScore = effectiveCvssScore;
+            EffectiveCvssVersion = effectiveCvssVersion;
+            CvssScores = cvssScores;
             Links = links;
             Description = description;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the CVE result. </summary>
         public string CveId { get; set; }
-        /// <summary> The SBOM component for the CVE. </summary>
-        public CveComponent Component { get; set; }
+        /// <summary> ID of the affected SBOM component. </summary>
+        public string ComponentId { get; set; }
+        /// <summary> Name of the affected SBOM component. </summary>
+        public string ComponentName { get; set; }
+        /// <summary> Version of the affected SBOM component. </summary>
+        public string ComponentVersion { get; set; }
         /// <summary> Severity of the CVE. </summary>
         public string Severity { get; set; }
         /// <summary> Name of the CVE. </summary>
-        public string NamePropertiesName { get; set; }
-        /// <summary> A single CVSS score to represent the CVE. If a V3 score is specified, then it will use the V3 score. Otherwise if the V2 score is specified it will be the V2 score. </summary>
+        public string CveName { get; set; }
+        /// <summary> Legacy property for the effective CVE score. </summary>
         public string CvssScore { get; set; }
-        /// <summary> CVSS version of the CVE. </summary>
-        public string CvssVersion { get; set; }
-        /// <summary> CVSS V2 score of the CVE. </summary>
+        /// <summary> Legacy property for the CVE CVSS version 2 score, if one existed. </summary>
         public string CvssV2Score { get; set; }
-        /// <summary> CVSS V3 score of the CVE. </summary>
+        /// <summary> Legacy property for the CVE CVSS version 3 score, if one existed. </summary>
         public string CvssV3Score { get; set; }
+        /// <summary> Legacy property for the what CVSS version score was stored in the cvssScore property. </summary>
+        public string CvssVersion { get; set; }
+        /// <summary> The most recent CVSS score of the CVE. </summary>
+        public float? EffectiveCvssScore { get; set; }
+        /// <summary> The version of the effectiveCvssScore property. </summary>
+        public int? EffectiveCvssVersion { get; set; }
+        /// <summary> All known CVSS scores for the CVE. </summary>
+        public IList<CvssScore> CvssScores { get; }
         /// <summary> The list of reference links for the CVE. </summary>
         public IReadOnlyList<CveLink> Links { get; }
         /// <summary> The CVE description. </summary>
         public string Description { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

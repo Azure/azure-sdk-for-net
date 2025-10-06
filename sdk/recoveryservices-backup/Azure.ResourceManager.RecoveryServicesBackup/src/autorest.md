@@ -8,17 +8,20 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# tag: package-2023-06
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec238f30bd6d4a0681b691908fe00b54868467de/specification/recoveryservicesbackup/resource-manager/readme.md
+# tag: package-2025-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/97ee23a6db6078abcbec7b75bf9af8c503e9bb8b/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+models-to-treat-empty-string-as-null:
+  - IaasComputeVmProtectedItem
 
 rename-mapping:
   Job: BackupGenericJob
@@ -95,6 +98,7 @@ rename-mapping:
   AzureVmWorkloadProtectedItem: VmWorkloadProtectedItem
   AzureVmWorkloadProtectedItemExtendedInfo: VmWorkloadProtectedItemExtendedInfo
   AzureVmWorkloadProtectionPolicy: VmWorkloadProtectionPolicy
+  AzureVmWorkloadSAPAseDatabaseProtectableItem: VmWorkloadSapAseDatabaseProtectableItem
   AzureVmWorkloadSAPAseDatabaseProtectedItem: VmWorkloadSapAseDatabaseProtectedItem
   AzureVmWorkloadSAPAseDatabaseWorkloadItem: VmWorkloadSapAseDatabaseWorkloadItem
   AzureVmWorkloadSAPAseSystemProtectableItem: VmWorkloadSapAseSystemProtectableItem
@@ -140,6 +144,10 @@ rename-mapping:
   AzureWorkloadSQLRecoveryPointExtendedInfo: WorkloadSqlRecoveryPointExtendedInfo
   AzureWorkloadSQLRestoreRequest: WorkloadSqlRestoreContent
   AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateContent
+  AzureWorkloadSAPAsePointInTimeRecoveryPoint: WorkloadSapAsePointInTimeRecoveryPoint
+  AzureWorkloadSAPAsePointInTimeRestoreRequest: WorkloadSapAsePointInTimeRestoreContent
+  AzureWorkloadSAPAseRecoveryPoint: WorkloadSapAseRecoveryPoint
+  AzureWorkloadSAPAseRestoreRequest: WorkloadSapAseRestoreContent
   BackupRequest: BackupContent
   BackupRequestResource: TriggerBackupContent
   BackupStatusResponse: BackupStatusResult
@@ -326,6 +334,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   IaaSVM: IaasVm
   Iaasvm: IaasVm
   Sqldb: SqlDB

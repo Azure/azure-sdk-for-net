@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the path. </summary>
+        [WirePath("path")]
         public string Path { get; }
         /// <summary> Gets the method. </summary>
+        [WirePath("method")]
         public string Method { get; }
     }
 }

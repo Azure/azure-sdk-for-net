@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -78,10 +77,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the backend address. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Reference to an existing virtual network. </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualNetwork.id")]
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to an existing subnet. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -108,10 +110,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
+        [WirePath("properties.ipAddress")]
         public string IPAddress { get; set; }
         /// <summary> Reference to IP address defined in network interfaces. </summary>
         internal WritableSubResource NetworkInterfaceIPConfiguration { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.networkInterfaceIPConfiguration.id")]
         public ResourceIdentifier NetworkInterfaceIPConfigurationId
         {
             get => NetworkInterfaceIPConfiguration?.Id;
@@ -120,6 +124,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
         internal WritableSubResource LoadBalancerFrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.loadBalancerFrontendIPConfiguration.id")]
         public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
             get => LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
@@ -132,8 +137,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Collection of inbound NAT rule port mappings. </summary>
+        [WirePath("properties.inboundNatRulesPortMapping")]
         public IReadOnlyList<NatRulePortMapping> InboundNatRulesPortMapping { get; }
         /// <summary> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </summary>
+        [WirePath("properties.adminState")]
         public LoadBalancerBackendAddressAdminState? AdminState { get; set; }
     }
 }

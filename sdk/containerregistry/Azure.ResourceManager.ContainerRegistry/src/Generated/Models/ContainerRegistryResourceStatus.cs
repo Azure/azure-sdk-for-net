@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The short label for the status. </summary>
+        [WirePath("displayStatus")]
         public string DisplayStatus { get; }
         /// <summary> The detailed message for the status, including alerts and error messages. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> The timestamp when the status was changed to the current value. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
     }
 }

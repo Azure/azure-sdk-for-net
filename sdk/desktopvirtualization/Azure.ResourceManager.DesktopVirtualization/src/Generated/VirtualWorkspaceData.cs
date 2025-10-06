@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
@@ -105,30 +104,43 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> ObjectId of Workspace. (internal use). </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; }
         /// <summary> Description of Workspace. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Friendly name of Workspace. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> List of applicationGroup resource Ids. </summary>
-        public IList<string> ApplicationGroupReferences { get; }
+        [WirePath("properties.applicationGroupReferences")]
+        public IList<string> ApplicationGroupReferences { get; set; }
         /// <summary> Is cloud pc resource. </summary>
+        [WirePath("properties.cloudPcResource")]
         public bool? IsCloudPCResource { get; }
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
+        [WirePath("managedBy")]
         public ResourceIdentifier ManagedBy { get; set; }
-        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Gets or sets the identity. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public DesktopVirtualizationSku Sku { get; set; }
         /// <summary> Gets or sets the plan. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
     }
 }

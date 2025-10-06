@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the table. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
         /// <summary> List of columns with data types. </summary>
+        [WirePath("columns")]
         public IList<DataTableResponseColumn> Columns { get; }
         /// <summary> Raw row values. </summary>
+        [WirePath("rows")]
         public IList<IList<string>> Rows { get; }
     }
 }

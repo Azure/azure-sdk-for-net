@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(MongoDBAuthenticationType left, MongoDBAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(MongoDBAuthenticationType left, MongoDBAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoDBAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoDBAuthenticationType"/>. </summary>
         public static implicit operator MongoDBAuthenticationType(string value) => new MongoDBAuthenticationType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

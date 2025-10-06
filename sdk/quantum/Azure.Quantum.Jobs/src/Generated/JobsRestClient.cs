@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Quantum.Jobs.Models;
@@ -77,7 +76,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetailsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobDetailsList.DeserializeJobDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -97,7 +96,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetailsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobDetailsList.DeserializeJobDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -144,7 +143,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobDetails.DeserializeJobDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +170,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobDetails.DeserializeJobDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -228,7 +227,7 @@ namespace Azure.Quantum.Jobs
                 case 201:
                     {
                         JobDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobDetails.DeserializeJobDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +260,7 @@ namespace Azure.Quantum.Jobs
                 case 201:
                     {
                         JobDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobDetails.DeserializeJobDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -386,7 +385,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobDetails.DeserializeJobDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +419,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobDetails.DeserializeJobDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -462,7 +461,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetailsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobDetailsList.DeserializeJobDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +488,7 @@ namespace Azure.Quantum.Jobs
                 case 200:
                     {
                         JobDetailsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobDetailsList.DeserializeJobDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

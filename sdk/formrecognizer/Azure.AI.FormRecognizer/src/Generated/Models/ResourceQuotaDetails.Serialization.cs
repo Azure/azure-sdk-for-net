@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -41,6 +40,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
             return new ResourceQuotaDetails(used, quota, quotaResetDateTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceQuotaDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeResourceQuotaDetails(document.RootElement);
         }
     }
 }

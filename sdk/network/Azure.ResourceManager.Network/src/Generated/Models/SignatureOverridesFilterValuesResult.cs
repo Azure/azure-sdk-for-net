@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Describes the possible values. </summary>
+        [WirePath("filterValues")]
         public IReadOnlyList<string> FilterValues { get; }
     }
 }

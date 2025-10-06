@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +11,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
@@ -35,7 +37,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 0,
+                ETag = etag,
+                LastModifiedTime = DateTimeOffset.UtcNow
+            };
 
             BlockBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -59,7 +66,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 0,
+                ETag = etag,
+                LastModifiedTime = DateTimeOffset.UtcNow
+            };
 
             PageBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -83,7 +95,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 0,
+                ETag = etag,
+                LastModifiedTime = DateTimeOffset.UtcNow
+            };
 
             AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.GetPropertiesInternalAsync();
@@ -108,11 +125,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties resourceProperties = new(
-                resourceLength: default,
-                eTag: etag,
-                lastModifiedTime: DateTimeOffset.UtcNow,
-                properties: default);
+            StorageResourceItemProperties resourceProperties = new()
+            {
+                ResourceLength = default,
+                ETag = etag,
+                LastModifiedTime = DateTimeOffset.UtcNow
+            };
 
             BlockBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
@@ -136,11 +154,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties resourceProperties = new(
-                resourceLength: default,
-                eTag: etag,
-                lastModifiedTime: DateTimeOffset.UtcNow,
-                properties: default);
+            StorageResourceItemProperties resourceProperties = new()
+            {
+                ResourceLength = default,
+                ETag = etag,
+                LastModifiedTime = DateTimeOffset.UtcNow
+            };
 
             PageBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
@@ -164,7 +183,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 0,
+                ETag = etag,
+                LastModifiedTime = DateTimeOffset.UtcNow
+            };
 
             AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -189,21 +213,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             List<string> names = Enumerable.Range(0, blobTypes.Count)
                 .Select(_ => Guid.NewGuid().ToString())
                 .ToList();
-            List<BlobItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
-                .Select(i => BlobsModelFactory.BlobItem(
+            List<BlobHierarchyItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
+                .Select(i => new BlobHierarchyItem(default, BlobsModelFactory.BlobItem(
                     name: names[i],
                     properties: BlobsModelFactory.BlobItemProperties(
                         accessTierInferred: false,
                         eTag: etags[i],
-                        blobType: blobTypes[i]))).ToList();
+                        blobType: blobTypes[i])))).ToList();
             Mock<BlobContainerClient> mock = new(new Uri("https://storageaccount.blob.core.windows.net/container"), new BlobClientOptions())
             {
                 CallBase = true
             };
-            mock.Setup(c => c.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Returns(AsyncPageable<BlobItem>.FromPages(new List<Page<BlobItem>>()
+            mock.Setup(c => c.GetBlobsByHierarchyAsync(
+                It.IsAny<BlobTraits>(),
+                It.IsAny<BlobStates>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(AsyncPageable<BlobHierarchyItem>.FromPages(new List<Page<BlobHierarchyItem>>()
                 {
-                    Page<BlobItem>.FromValues(
+                    Page<BlobHierarchyItem>.FromValues(
                         blobListItems,
                         continuationToken: null,
                         response: null)

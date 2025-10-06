@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NamedPartitionScheme"/>. </summary>
-        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <param name="partitionScheme"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="names"> Array for the names of the partitions. </param>
         internal NamedPartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> names) : base(partitionScheme, serializedAdditionalRawData)

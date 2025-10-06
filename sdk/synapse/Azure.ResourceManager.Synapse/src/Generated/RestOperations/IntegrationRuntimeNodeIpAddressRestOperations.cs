@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Synapse.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.Synapse
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, string nodeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeName, true);
+            uri.AppendPath("/ipAddress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, string nodeName)
@@ -86,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeNodeIPAddress value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIntegrationRuntimeNodeIPAddress.DeserializeSynapseIntegrationRuntimeNodeIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +137,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeNodeIPAddress value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIntegrationRuntimeNodeIPAddress.DeserializeSynapseIntegrationRuntimeNodeIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

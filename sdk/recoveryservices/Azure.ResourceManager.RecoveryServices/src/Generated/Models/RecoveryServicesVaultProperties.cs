@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -50,6 +49,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesVaultProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultProperties"/>. </summary>
@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
         /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -86,6 +88,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             RedundancySettings = redundancySettings;
             SecuritySettings = securitySettings;
             SecureScore = secureScore;
+            BcdrSecurityLevel = bcdrSecurityLevel;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -131,5 +135,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesSecuritySettings SecuritySettings { get; set; }
         /// <summary> Secure Score of Recovery Services Vault. </summary>
         public SecureScoreLevel? SecureScore { get; }
+        /// <summary> Security levels of Recovery Services Vault for business continuity and disaster recovery. </summary>
+        public BcdrSecurityLevel? BcdrSecurityLevel { get; }
+        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
+        public IList<string> ResourceGuardOperationRequests { get; }
     }
 }

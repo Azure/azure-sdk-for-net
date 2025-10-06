@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,11 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="type"> The type of the query. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(object text, ScriptType type)
+        /// <param name="type"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="type"/> is null. </exception>
+        public ScriptActivityScriptBlock(object text, object type)
         {
             Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(type, nameof(type));
 
             Text = text;
             Type = type;
@@ -29,9 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="type"> The type of the query. Type: string. </param>
+        /// <param name="type"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(object text, ScriptType type, IList<ScriptActivityParameter> parameters)
+        internal ScriptActivityScriptBlock(object text, object type, IList<ScriptActivityParameter> parameters)
         {
             Text = text;
             Type = type;
@@ -40,8 +40,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
         public object Text { get; set; }
-        /// <summary> The type of the query. Type: string. </summary>
-        public ScriptType Type { get; set; }
+        /// <summary> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </summary>
+        public object Type { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>
         public IList<ScriptActivityParameter> Parameters { get; }
     }

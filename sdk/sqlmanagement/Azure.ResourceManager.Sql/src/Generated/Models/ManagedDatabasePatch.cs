@@ -76,8 +76,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
         /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Collation = collation;
@@ -102,54 +103,81 @@ namespace Azure.ResourceManager.Sql.Models
             LastBackupName = lastBackupName;
             CrossSubscriptionTargetManagedInstanceId = crossSubscriptionTargetManagedInstanceId;
             IsLedgerOn = isLedgerOn;
+            ExtendedAccessibilityInfo = extendedAccessibilityInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Collation of the managed database. </summary>
+        [WirePath("properties.collation")]
         public string Collation { get; set; }
         /// <summary> Status of the database. </summary>
+        [WirePath("properties.status")]
         public ManagedDatabaseStatus? Status { get; }
         /// <summary> Creation date of the database. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Earliest restore point in time for point in time restore. </summary>
+        [WirePath("properties.earliestRestorePoint")]
         public DateTimeOffset? EarliestRestorePoint { get; }
         /// <summary> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        [WirePath("properties.restorePointInTime")]
         public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Geo paired region. </summary>
+        [WirePath("properties.defaultSecondaryLocation")]
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Collation of the metadata catalog. </summary>
+        [WirePath("properties.catalogCollation")]
         public CatalogCollationType? CatalogCollation { get; set; }
         /// <summary> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </summary>
+        [WirePath("properties.createMode")]
         public ManagedDatabaseCreateMode? CreateMode { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </summary>
+        [WirePath("properties.storageContainerUri")]
         public Uri StorageContainerUri { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
+        [WirePath("properties.sourceDatabaseId")]
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The resource identifier of the cross-subscription source database associated with create operation of this database. </summary>
+        [WirePath("properties.crossSubscriptionSourceDatabaseId")]
         public ResourceIdentifier CrossSubscriptionSourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
+        [WirePath("properties.restorableDroppedDatabaseId")]
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
         /// <summary> The restorable cross-subscription dropped database resource id to restore when creating this database. </summary>
+        [WirePath("properties.crossSubscriptionRestorableDroppedDatabaseId")]
         public ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </summary>
+        [WirePath("properties.storageContainerIdentity")]
         public string StorageContainerIdentity { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
+        [WirePath("properties.storageContainerSasToken")]
         public string StorageContainerSasToken { get; set; }
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
+        [WirePath("properties.failoverGroupId")]
         public ResourceIdentifier FailoverGroupId { get; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
+        [WirePath("properties.recoverableDatabaseId")]
         public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>
+        [WirePath("properties.longTermRetentionBackupResourceId")]
         public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> Whether to auto complete restore of this managed database. </summary>
+        [WirePath("properties.autoCompleteRestore")]
         public bool? AllowAutoCompleteRestore { get; set; }
         /// <summary> Last backup file name for restore of this managed database. </summary>
+        [WirePath("properties.lastBackupName")]
         public string LastBackupName { get; set; }
         /// <summary> Target managed instance id used in cross-subscription restore. </summary>
+        [WirePath("properties.crossSubscriptionTargetManagedInstanceId")]
         public ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get; set; }
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
+        [WirePath("properties.isLedgerOn")]
         public bool? IsLedgerOn { get; set; }
+        /// <summary> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </summary>
+        [WirePath("properties.extendedAccessibilityInfo")]
+        public ManagedDatabaseExtendedAccessibilityInfo ExtendedAccessibilityInfo { get; }
     }
 }

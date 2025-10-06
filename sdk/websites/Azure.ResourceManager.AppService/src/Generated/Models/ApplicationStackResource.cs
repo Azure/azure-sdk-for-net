@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -82,18 +81,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application stack name. </summary>
+        [WirePath("properties.name")]
         public string StackName { get; set; }
         /// <summary> Application stack display name. </summary>
+        [WirePath("properties.display")]
         public string Display { get; set; }
         /// <summary> Application stack dependency. </summary>
+        [WirePath("properties.dependency")]
         public string Dependency { get; set; }
         /// <summary> List of major versions available. </summary>
+        [WirePath("properties.majorVersions")]
         public IList<StackMajorVersion> MajorVersions { get; }
         /// <summary> List of frameworks associated with application stack. </summary>
+        [WirePath("properties.frameworks")]
         public IList<ApplicationStack> Frameworks { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isDeprecated")]
         public IList<ApplicationStack> IsDeprecated { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

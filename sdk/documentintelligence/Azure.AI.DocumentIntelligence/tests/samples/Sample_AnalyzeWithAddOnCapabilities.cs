@@ -16,8 +16,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithFormulaExtraction()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleFormulaExtraction
 #if SNIPPET
@@ -26,17 +25,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
             {
-                UrlSource = uriSource
+                Features = { DocumentAnalysisFeature.Formulas }
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-            {
-                DocumentAnalysisFeature.Formulas
-            };
-
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -65,8 +59,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithFontStyling()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleFontStyling
 #if SNIPPET
@@ -75,17 +68,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
             {
-                UrlSource = uriSource
+                Features = { DocumentAnalysisFeature.FontStyling }
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-            {
-                DocumentAnalysisFeature.StyleFont
-            };
-
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             // Handwritten styles
@@ -229,8 +217,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithBarcodeExtraction()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBarcodeExtraction
 #if SNIPPET
@@ -239,17 +226,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
             {
-                UrlSource = uriSource
+                Features = { DocumentAnalysisFeature.Barcodes }
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-            {
-                DocumentAnalysisFeature.Barcodes
-            };
-
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -280,8 +262,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithLanguageDetection()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleLanguageDetection
 #if SNIPPET
@@ -290,17 +271,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
             {
-                UrlSource = uriSource
+                Features = { DocumentAnalysisFeature.Languages }
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-            {
-                DocumentAnalysisFeature.Languages
-            };
-
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("----Languages detected in the document----");
@@ -323,8 +299,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithKeyValuePairs()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
 #if SNIPPET
@@ -333,17 +308,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
             {
-                UrlSource = uriSource
+                Features = { DocumentAnalysisFeature.KeyValuePairs }
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-            {
-                DocumentAnalysisFeature.KeyValuePairs
-            };
-
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("----Key Value Pair Options detected in the document----");

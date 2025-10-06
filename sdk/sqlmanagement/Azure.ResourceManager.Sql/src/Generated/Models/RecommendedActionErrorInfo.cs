@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the reason why the recommended action was put to error state. e.g., DatabaseHasQdsOff, IndexAlreadyExists. </summary>
+        [WirePath("errorCode")]
         public string ErrorCode { get; }
         /// <summary> Gets whether the error could be ignored and recommended action could be retried. Possible values are: Yes/No. </summary>
+        [WirePath("isRetryable")]
         public ActionRetryableState? IsRetryable { get; }
     }
 }

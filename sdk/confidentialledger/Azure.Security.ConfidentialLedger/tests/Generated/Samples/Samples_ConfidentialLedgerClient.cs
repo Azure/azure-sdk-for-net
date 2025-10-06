@@ -8,10 +8,8 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Security.ConfidentialLedger;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Samples
@@ -184,8 +182,36 @@ namespace Azure.Security.ConfidentialLedger.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 contents = "<contents>",
+                preHooks = new object[]
+            {
+new
+{
+functionId = "<functionId>",
+properties = new
+{
+arguments = new object[]
+{
+"<arguments>"
+},
+exportedFunctionName = "<exportedFunctionName>",
+runtimeOptions = new
+{
+log_exception_details = true,
+max_cached_interpreters = 1234L,
+max_execution_time_ms = 1234L,
+max_heap_bytes = 1234L,
+max_stack_bytes = 1234L,
+return_exception_details = true,
+},
+},
+}
+            },
+                postHooks = new object[]
+            {
+null
+            },
             });
-            Response response = client.CreateLedgerEntry(content, collectionId: "<collectionId>");
+            Response response = client.CreateLedgerEntry(content, collectionId: "<collectionId>", tags: "<tags>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -201,8 +227,36 @@ namespace Azure.Security.ConfidentialLedger.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 contents = "<contents>",
+                preHooks = new object[]
+            {
+new
+{
+functionId = "<functionId>",
+properties = new
+{
+arguments = new object[]
+{
+"<arguments>"
+},
+exportedFunctionName = "<exportedFunctionName>",
+runtimeOptions = new
+{
+log_exception_details = true,
+max_cached_interpreters = 1234L,
+max_execution_time_ms = 1234L,
+max_heap_bytes = 1234L,
+max_stack_bytes = 1234L,
+return_exception_details = true,
+},
+},
+}
+            },
+                postHooks = new object[]
+            {
+null
+            },
             });
-            Response response = await client.CreateLedgerEntryAsync(content, collectionId: "<collectionId>");
+            Response response = await client.CreateLedgerEntryAsync(content, collectionId: "<collectionId>", tags: "<tags>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -248,6 +302,24 @@ namespace Azure.Security.ConfidentialLedger.Samples
             Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
             Console.WriteLine(result.GetProperty("entry").GetProperty("collectionId").ToString());
             Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
         }
 
         [Test]
@@ -264,6 +336,24 @@ namespace Azure.Security.ConfidentialLedger.Samples
             Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
             Console.WriteLine(result.GetProperty("entry").GetProperty("collectionId").ToString());
             Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("entry").GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
         }
 
         [Test]
@@ -304,6 +394,13 @@ namespace Azure.Security.ConfidentialLedger.Samples
             Response response = client.GetReceipt("<transactionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("protocol").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("collectionId").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("contents").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("secretKey").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("protocol").ToString());
             Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
             Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
             Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("claimsDigest").ToString());
@@ -329,6 +426,13 @@ namespace Azure.Security.ConfidentialLedger.Samples
             Response response = await client.GetReceiptAsync("<transactionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("digest").GetProperty("protocol").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("collectionId").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("contents").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("secretKey").ToString());
+            Console.WriteLine(result.GetProperty("applicationClaims")[0].GetProperty("ledgerEntry").GetProperty("protocol").ToString());
             Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
             Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
             Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("claimsDigest").ToString());
@@ -439,6 +543,24 @@ namespace Azure.Security.ConfidentialLedger.Samples
             Console.WriteLine(result.GetProperty("contents").ToString());
             Console.WriteLine(result.GetProperty("collectionId").ToString());
             Console.WriteLine(result.GetProperty("transactionId").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
         }
 
         [Test]
@@ -454,6 +576,24 @@ namespace Azure.Security.ConfidentialLedger.Samples
             Console.WriteLine(result.GetProperty("contents").ToString());
             Console.WriteLine(result.GetProperty("collectionId").ToString());
             Console.WriteLine(result.GetProperty("transactionId").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
         }
 
         [Test]
@@ -630,6 +770,1170 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteLedgerUser_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.DeleteLedgerUser("<userId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteLedgerUser_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.DeleteLedgerUserAsync("<userId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteLedgerUser_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.DeleteLedgerUser("<userId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteLedgerUser_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.DeleteLedgerUserAsync("<userId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetLedgerUser_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetLedgerUser("<userId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerUser_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetLedgerUserAsync("<userId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetLedgerUser_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetLedgerUser("<userId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+            Console.WriteLine(result.GetProperty("userId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerUser_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetLedgerUserAsync("<userId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+            Console.WriteLine(result.GetProperty("userId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateLedgerUser_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                assignedRoles = new object[]
+            {
+"Administrator"
+            },
+            });
+            Response response = client.CreateOrUpdateLedgerUser("<userId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateLedgerUser_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                assignedRoles = new object[]
+            {
+"Administrator"
+            },
+            });
+            Response response = await client.CreateOrUpdateLedgerUserAsync("<userId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateLedgerUser_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                assignedRoles = new object[]
+            {
+"Administrator"
+            },
+            });
+            Response response = client.CreateOrUpdateLedgerUser("<userId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+            Console.WriteLine(result.GetProperty("userId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateLedgerUser_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                assignedRoles = new object[]
+            {
+"Administrator"
+            },
+            });
+            Response response = await client.CreateOrUpdateLedgerUserAsync("<userId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+            Console.WriteLine(result.GetProperty("userId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedEndpoint_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedEndpoint();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("modules").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedEndpoint_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedEndpointAsync();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("modules").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedEndpoint_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedEndpoint();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("modules").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedEndpoint_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedEndpointAsync();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("get").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("put").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("patch").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("authn_policies")[0].ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("forwarding_required").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("interpreter_reuse").GetProperty("key").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_function").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("js_module").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("mode").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("openapi_hidden").ToString());
+            Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").GetProperty("delete").GetProperty("redirection_strategy").ToString());
+            Console.WriteLine(result.GetProperty("modules").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateUserDefinedEndpoint_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                metadata = new
+                {
+                    endpoints = new
+                    {
+                        key = new object(),
+                    },
+                },
+                modules = new object(),
+            });
+            Response response = client.CreateUserDefinedEndpoint(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateUserDefinedEndpoint_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                metadata = new
+                {
+                    endpoints = new
+                    {
+                        key = new object(),
+                    },
+                },
+                modules = new object(),
+            });
+            Response response = await client.CreateUserDefinedEndpointAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateUserDefinedEndpoint_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                metadata = new
+                {
+                    endpoints = new
+                    {
+                        key = new
+                        {
+                            get = new
+                            {
+                                authn_policies = new object[]
+            {
+new object()
+            },
+                                forwarding_required = "sometimes",
+                                interpreter_reuse = new
+                                {
+                                    key = "<key>",
+                                },
+                                js_function = "<js_function>",
+                                js_module = "<js_module>",
+                                mode = "readwrite",
+                                openapi = new object(),
+                                openapi_hidden = true,
+                                redirection_strategy = "none",
+                            },
+                        },
+                    },
+                },
+                modules = new object(),
+            });
+            Response response = client.CreateUserDefinedEndpoint(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateUserDefinedEndpoint_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                metadata = new
+                {
+                    endpoints = new
+                    {
+                        key = new
+                        {
+                            get = new
+                            {
+                                authn_policies = new object[]
+            {
+new object()
+            },
+                                forwarding_required = "sometimes",
+                                interpreter_reuse = new
+                                {
+                                    key = "<key>",
+                                },
+                                js_function = "<js_function>",
+                                js_module = "<js_module>",
+                                mode = "readwrite",
+                                openapi = new object(),
+                                openapi_hidden = true,
+                                redirection_strategy = "none",
+                            },
+                        },
+                    },
+                },
+                modules = new object(),
+            });
+            Response response = await client.CreateUserDefinedEndpointAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetRuntimeOptions_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetRuntimeOptions();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRuntimeOptions_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetRuntimeOptionsAsync();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetRuntimeOptions_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetRuntimeOptions();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRuntimeOptions_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetRuntimeOptionsAsync();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_UpdateRuntimeOptions_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpdateRuntimeOptions(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateRuntimeOptions_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateRuntimeOptionsAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_UpdateRuntimeOptions_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                log_exception_details = true,
+                max_cached_interpreters = 1234L,
+                max_execution_time_ms = 1234L,
+                max_heap_bytes = 1234L,
+                max_stack_bytes = 1234L,
+                return_exception_details = true,
+            });
+            Response response = client.UpdateRuntimeOptions(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateRuntimeOptions_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                log_exception_details = true,
+                max_cached_interpreters = 1234L,
+                max_execution_time_ms = 1234L,
+                max_heap_bytes = 1234L,
+                max_stack_bytes = 1234L,
+                return_exception_details = true,
+            });
+            Response response = await client.UpdateRuntimeOptionsAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("log_exception_details").ToString());
+            Console.WriteLine(result.GetProperty("max_cached_interpreters").ToString());
+            Console.WriteLine(result.GetProperty("max_execution_time_ms").ToString());
+            Console.WriteLine(result.GetProperty("max_heap_bytes").ToString());
+            Console.WriteLine(result.GetProperty("max_stack_bytes").ToString());
+            Console.WriteLine(result.GetProperty("return_exception_details").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedEndpointsModule_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedEndpointsModule("<moduleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("module").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedEndpointsModule_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedEndpointsModuleAsync("<moduleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("module").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedEndpointsModule_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedEndpointsModule("<moduleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("module").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedEndpointsModule_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedEndpointsModuleAsync("<moduleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("module").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteUserDefinedFunction_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.DeleteUserDefinedFunction("<functionId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteUserDefinedFunction_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.DeleteUserDefinedFunctionAsync("<functionId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteUserDefinedFunction_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.DeleteUserDefinedFunction("<functionId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteUserDefinedFunction_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.DeleteUserDefinedFunctionAsync("<functionId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedFunction_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedFunction("<functionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedFunction_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedFunctionAsync("<functionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedFunction_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedFunction("<functionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedFunction_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedFunctionAsync("<functionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateUserDefinedFunction_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                code = "<code>",
+            });
+            Response response = client.CreateUserDefinedFunction("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateUserDefinedFunction_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                code = "<code>",
+            });
+            Response response = await client.CreateUserDefinedFunctionAsync("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateUserDefinedFunction_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                code = "<code>",
+            });
+            Response response = client.CreateUserDefinedFunction("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateUserDefinedFunction_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                code = "<code>",
+            });
+            Response response = await client.CreateUserDefinedFunctionAsync("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ExecuteUserDefinedFunction_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = null;
+            Response response = client.ExecuteUserDefinedFunction("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ExecuteUserDefinedFunction_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = null;
+            Response response = await client.ExecuteUserDefinedFunctionAsync("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ExecuteUserDefinedFunction_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                arguments = new object[]
+            {
+"<arguments>"
+            },
+                exportedFunctionName = "<exportedFunctionName>",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 1234L,
+                    max_execution_time_ms = 1234L,
+                    max_heap_bytes = 1234L,
+                    max_stack_bytes = 1234L,
+                    return_exception_details = true,
+                },
+            });
+            Response response = client.ExecuteUserDefinedFunction("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("returnValue").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ExecuteUserDefinedFunction_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                arguments = new object[]
+            {
+"<arguments>"
+            },
+                exportedFunctionName = "<exportedFunctionName>",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 1234L,
+                    max_execution_time_ms = 1234L,
+                    max_heap_bytes = 1234L,
+                    max_stack_bytes = 1234L,
+                    return_exception_details = true,
+                },
+            });
+            Response response = await client.ExecuteUserDefinedFunctionAsync("<functionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("returnValue").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedRole_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedRole("<roleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedRole_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedRoleAsync("<roleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedRole_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.GetUserDefinedRole("<roleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("roleName").ToString());
+            Console.WriteLine(result[0].GetProperty("roleActions")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedRole_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.GetUserDefinedRoleAsync("<roleName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("roleName").ToString());
+            Console.WriteLine(result[0].GetProperty("roleActions")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateUserDefinedRole_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = client.CreateUserDefinedRole(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateUserDefinedRole_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = await client.CreateUserDefinedRoleAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateUserDefinedRole_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+roleName = "<roleName>",
+roleActions = new object[]
+{
+"<roleActions>"
+},
+}
+            });
+            Response response = client.CreateUserDefinedRole(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateUserDefinedRole_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+roleName = "<roleName>",
+roleActions = new object[]
+{
+"<roleActions>"
+},
+}
+            });
+            Response response = await client.CreateUserDefinedRoleAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_UpdateUserDefinedRole_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = client.UpdateUserDefinedRole(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateUserDefinedRole_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = await client.UpdateUserDefinedRoleAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_UpdateUserDefinedRole_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+roleName = "<roleName>",
+roleActions = new object[]
+{
+"<roleActions>"
+},
+}
+            });
+            Response response = client.UpdateUserDefinedRole(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateUserDefinedRole_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+roleName = "<roleName>",
+roleActions = new object[]
+{
+"<roleActions>"
+},
+}
+            });
+            Response response = await client.UpdateUserDefinedRoleAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteUserDefinedRole_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.DeleteUserDefinedRole("<roleName>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteUserDefinedRole_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.DeleteUserDefinedRoleAsync("<roleName>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteUserDefinedRole_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = client.DeleteUserDefinedRole("<roleName>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteUserDefinedRole_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            Response response = await client.DeleteUserDefinedRoleAsync("<roleName>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetConsortiumMembers_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -779,12 +2083,30 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
+            foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>", tag: "<tag>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("contents").ToString());
                 Console.WriteLine(result.GetProperty("collectionId").ToString());
                 Console.WriteLine(result.GetProperty("transactionId").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
             }
         }
 
@@ -795,12 +2117,204 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
+            await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>", tag: "<tag>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("contents").ToString());
                 Console.WriteLine(result.GetProperty("collectionId").ToString());
                 Console.WriteLine(result.GetProperty("transactionId").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("functionId").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+                Console.WriteLine(result.GetProperty("preHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("functionId").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("arguments")[0].ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("exportedFunctionName").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("log_exception_details").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_cached_interpreters").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_execution_time_ms").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_heap_bytes").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("max_stack_bytes").ToString());
+                Console.WriteLine(result.GetProperty("postHooks")[0].GetProperty("properties").GetProperty("runtimeOptions").GetProperty("return_exception_details").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUsers_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            foreach (BinaryData item in client.GetUsers())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRole").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUsers_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            await foreach (BinaryData item in client.GetUsersAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRole").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUsers_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            foreach (BinaryData item in client.GetUsers())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRole").ToString());
+                Console.WriteLine(result.GetProperty("userId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUsers_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            await foreach (BinaryData item in client.GetUsersAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRole").ToString());
+                Console.WriteLine(result.GetProperty("userId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetLedgerUsers_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            foreach (BinaryData item in client.GetLedgerUsers())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerUsers_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            await foreach (BinaryData item in client.GetLedgerUsersAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetLedgerUsers_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            foreach (BinaryData item in client.GetLedgerUsers())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+                Console.WriteLine(result.GetProperty("userId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerUsers_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            await foreach (BinaryData item in client.GetLedgerUsersAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+                Console.WriteLine(result.GetProperty("userId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedFunctions_ShortVersion()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            foreach (BinaryData item in client.GetUserDefinedFunctions())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("code").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedFunctions_ShortVersion_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("code").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetUserDefinedFunctions_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            foreach (BinaryData item in client.GetUserDefinedFunctions())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUserDefinedFunctions_AllParameters_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+
+            await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
     }

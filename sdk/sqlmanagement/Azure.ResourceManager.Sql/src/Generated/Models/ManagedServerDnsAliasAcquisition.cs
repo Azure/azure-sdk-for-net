@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The resource ID of the managed server DNS alias that will be acquired to point to this managed server instead. </summary>
+        [WirePath("oldManagedServerDnsAliasResourceId")]
         public ResourceIdentifier OldManagedServerDnsAliasResourceId { get; }
     }
 }

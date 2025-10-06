@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The action enum for networking rule. </summary>
+        [WirePath("action")]
         public NetworkingRuleAction? Action { get; set; }
         /// <summary> Optional, if provided, the ServiceTag property will be ignored. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> Gets or sets the port ranges. </summary>
+        [WirePath("portRanges")]
         public string PortRanges { get; set; }
         /// <summary> Gets or sets the protocol. </summary>
+        [WirePath("protocol")]
         public string Protocol { get; set; }
         /// <summary> Gets or sets the service tag. </summary>
+        [WirePath("serviceTag")]
         public string ServiceTag { get; set; }
     }
 }

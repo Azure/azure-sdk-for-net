@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AcrAccessToken
+    public partial class AcrAccessToken
     {
         internal static AcrAccessToken DeserializeAcrAccessToken(JsonElement element)
         {
@@ -27,6 +27,14 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
             return new AcrAccessToken(accessToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcrAccessToken FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAcrAccessToken(document.RootElement);
         }
     }
 }

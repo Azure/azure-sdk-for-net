@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The principal type used to represent the type of Active Directory Administrator. </summary>
+        [WirePath("properties.principalType")]
         public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
         /// <summary> Active Directory administrator principal name. </summary>
+        [WirePath("properties.principalName")]
         public string PrincipalName { get; set; }
         /// <summary> The tenantId of the Active Directory administrator. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

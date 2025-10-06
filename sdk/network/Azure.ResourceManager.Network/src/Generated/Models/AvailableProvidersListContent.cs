@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of Azure regions. </summary>
+        [WirePath("azureLocations")]
         public IList<AzureLocation> AzureLocations { get; }
         /// <summary> The country for available providers list. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
         /// <summary> The state for available providers list. </summary>
+        [WirePath("state")]
         public string State { get; set; }
         /// <summary> The city or town for available providers list. </summary>
+        [WirePath("city")]
         public string City { get; set; }
     }
 }

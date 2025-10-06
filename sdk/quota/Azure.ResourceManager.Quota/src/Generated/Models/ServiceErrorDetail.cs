@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

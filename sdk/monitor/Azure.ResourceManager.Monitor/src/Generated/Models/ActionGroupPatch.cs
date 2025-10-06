@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,17 +54,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroupPatch(IDictionary<string, string> tags, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActionGroupPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Identity = identity;
             IsEnabled = isEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </summary>
         public bool? IsEnabled { get; set; }
     }

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -58,6 +57,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
             }
             return new JobMetadata(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JobMetadata FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeJobMetadata(document.RootElement);
         }
     }
 }

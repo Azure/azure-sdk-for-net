@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -25,8 +23,8 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class CurrentQuotaLimitBaseCollection : ArmCollection, IEnumerable<CurrentQuotaLimitBaseResource>, IAsyncEnumerable<CurrentQuotaLimitBaseResource>
     {
-        private readonly ClientDiagnostics _currentQuotaLimitBaseQuotaClientDiagnostics;
-        private readonly QuotaRestOperations _currentQuotaLimitBaseQuotaRestClient;
+        private readonly ClientDiagnostics _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics;
+        private readonly CurrentQuotaLimitBasesRestOperations _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CurrentQuotaLimitBaseCollection"/> class for mocking. </summary>
         protected CurrentQuotaLimitBaseCollection()
@@ -38,9 +36,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CurrentQuotaLimitBaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _currentQuotaLimitBaseQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentQuotaLimitBaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CurrentQuotaLimitBaseResource.ResourceType, out string currentQuotaLimitBaseQuotaApiVersion);
-            _currentQuotaLimitBaseQuotaRestClient = new QuotaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseQuotaApiVersion);
+            _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentQuotaLimitBaseResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CurrentQuotaLimitBaseResource.ResourceType, out string currentQuotaLimitBaseCurrentQuotaLimitBasesApiVersion);
+            _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient = new CurrentQuotaLimitBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseCurrentQuotaLimitBasesApiVersion);
         }
 
         /// <summary>
@@ -54,11 +52,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_CreateOrUpdate</description>
+        /// <description>CurrentQuotaLimitBase_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,12 +80,12 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdateAsync(Id, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateOrUpdateAsync(Id, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,11 +108,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_CreateOrUpdate</description>
+        /// <description>CurrentQuotaLimitBase_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,12 +136,12 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdate(Id, resourceName, data, cancellationToken);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateOrUpdate(Id, resourceName, data, cancellationToken);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,11 +162,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -189,11 +187,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -214,11 +212,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -239,11 +237,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id, resourceName, cancellationToken);
+                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Get(Id, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -264,11 +262,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_List</description>
+        /// <description>CurrentQuotaLimitBase_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -280,9 +278,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CurrentQuotaLimitBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseQuotaRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,11 +292,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_List</description>
+        /// <description>CurrentQuotaLimitBase_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,9 +308,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CurrentQuotaLimitBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseQuotaRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,11 +322,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,11 +347,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -372,11 +370,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,11 +395,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -420,11 +418,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,11 +443,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CurrentQuotaLimitBaseResource>(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -470,11 +468,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -495,11 +493,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CurrentQuotaLimitBaseResource>(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());

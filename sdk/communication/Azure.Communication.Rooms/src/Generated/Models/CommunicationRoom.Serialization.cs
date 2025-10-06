@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -53,6 +52,14 @@ namespace Azure.Communication.Rooms
                 }
             }
             return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationRoom FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCommunicationRoom(document.RootElement);
         }
     }
 }

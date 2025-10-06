@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile");
+                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+            }
             if (Optional.IsCollectionDefined(DnsARecords))
             {
                 writer.WritePropertyName("ARecords"u8);
@@ -165,6 +170,36 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(DnsDSRecords))
+            {
+                writer.WritePropertyName("dsRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsDSRecords)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DnsTlsaRecords))
+            {
+                writer.WritePropertyName("tlsaRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsTlsaRecords)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DnsNaptrRecords))
+            {
+                writer.WritePropertyName("naptrRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsNaptrRecords)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -207,12 +242,13 @@ namespace Azure.ResourceManager.Dns
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             IDictionary<string, string> metadata = default;
             long? ttl = default;
             string fqdn = default;
             string provisioningState = default;
             WritableSubResource targetResource = default;
+            WritableSubResource trafficManagementProfile = default;
             IList<DnsARecordInfo> aRecords = default;
             IList<DnsAaaaRecordInfo> aaaaRecords = default;
             IList<DnsMXRecordInfo> mxRecords = default;
@@ -223,6 +259,9 @@ namespace Azure.ResourceManager.Dns
             DnsCnameRecordInfo cnameRecord = default;
             DnsSoaRecordInfo soaRecord = default;
             IList<DnsCaaRecordInfo> caaRecords = default;
+            IList<DnsDSRecordInfo> dsRecords = default;
+            IList<DnsTlsaRecordInfo> tlsaRecords = default;
+            IList<DnsNaptrRecordInfo> naptrRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +296,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -308,6 +347,16 @@ namespace Azure.ResourceManager.Dns
                                 continue;
                             }
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
+                        if (property0.NameEquals("trafficManagementProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("ARecords"u8))
@@ -440,6 +489,48 @@ namespace Azure.ResourceManager.Dns
                             caaRecords = array;
                             continue;
                         }
+                        if (property0.NameEquals("dsRecords"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DnsDSRecordInfo> array = new List<DnsDSRecordInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DnsDSRecordInfo.DeserializeDnsDSRecordInfo(item));
+                            }
+                            dsRecords = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("tlsaRecords"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DnsTlsaRecordInfo> array = new List<DnsTlsaRecordInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DnsTlsaRecordInfo.DeserializeDnsTlsaRecordInfo(item));
+                            }
+                            tlsaRecords = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("naptrRecords"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DnsNaptrRecordInfo> array = new List<DnsNaptrRecordInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DnsNaptrRecordInfo.DeserializeDnsNaptrRecordInfo(item));
+                            }
+                            naptrRecords = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -460,6 +551,7 @@ namespace Azure.ResourceManager.Dns
                 fqdn,
                 provisioningState,
                 targetResource,
+                trafficManagementProfile,
                 aRecords ?? new ChangeTrackingList<DnsARecordInfo>(),
                 aaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>(),
                 mxRecords ?? new ChangeTrackingList<DnsMXRecordInfo>(),
@@ -470,6 +562,9 @@ namespace Azure.ResourceManager.Dns
                 cnameRecord,
                 soaRecord,
                 caaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>(),
+                dsRecords ?? new ChangeTrackingList<DnsDSRecordInfo>(),
+                tlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>(),
+                naptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>(),
                 serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<DnsRecordData>.Write(ModelReaderWriterOptions options)
@@ -479,7 +574,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsRecordData)} does not support '{options.Format}' format.");
             }

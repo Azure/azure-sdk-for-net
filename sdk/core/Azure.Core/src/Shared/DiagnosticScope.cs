@@ -66,6 +66,11 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.AddTag(name, value);
         }
 
+        public void AddLongAttribute(string name, long value)
+        {
+            _activityAdapter?.AddTag(name, value);
+        }
+
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
             if (_activityAdapter != null && value != null)
@@ -81,7 +86,7 @@ namespace Azure.Core.Pipeline
         /// <param name="traceparent">The traceparent for the link.</param>
         /// <param name="tracestate">The tracestate for the link.</param>
         /// <param name="attributes">Optional attributes to associate with the link.</param>
-        public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes = null)
+        public void AddLink(string traceparent, string? tracestate, IDictionary<string, object?>? attributes = null)
         {
             _activityAdapter?.AddLink(traceparent, tracestate, attributes);
         }
@@ -179,7 +184,7 @@ namespace Azure.Core.Pipeline
 
             private ActivityTagsCollection? _tagCollection;
             private DateTimeOffset _startTime;
-            private List<Activity>? _links;
+            private List<ActivityLink>? _links;
             private string? _traceparent;
             private string? _tracestate;
             private string? _displayName;
@@ -211,50 +216,56 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private List<ActivityLink>? GetActivitySourceLinkCollection()
+            private IReadOnlyList<Activity> GetDiagnosticSourceLinkCollection()
             {
                 if (_links == null)
                 {
-                    return null;
+                    return Array.Empty<Activity>();
                 }
 
-                var linkCollection = new List<ActivityLink>();
+                var linkCollection = new List<Activity>();
 
-                foreach (var activity in _links)
+                foreach (var link in _links)
                 {
-                    ActivityTagsCollection linkTagsCollection = new();
-                    foreach (var tag in activity.Tags)
+                    var activity = new Activity("LinkedActivity");
+                    activity.SetIdFormat(ActivityIdFormat.W3C);
+                    if (link.Context != default)
                     {
-                        linkTagsCollection.Add(tag.Key, tag.Value!);
+                        activity.SetParentId(ActivityContextToTraceParent(link.Context));
+                        activity.TraceStateString = link.Context.TraceState;
                     }
 
-                    var contextWasParsed = ActivityContext.TryParse(activity.ParentId!, activity.TraceStateString, out var context);
-                    if (contextWasParsed)
+                    if (link.Tags != null)
                     {
-                        var link = new ActivityLink(context, linkTagsCollection);
-                        linkCollection.Add(link);
+                        foreach (var tag in link.Tags)
+                        {
+                            if (tag.Value != null)
+                            {
+                                // old code path, only string attributes are supported
+                                activity.AddTag(tag.Key, tag.Value.ToString());
+                            }
+                        }
                     }
-            }
+                    linkCollection.Add(activity);
+                }
 
                 return linkCollection;
             }
 
-            public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes)
+            private static string ActivityContextToTraceParent(ActivityContext context)
             {
-                var linkedActivity = new Activity("LinkedActivity");
-                linkedActivity.SetParentId(traceparent);
-                linkedActivity.SetIdFormat(ActivityIdFormat.W3C);
-                linkedActivity.TraceStateString = tracestate;
+                string flags = (context.TraceFlags == ActivityTraceFlags.None) ? "00" : "01";
+                return "00-" + context.TraceId + "-" + context.SpanId + "-" + flags;
+            }
 
-                if (attributes != null)
-                {
-                    foreach (var kvp in attributes)
-                    {
-                        linkedActivity.AddTag(kvp.Key, kvp.Value);
-                    }
-                }
-
-                _links ??= new List<Activity>();
+            public void AddLink(string traceparent, string? tracestate, IDictionary<string, object?>? attributes)
+            {
+                // if context is invalid, we should still add a link since it contains attributes
+                // so we let ActivityLink deal with the default context.
+                // This is otel spec requirement and default context is allowed on links.
+                ActivityContext.TryParse(traceparent, tracestate, out var context);
+                var linkedActivity = new ActivityLink(context, attributes == null ? null : new ActivityTagsCollection(attributes));
+                _links ??= new List<ActivityLink>();
                 _links.Add(linkedActivity);
             }
 
@@ -273,7 +284,7 @@ namespace Azure.Core.Pipeline
                         return null;
                     }
 
-                    _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
+                    _currentActivity.SetTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
                 {
@@ -303,7 +314,7 @@ namespace Azure.Core.Pipeline
 
                     _currentActivity = new DiagnosticActivity(_activityName)
                     {
-                        Links = (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>(),
+                        Links = GetDiagnosticSourceLinkCollection(),
                     };
                     _currentActivity.SetIdFormat(ActivityIdFormat.W3C);
 
@@ -366,7 +377,7 @@ namespace Azure.Core.Pipeline
                 }
                 // TODO(limolkova) set isRemote to true once we switch to DiagnosticSource 7.0
                 ActivityContext.TryParse(_traceparent, _tracestate, out ActivityContext context);
-                return _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
+                return _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, _links, _startTime);
             }
 
             public void SetStartTime(DateTime startTime)

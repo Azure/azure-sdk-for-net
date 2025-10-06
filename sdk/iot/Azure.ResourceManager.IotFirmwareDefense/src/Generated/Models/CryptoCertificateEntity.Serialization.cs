@@ -10,82 +10,54 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CryptoCertificateEntity : IUtf8JsonSerializable, IJsonModel<CryptoCertificateEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CryptoCertificateEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CommonName))
             {
-                if (CommonName != null)
-                {
-                    writer.WritePropertyName("commonName"u8);
-                    writer.WriteStringValue(CommonName);
-                }
-                else
-                {
-                    writer.WriteNull("commonName");
-                }
+                writer.WritePropertyName("commonName"u8);
+                writer.WriteStringValue(CommonName);
             }
             if (Optional.IsDefined(Organization))
             {
-                if (Organization != null)
-                {
-                    writer.WritePropertyName("organization"u8);
-                    writer.WriteStringValue(Organization);
-                }
-                else
-                {
-                    writer.WriteNull("organization");
-                }
+                writer.WritePropertyName("organization"u8);
+                writer.WriteStringValue(Organization);
             }
             if (Optional.IsDefined(OrganizationalUnit))
             {
-                if (OrganizationalUnit != null)
-                {
-                    writer.WritePropertyName("organizationalUnit"u8);
-                    writer.WriteStringValue(OrganizationalUnit);
-                }
-                else
-                {
-                    writer.WriteNull("organizationalUnit");
-                }
+                writer.WritePropertyName("organizationalUnit"u8);
+                writer.WriteStringValue(OrganizationalUnit);
             }
             if (Optional.IsDefined(State))
             {
-                if (State != null)
-                {
-                    writer.WritePropertyName("state"u8);
-                    writer.WriteStringValue(State);
-                }
-                else
-                {
-                    writer.WriteNull("state");
-                }
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
             }
             if (Optional.IsDefined(Country))
             {
-                if (Country != null)
-                {
-                    writer.WritePropertyName("country"u8);
-                    writer.WriteStringValue(Country);
-                }
-                else
-                {
-                    writer.WriteNull("country");
-                }
+                writer.WritePropertyName("country"u8);
+                writer.WriteStringValue(Country);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,14 +67,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CryptoCertificateEntity IJsonModel<CryptoCertificateEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -110,7 +81,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +90,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CryptoCertificateEntity DeserializeCryptoCertificateEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,65 +102,40 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string state = default;
             string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        commonName = null;
-                        continue;
-                    }
                     commonName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("organization"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        organization = null;
-                        continue;
-                    }
                     organization = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("organizationalUnit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        organizationalUnit = null;
-                        continue;
-                    }
                     organizationalUnit = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        state = null;
-                        continue;
-                    }
                     state = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("country"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        country = null;
-                        continue;
-                    }
                     country = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CryptoCertificateEntity(
                 commonName,
                 organization,
@@ -206,9 +152,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,11 +166,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCryptoCertificateEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

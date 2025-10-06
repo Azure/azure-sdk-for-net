@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> A collection of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EventHubsPrivateLinkResourceData> Value { get; }
         /// <summary> A link for the next page of private link resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

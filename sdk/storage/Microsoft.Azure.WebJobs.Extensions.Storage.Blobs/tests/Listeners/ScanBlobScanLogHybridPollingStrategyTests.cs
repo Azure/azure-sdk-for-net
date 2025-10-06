@@ -57,6 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
             _blobClientMock.Setup(x => x.Uri).Returns(new Uri("https://fakeaccount.blob.core.windows.net/"));
+            _blobClientMock.Setup(x => x.AccountName).Returns(AccountName);
             _blobClientMock.Setup(x => x.GetBlobContainerClient("fakecontainer")).Returns(_blobContainerMock.Object);
             _blobClientMock.Setup(x => x.GetBlobContainerClient("fakecontainer2")).Returns(_secondBlobContainerMock.Object);
             _blobClientMock.Setup(x => x.GetBlobContainerClient("$logs")).Returns(_logsContainerMock.Object);

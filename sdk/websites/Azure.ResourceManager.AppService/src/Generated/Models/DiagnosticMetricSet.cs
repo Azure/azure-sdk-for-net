@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the metric. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Metric's unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; set; }
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; set; }
         /// <summary> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </summary>
+        [WirePath("values")]
         public IList<DiagnosticMetricSample> Values { get; }
     }
 }

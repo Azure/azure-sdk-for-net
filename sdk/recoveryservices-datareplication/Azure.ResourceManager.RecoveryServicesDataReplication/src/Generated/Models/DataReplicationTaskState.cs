@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string CancelledValue = "Cancelled";
         private const string SkippedValue = "Skipped";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Task has not been started. </summary>
         public static DataReplicationTaskState Pending { get; } = new DataReplicationTaskState(PendingValue);
-        /// <summary> Started. </summary>
+        /// <summary> Task is in progress. </summary>
         public static DataReplicationTaskState Started { get; } = new DataReplicationTaskState(StartedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Task has completed successfully. </summary>
         public static DataReplicationTaskState Succeeded { get; } = new DataReplicationTaskState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Task failed. </summary>
         public static DataReplicationTaskState Failed { get; } = new DataReplicationTaskState(FailedValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary> Task has been cancelled. </summary>
         public static DataReplicationTaskState Cancelled { get; } = new DataReplicationTaskState(CancelledValue);
-        /// <summary> Skipped. </summary>
+        /// <summary> Task has been skipped. </summary>
         public static DataReplicationTaskState Skipped { get; } = new DataReplicationTaskState(SkippedValue);
         /// <summary> Determines if two <see cref="DataReplicationTaskState"/> values are the same. </summary>
         public static bool operator ==(DataReplicationTaskState left, DataReplicationTaskState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationTaskState"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationTaskState left, DataReplicationTaskState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationTaskState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationTaskState"/>. </summary>
         public static implicit operator DataReplicationTaskState(string value) => new DataReplicationTaskState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

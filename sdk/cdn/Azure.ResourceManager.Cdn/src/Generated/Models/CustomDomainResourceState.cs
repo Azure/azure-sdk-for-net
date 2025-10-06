@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resource status of the custom domain. </summary>
+    /// <summary>
+    /// Resource status of the custom domain.
+    /// Serialized Name: CustomDomainResourceState
+    /// </summary>
     public readonly partial struct CustomDomainResourceState : IEquatable<CustomDomainResourceState>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: CustomDomainResourceState.Creating
+        /// </summary>
         public static CustomDomainResourceState Creating { get; } = new CustomDomainResourceState(CreatingValue);
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: CustomDomainResourceState.Active
+        /// </summary>
         public static CustomDomainResourceState Active { get; } = new CustomDomainResourceState(ActiveValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: CustomDomainResourceState.Deleting
+        /// </summary>
         public static CustomDomainResourceState Deleting { get; } = new CustomDomainResourceState(DeletingValue);
         /// <summary> Determines if two <see cref="CustomDomainResourceState"/> values are the same. </summary>
         public static bool operator ==(CustomDomainResourceState left, CustomDomainResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomDomainResourceState"/> values are not the same. </summary>
         public static bool operator !=(CustomDomainResourceState left, CustomDomainResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomDomainResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainResourceState"/>. </summary>
         public static implicit operator CustomDomainResourceState(string value) => new CustomDomainResourceState(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

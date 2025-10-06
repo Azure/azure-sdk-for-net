@@ -1,0 +1,57 @@
+{
+  "properties": {
+    "helpUri": "https://eng.ms/docs/microsoft-security/security/azure-security/cloudai-security-fundamentals-engineering/security-integration/guardian-wiki/microsoft-guardian/general/baselines"
+  },
+  "version": "1.0.0",
+  "baselines": {
+    "default": {
+      "name": "default",
+      "createdDate": "2024-08-19 08:41:49Z",
+      "lastUpdatedDate": "2024-08-19 08:41:49Z"
+    }
+  },
+  "results": {
+    "572007d428bd1b314408ba0c51e2d101ea2b19539a57c524097f28fa8cfa6c40": {
+      "signature": "572007d428bd1b314408ba0c51e2d101ea2b19539a57c524097f28fa8cfa6c40",
+      "alternativeSignatures": [],
+      "target": "eng/CredScanSuppression.json",
+      "line": 49,
+      "memberOf": [
+        "default"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-MSFT0090",
+      "createdDate": "2024-08-19 08:41:49Z",
+      "expirationDate": "2025-02-05 08:50:31Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-19 08:50:31Z"
+    },
+    "d4f7155a1fdbb51586b1df1db99d10918b19e33652b121fc75739fa6de6d45b6": {
+      "signature": "d4f7155a1fdbb51586b1df1db99d10918b19e33652b121fc75739fa6de6d45b6",
+      "alternativeSignatures": [],
+      "target": "tools/gpg/home/private-keys-v1.d/6E1639B881208F091CC6E2B3D0C9C6618D8A630D.key",
+      "line": 1,
+      "memberOf": [
+        "default"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0020",
+      "createdDate": "2024-08-19 08:41:49Z",
+      "expirationDate": "2025-02-05 08:50:31Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-19 08:50:31Z"
+    },
+    "7ddf82f0e77bef937bf1836284def42c6212aa203dce55147e07eb1c91ccceaa": {
+      "signature": "7ddf82f0e77bef937bf1836284def42c6212aa203dce55147e07eb1c91ccceaa",
+      "alternativeSignatures": [],
+      "target": "tools/gpg/home/private-keys-v1.d/7341036002BCDBA0200B29C9720E25A56D3ED212.key",
+      "line": 1,
+      "memberOf": [
+        "default"
+      ],
+      "tool": "credscan",
+      "ruleId": "CSCAN-GENERAL0020",
+      "createdDate": "2024-08-19 08:41:49Z",
+      "expirationDate": "2025-02-05 08:50:31Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-19 08:50:31Z"
+    }
+  }
+}

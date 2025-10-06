@@ -186,13 +186,23 @@ namespace Azure.Core.Tests
             byte[] data = Convert.FromBase64String(PrivateKey);
 
             using RSA fromPem = LightweightPkcs8Decoder.DecodeRSAPkcs8(data);
-            using RSA fromPfx = new X509Certificate2(Convert.FromBase64String(Pfx)).GetRSAPrivateKey();
+
+            byte[] cer = Convert.FromBase64String(Pfx);
+            X509Certificate2 clientCert;
+
+#if NET9_0_OR_GREATER
+            clientCert = X509CertificateLoader.LoadPkcs12(cer, null);
+#else
+            clientCert = new X509Certificate2(cer);
+#endif
+            using RSA fromPfx = clientCert.GetRSAPrivateKey();
 
             RSAParameters pemParams = fromPem.ExportParameters(false);
             RSAParameters pfxParams = fromPfx.ExportParameters(false);
 
             Assert.AreEqual(pfxParams.Modulus, pemParams.Modulus);
             Assert.AreEqual(pfxParams.Exponent, pemParams.Exponent);
+            clientCert.Dispose();
         }
 
         [Test]

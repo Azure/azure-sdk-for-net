@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The App ID of the app used for login. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
         /// <summary> The app setting name that contains the app secret. </summary>
+        [WirePath("appSecretSettingName")]
         public string AppSecretSettingName { get; set; }
     }
 }

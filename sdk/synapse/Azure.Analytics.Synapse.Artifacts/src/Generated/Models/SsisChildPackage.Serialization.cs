@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -20,14 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
-            writer.WriteObjectValue(PackagePath);
+            writer.WriteObjectValue<object>(PackagePath);
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
-            writer.WriteObjectValue(PackageContent);
+            writer.WriteObjectValue<object>(PackageContent);
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
@@ -72,12 +71,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisChildPackage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSsisChildPackage(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SsisChildPackageConverter : JsonConverter<SsisChildPackage>
         {
             public override void Write(Utf8JsonWriter writer, SsisChildPackage model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SsisChildPackage Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

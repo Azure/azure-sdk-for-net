@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Output of the command. </summary>
+        [WirePath("commandOutput")]
         public string CommandOutput { get; }
     }
 }

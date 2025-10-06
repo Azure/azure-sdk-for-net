@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Security.Cryptography;
 using Azure.Core.Diagnostics;
 using Moq;
 using NUnit.Framework;
@@ -81,6 +82,17 @@ namespace Azure.Core.Tests
         {
             (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithByteArray(new byte[] { 0, 1, 233 }));
             Assert.AreEqual("Logging 0001E9", message);
+        }
+
+        [Test]
+        public void FormatsLargeByteArrays()
+        {
+            byte[] largeArray = new byte[64];
+            using RandomNumberGenerator rng = RandomNumberGenerator.Create();
+            rng.GetBytes(largeArray);
+
+            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithByteArray(largeArray));
+            Assert.AreEqual($"Logging {string.Join("", largeArray.Select(b => b.ToString("X2")))}", message);
         }
 
         [Test]

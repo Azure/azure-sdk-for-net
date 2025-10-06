@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -39,12 +40,37 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             }
             Assert.GreaterOrEqual(counter, 1);
 
+            List<ScheduleDayOfWeek> days = new List<ScheduleDayOfWeek> { ScheduleDayOfWeek.Monday, ScheduleDayOfWeek.Tuesday};
+            UploadLimitWeeklyRecurrence uploadLimitWeeklyRecurrence = new UploadLimitWeeklyRecurrence(new ScheduleTime(1), new ScheduleTime(2), days, 100);
+            UploadLimitSchedule uploadLimitSchedule = new UploadLimitSchedule();
+            uploadLimitSchedule.WeeklyRecurrences.Add(uploadLimitWeeklyRecurrence);
+
             StorageMoverAgentPatch patch = new StorageMoverAgentPatch
             {
-                Description = "This is an updated agent"
+                Description = "This is an updated agent",
+                UploadLimitSchedule = uploadLimitSchedule,
             };
             agent = (await agent.UpdateAsync(patch)).Value;
             Assert.AreEqual(patch.Description, agent.Data.Description);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences.Count, agent.Data.UploadLimitSchedule.WeeklyRecurrences.Count);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].LimitInMbps, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].LimitInMbps);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].Days[0], agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].Days[0]);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].Days.Count, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].Days.Count);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].StartTime.Hour, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].StartTime.Hour);
+            Assert.AreEqual("0", agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].StartTime.Minute.ToString());
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].EndTime.Hour, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].EndTime.Hour);
+            Assert.AreEqual("0", agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].EndTime.Minute.ToString());
+
+            agent = (await agents.GetAsync(AgentName)).Value;
+            Assert.AreEqual(patch.Description, agent.Data.Description);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences.Count, agent.Data.UploadLimitSchedule.WeeklyRecurrences.Count);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].LimitInMbps, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].LimitInMbps);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].Days[0], agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].Days[0]);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].Days.Count, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].Days.Count);
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].StartTime.Hour, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].StartTime.Hour);
+            Assert.AreEqual("0", agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].StartTime.Minute.ToString());
+            Assert.AreEqual(uploadLimitSchedule.WeeklyRecurrences[0].EndTime.Hour, agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].EndTime.Hour);
+            Assert.AreEqual("0", agent.Data.UploadLimitSchedule.WeeklyRecurrences[0].EndTime.Minute.ToString());
 
             Assert.IsTrue((await agents.ExistsAsync(AgentName)).Value);
             Assert.IsFalse((await agents.ExistsAsync(AgentName + "111")).Value);

@@ -20,9 +20,5 @@ namespace Azure.Core.TestFramework
         public TestTimeoutException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        protected TestTimeoutException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

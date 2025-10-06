@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -38,12 +37,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Resource type of the linked resource. </summary>
+        [WirePath("properties.linkedResourceType")]
         public ResourceType? LinkedResourceType { get; set; }
         /// <summary> Link to the external resource. </summary>
+        [WirePath("properties.link")]
         public ResourceIdentifier Link { get; set; }
         /// <summary> The provisioning state of the resource navigation link resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

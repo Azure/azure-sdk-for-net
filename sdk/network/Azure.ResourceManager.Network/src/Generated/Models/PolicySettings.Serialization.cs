@@ -8,25 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class PolicySettings : IUtf8JsonSerializable, IJsonModel<PolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -80,7 +88,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue(LogScrubbing);
+                writer.WriteObjectValue(LogScrubbing, options);
+            }
+            if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
+            {
+                writer.WritePropertyName("jsChallengeCookieExpirationInMins"u8);
+                writer.WriteNumberValue(JsChallengeCookieExpirationInMins.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,14 +103,13 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PolicySettings IJsonModel<PolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -105,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PolicySettings DeserializePolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,8 +143,9 @@ namespace Azure.ResourceManager.Network.Models
             int? customBlockResponseStatusCode = default;
             string customBlockResponseBody = default;
             PolicySettingsLogScrubbing logScrubbing = default;
+            int? jsChallengeCookieExpirationInMins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -230,12 +243,21 @@ namespace Azure.ResourceManager.Network.Models
                     logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("jsChallengeCookieExpirationInMins"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jsChallengeCookieExpirationInMins = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicySettings(
                 state,
                 mode,
@@ -248,7 +270,214 @@ namespace Azure.ResourceManager.Network.Models
                 customBlockResponseStatusCode,
                 customBlockResponseBody,
                 logScrubbing,
+                jsChallengeCookieExpirationInMins,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
+                {
+                    builder.Append("  mode: ");
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyCheck), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyCheck: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyCheck))
+                {
+                    builder.Append("  requestBodyCheck: ");
+                    var boolValue = RequestBodyCheck.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyInspectLimitInKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyInspectLimitInKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+                {
+                    builder.Append("  requestBodyInspectLimitInKB: ");
+                    builder.AppendLine($"{RequestBodyInspectLimitInKB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyEnforcement), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyEnforcement: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyEnforcement))
+                {
+                    builder.Append("  requestBodyEnforcement: ");
+                    var boolValue = RequestBodyEnforcement.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxRequestBodySizeInKb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxRequestBodySizeInKb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxRequestBodySizeInKb))
+                {
+                    builder.Append("  maxRequestBodySizeInKb: ");
+                    builder.AppendLine($"{MaxRequestBodySizeInKb.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUploadEnforcement), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileUploadEnforcement: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileUploadEnforcement))
+                {
+                    builder.Append("  fileUploadEnforcement: ");
+                    var boolValue = FileUploadEnforcement.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUploadLimitInMb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileUploadLimitInMb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileUploadLimitInMb))
+                {
+                    builder.Append("  fileUploadLimitInMb: ");
+                    builder.AppendLine($"{FileUploadLimitInMb.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseStatusCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBlockResponseStatusCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBlockResponseStatusCode))
+                {
+                    builder.Append("  customBlockResponseStatusCode: ");
+                    builder.AppendLine($"{CustomBlockResponseStatusCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseBody), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBlockResponseBody: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBlockResponseBody))
+                {
+                    builder.Append("  customBlockResponseBody: ");
+                    if (CustomBlockResponseBody.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomBlockResponseBody}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomBlockResponseBody}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogScrubbing), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logScrubbing: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogScrubbing))
+                {
+                    builder.Append("  logScrubbing: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LogScrubbing, options, 2, false, "  logScrubbing: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JsChallengeCookieExpirationInMins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jsChallengeCookieExpirationInMins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
+                {
+                    builder.Append("  jsChallengeCookieExpirationInMins: ");
+                    builder.AppendLine($"{JsChallengeCookieExpirationInMins.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)
@@ -258,9 +487,11 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,11 +503,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

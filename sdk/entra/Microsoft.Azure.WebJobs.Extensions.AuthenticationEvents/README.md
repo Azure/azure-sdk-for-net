@@ -8,112 +8,64 @@ The authentication events trigger for Azure Functions allows you to implement a 
 
 ## Getting started
 
+You can follow this article to start creating your function: [Create a REST API for a token issuance start event in Azure Functions](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library)
+
 ### Install the package
 
-Install the authentication events trigger for Azure Functions with [NuGet](https://www.nuget.org/):
+Install the Authentication Event extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 ```
+
+---
 
 ### Prerequisites
 
-- **Azure Subscription:** To use Azure services, including Azure Functions, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- A basic understanding of the concepts covered in [Custom authentication extensions overview](https://learn.microsoft.com/entra/identity-platform/custom-extension-overview).
+- An Azure subscription with the ability to create Azure Functions. If you don't have an existing Azure account, sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- A Microsoft Entra ID tenant. You can use either a customer or workforce tenant for this how-to guide.
+- One of the following IDEs and configurations:
+    - Visual Studio with [Azure Development workload for Visual Studio](https://learn.microsoft.com/dotnet/azure/configure-visual-studio) configured.
+    - Visual Studio Code, with the [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) extension enabled.
 
 ### Authenticate the client
 
-When the Microsoft Entra authentication events service calls your custom extension, it sends an `Authorization` header with a `Bearer {token}`. This token represents a [service to service authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
+There are three ways to set up authentication for your Azure Function:
 
-* The '**resource**', also known as the **audience**, is the application that you register to represent your API. This is represented by the `aud` claim in the token.
-* The '**client**' is a Microsoft application that represents the Microsoft Entra authentication events service. It has an `appId` value of `99045fe1-7639-4a75-9d4a-577b6ca3810f`. This is represented by:
-  * The `azp` claim in the token if your application `accessTokenAcceptedVersion` property is set to `2`.
-  * The `appid` claim in the token if your resource application's `accessTokenAcceptedVersion` property is set to `1` or `null`.
+- [Set up authentication in the Azure portal using environment variables](#set-up-authentication-in-the-azure-portal-using-environment-variables) (recommended)
+- [Set up authentication in your code using `WebJobsAuthenticationEventsTriggerAttribute`](#set-up-authentication-in-your-code-using-webjobsauthenticationeventstriggerattribute)
+- [Azure App service authentication and authorization](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad?tabs=workforce-tenant)
 
-There are three approaches to authenticating HTTP requests to your function app and validating the token. 
+By default, the code has been set up for authentication in the Azure portal using environment variables. Use the tabs below to select your preferred method of implementing environment variables, or alternatively, refer to the built-in [Azure App service authentication and authorization](https://learn.microsoft.com/azure/app-service/overview-authentication-authorization). For setting up environment variables, use the following values:
 
-#### Validate tokens using Azure Functions Microsoft Entra ID authentication integration
+   | Name | Value |
+   | ---- | ----- |
+   | *AuthenticationEvents__AudienceAppId* | *Custom authentication extension app ID* which is set up in [Configure a custom claim provider for a token issuance event](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-configuration) |
+   | *AuthenticationEvents__AuthorityUrl* | &#8226; Workforce tenant `https://login.microsoftonline.com/<tenantID>` <br> &#8226; External tenant `https://<mydomain>.ciamlogin.com/<tenantID>` |
+   | *AuthenticationEvents__AuthorizedPartyAppId* | `99045fe1-7639-4a75-9d4a-577b6ca3810f` or another authorized party |
 
-When running your function in production, it is **highly recommended** to use the [Azure Functions Microsoft Entra ID authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens. Set the following function [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#settings).
 
-1. Go to the "Authentication" tab in your Function App
-2. Click on "Add identity provider"
-3. Select "Microsoft" as the identity provider
-4. Select "Provide the details of an existing app registration"
-5. Enter the `Application ID` of the app that represents your API in Microsoft Entra ID
+#### Set up authentication in the Azure portal using environment variables
 
-The issuer and allowed audience depends on the [`accessTokenAcceptedVersion`](https://learn.microsoft.com/azure/active-directory/develop/access-tokens) property of your application (can be found in the "Manifest" of the application).
+1. Sign in to the [Azure portal](https://portal.azure.com) as at least an [Application Administrator](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#application-developer) or [Authentication Administrator](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#authentication-administrator).
+2. Navigate to the function app you created, and under **Settings**, select **Configuration**.
+3. Under **Application settings**, select **New application setting** and add the environment variables from the table and their associated values.
+4. Select **Save** to save the application settings.
 
-If the `accessTokenAcceptedVersion` property is set to `2`:
-6. Set the `Issuer URL to "https://login.microsoftonline.com/{tenantId}/v2.0"
-7. Set an 'Allowed Audience' to the Application ID (`appId`)
+#### Set up authentication in your code using `WebJobsAuthenticationEventsTriggerAttribute`
 
-If the `accessTokenAcceptedVersion` property is set to `1` or `null`:
-6. Set the `Issuer URL to "https://sts.windows.net/{tenantId}/"
-7. Set an 'Allowed Audience' to the Application ID URI (also known as`identifierUri`). It should be in the format of`api://{azureFunctionAppName}.azurewebsites.net/{resourceApiAppId}` or `api://{FunctionAppFullyQualifiedDomainName}/{resourceApiAppId}` if using a [custom domain name](https://learn.microsoft.com/azure/dns/dns-custom-domain#:~:text=Azure%20Function%20App%201%20Navigate%20to%20Function%20App,Custom%20domain%20text%20field%20and%20select%20Validate.%20).
+1. Open your trigger class in your IDE.
+2. Modify the `WebJobsAuthenticationEventsTriggerAttribute` include the `AuthorityUrl`, `AudienceAppId` and `AuthorizedPartyAppId` properties, as shown in the below snippet.
 
-By default, the Authentication event trigger will validate that Azure Function authentication integration is configured and it will check that the **client** in the token is set to `99045fe1-7639-4a75-9d4a-577b6ca3810f` (via the `azp` or `appid` claims in the token).
-
-If you want to test your API against some other client that is not Microsoft Entra authentication events service, like using Postman, you can configure an _optional_ application setting:
-
-* **AuthenticationEvents__CustomCallerAppId** - the guid of your desired client. If not provided, `99045fe1-7639-4a75-9d4a-577b6ca3810f` is assumed.
-
-#### Have the trigger validate the token
-
-In local environments or environments that aren't hosted in the Azure Function service, the trigger can do the token validation. Set the following application settings in the [local.settings.json](https://learn.microsoft.com/azure/azure-functions/functions-develop-local#local-settings-file) file:
-
-* **AuthenticationEvents__TenantId** - your tenant ID
-* **AuthenticationEvents__AudienceAppId** - the same value as "Allowed audience" in option 1.
-* **AuthenticationEvents__CustomCallerAppId** (_optional_) - the guid of your desired client. If not provided, `99045fe1-7639-4a75-9d4a-577b6ca3810f` is assumed.
-
-An example `local.settings.json` file:
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "AuthenticationEvents__TenantId": "8615397b-****-****-****-********06c8",
-    "AuthenticationEvents__AudienceAppId": "api://46f98993-****-****-****-********0038",
-    "AuthenticationEvents__CustomCallerAppId": "46f98993-****-****-****-********0038"
-  }
-}
+```C# Snippet:AuthEventsTriggerParameters
+[FunctionName("onTokenIssuanceStart")]
+public static WebJobsAuthenticationEventResponse Run(
+[WebJobsAuthenticationEventsTriggerAttribute(
+    AudienceAppId = "<custom_authentication_extension_app_id>",
+    AuthorityUrl = "<authority_uri>", 
+    AuthorizedPartyAppId = "<authorized_party_app_id>")] WebJobsTokenIssuanceStartRequest request, ILogger log)
 ```
-
-#### No token validation
-
-If you would like to _not_ authenticate the token while in local development, set the following application settings in the [local.settings.json](https://learn.microsoft.com/azure/azure-functions/functions-develop-local#local-settings-file) file:
-
-* **AuthenticationEvents__BypassTokenValidation** - value of `true` will make the trigger not check for a validation of the token.
-
-### Quickstart
-
-* Visual Studio 2019
-  * Start Visual Studio
-  * Select "Create a new project"
-  * In the template search area search and select "AzureAuthEventsTrigger"
-  * Give your project a meaningful Project Name, Location, Solution and Solution Name.
-
-* Visual Studio Code
-  * Start Visual Studio Code
-  * Run the command "Create Azure Authentication Events Trigger Project" via the command palette
-  * Follow the project creation prompts
-* Please note: that on a first time run it might take awhile to download the the required packages.
-* For development purpose turn of token validation for testing:
-* Add the **AuthenticationEvents__BypassTokenValidation** application key to the "Values" section in the local.settings.json file and set it's value to **true**. If you do not have a local.settings.json file in your local environment, create one in the root of your Function App.
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "AuthenticationEvents__BypassTokenValidation": true
-  }
-}
-```
-
-* Once the project is loaded, you can run the sample code and you should see the Azure functions developer's application load your end point.
 
 ## Key concepts
 
@@ -123,7 +75,7 @@ Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/a
 
 ### Microsoft Entra custom extensions
 
-Custom extensions allow you to handle Microsoft Entra authentication events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Microsoft Entra directory. 
+Custom extensions allow you to handle Microsoft Entra authentication events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Microsoft Entra directory.
 
 ### Authentication events trigger
 
@@ -133,78 +85,127 @@ The authentication events trigger allows a function to be executed when an authe
 
 The authentication events trigger output binding allows a function to send authentication event actions to the Microsoft Entra event service.
 
-## Documentation
 
-* One the function has been published, there's some good reading about logging and metrics that can be found [here](https://learn.microsoft.com/azure/azure-functions/functions-monitor-log-analytics?tabs=csharp)
+### Create and build the Azure Function app
 
-* For API Documentation, please see the (Link TBD)
-* Once this moves to preview, we except no breaking changes and would be as simple as removing the the NuGet source that points to the private preview.
+The first step is to create an HTTP trigger function API using your IDE, install the required NuGet packages and copy in the sample code (found below). You can build the project and run the function to extract the local function URL.
 
 ## Examples
 
-To Test Token Augmentation, please do the following.
+The function API is the source of extra claims for your token. For the purposes of this article, we're hardcoding the values for the sample app. In production, you can fetch information about the user from external data store.
 
-* Start Visual Studio.
-* Open the project that was created in the prior step. (QuickStart)
-* Run the Application. (F5)
-* Once the Azure functions developer's application has started, copy the listening url that is displayed with the application starts up.
-* Note: All Authentication functions are listed, in the case we have one function listener registered called "**OnTokenIssuanceStart**"
-* Your function endpoint will then be a combination of the listening url and function, for example: "http://localhost:7071/runtime/webhooks/AuthenticationEvents?code=(YOUR_CODE)&function=OnTokenIssuanceStart"
-* Post the following payload using something like Postman or Fiddler.
-* Steps for using Postman can be found (Link TBD)
+In your trigger class (i.e: _AuthEventsTrigger.cs_), add the contents of the following snippet in your main function body:
+
+```C# Snippet:AuthEventsTriggerExample
+[FunctionName("onTokenIssuanceStart")]
+public static WebJobsAuthenticationEventResponse Run(
+[WebJobsAuthenticationEventsTriggerAttribute(
+    AudienceAppId = "<custom_authentication_extension_app_id>",
+    AuthorityUrl = "<authority_uri>", 
+    AuthorizedPartyAppId = "<authorized_party_app_id>")] WebJobsTokenIssuanceStartRequest request, ILogger log)
+{
+    try
+    {
+        // Checks if the request is successful and did the token validation pass
+        if (request.RequestStatus == WebJobsAuthenticationEventsRequestStatusType.Successful)
+        {
+            // Fetches information about the user from external data store
+            // Add new claims to the token's response
+            request.Response.Actions.Add(
+                new WebJobsProvideClaimsForToken(
+                    new WebJobsAuthenticationEventsTokenClaim("dateOfBirth", "01/01/2000"),
+                    new WebJobsAuthenticationEventsTokenClaim("customRoles", "Writer", "Editor"),
+                    new WebJobsAuthenticationEventsTokenClaim("apiVersion", "1.0.0"),
+                    new WebJobsAuthenticationEventsTokenClaim(
+                        "correlationId", 
+                        request.Data.AuthenticationContext.CorrelationId.ToString())));
+        }
+        else
+        {
+            // If the request fails, such as in token validation, output the failed request status, 
+            // such as in token validation or response validation.
+            log.LogInformation(request.StatusMessage);
+        }
+        return request.Completed();
+    }
+    catch (Exception ex) 
+    { 
+        return request.Failed(ex);
+    }
+}
+```
+
+### Build and run the project locally
+
+It's a good idea to test the function locally before deploying it to Azure. We can use a dummy JSON body that imitates the request that Microsoft Entra ID sends to your REST API. Use your preferred API testing tool to call the function directly.
+
+1. In your IDE, open *local.settings.json* and replace the code with the following JSON. We can set `"AuthenticationEvents__BypassTokenValidation"` to `true` for local testing purposes.
 
 ```json
 {
-  "type":"microsoft.graph.authenticationEvent.TokenIssuanceStart",
-  "source":"/tenants/{tenantId}/applications/{resourceAppId}",
-  "data":{
-    "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
-    "tenantId": "30000000-0000-0000-0000-000000000003",
-    "authenticationEventListenerId1": "10000000-0000-0000-0000-000000000001",
-    "customAuthenticationExtensionId": "10000000-0000-0000-0000-000000000002",
-    "authenticationContext1":{
-      "correlationId": "20000000-0000-0000-0000-000000000002",
-      "client": {
-        "ip": "127.0.0.1",
-        "locale": "en-us",
-        "market": "en-au"
-      },
-      "authenticationProtocol": "OAUTH2.0",
-      "clientServicePrincipal": {
-        "id": "40000000-0000-0000-0000-000000000001",
-        "appId": "40000000-0000-0000-0000-000000000002",
-        "appDisplayName": "Test client app",
-        "displayName": "Test client application"
-      },
-      "resourceServicePrincipal": {
-        "id": "40000000-0000-0000-0000-000000000003",
-        "appId": "40000000-0000-0000-0000-000000000004",
-        "appDisplayName": "Test resource app",
-        "displayName": "Test resource application"
-      },
-      "user": {
-        "companyName": "Nick Gomez",
-        "country": "USA",
-        "createdDateTime": "0001-01-01T00:00:00Z",
-        "displayName": "Dummy display name",
-        "givenName": "Example",
-        "id": "60000000-0000-0000-0000-000000000006",
-        "mail": "test@example.com",
-        "onPremisesSamAccountName": "testadmin",
-        "onPremisesSecurityIdentifier": "DummySID",
-        "onPremisesUserPrincipalName": "Dummy Name",
-        "preferredDataLocation": "DummyDataLocation",
-        "preferredLanguage": "DummyLanguage",
-        "surname": "Test",
-        "userPrincipalName": "testadmin@example.com",
-        "userType": "UserTypeCloudManaged"
-      }
-    }
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "AzureWebJobsSecretStorageType": "files",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AuthenticationEvents__BypassTokenValidation" : true
   }
 }
 ```
 
-* You should see this response:
+2. Using your preferred API testing tool, create a new HTTP request and set the **HTTP method** to `POST`.
+3. Use the following JSON body that imitates the request Microsoft Entra ID sends to your REST API.
+
+```json
+{
+    "type": "microsoft.graph.authenticationEvent.tokenIssuanceStart",
+    "source": "/tenants/30000000-0000-0000-0000-000000000003/applications/40000000-0000-0000-0000-000000000002",
+    "data": {
+        "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
+        "tenantId": "30000000-0000-0000-0000-000000000003",
+        "authenticationEventListenerId": "10000000-0000-0000-0000-000000000001",
+        "customAuthenticationExtensionId": "10000000-0000-0000-0000-000000000002",
+        "authenticationContext": {
+            "correlationId": "20000000-0000-0000-0000-000000000002",
+            "client": {
+                "ip": "127.0.0.1",
+                "locale": "en-us",
+                "market": "en-us"
+            },
+            "protocol": "OAUTH2.0",
+            "clientServicePrincipal": {
+                "id": "40000000-0000-0000-0000-000000000001",
+                "appId": "40000000-0000-0000-0000-000000000002",
+                "appDisplayName": "My Test application",
+                "displayName": "My Test application"
+            },
+            "resourceServicePrincipal": {
+                "id": "40000000-0000-0000-0000-000000000003",
+                "appId": "40000000-0000-0000-0000-000000000004",
+                "appDisplayName": "My Test application",
+                "displayName": "My Test application"
+            },
+            "user": {
+                "companyName": "Casey Jensen",
+                "createdDateTime": "2023-08-16T00:00:00Z",
+                "displayName": "Casey Jensen",
+                "givenName": "Casey",
+                "id": "60000000-0000-0000-0000-000000000006",
+                "mail": "casey@contoso.com",
+                "onPremisesSamAccountName": "Casey Jensen",
+                "onPremisesSecurityIdentifier": "<Enter Security Identifier>",
+                "onPremisesUserPrincipalName": "Casey Jensen",
+                "preferredLanguage": "en-us",
+                "surname": "Jensen",
+                "userPrincipalName": "casey@contoso.com",
+                "userType": "Member"
+            }
+        }
+    }
+}
+```
+
+4. Select **Send**, and you should receive a JSON response similar to the following:
 
 ```json
 {
@@ -212,39 +213,43 @@ To Test Token Augmentation, please do the following.
         "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
         "actions": [
             {
-                "@odata.type": "microsoft.graph.provideClaimsForToken",
+                "@odata.type": "microsoft.graph.tokenIssuanceStart.provideClaimsForToken",
                 "claims": {
-                    "DateOfBirth": "01/01/2000",
-                    "CustomRoles": [
-                            "Writer",
-                            "Editor"
-                        ]
-                    }
-             }
+                    "customClaim1": "customClaimValue1",
+                    "customClaim2": [
+                        "customClaimString1",
+                        "customClaimString2"
+                    ]
+                }
+            }
         ]
     }
 }
 ```
 
+### Deploy the function and publish to Azure
+
+Once it has been tested and working, deploy the function to Azure.
+
 ## Troubleshooting
 
-* Visual Studio Code
-  * If running in Visual Studio Code, you get an error along the lines of the local Azure Storage Emulator is unavailable, you can start the emulator manually.! (Note: Azure Storage emulator is now deprecated and the suggested replacement is [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio))
+### Visual Studio Code
+  * If running in Visual Studio Code, you get an error along the lines of the local Azure Storage Emulator is unavailable, you can start the emulator manually. (Note: Azure Storage emulator is now deprecated and the suggested replacement is [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio))
   * If using Visual Studio Code on Mac please use [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio)
-  * If you see the following error on Windows (it's a bug) when trying to run the created projected.
-  * This can be resolved by executing this command in powershell `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine` more info on this can be found [here](https://github.com/Azure/azure-functions-core-tools/issues/1821) and [here](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7)
+
+### Azure function endpoint
+
+* To determine your published posting endpoint, combine the Azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your Azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
+  * For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
 
 ## Next steps
 
+Follow [Configure a custom claim provider for a token issuance event](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-configuration?tabs=azure-portal%2Cworkforce-tenant) to create a custom extension that will call your function.
+
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
 
-## Publish
+Information about logging and metrics for the deployed function can be found [here](https://learn.microsoft.com/azure/azure-functions/monitor-functions?tabs=portal)
 
-* Follow the instruction here to create and publish your Azure Application. <https://learn.microsoft.com/azure/azure-functions/functions-develop-vs?tabs=in-process#publish-to-azure>
-* To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
-* For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
-* Make sure your production environment has the correct application settings for token authentication.
-* Once again you can test the published function by posting the above payload to the new endpoint.
 
 ## Contributing
 

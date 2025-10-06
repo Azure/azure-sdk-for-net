@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The text value of this TXT record. </summary>
+        [WirePath("value")]
         public IList<string> Values { get; }
     }
 }

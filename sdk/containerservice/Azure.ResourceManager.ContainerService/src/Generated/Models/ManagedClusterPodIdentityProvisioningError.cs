@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -61,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Details about the error. </summary>
+        [WirePath("error")]
         public ResponseError ErrorDetail { get; }
     }
 }

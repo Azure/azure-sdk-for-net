@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The ID of the resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

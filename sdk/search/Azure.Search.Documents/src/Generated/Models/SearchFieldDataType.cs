@@ -34,13 +34,14 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string HalfValue = "Edm.Half";
         private const string Int16Value = "Edm.Int16";
         private const string SByteValue = "Edm.SByte";
+        private const string ByteValue = "Edm.Byte";
         /// <summary> Indicates that a field contains a half-precision floating point number. This is only valid when used with Collection(Edm.Half). </summary>
         public static SearchFieldDataType Half { get; } = new SearchFieldDataType(HalfValue);
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
         public static bool operator ==(SearchFieldDataType left, SearchFieldDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are not the same. </summary>
         public static bool operator !=(SearchFieldDataType left, SearchFieldDataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchFieldDataType"/>. </summary>
         public static implicit operator SearchFieldDataType(string value) => new SearchFieldDataType(value);
 
         /// <inheritdoc />
@@ -51,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

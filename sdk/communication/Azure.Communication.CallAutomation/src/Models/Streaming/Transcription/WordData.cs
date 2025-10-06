@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
@@ -11,20 +12,33 @@ namespace Azure.Communication.CallAutomation
     public class WordData
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="WordData"/> class.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="offset"></param>
+        /// <param name="duration"></param>
+        internal WordData(string text, long offset, long duration)
+        {
+            Text = text;
+            Offset = TimeSpan.FromTicks(offset);
+            Duration = TimeSpan.FromTicks(duration);
+        }
+
+        /// <summary>
         /// Text in the phrase.
         /// </summary>
         [JsonPropertyName("text")]
-        public string Text { get; set; }
+        public string Text { get; }
         /// <summary>
         /// The word's position within the phrase.
         /// </summary>
         [JsonPropertyName("offset")]
-        public ulong Offset { get; set; }
+        public TimeSpan Offset { get; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
         [JsonPropertyName("duration")]
-        public ulong Duration { get; set; }
+        public TimeSpan Duration { get; }
     }
 }

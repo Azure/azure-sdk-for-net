@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -84,16 +83,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The client certificate id for the management endpoint. </summary>
+        [WirePath("clientCertificateId")]
         public string ClientCertificateId { get; set; }
         /// <summary> The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided. </summary>
+        [WirePath("clientCertificatethumbprint")]
         public string ClientCertificatethumbprint { get; set; }
         /// <summary> Maximum number of retries while attempting resolve the partition. </summary>
+        [WirePath("maxPartitionResolutionRetries")]
         public int? MaxPartitionResolutionRetries { get; set; }
         /// <summary> The cluster management endpoint. </summary>
+        [WirePath("managementEndpoints")]
         public IList<string> ManagementEndpoints { get; }
         /// <summary> Thumbprints of certificates cluster management service uses for tls communication. </summary>
+        [WirePath("serverCertificateThumbprints")]
         public IList<string> ServerCertificateThumbprints { get; }
         /// <summary> Server X509 Certificate Names Collection. </summary>
+        [WirePath("serverX509Names")]
         public IList<X509CertificateName> ServerX509Names { get; }
     }
 }

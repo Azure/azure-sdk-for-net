@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The Resource Group of the VNET to be validated. </summary>
+        [WirePath("properties.vnetResourceGroup")]
         public string VnetResourceGroup { get; set; }
         /// <summary> The name of the VNET to be validated. </summary>
+        [WirePath("properties.vnetName")]
         public string VnetName { get; set; }
         /// <summary> The subnet name to be validated. </summary>
+        [WirePath("properties.vnetSubnetName")]
         public string VnetSubnetName { get; set; }
         /// <summary> The ARM Resource ID of the subnet to validate. </summary>
+        [WirePath("properties.subnetResourceId")]
         public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

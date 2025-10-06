@@ -81,9 +81,28 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Reads a length and offset pair.
         /// </summary>
-        internal static (int Offset, int Length) ReadVariableLengthFieldInfo(this BinaryReader reader)
+        internal static (bool Preserve, int Offset, int Length) ReadVariableLengthFieldInfo(this BinaryReader reader)
         {
-            return (reader.ReadInt32(), reader.ReadInt32());
+            return (reader.ReadBoolean(), reader.ReadInt32(), reader.ReadInt32());
+        }
+
+        internal static void WritePreservablePropertyOffset(
+            this BinaryWriter writer,
+            bool isValueSet,
+            int length,
+            ref int currentVariableLengthIndex)
+        {
+            writer.Write(isValueSet);
+            if (isValueSet)
+            {
+                // Content Type offset/length
+                writer.WriteVariableLengthFieldInfo(length, ref currentVariableLengthIndex);
+            }
+            else
+            {
+                // Padding
+                writer.WriteEmptyLengthOffset();
+            }
         }
 
         internal static void WritePaddedString(this BinaryWriter writer, string value, int setSizeInBytes)
@@ -139,25 +158,22 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Writes a boolean plus two int64s to represent a nullable DateTimeOffset.
-        /// The first long is datetime ticks and the second is offset ticks.
+        /// The first long is datetime ticks and the second is a short for offset minutes.
         /// </summary>
         internal static void Write(this BinaryWriter writer, DateTimeOffset? value)
         {
             writer.Write(value.HasValue);
-            writer.Write(value?.Ticks ?? 0L);
-            writer.Write(value?.Offset.Ticks ?? 0L);
+            writer.Write(value?.UtcTicks ?? 0L);
         }
 
         /// <summary>
-        /// Reads a boolean plus two int64s as a nullable DateTimeOffset.
-        /// The first long is datetime ticks and the second is offset ticks.
+        /// Writes two int zero values to represent the length and offset of a value
+        /// that is preserved.
         /// </summary>
-        internal static DateTimeOffset? ReadNullableDateTimeOffset(this BinaryReader reader)
+        internal static void WriteEmptyLengthOffset(this BinaryWriter writer)
         {
-            bool hasValue = reader.ReadBoolean();
-            long valueTicks = reader.ReadInt64();
-            long valueOffsetTicks = reader.ReadInt64();
-            return hasValue ? new DateTimeOffset(valueTicks, new TimeSpan(valueOffsetTicks)) : default;
+            writer.Write(-1);
+            writer.Write(-1);
         }
 
         internal static string ReadPaddedString(this BinaryReader reader, int numBytes)

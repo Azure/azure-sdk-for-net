@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Search.Documents;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -32,13 +32,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="PatternReplaceTokenFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pattern"> A regular expression pattern. </param>
         /// <param name="replacement"> The replacement text. </param>
-        internal PatternReplaceTokenFilter(string oDataType, string name, string pattern, string replacement) : base(oDataType, name)
+        internal PatternReplaceTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string pattern, string replacement) : base(oDataType, name, serializedAdditionalRawData)
         {
             Pattern = pattern;
             Replacement = replacement;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PatternReplaceTokenFilter"/> for deserialization. </summary>
+        internal PatternReplaceTokenFilter()
+        {
         }
 
         /// <summary> A regular expression pattern. </summary>

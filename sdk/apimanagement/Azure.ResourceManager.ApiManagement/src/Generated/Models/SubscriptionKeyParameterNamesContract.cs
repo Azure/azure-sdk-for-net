@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription key header name. </summary>
+        [WirePath("header")]
         public string Header { get; set; }
         /// <summary> Subscription key query string parameter name. </summary>
+        [WirePath("query")]
         public string Query { get; set; }
     }
 }

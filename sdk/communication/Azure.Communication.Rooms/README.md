@@ -51,25 +51,29 @@ RoomsClient client = new RoomsClient(connectionString);
 To create a room, call the `CreateRoom` or `CreateRoomAsync` function from `RoomsClient`.
 The `validFrom`, `validUntil` and `participants` arguments are all optional. If `validFrom` and `validUntil` are not provided, then the default for `validFrom` is current date time and the default for `validUntil` is `validFrom + 180 days`.
 When defining `RoomParticipant`, if role is not specified, then it will be `Attendee` by default.
-Starting in 1.1.0-beta.1 release, `pstnDialOutEnabled` is added to enable PSTN Dial-Out feature in a Room. 
+Starting in 1.1.0 release, `pstnDialOutEnabled` is added to enable PSTN Dial-Out feature in a Room. 
 The returned value is `Response<CommunicationRoom>` which contains created room details as well as the status and associated error codes in case of a failure.
 
-Starting in 1.1.0-beta.1 release, ACS Rooms supports PSTN Dial-Out feature. To create room with PSTN Dial-Out property, call `CreateRoom` or `CreateRoomAsync` function with `createRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false. If `PstnDialOutEnabled` is not provided, then the default value for `PstnDialOutEnabled` is false.
+Starting in 1.1.0 release, ACS Rooms supports PSTN Dial-Out feature. To create room with PSTN Dial-Out property, call `CreateRoom` or `CreateRoomAsync` function with `createRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false. If `PstnDialOutEnabled` is not provided, then the default value for `PstnDialOutEnabled` is false.
 This parameter contains `ValidFrom`, `ValidUntil`, `PstnDialOutEnabled` and `Participants` properties. Those properties are optional.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 // Create communication users using the CommunicationIdentityClient
 Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
 Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
+Response<CommunicationUserIdentifier> communicationUser3 = await communicationIdentityClient.CreateUserAsync();
 
 DateTimeOffset validFrom = DateTimeOffset.UtcNow;
 DateTimeOffset validUntil = validFrom.AddDays(1);
 RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value); // If role is not provided, then it is set as Attendee by default
 RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter};
+// Starting in 1.2.0 release, A new role Collaborator is added
+RoomParticipant participant3 = new RoomParticipant(communicationUser3.Value) { Role = ParticipantRole.Collaborator };
 List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
 {
     participant1,
-    participant2
+    participant2,
+    participant3
 };
 
 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
@@ -92,7 +96,7 @@ createCommunicationRoom = createRoomResponse.Value;
 ### Update a room
 The `validFrom` and `validUntil` properties of a created room can be updated by calling the `UpdateRoom` or `UpdateRoomAsync` function from `RoomsClient`.
 
-Starting in 1.1.0-beta.1 release, ACS Rooms supports PSTN Dial-Out feature. To update room with PSTN Dial-Out property, call `UpdateRoom` or `UpdateRoomAsync` function with `updateRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false.If `PstnDialOutEnabled` is not provided, there there is no changes to `PstnDialOutEnabled` property in the room.
+Starting in 1.1.0 release, ACS Rooms supports PSTN Dial-Out feature. To update room with PSTN Dial-Out property, call `UpdateRoom` or `UpdateRoomAsync` function with `updateRoomOptions` parameter and set `PstnDialOutEnabled` to either true or false.If `PstnDialOutEnabled` is not provided, there there is no changes to `PstnDialOutEnabled` property in the room.
 The `updateRoomOptions` parameter contains `ValidFrom`, `ValidUntil` and `PstnDialOutEnabled` properties. Those properties are optional.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
@@ -100,7 +104,7 @@ validUntil = validFrom.AddDays(30);
 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-// Starting in 1.1.0-beta.1 release,UpdateRoom function also takes roomCreateOptions as parameter
+// Starting in 1.1.0 release,UpdateRoom function also takes roomCreateOptions as parameter
 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
 {
     ValidFrom = validFrom,
@@ -229,13 +233,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
-[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[communication_resource_docs]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://learn.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
 [nextsteps]: https://learn.microsoft.com/azure/communication-services/quickstarts/rooms/get-started-rooms?tabs=windows&pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
-[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
+[product_docs]: https://learn.microsoft.com/azure/communication-services/overview
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Rooms/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Rooms/tests/Samples
 

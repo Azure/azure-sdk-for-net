@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -95,22 +94,31 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> The ETag of the zone. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.maxNumberOfRecordSets")]
         public long? MaxNumberOfRecords { get; }
         /// <summary> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.numberOfRecordSets")]
         public long? NumberOfRecords { get; }
         /// <summary> The maximum number of virtual networks that can be linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.maxNumberOfVirtualNetworkLinks")]
         public long? MaxNumberOfVirtualNetworkLinks { get; }
         /// <summary> The current number of virtual networks that are linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.numberOfVirtualNetworkLinks")]
         public long? NumberOfVirtualNetworkLinks { get; }
         /// <summary> The maximum number of virtual networks that can be linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.maxNumberOfVirtualNetworkLinksWithRegistration")]
         public long? MaxNumberOfVirtualNetworkLinksWithRegistration { get; }
         /// <summary> The current number of virtual networks that are linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.numberOfVirtualNetworkLinksWithRegistration")]
         public long? NumberOfVirtualNetworkLinksWithRegistration { get; }
         /// <summary> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.provisioningState")]
         public PrivateDnsProvisioningState? PrivateDnsProvisioningState { get; }
         /// <summary> Private zone internal Id. </summary>
+        [WirePath("properties.internalId")]
         public string InternalId { get; }
     }
 }

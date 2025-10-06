@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The resource id of the playbook resource. </summary>
+        [WirePath("logicAppResourceId")]
         public ResourceIdentifier LogicAppResourceId { get; set; }
         /// <summary> The tenant id of the playbook resource. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The DMS List SKUs operation response. </summary>
+    /// <summary> The DMS (classic) List SKUs operation response. </summary>
     internal partial class ResourceSkusResult
     {
         /// <summary>
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of SKUs available for the subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ResourceSkusResult(IEnumerable<ResourceSku> value)
+        internal ResourceSkusResult(IEnumerable<DataMigrationSku> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -59,9 +58,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of SKUs available for the subscription. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of DMS SKUs. Call ListNext() with this to fetch the next page of DMS SKUs. </param>
+        /// <param name="nextLink"> The uri to fetch the next page of DMS (classic) SKUs. Call ListNext() with this to fetch the next page of DMS (classic) SKUs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkusResult(IReadOnlyList<ResourceSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceSkusResult(IReadOnlyList<DataMigrationSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -74,8 +73,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> The list of SKUs available for the subscription. </summary>
-        public IReadOnlyList<ResourceSku> Value { get; }
-        /// <summary> The uri to fetch the next page of DMS SKUs. Call ListNext() with this to fetch the next page of DMS SKUs. </summary>
+        public IReadOnlyList<DataMigrationSku> Value { get; }
+        /// <summary> The uri to fetch the next page of DMS (classic) SKUs. Call ListNext() with this to fetch the next page of DMS (classic) SKUs. </summary>
         public string NextLink { get; }
     }
 }

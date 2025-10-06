@@ -2,10 +2,10 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Description>This extension adds bindings for EventGrid</Description>
-    <Version>3.4.0-beta.1</Version>
+    <Version>3.6.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>3.3.1</ApiCompatVersion>
-    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <ApiCompatVersion>3.5.0</ApiCompatVersion>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>

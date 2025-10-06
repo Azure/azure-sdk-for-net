@@ -11,9 +11,6 @@
   .PARAMETER ignoreLinksFile
   Specifies the file that contains a set of links to ignore when verifying.
 
-  .PARAMETER devOpsLogging
-  Switch that will enable devops specific logging for warnings.
-
   .PARAMETER recursive
   Check the links recurisvely. Applies to links starting with 'baseUrl' parameter. Defaults to true.
 
@@ -45,6 +42,15 @@
   .PARAMETER outputCacheFile
   Path to a file that the script will output all the validated links after running all checks.
 
+  .PARAMETER localGithubClonedRoot
+  Path to the root of a local github clone. This is used to resolve links to local files in the repo instead of making web requests.
+
+  .PARAMETER localBuildRepoName
+  The name of the repo that is being built. This is used to resolve links to local files in the repo instead of making web requests.
+
+  .PARAMETER localBuildRepoPath
+  The path to the local build repo. This is used to resolve links to local files in the repo instead of making web requests.
+
   .PARAMETER requestTimeoutSec
   The number of seconds before we timeout when sending an individual web request. Default is 15 seconds.
 
@@ -61,7 +67,6 @@
 param (
   [string[]] $urls,
   [string] $ignoreLinksFile = "$PSScriptRoot/ignore-links.txt",
-  [switch] $devOpsLogging = $false,
   [switch] $recursive = $true,
   [string] $baseUrl = "",
   [string] $rootUrl = "",
@@ -72,19 +77,113 @@ param (
   [string] $userAgent,
   [string] $inputCacheFile,
   [string] $outputCacheFile,
-  [string] $requestTimeoutSec  = 15
+  [string] $localGithubClonedRoot = "",
+  [string] $localBuildRepoName = "",
+  [string] $localBuildRepoPath = "",
+  [string] $requestTimeoutSec = 15
 )
 
 Set-StrictMode -Version 3.0
 
+. "$PSScriptRoot/logging.ps1"
+
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
+
+function ProcessLink([System.Uri]$linkUri) {
+  # To help improve performance and rate limiting issues with github links we try to resolve them based on a local clone if one exists.
+  if (($localGithubClonedRoot -or $localBuildRepoName) -and $linkUri -match '^https://github.com/(?<org>Azure)/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
+
+    if ($localBuildRepoName -eq ($matches['org'] + "/" + $matches['repo'])) {
+      # If the link is to the current repo, use the local build path
+      $localPath = Join-Path $localBuildRepoPath $matches['path']
+    }
+    else {
+      # Otherwise use the local github clone path
+      $localPath = Join-Path $localGithubClonedRoot $matches['repo'] $matches['path']
+    }
+
+    if (Test-Path $localPath) {
+      return $true
+    }
+    return ProcessStandardLink $linkUri
+  }
+  if ($linkUri -match '^https?://?github\.com/(?<account>)[^/]+/(?<repo>)[^/]+/wiki/.+') {
+    # in an unauthenticated session, urls for missing pages will redirect to the wiki root
+    return ProcessRedirectLink $linkUri -invalidStatusCodes 302
+  }
+  elseif ($linkUri -match '^https?://aka.ms/.+') {
+    # aka.ms links are handled by a redirect service. Valid links return a 301
+    # and invalid links return a 302 redirecting the user to a Bing search 
+    return ProcessRedirectLink $linkUri -invalidStatusCodes 302
+  }
+  elseif ($linkUri -match '^https?://crates\.io(/(?<path>(crates|users|teams)/.+))?') {
+    # See comment in function below for details.
+    return ProcessCratesIoLink $linkUri $matches['path']
+  }
+  else {
+    return ProcessStandardLink $linkUri
+  }
+}
+
+function ProcessRedirectLink([System.Uri]$linkUri, [int[]]$invalidStatusCodes) {
+  # ProcessRedirectLink checks the status code of the initial response.
+  $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRedirection 0 -SkipHttpErrorCheck -ErrorAction SilentlyContinue
+  $statusCode = $response.StatusCode
+
+  if ($statusCode -in $invalidStatusCodes) {
+    Write-Host "[$statusCode] while requesting $linkUri"
+    return $false
+  }
+
+  # Because we've only tested the initial request for specific invalid status codes, we should still check that the
+  # final destination is valid.
+  return ProcessStandardLink $linkUri
+}
+
+function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
+  # crates.io is an SPA that will return a 404 if no 'accept: text/html' header is sent; however, even if you do
+  # send that header it will 200 on every request - even for missing pages. If a create/user/team path was sent,
+  # call into their API documented at https://doc.rust-lang.org/cargo/reference/registry-web-api.html; otherwise,
+  # assume the page exists since there's no other way to know.
+  if (!$path) {
+    return $true
+  }
+
+  $apiUri = "https://crates.io/api/v1/$path"
+
+  # Invoke-WebRequest will throw an exception for invalid status codes. They are handled in CheckLink
+  Invoke-WebRequest -Uri $apiUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec | Out-Null
+  
+  return $true
+}
+
+function ProcessStandardLink([System.Uri]$linkUri) {
+  $headRequestSucceeded = $true
+  try {
+    # Attempt HEAD request first
+    $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+  }
+  catch {
+    $headRequestSucceeded = $false
+  }
+  if (!$headRequestSucceeded) {
+    # Attempt a GET request if the HEAD request failed.
+    $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+  }
+  $statusCode = $response.StatusCode
+  if ($statusCode -ne 200) {
+    Write-Host "[$statusCode] while requesting $linkUri"
+  }
+  return $true
+}
+
 # Regex of the locale keywords.
 $locale = "/en-us/"
 $emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
 if (!$userAgent) {
   $userAgent = "Chrome/87.0.4280.88"
 }
-function NormalizeUrl([string]$url){
+function NormalizeUrl([string]$url) {
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
   }
@@ -108,30 +207,6 @@ function NormalizeUrl([string]$url){
     }
   }
   return $uri
-}
-
-function LogWarning
-{
-  if ($devOpsLogging)
-  {
-    Write-Host "##vso[task.LogIssue type=warning;]$args"
-  }
-  else
-  {
-    Write-Warning "$args"
-  }
-}
-
-function LogError
-{
-  if ($devOpsLogging)
-  {
-    Write-Host "##vso[task.logissue type=error]$args"
-  }
-  else
-  {
-    Write-Error "$args"
-  }
 }
 
 function ResolveUri ([System.Uri]$referralUri, [string]$link)
@@ -182,14 +257,14 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
   $hrefRegex = "<a[^>]+href\s*=\s*[""']?(?<href>[^""']*)[""']?"
   $regexOptions = [System.Text.RegularExpressions.RegexOptions]"Singleline, IgnoreCase";
 
-  $hrefs = [RegEx]::Matches($htmlContent, $hrefRegex, $regexOptions);
+  $matches = [RegEx]::Matches($htmlContent, $hrefRegex, $regexOptions);
 
-  #$hrefs | Foreach-Object { Write-Host $_ }
+  Write-Verbose "Found $($matches.Count) raw href's in page $baseUri";
 
-  Write-Verbose "Found $($hrefs.Count) raw href's in page $baseUri";
-  [string[]] $links = $hrefs | ForEach-Object { ResolveUri $baseUri $_.Groups["href"].Value }
+  # Html encoded urls in anchor hrefs need to be decoded
+  $urls = $matches | ForEach-Object { [System.Web.HttpUtility]::HtmlDecode($_.Groups["href"].Value) }
 
-  #$links | Foreach-Object { Write-Host $_ }
+  [string[]] $links = $urls | ForEach-Object { ResolveUri $baseUri $_ }
 
   if ($null -eq $links) {
     $links = @()
@@ -228,22 +303,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
   }
   elseif ($linkUri.IsAbsoluteUri) {
     try {
-      $headRequestSucceeded = $true
-      try {
-        # Attempt HEAD request first
-        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
-      }
-      catch {
-        $headRequestSucceeded = $false
-      }
-      if (!$headRequestSucceeded) {
-        # Attempt a GET request if the HEAD request failed.
-        $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
-      }
-      $statusCode = $response.StatusCode
-      if ($statusCode -ne 200) {
-        Write-Host "[$statusCode] while requesting $linkUri"
-      }
+      $linkValid = ProcessLink $linkUri
     }
     catch {
       
@@ -450,6 +510,7 @@ if ($inputCacheFile)
   $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
 
   foreach ($goodLink in $goodLinks) {
+    $goodLink = $goodLink.Trim()
     $checkedLinks[$goodLink] = $true
   }
 }
@@ -467,9 +528,8 @@ foreach ($url in $urls) {
   $pageUrisToCheck.Enqueue($uri);
 }
 
-if ($devOpsLogging) {
-  Write-Host "##[group]Link checking details"
-}
+LogGroupStart "Link checking details"
+
 while ($pageUrisToCheck.Count -ne 0)
 {
   $pageUri = $pageUrisToCheck.Dequeue();
@@ -505,9 +565,7 @@ while ($pageUrisToCheck.Count -ne 0)
 }
 
 try {
-  if ($devOpsLogging) {
-    Write-Host "##[endgroup]"
-  }
+  LogGroupEnd
 
   if ($badLinks.Count -gt 0) {
     Write-Host "Summary of broken links:"
@@ -530,7 +588,7 @@ try {
 
   if ($outputCacheFile)
   {
-    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString() }) | Sort-Object
+    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString()}) | Sort-Object -Unique
 
     Write-Host "Writing the list of validated links to $outputCacheFile"
     $goodLinks | Set-Content $outputCacheFile

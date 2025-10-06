@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +212,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +255,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -300,7 +298,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -345,7 +343,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

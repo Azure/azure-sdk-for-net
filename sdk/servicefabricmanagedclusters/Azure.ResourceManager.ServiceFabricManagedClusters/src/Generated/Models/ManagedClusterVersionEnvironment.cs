@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The ManagedClusterVersionEnvironment. </summary>
+    /// <summary> The operating system of the cluster. The default means all. </summary>
     public readonly partial struct ManagedClusterVersionEnvironment : IEquatable<ManagedClusterVersionEnvironment>
     {
         private readonly string _value;
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         private const string WindowsValue = "Windows";
 
-        /// <summary> Windows. </summary>
+        /// <summary> Indicates os is Windows. </summary>
         public static ManagedClusterVersionEnvironment Windows { get; } = new ManagedClusterVersionEnvironment(WindowsValue);
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterVersionEnvironment left, ManagedClusterVersionEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are not the same. </summary>
         public static bool operator !=(ManagedClusterVersionEnvironment left, ManagedClusterVersionEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterVersionEnvironment"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterVersionEnvironment"/>. </summary>
         public static implicit operator ManagedClusterVersionEnvironment(string value) => new ManagedClusterVersionEnvironment(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

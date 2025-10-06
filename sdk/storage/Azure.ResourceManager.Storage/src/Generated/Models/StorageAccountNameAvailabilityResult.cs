@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </summary>
+        [WirePath("reason")]
         public StorageAccountNameUnavailableReason? Reason { get; }
         /// <summary> Gets an error message explaining the Reason value in more detail. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

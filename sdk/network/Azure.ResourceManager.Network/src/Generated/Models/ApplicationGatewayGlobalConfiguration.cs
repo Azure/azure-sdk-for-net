@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Enable request buffering. </summary>
+        [WirePath("enableRequestBuffering")]
         public bool? EnableRequestBuffering { get; set; }
         /// <summary> Enable response buffering. </summary>
+        [WirePath("enableResponseBuffering")]
         public bool? EnableResponseBuffering { get; set; }
     }
 }

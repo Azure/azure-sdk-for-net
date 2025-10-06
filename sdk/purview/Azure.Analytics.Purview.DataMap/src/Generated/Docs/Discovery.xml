@@ -1,0 +1,4329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="QueryAsync(QueryConfig,CancellationToken)">
+      <example>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 10,
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "name",
+                        ["operator"] = "eq",
+                        ["attributeValue"] = "exampledata.csv"
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "qualifiedName",
+                        ["operator"] = "prefix",
+                        ["attributeValue"] = "https://"
+                    }
+                },
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                assetType = "SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Database",
+            },
+            new
+            {
+                assetType = "Azure SQL Data Warehouse",
+            },
+            new
+            {
+                assetType = "Azure SQL Managed Instance",
+            },
+            new
+            {
+                assetType = "Azure Storage Account",
+            },
+            new
+            {
+                assetType = "Azure Blob Storage",
+            },
+            new
+            {
+                assetType = "Azure Files",
+            },
+            new
+            {
+                assetType = "Azure Table Storage",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen1",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen2",
+            },
+            new
+            {
+                assetType = "Azure Cosmos DB",
+            },
+            new
+            {
+                assetType = "Azure Data Factory",
+            },
+            new
+            {
+                assetType = "Azure Cognitive Search",
+            },
+            new
+            {
+                assetType = "Power BI",
+            },
+            new
+            {
+                assetType = "Azure Data Explorer",
+            },
+            new
+            {
+                assetType = "Amazon S3",
+            },
+            new
+            {
+                assetType = "Azure Data Share",
+            },
+            new
+            {
+                assetType = "Teradata",
+            },
+            new
+            {
+                assetType = "SAP S4HANA",
+            },
+            new
+            {
+                assetType = "SAP ECC",
+            },
+            new
+            {
+                assetType = "SQL Server Integration Services",
+            },
+            new
+            {
+                assetType = "hive",
+            },
+            new
+            {
+                assetType = "Azure Database for MySQL",
+            },
+            new
+            {
+                assetType = "Azure Database for MariaDB",
+            },
+            new
+            {
+                assetType = "Azure Database for PostgreSQL",
+            },
+            new
+            {
+                assetType = "Azure Synapse Analytics",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "name",
+                ["operator"] = "eq",
+                ["attributeValue"] = "exampledata.csv"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "createTime",
+                ["operator"] = "ge",
+                ["attributeValue"] = 1545580800000L
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "modifiedTime",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+                ["operator"] = "eq|ne|contains|prefix",
+                ["attributeValue"] = "string value"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+                ["operator"] = "eq|ne|gt|ge|lt|le",
+                ["attributeValue"] = 123
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+                ["operator"] = "eq|ne",
+                ["attributeValue"] = true
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        classification = "MICROSOFT.PERSONAL.EMAIL",
+        includeSubClassifications = true,
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        collectionId = "collectionName",
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        objectType = "Tables",
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "assetType",
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+    }},
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                fileExtension = "txt",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "<term name>",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new
+                    {
+                        glossaryType = "AtlasGlossary",
+                    },
+                    new
+                    {
+                        glossaryType = "AtlasGlossaryTerm",
+                    }
+                },
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "termStatus",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "termTemplate",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        not = new
+        {
+            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                objectType = "Dashboards",
+            },
+            new
+            {
+                objectType = "Data pipelines",
+            },
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                objectType = "Folders",
+            },
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                objectType = "Reports",
+            },
+            new
+            {
+                objectType = "Stored procedures",
+            },
+            new
+            {
+                objectType = "Tables",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 2,
+    ContinuationToken = "<token>",
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 2,
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 2,
+    ContinuationToken = "<token>",
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                createTime = new Dictionary<string, object>
+                {
+                    ["operator"] = "lt",
+                    ["timeThreshold"] = 1545580800000L
+                },
+            },
+            new
+            {
+                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                not = new
+                {
+                    or = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "size",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        },
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "fileSize",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        }
+                    },
+                },
+            },
+            new
+            {
+                not = new
+                {
+                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                },
+            }
+        },
+    }),
+    TaxonomySetting = new SearchTaxonomySetting
+    {
+        AssetTypes = { "Azure Blob Storage" },
+        Facet = new SearchFacetItem
+        {
+            Count = 10,
+            Sort = new SearchFacetSort
+            {
+                Count = SearchSortOrder.Descend,
+            },
+        },
+    },
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "<asset name>",
+    Limit = 3,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                term = "ExampleTerm",
+            },
+            new
+            {
+                term = "ExampleTerm",
+                glossary = "GlossaryName",
+            },
+            new
+            {
+                termGuid = "<term guid>",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code></example>
+    </member>
+    <member name="Query(QueryConfig,CancellationToken)">
+      <example>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 10,
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "name",
+                        ["operator"] = "eq",
+                        ["attributeValue"] = "exampledata.csv"
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "qualifiedName",
+                        ["operator"] = "prefix",
+                        ["attributeValue"] = "https://"
+                    }
+                },
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                assetType = "SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Database",
+            },
+            new
+            {
+                assetType = "Azure SQL Data Warehouse",
+            },
+            new
+            {
+                assetType = "Azure SQL Managed Instance",
+            },
+            new
+            {
+                assetType = "Azure Storage Account",
+            },
+            new
+            {
+                assetType = "Azure Blob Storage",
+            },
+            new
+            {
+                assetType = "Azure Files",
+            },
+            new
+            {
+                assetType = "Azure Table Storage",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen1",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen2",
+            },
+            new
+            {
+                assetType = "Azure Cosmos DB",
+            },
+            new
+            {
+                assetType = "Azure Data Factory",
+            },
+            new
+            {
+                assetType = "Azure Cognitive Search",
+            },
+            new
+            {
+                assetType = "Power BI",
+            },
+            new
+            {
+                assetType = "Azure Data Explorer",
+            },
+            new
+            {
+                assetType = "Amazon S3",
+            },
+            new
+            {
+                assetType = "Azure Data Share",
+            },
+            new
+            {
+                assetType = "Teradata",
+            },
+            new
+            {
+                assetType = "SAP S4HANA",
+            },
+            new
+            {
+                assetType = "SAP ECC",
+            },
+            new
+            {
+                assetType = "SQL Server Integration Services",
+            },
+            new
+            {
+                assetType = "hive",
+            },
+            new
+            {
+                assetType = "Azure Database for MySQL",
+            },
+            new
+            {
+                assetType = "Azure Database for MariaDB",
+            },
+            new
+            {
+                assetType = "Azure Database for PostgreSQL",
+            },
+            new
+            {
+                assetType = "Azure Synapse Analytics",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "name",
+                ["operator"] = "eq",
+                ["attributeValue"] = "exampledata.csv"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "createTime",
+                ["operator"] = "ge",
+                ["attributeValue"] = 1545580800000L
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "modifiedTime",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+                ["operator"] = "eq|ne|contains|prefix",
+                ["attributeValue"] = "string value"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+                ["operator"] = "eq|ne|gt|ge|lt|le",
+                ["attributeValue"] = 123
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+                ["operator"] = "eq|ne",
+                ["attributeValue"] = true
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        classification = "MICROSOFT.PERSONAL.EMAIL",
+        includeSubClassifications = true,
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        collectionId = "collectionName",
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        objectType = "Tables",
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "assetType",
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+    }},
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                fileExtension = "txt",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "<term name>",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new
+                    {
+                        glossaryType = "AtlasGlossary",
+                    },
+                    new
+                    {
+                        glossaryType = "AtlasGlossaryTerm",
+                    }
+                },
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "termStatus",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "termTemplate",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        not = new
+        {
+            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                objectType = "Dashboards",
+            },
+            new
+            {
+                objectType = "Data pipelines",
+            },
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                objectType = "Folders",
+            },
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                objectType = "Reports",
+            },
+            new
+            {
+                objectType = "Stored procedures",
+            },
+            new
+            {
+                objectType = "Tables",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 2,
+    ContinuationToken = "<token>",
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 2,
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 2,
+    ContinuationToken = "<token>",
+    Orderby = {BinaryData.FromObjectAsJson(new
+    {
+        name = "ASC",
+    }), BinaryData.FromObjectAsJson(new
+    {
+        updateTime = "DESC",
+    })},
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    }),
+    Facets = {new SearchFacetItem
+    {
+        Count = 0,
+        Facet = "assetType",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "classification",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "contactId",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "label",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }, new SearchFacetItem
+    {
+        Count = 10,
+        Facet = "term",
+        Sort = new SearchFacetSort
+        {
+            Count = SearchSortOrder.Descend,
+        },
+    }},
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                createTime = new Dictionary<string, object>
+                {
+                    ["operator"] = "lt",
+                    ["timeThreshold"] = 1545580800000L
+                },
+            },
+            new
+            {
+                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "exampledata",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                not = new
+                {
+                    or = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "size",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        },
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "fileSize",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        }
+                    },
+                },
+            },
+            new
+            {
+                not = new
+                {
+                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                },
+            }
+        },
+    }),
+    TaxonomySetting = new SearchTaxonomySetting
+    {
+        AssetTypes = { "Azure Blob Storage" },
+        Facet = new SearchFacetItem
+        {
+            Count = 10,
+            Sort = new SearchFacetSort
+            {
+                Count = SearchSortOrder.Descend,
+            },
+        },
+    },
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Keywords = "<asset name>",
+    Limit = 3,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        or = new object[]
+        {
+            new
+            {
+                term = "ExampleTerm",
+            },
+            new
+            {
+                term = "ExampleTerm",
+                glossary = "GlossaryName",
+            },
+            new
+            {
+                termGuid = "<term guid>",
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code></example>
+    </member>
+    <member name="QueryAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 10,
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "name",
+                        ["operator"] = "eq",
+                        ["attributeValue"] = "exampledata.csv"
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "qualifiedName",
+                        ["operator"] = "prefix",
+                        ["attributeValue"] = "https://"
+                    }
+                },
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                assetType = "SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Database",
+            },
+            new
+            {
+                assetType = "Azure SQL Data Warehouse",
+            },
+            new
+            {
+                assetType = "Azure SQL Managed Instance",
+            },
+            new
+            {
+                assetType = "Azure Storage Account",
+            },
+            new
+            {
+                assetType = "Azure Blob Storage",
+            },
+            new
+            {
+                assetType = "Azure Files",
+            },
+            new
+            {
+                assetType = "Azure Table Storage",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen1",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen2",
+            },
+            new
+            {
+                assetType = "Azure Cosmos DB",
+            },
+            new
+            {
+                assetType = "Azure Data Factory",
+            },
+            new
+            {
+                assetType = "Azure Cognitive Search",
+            },
+            new
+            {
+                assetType = "Power BI",
+            },
+            new
+            {
+                assetType = "Azure Data Explorer",
+            },
+            new
+            {
+                assetType = "Amazon S3",
+            },
+            new
+            {
+                assetType = "Azure Data Share",
+            },
+            new
+            {
+                assetType = "Teradata",
+            },
+            new
+            {
+                assetType = "SAP S4HANA",
+            },
+            new
+            {
+                assetType = "SAP ECC",
+            },
+            new
+            {
+                assetType = "SQL Server Integration Services",
+            },
+            new
+            {
+                assetType = "hive",
+            },
+            new
+            {
+                assetType = "Azure Database for MySQL",
+            },
+            new
+            {
+                assetType = "Azure Database for MariaDB",
+            },
+            new
+            {
+                assetType = "Azure Database for PostgreSQL",
+            },
+            new
+            {
+                assetType = "Azure Synapse Analytics",
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "name",
+                ["operator"] = "eq",
+                ["attributeValue"] = "exampledata.csv"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "createTime",
+                ["operator"] = "ge",
+                ["attributeValue"] = 1545580800000L
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "modifiedTime",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+                ["operator"] = "eq|ne|contains|prefix",
+                ["attributeValue"] = "string value"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+                ["operator"] = "eq|ne|gt|ge|lt|le",
+                ["attributeValue"] = 123
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+                ["operator"] = "eq|ne",
+                ["attributeValue"] = true
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        classification = "MICROSOFT.PERSONAL.EMAIL",
+        includeSubClassifications = true,
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        collectionId = "collectionName",
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    filter = new
+    {
+        objectType = "Tables",
+    },
+    limit = 10,
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 10,
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                fileExtension = "txt",
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "<term name>",
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new
+                    {
+                        glossaryType = "AtlasGlossary",
+                    },
+                    new
+                    {
+                        glossaryType = "AtlasGlossaryTerm",
+                    }
+                },
+            }
+        },
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "termStatus",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "termTemplate",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        not = new
+        {
+            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                objectType = "Dashboards",
+            },
+            new
+            {
+                objectType = "Data pipelines",
+            },
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                objectType = "Folders",
+            },
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                objectType = "Reports",
+            },
+            new
+            {
+                objectType = "Stored procedures",
+            },
+            new
+            {
+                objectType = "Tables",
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 2,
+    continuationToken = "<token>",
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 2,
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 2,
+    continuationToken = "<token>",
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                createTime = new Dictionary<string, object>
+                {
+                    ["operator"] = "lt",
+                    ["timeThreshold"] = 1545580800000L
+                },
+            },
+            new
+            {
+                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                not = new
+                {
+                    or = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "size",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        },
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "fileSize",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        }
+                    },
+                },
+            },
+            new
+            {
+                not = new
+                {
+                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                },
+            }
+        },
+    },
+    limit = 10,
+    taxonomySetting = new
+    {
+        assetTypes = new object[]
+        {
+            "Azure Blob Storage"
+        },
+        facet = new
+        {
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "<asset name>",
+    limit = 3,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                term = "ExampleTerm",
+            },
+            new
+            {
+                term = "ExampleTerm",
+                glossary = "GlossaryName",
+            },
+            new
+            {
+                termGuid = "<term guid>",
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Query(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 10,
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "qualifiedName",
+                ["operator"] = "contains",
+                ["attributeValue"] = ".csv"
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "name",
+                        ["operator"] = "eq",
+                        ["attributeValue"] = "exampledata.csv"
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["attributeName"] = "qualifiedName",
+                        ["operator"] = "prefix",
+                        ["attributeValue"] = "https://"
+                    }
+                },
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                assetType = "SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Server",
+            },
+            new
+            {
+                assetType = "Azure SQL Database",
+            },
+            new
+            {
+                assetType = "Azure SQL Data Warehouse",
+            },
+            new
+            {
+                assetType = "Azure SQL Managed Instance",
+            },
+            new
+            {
+                assetType = "Azure Storage Account",
+            },
+            new
+            {
+                assetType = "Azure Blob Storage",
+            },
+            new
+            {
+                assetType = "Azure Files",
+            },
+            new
+            {
+                assetType = "Azure Table Storage",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen1",
+            },
+            new
+            {
+                assetType = "Azure Data Lake Storage Gen2",
+            },
+            new
+            {
+                assetType = "Azure Cosmos DB",
+            },
+            new
+            {
+                assetType = "Azure Data Factory",
+            },
+            new
+            {
+                assetType = "Azure Cognitive Search",
+            },
+            new
+            {
+                assetType = "Power BI",
+            },
+            new
+            {
+                assetType = "Azure Data Explorer",
+            },
+            new
+            {
+                assetType = "Amazon S3",
+            },
+            new
+            {
+                assetType = "Azure Data Share",
+            },
+            new
+            {
+                assetType = "Teradata",
+            },
+            new
+            {
+                assetType = "SAP S4HANA",
+            },
+            new
+            {
+                assetType = "SAP ECC",
+            },
+            new
+            {
+                assetType = "SQL Server Integration Services",
+            },
+            new
+            {
+                assetType = "hive",
+            },
+            new
+            {
+                assetType = "Azure Database for MySQL",
+            },
+            new
+            {
+                assetType = "Azure Database for MariaDB",
+            },
+            new
+            {
+                assetType = "Azure Database for PostgreSQL",
+            },
+            new
+            {
+                assetType = "Azure Synapse Analytics",
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "name",
+                ["operator"] = "eq",
+                ["attributeValue"] = "exampledata.csv"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "createTime",
+                ["operator"] = "ge",
+                ["attributeValue"] = 1545580800000L
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "modifiedTime",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+                ["operator"] = "eq|ne|contains|prefix",
+                ["attributeValue"] = "string value"
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+                ["operator"] = "eq|ne|gt|ge|lt|le",
+                ["attributeValue"] = 123
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+                ["operator"] = "eq|ne",
+                ["attributeValue"] = true
+            },
+            new Dictionary<string, object>
+            {
+                ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+                ["operator"] = "timerange",
+                ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        classification = "MICROSOFT.PERSONAL.EMAIL",
+        includeSubClassifications = true,
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        collectionId = "collectionName",
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    filter = new
+    {
+        objectType = "Tables",
+    },
+    limit = 10,
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 10,
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                fileExtension = "txt",
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "<term name>",
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                or = new object[]
+                {
+                    new
+                    {
+                        glossaryType = "AtlasGlossary",
+                    },
+                    new
+                    {
+                        glossaryType = "AtlasGlossaryTerm",
+                    }
+                },
+            }
+        },
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "termStatus",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "termTemplate",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        not = new
+        {
+            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                objectType = "Dashboards",
+            },
+            new
+            {
+                objectType = "Data pipelines",
+            },
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                objectType = "Folders",
+            },
+            new
+            {
+                objectType = "Glossary terms",
+            },
+            new
+            {
+                objectType = "Reports",
+            },
+            new
+            {
+                objectType = "Stored procedures",
+            },
+            new
+            {
+                objectType = "Tables",
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 2,
+    continuationToken = "<token>",
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 2,
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                entityType = "azure_blob_path",
+            }
+        },
+    },
+    limit = 2,
+    continuationToken = "<token>",
+    orderby = new object[]
+    {
+        new
+        {
+            name = "ASC",
+        },
+        new
+        {
+            updateTime = "DESC",
+        }
+    },
+    facets = new object[]
+    {
+        new
+        {
+            facet = "assetType",
+            count = 0,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "classification",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "contactId",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "label",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+        new
+        {
+            facet = "term",
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                createTime = new Dictionary<string, object>
+                {
+                    ["operator"] = "lt",
+                    ["timeThreshold"] = 1545580800000L
+                },
+            },
+            new
+            {
+                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                objectType = "Files",
+            },
+            new
+            {
+                not = new
+                {
+                    or = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "size",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        },
+                        new Dictionary<string, object>
+                        {
+                            ["attributeName"] = "fileSize",
+                            ["operator"] = "eq",
+                            ["attributeValue"] = 0
+                        }
+                    },
+                },
+            },
+            new
+            {
+                not = new
+                {
+                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                },
+            }
+        },
+    },
+    limit = 10,
+    taxonomySetting = new
+    {
+        assetTypes = new object[]
+        {
+            "Azure Blob Storage"
+        },
+        facet = new
+        {
+            count = 10,
+            sort = new
+            {
+                count = "desc",
+            },
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "<asset name>",
+    limit = 3,
+    filter = new
+    {
+        or = new object[]
+        {
+            new
+            {
+                term = "ExampleTerm",
+            },
+            new
+            {
+                term = "ExampleTerm",
+                glossary = "GlossaryName",
+            },
+            new
+            {
+                termGuid = "<term guid>",
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="SuggestAsync(SuggestConfig,CancellationToken)">
+      <example>
+This sample shows how to call SuggestAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+SuggestConfig body = new SuggestConfig
+{
+    Keywords = "exampledata",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    }),
+};
+Response<SuggestResult> response = await client.SuggestAsync(body);
+]]></code></example>
+    </member>
+    <member name="Suggest(SuggestConfig,CancellationToken)">
+      <example>
+This sample shows how to call Suggest.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+SuggestConfig body = new SuggestConfig
+{
+    Keywords = "exampledata",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    }),
+};
+Response<SuggestResult> response = client.Suggest(body);
+]]></code></example>
+    </member>
+    <member name="SuggestAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SuggestAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    },
+    limit = 10,
+});
+Response response = await client.SuggestAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Suggest(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Suggest and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exampledata",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    },
+    limit = 10,
+});
+Response response = client.Suggest(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="AutoCompleteAsync(AutoCompleteConfig,CancellationToken)">
+      <example>
+This sample shows how to call AutoCompleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+AutoCompleteConfig body = new AutoCompleteConfig
+{
+    Keywords = "exa",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    }),
+};
+Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
+]]></code></example>
+    </member>
+    <member name="AutoComplete(AutoCompleteConfig,CancellationToken)">
+      <example>
+This sample shows how to call AutoComplete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+AutoCompleteConfig body = new AutoCompleteConfig
+{
+    Keywords = "exa",
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    }),
+};
+Response<AutoCompleteResult> response = client.AutoComplete(body);
+]]></code></example>
+    </member>
+    <member name="AutoCompleteAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AutoCompleteAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exa",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    },
+    limit = 10,
+});
+Response response = await client.AutoCompleteAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="AutoComplete(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AutoComplete and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    keywords = "exa",
+    filter = new
+    {
+        and = new object[]
+        {
+            new
+            {
+                entityType = "azure_blob_path",
+                includeSubTypes = false,
+            }
+        },
+    },
+    limit = 10,
+});
+Response response = client.AutoComplete(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

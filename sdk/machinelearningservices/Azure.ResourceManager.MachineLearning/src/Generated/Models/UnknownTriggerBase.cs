@@ -10,10 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownTriggerBase. </summary>
+    /// <summary> Unknown version of TriggerBase. </summary>
     internal partial class UnknownTriggerBase : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTriggerBase"/>. </summary>
+        /// <param name="triggerType"> [Required]. </param>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -24,9 +25,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+        internal UnknownTriggerBase(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData)
         {
             TriggerType = triggerType;
         }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownFeatureSupportRequest. </summary>
+    /// <summary> Unknown version of FeatureSupportRequest. </summary>
     internal partial class UnknownFeatureSupportRequest : FeatureSupportContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFeatureSupportRequest"/>. </summary>

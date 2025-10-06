@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Automatic tuning desired state. </summary>
+        [WirePath("properties.desiredState")]
         public AutomaticTuningServerMode? DesiredState { get; set; }
         /// <summary> Automatic tuning actual state. </summary>
+        [WirePath("properties.actualState")]
         public AutomaticTuningServerMode? ActualState { get; }
         /// <summary> Automatic tuning options definition. </summary>
+        [WirePath("properties.options")]
         public IDictionary<string, AutomaticTuningServerOptions> Options { get; }
     }
 }

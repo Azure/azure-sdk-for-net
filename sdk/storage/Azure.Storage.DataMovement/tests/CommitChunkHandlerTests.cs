@@ -8,14 +8,21 @@ using Moq;
 using NUnit.Framework;
 using System.Threading;
 using Azure.Core;
-using Azure.Storage.Tests.Shared;
+using Azure.Storage.Test;
 using Azure.Core.Pipeline;
+using System.Threading.Channels;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     [TestFixture]
     public class CommitChunkHandlerTests
     {
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
+
         private readonly int _maxDelayInSec = 1;
         private readonly string _failedEventMsg = "Amount of Failed Event Handler calls was incorrect.";
         private readonly string _putBlockMsg = "Amount of Put Block Task calls were incorrect";
@@ -32,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
             int expectedCompleteFileCount,
             int maxWaitTimeInSec = 6)
         {
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
             CancellationToken cancellationToken = cancellationSource.Token;
             int currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
             int currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;
@@ -77,7 +84,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetPutBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueuePutBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>()))
+            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsAny<StorageResourceItemProperties>()))
                 .Returns(Task.CompletedTask);
             return mock;
         }
@@ -85,7 +92,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetExceptionPutBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueuePutBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>()))
+            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<StorageResourceItemProperties>()))
                 .Throws(new RequestFailedException("Mock Request Error"));
             return mock;
         }
@@ -93,7 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueueCommitBlockTaskInternal> GetCommitBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueueCommitBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del())
+            mock.Setup(del => del(It.IsAny<StorageResourceItemProperties>()))
                 .Returns(Task.CompletedTask);
             return mock;
         }
@@ -101,7 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueueCommitBlockTaskInternal> GetExceptionCommitBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueueCommitBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del())
+            mock.Setup(del => del(It.IsAny<StorageResourceItemProperties>()))
                 .Throws(new RequestFailedException("Mock Request Error"));
             return mock;
         }
@@ -109,7 +116,8 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.ReportProgressInBytes> GetReportProgressInBytesTask()
         {
             var mock = new Mock<CommitChunkHandler.ReportProgressInBytes>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>()));
+            mock.Setup(del => del(It.IsNotNull<long>()))
+                .Returns(new ValueTask());
             return mock;
         }
 
@@ -159,20 +167,15 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
-                ClientDiagnostics,
+                TransferOrder.Unordered,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would meet the expected length
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             VerifyDelegateInvocations(
                 behaviors: mockCommitChunkBehaviors,
@@ -180,6 +183,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -201,20 +207,15 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
-                ClientDiagnostics,
+                TransferOrder.Unordered,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -225,15 +226,10 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Now add the last block to meet the required commited block amount.
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize * 2,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -242,6 +238,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -263,20 +262,15 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
-                ClientDiagnostics,
+                TransferOrder.Unordered,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize * 2,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize * 2));
 
             // Assert
             VerifyDelegateInvocations(
@@ -285,6 +279,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -308,23 +305,18 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
-                ClientDiagnostics,
+                TransferOrder.Unordered,
+                default,
                 CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
 
             for (int i = 0; i < taskSize; i++)
             {
-                Task task = commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                    transferId: "fake-id",
-                    success: true,
+                Task task = Task.Run(async () => await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                     // Before commit block is called, one block chunk has already been added when creating the destination
                     offset: blockSize,
-                    bytesTransferred: blockSize,
-                    exception: default,
-                    isRunningSynchronously: false,
-                    cancellationToken: CancellationToken.None));
+                    bytesTransferred: blockSize)));
                 runningTasks.Add(task);
             }
 
@@ -339,6 +331,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: taskSize,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -360,20 +355,15 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Sequential,
-                ClientDiagnostics,
+                TransferOrder.Sequential,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -384,15 +374,10 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Now add the last block to meet the required commited block amount.
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize * 2,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -401,6 +386,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 1,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -422,20 +410,15 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Sequential,
-                ClientDiagnostics,
+                TransferOrder.Sequential,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize * 2,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize * 2));
 
             // Assert
             VerifyDelegateInvocations(
@@ -444,6 +427,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -466,19 +452,14 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferOrder: DataTransferOrder.Sequential,
-                ClientDiagnostics,
+                transferOrder: TransferOrder.Sequential,
+                default,
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -487,6 +468,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 1,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -508,19 +492,14 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferOrder: DataTransferOrder.Unordered,
-                ClientDiagnostics,
+                transferOrder: TransferOrder.Unordered,
+                default,
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -529,12 +508,15 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
-        public async Task DisposedEventHandler()
+        public async Task CleanUpAsync()
         {
-            // Arrange - Create DownloadChunkHandler then Dispose it so the event handler is disposed
+            // Arrange - Create CommitChunkHandler then Dispose it so the event handler is disposed
             MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             int blockSize = 512;
             long expectedLength = blockSize * 2;
@@ -549,15 +531,15 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferOrder: DataTransferOrder.Unordered,
-                ClientDiagnostics,
+                transferOrder: TransferOrder.Unordered,
+                default,
                 CancellationToken.None);
 
             // Act
-            commitBlockHandler.Dispose();
+            await commitBlockHandler.CleanUpAsync();
 
-            // Assert - Do not throw when trying to invoke the event handler when disposed
-            await commitBlockHandler.InvokeEvent(default);
+            Assert.ThrowsAsync<ChannelClosedException>(async () =>
+                await commitBlockHandler.QueueChunkAsync(default));
 
             VerifyDelegateInvocations(
                 behaviors: mockCommitChunkBehaviors,
@@ -565,6 +547,66 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 0,
                 expectedCompleteFileCount: 0);
+        }
+
+        [Test]
+        public async Task CompleteTransferTask_Properties()
+        {
+            // Set up tasks
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
+            int blockSize = 512;
+            long expectedLength = blockSize * 2;
+
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { "ContentType", DefaultContentType },
+                { "ContentEncoding", DefaultContentEncoding },
+                { "ContentLanguage", DefaultContentLanguage },
+                { "ContentDisposition", DefaultContentDisposition },
+                { "CacheControl", DefaultCacheControl },
+                { "Metadata", metadata },
+                { "Tags", tags }
+            };
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = expectedLength,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = sourceProperties
+            };
+            var commitBlockHandler = new CommitChunkHandler(
+                expectedLength: expectedLength,
+                blockSize: blockSize,
+                new CommitChunkHandler.Behaviors
+                {
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
+                },
+                TransferOrder.Unordered,
+                properties,
+                CancellationToken.None);
+
+            // Make one chunk that would meet the expected length
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
+                // Before commit block is called, one block chunk has already been added when creating the destination
+                offset: blockSize,
+                bytesTransferred: blockSize));
+
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: 1,
+                expectedCompleteFileCount: 1);
+
+            mockCommitChunkBehaviors.QueueCommitBlockTask.Verify(b => b(properties));
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
     }
 }

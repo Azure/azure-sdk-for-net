@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The policy name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The policy definition Id. </summary>
+        [WirePath("policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
         /// <summary> The policy parameters. </summary>
+        [WirePath("parameters")]
         public string Parameters { get; set; }
     }
 }

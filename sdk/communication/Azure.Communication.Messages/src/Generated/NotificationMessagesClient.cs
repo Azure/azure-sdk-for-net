@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -20,6 +19,7 @@ namespace Azure.Communication.Messages
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -75,8 +75,8 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SendAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
@@ -90,8 +90,8 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Send(content, context);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
@@ -280,6 +280,114 @@ namespace Azure.Communication.Messages
             }
         }
 
+        /// <summary> Sends a read receipt update from Business to User. </summary>
+        /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceiptAsync(ReadReceiptContent,CancellationToken)']/*" />
+        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
+
+            using RequestContent content = readReceiptContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await SendReadReceiptAsync(content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Sends a read receipt update from Business to User. </summary>
+        /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceipt(ReadReceiptContent,CancellationToken)']/*" />
+        public virtual Response SendReadReceipt(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
+
+            using RequestContent content = readReceiptContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = SendReadReceipt(content, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sends a read receipt update from Business to User.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SendReadReceiptAsync(ReadReceiptContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceiptAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> SendReadReceiptAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sends a read receipt update from Business to User.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SendReadReceipt(ReadReceiptContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceipt(RequestContent,RequestContext)']/*" />
+        public virtual Response SendReadReceipt(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateSendRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -310,6 +418,23 @@ namespace Azure.Communication.Messages
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateSendReadReceiptRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/messages/readreceipts:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 

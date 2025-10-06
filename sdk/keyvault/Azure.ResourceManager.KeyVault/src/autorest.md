@@ -7,21 +7,23 @@ azure-arm: true
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-tag: package-2023-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/402675202904b97229b067bf3b03ac8519de5125/specification/keyvault/resource-manager/readme.md
+#tag: package-2023-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
   MHSMPrivateLinkResources_ListByMhsmResource: GetManagedHsmPrivateLinkResources
-  ManagedHsms_CheckMhsmNameAvailability: CheckManagedHsmNameAvailability
+  ManagedHsms_CheckManagedHsmNameAvailability: CheckManagedHsmNameAvailability
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
@@ -119,6 +121,16 @@ rename-mapping:
   CertificatePermissions: IdentityAccessCertificatePermission
   IPRule.value: AddressRange
   CheckNameAvailabilityResult: KeyVaultNameAvailabilityResult
+  Trigger: KeyRotationTrigger
+  Action: KeyRotationAction
+  Key: KeyVaultKey
+  Key.properties.kty: keyType
+  KeyAttributes.enabled: isEnabled
+  KeyAttributes.exportable: canExported
+  KeyProperties.kty: keyType
+  ManagedHsmKeyAttributes.enabled: isEnabled
+  ManagedHsmKeyAttributes.exportable: canExported
+  ManagedHsmKeyProperties.kty: keyType
 
 prompted-enum-values: Default
 
@@ -150,17 +162,19 @@ directive:
       $.VaultProperties.properties.provisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
-```
-
-### Tag: package-2023-02
-
-These settings apply only when `--tag=package-2023-02` is specified on the command line.
-
-```yaml $(tag) == 'package-2023-02'
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/common.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/keyvault.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/managedHsm.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/providers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/secrets.json
+  # Remove keysManagedHsm.json and keys.json since these 2 are part of data plane
+  - from: keysManagedHsm.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: keys.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
 ```

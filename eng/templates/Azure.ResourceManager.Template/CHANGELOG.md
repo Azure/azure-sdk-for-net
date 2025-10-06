@@ -1,8 +1,10 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## ChangeLogH2Title
 
-### General New Features
+ChangeLogSdkDescription
+
+### Features Added
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

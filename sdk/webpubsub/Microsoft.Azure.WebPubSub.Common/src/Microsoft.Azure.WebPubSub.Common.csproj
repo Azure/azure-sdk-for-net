@@ -2,19 +2,18 @@
   <PropertyGroup>
     <Description>Azure SDK Common object library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK Common for WebPubSub</AssemblyTitle>
-    <Version>1.3.0-beta.1</Version>
+    <Version>1.5.0</Version>
+    <ApiCompatVersion>1.4.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <!--Remove ApiCompatVersion to remove unused JSON attribute-->
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);CA1822;AZC0001</NoWarn>
+    <NoWarn>$(NoWarn);CA1822</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

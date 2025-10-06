@@ -11,35 +11,22 @@ using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableKubernetesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableKubernetesArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableKubernetesArmClient for mocking. </summary>
         protected MockableKubernetesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKubernetesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKubernetesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKubernetesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableKubernetesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ConnectedClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConnectedClusterResource"/> object. </returns>
         public virtual ConnectedClusterResource GetConnectedClusterResource(ResourceIdentifier id)

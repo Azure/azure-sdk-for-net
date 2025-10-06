@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The UnknownStreamInputDataSource. </summary>
+    /// <summary> Unknown version of StreamInputDataSource. </summary>
     internal partial class UnknownStreamInputDataSource : StreamInputDataSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStreamInputDataSource"/>. </summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/>. </summary>
-        /// <param name="repeatingTimeIntervals"> ISO 8601 repeating time interval format. </param>
+        /// <param name="repeatingTimeIntervals"> Repeating time interval which only support the following ISO 8601 format [R/startDateTime/Duration]. Example: R/2007-03-01T13:00:00Z/P1Y2M10DT2H30M. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatingTimeIntervals"/> is null. </exception>
         public DataProtectionBackupSchedule(IEnumerable<string> repeatingTimeIntervals)
         {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/>. </summary>
-        /// <param name="repeatingTimeIntervals"> ISO 8601 repeating time interval format. </param>
+        /// <param name="repeatingTimeIntervals"> Repeating time interval which only support the following ISO 8601 format [R/startDateTime/Duration]. Example: R/2007-03-01T13:00:00Z/P1Y2M10DT2H30M. </param>
         /// <param name="timeZone"> Time zone for a schedule. Example: Pacific Standard Time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataProtectionBackupSchedule(IList<string> repeatingTimeIntervals, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
         }
 
-        /// <summary> ISO 8601 repeating time interval format. </summary>
+        /// <summary> Repeating time interval which only support the following ISO 8601 format [R/startDateTime/Duration]. Example: R/2007-03-01T13:00:00Z/P1Y2M10DT2H30M. </summary>
         public IList<string> RepeatingTimeIntervals { get; }
         /// <summary> Time zone for a schedule. Example: Pacific Standard Time. </summary>
         public string TimeZone { get; set; }

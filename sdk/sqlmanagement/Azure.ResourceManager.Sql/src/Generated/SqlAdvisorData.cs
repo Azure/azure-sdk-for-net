@@ -85,20 +85,28 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </summary>
+        [WirePath("properties.advisorStatus")]
         public SqlAdvisorStatus? AdvisorStatus { get; }
         /// <summary> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </summary>
+        [WirePath("properties.autoExecuteStatus")]
         public AutoExecuteStatus? AutoExecuteStatus { get; set; }
         /// <summary> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </summary>
+        [WirePath("properties.autoExecuteStatusInheritedFrom")]
         public AutoExecuteStatusInheritedFrom? AutoExecuteStatusInheritedFrom { get; }
         /// <summary> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </summary>
+        [WirePath("properties.recommendationsStatus")]
         public string RecommendationsStatus { get; }
         /// <summary> Gets the time when the current resource was analyzed for recommendations by this advisor. </summary>
+        [WirePath("properties.lastChecked")]
         public DateTimeOffset? LastCheckedOn { get; }
         /// <summary> Gets the recommended actions for this advisor. </summary>
+        [WirePath("properties.recommendedActions")]
         public IReadOnlyList<RecommendedActionData> RecommendedActions { get; }
     }
 }

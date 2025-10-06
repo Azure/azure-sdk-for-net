@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataFlowListResponse(document.RootElement);
+        }
+
         internal partial class DataFlowListResponseConverter : JsonConverter<DataFlowListResponse>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowListResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override DataFlowListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

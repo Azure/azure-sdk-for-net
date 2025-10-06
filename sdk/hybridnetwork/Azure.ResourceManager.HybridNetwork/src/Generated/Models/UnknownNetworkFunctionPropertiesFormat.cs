@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownNetworkFunctionPropertiesFormat. </summary>
+    /// <summary> Unknown version of NetworkFunctionPropertiesFormat. </summary>
     internal partial class UnknownNetworkFunctionPropertiesFormat : NetworkFunctionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionPropertiesFormat"/>. </summary>

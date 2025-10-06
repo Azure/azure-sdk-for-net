@@ -39,7 +39,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(PageAssetRedirectType left, PageAssetRedirectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PageAssetRedirectType"/> values are not the same. </summary>
         public static bool operator !=(PageAssetRedirectType left, PageAssetRedirectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PageAssetRedirectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PageAssetRedirectType"/>. </summary>
         public static implicit operator PageAssetRedirectType(string value) => new PageAssetRedirectType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

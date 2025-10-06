@@ -36,7 +36,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             if (Common.Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
-                writer.WriteObjectValue(ConversionConfiguration);
+                writer.WriteObjectValue<AssetConversionConfiguration>(ConversionConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -153,6 +153,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 accountId,
                 ingestionConfiguration,
                 scaledAssetDimensions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAssetConversionProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

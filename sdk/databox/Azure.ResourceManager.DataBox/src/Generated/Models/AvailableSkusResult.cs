@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataBox;
+using System.Linq;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -47,14 +47,15 @@ namespace Azure.ResourceManager.DataBox.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvailableSkusResult"/>. </summary>
-        internal AvailableSkusResult()
+        /// <param name="value"> [Placeholder] Description for page model. </param>
+        internal AvailableSkusResult(IEnumerable<DataBoxSkuInformation> value)
         {
-            Value = new ChangeTrackingList<DataBoxSkuInformation>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailableSkusResult"/>. </summary>
-        /// <param name="value"> List of available skus. </param>
-        /// <param name="nextLink"> Link for the next set of skus. </param>
+        /// <param name="value"> [Placeholder] Description for page model. </param>
+        /// <param name="nextLink"> [Placeholder] Description for nextLink property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AvailableSkusResult(IReadOnlyList<DataBoxSkuInformation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +64,14 @@ namespace Azure.ResourceManager.DataBox.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of available skus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableSkusResult"/> for deserialization. </summary>
+        internal AvailableSkusResult()
+        {
+        }
+
+        /// <summary> [Placeholder] Description for page model. </summary>
         public IReadOnlyList<DataBoxSkuInformation> Value { get; }
-        /// <summary> Link for the next set of skus. </summary>
+        /// <summary> [Placeholder] Description for nextLink property. </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The customer name. </summary>
+        [WirePath("customerName")]
         public string CustomerName { get; }
     }
 }

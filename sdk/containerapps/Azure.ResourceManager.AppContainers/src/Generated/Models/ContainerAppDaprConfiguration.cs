@@ -59,8 +59,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="httpMaxRequestSize"> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
         /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
         /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
+        /// <param name="appHealth"> Dapr application health check configuration. </param>
+        /// <param name="maxConcurrency"> Maximum number of concurrent requests, events handled by the Dapr sidecar. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled, DaprAppHealth appHealth, int? maxConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             AppId = appId;
@@ -70,24 +72,40 @@ namespace Azure.ResourceManager.AppContainers.Models
             HttpMaxRequestSize = httpMaxRequestSize;
             LogLevel = logLevel;
             IsApiLoggingEnabled = isApiLoggingEnabled;
+            AppHealth = appHealth;
+            MaxConcurrency = maxConcurrency;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Dapr application identifier. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
         /// <summary> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </summary>
+        [WirePath("appProtocol")]
         public ContainerAppProtocol? AppProtocol { get; set; }
         /// <summary> Tells Dapr which port your application is listening on. </summary>
+        [WirePath("appPort")]
         public int? AppPort { get; set; }
         /// <summary> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </summary>
+        [WirePath("httpReadBufferSize")]
         public int? HttpReadBufferSize { get; set; }
         /// <summary> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </summary>
+        [WirePath("httpMaxRequestSize")]
         public int? HttpMaxRequestSize { get; set; }
         /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+        [WirePath("logLevel")]
         public ContainerAppDaprLogLevel? LogLevel { get; set; }
         /// <summary> Enables API logging for the Dapr sidecar. </summary>
+        [WirePath("enableApiLogging")]
         public bool? IsApiLoggingEnabled { get; set; }
+        /// <summary> Dapr application health check configuration. </summary>
+        [WirePath("appHealth")]
+        public DaprAppHealth AppHealth { get; set; }
+        /// <summary> Maximum number of concurrent requests, events handled by the Dapr sidecar. </summary>
+        [WirePath("maxConcurrency")]
+        public int? MaxConcurrency { get; set; }
     }
 }

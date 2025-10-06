@@ -15,19 +15,32 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     [PersistableModelProxy(typeof(UnknownSummaryResourceProperties))]
     public partial class FirmwareAnalysisSummaryProperties : IUtf8JsonSerializable, IJsonModel<FirmwareAnalysisSummaryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisSummaryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisSummaryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirmwareAnalysisSummaryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareAnalysisSummaryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("summaryType"u8);
             writer.WriteStringValue(SummaryType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -36,14 +49,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FirmwareAnalysisSummaryProperties IJsonModel<FirmwareAnalysisSummaryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -51,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareAnalysisSummaryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static FirmwareAnalysisSummaryProperties DeserializeFirmwareAnalysisSummaryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 switch (discriminator.GetString())
                 {
                     case "BinaryHardening": return BinaryHardeningSummary.DeserializeBinaryHardeningSummary(element, options);
-                    case "CVE": return CveSummary.DeserializeCveSummary(element, options);
+                    case "CommonVulnerabilitiesAndExposures": return CveSummary.DeserializeCveSummary(element, options);
                     case "CryptoCertificate": return CryptoCertificateSummary.DeserializeCryptoCertificateSummary(element, options);
                     case "CryptoKey": return CryptoKeySummary.DeserializeCryptoKeySummary(element, options);
                     case "Firmware": return FirmwareSummary.DeserializeFirmwareSummary(element, options);
@@ -87,9 +99,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,11 +113,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirmwareAnalysisSummaryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

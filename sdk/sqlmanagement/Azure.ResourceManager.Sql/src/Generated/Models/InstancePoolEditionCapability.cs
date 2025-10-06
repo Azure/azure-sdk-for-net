@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The instance pool version name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The supported families. </summary>
+        [WirePath("supportedFamilies")]
         public IReadOnlyList<InstancePoolFamilyCapability> SupportedFamilies { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The public azure support URL. </summary>
+        [WirePath("publicAzure")]
         public Uri AzurePublicCloudUri { get; }
         /// <summary> The government cloud support URL. </summary>
+        [WirePath("governmentCloud")]
         public Uri AzureGovernmentUri { get; }
     }
 }

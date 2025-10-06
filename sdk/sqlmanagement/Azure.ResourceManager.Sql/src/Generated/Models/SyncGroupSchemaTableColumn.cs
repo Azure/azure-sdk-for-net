@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Quoted name of sync group table column. </summary>
+        [WirePath("quotedName")]
         public string QuotedName { get; set; }
         /// <summary> Data size of the column. </summary>
+        [WirePath("dataSize")]
         public string DataSize { get; set; }
         /// <summary> Data type of the column. </summary>
+        [WirePath("dataType")]
         public string DataType { get; set; }
     }
 }

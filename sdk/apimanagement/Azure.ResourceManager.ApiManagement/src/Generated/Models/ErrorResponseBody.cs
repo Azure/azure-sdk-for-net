@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </summary>
+        [WirePath("code")]
         public string Code { get; set; }
         /// <summary> Human-readable representation of the error. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> The list of invalid fields send in request, in case of validation error. </summary>
+        [WirePath("details")]
         public IList<ErrorFieldContract> Details { get; }
     }
 }

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the cpu usage. </summary>
+        [WirePath("cpuUsage")]
         public ContainerCpuUsage CpuUsage { get; set; }
         /// <summary> Gets or sets the system cpu usage. </summary>
+        [WirePath("systemCpuUsage")]
         public long? SystemCpuUsage { get; set; }
         /// <summary> Gets or sets the online cpu count. </summary>
+        [WirePath("onlineCpuCount")]
         public int? OnlineCpuCount { get; set; }
         /// <summary> Gets or sets the throttling data. </summary>
+        [WirePath("throttlingData")]
         public ContainerThrottlingInfo ThrottlingData { get; set; }
     }
 }

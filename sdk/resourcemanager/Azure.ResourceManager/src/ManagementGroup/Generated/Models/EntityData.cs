@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -88,30 +87,40 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The friendly name of the management group. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> (Optional) The ID of the parent management group. </summary>
         internal SubResource Parent { get; }
         /// <summary> Gets Id. </summary>
+        [WirePath("properties.parent.id")]
         public ResourceIdentifier ParentId
         {
             get => Parent?.Id;
         }
 
         /// <summary> The users specific permissions to this item. </summary>
+        [WirePath("properties.permissions")]
         public EntityPermission? Permissions { get; }
         /// <summary> The users specific permissions to this item. </summary>
+        [WirePath("properties.inheritedPermissions")]
         public EntityPermission? InheritedPermissions { get; }
         /// <summary> Number of Descendants. </summary>
+        [WirePath("properties.numberOfDescendants")]
         public int? NumberOfDescendants { get; }
         /// <summary> Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group. </summary>
+        [WirePath("properties.numberOfChildren")]
         public int? NumberOfChildren { get; }
         /// <summary> Number of children is the number of Groups that are exactly one level underneath the current Group. </summary>
+        [WirePath("properties.numberOfChildGroups")]
         public int? NumberOfChildGroups { get; }
         /// <summary> The parent display name chain from the root group to the immediate parent. </summary>
+        [WirePath("properties.parentDisplayNameChain")]
         public IReadOnlyList<string> ParentDisplayNameChain { get; }
         /// <summary> The parent name chain from the root group to the immediate parent. </summary>
+        [WirePath("properties.parentNameChain")]
         public IReadOnlyList<string> ParentNameChain { get; }
     }
 }

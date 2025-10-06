@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -60,13 +59,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
         /// <param name="endpointType"> The endpoint type. </param>
-        /// <param name="resourceId"> Resource ID of the connection monitor endpoint. </param>
-        /// <param name="address"> Address of the connection monitor endpoint (IP or domain name). </param>
-        /// <param name="filter"> Filter for sub-items within the endpoint. </param>
-        /// <param name="scope"> Endpoint scope. </param>
+        /// <param name="resourceId"> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </param>
+        /// <param name="address"> Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine, MMAWorkspaceMachine endpoint type. </param>
+        /// <param name="filter"> Filter field is getting deprecated and should not be used. Instead use Include/Exclude scope fields for it. </param>
+        /// <param name="scope"> Endpoint scope defines which target resource to monitor in case of compound resource endpoints like VMSS, AzureSubnet, AzureVNet, MMAWorkspaceNetwork, AzureArcNetwork. </param>
         /// <param name="coverageLevel"> Test coverage for the endpoint. </param>
+        /// <param name="locationDetails"> Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains region details. </param>
+        /// <param name="subscriptionId"> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, Guid? subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EndpointType = endpointType;
@@ -75,6 +76,8 @@ namespace Azure.ResourceManager.Network.Models
             Filter = filter;
             Scope = scope;
             CoverageLevel = coverageLevel;
+            LocationDetails = locationDetails;
+            SubscriptionId = subscriptionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,18 +87,43 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the connection monitor endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The endpoint type. </summary>
+        [WirePath("type")]
         public ConnectionMonitorEndpointType? EndpointType { get; set; }
-        /// <summary> Resource ID of the connection monitor endpoint. </summary>
+        /// <summary> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> Address of the connection monitor endpoint (IP or domain name). </summary>
+        /// <summary> Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine, MMAWorkspaceMachine endpoint type. </summary>
+        [WirePath("address")]
         public string Address { get; set; }
-        /// <summary> Filter for sub-items within the endpoint. </summary>
+        /// <summary> Filter field is getting deprecated and should not be used. Instead use Include/Exclude scope fields for it. </summary>
+        [WirePath("filter")]
         public ConnectionMonitorEndpointFilter Filter { get; set; }
-        /// <summary> Endpoint scope. </summary>
+        /// <summary> Endpoint scope defines which target resource to monitor in case of compound resource endpoints like VMSS, AzureSubnet, AzureVNet, MMAWorkspaceNetwork, AzureArcNetwork. </summary>
+        [WirePath("scope")]
         public ConnectionMonitorEndpointScope Scope { get; set; }
         /// <summary> Test coverage for the endpoint. </summary>
+        [WirePath("coverageLevel")]
         public CoverageLevel? CoverageLevel { get; set; }
+        /// <summary> Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains region details. </summary>
+        internal ConnectionMonitorEndpointLocationDetails LocationDetails { get; set; }
+        /// <summary> Region for connection monitor endpoint. </summary>
+        [WirePath("locationDetails.region")]
+        public string LocationDetailsRegion
+        {
+            get => LocationDetails is null ? default : LocationDetails.Region;
+            set
+            {
+                if (LocationDetails is null)
+                    LocationDetails = new ConnectionMonitorEndpointLocationDetails();
+                LocationDetails.Region = value;
+            }
+        }
+
+        /// <summary> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </summary>
+        [WirePath("subscriptionId")]
+        public Guid? SubscriptionId { get; set; }
     }
 }

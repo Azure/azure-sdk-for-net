@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The city or town name. </summary>
+        [WirePath("cityName")]
         public string CityName { get; }
         /// <summary> A list of Internet service providers. </summary>
+        [WirePath("providers")]
         public IReadOnlyList<string> Providers { get; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -86,6 +85,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy. </summary>
         internal WritableSubResource Slice { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("slice.id")]
         public ResourceIdentifier SliceId
         {
             get => Slice is null ? default : Slice.Id;
@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy. </summary>
         internal WritableSubResource DefaultDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("defaultDataNetwork.id")]
         public ResourceIdentifier DefaultDataNetworkId
         {
             get => DefaultDataNetwork is null ? default : DefaultDataNetwork.Id;
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </summary>
+        [WirePath("dataNetworkConfigurations")]
         public IList<DataNetworkConfiguration> DataNetworkConfigurations { get; }
     }
 }

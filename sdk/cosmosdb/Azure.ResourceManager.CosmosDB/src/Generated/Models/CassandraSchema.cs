@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Cassandra table columns. </summary>
+        [WirePath("columns")]
         public IList<CassandraColumn> Columns { get; }
         /// <summary> List of partition key. </summary>
+        [WirePath("partitionKeys")]
         public IList<CassandraPartitionKey> PartitionKeys { get; }
         /// <summary> List of cluster key. </summary>
+        [WirePath("clusterKeys")]
         public IList<CassandraClusterKey> ClusterKeys { get; }
     }
 }

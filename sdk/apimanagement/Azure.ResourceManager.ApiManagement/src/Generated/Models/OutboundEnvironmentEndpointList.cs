@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<OutboundEnvironmentEndpoint> Value { get; }
         /// <summary> Link to next page of resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -36,8 +34,8 @@ namespace Azure.ResourceManager.Automanage
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics;
-        private readonly HCIReportsRestOperations _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient;
+        private readonly ClientDiagnostics _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics;
+        private readonly HCIReportsRestOperations _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentReportData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,9 +60,9 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomanageHciClusterConfigurationProfileAssignmentReportResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string automanageHciClusterConfigurationProfileAssignmentReportHCIReportsApiVersion);
-            _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient = new HCIReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageHciClusterConfigurationProfileAssignmentReportHCIReportsApiVersion);
+            _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string automanageHciClusterConfigurationProfileAssignmentReportHciReportsApiVersion);
+            _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient = new HCIReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageHciClusterConfigurationProfileAssignmentReportHciReportsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -115,11 +113,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentReportResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportResource.Get");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportResource.Get");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
@@ -155,11 +153,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomanageHciClusterConfigurationProfileAssignmentReportResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportResource.Get");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportResource.Get");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _automanageHciClusterConfigurationProfileAssignmentReportHciReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());

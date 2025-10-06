@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -72,16 +71,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Private endpoint which the connection belongs to. </summary>
         internal WritableSubResource PrivateEndpoint { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint?.Id;
         }
 
         /// <summary> Group IDs. </summary>
+        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state of the private endpoint connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public SqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; }
         /// <summary> State of the private endpoint connection. </summary>
+        [WirePath("provisioningState")]
         public SqlPrivateEndpointProvisioningState? ProvisioningState { get; }
     }
 }

@@ -11,7 +11,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
@@ -24,6 +23,7 @@ namespace Azure.Maps.Rendering
         private readonly Uri _endpoint;
         private readonly string _clientId;
         private readonly string _apiVersion;
+        private readonly MediaType? _accept;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -32,19 +32,21 @@ namespace Azure.Maps.Rendering
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="accept"> The Accept header field can be used to specify preferences regarding response media types. Allowed media types include image/jpeg and image/png. Return image in image/png if Accept header is not specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RenderRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "2022-08-01")
+        public RenderRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "2024-04-01", MediaType? accept = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://atlas.microsoft.com");
             _clientId = clientId;
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            _accept = accept;
         }
 
-        internal HttpMessage CreateGetMapTileRequest(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp, MapTileSize? tileSize, string language, LocalizedMapView? localizedMapView)
+        internal HttpMessage CreateGetMapTileRequest(MapTileSetId tilesetId, MapTileIndex mapTileIndex, DateTimeOffset? timeStamp, MapTileSize? tileSize, string language, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,9 +56,9 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/tile", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
-            uri.AppendQuery("zoom", tileIndex.Z, true);
-            uri.AppendQuery("x", tileIndex.X, true);
-            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("zoom", mapTileIndex.Z, true);
+            uri.AppendQuery("x", mapTileIndex.X, true);
+            uri.AppendQuery("y", mapTileIndex.Y, true);
             if (timeStamp != null)
             {
                 uri.AppendQuery("timeStamp", timeStamp.Value, "O", true);
@@ -82,13 +84,9 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// The Get Map Tiles API allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control (Web SDK) and Android SDK.
-        /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <summary> Use to request map tiles in vector or raster format. </summary>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="timeStamp">
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). This parameter is only supported when tilesetId parameter is set to one of the values below.
         ///
@@ -107,15 +105,19 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Map Tiles` API in an HTTP GET request that allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control ([Web SDK](/azure/azure-maps/about-azure-maps#web-sdk)) and [Android SDK](/azure/azure-maps/about-azure-maps#android-sdk).
+        /// </remarks>
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex mapTileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapTileRequest(tilesetId, tileIndex, timeStamp, tileSize, language, localizedMapView);
+            using var message = CreateGetMapTileRequest(tilesetId, mapTileIndex, timeStamp, tileSize, language, localizedMapView);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -130,13 +132,9 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// The Get Map Tiles API allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control (Web SDK) and Android SDK.
-        /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <summary> Use to request map tiles in vector or raster format. </summary>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="timeStamp">
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). This parameter is only supported when tilesetId parameter is set to one of the values below.
         ///
@@ -155,15 +153,19 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Map Tiles` API in an HTTP GET request that allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control ([Web SDK](/azure/azure-maps/about-azure-maps#web-sdk)) and [Android SDK](/azure/azure-maps/about-azure-maps#android-sdk).
+        /// </remarks>
+        public ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex mapTileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapTileRequest(tilesetId, tileIndex, timeStamp, tileSize, language, localizedMapView);
+            using var message = CreateGetMapTileRequest(tilesetId, mapTileIndex, timeStamp, tileSize, language, localizedMapView);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -197,13 +199,13 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// <summary> Use to get metadata for a tileset. </summary>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         ///
         /// The Get Map Tileset API allows users to request metadata for a tileset.
-        /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public async Task<Response<MapTileSet>> GetMapTilesetAsync(MapTileSetId tilesetId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetMapTilesetRequest(tilesetId);
@@ -213,7 +215,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapTileSet value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapTileSet.DeserializeMapTileSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -222,13 +224,13 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// <summary> Use to get metadata for a tileset. </summary>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         ///
         /// The Get Map Tileset API allows users to request metadata for a tileset.
-        /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public Response<MapTileSet> GetMapTileset(MapTileSetId tilesetId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetMapTilesetRequest(tilesetId);
@@ -238,7 +240,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapTileSet value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapTileSet.DeserializeMapTileSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,16 +273,16 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
-        /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <summary> Use to get map copyright attribution information. </summary>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="zoom"> Zoom level for the desired map attribution. </param>
         /// <param name="bounds"> The string that represents the rectangular area of a bounding box. The bounds parameter is defined by the 4 bounding box coordinates, with WGS84 longitude and latitude of the southwest corner followed by  WGS84 longitude and latitude of the northeast corner. The string is presented in the following  format: `[SouthwestCorner_Longitude, SouthwestCorner_Latitude, NortheastCorner_Longitude,  NortheastCorner_Latitude]`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bounds"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Map Attribution` API allows users to request map copyright attribution information for a section of a tileset.
+        /// </remarks>
         public async Task<Response<MapAttribution>> GetMapAttributionAsync(MapTileSetId tilesetId, int zoom, IEnumerable<double> bounds, CancellationToken cancellationToken = default)
         {
             if (bounds == null)
@@ -295,7 +297,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapAttribution value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapAttribution.DeserializeMapAttribution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -304,16 +306,16 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
-        /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <summary> Use to get map copyright attribution information. </summary>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="zoom"> Zoom level for the desired map attribution. </param>
         /// <param name="bounds"> The string that represents the rectangular area of a bounding box. The bounds parameter is defined by the 4 bounding box coordinates, with WGS84 longitude and latitude of the southwest corner followed by  WGS84 longitude and latitude of the northeast corner. The string is presented in the following  format: `[SouthwestCorner_Longitude, SouthwestCorner_Latitude, NortheastCorner_Longitude,  NortheastCorner_Latitude]`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bounds"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Map Attribution` API allows users to request map copyright attribution information for a section of a tileset.
+        /// </remarks>
         public Response<MapAttribution> GetMapAttribution(MapTileSetId tilesetId, int zoom, IEnumerable<double> bounds, CancellationToken cancellationToken = default)
         {
             if (bounds == null)
@@ -328,7 +330,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapAttribution value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapAttribution.DeserializeMapAttribution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -337,7 +339,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetMapStateTileRequest(string statesetId, MapTileIndex tileIndex)
+        internal HttpMessage CreateGetMapStateTileRequest(string statesetId, MapTileIndex mapTileIndex)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -346,9 +348,9 @@ namespace Azure.Maps.Rendering
             uri.Reset(_endpoint);
             uri.AppendPath("/map/statetile", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("zoom", tileIndex.Z, true);
-            uri.AppendQuery("x", tileIndex.X, true);
-            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("zoom", mapTileIndex.Z, true);
+            uri.AppendQuery("x", mapTileIndex.X, true);
+            uri.AppendQuery("y", mapTileIndex.Y, true);
             uri.AppendQuery("statesetId", statesetId, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -359,27 +361,27 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling (see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid))
-        /// </summary>
+        /// <summary> Use to get state tiles in vector format that can then be used to display feature state information in an indoor map. </summary>
         /// <param name="statesetId"> The stateset id. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders>> GetMapStateTileAsync(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="mapTileIndex"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling. For more information, see [Zoom Levels and Tile Grid](/azure/location-based-services/zoom-levels-and-tile-grid).
+        /// </remarks>
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders>> GetMapStateTileAsync(string statesetId, MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
             if (statesetId == null)
             {
                 throw new ArgumentNullException(nameof(statesetId));
             }
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapStateTileRequest(statesetId, tileIndex);
+            using var message = CreateGetMapStateTileRequest(statesetId, mapTileIndex);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapStateTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -394,27 +396,27 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling (see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid))
-        /// </summary>
+        /// <summary> Use to get state tiles in vector format that can then be used to display feature state information in an indoor map. </summary>
         /// <param name="statesetId"> The stateset id. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
-        public ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders> GetMapStateTile(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="mapTileIndex"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling. For more information, see [Zoom Levels and Tile Grid](/azure/location-based-services/zoom-levels-and-tile-grid).
+        /// </remarks>
+        public ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders> GetMapStateTile(string statesetId, MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
             if (statesetId == null)
             {
                 throw new ArgumentNullException(nameof(statesetId));
             }
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapStateTileRequest(statesetId, tileIndex);
+            using var message = CreateGetMapStateTileRequest(statesetId, mapTileIndex);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapStateTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -448,18 +450,15 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Copyrights API is designed to serve copyright information for Render Tile
-        /// service. In addition to basic copyright for the whole map, API is serving
-        /// specific groups of copyrights for some countries/regions.
-        ///
-        /// As an alternative to copyrights for map request, one can receive captions
-        /// for displaying the map provider information on the map.
-        /// </summary>
+        /// <summary> Use to get copyright information to use when rendering a tile. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        ///
+        /// The `Get Copyright Caption` API is an HTTP GET request designed to serve copyright information to be used with tiles requested from the Render service. In addition to a basic copyright for the whole map, it can serve specific groups of copyrights for some countries/regions.
+        ///
+        /// As an alternative to copyrights for map request, it can also return captions for displaying provider information on the map.
+        /// </remarks>
         public async Task<Response<CopyrightCaption>> GetCopyrightCaptionAsync(ResponseFormat format, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCopyrightCaptionRequest(format);
@@ -469,7 +468,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         CopyrightCaption value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CopyrightCaption.DeserializeCopyrightCaption(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,18 +477,15 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Copyrights API is designed to serve copyright information for Render Tile
-        /// service. In addition to basic copyright for the whole map, API is serving
-        /// specific groups of copyrights for some countries/regions.
-        ///
-        /// As an alternative to copyrights for map request, one can receive captions
-        /// for displaying the map provider information on the map.
-        /// </summary>
+        /// <summary> Use to get copyright information to use when rendering a tile. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        ///
+        /// The `Get Copyright Caption` API is an HTTP GET request designed to serve copyright information to be used with tiles requested from the Render service. In addition to a basic copyright for the whole map, it can serve specific groups of copyrights for some countries/regions.
+        ///
+        /// As an alternative to copyrights for map request, it can also return captions for displaying provider information on the map.
+        /// </remarks>
         public Response<CopyrightCaption> GetCopyrightCaption(ResponseFormat format, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCopyrightCaptionRequest(format);
@@ -499,7 +495,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         CopyrightCaption value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CopyrightCaption.DeserializeCopyrightCaption(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -508,23 +504,22 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetMapStaticImageRequest(RasterTileFormat format, MapImageLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBoxPrivate, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
+        internal HttpMessage CreateGetMapStaticImageRequest(MapTileSetId? tilesetId, TrafficTilesetId? trafficLayer, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBoxPrivate, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/map/static/", false);
-            uri.AppendPath(format.ToString(), true);
+            uri.AppendPath("/map/static", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (layer != null)
+            if (tilesetId != null)
             {
-                uri.AppendQuery("layer", layer.Value.ToString(), true);
+                uri.AppendQuery("tilesetId", tilesetId.Value.ToString(), true);
             }
-            if (style != null)
+            if (trafficLayer != null)
             {
-                uri.AppendQuery("style", style.Value.ToString(), true);
+                uri.AppendQuery("trafficLayer", trafficLayer.Value.ToString(), true);
             }
             if (zoom != null)
             {
@@ -573,79 +568,77 @@ namespace Azure.Maps.Rendering
             {
                 request.Headers.Add("x-ms-client-id", _clientId);
             }
-            request.Headers.Add("Accept", "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile");
+            if (_accept != null)
+            {
+                request.Headers.Add("Accept", _accept.Value.ToString());
+            }
             return message;
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// This rendering API produces static, rasterized map views of a user-defined area. It's suitable for lightweight web applications, when the desired user experience doesn't require interactive map controls, or when bandwidth is limited. This API is also useful for embedding maps in applications outside of the browser, in backend services, report generation, or desktop applications.
         ///
-        /// The static image service renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The supported resolution range for the map image is from 1x1 to 8192x8192. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
+        ///  This API includes parameters for basic data visualization:
         ///
-        /// Service also provides Image Composition functionality to get a static image back with additional data like; pushpins and geometry overlays with following capabilities.
+        /// - Labeled pushpins in multiple styles.
+        /// - Render circle, path, and polygon geometry types.
         ///
-        /// - Specify multiple pushpin styles
-        /// - Render circle, polyline and polygon geometry types.
-        ///
-        /// Please see [How-to-Guide](https://aka.ms/AzureMapsHowToGuideImageCompositor) for detailed examples.
-        ///
-        /// _Note_ : Either **center** or **bbox** parameter must be supplied to the
-        /// API.
+        /// For more information and detailed examples, see [Render custom data on a raster map](/azure/azure-maps/how-to-render-custom-data).
         /// &lt;br&gt;&lt;br&gt;
-        /// The supported Lat and Lon ranges when using the **bbox** parameter, are as follows:
+        /// The dimensions of the bbox parameter are constrained, depending on the zoom level. This ensures the resulting image has an appropriate level of detail.
         /// &lt;br&gt;&lt;br&gt;
         ///
-        ///   |Zoom Level | Max Lon Range   | Max Lat Range|
-        ///   |:----------|:----------------|:-------------|
-        ///   |0          | 360.0           | 170.0        |
-        ///   |1          | 360.0           | 170.0        |
-        ///   |2          | 360.0           | 170.0        |
-        ///   |3          | 360.0           | 170.0        |
-        ///   |4          | 360.0           | 170.0        |
-        ///   |5          | 180.0           | 85.0         |
-        ///   |6          | 90.0            | 42.5         |
-        ///   |7          | 45.0            | 21.25        |
-        ///   |8          | 22.5            | 10.625       |
-        ///   |9          | 11.25           | 5.3125       |
-        ///   |10         | 5.625           | 2.62625      |
-        ///   |11         | 2.8125          | 1.328125     |
-        ///   |12         | 1.40625         | 0.6640625    |
-        ///   |13         | 0.703125        | 0.33203125   |
-        ///   |14         | 0.3515625       | 0.166015625  |
-        ///   |15         | 0.17578125      | 0.0830078125 |
-        ///   |16         | 0.087890625     | 0.0415039063 |
-        ///   |17         | 0.0439453125    | 0.0207519531 |
-        ///   |18         | 0.0219726563    | 0.0103759766 |
-        ///   |19         | 0.0109863281    | 0.0051879883 |
-        ///   |20         | 0.0054931641    | 0.0025939941 |
+        ///   |Zoom Level | Min Lon Range   | Max Lon Range   | Min Lat Range| Max Lat Range|
+        ///   |:----------|:----------------|:----------------|:----------------|:-------------|
+        ///   |0          | 56.25     | 360.0       | 30.1105585173    | 180.0        |
+        ///   |1          | 28.125         | 360.0       | 14.87468995    | 180.0        |
+        ///   |2         | 14.063       | 351.5625      |  7.4130741851    | 137.9576312246       |
+        ///   |3     | 7.03125     | 175.78125    |  3.7034501005    |   73.6354071932     |
+        ///   |4     | 3.515625    | 87.890625  | 1.8513375155  | 35.4776115315  |
+        ///   |5          | 1.7578125  | 43.9453125  | 0.925620264 | 17.4589959239  |
+        ///   |6       | 0.87890625 | 21.97265625 | 0.4628040687  | 8.6907788223  |
+        ///   |7      | 0.439453125 |  10.986328125 | 0.2314012764  | 4.3404320789 |
+        ///   |8       | 0.2197265625 | 5.4931640625 | 0.1157005434  | 2.1695927024  |
+        ///   |9      | 0.1098632812 | 2.7465820312  |  0.0578502599  | 1.0847183194  |
+        ///   |10    | 0.0549316406  | 1.3732910156 | 0.0289251285  | 0.5423494021  |
+        ///   |11     | 0.0274658203 | 0.6866455078 | 0.014462564 | 0.2711734813 |
+        ///   |12      |  0.0137329102  | 0.3433227539 | 0.007231282 | 0.1355865882  |
+        ///   |13    | 0.0068664551 | 0.171661377 | 0.003615641 | 0.067793275 |
+        ///   |14     |  0.0034332275  | 0.0858306885 | 0.0018078205 | 0.0338966351 |
+        ///   |15     |  0.0017166138 | 0.0429153442 | 0.0009039102 | 0.0169483173 |
+        ///   |16   |  0.0008583069  | 0.0214576721  |  0.0004519551  | 0.0084741586 |
+        ///   |17  | 0.0004291534 |  0.0107288361  |  0.0002259776 | 0.0042370793 |
+        ///   |18    | 0.0002145767 | 0.005364418 | 0.0001129888 | 0.0021185396 |
+        ///   |19    | 0.0001072884  |  0.002682209  | 5.64944E-05 | 0.0010592698 |
+        ///   |20    |  5.36442E-05  | 0.0013411045 | 2.82472E-05  | 0.0005296349 |
+        ///
+        /// _Note_ : Either **center** or **bbox** parameter must be supplied to the API.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Possible value: png. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="layer"> Map layer requested. If layer is set to labels or hybrid, the format should be png. </param>
-        /// <param name="style"> Map style to be returned. Possible values are main and dark. </param>
-        /// <param name="zoom"> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details. </param>
+        /// <param name="tilesetId"> Map style to be returned. Possible values are microsoft.base.road, microsoft.base.darkgrey, and microsoft.imagery.  Default value is set to be microsoft.base.road. For more information, see [Render TilesetId](https://learn.microsoft.com/en-us/rest/api/maps/render/get-map-tileset?view=rest-maps-2023-06-01&amp;tabs=HTTP#tilesetid). </param>
+        /// <param name="trafficLayer"> Optional Value, indicating no traffic flow overlaid on the image result. Possible values are microsoft.traffic.relative.main and none. Default value is none, indicating no traffic flow returned. If traffic related tilesetId is provided, will return map image with corresponding traffic layer. For more information, see [Render TilesetId](https://learn.microsoft.com/en-us/rest/api/maps/render/get-map-tileset?view=rest-maps-2023-06-01&amp;tabs=HTTP#tilesetid). </param>
+        /// <param name="zoom"> Desired zoom level of the map. Support zoom value range from 0-20 (inclusive) for tilesetId being microsoft.base.road or microsoft.base.darkgrey. Support zoom value range from 0-19 (inclusive) for tilesetId being microsoft.imagery. Default value is 12.&lt;br&gt;&lt;br&gt;For more information, see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid). </param>
         /// <param name="center">
-        /// Coordinates of the center point. Format: 'lon,lat'. Projection used
-        /// - EPSG:3857. Longitude range: -180 to 180. Latitude range: -85 to 85.
+        /// Coordinates of the center point in double. Format: 'lon,lat'. Longitude range: -180 to 180. Latitude range: -90 to 90.
         ///
         /// Note: Either center or bbox are required parameters. They are
         /// mutually exclusive.
         /// </param>
         /// <param name="boundingBoxPrivate">
-        /// Bounding box. Projection used - EPSG:3857. Format : 'minLon, minLat,
-        /// maxLon, maxLat'.
+        /// A bounding box is defined by two latitudes and two longitudes that represent the four sides of a rectangular area on the Earth. Format : 'minLon, minLat,
+        /// maxLon, maxLat' (in double).
         ///
         /// Note: Either bbox or center are required
-        /// parameters. They are mutually exclusive. It shouldn’t be used with
+        /// parameters. They are mutually exclusive. bbox shouldn’t be used with
         /// height or width.
         ///
-        /// The maximum allowed ranges for Lat and Lon are defined for each zoom level
+        /// The maximum and minimum allowed ranges for Lat and Lon are defined for each zoom level
         /// in the table at the top of this page.
         /// </param>
         /// <param name="height">
-        /// Height of the resulting image in pixels. Range is 1 to 8192. Default
+        /// Height of the resulting image in pixels. Range from 80 to 1500. Default
         /// is 512. It shouldn’t be used with bbox.
         /// </param>
-        /// <param name="width"> Width of the resulting image in pixels. Range is 1 to 8192. Default is 512. It shouldn’t be used with bbox. </param>
+        /// <param name="width"> Width of the resulting image in pixels. Range from 80 to 2000. Default is 512. It should not be used with bbox. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         ///
@@ -659,7 +652,7 @@ namespace Azure.Maps.Rendering
         /// <param name="pins">
         /// Pushpin style and instances. Use this parameter to optionally add pushpins to the image.
         /// The pushpin style describes the appearance of the pushpins, and the instances specify
-        /// the coordinates of the pushpins and optional labels for each pin. (Be sure to properly URL-encode values of this
+        /// the coordinates of the pushpins (in double) and optional labels for each pin. (Be sure to properly URL-encode values of this
         /// parameter since it will contain reserved characters such as pipes and punctuation.)
         ///
         /// The Azure Maps account S0 SKU only supports a single instance of the pins parameter. Other SKUs
@@ -698,12 +691,12 @@ namespace Azure.Maps.Rendering
         ///
         /// ### Pushpin Labels
         ///
-        /// To add a label to the pins, put the label in single quotes just before the coordinates. For example, to label
+        /// To add a label to the pins, put the label in single quotes just before the coordinates. Avoid using special character such as `|` or `||` in label. For example, to label
         /// three pins with the values '1', '2', and '3', use
         ///
         /// `pins=default||'1'-122 45|'2'-119.5 43.2|'3'-121.67 47.12`
         ///
-        /// There is a built in pushpin style called 'none' that does not display a pushpin image. You can use this if
+        /// There is a built-in pushpin style called 'none' that does not display a pushpin image. You can use this if
         /// you want to display labels without any pin image. For example,
         ///
         /// `pins=none||'A'-122 45|'B'-119.5 43.2`
@@ -730,7 +723,7 @@ namespace Azure.Maps.Rendering
         /// ### Custom Pushpins
         ///
         /// To use a custom pushpin image, use the word 'custom' as the pin style name, and then specify a URL after the
-        /// location and label information. Use two pipe characters to indicate that you're done specifying locations and are
+        /// location and label information. The maximum allowed size for a customized label image is 65,536 pixels. Use two pipe characters to indicate that you're done specifying locations and are
         /// starting the URL. For example,
         ///
         /// `pins=custom||-122 45||http://contoso.com/pushpins/red.png`
@@ -774,22 +767,22 @@ namespace Azure.Maps.Rendering
         ///
         /// ### Style Modifier Summary
         ///
-        /// Modifier  | Description     | Range
-        /// :--------:|-----------------|------------------
-        /// al        | Alpha (opacity) | 0 to 1
-        /// an        | Pin anchor      | *
-        /// co        | Pin color       | 000000 to FFFFFF
-        /// la        | Label anchor    | *
-        /// lc        | Label color     | 000000 to FFFFFF
-        /// ls        | Label size      | Greater than 0
-        /// ro        | Rotation        | -360 to 360
-        /// sc        | Scale           | Greater than 0
+        /// Modifier  | Description    | Type    | Range
+        /// :--------:|---------------|--------|----------
+        /// al        | Alpha (opacity) |  float | 0 to 1
+        /// an        | Pin anchor    | &lt;int32, int32&gt;  | *
+        /// co        | Pin color      | string | 000000 to FFFFFF
+        /// la        | Label anchor   | &lt;int32, int32&gt; | *
+        /// lc        | Label color   | string  | 000000 to FFFFFF
+        /// ls        | Label size      | float | Greater than 0
+        /// ro        | Rotation    | float    | -360 to 360
+        /// sc        | Scale         | float  | Greater than 0
         ///
         /// * X and Y coordinates can be anywhere within pin image or a margin around it.
         /// The margin size is the minimum of the pin width and height.
         /// </param>
         /// <param name="path">
-        /// Path style and locations. Use this parameter to optionally add lines, polygons or circles to the image.
+        /// Path style and locations (in double). Use this parameter to optionally add lines, polygons or circles to the image.
         /// The path style describes the appearance of the line and fill. (Be sure to properly URL-encode values of this
         /// parameter since it will contain reserved characters such as pipes and punctuation.)
         ///
@@ -813,11 +806,11 @@ namespace Azure.Maps.Rendering
         ///
         /// `path=||-122 45|-119.5 43.2|-121.67 47.12`
         ///
-        /// To render a polygon, last location must be equal to the start location. For example, use
+        /// A polygon is specified with a closed path, where the first and last points are equal. For example, use
         ///
         /// `path=||-122 45|-119.5 43.2|-121.67 47.12|-122 45`
         ///
-        /// Longitude and latitude values for locations of lines and polygons can be in the range from -360 to 360 to allow for rendering of geometries crossing the anti-meridian.
+        /// Longitude value for locations of lines and polygons can be in the range from -360 to 360 to allow for rendering of geometries crossing the anti-meridian.
         ///
         /// ### Style Modifiers
         ///
@@ -831,25 +824,25 @@ namespace Azure.Maps.Rendering
         ///
         /// `path=lcFF1493||-122 45|-119.5 43.2`
         ///
-        /// Multiple style modifiers may be combined together to create a more complex visual style.
+        /// Multiple style modifiers may be combined to create a more complex visual style.
         ///
         /// `lc0000FF|lw3|la0.60|fa0.50||-122.2 47.6|-122.2 47.7|-122.3 47.7|-122.3 47.6|-122.2 47.6`
         ///
         /// ### Style Modifier Summary
         ///
-        /// Modifier  | Description            | Range
-        /// :--------:|------------------------|------------------
-        /// lc        | Line color             | 000000 to FFFFFF
-        /// fc        | Fill color             | 000000 to FFFFFF
-        /// la        | Line alpha (opacity)   | 0 to 1
-        /// fa        | Fill alpha (opacity)   | 0 to 1
-        /// lw        | Line width             | Greater than 0
-        /// ra        | Circle radius (meters) | Greater than 0
+        /// Modifier  | Description       | Type     | Range
+        /// :--------:|---------------|--------|----------
+        /// lc        | Line color      | string       | 000000 to FFFFFF
+        /// fc        | Fill color        | string       | 000000 to FFFFFF
+        /// la    | Line alpha (opacity)     |  float     | 0 to 1
+        /// fa  | Fill alpha (opacity)   |     float       | 0 to 1
+        /// lw   | Line width     |int32        | (0, 50]
+        /// ra        | Circle radius (meters) |   float  | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(MapTileSetId? tilesetId = null, TrafficTilesetId? trafficLayer = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
+            using var message = CreateGetMapStaticImageRequest(tilesetId, trafficLayer, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapStaticImageHeaders(message.Response);
             switch (message.Response.Status)
@@ -865,74 +858,69 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// This rendering API produces static, rasterized map views of a user-defined area. It's suitable for lightweight web applications, when the desired user experience doesn't require interactive map controls, or when bandwidth is limited. This API is also useful for embedding maps in applications outside of the browser, in backend services, report generation, or desktop applications.
         ///
-        /// The static image service renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The supported resolution range for the map image is from 1x1 to 8192x8192. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
+        ///  This API includes parameters for basic data visualization:
         ///
-        /// Service also provides Image Composition functionality to get a static image back with additional data like; pushpins and geometry overlays with following capabilities.
+        /// - Labeled pushpins in multiple styles.
+        /// - Render circle, path, and polygon geometry types.
         ///
-        /// - Specify multiple pushpin styles
-        /// - Render circle, polyline and polygon geometry types.
-        ///
-        /// Please see [How-to-Guide](https://aka.ms/AzureMapsHowToGuideImageCompositor) for detailed examples.
-        ///
-        /// _Note_ : Either **center** or **bbox** parameter must be supplied to the
-        /// API.
+        /// For more information and detailed examples, see [Render custom data on a raster map](/azure/azure-maps/how-to-render-custom-data).
         /// &lt;br&gt;&lt;br&gt;
-        /// The supported Lat and Lon ranges when using the **bbox** parameter, are as follows:
+        /// The dimensions of the bbox parameter are constrained, depending on the zoom level. This ensures the resulting image has an appropriate level of detail.
         /// &lt;br&gt;&lt;br&gt;
         ///
-        ///   |Zoom Level | Max Lon Range   | Max Lat Range|
-        ///   |:----------|:----------------|:-------------|
-        ///   |0          | 360.0           | 170.0        |
-        ///   |1          | 360.0           | 170.0        |
-        ///   |2          | 360.0           | 170.0        |
-        ///   |3          | 360.0           | 170.0        |
-        ///   |4          | 360.0           | 170.0        |
-        ///   |5          | 180.0           | 85.0         |
-        ///   |6          | 90.0            | 42.5         |
-        ///   |7          | 45.0            | 21.25        |
-        ///   |8          | 22.5            | 10.625       |
-        ///   |9          | 11.25           | 5.3125       |
-        ///   |10         | 5.625           | 2.62625      |
-        ///   |11         | 2.8125          | 1.328125     |
-        ///   |12         | 1.40625         | 0.6640625    |
-        ///   |13         | 0.703125        | 0.33203125   |
-        ///   |14         | 0.3515625       | 0.166015625  |
-        ///   |15         | 0.17578125      | 0.0830078125 |
-        ///   |16         | 0.087890625     | 0.0415039063 |
-        ///   |17         | 0.0439453125    | 0.0207519531 |
-        ///   |18         | 0.0219726563    | 0.0103759766 |
-        ///   |19         | 0.0109863281    | 0.0051879883 |
-        ///   |20         | 0.0054931641    | 0.0025939941 |
+        ///   |Zoom Level | Min Lon Range   | Max Lon Range   | Min Lat Range| Max Lat Range|
+        ///   |:----------|:----------------|:----------------|:----------------|:-------------|
+        ///   |0          | 56.25     | 360.0       | 30.1105585173    | 180.0        |
+        ///   |1          | 28.125         | 360.0       | 14.87468995    | 180.0        |
+        ///   |2         | 14.063       | 351.5625      |  7.4130741851    | 137.9576312246       |
+        ///   |3     | 7.03125     | 175.78125    |  3.7034501005    |   73.6354071932     |
+        ///   |4     | 3.515625    | 87.890625  | 1.8513375155  | 35.4776115315  |
+        ///   |5          | 1.7578125  | 43.9453125  | 0.925620264 | 17.4589959239  |
+        ///   |6       | 0.87890625 | 21.97265625 | 0.4628040687  | 8.6907788223  |
+        ///   |7      | 0.439453125 |  10.986328125 | 0.2314012764  | 4.3404320789 |
+        ///   |8       | 0.2197265625 | 5.4931640625 | 0.1157005434  | 2.1695927024  |
+        ///   |9      | 0.1098632812 | 2.7465820312  |  0.0578502599  | 1.0847183194  |
+        ///   |10    | 0.0549316406  | 1.3732910156 | 0.0289251285  | 0.5423494021  |
+        ///   |11     | 0.0274658203 | 0.6866455078 | 0.014462564 | 0.2711734813 |
+        ///   |12      |  0.0137329102  | 0.3433227539 | 0.007231282 | 0.1355865882  |
+        ///   |13    | 0.0068664551 | 0.171661377 | 0.003615641 | 0.067793275 |
+        ///   |14     |  0.0034332275  | 0.0858306885 | 0.0018078205 | 0.0338966351 |
+        ///   |15     |  0.0017166138 | 0.0429153442 | 0.0009039102 | 0.0169483173 |
+        ///   |16   |  0.0008583069  | 0.0214576721  |  0.0004519551  | 0.0084741586 |
+        ///   |17  | 0.0004291534 |  0.0107288361  |  0.0002259776 | 0.0042370793 |
+        ///   |18    | 0.0002145767 | 0.005364418 | 0.0001129888 | 0.0021185396 |
+        ///   |19    | 0.0001072884  |  0.002682209  | 5.64944E-05 | 0.0010592698 |
+        ///   |20    |  5.36442E-05  | 0.0013411045 | 2.82472E-05  | 0.0005296349 |
+        ///
+        /// _Note_ : Either **center** or **bbox** parameter must be supplied to the API.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Possible value: png. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="layer"> Map layer requested. If layer is set to labels or hybrid, the format should be png. </param>
-        /// <param name="style"> Map style to be returned. Possible values are main and dark. </param>
-        /// <param name="zoom"> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details. </param>
+        /// <param name="tilesetId"> Map style to be returned. Possible values are microsoft.base.road, microsoft.base.darkgrey, and microsoft.imagery.  Default value is set to be microsoft.base.road. For more information, see [Render TilesetId](https://learn.microsoft.com/en-us/rest/api/maps/render/get-map-tileset?view=rest-maps-2023-06-01&amp;tabs=HTTP#tilesetid). </param>
+        /// <param name="trafficLayer"> Optional Value, indicating no traffic flow overlaid on the image result. Possible values are microsoft.traffic.relative.main and none. Default value is none, indicating no traffic flow returned. If traffic related tilesetId is provided, will return map image with corresponding traffic layer. For more information, see [Render TilesetId](https://learn.microsoft.com/en-us/rest/api/maps/render/get-map-tileset?view=rest-maps-2023-06-01&amp;tabs=HTTP#tilesetid). </param>
+        /// <param name="zoom"> Desired zoom level of the map. Support zoom value range from 0-20 (inclusive) for tilesetId being microsoft.base.road or microsoft.base.darkgrey. Support zoom value range from 0-19 (inclusive) for tilesetId being microsoft.imagery. Default value is 12.&lt;br&gt;&lt;br&gt;For more information, see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid). </param>
         /// <param name="center">
-        /// Coordinates of the center point. Format: 'lon,lat'. Projection used
-        /// - EPSG:3857. Longitude range: -180 to 180. Latitude range: -85 to 85.
+        /// Coordinates of the center point in double. Format: 'lon,lat'. Longitude range: -180 to 180. Latitude range: -90 to 90.
         ///
         /// Note: Either center or bbox are required parameters. They are
         /// mutually exclusive.
         /// </param>
         /// <param name="boundingBoxPrivate">
-        /// Bounding box. Projection used - EPSG:3857. Format : 'minLon, minLat,
-        /// maxLon, maxLat'.
+        /// A bounding box is defined by two latitudes and two longitudes that represent the four sides of a rectangular area on the Earth. Format : 'minLon, minLat,
+        /// maxLon, maxLat' (in double).
         ///
         /// Note: Either bbox or center are required
-        /// parameters. They are mutually exclusive. It shouldn’t be used with
+        /// parameters. They are mutually exclusive. bbox shouldn’t be used with
         /// height or width.
         ///
-        /// The maximum allowed ranges for Lat and Lon are defined for each zoom level
+        /// The maximum and minimum allowed ranges for Lat and Lon are defined for each zoom level
         /// in the table at the top of this page.
         /// </param>
         /// <param name="height">
-        /// Height of the resulting image in pixels. Range is 1 to 8192. Default
+        /// Height of the resulting image in pixels. Range from 80 to 1500. Default
         /// is 512. It shouldn’t be used with bbox.
         /// </param>
-        /// <param name="width"> Width of the resulting image in pixels. Range is 1 to 8192. Default is 512. It shouldn’t be used with bbox. </param>
+        /// <param name="width"> Width of the resulting image in pixels. Range from 80 to 2000. Default is 512. It should not be used with bbox. </param>
         /// <param name="language">
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         ///
@@ -946,7 +934,7 @@ namespace Azure.Maps.Rendering
         /// <param name="pins">
         /// Pushpin style and instances. Use this parameter to optionally add pushpins to the image.
         /// The pushpin style describes the appearance of the pushpins, and the instances specify
-        /// the coordinates of the pushpins and optional labels for each pin. (Be sure to properly URL-encode values of this
+        /// the coordinates of the pushpins (in double) and optional labels for each pin. (Be sure to properly URL-encode values of this
         /// parameter since it will contain reserved characters such as pipes and punctuation.)
         ///
         /// The Azure Maps account S0 SKU only supports a single instance of the pins parameter. Other SKUs
@@ -985,12 +973,12 @@ namespace Azure.Maps.Rendering
         ///
         /// ### Pushpin Labels
         ///
-        /// To add a label to the pins, put the label in single quotes just before the coordinates. For example, to label
+        /// To add a label to the pins, put the label in single quotes just before the coordinates. Avoid using special character such as `|` or `||` in label. For example, to label
         /// three pins with the values '1', '2', and '3', use
         ///
         /// `pins=default||'1'-122 45|'2'-119.5 43.2|'3'-121.67 47.12`
         ///
-        /// There is a built in pushpin style called 'none' that does not display a pushpin image. You can use this if
+        /// There is a built-in pushpin style called 'none' that does not display a pushpin image. You can use this if
         /// you want to display labels without any pin image. For example,
         ///
         /// `pins=none||'A'-122 45|'B'-119.5 43.2`
@@ -1017,7 +1005,7 @@ namespace Azure.Maps.Rendering
         /// ### Custom Pushpins
         ///
         /// To use a custom pushpin image, use the word 'custom' as the pin style name, and then specify a URL after the
-        /// location and label information. Use two pipe characters to indicate that you're done specifying locations and are
+        /// location and label information. The maximum allowed size for a customized label image is 65,536 pixels. Use two pipe characters to indicate that you're done specifying locations and are
         /// starting the URL. For example,
         ///
         /// `pins=custom||-122 45||http://contoso.com/pushpins/red.png`
@@ -1061,22 +1049,22 @@ namespace Azure.Maps.Rendering
         ///
         /// ### Style Modifier Summary
         ///
-        /// Modifier  | Description     | Range
-        /// :--------:|-----------------|------------------
-        /// al        | Alpha (opacity) | 0 to 1
-        /// an        | Pin anchor      | *
-        /// co        | Pin color       | 000000 to FFFFFF
-        /// la        | Label anchor    | *
-        /// lc        | Label color     | 000000 to FFFFFF
-        /// ls        | Label size      | Greater than 0
-        /// ro        | Rotation        | -360 to 360
-        /// sc        | Scale           | Greater than 0
+        /// Modifier  | Description    | Type    | Range
+        /// :--------:|---------------|--------|----------
+        /// al        | Alpha (opacity) |  float | 0 to 1
+        /// an        | Pin anchor    | &lt;int32, int32&gt;  | *
+        /// co        | Pin color      | string | 000000 to FFFFFF
+        /// la        | Label anchor   | &lt;int32, int32&gt; | *
+        /// lc        | Label color   | string  | 000000 to FFFFFF
+        /// ls        | Label size      | float | Greater than 0
+        /// ro        | Rotation    | float    | -360 to 360
+        /// sc        | Scale         | float  | Greater than 0
         ///
         /// * X and Y coordinates can be anywhere within pin image or a margin around it.
         /// The margin size is the minimum of the pin width and height.
         /// </param>
         /// <param name="path">
-        /// Path style and locations. Use this parameter to optionally add lines, polygons or circles to the image.
+        /// Path style and locations (in double). Use this parameter to optionally add lines, polygons or circles to the image.
         /// The path style describes the appearance of the line and fill. (Be sure to properly URL-encode values of this
         /// parameter since it will contain reserved characters such as pipes and punctuation.)
         ///
@@ -1100,11 +1088,11 @@ namespace Azure.Maps.Rendering
         ///
         /// `path=||-122 45|-119.5 43.2|-121.67 47.12`
         ///
-        /// To render a polygon, last location must be equal to the start location. For example, use
+        /// A polygon is specified with a closed path, where the first and last points are equal. For example, use
         ///
         /// `path=||-122 45|-119.5 43.2|-121.67 47.12|-122 45`
         ///
-        /// Longitude and latitude values for locations of lines and polygons can be in the range from -360 to 360 to allow for rendering of geometries crossing the anti-meridian.
+        /// Longitude value for locations of lines and polygons can be in the range from -360 to 360 to allow for rendering of geometries crossing the anti-meridian.
         ///
         /// ### Style Modifiers
         ///
@@ -1118,25 +1106,25 @@ namespace Azure.Maps.Rendering
         ///
         /// `path=lcFF1493||-122 45|-119.5 43.2`
         ///
-        /// Multiple style modifiers may be combined together to create a more complex visual style.
+        /// Multiple style modifiers may be combined to create a more complex visual style.
         ///
         /// `lc0000FF|lw3|la0.60|fa0.50||-122.2 47.6|-122.2 47.7|-122.3 47.7|-122.3 47.6|-122.2 47.6`
         ///
         /// ### Style Modifier Summary
         ///
-        /// Modifier  | Description            | Range
-        /// :--------:|------------------------|------------------
-        /// lc        | Line color             | 000000 to FFFFFF
-        /// fc        | Fill color             | 000000 to FFFFFF
-        /// la        | Line alpha (opacity)   | 0 to 1
-        /// fa        | Fill alpha (opacity)   | 0 to 1
-        /// lw        | Line width             | Greater than 0
-        /// ra        | Circle radius (meters) | Greater than 0
+        /// Modifier  | Description       | Type     | Range
+        /// :--------:|---------------|--------|----------
+        /// lc        | Line color      | string       | 000000 to FFFFFF
+        /// fc        | Fill color        | string       | 000000 to FFFFFF
+        /// la    | Line alpha (opacity)     |  float     | 0 to 1
+        /// fa  | Fill alpha (opacity)   |     float       | 0 to 1
+        /// lw   | Line width     |int32        | (0, 50]
+        /// ra        | Circle radius (meters) |   float  | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(MapTileSetId? tilesetId = null, TrafficTilesetId? trafficLayer = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
+            using var message = CreateGetMapStaticImageRequest(tilesetId, trafficLayer, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapStaticImageHeaders(message.Response);
             switch (message.Response.Status)
@@ -1182,16 +1170,16 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
-        /// </summary>
+        /// <summary> Use to get copyright information for the specified bounding box. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="boundingBox"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
+        /// </remarks>
         public async Task<Response<RenderCopyright>> GetCopyrightFromBoundingBoxAsync(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (boundingBox == null)
@@ -1206,7 +1194,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1215,16 +1203,16 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
-        /// </summary>
+        /// <summary> Use to get copyright information for the specified bounding box. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="boundingBox"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
+        /// </remarks>
         public Response<RenderCopyright> GetCopyrightFromBoundingBox(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (boundingBox == null)
@@ -1239,7 +1227,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1248,7 +1236,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex mapTileIndex, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1258,9 +1246,9 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/tile/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("zoom", tileIndex.Z, true);
-            uri.AppendQuery("x", tileIndex.X, true);
-            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("zoom", mapTileIndex.Z, true);
+            uri.AppendQuery("x", mapTileIndex.X, true);
+            uri.AppendQuery("y", mapTileIndex.Y, true);
             if (includeText != null)
             {
                 uri.AppendQuery("text", includeText.Value.ToString(), true);
@@ -1274,32 +1262,33 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
-        /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
-        /// </summary>
+        /// <summary> Use to get copyright information. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates. For more information, see [Zoom Levels and Tile Grid](/azure/azure-maps/zoom-levels-and-tile-grid).
+        ///
+        /// Copyrights API is designed to serve copyright information for Render service. In addition to basic copyright for the whole map, API is serving specific groups of copyrights for some countries/regions.
+        /// </remarks>
+        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex mapTileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
+            using var message = CreateGetCopyrightForTileRequest(format, mapTileIndex, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1308,32 +1297,33 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
-        /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
-        /// </summary>
+        /// <summary> Use to get copyright information. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates. For more information, see [Zoom Levels and Tile Grid](/azure/azure-maps/zoom-levels-and-tile-grid).
+        ///
+        /// Copyrights API is designed to serve copyright information for Render service. In addition to basic copyright for the whole map, API is serving specific groups of copyrights for some countries/regions.
+        /// </remarks>
+        public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex mapTileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
+            using var message = CreateGetCopyrightForTileRequest(format, mapTileIndex, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1365,15 +1355,16 @@ namespace Azure.Maps.Rendering
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
-        /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
-        /// </summary>
+        /// <summary> Use to get copyright information for for the world. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        ///
+        /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, don't specify a tile or bounding box.
+        ///
+        /// Copyrights API is designed to serve copyright information for Render service. In addition to basic copyright for the whole map, API is serving specific groups of copyrights for some countries/regions.
+        /// </remarks>
         public async Task<Response<RenderCopyright>> GetCopyrightForWorldAsync(ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCopyrightForWorldRequest(format, includeText);
@@ -1383,7 +1374,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1392,15 +1383,16 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
-        /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
-        /// </summary>
+        /// <summary> Use to get copyright information for for the world. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        ///
+        /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, don't specify a tile or bounding box.
+        ///
+        /// Copyrights API is designed to serve copyright information for Render service. In addition to basic copyright for the whole map, API is serving specific groups of copyrights for some countries/regions.
+        /// </remarks>
         public Response<RenderCopyright> GetCopyrightForWorld(ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCopyrightForWorldRequest(format, includeText);
@@ -1410,7 +1402,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

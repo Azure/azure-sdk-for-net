@@ -8,49 +8,105 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The MetricResultsResponseValuesItem. </summary>
-    public partial class MetricsBatchResultValues
+    internal partial class MetricsBatchResultValues
     {
-        /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
-        /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="metrics"> The value of the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<MetricResult> metrics)
-        {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-            StartTime = startTime;
-            EndTime = endTime;
-            Metrics = metrics.ToList();
+        /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
+        /// <param name="starttime"> The start time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="endtime"> The end time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="value"> The value of the collection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="starttime"/>, <paramref name="endtime"/> or <paramref name="value"/> is null. </exception>
+        internal MetricsBatchResultValues(string starttime, string endtime, IEnumerable<MetricResult> value)
+        {
+            Argument.AssertNotNull(starttime, nameof(starttime));
+            Argument.AssertNotNull(endtime, nameof(endtime));
+            Argument.AssertNotNull(value, nameof(value));
+
+            Starttime = starttime;
+            Endtime = endtime;
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
-        /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="starttime"> The start time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="endtime"> The end time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="interval">
+        /// The interval (window size) for which the metric data was returned in ISO 8601 duration format with a special case for 'FULL' value that returns single datapoint for entire time span requested (*Examples: PT15M, PT1H, P1D, FULL*).
+        /// This may be adjusted and different from what was originally requested if AutoAdjustTimegrain=true is specified.
+        /// </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
-        /// <param name="resourceId"> The resource that has been queried for metrics. </param>
-        /// <param name="metrics"> The value of the collection. </param>
-        internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, AzureLocation resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> metrics)
+        /// <param name="resourceregion"> The region of the resource been queried for metrics. </param>
+        /// <param name="resourceid"> The resource that has been queried for metrics. </param>
+        /// <param name="value"> The value of the collection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricsBatchResultValues(string starttime, string endtime, string interval, string @namespace, string resourceregion, string resourceid, IReadOnlyList<MetricResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            Starttime = starttime;
+            Endtime = endtime;
             Interval = interval;
             Namespace = @namespace;
-            ResourceRegion = resourceRegion;
-            ResourceId = resourceId;
-            Metrics = metrics;
+            Resourceregion = resourceregion;
+            Resourceid = resourceid;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
-        public TimeSpan? Interval { get; }
+
+        /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/> for deserialization. </summary>
+        internal MetricsBatchResultValues()
+        {
+        }
+
+        /// <summary> The start time, in datetime format, for which the data was retrieved. </summary>
+        public string Starttime { get; }
+        /// <summary> The end time, in datetime format, for which the data was retrieved. </summary>
+        public string Endtime { get; }
+        /// <summary>
+        /// The interval (window size) for which the metric data was returned in ISO 8601 duration format with a special case for 'FULL' value that returns single datapoint for entire time span requested (*Examples: PT15M, PT1H, P1D, FULL*).
+        /// This may be adjusted and different from what was originally requested if AutoAdjustTimegrain=true is specified.
+        /// </summary>
+        public string Interval { get; }
         /// <summary> The namespace of the metrics been queried. </summary>
         public string Namespace { get; }
+        /// <summary> The region of the resource been queried for metrics. </summary>
+        public string Resourceregion { get; }
+        /// <summary> The resource that has been queried for metrics. </summary>
+        public string Resourceid { get; }
+        /// <summary> The value of the collection. </summary>
+        public IReadOnlyList<MetricResult> Value { get; }
     }
 }

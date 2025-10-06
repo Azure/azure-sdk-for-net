@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkRecommendedVersion left, MobileNetworkRecommendedVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkRecommendedVersion"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkRecommendedVersion left, MobileNetworkRecommendedVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkRecommendedVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkRecommendedVersion"/>. </summary>
         public static implicit operator MobileNetworkRecommendedVersion(string value) => new MobileNetworkRecommendedVersion(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

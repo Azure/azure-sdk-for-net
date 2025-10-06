@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/grafana/Azure.ResourceManager.Grafana",
-  "Tag": "net/grafana/Azure.ResourceManager.Grafana_bf5b715bbc"
+  "Tag": ""
 }

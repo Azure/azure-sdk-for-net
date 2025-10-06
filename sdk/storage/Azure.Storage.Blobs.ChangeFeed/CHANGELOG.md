@@ -1,6 +1,74 @@
 # Release History
 
-## 12.0.0-preview.43 (Unreleased)
+## 12.0.0-preview.57 (Unreleased)
+
+### Features Added
+- Added support for service version 2026-02-06.
+
+## 12.0.0-preview.56 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+## 12.0.0-preview.55 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added BlobChangeFeedClient.GetLastConsumable() and .GetLastConsumableAsync().
+
+## 12.0.0-preview.54 (2025-03-11)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.53 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.0.0-preview.52 (2024-11-12)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.51 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.0.0-preview.50 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+
+## 12.0.0-preview.49 (2024-09-18)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.48 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+
+## 12.0.0-preview.47 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.0.0-preview.46 (2024-07-16)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.45 (2024-06-11)
+- Added support for service version 2024-08-04.
+
+## 12.0.0-preview.44 (2024-05-13)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.43 (2024-04-15)
 - Added support for service version 2024-05-04.
 
 ## 12.0.0-preview.42 (2023-12-05)

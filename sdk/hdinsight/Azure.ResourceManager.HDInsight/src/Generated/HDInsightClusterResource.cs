@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
 
@@ -133,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,7 +200,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -233,7 +231,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +269,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +300,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +331,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -373,7 +371,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,7 +411,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,7 +453,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -497,7 +495,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -539,7 +537,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -581,7 +579,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,7 +626,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -675,7 +673,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -722,7 +720,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -769,7 +767,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -815,7 +813,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -861,7 +859,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -899,7 +897,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -937,7 +935,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -983,7 +981,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1029,7 +1027,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1072,7 +1070,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1115,7 +1113,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1161,7 +1159,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1207,7 +1205,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1253,7 +1251,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1299,7 +1297,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1333,7 +1331,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1367,7 +1365,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1412,7 +1410,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1457,7 +1455,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1496,7 +1494,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1535,7 +1533,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1577,7 +1575,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1619,7 +1617,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1653,7 +1651,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1687,7 +1685,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1725,7 +1723,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1763,7 +1761,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1805,7 +1803,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1847,7 +1845,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1881,7 +1879,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1915,7 +1913,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1953,7 +1951,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1979,6 +1977,234 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
+        /// Enables the Azure Monitor Agent on the HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/azureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_EnableAzureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The Log Analytics workspace parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> EnableAzureMonitorAgentExtensionAsync(WaitUntil waitUntil, HDInsightAzureMonitorExtensionEnableContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.EnableAzureMonitorAgentExtension");
+            scope.Start();
+            try
+            {
+                var response = await _extensionsRestClient.EnableAzureMonitorAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enables the Azure Monitor Agent on the HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/azureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_EnableAzureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The Log Analytics workspace parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation EnableAzureMonitorAgentExtension(WaitUntil waitUntil, HDInsightAzureMonitorExtensionEnableContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.EnableAzureMonitorAgentExtension");
+            scope.Start();
+            try
+            {
+                var response = _extensionsRestClient.EnableAzureMonitorAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status of Azure Monitor Agent on the HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/azureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_GetAzureMonitorAgentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorAgentStatusExtensionAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetAzureMonitorAgentStatusExtension");
+            scope.Start();
+            try
+            {
+                var response = await _extensionsRestClient.GetAzureMonitorAgentStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status of Azure Monitor Agent on the HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/azureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_GetAzureMonitorAgentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HDInsightAzureMonitorExtensionStatus> GetAzureMonitorAgentStatusExtension(CancellationToken cancellationToken = default)
+        {
+            using var scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetAzureMonitorAgentStatusExtension");
+            scope.Start();
+            try
+            {
+                var response = _extensionsRestClient.GetAzureMonitorAgentStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disables the Azure Monitor Agent on the HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/azureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_DisableAzureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DisableAzureMonitorAgentExtensionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DisableAzureMonitorAgentExtension");
+            scope.Start();
+            try
+            {
+                var response = await _extensionsRestClient.DisableAzureMonitorAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disables the Azure Monitor Agent on the HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/azureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_DisableAzureMonitorAgent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DisableAzureMonitorAgentExtension(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DisableAzureMonitorAgentExtension");
+            scope.Start();
+            try
+            {
+                var response = _extensionsRestClient.DisableAzureMonitorAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates an HDInsight cluster extension.
         /// <list type="bullet">
         /// <item>
@@ -1991,7 +2217,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2036,7 +2262,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2081,7 +2307,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2120,7 +2346,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2159,7 +2385,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2202,7 +2428,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2245,7 +2471,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2286,7 +2512,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2327,7 +2553,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2366,7 +2592,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2405,7 +2631,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2431,7 +2657,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2457,7 +2683,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2496,7 +2722,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2535,7 +2761,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2574,7 +2800,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2613,7 +2839,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2639,7 +2865,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2665,7 +2891,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2704,7 +2930,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2743,7 +2969,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2768,7 +2994,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2793,7 +3019,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2835,7 +3061,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2877,7 +3103,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2916,7 +3142,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2955,7 +3181,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3017,7 +3243,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3079,7 +3305,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3136,7 +3362,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3193,7 +3419,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3253,7 +3479,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

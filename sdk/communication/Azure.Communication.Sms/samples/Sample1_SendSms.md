@@ -38,6 +38,8 @@ var response = smsClient.Send(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
+        DeliveryReportTimeoutInSeconds = 90,
+        MessagingConnect = new MessagingConnectOptions("PartnerApiKey", "PartnerName")  // OPTIONAL
     });
 foreach (SmsSendResult result in response.Value)
 {

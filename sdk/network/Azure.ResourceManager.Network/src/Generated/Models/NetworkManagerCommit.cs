@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -81,12 +80,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Commit Id. </summary>
+        [WirePath("commitId")]
         public string CommitId { get; }
         /// <summary> List of target locations. </summary>
+        [WirePath("targetLocations")]
         public IList<string> TargetLocations { get; }
         /// <summary> List of configuration ids. </summary>
+        [WirePath("configurationIds")]
         public IList<string> ConfigurationIds { get; }
         /// <summary> Commit Type. </summary>
+        [WirePath("commitType")]
         public NetworkConfigurationDeploymentType CommitType { get; set; }
     }
 }

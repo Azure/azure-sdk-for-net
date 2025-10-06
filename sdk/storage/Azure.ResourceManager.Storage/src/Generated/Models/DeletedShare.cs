@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Required. Identify the name of the deleted share that will be restored. </summary>
+        [WirePath("deletedShareName")]
         public string DeletedShareName { get; }
         /// <summary> Required. Identify the version of the deleted share that will be restored. </summary>
+        [WirePath("deletedShareVersion")]
         public string DeletedShareVersion { get; }
     }
 }

@@ -4,10 +4,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -15,7 +18,8 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     [ClientTestFixture(
         ConfigurationClientOptions.ServiceVersion.V1_0,
-        ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        ConfigurationClientOptions.ServiceVersion.V2023_10_01,
+        ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
@@ -37,21 +41,29 @@ namespace Azure.Data.AppConfiguration.Tests
             return prefix + Recording.GenerateId();
         }
 
-        private ConfigurationClient GetClient()
+        private ConfigurationClient GetClient(bool skipClientInstrumentation = false)
         {
             if (string.IsNullOrEmpty(TestEnvironment.ConnectionString))
             {
                 throw new TestRecordingMismatchException();
             }
             var options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
-            return InstrumentClient(new ConfigurationClient(TestEnvironment.ConnectionString, options));
+            var client = new ConfigurationClient(TestEnvironment.ConnectionString, options);
+
+            if (!skipClientInstrumentation)
+            {
+                client = InstrumentClient(client);
+            }
+
+            return client;
         }
 
-        private ConfigurationClient GetAADClient()
+        private ConfigurationClient GetAADClient(ConfigurationClientOptions clientOptions = null)
         {
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
-            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
+            ConfigurationClientOptions configurationClientOptions = clientOptions ?? new ConfigurationClientOptions(_serviceVersion);
+            ConfigurationClientOptions options = InstrumentClientOptions(configurationClientOptions);
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
@@ -86,16 +98,15 @@ namespace Azure.Data.AppConfiguration.Tests
             return CreateSetting($"{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
         }
 
-        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
+        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents, [CallerMemberName] string batchKey = null)
         {
             string key = GenerateKeyId("key-");
 
             /*
              * The configuration store contains a KV with the Key
              * that represents {expectedEvents} data points.
-             * If not set, create the {expectedEvents} data points and the "BatchKey"
+             * If not set, create the {expectedEvents} data points and the "batchKey"
             */
-            const string batchKey = "BatchKey";
 
             try
             {
@@ -112,6 +123,70 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(new ConfigurationSetting(batchKey, key));
             }
             return key;
+        }
+
+        private async Task<string> SetMultipleKeysWithLabels(ConfigurationClient service, int expectedEvents, [CallerMemberName] string batchKey = null)
+        {
+            string key = GenerateKeyId("key-l");
+            string label = key;
+
+            try
+            {
+                Response<ConfigurationSetting> responseGet = await service.GetConfigurationSettingAsync(batchKey, label);
+                label = responseGet.Value.Label;
+            }
+            catch
+            {
+                for (int i = 0; i < expectedEvents; i++)
+                {
+                    await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "test_value", $"{label}_{i}"));
+                }
+
+                await service.SetConfigurationSettingAsync(new ConfigurationSetting(batchKey, label));
+            }
+            return label;
+        }
+
+        // This test validates that the correct token audience is parsed from the test endpoint
+        // when the client is created with no specified audience.
+        [RecordedTest]
+        public async Task TokenAudienceDefaultAudience()
+        {
+            ConfigurationClient service = GetAADClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        // This test validates that the client successfully authenticates and calls the service operation
+        // when the client is created with a specified audience. The audience is derived from the test endpoint.
+        [RecordedTest]
+        public async Task TokenAudienceSpecifiedAudience()
+        {
+            ConfigurationClientOptions options = new(_serviceVersion)
+            {
+                Audience = TestEnvironment.GetAudience()
+            };
+            ConfigurationClient service = GetAADClient(options);
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
         }
 
         [RecordedTest]
@@ -569,6 +644,71 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        // Validates that the expected revisions are retrieved correctly when specifying a list of tags.
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        public async Task GetRevisionsByTags()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            //Prepare environment
+            ConfigurationSetting setting = testSetting;
+
+            setting.Key = GenerateKeyId("key-");
+            ConfigurationSetting testSettingUpdate = setting.Clone();
+            testSettingUpdate.Label = "test_label_update";
+            testSettingUpdate.Tags = new Dictionary<string, string>
+            {
+                { "foo", "bar" },
+                { "foo2", "bar2" },
+                { "foo3", "bar3" },
+                { "foo4", "bar4" },
+                { "foo5", "bar5" }
+            };
+            int expectedRevisions = 1;
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(setting);
+                await service.SetConfigurationSettingAsync(testSettingUpdate);
+
+                // Test
+                var selector = new SettingSelector
+                {
+                    KeyFilter = setting.Key,
+                    AcceptDateTime = DateTimeOffset.MaxValue
+                };
+
+                foreach (var tag in testSettingUpdate.Tags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    selector.TagsFilter.Add(parsedTag);
+                }
+
+                int resultsReturned = 0;
+                await foreach (ConfigurationSetting value in service.GetRevisionsAsync(selector, CancellationToken.None))
+                {
+                    if (value.Label.Contains("update"))
+                    {
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
+                    }
+                    else
+                    {
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, setting));
+                    }
+                    resultsReturned++;
+                }
+
+                Assert.AreEqual(expectedRevisions, resultsReturned);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label));
+            }
+        }
+
         [RecordedTest]
         public async Task GetRevisionsByKeyAndLabel()
         {
@@ -861,6 +1001,36 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task GetIfChangedSettingUnmodifiedDoesNotLogWarning()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            try
+            {
+                testSetting = await service.AddConfigurationSettingAsync(testSetting);
+
+                using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+                {
+                    Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(testSetting, onlyIfChanged: true);
+                    Assert.AreEqual(304, response.GetRawResponse().Status);
+                }
+
+                Assert.Null(logMessage);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
         public async Task GetSettingSpecialCharacters()
         {
             ConfigurationClient service = GetClient();
@@ -925,10 +1095,11 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetBatchSettingIfChangedWithUnmodifiedPage()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
 
             const int expectedEvents = 105;
             var key = await SetMultipleKeys(service, expectedEvents);
@@ -947,14 +1118,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 matchConditionsList.Add(matchConditions);
             }
 
-            foreach (MatchConditions matchConditions in matchConditionsList)
-            {
-                selector.MatchConditions.Add(matchConditions);
-            }
-
             int pagesCount = 0;
 
-            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
             {
                 Response response = page.GetRawResponse();
 
@@ -968,10 +1134,134 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPageSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+            }
+
+            int pagesCount = 0;
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningAsync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            var pagesEnumerator = service.GetConfigurationSettingsAsync(selector).AsPages().GetAsyncEnumerator();
+            await pagesEnumerator.MoveNextAsync();
+
+            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
+
+            var matchConditions = new MatchConditions()
+            {
+                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
+            };
+            matchConditionsList.Add(matchConditions);
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            pagesEnumerator = service.GetConfigurationSettingsAsync(selector).AsPages(matchConditionsList).GetAsyncEnumerator();
+
+            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+            {
+                await pagesEnumerator.MoveNextAsync();
+                firstPage = pagesEnumerator.Current;
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
+            }
+
+            Assert.Null(logMessage);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            var pagesEnumerator = service.GetConfigurationSettings(selector).AsPages().GetEnumerator();
+            pagesEnumerator.MoveNext();
+
+            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
+
+            var matchConditions = new MatchConditions()
+            {
+                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
+            };
+            matchConditionsList.Add(matchConditions);
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            pagesEnumerator = service.GetConfigurationSettings(selector).AsPages(matchConditionsList).GetEnumerator();
+
+            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+            {
+                pagesEnumerator.MoveNext();
+                firstPage = pagesEnumerator.Current;
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
+            }
+
+            Assert.Null(logMessage);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetBatchSettingIfChangedWithModifiedPage()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
 
             const int expectedEvents = 105;
             var key = await SetMultipleKeys(service, expectedEvents);
@@ -992,9 +1282,56 @@ namespace Azure.Data.AppConfiguration.Tests
                 lastSetting = page.Values.Last();
             }
 
-            foreach (MatchConditions matchConditions in matchConditionsList)
+            lastSetting.Value += "1";
+            await service.SetConfigurationSettingAsync(lastSetting);
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
             {
-                selector.MatchConditions.Add(matchConditions);
+                Response response = page.GetRawResponse();
+
+                if (pagesCount == 0)
+                {
+                    Assert.AreEqual(304, response.Status);
+                    Assert.IsEmpty(page.Values);
+                }
+                else
+                {
+                    Assert.AreEqual(200, response.Status);
+                    Assert.IsNotEmpty(page.Values);
+                }
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithModifiedPageSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+            ConfigurationSetting lastSetting = null;
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+                lastSetting = page.Values.Last();
             }
 
             lastSetting.Value += "1";
@@ -1002,7 +1339,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             int pagesCount = 0;
 
-            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages(matchConditionsList))
             {
                 Response response = page.GetRawResponse();
 
@@ -1323,6 +1660,89 @@ namespace Azure.Data.AppConfiguration.Tests
             finally
             {
                 AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        public async Task GetBatchSettingByTags()
+        {
+            ConfigurationClient service = GetClient();
+            var expectedTags = new Dictionary<string, string>
+            {
+                { "my_tag", "my_tag_value" }
+            };
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("abcd", "foobar")
+            {
+                Tags = expectedTags
+            };
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("wxyz", "barfoo")
+            {
+                Tags = expectedTags
+            };
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(abcSetting);
+                await service.SetConfigurationSettingAsync(xyzSetting);
+
+                var tags = expectedTags.Select(t => $"{t.Key}={t.Value}").ToArray();
+                var selector = new SettingSelector();
+                foreach (var tag in expectedTags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    selector.TagsFilter.Add(parsedTag);
+                }
+
+                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(2, settings.Length);
+                Assert.IsTrue(settings.Any(s => s.Key == "abcd"));
+                Assert.IsTrue(settings.Any(s => s.Key == "wxyz"));
+                Assert.IsTrue(settings.Any(s => s.Tags.Any() == true));
+                Assert.IsTrue(settings.Any(s => s.Tags.SequenceEqual(expectedTags)));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        public async Task GetBatchSettingByTagsNoMatchingSettings()
+        {
+            ConfigurationClient service = GetClient();
+            var tags = new Dictionary<string, string>
+            {
+                { "my_tag", "my_tag_value" }
+            };
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("abcd", "foobar");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("wxyz", "barfoo");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(abcSetting);
+                await service.SetConfigurationSettingAsync(xyzSetting);
+
+                var selector = new SettingSelector();
+                foreach (var tag in tags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    selector.TagsFilter.Add(parsedTag);
+                }
+
+                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(0, settings.Length);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key));
             }
         }
 
@@ -1853,6 +2273,48 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        // Validates that the snapshot is successfully created for the settings that match the key and tags filter. In
+        // addition, the settings' filters are validated in the created snapshot.
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        public async Task CreateSnapshotWithTagsUsingWaitForCompletion()
+        {
+            var service = GetClient();
+            var testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+                var settingsFilter = new ConfigurationSettingsFilter(testSetting.Key);
+
+                foreach (var tag in testSetting.Tags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    settingsFilter.Tags.Add(parsedTag);
+                }
+
+                var settingsFilters = new List<ConfigurationSettingsFilter>(
+                    new ConfigurationSettingsFilter[]
+                    {
+                        settingsFilter
+                    });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilters);
+
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                ValidateCompletedOperation(operation);
+                var createdSnapshot = operation.Value;
+
+                var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
         [RecordedTest]
         [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingManualPolling()
@@ -1921,6 +2383,133 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Assert.AreEqual(key1, settings[0].Key);
                 Assert.AreEqual(key2, settings[1].Key);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(thirdSetting.Key, thirdSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(fourthSetting.Key, fourthSetting.Label));
+            }
+        }
+
+        // Validates that the snapshots are created for the settings that match the key and tags filter.
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        public async Task CreateSnapshotUsingTags()
+        {
+            var service = GetClient();
+            var key1 = GenerateKeyId("KeyBar-1");
+            var key2 = GenerateKeyId("KeyBar-2");
+            var key3 = GenerateKeyId("KeyBar-3");
+            var key4 = GenerateKeyId("Key1");
+            var expectedTags = new Dictionary<string, string>
+            {
+                { "foo", "bartemp1" }
+            };
+            var firstSetting = new ConfigurationSetting(key1, "value1")
+            {
+                Tags = expectedTags
+            };
+            var secondSetting = new ConfigurationSetting(key2, "value2")
+            {
+                Tags = expectedTags
+            };
+            var thirdSetting = new ConfigurationSetting(key3, "value3")
+            {
+                Tags = expectedTags
+            };
+            var fourthSetting = new ConfigurationSetting(key4, "value4");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(firstSetting);
+                await service.AddConfigurationSettingAsync(secondSetting);
+                await service.AddConfigurationSettingAsync(thirdSetting);
+                await service.AddConfigurationSettingAsync(fourthSetting);
+
+                var settingsFilter = new ConfigurationSettingsFilter("KeyBar-*");
+                foreach (var tag in expectedTags)
+                {
+                    var parsedTag = $"{tag.Key}={tag.Value}";
+                    settingsFilter.Tags.Add(parsedTag);
+                }
+
+                var settingsFilters = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[]
+                {
+                    settingsFilter
+                });
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters));
+                ValidateCompletedOperation(operation);
+
+                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Assert.AreEqual(3, settings.Count());
+
+                Assert.AreEqual(key1, settings[0].Key);
+                Assert.AreEqual(key2, settings[1].Key);
+                Assert.AreEqual(key3, settings[2].Key);
+                Assert.AreEqual(expectedTags, settings[0].Tags);
+                Assert.AreEqual(expectedTags, settings[1].Tags);
+                Assert.AreEqual(expectedTags, settings[2].Tags);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(thirdSetting.Key, thirdSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(fourthSetting.Key, fourthSetting.Label));
+            }
+        }
+
+        // Validates that a snapshot is not created for a setting when the filter does not match any existing setting.
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        public async Task CreateSnapshotUsingTagsNoMatchingSetting()
+        {
+            var service = GetClient();
+            var key1 = GenerateKeyId("KeyBar-1");
+            var key2 = GenerateKeyId("KeyBar-2");
+            var key3 = GenerateKeyId("KeyBar-3");
+            var key4 = GenerateKeyId("KeyBar-4");
+            var expectedTags = new Dictionary<string, string>
+            {
+                { "foo", "bar" }
+            };
+            var firstSetting = new ConfigurationSetting(key1, "value1")
+            {
+                Tags = expectedTags
+            };
+            var secondSetting = new ConfigurationSetting(key2, "value2")
+            {
+                Tags = expectedTags
+            };
+            var thirdSetting = new ConfigurationSetting(key3, "value3")
+            {
+                Tags = expectedTags
+            };
+            var fourthSetting = new ConfigurationSetting(key4, "value4");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(firstSetting);
+                await service.AddConfigurationSettingAsync(secondSetting);
+                await service.AddConfigurationSettingAsync(thirdSetting);
+                await service.AddConfigurationSettingAsync(fourthSetting);
+
+                var settingFilter = new ConfigurationSettingsFilter("KeyBar-*");
+                settingFilter.Tags.Add("uknown=tag");
+
+                var settingsFilters = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[]
+                {
+                    settingFilter
+                });
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters));
+                ValidateCompletedOperation(operation);
+
+                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Assert.AreEqual(0, settings.Count());
             }
             finally
             {
@@ -2132,6 +2721,309 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        // This test validates that a label is successfully retrieved by name.
+        [RecordedTest]
+        public async Task GetLabelByName()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            //Prepare environment
+            ConfigurationSetting setting = testSetting;
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(setting);
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = setting.Label
+                };
+
+                int resultsReturned = 0;
+                int expectedLabels = 1;
+                await foreach (SettingLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
+                {
+                    Assert.AreEqual(setting.Label, label.Name);
+                    resultsReturned++;
+                }
+
+                Assert.AreEqual(expectedLabels, resultsReturned);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+            }
+        }
+
+        // This test validates that all the labels for a set of settings are successfully retrieved by name.
+        [RecordedTest]
+        [TestCase("*")]
+        [TestCase("")]
+        public async Task GetAllLabels(string delimiter)
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting1 = CreateSetting();
+            ConfigurationSetting testSetting2 = testSetting1.Clone();
+            testSetting2.Key = GenerateKeyId("key-");
+            testSetting2.Label = $"{testSetting1.Label}_update";
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(testSetting1);
+                await service.SetConfigurationSettingAsync(testSetting2);
+
+                // match all labels that start with the label of the first setting
+                SettingLabelSelector selector = new SettingLabelSelector();
+                if (!string.IsNullOrEmpty(delimiter))
+                {
+                    selector = new SettingLabelSelector()
+                    {
+                        NameFilter = delimiter
+                    };
+                }
+
+                var labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
+                Assert.GreaterOrEqual(labels.Count, 2);
+
+                bool foundLabel1 = false;
+                bool foundLabel2 = false;
+                foreach (SettingLabel label in labels)
+                {
+                    if (foundLabel1 && foundLabel2)
+                    {
+                        break;
+                    }
+
+                    if (label.Name == testSetting1.Label)
+                    {
+                        foundLabel1 = true;
+                    }
+                    else if (label.Name == testSetting2.Label)
+                    {
+                        foundLabel2 = true;
+                    }
+                }
+
+                Assert.IsTrue(foundLabel1);
+                Assert.IsTrue(foundLabel2);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1.Key, testSetting1.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting2.Key, testSetting2.Label));
+            }
+        }
+
+        // This test validates that the labels for a set of settings are successfully retrieved by keyword.
+        [RecordedTest]
+        public async Task GetLabelsStartsWith()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting1 = CreateSetting("abcde", "sample value", "abcde");
+            ConfigurationSetting testSetting2 = CreateSetting("abcdef", "sample value", "abcdef");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(testSetting1);
+                await service.SetConfigurationSettingAsync(testSetting2);
+
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = "abc*"
+                };
+
+                List<SettingLabel> labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
+
+                // There should be at least one label retrieved.
+                CollectionAssert.IsNotEmpty(labels);
+
+                foreach (SettingLabel label in labels)
+                {
+                    StringAssert.StartsWith("abc", label.Name);
+                }
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1.Key, testSetting1.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting2.Key, testSetting2.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLabelsWithCommaInSelectorKey()
+        {
+            ConfigurationClient service = GetClient();
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("abcd", "comma in label", "ab,cd");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("wxyz", "comma in label", "wx,yz");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(abcSetting);
+                await service.SetConfigurationSettingAsync(xyzSetting);
+
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = @"ab\,cd,wx\,yz"
+                };
+
+                SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.GreaterOrEqual(2, labels.Length);
+                Assert.IsTrue(labels.Any(l => l.Name == "ab,cd"));
+                Assert.IsTrue(labels.Any(l => l.Name == "wx,yz"));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key, abcSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key, xyzSetting.Label));
+            }
+        }
+
+        // This test validates that the labels for a set of settings are successfully using the OR delimiter.
+        [RecordedTest]
+        public async Task GetLabelsByOr()
+        {
+            ConfigurationClient service = GetClient();
+
+            ConfigurationSetting abcSetting = new ConfigurationSetting("key-abc", "abc setting", "abc");
+            ConfigurationSetting xyzSetting = new ConfigurationSetting("label-xyz", "xyz setting", "xyz");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(abcSetting);
+                await service.SetConfigurationSettingAsync(xyzSetting);
+
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = "abc,xyz"
+                };
+
+                SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.GreaterOrEqual(2, labels.Length);
+                Assert.IsTrue(labels.Any(l => l.Name == "abc"));
+                Assert.IsTrue(labels.Any(l => l.Name == "xyz"));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key, abcSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key, xyzSetting.Label));
+            }
+        }
+
+        // This test validates that the labels for multiple settings are retrieved successfully from a paginated response.
+        [RecordedTest]
+        public async Task GetLabelsPagination()
+        {
+            ConfigurationClient service = GetClient();
+
+            const int expectedEvents = 106;
+            var labelPrefix = await SetMultipleKeysWithLabels(service, expectedEvents);
+
+            int resultsReturned = 0;
+            var selector = new SettingLabelSelector()
+            {
+                NameFilter = labelPrefix + "*"
+            };
+
+            await foreach (SettingLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
+            {
+                StringAssert.StartsWith(labelPrefix, label.Name);
+                resultsReturned++;
+            }
+
+            Assert.AreEqual(expectedEvents, resultsReturned);
+        }
+
+        [RecordedTest]
+        public async Task GetLabelsWithFields()
+        {
+            ConfigurationClient service = GetClient();
+
+            string key = GenerateKeyId("keyFields-");
+            ConfigurationSetting setting = await service.AddConfigurationSettingAsync(key, "my_value", "my_label");
+
+            try
+            {
+                var fieldSelector = SettingLabelFields.Name;
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = setting.Label
+                };
+                selector.Fields.Add(fieldSelector);
+
+                SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(1, labels.Length);
+
+                Assert.IsNotNull(labels[0].Name);
+                Assert.AreEqual(setting.Label, labels[0].Name);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+            }
+        }
+
+        // This test validates that a label is successfully retrieved by name, but it's name field is not populated
+        // because it is not included in the fields selector.
+        [RecordedTest]
+        public async Task GetLabelsWithFieldsCustomField()
+        {
+            ConfigurationClient service = GetClient();
+
+            string key = GenerateKeyId("keyFields-");
+            ConfigurationSetting setting = await service.AddConfigurationSettingAsync(key, "my_value", "my_label");
+
+            try
+            {
+                var unknownFieldSelector1 = new SettingLabelFields("uknown_field");
+                var unknownFieldSelector2 = new SettingLabelFields("unknown_field2");
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = setting.Label
+                };
+                selector.Fields.Add(unknownFieldSelector1);
+                selector.Fields.Add(unknownFieldSelector2);
+
+                SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(1, labels.Length);
+                Assert.IsNull(labels[0].Name);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLabelsWithAcceptDateTime()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(testSetting);
+                var selector = new SettingLabelSelector()
+                {
+                    NameFilter = testSetting.Label,
+                    AcceptDateTime = DateTimeOffset.MaxValue
+                };
+
+                SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(1, labels.Length);
+                Assert.AreEqual(testSetting.Label, labels[0].Name);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
         private void ValidateCreatedSnapshot(ConfigurationSnapshot createdSnapshot, ConfigurationSnapshot retrievedSnapshot, string expectedName)
         {
             Assert.NotNull(createdSnapshot);
@@ -2139,6 +3031,18 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.NotNull(retrievedSnapshot);
             Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+
+            // validate retrieved filters
+            if (createdSnapshot.Filters != null)
+            {
+                Assert.NotNull(retrievedSnapshot.Filters);
+                Assert.AreEqual(createdSnapshot.Filters.Count, retrievedSnapshot.Filters.Count);
+                for (int i = 0; i < createdSnapshot.Filters.Count; i++)
+                {
+                    Assert.AreEqual(createdSnapshot.Filters[i].Key, retrievedSnapshot.Filters[i].Key);
+                    Assert.AreEqual(createdSnapshot.Filters[i].Tags, retrievedSnapshot.Filters[i].Tags);
+                }
+            }
         }
 
         private static void ValidateCompletedOperation(CreateSnapshotOperation operation)

@@ -23,17 +23,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         private const string AllValue = "All";
-        private const string CustomValue = "Custom";
 
         /// <summary> All. </summary>
         public static NodesValueType All { get; } = new NodesValueType(AllValue);
-        /// <summary> Custom. </summary>
-        public static NodesValueType Custom { get; } = new NodesValueType(CustomValue);
         /// <summary> Determines if two <see cref="NodesValueType"/> values are the same. </summary>
         public static bool operator ==(NodesValueType left, NodesValueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodesValueType"/> values are not the same. </summary>
         public static bool operator !=(NodesValueType left, NodesValueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodesValueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodesValueType"/>. </summary>
         public static implicit operator NodesValueType(string value) => new NodesValueType(value);
 
         /// <inheritdoc />
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

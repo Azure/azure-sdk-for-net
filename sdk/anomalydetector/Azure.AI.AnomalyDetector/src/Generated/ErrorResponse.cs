@@ -49,7 +49,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        public ErrorResponse(string code, string message)
+        internal ErrorResponse(string code, string message)
         {
             Argument.AssertNotNull(code, nameof(code));
             Argument.AssertNotNull(message, nameof(message));
@@ -75,8 +75,8 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Error code. </summary>
-        public string Code { get; set; }
+        public string Code { get; }
         /// <summary> Message that explains the error that the service reported. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }

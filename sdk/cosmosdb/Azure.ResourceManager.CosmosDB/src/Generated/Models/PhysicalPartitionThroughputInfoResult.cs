@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> properties of physical partition throughput info. </summary>
         internal PhysicalPartitionThroughputInfoResultPropertiesResource Resource { get; set; }
         /// <summary> Array of physical partition throughput info objects. </summary>
+        [WirePath("properties.resource.physicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> ResourcePhysicalPartitionThroughputInfo
         {
             get
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

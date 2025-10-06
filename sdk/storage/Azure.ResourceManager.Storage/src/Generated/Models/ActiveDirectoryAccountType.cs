@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Specifies the Active Directory account type for Azure Storage. </summary>
+    /// <summary> Specifies the Active Directory account type for Azure Storage. If directoryServiceOptions is set to AD (AD DS authentication), this property is optional. If provided, samAccountName should also be provided. For directoryServiceOptions AADDS (Entra DS authentication) or AADKERB (Entra authentication), this property can be omitted. </summary>
     public readonly partial struct ActiveDirectoryAccountType : IEquatable<ActiveDirectoryAccountType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(ActiveDirectoryAccountType left, ActiveDirectoryAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActiveDirectoryAccountType"/> values are not the same. </summary>
         public static bool operator !=(ActiveDirectoryAccountType left, ActiveDirectoryAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActiveDirectoryAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActiveDirectoryAccountType"/>. </summary>
         public static implicit operator ActiveDirectoryAccountType(string value) => new ActiveDirectoryAccountType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

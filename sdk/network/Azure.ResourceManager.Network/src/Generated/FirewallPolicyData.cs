@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -77,18 +76,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The identity of the firewall policy. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </summary>
+        [WirePath("properties.size")]
         public string Size { get; }
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
+        [WirePath("properties.ruleCollectionGroups")]
         public IReadOnlyList<WritableSubResource> RuleCollectionGroups { get; }
         /// <summary> The provisioning state of the firewall policy resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The parent firewall policy from which rules are inherited. </summary>
         internal WritableSubResource BasePolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.basePolicy.id")]
         public ResourceIdentifier BasePolicyId
         {
             get => BasePolicy is null ? default : BasePolicy.Id;
@@ -101,20 +106,27 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
+        [WirePath("properties.firewalls")]
         public IReadOnlyList<WritableSubResource> Firewalls { get; }
         /// <summary> List of references to Child Firewall Policies. </summary>
+        [WirePath("properties.childPolicies")]
         public IReadOnlyList<WritableSubResource> ChildPolicies { get; }
         /// <summary> The operation mode for Threat Intelligence. </summary>
+        [WirePath("properties.threatIntelMode")]
         public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
         /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
+        [WirePath("properties.threatIntelWhitelist")]
         public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get; set; }
         /// <summary> Insights on Firewall Policy. </summary>
+        [WirePath("properties.insights")]
         public FirewallPolicyInsights Insights { get; set; }
         /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
+        [WirePath("properties.snat")]
         public FirewallPolicySnat Snat { get; set; }
         /// <summary> SQL Settings definition. </summary>
         internal FirewallPolicySQL Sql { get; set; }
         /// <summary> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </summary>
+        [WirePath("properties.sql.allowSqlRedirect")]
         public bool? AllowSqlRedirect
         {
             get => Sql is null ? default : Sql.AllowSqlRedirect;
@@ -127,14 +139,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> DNS Proxy Settings definition. </summary>
+        [WirePath("properties.dnsSettings")]
         public DnsSettings DnsSettings { get; set; }
         /// <summary> Explicit Proxy Settings definition. </summary>
+        [WirePath("properties.explicitProxy")]
         public FirewallPolicyExplicitProxy ExplicitProxy { get; set; }
         /// <summary> The configuration for Intrusion detection. </summary>
+        [WirePath("properties.intrusionDetection")]
         public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
         /// <summary> TLS Configuration definition. </summary>
         internal FirewallPolicyTransportSecurity TransportSecurity { get; set; }
         /// <summary> The CA used for intermediate CA generation. </summary>
+        [WirePath("properties.transportSecurity.certificateAuthority")]
         public FirewallPolicyCertificateAuthority TransportSecurityCertificateAuthority
         {
             get => TransportSecurity is null ? default : TransportSecurity.CertificateAuthority;
@@ -149,6 +165,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Firewall Policy SKU. </summary>
         internal FirewallPolicySku Sku { get; set; }
         /// <summary> Tier of Firewall Policy. </summary>
+        [WirePath("properties.sku.tier")]
         public FirewallPolicySkuTier? SkuTier
         {
             get => Sku is null ? default : Sku.Tier;

@@ -10,7 +10,7 @@ The Azure SDK libraries produce various log messages that include information ab
 2. Authentication attempts
 3. Retries
 
-The simplest way to see the logs is to enable the console logging using the [`AzureEventSourceListener`](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet).
+The simplest way to see the logs is to enable the console logging using the [`AzureEventSourceListener`](https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet).
 
 ```C# Snippet:ConsoleLogging
 // Setup a listener to monitor logged events.
@@ -41,7 +41,7 @@ using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTr
 
 ### Enabling content logging
 
-By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option:
+By default only URI and headers are logged. To enable content logging, set the logging level to `EventLevel.Verbose` and set the `Diagnostics.IsLoggingContentEnabled` client option:
 
 ```C# Snippet:LoggingContent
 SecretClientOptions options = new SecretClientOptions()
@@ -94,7 +94,7 @@ using AzureEventSourceListener listener = new AzureEventSourceListener(
 When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `args.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
 For help diagnosing multi-threading issues, you might also log `args.OSThreadId` which is also available on those same targets.
 
-More information about the `args` parameter for the callback can be found in the [EventWrittenEventArgs](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventwritteneventargs) documentation.
+More information about the `args` parameter for the callback can be found in the [EventWrittenEventArgs](https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventwritteneventargs) documentation.
 
 ### Applying filtering logic
 
@@ -174,14 +174,15 @@ Azure client libraries produce the following kinds of activities:
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
-Prior to November 2023, OpenTelemetry support was experimental for all Azure client libraries (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
-Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental. 
+Prior to November 2023, OpenTelemetry support was experimental for all Azure client libraries (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details).
+Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental.
 
-More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md).
+More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/observability/opentelemetry-conventions.md). Additional attributes emitted by
+Azure client libraries in .NET are documented [here](https://github.com/Azure/azure-sdk-for-net/blob/95b7ac20eebea0c13eab4a9bed0ee3ae1908d2bd/sdk/core/Azure.Core/samples/OpenTelemetrySemanticConventions.md).
 
 ### OpenTelemetry configuration
 
-OpenTelemetry relies on `ActivitySource` to collect distributed traces. 
+OpenTelemetry relies on `ActivitySource` to collect distributed traces.
 Follow the [OpenTelemetry configuration guide](https://opentelemetry.io/docs/instrumentation/net/getting-started/#instrumentation) to configure collection and exporting pipeline.
 
 Your observability vendor may enable Azure SDK activities by default. For example, stable Azure SDK instrumentations are enabled by [Azure Monitor OpenTelemetry Distro](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md#enable-azure-sdk-instrumentation).
@@ -212,7 +213,7 @@ Azure SDK traces all HTTP calls using `Azure.Core.Http` source. If you enable it
 
 Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure services in `x-ms-client-request-id`, `x-ms-request-id` or similar request and response headers. This data may be important when correlating client and server telemetry or creating support tickets.
 
-To avoid double-collection you may either 
+To avoid double-collection you may either:
 - enrich generic HTTP client activities with Azure request identifiers and disable Azure SDK HTTP activities.
 - filter out duplicated generic HTTP client activities.
 
@@ -256,7 +257,7 @@ Another approach would be to filter out generic HTTP client activities:
 .WithTracing(tracerProviderBuilder => tracerProviderBuilder
     .AddSource("Azure.*")
     .AddHttpClientInstrumentation(o => {
-        o => o.FilterHttpRequestMessage = (_) => Activity.Current?.Parent?.Source?.Name != "Azure.Core.Http";
+        o.FilterHttpRequestMessage = (_) => Activity.Current?.Parent?.Source?.Name != "Azure.Core.Http";
     })
     ...)
 ```
@@ -283,7 +284,7 @@ To see an example of distributed tracing in action, take a look at our [sample a
 
 ### Enabling experimental tracing features
 
-Certain tracing features remain experimental and still need to be enabled explicitly. Check out [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md) to see which conventions are considered experimental.
+Certain tracing features remain experimental and still need to be enabled explicitly. Check out [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/observability/opentelemetry-conventions.md) to see which conventions are considered experimental.
 
 The shape of experimental Activities may change in the future without notice. This includes:
 - the kinds of operations that are tracked

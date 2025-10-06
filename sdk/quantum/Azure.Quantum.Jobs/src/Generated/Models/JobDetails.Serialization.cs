@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -40,7 +39,7 @@ namespace Azure.Quantum.Jobs.Models
             if (Optional.IsDefined(InputParams))
             {
                 writer.WritePropertyName("inputParams"u8);
-                writer.WriteObjectValue(InputParams);
+                writer.WriteObjectValue<object>(InputParams);
             }
             writer.WritePropertyName("providerId"u8);
             writer.WriteStringValue(ProviderId);
@@ -292,6 +291,22 @@ namespace Azure.Quantum.Jobs.Models
                 costEstimate,
                 errorData,
                 tags ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JobDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeJobDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

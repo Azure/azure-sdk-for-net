@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -63,6 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> A list of public IP resources. </summary>
+        [WirePath("publicIPs")]
         public IList<WritableSubResource> PublicIPs { get; }
     }
 }

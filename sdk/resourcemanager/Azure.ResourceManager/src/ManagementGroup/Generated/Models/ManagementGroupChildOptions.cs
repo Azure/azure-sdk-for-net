@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>
+        [WirePath("type")]
         public ManagementGroupChildType? ChildType { get; }
         /// <summary> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The name of the child entity. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The friendly name of the child resource. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The list of children. </summary>
+        [WirePath("children")]
         public IReadOnlyList<ManagementGroupChildOptions> Children { get; }
     }
 }

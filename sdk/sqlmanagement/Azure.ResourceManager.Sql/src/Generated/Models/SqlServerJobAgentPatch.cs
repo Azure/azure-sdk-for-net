@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -53,15 +52,26 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobAgentPatch"/>. </summary>
+        /// <param name="identity"> Managed identity assigned to job agent. </param>
+        /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobAgentPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlServerJobAgentPatch(JobAgentIdentity identity, SqlSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
+            Sku = sku;
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Managed identity assigned to job agent. </summary>
+        [WirePath("identity")]
+        public JobAgentIdentity Identity { get; set; }
+        /// <summary> The name and tier of the SKU. </summary>
+        [WirePath("sku")]
+        public SqlSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

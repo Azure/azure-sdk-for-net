@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents a database data masking rule. </summary>
+    /// <summary> A database data masking rule. </summary>
     public partial class DataMaskingRule : ResourceData
     {
         /// <summary>
@@ -59,11 +59,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the data masking rule. </param>
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
-        /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
+        /// <param name="ruleId"> The rule Id. </param>
         /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
+        /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
         /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
         /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
         /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
@@ -71,15 +72,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string ruleId, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, string aliasName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
-            AliasName = aliasName;
+            RuleId = ruleId;
             RuleState = ruleState;
             SchemaName = schemaName;
             TableName = tableName;
             ColumnName = columnName;
+            AliasName = aliasName;
             MaskingFunction = maskingFunction;
             NumberFrom = numberFrom;
             NumberTo = numberTo;
@@ -90,30 +92,46 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The location of the data masking rule. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> The kind of Data Masking Rule. Metadata, used for Azure portal. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
-        /// <summary> The alias name. This is a legacy parameter and is no longer used. </summary>
-        public string AliasName { get; set; }
+        /// <summary> The rule Id. </summary>
+        [WirePath("properties.id")]
+        public string RuleId { get; }
         /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
+        [WirePath("properties.ruleState")]
         public DataMaskingRuleState? RuleState { get; set; }
         /// <summary> The schema name on which the data masking rule is applied. </summary>
+        [WirePath("properties.schemaName")]
         public string SchemaName { get; set; }
         /// <summary> The table name on which the data masking rule is applied. </summary>
+        [WirePath("properties.tableName")]
         public string TableName { get; set; }
         /// <summary> The column name on which the data masking rule is applied. </summary>
+        [WirePath("properties.columnName")]
         public string ColumnName { get; set; }
+        /// <summary> The alias name. This is a legacy parameter and is no longer used. </summary>
+        [WirePath("properties.aliasName")]
+        public string AliasName { get; set; }
         /// <summary> The masking function that is used for the data masking rule. </summary>
+        [WirePath("properties.maskingFunction")]
         public DataMaskingFunction? MaskingFunction { get; set; }
         /// <summary> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </summary>
+        [WirePath("properties.numberFrom")]
         public string NumberFrom { get; set; }
         /// <summary> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </summary>
+        [WirePath("properties.numberTo")]
         public string NumberTo { get; set; }
         /// <summary> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </summary>
+        [WirePath("properties.prefixSize")]
         public string PrefixSize { get; set; }
         /// <summary> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </summary>
+        [WirePath("properties.suffixSize")]
         public string SuffixSize { get; set; }
         /// <summary> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </summary>
+        [WirePath("properties.replacementString")]
         public string ReplacementString { get; set; }
     }
 }

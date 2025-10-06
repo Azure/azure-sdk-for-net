@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Fast provisioning supported storage in Gb. </summary>
+        [WirePath("supportedStorageGb")]
         public long? SupportedStorageGb { get; }
     }
 }

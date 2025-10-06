@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The UnknownCustomPersistentDiskProperties. </summary>
+    /// <summary> Unknown version of CustomPersistentDiskProperties. </summary>
     internal partial class UnknownCustomPersistentDiskProperties : AppCustomPersistentDiskProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomPersistentDiskProperties"/>. </summary>

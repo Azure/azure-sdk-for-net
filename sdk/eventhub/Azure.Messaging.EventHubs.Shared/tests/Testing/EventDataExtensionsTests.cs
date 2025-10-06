@@ -39,13 +39,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
-                offset: 111,
+                offset: "111",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -62,13 +62,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -85,13 +85,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "goodbye",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -112,6 +112,114 @@ namespace Azure.Messaging.EventHubs.Tests
 
             firstEvent.Properties["test"] = "trackOne";
             secondEvent.Properties["test"] = "trackTwo";
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToComparesByteArrayPropertiesBySequence()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+            secondEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsDifferentArrayProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+            secondEvent.Properties["test"] = new byte[] { 0x2, 0x3, 0x4 };
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToComparesArraySegmentPropertiesBySequence()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+            secondEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsDifferentArraySegmentProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+            secondEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x2, 0x3, 0x4 });
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToComparesMixedBinaryPropertiesBySequence()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+            secondEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsMixedBinaryProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+            secondEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x2, 0x3, 0x4 });
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
         }
@@ -177,8 +285,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsDifferentTypedSystemProperties()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
-            var firstEvent = new MockEventData((byte[])body.Clone(), offset: 1);
-            var secondEvent = new MockEventData((byte[])body.Clone(), offset: 2);
+            var firstEvent = new MockEventData((byte[])body.Clone(), offset: "1");
+            var secondEvent = new MockEventData((byte[])body.Clone(), offset: "2");
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
         }
@@ -272,13 +380,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstEvent = new MockEventData(
                 eventBody: (byte[])body.Clone(),
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: (byte[])body.Clone(),
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -297,13 +405,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstEvent = new MockEventData(
                 eventBody: (byte[])body.Clone(),
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: (byte[])body.Clone(),
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -320,7 +428,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44, 0x88 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -348,7 +456,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44, 0x88 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -365,7 +473,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44, 0x88 },
-                offset: 1,
+                offset: "1",
                 partitionKey: "hello",
                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
@@ -385,9 +493,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                  IDictionary<string, object> properties = null,
                                  IReadOnlyDictionary<string, object> systemProperties = null,
                                  long sequenceNumber = long.MinValue,
-                                 long offset = long.MinValue,
+                                 string offset = null,
                                  DateTimeOffset enqueuedTime = default,
-                                 string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
+                                 string partitionKey = null) : base(BinaryData.FromBytes(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
             {
             }
         }

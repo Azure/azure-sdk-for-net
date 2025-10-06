@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -54,14 +53,18 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
         /// <param name="value"> A list of SubscriptionQuotaItems. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of SubscriptionQuotaItems. </summary>
         public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

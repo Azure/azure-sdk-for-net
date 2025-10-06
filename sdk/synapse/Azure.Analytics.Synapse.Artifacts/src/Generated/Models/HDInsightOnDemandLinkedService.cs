@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
         /// <param name="timeToLive"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
+        /// <param name="versionTypePropertiesVersion"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="versionTypePropertiesVersion"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
+        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object versionTypePropertiesVersion, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup)
         {
             Argument.AssertNotNull(clusterSize, nameof(clusterSize));
             Argument.AssertNotNull(timeToLive, nameof(timeToLive));
-            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNull(versionTypePropertiesVersion, nameof(versionTypePropertiesVersion));
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(hostSubscriptionId, nameof(hostSubscriptionId));
             Argument.AssertNotNull(tenant, nameof(tenant));
@@ -35,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
-            Version = version;
+            VersionTypePropertiesVersion = versionTypePropertiesVersion;
             LinkedServiceName = linkedServiceName;
             HostSubscriptionId = hostSubscriptionId;
             Tenant = tenant;
@@ -47,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
         /// <param name="timeToLive"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
+        /// <param name="versionTypePropertiesVersion"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </param>
@@ -98,11 +98,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object versionTypePropertiesVersion, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
-            Version = version;
+            VersionTypePropertiesVersion = versionTypePropertiesVersion;
             LinkedServiceName = linkedServiceName;
             HostSubscriptionId = hostSubscriptionId;
             ServicePrincipalId = servicePrincipalId;
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
         public object TimeToLive { get; set; }
         /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
-        public object Version { get; set; }
+        public object VersionTypePropertiesVersion { get; set; }
         /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -61,13 +60,13 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
+        /// <param name="type"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
-        /// <param name="parameterType"> The type of execution parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptExecutionParameterDetails(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Type = type;
             Name = name;
-            ParameterType = parameterType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,9 +75,9 @@ namespace Azure.ResourceManager.Avs.Models
         {
         }
 
+        /// <summary> script execution parameter type. </summary>
+        internal ScriptExecutionParameterType Type { get; set; }
         /// <summary> The parameter name. </summary>
         public string Name { get; set; }
-        /// <summary> The type of execution parameter. </summary>
-        internal ScriptExecutionParameterType ParameterType { get; set; }
     }
 }

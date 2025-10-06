@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The list of container registry quota usages. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerRegistryUsage> Value { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -166,6 +165,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 lines ?? new ChangeTrackingList<DocumentLine>(),
                 barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
                 formulas ?? new ChangeTrackingList<DocumentFormula>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentPage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDocumentPage(document.RootElement);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -72,14 +71,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The update classifications to select when installing patches for Windows. </summary>
+        [WirePath("classificationsToInclude")]
         public IList<VmGuestPatchClassificationWindow> ClassificationsToInclude { get; }
         /// <summary> Kbs to include in the patch operation. </summary>
+        [WirePath("kbNumbersToInclude")]
         public IList<string> KbNumbersToInclude { get; }
         /// <summary> Kbs to exclude in the patch operation. </summary>
+        [WirePath("kbNumbersToExclude")]
         public IList<string> KbNumbersToExclude { get; }
         /// <summary> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </summary>
+        [WirePath("excludeKbsRequiringReboot")]
         public bool? ExcludeKbsRequiringReboot { get; set; }
         /// <summary> This is used to install patches that were published on or before this given max published date. </summary>
+        [WirePath("maxPatchPublishDate")]
         public DateTimeOffset? MaxPatchPublishOn { get; set; }
     }
 }

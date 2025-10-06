@@ -92,6 +92,8 @@ namespace Azure.Storage
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
                     return token.AsPolicy(scope, options);
+                case AzureSasCredential sas:
+                    return new AzureSasCredentialSynchronousPolicy(sas);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
@@ -109,7 +111,7 @@ namespace Azure.Storage
             this ClientOptions options,
             HttpPipelinePolicy authentication = null,
             Uri geoRedundantSecondaryStorageUri = null,
-            ExpectContinueOptions expectContinue = null)
+            Request100ContinueOptions expectContinue = null)
         {
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
@@ -131,20 +133,20 @@ namespace Azure.Storage
             {
                 switch (expectContinue.Mode)
                 {
-                    case ExpectContinueMode.ApplyOnThrottle:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                    case Request100ContinueMode.Auto:
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinueOnThrottlePolicy()
                         {
-                            ThrottleInterval = expectContinue.ThrottleInterval,
+                            ThrottleInterval = expectContinue.AutoInterval,
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });
                         break;
-                    case ExpectContinueMode.On:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
+                    case Request100ContinueMode.Always:
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinuePolicy()
                         {
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });
                         break;
-                    case ExpectContinueMode.Off:
+                    case Request100ContinueMode.Never:
                         break;
                 }
             }
@@ -172,7 +174,7 @@ namespace Azure.Storage
             this ClientOptions options,
             object credentials,
             Uri geoRedundantSecondaryStorageUri = null,
-            ExpectContinueOptions expectContinue = null) =>
+            Request100ContinueOptions expectContinue = null) =>
             Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue);
     }
 }

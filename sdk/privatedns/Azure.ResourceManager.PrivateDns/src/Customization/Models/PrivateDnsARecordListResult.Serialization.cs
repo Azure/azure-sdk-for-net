@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateDnsARecordData> array = new List<PrivateDnsARecordData>();
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsARecordListResult)} does not support '{options.Format}' format.");
             }

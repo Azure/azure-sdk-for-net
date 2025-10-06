@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Resource type of Azure resource. </summary>
+        [WirePath("sourceResourceType")]
         public string SourceResourceType { get; }
         /// <summary> Name of role, name is unique under a source resource type. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </summary>
+        [WirePath("rules")]
         public IReadOnlyList<ContainerServiceTrustedAccessRoleRule> Rules { get; }
     }
 }

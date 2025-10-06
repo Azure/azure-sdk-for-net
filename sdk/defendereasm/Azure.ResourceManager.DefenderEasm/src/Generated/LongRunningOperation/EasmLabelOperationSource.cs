@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DefenderEasm
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DefenderEasm
 
         EasmLabelResource IOperationSource<EasmLabelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
+            var data = ModelReaderWriter.Read<EasmLabelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDefenderEasmContext.Default);
             return new EasmLabelResource(_client, data);
         }
 
         async ValueTask<EasmLabelResource> IOperationSource<EasmLabelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
-            return new EasmLabelResource(_client, data);
+            var data = ModelReaderWriter.Read<EasmLabelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDefenderEasmContext.Default);
+            return await Task.FromResult(new EasmLabelResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

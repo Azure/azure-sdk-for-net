@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -83,12 +82,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Unique identifier for the agreement. </summary>
+        [WirePath("agreementKey")]
         public string AgreementKey { get; }
         /// <summary> Agreement title. </summary>
+        [WirePath("title")]
         public string Title { get; }
         /// <summary> Agreement details. </summary>
+        [WirePath("content")]
         public string Content { get; }
         /// <summary> URL where a copy of the agreement details is hosted. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
     }
 }

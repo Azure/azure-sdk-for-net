@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the resource selector. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The list of the selector expressions. </summary>
+        [WirePath("selectors")]
         public IList<ResourceSelectorExpression> Selectors { get; }
     }
 }

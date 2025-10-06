@@ -122,6 +122,8 @@
                 GetTransportObjectIfChanged<JobConstraints, Models.JobConstraints>();
             Models.PoolInformation modelPoolInformation = this.propertyContainer.PoolInformationProperty.
                 GetTransportObjectIfChanged<PoolInformation, Models.PoolInformation>();
+            Models.JobNetworkConfiguration networkConfiguration = this.propertyContainer.NetworkConfigurationProperty.
+                GetTransportObjectIfChanged<JobNetworkConfiguration, Models.JobNetworkConfiguration>();
             int? priority = this.propertyContainer.PriorityProperty.GetIfChangedOrNull();
             int? maxParallelTasks = this.propertyContainer.MaxParallelTasksProperty.GetIfChangedOrNull();
 
@@ -133,6 +135,7 @@
                 UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                 modelPoolInformation,
                 modelJobConstraints,
+                networkConfiguration,
                 modelMetadata,
                 behaveMgr,
                 cancellationToken);

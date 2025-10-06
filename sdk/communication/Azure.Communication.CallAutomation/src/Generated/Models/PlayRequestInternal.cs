@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -32,16 +31,18 @@ namespace Azure.Communication.CallAutomation
         /// The list of call participants play provided audio to.
         /// Plays to everyone in the call when not provided.
         /// </param>
+        /// <param name="interruptCallMediaOperation"> If set play can barge into other existing queued-up/currently-processing requests. </param>
         /// <param name="playOptions"> Defines options for playing the audio. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal PlayRequestInternal(IList<PlaySourceInternal> playSources, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, string operationCallbackUri)
+        internal PlayRequestInternal(IList<PlaySourceInternal> playSources, IList<CommunicationIdentifierModel> playTo, bool? interruptCallMediaOperation, PlayOptionsInternal playOptions, string operationContext, string operationCallbackUri)
         {
             PlaySources = playSources;
             PlayTo = playTo;
+            InterruptCallMediaOperation = interruptCallMediaOperation;
             PlayOptions = playOptions;
             OperationContext = operationContext;
             OperationCallbackUri = operationCallbackUri;
@@ -49,6 +50,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The source of the audio to be played. </summary>
         public IList<PlaySourceInternal> PlaySources { get; }
+        /// <summary> If set play can barge into other existing queued-up/currently-processing requests. </summary>
+        public bool? InterruptCallMediaOperation { get; set; }
         /// <summary> Defines options for playing the audio. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
         /// <summary> The value to identify context of the operation. </summary>

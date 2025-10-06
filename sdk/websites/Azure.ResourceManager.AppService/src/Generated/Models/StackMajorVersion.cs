@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -93,20 +91,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application stack major version (display only). </summary>
+        [WirePath("displayVersion")]
         public string DisplayVersion { get; set; }
         /// <summary> Application stack major version (runtime only). </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; set; }
         /// <summary> Minor versions associated with the major version. </summary>
+        [WirePath("minorVersions")]
         public IList<StackMinorVersion> MinorVersions { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("applicationInsights")]
         public bool? IsApplicationInsights { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; set; }
         /// <summary>
         /// &lt;appSettings&gt;
@@ -141,6 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("appSettingsDictionary")]
         public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
         /// <summary>
         /// &lt;siteConfigProperties&gt;
@@ -175,6 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("siteConfigPropertiesDictionary")]
         public IDictionary<string, BinaryData> SiteConfigPropertiesDictionary { get; }
     }
 }

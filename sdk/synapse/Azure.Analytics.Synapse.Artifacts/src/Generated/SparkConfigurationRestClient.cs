@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -61,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SparkConfigurationListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkConfigurationListResponse.DeserializeSparkConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -81,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SparkConfigurationListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkConfigurationListResponse.DeserializeSparkConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SparkConfigurationResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkConfigurationResource.DeserializeSparkConfigurationResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SparkConfigurationResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkConfigurationResource.DeserializeSparkConfigurationResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +419,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SparkConfigurationListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkConfigurationListResponse.DeserializeSparkConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +446,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SparkConfigurationListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkConfigurationListResponse.DeserializeSparkConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

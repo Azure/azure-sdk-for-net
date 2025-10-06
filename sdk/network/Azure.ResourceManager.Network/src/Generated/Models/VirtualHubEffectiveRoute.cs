@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of address prefixes. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> The list of next hops. </summary>
+        [WirePath("nextHops")]
         public IReadOnlyList<string> NextHops { get; }
         /// <summary> The type of the next hop. </summary>
+        [WirePath("nextHopType")]
         public string NextHopType { get; }
         /// <summary> The ASPath of this route. </summary>
+        [WirePath("asPath")]
         public string AsPath { get; }
         /// <summary> The origin of this route. </summary>
+        [WirePath("routeOrigin")]
         public string RouteOrigin { get; }
     }
 }

@@ -142,6 +142,11 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 ifUnmodifiedSince = jobDeleteOptions.IfUnmodifiedSince;
             }
+            bool? force = default(bool?);
+            if (jobDeleteOptions != null)
+            {
+                force = jobDeleteOptions.Force;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -158,6 +163,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("ifNoneMatch", ifNoneMatch);
                 tracingParameters.Add("ifModifiedSince", ifModifiedSince);
                 tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
+                tracingParameters.Add("force", force);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -174,6 +180,10 @@ namespace Microsoft.Azure.Batch.Protocol
             if (timeout != null)
             {
                 _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
+            }
+            if (force != null)
+            {
+                _queryParameters.Add(string.Format("force={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(force, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1976,6 +1986,11 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 ifUnmodifiedSince = jobTerminateOptions.IfUnmodifiedSince;
             }
+            bool? force = default(bool?);
+            if (jobTerminateOptions != null)
+            {
+                force = jobTerminateOptions.Force;
+            }
             JobTerminateParameter jobTerminateParameter = default(JobTerminateParameter);
             if (terminateReason != null)
             {
@@ -1998,6 +2013,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("ifNoneMatch", ifNoneMatch);
                 tracingParameters.Add("ifModifiedSince", ifModifiedSince);
                 tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
+                tracingParameters.Add("force", force);
                 tracingParameters.Add("jobTerminateParameter", jobTerminateParameter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Terminate", tracingParameters);
@@ -2015,6 +2031,10 @@ namespace Microsoft.Azure.Batch.Protocol
             if (timeout != null)
             {
                 _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
+            }
+            if (force != null)
+            {
+                _queryParameters.Add(string.Format("force={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(force, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

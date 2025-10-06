@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -34,6 +33,17 @@ namespace Azure.ResourceManager.HybridContainerService
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetKubernetesVersionsRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetKubernetesVersionsRequest(string customLocationResourceUri)
@@ -68,7 +78,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         KubernetesVersionProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -94,7 +104,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         KubernetesVersionProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,6 +113,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutKubernetesVersionsRequestUri(string customLocationResourceUri, KubernetesVersionProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutKubernetesVersionsRequest(string customLocationResourceUri, KubernetesVersionProfileData data)
@@ -120,7 +141,7 @@ namespace Azure.ResourceManager.HybridContainerService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -168,6 +189,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteKubernetesVersionsRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteKubernetesVersionsRequest(string customLocationResourceUri)
@@ -227,6 +259,17 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateGetVmSkusRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetVmSkusRequest(string customLocationResourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -259,7 +302,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         HybridContainerServiceVmSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +328,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         HybridContainerServiceVmSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,6 +337,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutVmSkusRequestUri(string customLocationResourceUri, HybridContainerServiceVmSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutVmSkusRequest(string customLocationResourceUri, HybridContainerServiceVmSkuData data)
@@ -311,7 +365,7 @@ namespace Azure.ResourceManager.HybridContainerService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -359,6 +413,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteVmSkusRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteVmSkusRequest(string customLocationResourceUri)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The tags that will be assigned to the secret. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the secret. </summary>
+        [WirePath("properties")]
         public SecretPatchProperties Properties { get; set; }
     }
 }

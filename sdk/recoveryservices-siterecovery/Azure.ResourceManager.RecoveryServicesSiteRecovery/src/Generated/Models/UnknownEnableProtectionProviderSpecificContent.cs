@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownEnableProtectionProviderSpecificContent. </summary>
+    /// <summary> Unknown version of EnableProtectionProviderSpecificInput. </summary>
     internal partial class UnknownEnableProtectionProviderSpecificContent : EnableProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEnableProtectionProviderSpecificContent"/>. </summary>

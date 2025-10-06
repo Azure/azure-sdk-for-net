@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
         public ServiceAccountEncryptionProperties()
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Properties of KeyVault. </summary>
+        [WirePath("keyVaultProperties")]
         public CognitiveServicesKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
+        [WirePath("keySource")]
         public ServiceAccountEncryptionKeySource? KeySource { get; set; }
     }
 }

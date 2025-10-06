@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ResourceConnector
 
         ResourceConnectorApplianceResource IOperationSource<ResourceConnectorApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
+            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceConnectorContext.Default);
             return new ResourceConnectorApplianceResource(_client, data);
         }
 
         async ValueTask<ResourceConnectorApplianceResource> IOperationSource<ResourceConnectorApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
-            return new ResourceConnectorApplianceResource(_client, data);
+            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceConnectorContext.Default);
+            return await Task.FromResult(new ResourceConnectorApplianceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

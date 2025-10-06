@@ -6,11 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CustomCallingContext. </summary>
+    /// <summary> The custom calling context which will be sent to the target. </summary>
     internal partial class CustomCallingContextInternal
     {
         /// <summary> Initializes a new instance of <see cref="CustomCallingContextInternal"/>. </summary>
@@ -20,9 +19,18 @@ namespace Azure.Communication.CallAutomation
             SipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCallingContextInternal"/>. </summary>
+        /// <param name="voipHeaders"> Custom calling context VoiP headers. </param>
+        /// <param name="sipHeaders"> Custom calling context SIP headers. </param>
+        internal CustomCallingContextInternal(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
+        {
+            VoipHeaders = voipHeaders;
+            SipHeaders = sipHeaders;
+        }
+
+        /// <summary> Custom calling context VoiP headers. </summary>
         public IDictionary<string, string> VoipHeaders { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Custom calling context SIP headers. </summary>
         public IDictionary<string, string> SipHeaders { get; }
     }
 }

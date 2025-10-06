@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Query text. </summary>
+        [WirePath("properties.queryText")]
         public string QueryText { get; set; }
     }
 }

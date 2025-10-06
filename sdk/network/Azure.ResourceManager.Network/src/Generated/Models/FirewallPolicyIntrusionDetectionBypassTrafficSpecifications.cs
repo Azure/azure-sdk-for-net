@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -80,20 +79,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the bypass traffic rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Description of the bypass traffic rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> The rule bypass protocol. </summary>
+        [WirePath("protocol")]
         public FirewallPolicyIntrusionDetectionProtocol? Protocol { get; set; }
         /// <summary> List of source IP addresses or ranges for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses or ranges for this rule. </summary>
+        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports or ranges. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
         /// <summary> List of destination IpGroups for this rule. </summary>
+        [WirePath("destinationIpGroups")]
         public IList<string> DestinationIPGroups { get; }
     }
 }

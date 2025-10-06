@@ -18,8 +18,8 @@ var defaultMarketplaceDefinition = 'sdk-devboxdefinition-${uniqueString('devboxd
 var defaultCatalogName = 'sdk-default-catalog'
 var defaultScheduleName = 'default'
 var defaultEnvironmentTypeName = 'sdk-environment-type-${uniqueString('environment-type', '2022-11-11-preview', baseName, resourceGroup().name)}'
-var devBoxSkuName = 'general_i_16c64gb1024ssd_v2'
-var devBoxStorage = 'ssd_1024gb'
+var devBoxSkuName = 'general_i_8c32gb256ssd_v2'
+var devBoxStorage = 'ssd_256gb'
 var marketplaceImageName = 'microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2'
 var gitUri = 'https://github.com/Azure/deployment-environments.git'
 
@@ -170,7 +170,7 @@ resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = 
     gitHub: {
       branch: 'main'
       secretIdentifier: catalogPatIdentifier
-      path: '/NewFormat'
+      path: '/Environments'
       uri: gitUri
     }
   }

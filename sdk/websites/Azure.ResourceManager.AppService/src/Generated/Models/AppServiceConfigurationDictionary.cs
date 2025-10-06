@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Settings. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

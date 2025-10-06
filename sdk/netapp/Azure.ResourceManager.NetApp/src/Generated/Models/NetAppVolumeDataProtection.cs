@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.NetApp.Models
             VolumeRelocation = volumeRelocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Backup Properties. </summary>
+        public NetAppVolumeBackupConfiguration Backup { get; set; }
         /// <summary> Replication properties. </summary>
         public NetAppReplicationObject Replication { get; set; }
         /// <summary> Snapshot properties. </summary>

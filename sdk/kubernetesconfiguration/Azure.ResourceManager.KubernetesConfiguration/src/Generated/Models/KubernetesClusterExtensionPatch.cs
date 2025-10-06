@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>
+        [WirePath("properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
         /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </summary>
+        [WirePath("properties.releaseTrain")]
         public string ReleaseTrain { get; set; }
         /// <summary> Version of the extension for this extension, if it is 'pinned' to a specific version. autoUpgradeMinorVersion must be 'false'. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
+        [WirePath("properties.configurationSettings")]
         public IDictionary<string, string> ConfigurationSettings { get; set; }
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
+        [WirePath("properties.configurationProtectedSettings")]
         public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
     }
 }

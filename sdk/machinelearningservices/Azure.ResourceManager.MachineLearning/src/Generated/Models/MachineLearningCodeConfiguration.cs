@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>
+        [WirePath("codeId")]
         public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The script to execute on startup. eg. "score.py". </summary>
+        [WirePath("scoringScript")]
         public string ScoringScript { get; set; }
     }
 }

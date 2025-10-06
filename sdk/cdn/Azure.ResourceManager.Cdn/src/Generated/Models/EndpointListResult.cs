@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result of the request to list endpoints. It contains a list of endpoint objects and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list endpoints. It contains a list of endpoint objects and a URL link to get the next set of results.
+    /// Serialized Name: EndpointListResult
+    /// </summary>
     internal partial class EndpointListResult
     {
         /// <summary>
@@ -53,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointListResult"/>. </summary>
-        /// <param name="value"> List of CDN endpoints within a profile. </param>
-        /// <param name="nextLink"> URL to get the next set of endpoint objects if there is any. </param>
+        /// <param name="value">
+        /// List of CDN endpoints within a profile
+        /// Serialized Name: EndpointListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of endpoint objects if there is any.
+        /// Serialized Name: EndpointListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EndpointListResult(IReadOnlyList<CdnEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of CDN endpoints within a profile. </summary>
+        /// <summary>
+        /// List of CDN endpoints within a profile
+        /// Serialized Name: EndpointListResult.value
+        /// </summary>
         public IReadOnlyList<CdnEndpointData> Value { get; }
-        /// <summary> URL to get the next set of endpoint objects if there is any. </summary>
+        /// <summary>
+        /// URL to get the next set of endpoint objects if there is any.
+        /// Serialized Name: EndpointListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

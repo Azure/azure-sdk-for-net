@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> Kind of encryption protector used to protect the key. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The key type like 'AzureKeyVault'. </summary>
+        [WirePath("properties.serverKeyType")]
         public PostgreSqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the key. </summary>
+        [WirePath("properties.uri")]
         public Uri Uri { get; set; }
         /// <summary> The key creation date. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

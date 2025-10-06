@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isMainFeature"> Whether can apply addon feature on to it. </param>
         /// <param name="supportedAddonFeatures"> The add on features on main feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentFeature(string featureName, string meterId, string meterRateFrequency, string resourceId, bool? isHidden, IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities, string title, bool? isMainFeature, string supportedAddonFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentFeature(string featureName, string meterId, string meterRateFrequency, ResourceIdentifier resourceId, bool? isHidden, IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities, string title, bool? isMainFeature, string supportedAddonFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FeatureName = featureName;
             MeterId = meterId;
@@ -78,22 +78,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The pricing feature name. </summary>
+        [WirePath("FeatureName")]
         public string FeatureName { get; }
         /// <summary> The meter id used for the feature. </summary>
+        [WirePath("MeterId")]
         public string MeterId { get; }
         /// <summary> The meter rate for the feature's meter. </summary>
+        [WirePath("MeterRateFrequency")]
         public string MeterRateFrequency { get; }
         /// <summary> Reserved, not used now. </summary>
-        public string ResourceId { get; }
+        [WirePath("ResouceId")]
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("IsHidden")]
         public bool? IsHidden { get; }
         /// <summary> A list of Application Insights component feature capability. </summary>
+        [WirePath("Capabilities")]
         public IReadOnlyList<ApplicationInsightsComponentFeatureCapability> Capabilities { get; }
         /// <summary> Display name of the feature. </summary>
+        [WirePath("Title")]
         public string Title { get; }
         /// <summary> Whether can apply addon feature on to it. </summary>
+        [WirePath("IsMainFeature")]
         public bool? IsMainFeature { get; }
         /// <summary> The add on features on main feature. </summary>
+        [WirePath("SupportedAddonFeatures")]
         public string SupportedAddonFeatures { get; }
     }
 }

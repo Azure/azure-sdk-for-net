@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -77,14 +76,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </summary>
+        [WirePath("properties.address")]
         public IPAddress Address { get; }
         /// <summary> The geo-location context attached to the ip entity. </summary>
+        [WirePath("properties.location")]
         public SecurityInsightsIPEntityGeoLocation Location { get; }
         /// <summary> A list of TI contexts attached to the ip entity. </summary>
+        [WirePath("properties.threatIntelligence")]
         public IReadOnlyList<SecurityInsightsThreatIntelligence> ThreatIntelligence { get; }
     }
 }

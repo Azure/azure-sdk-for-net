@@ -3,59 +3,47 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Properties of a Storage Resource
+    /// Properties of a Storage Resource.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class StorageResourceItemProperties
     {
         /// <summary>
         /// The length of the resource.
         /// </summary>
-        public long? ResourceLength { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long? ResourceLength { get; set; }
 
         /// <summary>
         /// The HTTP ETag of the Storage Resource.
         /// </summary>
-        public ETag? ETag { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ETag? ETag { get; set; }
 
         /// <summary>
         /// The Last Modified Time of the Storage Resource.
         /// </summary>
-        public DateTimeOffset? LastModifiedTime { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? LastModifiedTime { get; set; }
 
         /// <summary>
         /// Dictionary of the properties associated with this resource.
         /// </summary>
-        public Dictionary<string, object> RawProperties { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IDictionary<string, object> RawProperties { get; set; }
 
         /// <summary>
         /// Base constructor for mocking.
         /// </summary>
-        protected StorageResourceItemProperties()
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public StorageResourceItemProperties()
         {
             RawProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary>
-        /// Constructor for StorageResourceProperties
-        /// </summary>
-        /// <param name="resourceLength"></param>
-        /// <param name="eTag"></param>
-        /// <param name="lastModifiedTime"></param>
-        /// <param name="properties"></param>
-        public StorageResourceItemProperties(
-            long? resourceLength,
-            ETag? eTag,
-            DateTimeOffset? lastModifiedTime,
-            Dictionary<string, object> properties)
-        {
-            ResourceLength = resourceLength;
-            ETag = eTag;
-            LastModifiedTime = lastModifiedTime;
-            RawProperties = properties;
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -72,16 +71,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("trainedModelName"u8);
-            writer.WriteObjectValue(TrainedModelName);
+            writer.WriteObjectValue<object>(TrainedModelName);
             writer.WritePropertyName("trainedModelLinkedServiceName"u8);
             writer.WriteObjectValue(TrainedModelLinkedServiceName);
             writer.WritePropertyName("trainedModelFilePath"u8);
-            writer.WriteObjectValue(TrainedModelFilePath);
+            writer.WriteObjectValue<object>(TrainedModelFilePath);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -233,12 +232,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 trainedModelFilePath);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLUpdateResourceActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzureMLUpdateResourceActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureMLUpdateResourceActivityConverter : JsonConverter<AzureMLUpdateResourceActivity>
         {
             public override void Write(Utf8JsonWriter writer, AzureMLUpdateResourceActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzureMLUpdateResourceActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

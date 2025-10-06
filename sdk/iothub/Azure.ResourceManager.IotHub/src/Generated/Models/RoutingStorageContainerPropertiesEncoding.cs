@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are not the same. </summary>
         public static bool operator !=(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingStorageContainerPropertiesEncoding"/>. </summary>
         public static implicit operator RoutingStorageContainerPropertiesEncoding(string value) => new RoutingStorageContainerPropertiesEncoding(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

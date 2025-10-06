@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkTapResource IOperationSource<NetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkTapData.DeserializeNetworkTapData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return new NetworkTapResource(_client, data);
         }
 
         async ValueTask<NetworkTapResource> IOperationSource<NetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkTapData.DeserializeNetworkTapData(document.RootElement);
-            return new NetworkTapResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            return await Task.FromResult(new NetworkTapResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

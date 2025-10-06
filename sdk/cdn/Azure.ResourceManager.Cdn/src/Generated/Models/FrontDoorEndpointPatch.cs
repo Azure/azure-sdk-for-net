@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Properties required to create or update an endpoint. </summary>
+    /// <summary>
+    /// Properties required to create or update an endpoint.
+    /// Serialized Name: AFDEndpointUpdateParameters
+    /// </summary>
     public partial class FrontDoorEndpointPatch
     {
         /// <summary>
@@ -53,9 +55,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
-        /// <param name="tags"> Endpoint tags. </param>
-        /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="tags">
+        /// Endpoint tags.
+        /// Serialized Name: AFDEndpointUpdateParameters.tags
+        /// </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the endpoint.
+        /// Serialized Name: AFDEndpointUpdateParameters.properties.profileName
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDEndpointUpdateParameters.properties.enabledState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorEndpointPatch(IDictionary<string, string> tags, string profileName, EnabledState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,11 +76,20 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Endpoint tags. </summary>
+        /// <summary>
+        /// Endpoint tags.
+        /// Serialized Name: AFDEndpointUpdateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The name of the profile which holds the endpoint. </summary>
+        /// <summary>
+        /// The name of the profile which holds the endpoint.
+        /// Serialized Name: AFDEndpointUpdateParameters.properties.profileName
+        /// </summary>
         public string ProfileName { get; }
-        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        /// <summary>
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDEndpointUpdateParameters.properties.enabledState
+        /// </summary>
         public EnabledState? EnabledState { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> SAS URIs for the target blobs to import from. </summary>
+        [WirePath("sasUris")]
         public IList<Uri> SasUris { get; }
     }
 }

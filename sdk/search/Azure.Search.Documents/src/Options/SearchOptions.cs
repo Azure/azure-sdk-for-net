@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using Azure.Core;
 using Azure.Search.Documents.Models;
@@ -48,15 +47,27 @@ namespace Azure.Search.Documents
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
+        /// <param name="queryRewritesRaw"> A value that specifies whether query rewrites should be generated to augment the search query. </param>
         /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic ranking. </param>
         /// <param name="vectorQueries">
         /// The query parameters for vector and hybrid search queries.
         /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
+        /// The available derived classes include <see cref="VectorizableImageBinaryQuery"/>, <see cref="VectorizableImageUrlQuery"/>, <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
         /// </param>
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter'. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticQuery, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, string queryRewritesRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, HybridSearch hybridSearch)
         {
+            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null) ? new SemanticSearchOptions() : null;
+            if (SemanticSearch != null)
+            {
+                SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
+                SemanticSearch.QueryCaption = queryCaptionRaw != null ? new QueryCaption() : null;
+                SemanticSearch.QueryRewrites = queryRewritesRaw != null ? new QueryRewrites() : null;
+            }
+
+            VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
+
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
             Filter = filter;
@@ -70,33 +81,26 @@ namespace Azure.Search.Documents
             SessionId = sessionId;
             ScoringParameters = scoringParameters;
             ScoringProfile = scoringProfile;
+            Debug = debug;
             SearchText = searchText;
             SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;
+            QueryLanguage = queryLanguage;
+            QuerySpeller = querySpeller;
             SelectRaw = selectRaw;
             Skip = skip;
             Size = size;
-            QueryLanguage = queryLanguage;
-            QuerySpeller = querySpeller;
-
-            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null || debug != null) ? new SemanticSearchOptions() : null;
-            if (SemanticSearch != null)
-            {
-                SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
-                SemanticSearch.QueryCaption = queryCaptionRaw != null ? new QueryCaption() : null;
-            }
             SemanticConfigurationName = semanticConfigurationName;
             SemanticErrorMode = semanticErrorMode;
             SemanticMaxWaitInMilliseconds = semanticMaxWaitInMilliseconds;
+            SemanticQuery = semanticQuery;
             QueryAnswerRaw = queryAnswerRaw;
             QueryCaptionRaw = queryCaptionRaw;
-            SemanticQuery = semanticQuery;
+            QueryRewritesRaw = queryRewritesRaw;
             SemanticFieldsRaw = semanticFieldsRaw;
-            Debug = debug;
-
-            VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
             VectorQueries = vectorQueries;
             FilterMode = filterMode;
+            HybridSearch = hybridSearch;
         }
 
         /// <summary>
@@ -139,7 +143,7 @@ namespace Azure.Search.Documents
         internal string HighlightFieldsRaw
         {
             get => HighlightFields.CommaJoin();
-            set => HighlightFields = SearchExtensions.CommaSplit(value);
+            set => HighlightFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -157,7 +161,7 @@ namespace Azure.Search.Documents
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
-            set => SearchFields = SearchExtensions.CommaSplit(value);
+            set => SearchFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -173,7 +177,7 @@ namespace Azure.Search.Documents
         internal string SelectRaw
         {
             get => Select.CommaJoin();
-            set => Select = SearchExtensions.CommaSplit(value);
+            set => Select = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -206,7 +210,7 @@ namespace Azure.Search.Documents
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
-            set => OrderBy = SearchExtensions.CommaSplit(value);
+            set => OrderBy = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -294,6 +298,20 @@ namespace Azure.Search.Documents
             }
         }
 
+        /// <summary> Constructed from <see cref="QueryRewrites.RewritesType"/> and <see cref="QueryRewrites.Count"/>. For example: "generative|count-3"</summary>
+        [CodeGenMember("QueryRewrites")]
+        private string QueryRewritesRaw
+        {
+            get { return SemanticSearch?.QueryRewrites?.QueryRewritesRaw; }
+            set
+            {
+                if (SemanticSearch?.QueryRewrites != null)
+                {
+                    SemanticSearch.QueryRewrites.QueryRewritesRaw = value;
+                }
+            }
+        }
+
         /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
         [CodeGenMember("SemanticFields")]
         private string SemanticFieldsRaw
@@ -318,20 +336,6 @@ namespace Azure.Search.Documents
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.SemanticQuery = value;
-                }
-            }
-        }
-
-        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
-        [CodeGenMember("Debug")]
-        private QueryDebugMode? Debug
-        {
-            get { return SemanticSearch?.Debug; }
-            set
-            {
-                if (SemanticSearch != null)
-                {
-                    SemanticSearch.Debug = value;
                 }
             }
         }
@@ -424,8 +428,10 @@ namespace Azure.Search.Documents
             destination.Skip = source.Skip;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
+            destination.Debug = source.Debug;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
+            destination.HybridSearch  = source.HybridSearch;
         }
 
         /// <summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Instructions if any for the data source. </summary>
+        [WirePath("instructions")]
         public IList<string> Instructions { get; }
         /// <summary> Datasource Uri Links. </summary>
+        [WirePath("dataSourceUri")]
         public IList<AppServiceNameValuePair> DataSourceUri { get; }
     }
 }

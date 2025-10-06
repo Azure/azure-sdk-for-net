@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(OracleReaderQuery))
             {
                 writer.WritePropertyName("oracleReaderQuery"u8);
-                writer.WriteObjectValue(OracleReaderQuery);
+                writer.WriteObjectValue<object>(OracleReaderQuery);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
             if (Optional.IsDefined(PartitionOption))
             {
@@ -43,29 +42,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
+            }
+            if (Optional.IsDefined(NumberPrecision))
+            {
+                writer.WritePropertyName("numberPrecision"u8);
+                writer.WriteObjectValue<object>(NumberPrecision);
+            }
+            if (Optional.IsDefined(NumberScale))
+            {
+                writer.WritePropertyName("numberScale"u8);
+                writer.WriteObjectValue<object>(NumberScale);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -81,6 +90,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             OraclePartitionOption? partitionOption = default;
             OraclePartitionSettings partitionSettings = default;
             object additionalColumns = default;
+            object numberPrecision = default;
+            object numberScale = default;
             string type = default;
             object sourceRetryCount = default;
             object sourceRetryWait = default;
@@ -134,6 +145,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     additionalColumns = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("numberPrecision"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberPrecision = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("numberScale"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberScale = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
@@ -179,7 +208,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 queryTimeout,
                 partitionOption,
                 partitionSettings,
-                additionalColumns);
+                additionalColumns,
+                numberPrecision,
+                numberScale);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new OracleSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOracleSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class OracleSourceConverter : JsonConverter<OracleSource>
@@ -188,6 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override OracleSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

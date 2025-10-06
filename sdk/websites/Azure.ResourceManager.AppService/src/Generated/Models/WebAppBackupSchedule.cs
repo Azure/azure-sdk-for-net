@@ -83,16 +83,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </summary>
+        [WirePath("frequencyInterval")]
         public int FrequencyInterval { get; set; }
         /// <summary> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </summary>
+        [WirePath("frequencyUnit")]
         public BackupFrequencyUnit FrequencyUnit { get; set; }
         /// <summary> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </summary>
+        [WirePath("keepAtLeastOneBackup")]
         public bool ShouldKeepAtLeastOneBackup { get; set; }
         /// <summary> After how many days backups should be deleted. </summary>
+        [WirePath("retentionPeriodInDays")]
         public int RetentionPeriodInDays { get; set; }
         /// <summary> When the schedule should start working. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Last time when this schedule was triggered. </summary>
+        [WirePath("lastExecutionTime")]
         public DateTimeOffset? LastExecutedOn { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The connector id that provides the following data types. </summary>
+        [WirePath("connectorId")]
         public string ConnectorId { get; set; }
         /// <summary> The data types used by the security ml analytics settings. </summary>
+        [WirePath("dataTypes")]
         public IList<string> DataTypes { get; }
     }
 }

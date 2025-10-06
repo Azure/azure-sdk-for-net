@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application notification endpoint uri. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
     }
 }

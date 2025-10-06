@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Mocking
 {
@@ -106,6 +104,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             PacketCoreControlPlaneResource.ValidateResourceId(id);
             return new PacketCoreControlPlaneResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MobileNetworkRoutingInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkRoutingInfoResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkRoutingInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MobileNetworkRoutingInfoResource"/> object. </returns>
+        public virtual MobileNetworkRoutingInfoResource GetMobileNetworkRoutingInfoResource(ResourceIdentifier id)
+        {
+            MobileNetworkRoutingInfoResource.ValidateResourceId(id);
+            return new MobileNetworkRoutingInfoResource(Client, id);
         }
 
         /// <summary>
@@ -214,6 +224,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             MobileNetworkSliceResource.ValidateResourceId(id);
             return new MobileNetworkSliceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedUEInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedUEInfoResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedUEInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExtendedUEInfoResource"/> object. </returns>
+        public virtual ExtendedUEInfoResource GetExtendedUEInfoResource(ResourceIdentifier id)
+        {
+            ExtendedUEInfoResource.ValidateResourceId(id);
+            return new ExtendedUEInfoResource(Client, id);
         }
     }
 }

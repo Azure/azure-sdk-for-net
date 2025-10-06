@@ -7,11 +7,11 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/236c7ce93e9bcb875e1fbe1db8602a3a159ee2ae/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9b87e611b5016ed5c8d0eea2ee4578be782e7feb/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - LogAnalytics_GetLogAnalyticsMetrics
@@ -19,8 +19,12 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
+
+mgmt-debug:
+  show-serialized-names: true
 
 operation-id-mappings:
   CdnEndpoint:
@@ -72,7 +76,6 @@ acronym-mapping:
 
 no-property-type-replacement:
   - ContinentsResponseContinentsItem
-  - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - FrontDoorCustomDomainHttpsContentSecret
   - FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
@@ -92,12 +95,272 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+  Profiles_CdnCanMigrateToAfd: CheckCdnMigrationCompatibility
+  Profiles_CdnMigrateToAfd: MigrateCdnToAfd
+  Profiles_MigrationAbort: AbortMigration
 
 rename-mapping:
-  SecretProperties: FrontDoorSecretProperties
-  CacheLevel: CdnCacheLevel
+  CacheType: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
-  SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
+  Endpoint.properties.customDomains: DeepCreatedCustomDomains
+  WafMetricsSeriesUnit: WafMetricsResponseSeriesItemUnit
+  WafMetricsGranularity: WafMetricsResponseGranularity
+  MetricsSeriesUnit: MetricsResponseSeriesItemUnit
+  MetricsGranularity: MetricsResponseGranularity
+  Profile.properties.frontDoorId: -|uuid
+  DeepCreatedOrigin.properties.privateLinkResourceId: -|arm-id
+  EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.id: -|arm-id
+  Origin: CdnOrigin
+  Origin.properties.privateLinkResourceId: -|arm-id
+  OriginGroup: CdnOriginGroup
+  CustomDomain: CdnCustomDomain
+  ValidateCustomDomainInput: ValidateCustomDomainContent
+  ValidateCustomDomainOutput: ValidateCustomDomainResult
+  HealthProbeParameters: HealthProbeSettings
+  DeliveryRuleSocketAddrCondition: DeliveryRuleSocketAddressCondition
+  SocketAddrMatchConditionParameters: SocketAddressMatchCondition
+  SocketAddrMatchConditionParameters.typeName: ConditionType
+  SocketAddrMatchConditionParametersTypeName: SocketAddressMatchConditionType
+  SocketAddrMatchConditionParametersTypeName.DeliveryRuleSocketAddrConditionParameters: SocketAddressCondition
+  SocketAddrMatchConditionParameters.operator: SocketAddressOperator
+  CdnManagedHttpsParameters: CdnManagedHttpsContent
+  UserManagedHttpsParameters: UserManagedHttpsContent
+  ResponseBasedOriginErrorDetectionParameters: ResponseBasedOriginErrorDetectionSettings
+  HttpErrorRangeParameters: HttpErrorRange
+  CheckNameAvailabilityInput: CdnNameAvailabilityContent
+  CheckNameAvailabilityOutput: CdnNameAvailabilityResult
+  ValidateProbeOutput: ValidateProbeResult
+  ResourceUsage: CdnUsage
+  ValidateCustomDomainOutput.customDomainValidated: isCustomDomainValid
+  ResponseBasedOriginErrorDetectionParameters.responseBasedDetectedErrorTypes: responseBasedDetectedErrorType
+  CustomDomain.properties.customHttpsParameters: customDomainHttpsContent
+  CustomDomain.properties.customHttpsProvisioningSubstate: customHttpsAvailabilityState
+  SsoUri.ssoUriValue: availableSsoUri
+  CustomerCertificateProperties.expirationDate: -|date-time
+  ManagedCertificateProperties.expirationDate: -|date-time
+  DomainValidationProperties.expirationDate: expiresDate|date-time
+  FrontDoorActivatedResourceInfo.id: -|arm-id
+  Usage.id: -|arm-id
+  AfdPurgeParameters: FrontDoorPurgeParameters
+  AfdRouteCacheConfiguration: FrontDoorRouteCacheConfiguration
+  Route: FrontDoorRoute
+  RuleSet: FrontDoorRuleSet
+  Rule: FrontDoorRule
+  SecurityPolicy: FrontDoorSecurityPolicy
+  Secret: FrontDoorSecret
+  ValidateSecretOutput: ValidateSecretResult
+  LoadBalancingSettingsParameters: LoadBalancingSettings
+  CompressionSettings: RouteCacheCompressionSettings
+  UsageName: FrontDoorUsageResourceName
+  Usage: FrontDoorUsage
+  AzureFirstPartyManagedCertificateParameters: AzureFirstPartyManagedCertificateProperties
+  UrlSigningKeyParameters: UriSigningKeyProperties
+  CheckHostNameAvailabilityInput: HostNameAvailabilityContent
+  CheckEndpointNameAvailabilityInput: EndpointNameAvailabilityContent
+  CheckEndpointNameAvailabilityOutput: EndpointNameAvailabilityResult
+  SecurityPolicyWebApplicationFirewallParameters: SecurityPolicyWebApplicationFirewall
+  AFDDomain.properties.azureDnsZone: dnsZone
+  AFDDomainUpdateParameters.properties.azureDnsZone: DnsZone
+  AFDOrigin.properties.azureOrigin: origin
+  AFDOriginUpdateParameters.properties.azureOrigin: origin
+  AFDOriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes: trafficRestorationTimeInMinutes
+  AFDOriginGroupUpdateParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes: trafficRestorationTimeInMinutes
+  MatchCondition: CustomRuleMatchCondition
+  ManagedRuleSet: WafPolicyManagedRuleSet
+  ManagedRuleGroupOverride: ManagedRuleGroupOverrideSetting
+  CdnWebApplicationFirewallPolicy.properties.rateLimitRules: RateLimitSettings
+  ManagedRuleOverride: ManagedRuleOverrideSetting
+  MatchCondition.operator: matchOperator
+  CdnWebApplicationFirewallPolicy.properties.customRules: CustomSettings
+  Endpoint: CdnEndpoint
+  SocketAddrOperator: SocketAddressOperator
+  CacheExpirationActionParameters: CacheExpirationActionProperties
+  CacheExpirationActionParameters.cacheDuration: -|duration-constant
+  CacheExpirationActionParametersTypeName: CacheExpirationActionType
+  CacheExpirationActionParameters.typeName: ActionType
+  CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters: CacheExpirationAction
+  CacheKeyQueryStringActionParameters: CacheKeyQueryStringActionProperties
+  CacheKeyQueryStringActionParameters.typeName: ActionType
+  CacheKeyQueryStringActionParametersTypeName: CacheKeyQueryStringActionType
+  CacheKeyQueryStringActionParametersTypeName.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters: CacheKeyQueryStringBehaviorAction
+  CacheConfiguration.cacheDuration: -|duration-constant
+  ClientPortMatchConditionParametersTypeName.DeliveryRuleClientPortConditionParameters: ClientPortCondition
+  ProtocolType: SecureDeliveryProtocolType
+  ProbeProtocol: HealthProbeProtocol
+  CustomHttpsProvisioningSubstate: CustomHttpsAvailabilityState
+  CacheBehavior: CacheBehaviorSetting
+  CertificateType: CdnManagedCertificateType
+  MinimumTlsVersion: CdnMinimumTlsVersion
+  ResourceType: CdnResourceType
+  EndpointProvisioningState: CdnEndpointProvisioningState
+  ResourceUsageUnit: CdnUsageUnit
+  DeleteRule: CertificateDeleteAction
+  UpdateRule: CertificateUpdateAction
+  Transform: PreTransformCategory
+  Algorithm: UriSigningAlgorithm
+  IsDeviceMatchConditionParametersMatchValuesItem: IsDeviceMatchConditionMatchValue
+  RequestMethodMatchConditionParametersMatchValuesItem: RequestMethodMatchConditionMatchValue
+  RequestSchemeMatchConditionParametersMatchValuesItem: RequestSchemeMatchConditionMatchValue
+  UrlRewriteActionParameters.typeName: ActionType
+  UrlRewriteActionParametersTypeName: UriRewriteActionType
+  UrlRewriteActionParametersTypeName.DeliveryRuleUrlRewriteActionParameters: UriRewriteAction
+  UrlRewriteActionParameters: UriRewriteActionProperties
+  UrlSigningActionParameters: UriSigningActionProperties
+  UrlSigningActionParameters.typeName: ActionType
+  UrlSigningActionParametersTypeName: UriSigningActionType
+  UrlSigningActionParametersTypeName.DeliveryRuleUrlSigningActionParameters: UriSigningAction
+  UrlRedirectActionParameters: UriRedirectActionProperties
+  UrlRedirectActionParameters.typeName: ActionType
+  UrlRedirectActionParametersTypeName: UriRedirectActionType
+  UrlRedirectActionParametersTypeName.DeliveryRuleUrlRedirectActionParameters: UriRedirectAction
+  UrlPathMatchConditionParameters: UriPathMatchCondition
+  UrlPathMatchConditionParameters.typeName: ConditionType
+  UrlPathMatchConditionParametersTypeName: UriPathMatchConditionType
+  UrlPathMatchConditionParametersTypeName.DeliveryRuleUrlPathMatchConditionParameters: UriPathMatchCondition
+  UrlPathMatchConditionParameters.operator: UriPathOperator
+  UrlFileNameMatchConditionParameters: UriFileNameMatchCondition
+  UrlFileNameMatchConditionParameters.typeName: ConditionType
+  UrlFileNameMatchConditionParametersTypeName: UriFileNameMatchConditionType
+  UrlFileNameMatchConditionParametersTypeName.DeliveryRuleUrlFilenameConditionParameters: UriFilenameCondition
+  UrlFileNameMatchConditionParameters.operator: UriFileNameOperator
+  UrlFileExtensionMatchConditionParameters: UriFileExtensionMatchCondition
+  UrlFileExtensionMatchConditionParameters.typeName: ConditionType
+  UrlFileExtensionMatchConditionParametersTypeName: UriFileExtensionMatchConditionType
+  UrlFileExtensionMatchConditionParametersTypeName.DeliveryRuleUrlFileExtensionMatchConditionParameters: UriFileExtensionMatchCondition
+  UrlFileExtensionMatchConditionParameters.operator: UriFileExtensionOperator
+  SslProtocolMatchConditionParameters: DeliveryRuleSslProtocolMatchCondition
+  SslProtocolMatchConditionParameters.typeName: SslProtocolMatchConditionType
+  SslProtocolMatchConditionParametersTypeName: SslProtocolMatchConditionType
+  SslProtocolMatchConditionParametersTypeName.DeliveryRuleSslProtocolConditionParameters: SslProtocolCondition
+  SslProtocolMatchConditionParameters.operator: SslProtocolOperator
+  ServerPortMatchConditionParameters: ServerPortMatchCondition
+  ServerPortMatchConditionParameters.typeName: ConditionType
+  ServerPortMatchConditionParametersTypeName: ServerPortMatchConditionType
+  ServerPortMatchConditionParametersTypeName.DeliveryRuleServerPortConditionParameters: ServerPortCondition
+  ServerPortMatchConditionParameters.operator: ServerPortOperator
+  RouteConfigurationOverrideActionParameters: RouteConfigurationOverrideActionProperties
+  RouteConfigurationOverrideActionParameters.typeName: ActionType
+  RouteConfigurationOverrideActionParametersTypeName: RouteConfigurationOverrideActionType
+  RouteConfigurationOverrideActionParametersTypeName.DeliveryRuleRouteConfigurationOverrideActionParameters: RouteConfigurationOverrideAction
+  RequestUriMatchConditionParameters: RequestUriMatchCondition
+  RequestUriMatchConditionParameters.typeName: ConditionType
+  RequestUriMatchConditionParametersTypeName: RequestUriMatchConditionType
+  RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters: RequestUriCondition
+  RequestUriMatchConditionParameters.operator: RequestUriOperator
+  RequestSchemeMatchConditionParameters: RequestSchemeMatchCondition
+  RequestSchemeMatchConditionParameters.typeName: ConditionType
+  RequestSchemeMatchConditionParametersTypeName: RequestSchemeMatchConditionType
+  RequestSchemeMatchConditionParametersTypeName.DeliveryRuleRequestSchemeConditionParameters: RequestSchemeCondition
+  RequestSchemeMatchConditionParameters.operator: RequestSchemeOperator
+  RequestMethodMatchConditionParameters: RequestMethodMatchCondition
+  RequestMethodMatchConditionParameters.typeName: ConditionType
+  RequestMethodMatchConditionParametersTypeName: RequestMethodMatchConditionType
+  RequestMethodMatchConditionParametersTypeName.DeliveryRuleRequestMethodConditionParameters: RequestMethodCondition
+  RequestMethodMatchConditionParameters.operator: RequestMethodOperator
+  RequestHeaderMatchConditionParameters: RequestHeaderMatchCondition
+  RequestHeaderMatchConditionParameters.typeName: ConditionType
+  RequestHeaderMatchConditionParametersTypeName: RequestHeaderMatchConditionType
+  RequestHeaderMatchConditionParametersTypeName.DeliveryRuleRequestHeaderConditionParameters: RequestHeaderCondition
+  RequestHeaderMatchConditionParameters.operator: RequestHeaderOperator
+  RequestBodyMatchConditionParameters: RequestBodyMatchCondition
+  RequestBodyMatchConditionParameters.typeName: ConditionType
+  RequestBodyMatchConditionParametersTypeName: RequestBodyMatchConditionType
+  RequestBodyMatchConditionParametersTypeName.DeliveryRuleRequestBodyConditionParameters: RequestBodyCondition
+  RequestBodyMatchConditionParameters.operator: RequestBodyOperator
+  RemoteAddressMatchConditionParameters: RemoteAddressMatchCondition
+  RemoteAddressMatchConditionParameters.typeName: ConditionType
+  RemoteAddressMatchConditionParametersTypeName: RemoteAddressMatchConditionType
+  RemoteAddressMatchConditionParametersTypeName.DeliveryRuleRemoteAddressConditionParameters: RemoteAddressCondition
+  RemoteAddressMatchConditionParameters.operator: RemoteAddressOperator
+  QueryStringMatchConditionParameters: QueryStringMatchCondition
+  QueryStringMatchConditionParameters.typeName: ConditionType
+  QueryStringMatchConditionParametersTypeName: QueryStringMatchConditionType
+  QueryStringMatchConditionParametersTypeName.DeliveryRuleQueryStringConditionParameters: QueryStringCondition
+  QueryStringMatchConditionParameters.operator: QueryStringOperator
+  PostArgsMatchConditionParameters: PostArgsMatchCondition
+  PostArgsMatchConditionParameters.typeName: ConditionType
+  PostArgsMatchConditionParametersTypeName: PostArgsMatchConditionType
+  PostArgsMatchConditionParametersTypeName.DeliveryRulePostArgsConditionParameters: PostArgsCondition
+  PostArgsMatchConditionParameters.operator: PostArgsOperator
+  OriginGroupOverrideActionParameters: OriginGroupOverrideActionProperties
+  OriginGroupOverrideActionParameters.typeName: ActionType
+  OriginGroupOverrideActionParametersTypeName: OriginGroupOverrideActionType
+  OriginGroupOverrideActionParametersTypeName.DeliveryRuleOriginGroupOverrideActionParameters: OriginGroupOverrideAction
+  KeyVaultCertificateSourceParameters: KeyVaultCertificateSource
+  KeyVaultSigningKeyParameters: KeyVaultSigningKey
+  KeyVaultCertificateSourceParameters.typeName: SourceType
+  KeyVaultCertificateSourceParametersTypeName: KeyVaultCertificateSourceType
+  KeyVaultCertificateSourceParametersTypeName.KeyVaultCertificateSourceParameters: KeyVaultCertificateSource
+  KeyVaultSigningKeyParameters.typeName: KeyType
+  KeyVaultSigningKeyParametersTypeName: KeyVaultSigningKeyType
+  KeyVaultSigningKeyParametersTypeName.KeyVaultSigningKeyParameters: KeyVaultSigningKey
+  IsDeviceMatchConditionParameters: IsDeviceMatchCondition
+  IsDeviceMatchConditionParameters.typeName: ConditionType
+  IsDeviceMatchConditionParametersTypeName: IsDeviceMatchConditionType
+  IsDeviceMatchConditionParametersTypeName.DeliveryRuleIsDeviceConditionParameters: IsDeviceCondition
+  IsDeviceMatchConditionParameters.operator: IsDeviceOperator
+  HttpVersionMatchConditionParameters: HttpVersionMatchCondition
+  HttpVersionMatchConditionParameters.typeName: ConditionType
+  HttpVersionMatchConditionParametersTypeName: HttpVersionMatchConditionType
+  HttpVersionMatchConditionParametersTypeName.DeliveryRuleHttpVersionConditionParameters: HttpVersionCondition
+  HttpVersionMatchConditionParameters.operator: HttpVersionOperator
+  HostNameMatchConditionParameters: HostNameMatchCondition
+  HostNameMatchConditionParameters.typeName: ConditionType
+  HostNameMatchConditionParametersTypeName: HostNameMatchConditionType
+  HostNameMatchConditionParametersTypeName.DeliveryRuleHostNameConditionParameters: HostNameCondition
+  HostNameMatchConditionParameters.operator: HostNameOperator
+  HeaderActionParameters: HeaderActionProperties
+  HeaderActionParameters.typeName: ActionType
+  HeaderActionParametersTypeName: HeaderActionType
+  HeaderActionParametersTypeName.DeliveryRuleHeaderActionParameters: HeaderAction
+  CookiesMatchConditionParameters: CookiesMatchCondition
+  CookiesMatchConditionParameters.typeName: ConditionType
+  CookiesMatchConditionParametersTypeName: CookiesMatchConditionType
+  CookiesMatchConditionParametersTypeName.DeliveryRuleCookiesConditionParameters: CookiesCondition
+  CookiesMatchConditionParameters.operator: CookiesOperator
+  ClientPortMatchConditionParameters: ClientPortMatchCondition
+  ClientPortMatchConditionParameters.typeName: ConditionType
+  ClientPortMatchConditionParametersTypeName: ClientPortMatchConditionType
+  ClientPortMatchConditionParameters.operator: ClientPortOperator
+  CdnCertificateSourceParameters: CdnCertificateSource
+  CdnCertificateSourceParameters.typeName: SourceType
+  CdnCertificateSourceParametersTypeName: CdnCertificateSourceType
+  CdnCertificateSourceParametersTypeName.CdnCertificateSourceParameters: CdnCertificateSource
+  PolicySettings: WafPolicySettings
+  ProvisioningState: WebApplicationFirewallPolicyProvisioningState
+  ActionType: OverrideActionType
+  ManagedRuleEnabledState: ManagedRuleSetupState
+  Operator: MatchOperator
+  ActivatedResourceReference: FrontDoorActivatedResourceInfo
+  ActivatedResourceReference.id: -|arm-id
+  CustomerCertificateParameters: CustomerCertificateProperties
+  SecretParameters: FrontDoorSecretProperties
+  AutoGeneratedDomainNameLabelScope: DomainNameLabelScope
+  ManagedCertificateParameters: ManagedCertificateProperties
+  SecretProperties: SecretDetails
+  SecurityPolicyProperties: SecurityPolicyDetails
+  SecurityPolicyPropertiesParameters: SecurityPolicyProperties
+  AfdCertificateType: FrontDoorCertificateType
+  AfdMinimumTlsVersion: FrontDoorMinimumTlsVersion
+  AfdQueryStringCachingBehavior: FrontDoorQueryStringCachingBehavior
+  CustomerCertificateParameters.expirationDate: ExpiresOn|date-time
+  ManagedCertificateParameters.expirationDate: ExpiresOn|date-time
+  DeploymentStatus: FrontDoorDeploymentStatus
+  AfdProvisioningState: FrontDoorProvisioningState
+  AFDDomain.properties.preValidatedCustomDomainResourceId: PreValidatedCustomDomainResource
+  AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId: PreValidatedCustomDomainResource
+  UsageUnit: FrontDoorUsageUnit
+  Status: ValidationStatus
+  DeliveryRuleActionParameters: DeliveryRuleActionProperties
+  DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
+  CertificateSourceParameters: CertificateSourceProperties
+  CanMigrateResult.id: ResourceId
+  MigrateResult.id: ResourceId
+  IsDeviceMatchValue: IsDeviceMatchConditionMatchValue
+  KeyVaultSigningKeyParametersType: KeyVaultSigningKeyType
+  RequestMethodMatchValue: RequestMethodMatchConditionMatchValue
+  RequestSchemeMatchValue: RequestSchemeMatchConditionMatchValue
+  KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters: KeyVaultSigningKey
 
 directive:
   - from: swagger-document
@@ -107,119 +370,11 @@ directive:
   - from: cdn.json
     where: $.definitions
     transform: >
-      $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
-      $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
-          "name": "RequestSchemeOperator"
-        }
-      for (var key in $) {
-            if (key.endsWith('Parameters')) {
-                for (var property in $[key].properties) {
-                    if (property === 'typeName' && $[key].properties[property].enum.length === 1) {
-                        const newKey = key.replace('Parameters', '');
-                        $[key]['x-ms-client-name'] = newKey;
-                        if(key.endsWith('ActionParameters')) {
-                             $[key]['x-ms-client-name'] = newKey + 'Properties';
-                        }
-                        if(key.endsWith('ConditionParameters')) {
-                            $[key].properties.operator['x-ms-client-name'] = $[key].properties.operator['x-ms-enum'].name;
-                        }
-                        $[key].properties.typeName['x-ms-client-name'] = 'type';
-                        $[key].properties.typeName['x-ms-enum'] = {
-                            "name": newKey + 'Type',
-                            "modelAsString": true,
-                            "values": [
-                                {
-                                    "value": $[key].properties.typeName.enum[0],
-                                    "name": $[key].properties.typeName.enum[0].replace(/^(DeliveryRule)/, '').replace(/(Parameters)$/, '')
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        }
-      $.ProfileProperties.properties.frontDoorId['format'] = 'uuid';
-      $.CacheExpirationActionParameters.properties.cacheDuration['x-ms-format'] = 'duration-constant';
-      $.CacheConfiguration.properties.cacheDuration['x-ms-format'] = 'duration-constant';
-      $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
-      $.DeepCreatedOriginProperties.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
-      $.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink.properties.id['x-ms-format'] = 'arm-id';
-      $.Endpoint['x-ms-client-name'] = 'CdnEndpoint';
-      $.Origin['x-ms-client-name'] = 'CdnOrigin';
-      $.OriginGroup['x-ms-client-name'] = 'CdnOriginGroup';
-      $.CustomDomain['x-ms-client-name'] = 'CdnCustomDomain';
-      $.ValidateCustomDomainInput['x-ms-client-name'] = 'ValidateCustomDomainContent';
-      $.ValidateCustomDomainOutput['x-ms-client-name'] = 'ValidateCustomDomainResult';
-      $.HealthProbeParameters['x-ms-client-name'] = 'HealthProbeSettings';
-      $.DeliveryRuleSocketAddrCondition['x-ms-client-name'] = 'DeliveryRuleSocketAddressCondition';
-      $.SocketAddrMatchConditionParameters['x-ms-client-name'] = 'SocketAddressMatchCondition';
-      $.CdnManagedHttpsParameters['x-ms-client-name'] = 'CdnManagedHttpsContent';
-      $.UserManagedHttpsParameters['x-ms-client-name'] = 'UserManagedHttpsContent';
-      $.ResponseBasedOriginErrorDetectionParameters['x-ms-client-name'] = 'ResponseBasedOriginErrorDetectionSettings';
-      $.HttpErrorRangeParameters['x-ms-client-name'] = 'HttpErrorRange';
-      $.CheckNameAvailabilityInput['x-ms-client-name'] = 'CdnNameAvailabilityContent';
-      $.CheckNameAvailabilityOutput['x-ms-client-name'] = 'CdnNameAvailabilityResult';
-      $.ValidateProbeOutput['x-ms-client-name'] = 'ValidateProbeResult';
-      $.ResourceUsage['x-ms-client-name'] = 'CdnUsage';
-      $.HealthProbeParameters.properties.probeProtocol['x-ms-enum'].name = 'HealthProbeProtocol';
-      $.CustomDomainHttpsParameters.properties.protocolType['x-ms-enum'].name = 'SecureDeliveryProtocolType';
-      $.ResponseBasedOriginErrorDetectionParameters.properties.responseBasedDetectedErrorTypes['x-ms-client-name'] = 'responseBasedDetectedErrorType';
-      $.ValidateCustomDomainOutput.properties.customDomainValidated['x-ms-client-name'] = 'isCustomDomainValid';
-      $.CustomDomainProperties.properties.customHttpsParameters['x-ms-client-name'] = 'customDomainHttpsContent';
-      $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-client-name'] = 'customHttpsAvailabilityState';
-      $.SsoUri.properties.ssoUriValue['x-ms-client-name'] = 'availableSsoUri';
-      $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-enum'].name = 'CustomHttpsAvailabilityState';
-      $.CacheExpirationActionParameters.properties.cacheBehavior['x-ms-enum'].name = 'cacheBehaviorSetting';
-      $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
-      $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
-      $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
-      $.CustomDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'CdnMinimumTlsVersion';
-      $.ResourceType['x-ms-enum'].values = [
-                                {
-                                    "value": "Microsoft.Cdn/Profiles/Endpoints",
-                                    "name": "Endpoints"
-                                },
-                                {
-                                    "value": "Microsoft.Cdn/Profiles/AfdEndpoints",
-                                    "name": "FrontDoorEndpoints"
-                                }
-                            ]
-      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
-      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
-      $.transform['x-ms-enum'].name = 'preTransformCategory';
-      $.KeyVaultCertificateSourceParameters.properties.updateRule['x-ms-enum'].name = 'certificateUpdateAction';
-      $.KeyVaultCertificateSourceParameters.properties.deleteRule['x-ms-enum'].name = 'certificateDeleteAction';
-      $.DeliveryRuleAction.properties.name['x-ms-enum'].name = 'DeliveryRuleActionType';
-      $.UrlSigningActionParameters.properties.algorithm['x-ms-enum'].name = 'urlSigningAlgorithm';
-      $.ResourceUsage.properties.unit['x-ms-enum'].name = 'CdnUsageUnit';
-      $.EndpointProperties.properties.provisioningState['x-ms-enum'].name = 'CdnEndpointProvisioningState';
-      $.IsDeviceMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
-            "name": "IsDeviceMatchConditionMatchValue",
-            "modelAsString": true
-        }
-      $.RequestMethodMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
-            "name": "RequestMethodMatchConditionMatchValue",
-            "modelAsString": true
-        }
       $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
             "name": "RequestSchemeOperator",
             "modelAsString": true
-        }
-      $.RequestSchemeMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
-            "name": "RequestSchemeMatchConditionMatchValue",
-            "modelAsString": true
-        }
-      $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup = {
-            "description": "A reference to the origin group.",
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Resource ID.",
-                    "x-ms-format": "arm-id"
-                }
-            }
-        }
+        };
+      $.DeliveryRuleAction.properties.name['x-ms-enum'].name = 'DeliveryRuleActionType';
       $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.optimizationType['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.urlSigningKeys['x-nullable'] = true;
@@ -263,74 +418,6 @@ directive:
   - from: afdx.json
     where: $.definitions
     transform: >
-      $.CustomerCertificateParameters.properties.expirationDate['format'] = 'date-time';
-      $.ManagedCertificateParameters.properties.expirationDate['format'] = 'date-time';
-      $.DomainValidationProperties.properties.expirationDate['format'] = 'date-time';
-      $.ActivatedResourceReference.properties.id['x-ms-format'] = 'arm-id';
-      $.Usage.properties.id['x-ms-format'] = 'arm-id';
-      $.AfdPurgeParameters['x-ms-client-name'] = 'FrontDoorPurgeParameters';
-      $.AfdRouteCacheConfiguration['x-ms-client-name'] = 'FrontDoorRouteCacheConfiguration';
-      $.Route['x-ms-client-name'] = 'FrontDoorRoute';
-      $.RuleSet['x-ms-client-name'] = 'FrontDoorRuleSet';
-      $.Rule['x-ms-client-name'] = 'FrontDoorRule';
-      $.SecurityPolicy['x-ms-client-name'] = 'FrontDoorSecurityPolicy';
-      $.Secret['x-ms-client-name'] = 'FrontDoorSecret';
-      $.ValidateSecretOutput['x-ms-client-name'] = 'ValidateSecretResult';
-      $.LoadBalancingSettingsParameters['x-ms-client-name'] = 'LoadBalancingSettings';
-      $.CompressionSettings['x-ms-client-name'] = 'RouteCacheCompressionSettings';
-      $.UsageName['x-ms-client-name'] = 'FrontDoorUsageResourceName';
-      $.Usage['x-ms-client-name'] = 'FrontDoorUsage';
-      $.SecretProperties['x-ms-client-name'] = 'SecretDetails';
-      $.SecurityPolicyProperties['x-ms-client-name'] = 'SecurityPolicyDetails';
-      $.SecretParameters['x-ms-client-name'] = 'SecretProperties';
-      $.SecurityPolicyPropertiesParameters['x-ms-client-name'] = 'SecurityPolicyProperties';
-      $.AzureFirstPartyManagedCertificateParameters['x-ms-client-name'] = 'AzureFirstPartyManagedCertificateProperties';
-      $.CustomerCertificateParameters['x-ms-client-name'] = 'CustomerCertificateProperties';
-      $.ManagedCertificateParameters['x-ms-client-name'] = 'ManagedCertificateProperties';
-      $.UrlSigningKeyParameters['x-ms-client-name'] = 'UriSigningKeyProperties';
-      $.CheckHostNameAvailabilityInput['x-ms-client-name'] = 'HostNameAvailabilityContent';
-      $.CheckEndpointNameAvailabilityInput['x-ms-client-name'] = 'EndpointNameAvailabilityContent';
-      $.CheckEndpointNameAvailabilityOutput['x-ms-client-name'] = 'EndpointNameAvailabilityResult';
-      $.SecurityPolicyWebApplicationFirewallParameters['x-ms-client-name'] = 'SecurityPolicyWebApplicationFirewall';
-      $.ActivatedResourceReference['x-ms-client-name'] = 'FrontDoorActivatedResourceInfo';
-      $.CustomerCertificateParameters.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
-      $.ManagedCertificateParameters.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
-      $.DomainValidationProperties.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
-      $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
-      $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
-      $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';
-      $.AutoGeneratedDomainNameLabelScope['x-ms-enum'].name = 'DomainNameLabelScope';
-      $.AFDStateProperties.properties.deploymentStatus['x-ms-enum'].name = 'FrontDoorDeploymentStatus';
-      $.AFDStateProperties.properties.provisioningState['x-ms-enum'].name = 'FrontDoorProvisioningState';
-      $.AFDEndpointProtocols['x-ms-enum'].name = 'FrontDoorEndpointProtocol';
-      $.ValidateSecretOutput.properties.status['x-ms-enum'].name = 'validationStatus';
-      $.AFDDomainHttpsParameters.properties.certificateType['x-ms-enum'].name = 'FrontDoorCertificateType';
-      $.AFDDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'FrontDoorMinimumTlsVersion';
-      $.AfdRouteCacheConfiguration.properties.queryStringCachingBehavior['x-ms-enum'].name = 'FrontDoorQueryStringCachingBehavior';
-      $.Usage.properties.unit['x-ms-enum'].name = 'FrontDoorUsageUnit';
-      $.AFDDomainHttpsParameters.properties.secret = {
-            "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Resource ID.",
-                    "x-ms-format": "arm-id"
-                }
-            }
-        }
-      $.AFDDomainUpdatePropertiesParameters.properties.preValidatedCustomDomainResourceId = {
-            "x-ms-client-name": "preValidatedCustomDomainResource",
-            "description": "Resource reference to the Azure resource where custom domain ownership was prevalidated",
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Resource ID.",
-                    "x-ms-format": "arm-id"
-                }
-            }
-        }
       $.AFDDomainHttpsParameters.properties.secret['x-nullable'] = true;
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-nullable'] = true;
       $.WafMetricsResponse.properties.series.items.properties.groups['x-nullable'] = true;
@@ -361,18 +448,6 @@ directive:
     where: $.definitions
     transform: >
       $.CdnEndpoint['x-ms-client-name'] = 'CdnEndpointReference';
-      $.policySettings['x-ms-client-name'] = 'WafPolicySettings';
-      $.MatchCondition['x-ms-client-name'] = 'CustomRuleMatchCondition';
-      $.ActionType['x-ms-enum'].name = 'OverrideActionType';
-      $.ManagedRuleSet['x-ms-client-name'] = 'WafPolicyManagedRuleSet';
-      $.ManagedRuleGroupOverride['x-ms-client-name'] = 'ManagedRuleGroupOverrideSetting';
-      $.ManagedRuleOverride['x-ms-client-name'] = 'ManagedRuleOverrideSetting';
-      $.ManagedRuleOverride.properties.enabledState['x-ms-enum'].name = 'ManagedRuleSetupState';
-      $.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules['x-ms-client-name'] = 'RateLimitSettings';
-      $.CdnWebApplicationFirewallPolicyProperties.properties.customRules['x-ms-client-name'] = 'CustomSettings';
-      $.CdnWebApplicationFirewallPolicyProperties.properties.provisioningState['x-ms-enum'].name = 'WebApplicationFirewallPolicyProvisioningState';
-      $.MatchCondition.properties.operator['x-ms-client-name'] = 'matchOperator';
-      $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
       $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
   - remove-operation: Validate_Secret

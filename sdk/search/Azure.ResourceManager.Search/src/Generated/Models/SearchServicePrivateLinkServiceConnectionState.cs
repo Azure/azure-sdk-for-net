@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes the current state of an existing Private Link Service connection to the Azure Private Endpoint. </summary>
+    /// <summary> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </summary>
     public partial class SearchServicePrivateLinkServiceConnectionState
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePrivateLinkServiceConnectionState"/>. </summary>
-        /// <param name="status"> Status of the the private link service connection. Can be Pending, Approved, Rejected, or Disconnected. </param>
+        /// <param name="status"> Status of the the private link service connection. Valid values are Pending, Approved, Rejected, or Disconnected. </param>
         /// <param name="description"> The description for the private link service connection state. </param>
         /// <param name="actionsRequired"> A description of any extra actions that may be required. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,11 +63,14 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status of the the private link service connection. Can be Pending, Approved, Rejected, or Disconnected. </summary>
+        /// <summary> Status of the the private link service connection. Valid values are Pending, Approved, Rejected, or Disconnected. </summary>
+        [WirePath("status")]
         public SearchServicePrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The description for the private link service connection state. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A description of any extra actions that may be required. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
     }
 }

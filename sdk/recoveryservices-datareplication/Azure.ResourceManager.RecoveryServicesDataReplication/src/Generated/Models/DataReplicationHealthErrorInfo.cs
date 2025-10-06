@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -55,11 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationHealthErrorInfo"/>. </summary>
         /// <param name="affectedResourceType"> Gets or sets the type of affected resource type. </param>
-        /// <param name="affectedResourceCorrelationIds">
-        /// Gets or sets the list of affected resource correlation Ids. This can be used to
-        /// uniquely identify the count of items affected by a specific category and severity
-        /// as well as count of item affected by an specific issue.
-        /// </param>
+        /// <param name="affectedResourceCorrelationIds"> Gets or sets the list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
         /// <param name="childErrors"> Gets or sets a list of child health errors associated with this error. </param>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="healthCategory"> Gets or sets the health category. </param>
@@ -73,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="causes"> Gets or sets possible causes of the error. </param>
         /// <param name="recommendation"> Gets or sets recommended action to resolve the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationHealthErrorInfo(string affectedResourceType, IReadOnlyList<string> affectedResourceCorrelationIds, IReadOnlyList<DataReplicationInnerHealthErrorInfo> childErrors, string code, string healthCategory, string category, string severity, string source, DateTimeOffset? createdOn, bool? isCustomerResolvable, string summary, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationHealthErrorInfo(ResourceType? affectedResourceType, IReadOnlyList<string> affectedResourceCorrelationIds, IReadOnlyList<DataReplicationInnerHealthErrorInfo> childErrors, string code, string healthCategory, string category, string severity, string source, DateTimeOffset? createdOn, bool? isCustomerResolvable, string summary, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AffectedResourceType = affectedResourceType;
             AffectedResourceCorrelationIds = affectedResourceCorrelationIds;
@@ -93,12 +89,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Gets or sets the type of affected resource type. </summary>
-        public string AffectedResourceType { get; }
-        /// <summary>
-        /// Gets or sets the list of affected resource correlation Ids. This can be used to
-        /// uniquely identify the count of items affected by a specific category and severity
-        /// as well as count of item affected by an specific issue.
-        /// </summary>
+        public ResourceType? AffectedResourceType { get; }
+        /// <summary> Gets or sets the list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </summary>
         public IReadOnlyList<string> AffectedResourceCorrelationIds { get; }
         /// <summary> Gets or sets a list of child health errors associated with this error. </summary>
         public IReadOnlyList<DataReplicationInnerHealthErrorInfo> ChildErrors { get; }

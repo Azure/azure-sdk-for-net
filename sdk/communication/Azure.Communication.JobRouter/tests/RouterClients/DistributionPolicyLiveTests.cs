@@ -83,6 +83,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [LiveOnly(Reason = "ClientId is sanitized in test recordings.")]
         public async Task CreateDistributionPolicyTest_BestWorker_AzureRuleFunctions()
         {
             JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();

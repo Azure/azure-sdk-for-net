@@ -6,7 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Search.Documents;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userAssignedIdentity"/> is null. </exception>
-        public SearchIndexerDataUserAssignedIdentity(string userAssignedIdentity)
+        public SearchIndexerDataUserAssignedIdentity(ResourceIdentifier userAssignedIdentity)
         {
             Argument.AssertNotNull(userAssignedIdentity, nameof(userAssignedIdentity));
 
@@ -26,14 +27,20 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
-        internal SearchIndexerDataUserAssignedIdentity(string oDataType, string userAssignedIdentity) : base(oDataType)
+        internal SearchIndexerDataUserAssignedIdentity(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier userAssignedIdentity) : base(oDataType, serializedAdditionalRawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.DataUserAssignedIdentity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/> for deserialization. </summary>
+        internal SearchIndexerDataUserAssignedIdentity()
+        {
+        }
+
         /// <summary> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </summary>
-        public string UserAssignedIdentity { get; set; }
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

@@ -16,20 +16,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         public static readonly TransmitterFactory Instance = new();
 
-        internal readonly Dictionary<string, AzureMonitorTransmitter> _transmitters = new();
+        internal readonly Dictionary<string, ITransmitter> _transmitters = new();
         private readonly object _lockObj = new();
 
-        public AzureMonitorTransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions)
+        public ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions)
+        {
+            return Get(azureMonitorExporterOptions, DefaultPlatform.Instance);
+        }
+
+        /// <remarks>
+        /// This method should not be called directly in product code.
+        /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+        /// </remarks>
+        internal ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, IPlatform platform)
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
-            if (!_transmitters.TryGetValue(key, out AzureMonitorTransmitter? transmitter))
+            if (!_transmitters.TryGetValue(key, out ITransmitter? transmitter))
             {
                 lock (_lockObj)
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, new DefaultPlatform());
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
                         _transmitters.Add(key, transmitter);
                     }
@@ -37,6 +46,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return transmitter;
+        }
+
+        internal void Set(string connectionString, ITransmitter transmitter)
+        {
+            lock (_lockObj)
+            {
+                _transmitters[connectionString] = transmitter;
+            }
         }
     }
 }

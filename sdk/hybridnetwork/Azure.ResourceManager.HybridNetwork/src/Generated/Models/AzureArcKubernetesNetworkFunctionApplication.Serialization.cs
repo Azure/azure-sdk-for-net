@@ -9,52 +9,34 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     [PersistableModelProxy(typeof(UnknownAzureArcKubernetesNetworkFunctionApplication))]
     public partial class AzureArcKubernetesNetworkFunctionApplication : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesNetworkFunctionApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesNetworkFunctionApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesNetworkFunctionApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureArcKubernetesNetworkFunctionApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DependsOnProfile))
-            {
-                writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AzureArcKubernetesNetworkFunctionApplication IJsonModel<AzureArcKubernetesNetworkFunctionApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,7 +44,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +53,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureArcKubernetesNetworkFunctionApplication DeserializeAzureArcKubernetesNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,9 +76,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -108,11 +90,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support reading '{options.Format}' format.");
             }
         }
 

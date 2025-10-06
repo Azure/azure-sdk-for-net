@@ -41,10 +41,8 @@
     <Compile Include="..\src\Shared\IXmlSerializable.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\JsonElementExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\LightweightPkcs8Decoder.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\NextLinkOperationImplementation.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\OperationFinalStateVia.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\Optional.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\Page.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\PageableHelpers.cs" LinkBase="Shared" />

@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Specifies the number of months between each set of occurrences. </summary>
+        [WirePath("intervalMonths")]
         public int IntervalMonths { get; set; }
         /// <summary> The date of the month. </summary>
+        [WirePath("dayOfMonth")]
         public int DayOfMonth { get; set; }
     }
 }

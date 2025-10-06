@@ -5,35 +5,35 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NET6.0": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
-        "TestTargetFramework": "net6.0"
+      "Ubuntu-24.04_NET8.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net8.0"
       },
-      "Ubuntu-20.04_NET7.0": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
-        "TestTargetFramework": "net7.0"
+      "Ubuntu-24.04_NET9.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net9.0"
       },
       "Windows2022_NET462": {
-        "OSVmImage": "windows-2022",
-        "Pool": "azsdk-pool-mms-win-2022-general",
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
         "TestTargetFramework": "net462"
       },
-      "Windows2022_NET7.0": {
-        "OSVmImage": "windows-2022",
-        "Pool": "azsdk-pool-mms-win-2022-general",
-        "TestTargetFramework": "net7.0"
+      "Windows2022_NET8.0": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net8.0"
       },
-      "MacOS-11_NET6.0": {
-        "OSVmImage": "macos-11",
-        "Pool": "Azure Pipelines",
-        "TestTargetFramework": "net6.0"
+      "MacOS_NET8.0": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net8.0"
       },
-      "MacOS-11_NET7.0": {
-        "OSVmImage": "macos-11",
-        "Pool": "Azure Pipelines",
-        "TestTargetFramework": "net7.0"
+      "MacOS_NET9.0": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net9.0"
       }
     },
     "AdditionalTestArguments": [
@@ -48,10 +48,10 @@
   "include": [
     {
       "Agent": {
-        "Windows2022_NET7.0": {
-          "OSVmImage": "windows-2022",
-          "Pool": "azsdk-pool-mms-win-2022-general",
-          "TestTargetFramework": "net7.0"
+        "Windows2022_NET9.0": {
+          "OSVmImage": "env:WINDOWSVMIMAGE",
+          "Pool": "env:WINDOWSPOOL",
+          "TestTargetFramework": "net9.0"
         }
       },
       "TestMode": {
@@ -59,7 +59,8 @@
           "SupportsRecording": true,
           "CollectCoverage": true
         }
-      }
+      },
+      "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false"
     }
   ]
 }

@@ -99,6 +99,29 @@ namespace Azure.Storage.Files.DataLake
             };
             return fileDownloadInfo;
         }
+        internal static DataLakeFileReadStreamingResult ToDataLakeFileReadStreamingResult(this Response<BlobDownloadStreamingResult> blobDownloadStreamingResultResponse)
+        {
+            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.AclHeaderName, out string accessControlList);
+            DataLakeFileReadStreamingResult dataLakeFileReadStreamingResult = new DataLakeFileReadStreamingResult()
+            {
+                Content = blobDownloadStreamingResultResponse.Value.Content,
+                Details = blobDownloadStreamingResultResponse.Value.Details.ToFileDownloadDetails(encryptionContext, accessControlList)
+            };
+            return dataLakeFileReadStreamingResult;
+        }
+
+        internal static DataLakeFileReadResult ToDataLakeFileReadResult(this Response<BlobDownloadResult> blobDownloadResult)
+        {
+            blobDownloadResult.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            blobDownloadResult.GetRawResponse().Headers.TryGetValue(Constants.DataLake.AclHeaderName, out string accessControlList);
+            DataLakeFileReadResult dataLakeFileReadResult = new DataLakeFileReadResult()
+            {
+                Content = blobDownloadResult.Value.Content,
+                Details = blobDownloadResult.Value.Details.ToFileDownloadDetails(encryptionContext, accessControlList)
+            };
+            return dataLakeFileReadResult;
+        }
 
         internal static PathProperties ToPathProperties(this Response<BlobProperties> blobPropertiesResponse)
         {
@@ -965,6 +988,13 @@ namespace Azure.Storage.Files.DataLake
             }
 
             return new Blobs.Models.CustomerProvidedKey(dataLakeCustomerProvidedKey.Value.EncryptionKey);
+        }
+
+        internal static GetPathTagResult ToGetPathTagResult(this GetBlobTagResult blobTagResult)
+        {
+            return blobTagResult == null
+                ? null
+                : new GetPathTagResult { Tags = blobTagResult.Tags };
         }
 
         #region ValidateConditionsNotPresent

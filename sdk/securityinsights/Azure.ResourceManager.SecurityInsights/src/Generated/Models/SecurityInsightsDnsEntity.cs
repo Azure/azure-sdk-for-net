@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -78,16 +77,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> An ip entity id for the dns server resolving the request. </summary>
+        [WirePath("properties.dnsServerIpEntityId")]
         public string DnsServerIPEntityId { get; }
         /// <summary> The name of the dns record associated with the alert. </summary>
+        [WirePath("properties.domainName")]
         public string DomainName { get; }
         /// <summary> An ip entity id for the dns request client. </summary>
+        [WirePath("properties.hostIpAddressEntityId")]
         public string HostIPAddressEntityId { get; }
         /// <summary> Ip entity identifiers for the resolved ip address. </summary>
+        [WirePath("properties.ipAddressEntityIds")]
         public IReadOnlyList<string> IPAddressEntityIds { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -65,18 +64,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The template/definition file path relative to the source. </summary>
+        [WirePath("taskFilePath")]
         public string TaskFilePath { get; set; }
         /// <summary> The values/parameters file path relative to the source. </summary>
+        [WirePath("valuesFilePath")]
         public string ValuesFilePath { get; set; }
         /// <summary> The collection of overridable values that can be passed when running a task. </summary>
+        [WirePath("values")]
         public IList<ContainerRegistryTaskOverridableValue> Values { get; }
         /// <summary> Run timeout in seconds. </summary>
+        [WirePath("timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
+        [WirePath("platform")]
         public ContainerRegistryPlatformProperties Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
         internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
+        [WirePath("agentConfiguration.cpu")]
         public int? AgentCpu
         {
             get => AgentConfiguration is null ? default : AgentConfiguration.Cpu;
@@ -92,8 +97,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// The URL(absolute or relative) of the source context. It can be an URL to a tar or git repository.
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </summary>
+        [WirePath("sourceLocation")]
         public string SourceLocation { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
+        [WirePath("credentials")]
         public ContainerRegistryCredentials Credentials { get; set; }
     }
 }

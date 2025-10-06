@@ -10,5 +10,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public const string ContosoReceipt = "contoso-receipt.jpg";
 
         public const string Irs1040 = "IRS-1040_2.pdf";
+
+        public const string LayoutSample = "layout-pageobject.pdf";
     }
 }

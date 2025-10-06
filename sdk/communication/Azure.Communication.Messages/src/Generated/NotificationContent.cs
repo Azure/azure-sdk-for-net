@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// Details of the message to send.
     /// Please note <see cref="NotificationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="TextNotificationContent"/>, <see cref="MediaNotificationContent"/> and <see cref="TemplateNotificationContent"/>.
+    /// The available derived classes include <see cref="AudioNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="MediaNotificationContent"/>, <see cref="InteractiveNotificationContent"/>, <see cref="ReactionNotificationContent"/>, <see cref="StickerNotificationContent"/>, <see cref="TemplateNotificationContent"/>, <see cref="TextNotificationContent"/> and <see cref="VideoNotificationContent"/>.
     /// </summary>
     public abstract partial class NotificationContent
     {
@@ -65,7 +65,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="kind"> The type discriminator describing a notification type. </param>
+        /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,7 +84,7 @@ namespace Azure.Communication.Messages
         public Guid ChannelRegistrationId { get; }
         /// <summary> The native external platform user identifiers of the recipient. </summary>
         public IList<string> To { get; }
-        /// <summary> The type discriminator describing a notification type. </summary>
+        /// <summary> The type discriminator describing a message type. </summary>
         internal CommunicationMessageKind Kind { get; set; }
     }
 }

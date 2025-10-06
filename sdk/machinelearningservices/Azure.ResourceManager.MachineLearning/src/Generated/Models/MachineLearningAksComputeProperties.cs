@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -78,22 +77,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Cluster full qualified domain name. </summary>
+        [WirePath("clusterFqdn")]
         public string ClusterFqdn { get; set; }
         /// <summary> System services. </summary>
+        [WirePath("systemServices")]
         public IReadOnlyList<MachineLearningComputeSystemService> SystemServices { get; }
         /// <summary> Number of agents. </summary>
+        [WirePath("agentCount")]
         public int? AgentCount { get; set; }
         /// <summary> Agent virtual machine size. </summary>
+        [WirePath("agentVmSize")]
         public string AgentVmSize { get; set; }
         /// <summary> Intended usage of the cluster. </summary>
+        [WirePath("clusterPurpose")]
         public MachineLearningClusterPurpose? ClusterPurpose { get; set; }
         /// <summary> SSL configuration. </summary>
+        [WirePath("sslConfiguration")]
         public MachineLearningSslConfiguration SslConfiguration { get; set; }
         /// <summary> AKS networking configuration for vnet. </summary>
+        [WirePath("aksNetworkingConfiguration")]
         public MachineLearningAksNetworkingConfiguration AksNetworkingConfiguration { get; set; }
         /// <summary> Load Balancer Type. </summary>
+        [WirePath("loadBalancerType")]
         public MachineLearningLoadBalancerType? LoadBalancerType { get; set; }
         /// <summary> Load Balancer Subnet. </summary>
+        [WirePath("loadBalancerSubnet")]
         public string LoadBalancerSubnet { get; set; }
     }
 }

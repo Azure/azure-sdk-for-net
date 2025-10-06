@@ -1,44 +1,46 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Description>An OpenTelemetry .NET AzureMonitor OpenTelemetry Live Metrics</Description>
-    <AssemblyTitle>AzureMonitor OpenTelemetry Live Metrics</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
-    <PackageTags>Azure Monitor OpenTelemetry live Metrics ApplicationInsights</PackageTags>
+    <AssemblyTitle>Azure.Monitor.OpenTelemetry.Exporter shared code library</AssemblyTitle>
+    <Version>1.0.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsShippingLibrary>false</IsShippingLibrary>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <Nullable>enable</Nullable>
-    <DefineConstants>$(DefineConstants);LIVE_METRICS_EXPORTER;</DefineConstants>
+    <DefineConstants>$(DefineConstants);LIVE_METRICS_PROJECT;</DefineConstants>
+    <NoWarn>$(NoWarn);AZC0011</NoWarn>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenTelemetry" />
-    <PackageReference Include="OpenTelemetry.Exporter.Console" VersionOverride="1.6.0" />
-    <!--<PackageReference Include="System.Diagnostics.PerformanceCounter" VersionOverride="7.0.0" />-->
   </ItemGroup>
 
-  <!-- Shared sorce from Azure.Monitor.OpenTelemetry.Exporter -->
+  <!-- Shared sources from Azure.Core -->
   <ItemGroup>
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ConnectionString\*.cs" LinkBase="Internals\ConnectionString" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\*.cs" LinkBase="Internals\Platform" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ActivityTagsProcessor.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ArrayExtensions.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonList.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonListExtensions.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonNewListExtensions.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AksResourceProcessor.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\NullableAttributes.cs" LinkBase="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\OperationType.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SchemaConstants.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SdkVersionUtils.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" Link="Internals" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-
-  <!-- Shared source from Azure.Core -->
+  
+  <!-- Shared sources from Azure.Monitor.OpenTelemetry.Exporter -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ConnectionString\*.cs" LinkBase="Shared\Exporter\ConnectionString" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\*.cs" LinkBase="Shared\Exporter\Platform" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ActivityTagsProcessor.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ArrayExtensions.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonList.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonListExtensions.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonNewListExtensions.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AksResourceProcessor.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\NullableAttributes.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\OperationType.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SchemaConstants.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SdkVersionUtils.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" LinkBase="Shared\Exporter" />
   </ItemGroup>
   
 </Project>

@@ -3,25 +3,28 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
-    <Version>1.14.0-beta.1</Version>
+    <Version>2.2.0-beta.1</Version>
+    <ApiCompatVersion>2.1.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.13.0</ApiCompatVersion>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0107;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MessagePack" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" />
-    <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <!--Microsoft.Azure.SignalR.Management is not compatible with central version 1.2.0 yet.
+    Tracked by issue https://github.com/Azure/azure-sdk-for-net/issues/51460 -->
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" VersionOverride="1.0.15" />
   </ItemGroup>
 </Project>

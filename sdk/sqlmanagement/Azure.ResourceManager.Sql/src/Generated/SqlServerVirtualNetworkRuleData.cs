@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The ARM resource id of the virtual network subnet. </summary>
+        [WirePath("properties.virtualNetworkSubnetId")]
         public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
+        [WirePath("properties.ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
         /// <summary> Virtual Network Rule State. </summary>
+        [WirePath("properties.state")]
         public SqlServerVirtualNetworkRuleState? State { get; }
     }
 }

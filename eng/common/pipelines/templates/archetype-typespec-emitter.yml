@@ -1,0 +1,514 @@
+parameters:
+# Pool to use for the pipeline stages
+- name: Pool
+  type: object
+  default:
+    name: $(LINUXPOOL)
+    image: $(LINUXVMIMAGE)
+    os: linux
+
+# Whether to build alpha versions of the packages. This is passed as a flag to the build script.
+- name: BuildPrereleaseVersion
+  type: boolean
+  default: true
+
+# Whether to use the `next` version of TypeSpec. This is passed as a flag to the initialize script.
+- name: UseTypeSpecNext
+  type: boolean
+  default: false
+
+# Custom steps to run after the repository is cloned but before other job steps.
+- name: InitializationSteps
+  type: stepList
+  default: []
+
+# Indicates the build matrix to use for post-build TypeSpec validation
+- name: TestMatrix
+  type: object
+  default: {}
+
+# Whether to run the publish and regeneration stages. If false, only the build stage will run.
+- name: ShouldPublish
+  type: boolean
+  default: false
+
+# Whether to publish to npmjs.org.
+- name: PublishPublic
+  type: boolean
+  default: true
+
+# Whether the built packages contain nuget packages. If true, the publish stage will publish the nuget packages to the internal nuget feed.
+- name: HasNugetPackages
+  type: boolean
+  default: false
+
+# Indicates if the Publish stage should depend on the Test stage
+- name: PublishDependsOnTest
+  type: boolean
+  default: false
+
+# Whether to regenerate sdk clients using the new emitter.
+- name: ShouldRegenerate
+  type: boolean
+  default: false
+
+# Number of jobs to generate. This is the maximum number of jobs that will be generated. The actual number of jobs will be reduced if it would result in fewer than MinimumPerJob packages per job.
+- name: RegenerationJobCount
+  type: number
+  default: 10
+
+# Minimum number of packages to generate per job.
+- name: MinimumPerJob
+  type: number
+  default: 10
+
+# Indicates if regeneration matrix should only contain folders with typespec files
+- name: OnlyGenerateTypespec
+  type: boolean
+  default: false
+
+# Paths to sparse checkout
+- name: SparseCheckoutPaths
+  type: object
+  default: []
+
+# The path to the emitter package json file.
+- name: EmitterPackageJsonOutputPath
+  type: string
+  default: "eng/emitter-package.json"
+
+# The relative path to the emitter package.
+- name: EmitterPackagePath
+  type: string
+
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+    # Build stage
+    # Responsible for building the TypeSpec generator and emitter packages
+    # Produces the artifact `build_artifacts` which contains the following:
+    #   package-versions.json: Contains a map of package name to version for the packages that were built
+    #   overrides.json: Contains npm package version overrides for the emitter and generator
+    #   packages/: Contains the packages to publish
+    #   lock-files/: Contains package.json and package-lock.json files for use in the test stage to ensure tests are run against the correct dependency versions
+    - stage: Build
+      pool: ${{ parameters.Pool }}
+      jobs:
+      - job: Build
+        steps:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            Paths: ${{ parameters.SparseCheckoutPaths }}
+
+        - ${{ parameters.InitializationSteps }}
+
+        # Initialize-WorkingDirectory.ps1 is responsible for setting the emitterVersion output variable.
+        - task: PowerShell@2
+          displayName: 'Run initialize script'
+          name: initialize
+          inputs:
+            pwsh: true
+            filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
+            ${{ if parameters.BuildPrereleaseVersion }}:
+              arguments: >
+                -PrereleaseSuffix "-alpha.$(Build.BuildNumber)"
+                -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+                -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
+            ${{ else }}:
+              arguments: >
+                -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -UseTypeSpecNext:$${{ parameters.UseTypeSpecNext }}
+                -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
+
+        - task: PowerShell@2
+          displayName: 'Run build script'
+          inputs:
+            pwsh: true
+            filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Build-Emitter.ps1
+            arguments: >
+              -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
+              -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
+              -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
+              -GeneratorVersion: $(initialize.emitterVersion)
+
+        - pwsh: |
+            $sourceBranch = '$(Build.SourceBranch)'
+            $buildReason = '$(Build.Reason)'
+            $buildNumber = '$(Build.BuildNumber)'
+
+            if ($buildReason -eq 'Schedule') {
+              $branchName = 'validate-typespec-scheduled'
+            } elseif ($sourceBranch -match "^refs/pull/(\d+)/(head|merge)$") {
+              $branchName = "validate-typespec-pr-$($Matches[1])"
+            } else {
+              $branchName = "validate-typespec-$buildNumber"
+            }
+
+            Write-Host "Setting variable 'branchName' to '$branchName'"
+            Write-Host "##vso[task.setvariable variable=branchName;isOutput=true]$branchName"
+          displayName: Set branch name
+          name: set_branch_name
+
+        - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+          parameters:
+            artifactName: build_artifacts
+            artifactPath: $(Build.ArtifactStagingDirectory)
+
+    # Publish stage
+    # Responsible for publishing the packages in `build_artifacts/packages`
+    - ${{ if parameters.ShouldPublish }}:
+      - stage: Publish
+        dependsOn:
+        - Build
+        - ${{ if and(parameters.PublishDependsOnTest, ne(length(parameters.TestMatrix), 0)) }}:
+          - Test
+
+        variables:
+          buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
+
+        jobs:
+        - deployment: Publish
+          environment: none
+
+          pool:
+            name: azsdk-pool
+            image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
+            os: windows
+
+          templateContext:
+            type: releaseJob
+            isProduction: true
+            inputs:  # All input build artifacts must be declared here
+              - input: pipelineArtifact  # Required, type of the input artifact
+                artifactName: build_artifacts
+                targetPath: $(buildArtifactsPath)
+
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                # Create authenticated .npmrc file for publishing to devops
+                - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+                  parameters:
+                    npmrcPath: $(buildArtifactsPath)/packages/.npmrc
+                    registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
+        
+                # publish to devops feed
+                - pwsh: |
+                    $packageFiles = Get-ChildItem -Path . -Filter '*.tgz'
+                    foreach ($file in $packageFiles.Name) {
+                      Write-Host "npm publish $file --verbose --access public"
+                      npm publish $file --verbose --access public
+                    }
+                  displayName: Publish to DevOps feed
+                  workingDirectory: $(buildArtifactsPath)/packages
+        
+                # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+                - ${{ if parameters.HasNugetPackages }}:
+                  - task: 1ES.PublishNuget@1
+                    displayName: Publish NuGet Packages to DevOps feed
+                    inputs:
+                      packagesToPush: $(buildArtifactsPath)/packages/*.nupkg;!$(buildArtifactsPath)/packages/*.symbols.nupkg
+                      packageParentPath: $(buildArtifactsPath)/packages
+                      publishVstsFeed: "public/azure-sdk-for-net"
+        
+                - ${{ if parameters.PublishPublic }}:
+                  # publish to npmjs.org using ESRP
+                  - task: EsrpRelease@9
+                    inputs:
+                      displayName: Publish to npmjs.org
+                      ConnectedServiceName: Azure SDK PME Managed Identity
+                      ClientId: 5f81938c-2544-4f1f-9251-dd9de5b8a81b
+                      DomainTenantId: 975f013f-7f24-47e8-a7d3-abc4752bf346
+                      UseManagedIdentity: true
+                      KeyVaultName: kv-azuresdk-codesign
+                      SignCertName: azure-sdk-esrp-release-certificate
+                      Intent: PackageDistribution
+                      ContentType: npm
+                      FolderLocation: $(buildArtifactsPath)/packages
+                      Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                      Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                      ServiceEndpointUrl: https://api.esrp.microsoft.com
+                      MainPublisher: ESRPRELPACMANTEST
+        
+    # Regenerate stage
+    # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
+    - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
+      - stage: Regenerate
+        dependsOn:
+        - Build
+        - Publish
+        variables:
+          pullRequestTargetBranch: 'main'
+          buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
+          branchName: $[stageDependencies.Build.Build.outputs['set_branch_name.branchName']]
+        pool: ${{ parameters.Pool }}
+        jobs:
+        - job: Initialize
+          steps:
+          - checkout: self
+          
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '22.x'
+
+          - download: current
+            displayName: Download pipeline artifacts
+
+          - pwsh: |
+              npm install -g @azure-tools/typespec-client-generator-cli@latest
+            displayName: Install tsp-client
+
+          - pwsh: |
+              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+
+              if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
+                Write-Host "Using overrides.json to generate emitter-package.json"
+                tsp-client generate-config-files `
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
+                --overrides '$(buildArtifactsPath)/packages/overrides.json'
+              } else {
+                Write-Host "No overrides.json found. Running tsp-client without overrides."
+
+                tsp-client generate-config-files `
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
+              }
+            displayName: Generate emitter-package.json and emitter-package-lock files
+            workingDirectory: $(Build.SourcesDirectory)
+
+          - ${{ parameters.InitializationSteps }}
+
+          - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+            parameters:
+              BaseRepoOwner: azure-sdk
+              TargetRepoName: $(Build.Repository.Name)
+              BaseRepoBranch: $(branchName)
+              CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)
+              WorkingDirectory: $(Build.SourcesDirectory)
+              ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
+              # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
+              PushArgs: --force
+
+          - task: PowerShell@2
+            displayName: Get generation job matrix
+            name: generate_matrix
+            inputs:
+              pwsh: true
+              filePath: ./eng/common/scripts/New-RegenerateMatrix.ps1
+              arguments: >
+                -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -OutputVariableName matrix
+                -JobCount ${{ parameters.RegenerationJobCount }}
+                -MinimumPerJob ${{ parameters.MinimumPerJob }}
+                -OnlyTypespec ${{ parameters.OnlyGenerateTypespec }}
+              workingDirectory: $(Build.SourcesDirectory)
+
+          - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+            parameters:
+              artifactName: matrix_artifacts
+              artifactPath: $(Build.ArtifactStagingDirectory)
+
+        - job: Generate
+          dependsOn: Initialize
+          strategy:
+            matrix: $[dependencies.Initialize.outputs['generate_matrix.matrix']]
+          variables:
+            matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
+            AzureSdkRepoName: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
+          steps:
+          - checkout: self
+          - pwsh: |
+              git remote add azure-sdk https://github.com/$(AzureSdkRepoName).git
+              git fetch azure-sdk $(branchName)
+              git switch $(branchName)
+            displayName: 'Checkout PR branch $(branchName)'  
+
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '22.x'
+
+          - download: current
+            displayName: Download pipeline artifacts
+
+          - ${{ parameters.InitializationSteps }}
+
+          - task: PowerShell@2
+            displayName: Call regeneration script
+            inputs:
+              pwsh: true
+              filePath: ./eng/common/scripts/Update-GeneratedSdks.ps1
+              arguments: >
+                -PackageDirectoriesFile "$(matrixArtifactsPath)/$(DirectoryList)"
+              workingDirectory: $(Build.SourcesDirectory)
+            continueOnError: true
+
+          - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+            parameters:
+              BaseRepoOwner: azure-sdk
+              TargetRepoName: $(Build.Repository.Name)
+              BaseRepoBranch: $(branchName)
+              CommitMsg: Update SDK code $(JobKey)
+              WorkingDirectory: $(Build.SourcesDirectory)
+              ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
+
+        - job: Create_PR
+          displayName: Create PR
+          dependsOn: 
+          - Generate
+          variables:
+            generateJobResult: $[dependencies.Generate.result]
+            emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
+          steps:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+
+          - pwsh: |
+              $generateJobResult = '$(generateJobResult)'
+              $emitterVersion = '$(emitterVersion)'
+              $collectionUri = '$(System.CollectionUri)'
+              $project = '$(System.TeamProject)'
+              $definitionName = '$(Build.DefinitionName)'
+              $repoUrl = '$(Build.Repository.Uri)'
+              $repoName = '$(Build.Repository.Name)'
+              $sourceBranch = '$(Build.SourceBranch)'
+              $reason = '$(Build.Reason)'
+              $buildId = '$(Build.BuildId)'
+              $buildNumber = '$(Build.BuildNumber)'
+              $preRelease = '${{ parameters.BuildPrereleaseVersion }}' -eq 'true'
+              
+              $prBody = "Generated by $definitionName build [$buildNumber]($collectionUri/$project/_build/results?buildId=$buildId)<br/>"
+
+              if ($sourceBranch -match "^refs/heads/(.+)$") {
+                $prBody += "Triggered from branch: [$($Matches[1])]($repoUrl/tree/$sourceBranch)"
+              } elseif ($sourceBranch -match "^refs/tags/(.+)$") {
+                $prBody += "Triggered from tag: [$($Matches[1])]($repoUrl/tree/$sourceBranch)"
+              } elseif ($sourceBranch -match "^refs/pull/(\d+)/(head|merge)$") {
+                $prBody += "Triggered from pull request: $repoUrl/pull/$($Matches[1])"
+              } else {
+                $prBody += "Triggered from [$sourceBranch]($repoUrl/tree/$sourceBranch)"
+              }
+
+              if ($reason -eq 'Schedule') {
+                $prTitle = "Scheduled code regeneration test"
+              } else {
+                if ($preRelease) {
+                  $prTitle = "Update TypeSpec emitter version to prerelease $emitterVersion"
+                } else {
+                  $prTitle = "Update TypeSpec emitter version to $emitterVersion"
+                }
+
+                if ($generateJobResult -ne 'Succeeded') {
+                  $prTitle = "Failed: $prTitle"
+                }
+              }
+
+              Write-Host "Setting variable 'PullRequestTitle' to '$prTitle'"
+              Write-Host "##vso[task.setvariable variable=PullRequestTitle]$prTitle"
+
+              Write-Host "Setting variable 'PullRequestBody' to '$prBody'"
+              Write-Host "##vso[task.setvariable variable=PullRequestBody]$prBody"
+
+              $repoNameParts = $repoName.Split('/')
+              if ($repoNameParts.Length -eq 2) {
+                Write-Host "Setting variable 'RepoOwner' to '$($repoNameParts[0])'"
+                Write-Host "##vso[task.setvariable variable=RepoOwner]$($repoNameParts[0])"
+
+                Write-Host "Setting variable 'RepoName' to '$($repoNameParts[1])'"
+                Write-Host "##vso[task.setvariable variable=RepoName]$($repoNameParts[1])"
+              } else {
+                Write-Error "Build.Repository.Name not in the expected {Owner}/{Name} format"
+              }
+
+              $openAsDraft = -not ($reason -eq 'IndividualCI' -and $sourceBranch -eq 'refs/heads/main')
+              Write-Host "Setting OpenAsDraftBool = $openAsDraft"
+              Write-Host "##vso[task.setvariable variable=OpenAsDraft]$openAsDraft"
+              if ($openAsDraft) {
+                Write-Host "##vso[task.setvariable variable=PRLabels]Do Not Merge"
+              } else {
+                Write-Host "##vso[task.setvariable variable=PRLabels]"
+              }
+              
+            displayName: Get PR title and body
+
+          - task: PowerShell@2
+            displayName: Create pull request
+            inputs:
+              pwsh: true
+              filePath: ./eng/common/scripts/Submit-PullRequest.ps1
+              arguments: >
+                -RepoOwner '$(RepoOwner)'
+                -RepoName '$(RepoName)'
+                -BaseBranch '$(pullRequestTargetBranch)'
+                -PROwner 'azure-sdk'
+                -PRBranch '$(branchName)'
+                -AuthToken '$(azuresdk-github-pat)'
+                -PRTitle '$(PullRequestTitle)'
+                -PRBody '$(PullRequestBody)'
+                -OpenAsDraft $$(OpenAsDraft)
+                -PRLabels '$(PRLabels)'
+              workingDirectory: $(Build.SourcesDirectory)
+
+    # Test stage
+    # Responsible for running unit and functional tests using a matrix passed in as the parameter `TestMatrix`.
+    # Will only run if the parameter `TestMatrix` is not empty.
+    # The contents of the artficact `build_artifacts` are available under the path `$(buildArtifactsPath)`.
+    - ${{ if ne(length(parameters.TestMatrix), 0) }}:
+      - stage: Test
+        dependsOn: Build
+        pool: ${{ parameters.Pool }}
+        jobs:
+        - job: Test
+          strategy:
+            matrix: ${{ parameters.TestMatrix }}
+          variables:
+            buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
+          steps:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              Paths: ${{ parameters.SparseCheckoutPaths }}
+
+          - download: current
+            artifact: build_artifacts
+            displayName: Download build artifacts
+
+          - ${{ parameters.InitializationSteps }}
+
+          - task: PowerShell@2
+            displayName: 'Run initialize script'
+            inputs:
+              pwsh: true
+              filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
+              arguments: > 
+                -BuildArtifactsPath '$(buildArtifactsPath)/lock-files'
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
+
+          - task: PowerShell@2
+            displayName: 'Run test script'
+            inputs:
+              pwsh: true
+              filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Test-Emitter.ps1
+              arguments: >
+                $(TestArguments)
+                -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+                -EmitterPackagePath: ${{ parameters.EmitterPackagePath }}
+
+          - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+            parameters:
+              artifactName: test_artifacts_$(System.JobName)
+              artifactPath: $(Build.ArtifactStagingDirectory)
+
+          - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest')) }}:
+              - task: AzureCLI@2
+                displayName: "Upload Spector Standard Coverage Report"
+                condition: and(ne(variables['SpectorName'], ''), succeeded())
+                inputs:
+                  azureSubscription: "TypeSpec Storage"
+                  scriptType: "bash"
+                  scriptLocation: "inlineScript"
+                  inlineScript: npx tsp-spector upload-coverage --coverageFile $(Build.ArtifactStagingDirectory)/tsp-spector-coverage-azure.json --generatorName @azure-typespec/$(SpectorName) --storageAccountName typespec --containerName coverages --generatorVersion $(node -p -e "require('./package.json').version") --generatorMode azure
+                  workingDirectory: $(Build.SourcesDirectory)/eng/packages/$(SpectorName)

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The UnknownBenefitUtilizationSummary. </summary>
+    /// <summary> Unknown version of BenefitUtilizationSummary. </summary>
     internal partial class UnknownBenefitUtilizationSummary : BenefitUtilizationSummary
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBenefitUtilizationSummary"/>. </summary>

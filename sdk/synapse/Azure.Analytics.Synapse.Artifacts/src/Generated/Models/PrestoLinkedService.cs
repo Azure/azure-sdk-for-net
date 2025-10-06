@@ -7,27 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Presto server linked service. </summary>
+    /// <summary> Presto server linked service. This linked service has supported version property. The Version 1.0 is scheduled for deprecation while your pipeline will continue to run after EOL but without any bug fix or new features. </summary>
     public partial class PrestoLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
-        /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="serverVersion"/> or <paramref name="catalog"/> is null. </exception>
-        public PrestoLinkedService(object host, object serverVersion, object catalog, PrestoAuthenticationType authenticationType)
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="catalog"/> is null. </exception>
+        public PrestoLinkedService(object host, object catalog, PrestoAuthenticationType authenticationType)
         {
             Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(serverVersion, nameof(serverVersion));
             Argument.AssertNotNull(catalog, nameof(catalog));
 
             Host = host;
-            ServerVersion = serverVersion;
             Catalog = catalog;
             AuthenticationType = authenticationType;
             Type = "Presto";
@@ -35,15 +31,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
-        /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
+        /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
-        /// <param name="port"> The TCP port that the Presto server uses to listen for client connections. The default value is 8080. </param>
+        /// <param name="port"> The TCP port that the Presto server uses to listen for client connections. The default value is 8080 when disable SSL, default value is 443 when enable SSL. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
         /// <param name="username"> The user name used to connect to the Presto server. </param>
         /// <param name="password">
@@ -51,14 +48,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
-        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
-        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
-        /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
-        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
-        /// <param name="timeZoneID"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is the system time zone. </param>
+        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </param>
+        /// <param name="enableServerCertificateValidation"> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </param>
+        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Only used for Version 1.0. </param>
+        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Only used for Version 1.0. </param>
+        /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. Only used for Version 1.0. </param>
+        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. Only used for Version 1.0. </param>
+        /// <param name="timeZoneID"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal PrestoLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object serverVersion, object catalog, object port, PrestoAuthenticationType authenticationType, object username, SecretBase password, object enableSsl, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object timeZoneID, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal PrestoLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object serverVersion, object catalog, object port, PrestoAuthenticationType authenticationType, object username, SecretBase password, object enableSsl, object enableServerCertificateValidation, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object timeZoneID, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             ServerVersion = serverVersion;
@@ -68,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Username = username;
             Password = password;
             EnableSsl = enableSsl;
+            EnableServerCertificateValidation = enableServerCertificateValidation;
             TrustedCertPath = trustedCertPath;
             UseSystemTrustStore = useSystemTrustStore;
             AllowHostNameCNMismatch = allowHostNameCNMismatch;
@@ -79,11 +78,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </summary>
         public object Host { get; set; }
-        /// <summary> The version of the Presto server. (i.e. 0.148-t). </summary>
+        /// <summary> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </summary>
         public object ServerVersion { get; set; }
         /// <summary> The catalog context for all request against the server. </summary>
         public object Catalog { get; set; }
-        /// <summary> The TCP port that the Presto server uses to listen for client connections. The default value is 8080. </summary>
+        /// <summary> The TCP port that the Presto server uses to listen for client connections. The default value is 8080 when disable SSL, default value is 443 when enable SSL. </summary>
         public object Port { get; set; }
         /// <summary> The authentication mechanism used to connect to the Presto server. </summary>
         public PrestoAuthenticationType AuthenticationType { get; set; }
@@ -95,17 +94,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
+        /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </summary>
         public object EnableSsl { get; set; }
-        /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
+        /// <summary> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </summary>
+        public object EnableServerCertificateValidation { get; set; }
+        /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Only used for Version 1.0. </summary>
         public object TrustedCertPath { get; set; }
-        /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
+        /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Only used for Version 1.0. </summary>
         public object UseSystemTrustStore { get; set; }
-        /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
+        /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. Only used for Version 1.0. </summary>
         public object AllowHostNameCNMismatch { get; set; }
-        /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
+        /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. Only used for Version 1.0. </summary>
         public object AllowSelfSignedServerCert { get; set; }
-        /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is the system time zone. </summary>
+        /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </summary>
         public object TimeZoneID { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

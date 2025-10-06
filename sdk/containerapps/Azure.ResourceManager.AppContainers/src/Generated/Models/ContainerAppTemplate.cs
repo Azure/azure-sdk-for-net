@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -81,18 +80,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> User friendly suffix that is appended to the revision name. </summary>
+        [WirePath("revisionSuffix")]
         public string RevisionSuffix { get; set; }
         /// <summary> Optional duration in seconds the Container App Instance needs to terminate gracefully. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds. </summary>
+        [WirePath("terminationGracePeriodSeconds")]
         public long? TerminationGracePeriodSeconds { get; set; }
         /// <summary> List of specialized containers that run before app containers. </summary>
+        [WirePath("initContainers")]
         public IList<ContainerAppInitContainer> InitContainers { get; }
         /// <summary> List of container definitions for the Container App. </summary>
+        [WirePath("containers")]
         public IList<ContainerAppContainer> Containers { get; }
         /// <summary> Scaling properties for the Container App. </summary>
+        [WirePath("scale")]
         public ContainerAppScale Scale { get; set; }
         /// <summary> List of volume definitions for the Container App. </summary>
+        [WirePath("volumes")]
         public IList<ContainerAppVolume> Volumes { get; }
         /// <summary> List of container app services bound to the app. </summary>
+        [WirePath("serviceBinds")]
         public IList<ContainerAppServiceBind> ServiceBinds { get; }
     }
 }

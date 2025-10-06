@@ -29,11 +29,11 @@ dotnet add package Azure.ResourceManager
 - Set up a way to authenticate to Azure with Azure Identity.
 
   Some options are:
-    - Through the [Azure CLI sign in](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
-    - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
+    - Through the [Azure CLI sign in](https://learn.microsoft.com/cli/azure/authenticate-azure-cli).
+    - Via [Visual Studio](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
     - Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
 
-    More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+    More information and different authentication approaches using Azure Identity can be found in [this document](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ### Authenticate the Client
 
@@ -46,7 +46,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 ```
@@ -54,7 +53,24 @@ using Azure.ResourceManager.Resources;
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 
-More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+Note: if you want to authenticate with the azure in China, you can use the following code:
+```C# Snippet:Readme_AuthClientChina
+// Please replace the following placeholders with your Azure information
+string tenantId = "your-tenant-id";
+string clientId = "your-client-id";
+string clientSecret = "your-client-secret";
+string subscriptionId = "your-subscription-id";
+//ArmClientOptions to set the Azure China environment
+ArmClientOptions armOptions = new ArmClientOptions { Environment = ArmEnvironment.AzureChina };
+// AzureAuthorityHosts to set the Azure China environment
+Uri authorityHost = AzureAuthorityHosts.AzureChina;
+// Create ClientSecretCredential for authentication
+TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
+// Create the Azure Resource Manager client
+ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
+```
+
+More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
@@ -430,6 +446,24 @@ var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
 Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");
 ```
 
+### Rehydrate a long-running operation
+```C# Snippet:Readme_LRORehydration
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+// We initialize a long-running operation
+var rgOp = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Started, "orgName", orgData);
+// We get the rehydration token from the operation
+var rgOpRehydrationToken = rgOp.GetRehydrationToken();
+// We rehydrate the long-running operation with the rehydration token, we can also do this asynchronously
+var rehydratedOrgOperation = ArmOperation.Rehydrate<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+var rehydratedOrgOperationAsync = await ArmOperation.RehydrateAsync<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+// Now we can operate with the rehydrated operation
+var rawResponse = rehydratedOrgOperation.GetRawResponse();
+await rehydratedOrgOperation.WaitForCompletionAsync();
+```
+
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
 
 ## Azure Resource Manager Tests
@@ -459,7 +493,7 @@ To run test with code coverage and auto generate an html report with just a sing
 
 - [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample2_ManagingResourceGroups.md)
 - [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample3_CreatingAVirtualNetwork.md)
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [.NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Other Documentation
 

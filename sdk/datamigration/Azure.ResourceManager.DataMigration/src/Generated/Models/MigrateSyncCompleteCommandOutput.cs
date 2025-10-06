@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandOutput"/>. </summary>
         internal MigrateSyncCompleteCommandOutput()
         {
-            Errors = new ChangeTrackingList<ReportableException>();
+            Errors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateSyncCompleteCommandOutput(string id, IReadOnlyList<ReportableException> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateSyncCompleteCommandOutput(string id, IReadOnlyList<DataMigrationReportableException> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Errors = errors;
@@ -66,6 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Result identifier. </summary>
         public string Id { get; }
         /// <summary> List of errors that happened during the command execution. </summary>
-        public IReadOnlyList<ReportableException> Errors { get; }
+        public IReadOnlyList<DataMigrationReportableException> Errors { get; }
     }
 }

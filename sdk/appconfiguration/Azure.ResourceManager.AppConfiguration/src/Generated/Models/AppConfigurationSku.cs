@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

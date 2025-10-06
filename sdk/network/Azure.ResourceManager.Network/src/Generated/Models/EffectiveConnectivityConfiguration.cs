@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -61,12 +60,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
         /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ConfigurationGroups = configurationGroups;
@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectivityTopology = connectivityTopology;
             Hubs = hubs;
             IsGlobal = isGlobal;
+            ConnectivityCapabilities = connectivityCapabilities;
             AppliesToGroups = appliesToGroups;
             ProvisioningState = provisioningState;
             DeleteExistingPeering = deleteExistingPeering;
@@ -82,24 +83,37 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Connectivity configuration ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Effective configuration groups. </summary>
+        [WirePath("configurationGroups")]
         public IReadOnlyList<NetworkConfigurationGroup> ConfigurationGroups { get; }
         /// <summary> A description of the connectivity configuration. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Connectivity topology type. </summary>
+        [WirePath("properties.connectivityTopology")]
         public ConnectivityTopology? ConnectivityTopology { get; }
         /// <summary> List of hubItems. </summary>
+        [WirePath("properties.hubs")]
         public IReadOnlyList<ConnectivityHub> Hubs { get; }
         /// <summary> Flag if global mesh is supported. </summary>
+        [WirePath("properties.isGlobal")]
         public GlobalMeshSupportFlag? IsGlobal { get; }
+        /// <summary> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </summary>
+        [WirePath("properties.connectivityCapabilities")]
+        public ConnectivityConfigurationPropertiesConnectivityCapabilities ConnectivityCapabilities { get; }
         /// <summary> Groups for configuration. </summary>
+        [WirePath("properties.appliesToGroups")]
         public IReadOnlyList<ConnectivityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Flag if need to remove current existing peerings. </summary>
+        [WirePath("properties.deleteExistingPeering")]
         public DeleteExistingPeering? DeleteExistingPeering { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
     }
 }

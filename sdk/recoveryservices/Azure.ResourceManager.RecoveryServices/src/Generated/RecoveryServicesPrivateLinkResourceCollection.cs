@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
@@ -26,8 +24,8 @@ namespace Azure.ResourceManager.RecoveryServices
     /// </summary>
     public partial class RecoveryServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<RecoveryServicesPrivateLinkResource>, IAsyncEnumerable<RecoveryServicesPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics;
+        private readonly PrivateLinkResourceOperationGroupRestOperations _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RecoveryServicesPrivateLinkResourceCollection"/> class for mocking. </summary>
         protected RecoveryServicesPrivateLinkResourceCollection()
@@ -39,9 +37,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RecoveryServicesPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RecoveryServicesPrivateLinkResource.ResourceType, out string recoveryServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RecoveryServicesPrivateLinkResource.ResourceType, out string recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupApiVersion);
+            _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient = new PrivateLinkResourceOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,11 +60,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,11 +80,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Get");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -107,11 +105,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -127,11 +125,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Get");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
+                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -152,11 +150,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_List</description>
+        /// <description>PrivateLinkResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,9 +166,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An async collection of <see cref="RecoveryServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecoveryServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,11 +180,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_List</description>
+        /// <description>PrivateLinkResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,9 +196,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="RecoveryServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecoveryServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,11 +210,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,11 +230,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Exists");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,11 +253,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,11 +273,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Exists");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,11 +296,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,11 +316,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<RecoveryServicesPrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -343,11 +341,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,11 +361,11 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupClientDiagnostics.CreateScope("RecoveryServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourceOperationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<RecoveryServicesPrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());

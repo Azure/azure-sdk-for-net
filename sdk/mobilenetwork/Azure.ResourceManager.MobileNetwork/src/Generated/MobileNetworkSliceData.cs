@@ -87,10 +87,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the network slice resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </summary>
+        [WirePath("properties.snssai")]
         public Snssai Snssai { get; set; }
         /// <summary> An optional description for this network slice. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
     }
 }

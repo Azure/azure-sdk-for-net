@@ -116,48 +116,70 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Restore type. </summary>
+        [WirePath("properties.type")]
         public string RestoreType { get; }
         /// <summary> Restore status. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> The reason why restore is in Blocked state. </summary>
+        [WirePath("properties.blockReason")]
         public string BlockReason { get; }
         /// <summary> Last uploaded file name. </summary>
+        [WirePath("properties.lastUploadedFileName")]
         public string LastUploadedFileName { get; }
         /// <summary> Last uploaded file time. </summary>
+        [WirePath("properties.lastUploadedFileTime")]
         public DateTimeOffset? LastUploadedFileOn { get; }
         /// <summary> Last restored file name. </summary>
+        [WirePath("properties.lastRestoredFileName")]
         public string LastRestoredFileName { get; }
         /// <summary> Last restored file time. </summary>
+        [WirePath("properties.lastRestoredFileTime")]
         public DateTimeOffset? LastRestoredFileOn { get; }
         /// <summary> Percent completed. </summary>
+        [WirePath("properties.percentCompleted")]
         public int? CompletedPercent { get; }
         /// <summary> Current restored size MB. </summary>
+        [WirePath("properties.currentRestoredSizeMB")]
         public int? CurrentRestoredSizeInMB { get; }
         /// <summary> Current restore plan size MB. </summary>
+        [WirePath("properties.currentRestorePlanSizeMB")]
         public int? CurrentRestorePlanSizeInMB { get; }
         /// <summary> Current backup type. </summary>
+        [WirePath("properties.currentBackupType")]
         public string CurrentBackupType { get; }
         /// <summary> Current restoring file name. </summary>
+        [WirePath("properties.currentRestoringFileName")]
         public string CurrentRestoringFileName { get; }
         /// <summary> Number of files detected. </summary>
+        [WirePath("properties.numberOfFilesDetected")]
         public int? NumberOfFilesFound { get; }
         /// <summary> Number of files queued. </summary>
+        [WirePath("properties.numberOfFilesQueued")]
         public int? NumberOfFilesQueued { get; }
         /// <summary> Number of files skipped. </summary>
+        [WirePath("properties.numberOfFilesSkipped")]
         public int? NumberOfFilesSkipped { get; }
         /// <summary> Number of files restoring. </summary>
+        [WirePath("properties.numberOfFilesRestoring")]
         public int? NumberOfFilesRestoring { get; }
         /// <summary> Number of files restored. </summary>
+        [WirePath("properties.numberOfFilesRestored")]
         public int? NumberOfFilesRestored { get; }
         /// <summary> Number of files unrestorable. </summary>
+        [WirePath("properties.numberOfFilesUnrestorable")]
         public int? NumberOfFilesUnrestorable { get; }
         /// <summary> Full backup sets. </summary>
+        [WirePath("properties.fullBackupSets")]
         public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> FullBackupSets { get; }
         /// <summary> Diff backup sets. </summary>
+        [WirePath("properties.diffBackupSets")]
         public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> DiffBackupSets { get; }
         /// <summary> Log backup sets. </summary>
+        [WirePath("properties.logBackupSets")]
         public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> LogBackupSets { get; }
         /// <summary> Unrestorable files. </summary>
+        [WirePath("properties.unrestorableFiles")]
         public IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> UnrestorableFileList { get; }
     }
 }

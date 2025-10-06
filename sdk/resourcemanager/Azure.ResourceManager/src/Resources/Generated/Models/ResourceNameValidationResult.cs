@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Name of Resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Type of Resource. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> Is the resource name Allowed or Reserved. </summary>
+        [WirePath("status")]
         public ResourceNameValidationStatus? Status { get; }
     }
 }

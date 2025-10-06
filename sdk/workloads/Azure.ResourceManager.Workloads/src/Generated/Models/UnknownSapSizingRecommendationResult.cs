@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The UnknownSapSizingRecommendationResult. </summary>
+    /// <summary> Unknown version of SAPSizingRecommendationResult. </summary>
     internal partial class UnknownSapSizingRecommendationResult : SapSizingRecommendationResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSapSizingRecommendationResult"/>. </summary>

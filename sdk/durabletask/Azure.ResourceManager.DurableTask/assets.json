@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/durabletask/Azure.ResourceManager.DurableTask",
+  "Tag": "net/durabletask/Azure.ResourceManager.DurableTask_62fe2ab8cf"
+}

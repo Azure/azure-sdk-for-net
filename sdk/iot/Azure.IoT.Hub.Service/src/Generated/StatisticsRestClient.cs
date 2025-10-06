@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.IoT.Hub.Service.Models;
@@ -64,7 +63,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         DevicesStatistics value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevicesStatistics.DeserializeDevicesStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -84,7 +83,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         DevicesStatistics value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevicesStatistics.DeserializeDevicesStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,7 +117,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         ServiceStatistics value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -138,7 +137,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         ServiceStatistics value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

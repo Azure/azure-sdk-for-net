@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppResource IOperationSource<ContainerAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerAppData.DeserializeContainerAppData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppResource(_client, data);
         }
 
         async ValueTask<ContainerAppResource> IOperationSource<ContainerAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerAppData.DeserializeContainerAppData(document.RootElement);
-            return new ContainerAppResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            return await Task.FromResult(new ContainerAppResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

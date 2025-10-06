@@ -24,16 +24,19 @@ namespace Azure.Communication.PhoneNumbers
 
         private const string GeographicValue = "geographic";
         private const string TollFreeValue = "tollFree";
+        private const string MobileValue = "mobile";
 
         /// <summary> geographic. </summary>
         public static PhoneNumberType Geographic { get; } = new PhoneNumberType(GeographicValue);
         /// <summary> tollFree. </summary>
         public static PhoneNumberType TollFree { get; } = new PhoneNumberType(TollFreeValue);
+        /// <summary> mobile. </summary>
+        public static PhoneNumberType Mobile { get; } = new PhoneNumberType(MobileValue);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberType left, PhoneNumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are not the same. </summary>
         public static bool operator !=(PhoneNumberType left, PhoneNumberType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PhoneNumberType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PhoneNumberType"/>. </summary>
         public static implicit operator PhoneNumberType(string value) => new PhoneNumberType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

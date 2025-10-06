@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatia
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Perf", "perf\Azure.Core.Perf.csproj", "{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{96E9F605-9C38-4D77-96F4-679EF8B9390F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework.Tests", "..\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj", "{33C299B5-ABDA-47BC-838F-973E62C067F9}"
@@ -62,6 +60,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ClientModel.Tests.Internal.Perf", "..\System.ClientModel\tests\internal.perf\System.ClientModel.Tests.Internal.Perf.csproj", "{2E79B809-C520-4A07-8BC2-23C43B4D3C35}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ClientModel.Tests", "..\System.ClientModel\tests\System.ClientModel.Tests.csproj", "{F317D37D-AA38-4557-A724-6ADA56281B77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGeneration", "..\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj", "{BBE55E49-F4CA-4EBD-C093-F8935A86C03F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGeneration.Tests", "..\System.ClientModel\tests\gen\System.ClientModel.SourceGeneration.Tests.csproj", "{F34B21B1-A3FC-5284-DBB8-1188EAA04B83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel.SourceGeneration.Unit.Tests", "..\System.ClientModel\tests\gen.unit\System.ClientModel.SourceGeneration.Unit.Tests.csproj", "{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Perf", "perf\Azure.Core.Perf.csproj", "{169EE35E-F12E-5230-EAD4-3FBEB1183235}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,10 +119,6 @@ Global
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -161,6 +163,22 @@ Global
 		{F317D37D-AA38-4557-A724-6ADA56281B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F317D37D-AA38-4557-A724-6ADA56281B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F317D37D-AA38-4557-A724-6ADA56281B77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE55E49-F4CA-4EBD-C093-F8935A86C03F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE55E49-F4CA-4EBD-C093-F8935A86C03F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE55E49-F4CA-4EBD-C093-F8935A86C03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE55E49-F4CA-4EBD-C093-F8935A86C03F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34B21B1-A3FC-5284-DBB8-1188EAA04B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F34B21B1-A3FC-5284-DBB8-1188EAA04B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F34B21B1-A3FC-5284-DBB8-1188EAA04B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F34B21B1-A3FC-5284-DBB8-1188EAA04B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED66F0E-C7FA-3F0E-38C8-D576D48C8A58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{169EE35E-F12E-5230-EAD4-3FBEB1183235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{169EE35E-F12E-5230-EAD4-3FBEB1183235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{169EE35E-F12E-5230-EAD4-3FBEB1183235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{169EE35E-F12E-5230-EAD4-3FBEB1183235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

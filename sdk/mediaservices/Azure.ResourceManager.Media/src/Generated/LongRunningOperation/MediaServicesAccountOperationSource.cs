@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Media
 
         MediaServicesAccountResource IOperationSource<MediaServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<MediaServicesAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
             return new MediaServicesAccountResource(_client, data);
         }
 
         async ValueTask<MediaServicesAccountResource> IOperationSource<MediaServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
-            return new MediaServicesAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<MediaServicesAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
+            return await Task.FromResult(new MediaServicesAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

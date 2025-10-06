@@ -1,7 +1,28 @@
 trigger: none
 
+parameters:
+- name: UpdateMain
+  displayName: |
+    Update main branch.
+  type: boolean
+  default: true
+
+- name: StartMainSDKCIRun
+  displayName: |
+    Kick off the main SDK CI docs run when manually running the pipeline
+  type: boolean
+  default: false
+
+- name: ForceDailyUpdate
+  displayName: |
+    Force the daily branch update (includes starting daily branch run).
+  type: boolean
+  default: false
+
+
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
 
   # Globals sets skipComponentGovernanceDetection by default
   - name: skipComponentGovernanceDetection
@@ -12,12 +33,11 @@ jobs:
 
   - job: UpdateDocsMsBuildConfig
     pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: Ubuntu20.04
+      name: $(LINUXPOOL)
+      demands: ImageOverride -equals $(LINUXVMIMAGE)
+
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
-      DocRepoOwner: Azure
-      DocRepoName: azure-docs-sdk-dotnet
     steps:
       # Checkout the eng folder from the SDK repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -38,7 +58,7 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
-      
+
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:
@@ -46,140 +66,169 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
-          arguments: -DocRepoLocation $(DocRepoLocation)
-        displayName: Move deprecated packages to legacy moniker
-        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+      # Updating main is the default reason to kick off manual builds of the docIndex run.
+      # Manual builds of docIndex are typically done to update Main when certain updates are
+      # made. These updates include new libraries and CSV updates in azure-sdk which, depending
+      # on the column(s) updated can cause anything from package deprecation to service level
+      # readme or ToC updates.
+      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), parameters.UpdateMain) }}:
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
+            arguments: >-
+              -DocRepoLocation $(DocRepoLocation)
+          displayName: Verify Required Docs Json Members
 
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsPackages.ps1
-          arguments: -DocRepoLocation $(DocRepoLocation)
-        displayName: Update Docs Onboarding for main branch
-        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-            -ReadmeFolderRoot 'api/overview/azure'
-        displayName: Generate Service Level Readme for main branch
-        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsToc.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-            -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
-            -ReadmeFolderRoot "api/overview/azure"
-        displayName: Generate ToC for main branch
-        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+            arguments: -DocRepoLocation $(DocRepoLocation)
+          displayName: Move deprecated packages to legacy moniker
 
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-        displayName: Verify Required Docs Json Members
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Update-DocsMsPackages.ps1
+            arguments: -DocRepoLocation $(DocRepoLocation)
+          displayName: Update Docs Onboarding for main branch
 
-      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-        parameters:
-          BaseRepoBranch: $(DefaultBranch)
-          BaseRepoOwner: $(DocRepoOwner)
-          CommitMsg: "Update docs CI configuration"
-          TargetRepoName: $(DocRepoName)
-          TargetRepoOwner: $(DocRepoOwner)
-          WorkingDirectory: $(DocRepoLocation)
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+            arguments: >-
+              -DocRepoLocation $(DocRepoLocation)
+              -ReadmeFolderRoot 'api/overview/azure'
+          displayName: Generate Service Level Readme for main branch
 
-      # Prepare daily docs CI
-      - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
-        parameters:
-          DailyBranchVariableName: DailyDocsBranchName
-      - pwsh: |
-          $ErrorActionPreference = "Continue"
-          git checkout "origin/$(DailyDocsBranchName)" 2>&1 | Out-Null
-          $LASTEXITCODE = 0 # This ignores any error from git checkout
-          git status
-        displayName: Checkout daily branch if it exists
-        workingDirectory: $(DocRepoLocation)
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Update-DocsMsToc.ps1
+            arguments: >-
+              -DocRepoLocation $(DocRepoLocation)
+              -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
+              -ReadmeFolderRoot "api/overview/azure"
+          displayName: Generate ToC for main branch
 
-      - pwsh: |
-          $publicFeedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
-          Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
-        displayName: Set package source variable
-        workingDirectory: $(DocRepoLocation)
+        - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+          parameters:
+            BaseRepoBranch: $(DefaultBranch)
+            BaseRepoOwner: $(DocRepoOwner)
+            CommitMsg: "Update docs CI configuration"
+            TargetRepoName: $(DocRepoName)
+            TargetRepoOwner: $(DocRepoOwner)
+            WorkingDirectory: $(DocRepoLocation)
 
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
-          arguments: -DocRepoLocation $(DocRepoLocation)
-        displayName: Move deprecated packages to legacy moniker
-        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+        - task: AzureCLI@2
+          displayName: Queue Docs CI build for main branch
+          condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(${{ parameters.StartMainSDKCIRun }}, true)))
+          inputs:
+            azureSubscription: msdocs-apidrop-connection
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              # Resource here is the Devops API scope
+              $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+              $buildParamJson = (@{ params = (Get-Content ./eng/docsSDKCIConfig.json -Raw) -replace '%%DocsBranchName%%', "main" } | ConvertTo-Json)
+              eng/common/scripts/Queue-Pipeline.ps1 `
+                -Organization "apidrop" `
+                -Project "Content%20CI" `
+                -DefinitionId 397 `
+                -BuildParametersJson $buildParamJson `
+                -BearerToken $accessToken
 
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsPackages.ps1
-          # Use the dotnet public daily package preview feed as the source for
-          # updated packages.
-          arguments: >
-            -DocRepoLocation $(DocRepoLocation)
-            -PackageSourceOverride $(PackageSourceOverride)
-        displayName: Update Docs Onboarding for Daily docs
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-            -ReadmeFolderRoot 'api/overview/azure'
-        displayName: Generate Service Level Readme for Daily docs
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsToc.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-            -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
-            -ReadmeFolderRoot "api/overview/azure"
-            -PackageSourceOverride $(PackageSourceOverride)
-        displayName: Generate ToC for Daily docs
+      # The scenario for running a Manual build is normally only for the main updates. The daily build
+      # should really only get kicked off for scheduled runs.
+      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), parameters.ForceDailyUpdate) }}:
+        - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
+          parameters:
+            DailyBranchVariableName: DailyDocsBranchName
+        - pwsh: |
+            $ErrorActionPreference = "Continue"
+            git checkout "origin/$(DailyDocsBranchName)" 2>&1 | Out-Null
+            $LASTEXITCODE = 0 # This ignores any error from git checkout
+            git status
+          displayName: Checkout daily branch if it exists
+          workingDirectory: $(DocRepoLocation)
 
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-        displayName: Verify Required Docs Json Members
+        - pwsh: |
+            $publicFeedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
+            Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
+          displayName: Set package source variable
+          workingDirectory: $(DocRepoLocation)
 
-      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-        parameters:
-          BaseRepoBranch: $(DailyDocsBranchName)
-          BaseRepoOwner: $(DocRepoOwner)
-          CommitMsg: "Update targeting packages based on release metadata. (Daily docs)"
-          TargetRepoName: $(DocRepoName)
-          TargetRepoOwner: $(DocRepoOwner)
-          WorkingDirectory: $(DocRepoLocation)
-          ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
-          PushArgs: -f
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
+            arguments: >-
+              -DocRepoLocation $(DocRepoLocation)
+          displayName: Verify Required Docs Json Members
 
-      - task: PowerShell@2
-        displayName: Queue Docs CI build
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Queue-Pipeline.ps1
-          arguments: >
-            -Organization "apidrop"
-            -Project "Content%20CI"
-            -DefinitionId 397
-            -AuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
-            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+            arguments: -DocRepoLocation $(DocRepoLocation)
+          displayName: Move deprecated packages to legacy moniker
+
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Update-DocsMsPackages.ps1
+            # Use the dotnet public daily package preview feed as the source for
+            # updated packages.
+            arguments: >
+              -DocRepoLocation $(DocRepoLocation)
+              -PackageSourceOverride $(PackageSourceOverride)
+          displayName: Update Docs Onboarding for Daily docs
+
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+            arguments: >-
+              -DocRepoLocation $(DocRepoLocation)
+              -ReadmeFolderRoot 'api/overview/azure'
+          displayName: Generate Service Level Readme for Daily docs
+
+        - task: Powershell@2
+          inputs:
+            pwsh: true
+            filePath: eng/common/scripts/Update-DocsMsToc.ps1
+            arguments: >-
+              -DocRepoLocation $(DocRepoLocation)
+              -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
+              -ReadmeFolderRoot "api/overview/azure"
+              -PackageSourceOverride $(PackageSourceOverride)
+          displayName: Generate ToC for Daily docs
+
+        - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+          parameters:
+            BaseRepoBranch: $(DailyDocsBranchName)
+            BaseRepoOwner: $(DocRepoOwner)
+            CommitMsg: "Update targeting packages based on release metadata. (Daily docs)"
+            TargetRepoName: $(DocRepoName)
+            TargetRepoOwner: $(DocRepoOwner)
+            WorkingDirectory: $(DocRepoLocation)
+            ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
+            PushArgs: -f
+
+        - task: AzureCLI@2
+          displayName: Queue Docs CI build
+          inputs:
+            azureSubscription: msdocs-apidrop-connection
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+              $buildParamJson = (@{ params = (Get-Content ./eng/docsSDKCIConfig.json -Raw) -replace '%%DocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+              eng/common/scripts/Queue-Pipeline.ps1 `
+                -Organization "apidrop" `
+                -Project "Content%20CI" `
+                -DefinitionId 397 `
+                -BuildParametersJson $buildParamJson `
+                -BearerToken $accessToken

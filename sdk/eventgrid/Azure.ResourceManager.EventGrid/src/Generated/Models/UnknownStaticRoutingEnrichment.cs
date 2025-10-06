@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownStaticRoutingEnrichment. </summary>
+    /// <summary> Unknown version of StaticRoutingEnrichment. </summary>
     internal partial class UnknownStaticRoutingEnrichment : StaticRoutingEnrichment
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStaticRoutingEnrichment"/>. </summary>

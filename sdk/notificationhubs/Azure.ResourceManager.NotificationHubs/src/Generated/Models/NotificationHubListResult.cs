@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -53,8 +52,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubListResult"/>. </summary>
-        /// <param name="value"> Result of the List NotificationHub operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </param>
+        /// <param name="value"> Gets or sets result of the List AuthorizationRules operation. </param>
+        /// <param name="nextLink"> Gets or sets link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationHubListResult(IReadOnlyList<NotificationHubData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +62,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the List NotificationHub operation. </summary>
+        /// <summary> Gets or sets result of the List AuthorizationRules operation. </summary>
         public IReadOnlyList<NotificationHubData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </summary>
+        /// <summary> Gets or sets link to the next set of results. </summary>
         public string NextLink { get; }
     }
 }

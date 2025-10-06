@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Network
 
         VpnGatewayNatRuleResource IOperationSource<VpnGatewayNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<VpnGatewayNatRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new VpnGatewayNatRuleResource(_client, data);
         }
 
         async ValueTask<VpnGatewayNatRuleResource> IOperationSource<VpnGatewayNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
-            return new VpnGatewayNatRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<VpnGatewayNatRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new VpnGatewayNatRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

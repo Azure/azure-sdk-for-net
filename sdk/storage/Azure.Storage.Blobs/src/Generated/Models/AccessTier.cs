@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator ==(AccessTier left, AccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessTier"/> values are not the same. </summary>
         public static bool operator !=(AccessTier left, AccessTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AccessTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessTier"/>. </summary>
         public static implicit operator AccessTier(string value) => new AccessTier(value);
 
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

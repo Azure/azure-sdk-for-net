@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -81,25 +80,34 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The configuration settings of the Azure Active directory provider. </summary>
+        [WirePath("azureActiveDirectory")]
         public AppServiceAadProvider AzureActiveDirectory { get; set; }
         /// <summary> The configuration settings of the Facebook provider. </summary>
+        [WirePath("facebook")]
         public AppServiceFacebookProvider Facebook { get; set; }
         /// <summary> The configuration settings of the GitHub provider. </summary>
+        [WirePath("gitHub")]
         public AppServiceGitHubProvider GitHub { get; set; }
         /// <summary> The configuration settings of the Google provider. </summary>
+        [WirePath("google")]
         public AppServiceGoogleProvider Google { get; set; }
         /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
+        [WirePath("legacyMicrosoftAccount")]
         public LegacyMicrosoftAccount LegacyMicrosoftAccount { get; set; }
         /// <summary> The configuration settings of the Twitter provider. </summary>
+        [WirePath("twitter")]
         public AppServiceTwitterProvider Twitter { get; set; }
         /// <summary> The configuration settings of the Apple provider. </summary>
+        [WirePath("apple")]
         public AppServiceAppleProvider Apple { get; set; }
         /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
+        [WirePath("azureStaticWebApps")]
         public AppServiceStaticWebAppsProvider AzureStaticWebApps { get; set; }
         /// <summary>
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
         /// </summary>
+        [WirePath("customOpenIdConnectProviders")]
         public IDictionary<string, CustomOpenIdConnectProvider> CustomOpenIdConnectProviders { get; }
     }
 }

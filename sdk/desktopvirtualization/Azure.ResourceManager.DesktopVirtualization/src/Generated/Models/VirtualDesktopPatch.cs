@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Description of Desktop. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Friendly name of Desktop. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
     }
 }

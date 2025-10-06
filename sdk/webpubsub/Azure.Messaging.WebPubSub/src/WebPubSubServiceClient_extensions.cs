@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using Autorest.CSharp.Core;
+
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,7 +21,7 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
-    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SendToGroupAsync", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("AddUserToGroup", typeof(string), typeof(string), typeof(RequestContext))]
@@ -27,6 +30,7 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("RemoveUserFromGroupAsync", typeof(string), typeof(string), typeof(RequestContext))]
     public partial class WebPubSubServiceClient
     {
+        private readonly WebPubSubServiceClientOptions.ServiceVersion _apiVersionEnum;
         private AzureKeyCredential _credential;
         private TokenCredential _tokenCredential;
 
@@ -160,6 +164,7 @@ namespace Azure.Messaging.WebPubSub
             options ??= new WebPubSubServiceClientOptions();
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _apiVersion = options.Version;
+            _apiVersionEnum = options.VersionEnum;
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -170,7 +175,8 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return await SendToAllAsync(RequestContent.Create(content), contentType.ToString(), default, context: default).ConfigureAwait(false);
         }
@@ -183,7 +189,8 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToAll(RequestContent.Create(content), contentType, excluded: default, context: default);
         }
@@ -200,7 +207,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return await SendToUserAsync(userId, RequestContent.Create(content), contentType, context: default).ConfigureAwait(false);
         }
@@ -217,7 +225,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToUser(userId, RequestContent.Create(content), contentType, context: default);
         }
@@ -234,7 +243,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return await SendToConnectionAsync(connectionId, RequestContent.Create(content), contentType, context: default).ConfigureAwait(false);
         }
@@ -251,7 +261,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToConnection(connectionId, RequestContent.Create(content), contentType, context: default);
         }
@@ -268,9 +279,10 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded : default, context: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded: default, context: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -285,7 +297,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToGroup(group, RequestContent.Create(content), contentType, excluded: default, context: default);
         }
@@ -548,6 +561,104 @@ namespace Azure.Messaging.WebPubSub
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Add filtered connections to multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual Response AddConnectionsToGroups(IEnumerable<string> groups, string filter, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return AddConnectionsToGroups(RequestContent.Create(new { filter = filter, groups = groups }), context);
+        }
+
+        /// <summary>
+        /// Add filtered connections to multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual async Task<Response> AddConnectionsToGroupsAsync(IEnumerable<string> groups, string filter, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return await AddConnectionsToGroupsAsync(RequestContent.Create(new { filter = filter, groups = groups }), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Remove filtered connections from multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual Response RemoveConnectionsFromGroups(IEnumerable<string> groups, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return RemoveConnectionsFromGroups(RequestContent.Create(new { filter = filter, groups = groups }), context);
+        }
+
+        /// <summary>
+        /// Remove filtered connections from multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual async Task<Response> RemoveConnectionsFromGroupsAsync(IEnumerable<string> groups, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return await RemoveConnectionsFromGroupsAsync(RequestContent.Create(new { filter = filter, groups = groups }), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all the connections in a group.
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{GroupMember}"/> from the service. </returns>
+        public virtual Pageable<WebPubSubGroupMember> ListConnectionsInGroup(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, null);
+
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebPubSubGroupMember.ParseFromJson, ClientDiagnostics, _pipeline, "WebPubSubServiceClient.ListConnectionsInGroup", "value", "nextLink", maxpagesize, null);
+        }
+
+        /// <summary>
+        /// List all the connections in a group.
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{GroupMember}"/> from the service. </returns>
+        public virtual AsyncPageable<WebPubSubGroupMember> ListConnectionsInGroupAsync(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, null);
+
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebPubSubGroupMember.ParseFromJson, ClientDiagnostics, _pipeline, "WebPubSubServiceClient.ListConnectionsInGroup", "value", "nextLink", maxpagesize, null);
         }
     }
 }

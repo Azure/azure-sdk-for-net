@@ -66,12 +66,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
         public EventGridSkuName? Name { get; set; }
         /// <summary>
         /// Specifies the number of Throughput Units that defines the capacity for the namespace. The property default value is
         /// 1 which signifies 1 Throughput Unit = 1MB/s ingress and 2MB/s egress per namespace. Min capacity is 1 and
         /// max allowed capacity is 20.
         /// </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

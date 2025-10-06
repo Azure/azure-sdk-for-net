@@ -4,42 +4,43 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-public class PopTestClient
+namespace Azure.Identity.Broker.Tests
 {
-    private readonly HttpPipeline _pipeline;
-
-    protected PopTestClient() { }
-    public PopTestClient(TokenCredential credential, ClientOptions options = null)
+    public class PopTestClient
     {
-        options ??= new PopClientOptions();
-        var pipelineOptions = new HttpPipelineOptions(options);
-        pipelineOptions.PerRetryPolicies.Add(new PopTokenAuthenticationPolicy(credential as ISupportsProofOfPossession, "https://graph.microsoft.com/.default"));
-        _pipeline = HttpPipelineBuilder.Build(
-            pipelineOptions,
-            new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = (_) => true });
-    }
+        internal readonly HttpPipeline _pipeline;
 
-    [ForwardsClientCalls(true)]
-    public async virtual ValueTask<Response> GetAsync(Uri uri, CancellationToken cancellationToken = default)
-    {
-        using Request request = _pipeline.CreateRequest();
-        request.Method = RequestMethod.Get;
-        request.Uri.Reset(uri);
-        var response = await _pipeline.SendRequestAsync(request, cancellationToken);
-        return response;
-    }
+        protected PopTestClient() { }
+        public PopTestClient(TokenCredential credential, ClientOptions options = null)
+        {
+            options ??= new PopClientOptions();
+            var pipelineOptions = new HttpPipelineOptions(options);
+            pipelineOptions.PerRetryPolicies.Add(new PopTokenAuthenticationPolicy(credential, "https://graph.microsoft.com/.default"));
+            _pipeline = HttpPipelineBuilder.Build(
+                pipelineOptions);
+        }
 
-    [ForwardsClientCalls(true)]
-    public virtual Response Get(Uri uri, CancellationToken cancellationToken = default)
-    {
-        using Request request = _pipeline.CreateRequest();
-        request.Method = RequestMethod.Get;
-        request.Uri.Reset(uri);
-        var response = _pipeline.SendRequest(request, cancellationToken);
-        return response;
+        [ForwardsClientCalls(true)]
+        public async virtual ValueTask<Response> GetAsync(Uri uri, CancellationToken cancellationToken = default)
+        {
+            using Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(uri);
+            var response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            return response;
+        }
+
+        [ForwardsClientCalls(true)]
+        public virtual Response Get(Uri uri, CancellationToken cancellationToken = default)
+        {
+            using Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(uri);
+            var response = _pipeline.SendRequest(request, cancellationToken);
+            return response;
+        }
     }
 }

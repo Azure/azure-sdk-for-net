@@ -38,12 +38,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowDebugCommandResponse(status, data);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowDebugCommandResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataFlowDebugCommandResponse(document.RootElement);
+        }
+
         internal partial class DataFlowDebugCommandResponseConverter : JsonConverter<DataFlowDebugCommandResponse>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugCommandResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override DataFlowDebugCommandResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

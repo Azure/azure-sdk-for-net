@@ -165,5 +165,13 @@ namespace Azure.Containers.ContainerRegistry
                 history ?? new ChangeTrackingList<History>(),
                 signatures ?? new ChangeTrackingList<ImageSignature>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ManifestWrapper FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeManifestWrapper(document.RootElement);
+        }
     }
 }

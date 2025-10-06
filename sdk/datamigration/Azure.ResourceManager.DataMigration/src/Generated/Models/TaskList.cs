@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="TaskList"/>. </summary>
         internal TaskList()
         {
-            Value = new ChangeTrackingList<ProjectTaskData>();
+            Value = new ChangeTrackingList<DataMigrationProjectTaskData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskList"/>. </summary>
         /// <param name="value"> List of tasks. </param>
         /// <param name="nextLink"> URL to load the next page of tasks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskList(IReadOnlyList<ProjectTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TaskList(IReadOnlyList<DataMigrationProjectTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> List of tasks. </summary>
-        public IReadOnlyList<ProjectTaskData> Value { get; }
+        public IReadOnlyList<DataMigrationProjectTaskData> Value { get; }
         /// <summary> URL to load the next page of tasks. </summary>
         public string NextLink { get; }
     }

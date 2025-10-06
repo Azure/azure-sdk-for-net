@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -95,34 +94,49 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the security rule specified by the user (if created by the user). </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The network protocol this rule applies to. </summary>
+        [WirePath("protocol")]
         public EffectiveSecurityRuleProtocol? Protocol { get; }
         /// <summary> The source port or range. </summary>
+        [WirePath("sourcePortRange")]
         public string SourcePortRange { get; }
         /// <summary> The destination port or range. </summary>
+        [WirePath("destinationPortRange")]
         public string DestinationPortRange { get; }
         /// <summary> The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </summary>
+        [WirePath("sourcePortRanges")]
         public IReadOnlyList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </summary>
+        [WirePath("destinationPortRanges")]
         public IReadOnlyList<string> DestinationPortRanges { get; }
         /// <summary> The source address prefix. </summary>
+        [WirePath("sourceAddressPrefix")]
         public string SourceAddressPrefix { get; }
         /// <summary> The destination address prefix. </summary>
+        [WirePath("destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; }
         /// <summary> The source address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the asterisk (*). </summary>
+        [WirePath("sourceAddressPrefixes")]
         public IReadOnlyList<string> SourceAddressPrefixes { get; }
         /// <summary> The destination address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the asterisk (*). </summary>
+        [WirePath("destinationAddressPrefixes")]
         public IReadOnlyList<string> DestinationAddressPrefixes { get; }
         /// <summary> The expanded source address prefix. </summary>
+        [WirePath("expandedSourceAddressPrefix")]
         public IReadOnlyList<string> ExpandedSourceAddressPrefix { get; }
         /// <summary> Expanded destination address prefix. </summary>
+        [WirePath("expandedDestinationAddressPrefix")]
         public IReadOnlyList<string> ExpandedDestinationAddressPrefix { get; }
         /// <summary> Whether network traffic is allowed or denied. </summary>
+        [WirePath("access")]
         public SecurityRuleAccess? Access { get; }
         /// <summary> The priority of the rule. </summary>
+        [WirePath("priority")]
         public int? Priority { get; }
         /// <summary> The direction of the rule. </summary>
+        [WirePath("direction")]
         public SecurityRuleDirection? Direction { get; }
     }
 }

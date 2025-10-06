@@ -34,5 +34,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new ErrorCode(message, code);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorCode FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeErrorCode(document.RootElement);
+        }
     }
 }

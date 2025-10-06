@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownInputDefinition. </summary>
+    /// <summary> Unknown version of InputDefinition. </summary>
     internal partial class UnknownInputDefinition : MediaJobInputDefinition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInputDefinition"/>. </summary>

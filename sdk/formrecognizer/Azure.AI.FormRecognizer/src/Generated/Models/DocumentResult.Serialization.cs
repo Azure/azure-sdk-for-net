@@ -72,5 +72,13 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new DocumentResult(docType, modelId, pageRange, docTypeConfidence, fields);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDocumentResult(document.RootElement);
+        }
     }
 }

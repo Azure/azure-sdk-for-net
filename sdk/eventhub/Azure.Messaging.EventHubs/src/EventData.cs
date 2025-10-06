@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Azure.Core;
@@ -11,6 +13,7 @@ using Azure.Core.Amqp;
 using Azure.Core.Serialization;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs
@@ -19,6 +22,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
+    [SuppressMessage("Usage", "AZC0034:Type name 'EventData' conflicts with 'EventData (from Azure.Storage.Blobs)'. Consider renaming to 'EventHubsEventDataClient' or 'EventHubsEventDataService' to avoid confusion.", Justification = "Existing name with a stable release.")]
     public class EventData : MessageContent
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
@@ -243,6 +247,7 @@ namespace Azure.Messaging.EventHubs
         ///     <item><description>Stream</description></item>
         ///     <item><description>Uri</description></item>
         ///     <item><description>TimeSpan</description></item>
+        ///     <item><description>byte[]</description></item>
         ///   </list>
         /// </remarks>
         ///
@@ -283,15 +288,44 @@ namespace Azure.Messaging.EventHubs
         public long SequenceNumber => _amqpMessage.GetSequenceNumber(long.MinValue);
 
         /// <summary>
+        ///   Obsolete.
+        ///   A numeric representation of the offset of an event when it was received from the associated Event Hub partition.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is obsolete and should no longer be used.  Please use <see cref="OffsetString"/> instead.
+        /// </value>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetPropertyObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long Offset
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(OffsetString))
+                {
+                    return long.MinValue;
+                }
+
+                if (long.TryParse(OffsetString, out var value))
+                {
+                    return value;
+                }
+
+                throw new NotSupportedException(Resources.LongOffsetOffsetUnsupported);
+            }
+        }
+
+        /// <summary>
         ///   The offset of the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
         /// <value>
         ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
-        ///   when not populated is <see cref="long.MinValue"/>.
+        ///   when not populated is <c>null</c>.
         /// </value>
         ///
-        public long Offset => _amqpMessage.GetOffset(long.MinValue);
+        public string OffsetString => _amqpMessage.GetOffset(null);
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -382,7 +416,7 @@ namespace Azure.Messaging.EventHubs
         ///   populated is <c>null</c>.
         /// </value>
         ///
-        internal long? LastPartitionOffset => _amqpMessage.GetLastPartitionOffset();
+        internal string LastPartitionOffset => _amqpMessage.GetLastPartitionOffset();
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from
@@ -552,11 +586,11 @@ namespace Azure.Messaging.EventHubs
                            IDictionary<string, object> properties = null,
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
-                           long? offset = null,
+                           string offset = null,
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
-                           long? lastPartitionOffset = null,
+                           string lastPartitionOffset = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
                            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
                            int? publishedSequenceNumber = null,
@@ -602,17 +636,17 @@ namespace Azure.Messaging.EventHubs
         /// <param name="properties">The set of free-form event properties to send with the event.</param>
         /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
-        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="offsetString">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
-        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///   <para>This constructor exists only for backwards compatibility and has been replaced by <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />.
+        ///   It should no longer be called.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
         ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
-        ///   meaningful on events that have been read from the Event Hubs service.</para>
+        ///   meaningful on events that have been read from the Event Hubs service.</para>SSS
         /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -620,13 +654,15 @@ namespace Azure.Messaging.EventHubs
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
                             long sequenceNumber = long.MinValue,
-                            long offset = long.MinValue,
+                            string offsetString = default,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offsetString, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Initializes a new instance of the <see cref="EventData"/> class.
         /// </summary>
         ///
@@ -639,14 +675,50 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
-        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///   <para>This constructor is obsolete and has been replaced by <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />.
+        ///   It should no longer be called.</para>
+        ///
+        ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
+        ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
+        ///   meaningful on events that have been read from the Event Hubs service.</para>SSS
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected EventData(BinaryData eventBody,
+                            IDictionary<string, object> properties = null,
+                            IReadOnlyDictionary<string, object> systemProperties = null,
+                            long sequenceNumber = long.MinValue,
+                            long offset = long.MinValue,
+                            DateTimeOffset enqueuedTime = default,
+                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, (offset > long.MinValue) ? offset.ToString(CultureInfo.InvariantCulture) : null, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
+        ///   Obsolete.
+        ///
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        ///
+        /// <remarks>
+        ///   <para>This constructor is obsolete and has been replaced by <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />.
+        ///   It should no longer be called.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
         ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
         ///   meaningful on events that have been read from the Event Hubs service.</para>
         /// </remarks>
         ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected EventData(ReadOnlyMemory<byte> eventBody,
                             IDictionary<string, object> properties = null,
@@ -654,7 +726,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, (offset > long.MinValue) ? offset.ToString(CultureInfo.InvariantCulture) : null, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 

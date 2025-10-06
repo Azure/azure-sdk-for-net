@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceConfiguration"/>. </summary>
-        /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminCredentials"/> or <paramref name="serialNumber"/> is null. </exception>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceConfiguration"/>. </summary>
-        /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>
         /// <param name="storageApplianceName"> The user-provided name for the storage appliance that will be created from this specification. </param>
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
-        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
+        /// <summary> The credentials of the administrative interface on this storage appliance. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </summary>
         public AdministrativeCredentials AdminCredentials { get; set; }
         /// <summary> The slot that storage appliance is in the rack based on the BOM configuration. </summary>
         public long RackSlot { get; set; }

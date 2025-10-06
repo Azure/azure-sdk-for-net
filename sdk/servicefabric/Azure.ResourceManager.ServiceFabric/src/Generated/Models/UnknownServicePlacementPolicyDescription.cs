@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The UnknownServicePlacementPolicyDescription. </summary>
+    /// <summary> Unknown version of ServicePlacementPolicyDescription. </summary>
     internal partial class UnknownServicePlacementPolicyDescription : ServicePlacementPolicyDescription
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicyDescription"/>. </summary>

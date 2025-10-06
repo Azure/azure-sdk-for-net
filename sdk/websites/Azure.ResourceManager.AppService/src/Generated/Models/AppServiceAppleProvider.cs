@@ -64,12 +64,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the Apple registration. </summary>
+        [WirePath("registration")]
         public AppServiceAppleRegistration Registration { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>
         internal LoginScopes Login { get; set; }
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("login.scopes")]
         public IList<string> LoginScopes
         {
             get

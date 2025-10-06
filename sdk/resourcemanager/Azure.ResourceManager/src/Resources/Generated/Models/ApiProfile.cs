@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The profile version. </summary>
+        [WirePath("profileVersion")]
         public string ProfileVersion { get; }
         /// <summary> The API version. </summary>
+        [WirePath("apiVersion")]
         public string ApiVersion { get; }
     }
 }

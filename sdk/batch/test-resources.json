@@ -11,21 +11,61 @@
   },
   "variables": {
     "batch_account_name": "dotnotsdkbatchaccount1",
+    "batch_storage_name": "dotnotsdkbatchstorage1",
     "location": "eastus",
-    "api_version": "2023-11-01"
+    "api_version": "2023-11-01",
+    "mgmtApiVersion": "2022-05-01",
+    "encryption": {
+      "services": {
+          "file": {
+              "enabled": true
+          },
+          "blob": {
+              "enabled": true
+          }
+      },
+      "keySource": "Microsoft.Storage"
+    },
+    "networkAcls": {
+      "bypass": "AzureServices",
+      "virtualNetworkRules": [],
+      "ipRules": [],
+      "defaultAction": "Allow"
+  }
   },
   "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "[variables('mgmtApiVersion')]",
+      "name": "[variables('batch_storage_name')]",
+      "location": "[variables('location')]",
+      "sku": {
+          "name": "Standard_RAGRS",
+          "tier": "Standard"
+      },
+      "kind": "StorageV2",
+      "properties": {
+          "networkAcls": "[variables('networkAcls')]",
+          "supportsHttpsTrafficOnly": true,
+          "encryption": "[variables('encryption')]",
+          "accessTier": "Hot",
+          "minimumTlsVersion": "TLS1_2",
+          "allowBlobPublicAccess": true
+      }
+    },
     {
       "type": "Microsoft.Batch/batchAccounts",
       "apiVersion": "[variables('api_version')]",
       "name": "[variables('batch_account_name')]",
       "location": "[variables('location')]",
-      "dependsOn": [],
       "tags": {},
       "identity": {
         "type": "None"
       },
       "properties": {
+        "autoStorage": {
+          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('batch_storage_name'))]"
+        },
         "publicNetworkAccess": "Enabled",
         "poolAllocationMode": "BatchService",
         "allowedAuthenticationModes": [
@@ -38,10 +78,17 @@
             "defaultAction": "Allow"
           }
         }
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('batch_storage_name'))]"
+      ]
     }
   ],
   "outputs": {
+    "batch_storage_name": {
+      "type": "string",
+      "value": "[variables('batch_storage_name')]"
+    },
     "batch_account_name": {
       "type": "string",
       "value": "[variables('batch_account_name')]"

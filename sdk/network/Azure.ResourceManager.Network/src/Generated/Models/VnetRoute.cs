@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Configuration for static routes on this HubVnetConnection. </summary>
+        [WirePath("staticRoutesConfig")]
         public StaticRoutesConfig StaticRoutesConfig { get; set; }
         /// <summary> List of all Static Routes. </summary>
+        [WirePath("staticRoutes")]
         public IList<StaticRoute> StaticRoutes { get; }
         /// <summary> The list of references to HubBgpConnection objects. </summary>
+        [WirePath("bgpConnections")]
         public IReadOnlyList<WritableSubResource> BgpConnections { get; }
     }
 }

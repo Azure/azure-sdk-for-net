@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }
 }

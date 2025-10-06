@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string NfsMountValue = "NfsMount";
         private const string AzureStorageSmbFileShareValue = "AzureStorageSmbFileShare";
         private const string SmbMountValue = "SmbMount";
+        private const string AzureMultiCloudConnectorValue = "AzureMultiCloudConnector";
+        private const string AzureStorageNfsFileShareValue = "AzureStorageNfsFileShare";
 
         /// <summary> AzureStorageBlobContainer. </summary>
         public static EndpointType AzureStorageBlobContainer { get; } = new EndpointType(AzureStorageBlobContainerValue);
@@ -35,11 +37,15 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static EndpointType AzureStorageSmbFileShare { get; } = new EndpointType(AzureStorageSmbFileShareValue);
         /// <summary> SmbMount. </summary>
         public static EndpointType SmbMount { get; } = new EndpointType(SmbMountValue);
+        /// <summary> AzureMultiCloudConnector. </summary>
+        public static EndpointType AzureMultiCloudConnector { get; } = new EndpointType(AzureMultiCloudConnectorValue);
+        /// <summary> AzureStorageNfsFileShare. </summary>
+        public static EndpointType AzureStorageNfsFileShare { get; } = new EndpointType(AzureStorageNfsFileShareValue);
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>
         public static bool operator !=(EndpointType left, EndpointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EndpointType"/>. </summary>
         public static implicit operator EndpointType(string value) => new EndpointType(value);
 
         /// <inheritdoc />
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

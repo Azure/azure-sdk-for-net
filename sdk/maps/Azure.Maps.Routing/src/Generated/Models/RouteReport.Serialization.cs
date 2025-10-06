@@ -39,5 +39,13 @@ namespace Azure.Maps.Routing.Models
             }
             return new RouteReport(effectiveSettings ?? new ChangeTrackingList<EffectiveSetting>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteReport FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRouteReport(document.RootElement);
+        }
     }
 }

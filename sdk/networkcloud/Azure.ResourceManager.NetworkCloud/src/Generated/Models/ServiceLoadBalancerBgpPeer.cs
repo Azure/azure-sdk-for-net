@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -64,8 +63,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="ServiceLoadBalancerBgpPeer"/>. </summary>
         /// <param name="bfdEnabled"> The indicator of BFD enablement for this BgpPeer. </param>
         /// <param name="bgpMultiHop"> The indicator to enable multi-hop peering support. </param>
-        /// <param name="holdTime"> The requested BGP hold time value. This field uses ISO 8601 duration format, for example P1H. </param>
-        /// <param name="keepAliveTime"> The requested BGP keepalive time value. This field uses ISO 8601 duration format, for example P1H. </param>
+        /// <param name="holdTime"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The requested BGP hold time value. This field uses ISO 8601 duration format, for example P1H. </param>
+        /// <param name="keepAliveTime"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The requested BGP keepalive time value. This field uses ISO 8601 duration format, for example P1H. </param>
         /// <param name="myAsn"> The autonomous system number used for the local end of the BGP session. </param>
         /// <param name="name"> The name used to identify this BGP peer for association with a BGP advertisement. </param>
         /// <param name="password"> The authentication password for routers enforcing TCP MD5 authenticated sessions. </param>
@@ -97,9 +96,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public BfdEnabled? BfdEnabled { get; set; }
         /// <summary> The indicator to enable multi-hop peering support. </summary>
         public BgpMultiHop? BgpMultiHop { get; set; }
-        /// <summary> The requested BGP hold time value. This field uses ISO 8601 duration format, for example P1H. </summary>
+        /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The requested BGP hold time value. This field uses ISO 8601 duration format, for example P1H. </summary>
         public string HoldTime { get; set; }
-        /// <summary> The requested BGP keepalive time value. This field uses ISO 8601 duration format, for example P1H. </summary>
+        /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The requested BGP keepalive time value. This field uses ISO 8601 duration format, for example P1H. </summary>
         public string KeepAliveTime { get; set; }
         /// <summary> The autonomous system number used for the local end of the BGP session. </summary>
         public long? MyAsn { get; set; }

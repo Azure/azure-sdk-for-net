@@ -1,5 +1,11 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
+parameters:
+  - name: ReleaseToDevOpsOnly
+    displayName: 'Release package to DevOps feed instead of Nuget.org'
+    type: boolean
+    default: false
+
 trigger:
   branches:
     include:
@@ -9,8 +15,17 @@ trigger:
   paths:
     include:
     - sdk/storage/
+    - sdk/storage/Azure.Storage.DataMovement/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs/
+    - sdk/storage/Azure.Storage.DataMovement.Files/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
     exclude:
     - sdk/storage/Azure.ResourceManager.Storage/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests/
 
 pr:
   branches:
@@ -23,40 +38,50 @@ pr:
     include:
     - sdk/storage/
     exclude:
-    - sdk/storage/Azure.ResourceManager.Storage/
+    - sdk/storage/Azure.Storage.DataMovement/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs/
+    - sdk/storage/Azure.Storage.DataMovement.Files/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/
+    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    ${{ if eq(parameters.ReleaseToDevOpsOnly, 'true') }}:
+      PublicFeed: 'public/storage-staging'
+    SDKType: client
     ServiceDirectory: storage
     BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Storage.Blobs
       safeName: AzureStorageBlobs
+      skipSmokeTests: true
     - name: Azure.Storage.Blobs.Batch
       safeName: AzureStorageBlobsBatch
+      skipSmokeTests: true
     - name: Azure.Storage.Common
       safeName: AzureStorageCommon
+      skipSmokeTests: true
     - name: Azure.Storage.Files.Shares
       safeName: AzureStorageFilesShares
+      skipSmokeTests: true
     - name: Azure.Storage.Files.DataLake
       safeName: AzureStorageFilesDataLake
+      skipSmokeTests: true
     - name: Azure.Storage.Queues
       safeName: AzureStorageQueues
+      skipSmokeTests: true
     - name: Azure.Storage.Blobs.ChangeFeed
       safeName: AzureStorageBlobsChangeFeed
-    - name: Azure.Storage.DataMovement
-      safeName: AzureStorageDataMovement
-    - name: Azure.Storage.DataMovement.Blobs
-      safeName: AzureStorageDataMovementBlobs
-    - name: Azure.Storage.DataMovement.Files.Shares
-      safeName: AzureStorageDataMovementFilesShares
-    - name: Microsoft.Azure.WebJobs.Extensions.Storage
-      safeName: MicrosoftAzureWebJobsExtensionsStorage
-    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
-      safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
-    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
-      safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
+      skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Storage.Blobs
+      ExpectedWarningsFilepath: None

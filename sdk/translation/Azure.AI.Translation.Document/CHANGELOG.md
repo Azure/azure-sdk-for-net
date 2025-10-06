@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 2.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0 (2024-11-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+
+### Other Changes
+- Renamed SingleDocumentTranslationClient's API from `document_translate` to `translate`
+
+## 2.0.0-beta.2 (2024-07-05)
+
+### Features Added
+- Single document translation client can be created using endpoint alone, mainly for SDK to work against containers.
+
+### Bugs Fixed
+- SourceInput options which is a part of TranslationInput is now public. This allows users to enter source language, source storage, and document filter prefix and suffix.
+
+## 2.0.0-beta.1 (2024-05-07)
+
+### Features Added
+- `documenttranslate` is the method added to submit a single/synchronous document translation request to the Document Translation service.
+- `DocumentTranslateContent` has been added to specify the `documenttranslate` request content.
+- Added `getSupportedFormats` that returns a list of supported documents and glossaries by the Document Translation service.
+
+### Breaking Changes
+- Version `v1.0` is not supported
+- Renamed property `FormatType` to `FileFormatType`
 
 ## 1.0.0 (2022-06-07)
 

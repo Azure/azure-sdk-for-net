@@ -1,18 +1,128 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
-* All three signals (Traces, Metrics, and Logs) now support OpenTelemetry's ["service.version"](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/resource#service) in Resource attributes.
-  This is mapped as [Application Version](https://learn.microsoft.com/azure/azure-monitor/app/data-model-complete#application-version) in Application Insights.
-  ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`). This now applies to both
+  `UseAzureMonitorExporter` and the direct
+  `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-05-08)
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be internal to match the other Exporters (Trace and Metric).
+  ([#49849](https://github.com/Azure/azure-sdk-for-net/pull/49849))
+
+* Update OpenTelemetry dependencies
+  ([#49861](https://github.com/Azure/azure-sdk-for-net/pull/49861))
+  - OpenTelemetry 1.12.0
+
+## 1.4.0-beta.3 (2025-04-01)
+
+### Features Added
+
+* Added support for emitting Application Insights Custom Events.
+  ([#48378](https://github.com/Azure/azure-sdk-for-net/pull/48378))
+
+* Added new api `UseAzureMonitorExporter` which automatically enables logging, tracing, and metrics.
+  Additional calls to `WithLogging`, `WithMetrics`, and `WithTracing` are NOT required.
+  However, you may still need to enable specific tracing/metric sources/meters separately.
+  ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
+  - Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
+
+### Bugs Fixed
+
+* Fixed an issue where array attributes on metrics weren't exported correctly.
+  ([#47300](https://github.com/Azure/azure-sdk-for-net/pull/47300))
+
+* Always set Dependency.Target to "server.address" and "server.port" if present.
+  ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#48574](https://github.com/Azure/azure-sdk-for-net/pull/48574))
+  - OpenTelemetry 1.11.2
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.1
+
+## 1.4.0-beta.2 (2024-10-11)
+
+### Bugs Fixed
+
+* RPC attributes are now correctly exported to Application Insights as custom properties.
+  ([#45316](https://github.com/Azure/azure-sdk-for-net/pull/45316))
+* Fixed an issue where unmapped attributes were dropped from telemetry.
+  ([#45909](https://github.com/Azure/azure-sdk-for-net/pull/45909))
+
+## 1.4.0-beta.1 (2024-07-12)
+
+### Bugs Fixed
+
+* Added the `LogRecord.CategoryName` field to log and exception telemetry.
+  Previously the `CategoryName` field was omitted, which was inconsistent with
+  expected `ILogger` behavior, and with Application Insights classic behavior.
+  ([#44754](https://github.com/Azure/azure-sdk-for-net/pull/44754))
+
+### Features Added
+
+* Added `LoggerProviderBuilder.AddAzureMonitorLogExporter` registration extension.
+  ([#44617](https://github.com/Azure/azure-sdk-for-net/pull/44617))
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  (This feature was originally introduced in 1.3.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
+
+* Update OpenTelemetry dependencies
+  ([#44650](https://github.com/Azure/azure-sdk-for-net/pull/44650))
+  - OpenTelemetry 1.9.0
+
+## 1.3.0 (2024-06-07)
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be internal.
+  This will be changed back to public in our next Beta while we experiment with options to enable log filtering.
+  ([#44479](https://github.com/Azure/azure-sdk-for-net/pull/44479))
+
+## 1.3.0-beta.2 (2024-05-08)
+
+### Features Added
+
+* All three signals (Traces, Metrics, and Logs) now support OpenTelemetry's ["service.version"](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/resource#service) in Resource attributes.
+  This is mapped as [Application Version](https://learn.microsoft.com/azure/azure-monitor/app/data-model-complete#application-version) in Application Insights.
+  ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+* Turned off internal spans and logs in exporter HTTP pipeline
+  ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
+
+### Bugs Fixed
+* The success or failure of an incoming HTTP request is now determined by the status code only when the Activity Status is `Unset`
+  ([#43594](https://github.com/Azure/azure-sdk-for-net/pull/43594), based on [#41993](https://github.com/Azure/azure-sdk-for-net/issues/41993))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#43688](https://github.com/Azure/azure-sdk-for-net/pull/43688))
+  - OpenTelemetry 1.8.1
 
 ## 1.3.0-beta.1 (2024-02-08)
 
@@ -58,7 +168,7 @@
   of the OpenTelemetry LoggerProvider. This fix prevents data duplication in
   message fields and properties.
   ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
-  
+
 * Fixed an issue related to the processing of scopes that do not conform to a
   key-value pair structure.
   ([#39453](https://github.com/Azure/azure-sdk-for-net/pull/39453))
@@ -67,7 +177,7 @@
      'SomeScopeValue' to the properties using a key that follows the pattern
      'scope->*'. Additionally, 'OriginalFormatScope_*' keys were used to handle
      formatted strings within the scope.
-   * **New Behavior**: 
+   * **New Behavior**:
      * Non-key-value pair scopes are no longer added to the properties,
        resulting in cleaner and more efficient log output.
      * 'OriginalFormatScope_*' keys have been removed.
@@ -151,7 +261,7 @@
   ([#36509](https://github.com/Azure/azure-sdk-for-net/pull/36509))
 * Add `db.name` to custom properties.
   ([#36389](https://github.com/Azure/azure-sdk-for-net/pull/36389))
- 
+
 ### Bugs Fixed
 
 * Fixed an issue which resulted in standard metrics getting exported to backends other than Azure Monitor, when Azure Monitor metric exporter was used with other exporters such as otlp side by side.
@@ -280,7 +390,7 @@
 * Request and Dependency Success criteria will now be decided based on
   `Activity.Status` ([#31024](https://github.com/Azure/azure-sdk-for-net/pull/31024))
 * Changed `AzureMonitorTraceExporter` to internal ([#31067](https://github.com/Azure/azure-sdk-for-net/pull/31067))
-  
+
 ### Bugs Fixed
 
 * Fix shared RoleName/RoleInstance between Trace and Log Exporter ([#26438](https://github.com/Azure/azure-sdk-for-net/pull/26438))

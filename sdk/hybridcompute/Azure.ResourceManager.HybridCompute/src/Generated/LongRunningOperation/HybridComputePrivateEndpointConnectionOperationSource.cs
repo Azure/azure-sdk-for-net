@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputePrivateEndpointConnectionResource IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return new HybridComputePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<HybridComputePrivateEndpointConnectionResource> IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(document.RootElement);
-            return new HybridComputePrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            return await Task.FromResult(new HybridComputePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

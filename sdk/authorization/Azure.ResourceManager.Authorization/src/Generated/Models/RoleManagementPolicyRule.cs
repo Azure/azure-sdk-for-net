@@ -68,10 +68,12 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The id of the rule. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The type of rule. </summary>
         internal RoleManagementPolicyRuleType RuleType { get; set; }
         /// <summary> The target of the current rule. </summary>
+        [WirePath("target")]
         public RoleManagementPolicyRuleTarget Target { get; set; }
     }
 }

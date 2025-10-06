@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sphere
 
         SphereDeploymentResource IOperationSource<SphereDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SphereDeploymentData.DeserializeSphereDeploymentData(document.RootElement);
+            var data = ModelReaderWriter.Read<SphereDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
             return new SphereDeploymentResource(_client, data);
         }
 
         async ValueTask<SphereDeploymentResource> IOperationSource<SphereDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SphereDeploymentData.DeserializeSphereDeploymentData(document.RootElement);
-            return new SphereDeploymentResource(_client, data);
+            var data = ModelReaderWriter.Read<SphereDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
+            return await Task.FromResult(new SphereDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

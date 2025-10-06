@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownExternalSecuritySolution. </summary>
+    /// <summary> Unknown version of ExternalSecuritySolution. </summary>
     internal partial class UnknownExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExternalSecuritySolution"/>. </summary>

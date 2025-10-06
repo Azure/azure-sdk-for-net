@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -28,11 +27,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="StopAnalyzer"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        internal StopAnalyzer(string oDataType, string name, IList<string> stopwords) : base(oDataType, name)
+        internal StopAnalyzer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> stopwords) : base(oDataType, name, serializedAdditionalRawData)
         {
             Stopwords = stopwords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StopAnalyzer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StopAnalyzer"/> for deserialization. </summary>
+        internal StopAnalyzer()
+        {
         }
     }
 }

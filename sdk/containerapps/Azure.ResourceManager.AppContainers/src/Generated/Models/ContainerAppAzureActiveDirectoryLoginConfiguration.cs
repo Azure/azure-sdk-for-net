@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -70,8 +69,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
         /// </summary>
+        [WirePath("loginParameters")]
         public IList<string> LoginParameters { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("disableWWWAuthenticate")]
         public bool? IsWwwAuthenticationDisabled { get; set; }
     }
 }

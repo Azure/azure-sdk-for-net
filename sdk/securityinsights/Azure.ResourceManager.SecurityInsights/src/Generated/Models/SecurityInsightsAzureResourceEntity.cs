@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The azure resource id of the resource. </summary>
+        [WirePath("properties.resourceId")]
         public string ResourceId { get; }
         /// <summary> The subscription id of the resource. </summary>
+        [WirePath("properties.subscriptionId")]
         public string SubscriptionId { get; }
     }
 }

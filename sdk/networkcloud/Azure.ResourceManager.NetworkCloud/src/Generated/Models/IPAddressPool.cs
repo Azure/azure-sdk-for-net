@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IPAddressPool"/>. </summary>
-        /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. </param>
+        /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. For a BGP service load balancer configuration, only CIDR format is supported and excludes /32 (IPv4) and /128 (IPv6) prefixes. </param>
         /// <param name="name"> The name used to identify this IP address pool for association with a BGP advertisement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addresses"/> or <paramref name="name"/> is null. </exception>
         public IPAddressPool(IEnumerable<string> addresses, string name)
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IPAddressPool"/>. </summary>
-        /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. </param>
+        /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. For a BGP service load balancer configuration, only CIDR format is supported and excludes /32 (IPv4) and /128 (IPv6) prefixes. </param>
         /// <param name="autoAssign"> The indicator to determine if automatic allocation from the pool should occur. </param>
         /// <param name="name"> The name used to identify this IP address pool for association with a BGP advertisement. </param>
         /// <param name="onlyUseHostIPs"> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </param>
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
-        /// <summary> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. </summary>
+        /// <summary> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. For a BGP service load balancer configuration, only CIDR format is supported and excludes /32 (IPv4) and /128 (IPv6) prefixes. </summary>
         public IList<string> Addresses { get; }
         /// <summary> The indicator to determine if automatic allocation from the pool should occur. </summary>
         public BfdEnabled? AutoAssign { get; set; }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="bgpAdvertisements"> The association of IP address pools to the communities and peers, allowing for announcement of IPs. </param>
         /// <param name="bgpPeers"> The list of additional BgpPeer entities that the Kubernetes cluster will peer with. All peering must be explicitly defined. </param>
         /// <param name="fabricPeeringEnabled"> The indicator to specify if the load balancer peers with the network fabric. </param>
-        /// <param name="ipAddressPools"> The list of pools of IP addresses that can be allocated to Load Balancer services. </param>
+        /// <param name="ipAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BgpServiceLoadBalancerConfiguration(IList<BgpAdvertisement> bgpAdvertisements, IList<ServiceLoadBalancerBgpPeer> bgpPeers, FabricPeeringEnabled? fabricPeeringEnabled, IList<IPAddressPool> ipAddressPools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IList<ServiceLoadBalancerBgpPeer> BgpPeers { get; }
         /// <summary> The indicator to specify if the load balancer peers with the network fabric. </summary>
         public FabricPeeringEnabled? FabricPeeringEnabled { get; set; }
-        /// <summary> The list of pools of IP addresses that can be allocated to Load Balancer services. </summary>
+        /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
         public IList<IPAddressPool> IPAddressPools { get; }
     }
 }

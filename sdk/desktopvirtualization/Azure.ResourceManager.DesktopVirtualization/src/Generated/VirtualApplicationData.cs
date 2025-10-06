@@ -103,30 +103,43 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> ObjectId of Application. (internal use). </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; }
         /// <summary> Description of Application. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Friendly name of Application. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Specifies a path for the executable file for the application. </summary>
+        [WirePath("properties.filePath")]
         public string FilePath { get; set; }
         /// <summary> Specifies the package family name for MSIX applications. </summary>
+        [WirePath("properties.msixPackageFamilyName")]
         public string MsixPackageFamilyName { get; set; }
         /// <summary> Specifies the package application Id for MSIX applications. </summary>
+        [WirePath("properties.msixPackageApplicationId")]
         public string MsixPackageApplicationId { get; set; }
         /// <summary> Resource Type of Application. </summary>
+        [WirePath("properties.applicationType")]
         public RemoteApplicationType? ApplicationType { get; set; }
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
+        [WirePath("properties.commandLineSetting")]
         public VirtualApplicationCommandLineSetting CommandLineSetting { get; set; }
         /// <summary> Command Line Arguments for Application. </summary>
+        [WirePath("properties.commandLineArguments")]
         public string CommandLineArguments { get; set; }
         /// <summary> Specifies whether to show the RemoteApp program in the RD Web Access server. </summary>
+        [WirePath("properties.showInPortal")]
         public bool? ShowInPortal { get; set; }
         /// <summary> Path to icon. </summary>
+        [WirePath("properties.iconPath")]
         public string IconPath { get; set; }
         /// <summary> Index of the icon. </summary>
+        [WirePath("properties.iconIndex")]
         public int? IconIndex { get; set; }
         /// <summary> Hash of the icon. </summary>
+        [WirePath("properties.iconHash")]
         public string IconHash { get; }
         /// <summary>
         /// the icon a 64 bit string as a byte array.
@@ -158,6 +171,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.iconContent")]
         public BinaryData IconContent { get; }
     }
 }

@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing the query API keys for a given Azure Cognitive Search service. </summary>
+    /// <summary> Response containing the query API keys for a given Azure AI Search service. </summary>
     internal partial class ListQueryKeysResult
     {
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListQueryKeysResult"/>. </summary>
-        /// <param name="value"> The query keys for the Azure Cognitive Search service. </param>
+        /// <param name="value"> The query keys for the Azure AI Search service. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of query keys. Returned when the total number of requested query keys exceed maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ListQueryKeysResult(IReadOnlyList<SearchServiceQueryKey> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The query keys for the Azure Cognitive Search service. </summary>
+        /// <summary> The query keys for the Azure AI Search service. </summary>
         public IReadOnlyList<SearchServiceQueryKey> Value { get; }
         /// <summary> Request URL that can be used to query next page of query keys. Returned when the total number of requested query keys exceed maximum page size. </summary>
         public string NextLink { get; }

@@ -1799,7 +1799,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     ""recipient"": ""test1@contoso.com"",
                     ""messageId"": ""950850f5-bcdf-4315-b77a-6447cf56fac9"",
                     ""status"": ""delivered"",
-                    ""deliveryAttemptTimeStamp"": ""2023-02-09T19:46:12.2480265+00:00"",
+                    ""deliveryAttemptTimestamp"": ""2023-02-09T19:46:12.2480265+00:00"",
                     ""deliveryStatusDetails"": {
                         ""statusMessage"": ""DestinationMailboxFull""
                     }
@@ -1944,7 +1944,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
             ""eventType"": ""Microsoft.HealthcareApis.DicomImageCreated"",
             ""dataVersion"": ""1"",
-            ""metadataVersion"": ""1"", 
+            ""metadataVersion"": ""1"",
             ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
@@ -1978,7 +1978,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
             ""eventType"": ""Microsoft.HealthcareApis.DicomImageUpdated"",
             ""dataVersion"": ""1"",
-            ""metadataVersion"": ""1"", 
+            ""metadataVersion"": ""1"",
             ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
@@ -2012,7 +2012,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
             ""eventType"": ""Microsoft.HealthcareApis.DicomImageDeleted"",
             ""dataVersion"": ""1"",
-            ""metadataVersion"": ""1"", 
+            ""metadataVersion"": ""1"",
             ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
@@ -3689,7 +3689,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     ""deliveryStatusDetails"": {
                         ""statusMessage"": ""DestinationMailboxFull""
                     },
-                    ""deliveryAttemptTimeStamp"": ""2023-02-09T19:46:12.2480265+00:00""
+                    ""deliveryAttemptTimestamp"": ""2023-02-09T19:46:12.2480265+00:00""
                 },
                 ""type"": ""Microsoft.Communication.EmailDeliveryReportReceived"",
                 ""time"": ""2023-02-09T19:46:12.2478002Z"",
@@ -3785,7 +3785,7 @@ namespace Azure.Messaging.EventGrid.Tests
                                         ""code"": ""InnerFailure"",
                                         ""message"": ""Classification failed due to <reason>"",
                                         ""target"": null},
-                        ""details"": null
+                        ""details"": []
                       }
                     ],
                     ""jobId"": ""7f1df17b-570b-4ae5-9cf5-fe6ff64cc712"",

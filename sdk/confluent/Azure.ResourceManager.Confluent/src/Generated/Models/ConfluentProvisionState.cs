@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static bool operator ==(ConfluentProvisionState left, ConfluentProvisionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfluentProvisionState"/> values are not the same. </summary>
         public static bool operator !=(ConfluentProvisionState left, ConfluentProvisionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfluentProvisionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfluentProvisionState"/>. </summary>
         public static implicit operator ConfluentProvisionState(string value) => new ConfluentProvisionState(value);
 
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

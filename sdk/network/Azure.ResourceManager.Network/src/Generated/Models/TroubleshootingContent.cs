@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -82,10 +81,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The target resource to troubleshoot. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The ID for the storage account to save the troubleshoot result. </summary>
+        [WirePath("properties.storageId")]
         public ResourceIdentifier StorageId { get; }
         /// <summary> The path to the blob to save the troubleshoot result in. </summary>
+        [WirePath("properties.storagePath")]
         public Uri StorageUri { get; }
     }
 }

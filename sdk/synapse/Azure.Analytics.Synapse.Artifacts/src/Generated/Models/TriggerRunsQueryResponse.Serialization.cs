@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TriggerRunsQueryResponse(value, continuationToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TriggerRunsQueryResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTriggerRunsQueryResponse(document.RootElement);
+        }
+
         internal partial class TriggerRunsQueryResponseConverter : JsonConverter<TriggerRunsQueryResponse>
         {
             public override void Write(Utf8JsonWriter writer, TriggerRunsQueryResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override TriggerRunsQueryResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

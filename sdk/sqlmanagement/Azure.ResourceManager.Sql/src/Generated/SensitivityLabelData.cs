@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="informationTypeId"> The information type ID. </param>
         /// <param name="isDisabled"> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </param>
         /// <param name="rank"></param>
+        /// <param name="clientClassificationSource"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, ClientClassificationSource? clientClassificationSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             SchemaName = schemaName;
@@ -84,28 +85,42 @@ namespace Azure.ResourceManager.Sql
             InformationTypeId = informationTypeId;
             IsDisabled = isDisabled;
             Rank = rank;
+            ClientClassificationSource = clientClassificationSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource that manages the sensitivity label. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; }
         /// <summary> The schema name. </summary>
+        [WirePath("properties.schemaName")]
         public string SchemaName { get; }
         /// <summary> The table name. </summary>
+        [WirePath("properties.tableName")]
         public string TableName { get; }
         /// <summary> The column name. </summary>
+        [WirePath("properties.columnName")]
         public string ColumnName { get; }
         /// <summary> The label name. </summary>
+        [WirePath("properties.labelName")]
         public string LabelName { get; set; }
         /// <summary> The label ID. </summary>
+        [WirePath("properties.labelId")]
         public string LabelId { get; set; }
         /// <summary> The information type. </summary>
+        [WirePath("properties.informationType")]
         public string InformationType { get; set; }
         /// <summary> The information type ID. </summary>
+        [WirePath("properties.informationTypeId")]
         public string InformationTypeId { get; set; }
         /// <summary> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </summary>
+        [WirePath("properties.isDisabled")]
         public bool? IsDisabled { get; }
         /// <summary> Gets or sets the rank. </summary>
+        [WirePath("properties.rank")]
         public SensitivityLabelRank? Rank { get; set; }
+        /// <summary> Gets or sets the client classification source. </summary>
+        [WirePath("properties.clientClassificationSource")]
+        public ClientClassificationSource? ClientClassificationSource { get; set; }
     }
 }

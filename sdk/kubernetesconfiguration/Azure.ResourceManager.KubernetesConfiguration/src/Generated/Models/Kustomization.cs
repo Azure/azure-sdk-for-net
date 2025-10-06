@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -76,20 +75,28 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Name of the Kustomization, matching the key in the Kustomizations object map. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The path in the source reference to reconcile on the cluster. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </summary>
+        [WirePath("dependsOn")]
         public IList<string> DependsOn { get; set; }
         /// <summary> The maximum time to attempt to reconcile the Kustomization on the cluster. </summary>
+        [WirePath("timeoutInSeconds")]
         public long? TimeoutInSeconds { get; set; }
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster. </summary>
+        [WirePath("syncIntervalInSeconds")]
         public long? SyncIntervalInSeconds { get; set; }
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </summary>
+        [WirePath("retryIntervalInSeconds")]
         public long? RetryIntervalInSeconds { get; set; }
         /// <summary> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </summary>
+        [WirePath("prune")]
         public bool? Prune { get; set; }
         /// <summary> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </summary>
+        [WirePath("force")]
         public bool? Force { get; set; }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 {
@@ -190,6 +188,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         {
             SiteRecoveryPointResource.ValidateResourceId(id);
             return new SiteRecoveryPointResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> object. </returns>
+        public virtual SiteRecoveryReplicationProtectionClusterResource GetSiteRecoveryReplicationProtectionClusterResource(ResourceIdentifier id)
+        {
+            SiteRecoveryReplicationProtectionClusterResource.ValidateResourceId(id);
+            return new SiteRecoveryReplicationProtectionClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteRecoveryClusterRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryClusterRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryClusterRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteRecoveryClusterRecoveryPointResource"/> object. </returns>
+        public virtual SiteRecoveryClusterRecoveryPointResource GetSiteRecoveryClusterRecoveryPointResource(ResourceIdentifier id)
+        {
+            SiteRecoveryClusterRecoveryPointResource.ValidateResourceId(id);
+            return new SiteRecoveryClusterRecoveryPointResource(Client, id);
         }
 
         /// <summary>

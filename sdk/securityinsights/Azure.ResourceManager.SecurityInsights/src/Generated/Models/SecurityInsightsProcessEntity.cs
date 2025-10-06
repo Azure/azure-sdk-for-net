@@ -86,26 +86,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The account entity id running the processes. </summary>
+        [WirePath("properties.accountEntityId")]
         public string AccountEntityId { get; }
         /// <summary> The command line used to create the process. </summary>
+        [WirePath("properties.commandLine")]
         public string CommandLine { get; }
         /// <summary> The time when the process started to run. </summary>
+        [WirePath("properties.creationTimeUtc")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The elevation token associated with the process. </summary>
+        [WirePath("properties.elevationToken")]
         public SecurityInsightsProcessElevationToken? ElevationToken { get; set; }
         /// <summary> The host entity id on which the process was running. </summary>
+        [WirePath("properties.hostEntityId")]
         public string HostEntityId { get; }
         /// <summary> The session entity id in which the process was running. </summary>
+        [WirePath("properties.hostLogonSessionEntityId")]
         public string HostLogonSessionEntityId { get; }
         /// <summary> Image file entity id. </summary>
+        [WirePath("properties.imageFileEntityId")]
         public string ImageFileEntityId { get; }
         /// <summary> The parent process entity id. </summary>
+        [WirePath("properties.parentProcessEntityId")]
         public string ParentProcessEntityId { get; }
         /// <summary> The process ID. </summary>
+        [WirePath("properties.processId")]
         public string ProcessId { get; }
     }
 }

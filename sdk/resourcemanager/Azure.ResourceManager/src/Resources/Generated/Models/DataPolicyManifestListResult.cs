@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,11 +25,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/>. </summary>
-        /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="description"> Description for the input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] Literal value for the input. </param>
-        internal MachineLearningLiteralJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(description, jobInputType, serializedAdditionalRawData)
+        internal MachineLearningLiteralJobInput(JobInputType jobInputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(jobInputType, description, serializedAdditionalRawData)
         {
             Value = value;
             JobInputType = jobInputType;
@@ -42,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Literal value for the input. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

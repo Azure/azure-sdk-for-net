@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource ID of the destination cluster or kusto pool. </summary>
+        [WirePath("clusterResourceId")]
         public string ClusterResourceId { get; }
     }
 }

@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -137,62 +135,91 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> List of tags. </summary>
+        [WirePath("properties.threatIntelligenceTags")]
         public IList<string> ThreatIntelligenceTags { get; }
         /// <summary> Last updated time in UTC. </summary>
+        [WirePath("properties.lastUpdatedTimeUtc")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
         /// <summary> Source of a threat intelligence entity. </summary>
+        [WirePath("properties.source")]
         public string Source { get; set; }
         /// <summary> Display name of a threat intelligence entity. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Description of a threat intelligence entity. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Indicator types of threat intelligence entities. </summary>
+        [WirePath("properties.indicatorTypes")]
         public IList<string> IndicatorTypes { get; }
         /// <summary> Pattern of a threat intelligence entity. </summary>
+        [WirePath("properties.pattern")]
         public string Pattern { get; set; }
         /// <summary> Pattern type of a threat intelligence entity. </summary>
+        [WirePath("properties.patternType")]
         public string PatternType { get; set; }
         /// <summary> Pattern version of a threat intelligence entity. </summary>
+        [WirePath("properties.patternVersion")]
         public string PatternVersion { get; set; }
         /// <summary> Kill chain phases. </summary>
+        [WirePath("properties.killChainPhases")]
         public IList<ThreatIntelligenceKillChainPhase> KillChainPhases { get; }
         /// <summary> Parsed patterns. </summary>
+        [WirePath("properties.parsedPattern")]
         public IList<ThreatIntelligenceParsedPattern> ParsedPattern { get; }
         /// <summary> External ID of threat intelligence entity. </summary>
+        [WirePath("properties.externalId")]
         public string ExternalId { get; set; }
         /// <summary> Created by reference of threat intelligence entity. </summary>
+        [WirePath("properties.createdByRef")]
         public string CreatedByRef { get; set; }
         /// <summary> Is threat intelligence entity defanged. </summary>
+        [WirePath("properties.defanged")]
         public bool? IsDefanged { get; set; }
         /// <summary> External last updated time in UTC. </summary>
+        [WirePath("properties.externalLastUpdatedTimeUtc")]
         public DateTimeOffset? ExternalLastUpdatedOn { get; set; }
         /// <summary> External References. </summary>
+        [WirePath("properties.externalReferences")]
         public IList<ThreatIntelligenceExternalReference> ExternalReferences { get; }
         /// <summary> Granular Markings. </summary>
+        [WirePath("properties.granularMarkings")]
         public IList<ThreatIntelligenceGranularMarkingEntity> GranularMarkings { get; }
         /// <summary> Labels  of threat intelligence entity. </summary>
+        [WirePath("properties.labels")]
         public IList<string> Labels { get; }
         /// <summary> Is threat intelligence entity revoked. </summary>
+        [WirePath("properties.revoked")]
         public bool? IsRevoked { get; set; }
         /// <summary> Confidence of threat intelligence entity. </summary>
+        [WirePath("properties.confidence")]
         public int? Confidence { get; set; }
         /// <summary> Threat intelligence entity object marking references. </summary>
+        [WirePath("properties.objectMarkingRefs")]
         public IList<string> ObjectMarkingRefs { get; }
         /// <summary> Language of threat intelligence entity. </summary>
+        [WirePath("properties.language")]
         public string Language { get; set; }
         /// <summary> Threat types. </summary>
+        [WirePath("properties.threatTypes")]
         public IList<string> ThreatTypes { get; }
         /// <summary> Valid from. </summary>
+        [WirePath("properties.validFrom")]
         public DateTimeOffset? ValidFrom { get; set; }
         /// <summary> Valid until. </summary>
+        [WirePath("properties.validUntil")]
         public DateTimeOffset? ValidUntil { get; set; }
         /// <summary> Created by. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Modified by. </summary>
+        [WirePath("properties.modified")]
         public string Modified { get; set; }
         /// <summary>
         /// Extensions map
@@ -224,6 +251,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.extensions")]
         public IDictionary<string, BinaryData> Extensions { get; }
     }
 }

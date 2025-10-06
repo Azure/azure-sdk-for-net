@@ -5,21 +5,53 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains configuration options related to vector search. </summary>
     public partial class VectorSearch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
         public VectorSearch()
         {
             Profiles = new ChangeTrackingList<VectorSearchProfile>();
             Algorithms = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
             Vectorizers = new ChangeTrackingList<VectorSearchVectorizer>();
-            Compressions = new ChangeTrackingList<VectorSearchCompressionConfiguration>();
+            Compressions = new ChangeTrackingList<VectorSearchCompression>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
@@ -32,19 +64,21 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="vectorizers">
         /// Contains configuration options on how to vectorize text vector queries.
         /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="CustomVectorizer"/>.
+        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
         /// </param>
         /// <param name="compressions">
         /// Contains configuration options specific to the compression method used during indexing or querying.
-        /// Please note <see cref="VectorSearchCompressionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ScalarQuantizationCompressionConfiguration"/>.
+        /// Please note <see cref="VectorSearchCompression"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
         /// </param>
-        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompressionConfiguration> compressions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompression> compressions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Profiles = profiles;
             Algorithms = algorithms;
             Vectorizers = vectorizers;
             Compressions = compressions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines combinations of configurations to use with vector search. </summary>
@@ -58,14 +92,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Contains configuration options on how to vectorize text vector queries.
         /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="CustomVectorizer"/>.
+        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
         /// </summary>
         public IList<VectorSearchVectorizer> Vectorizers { get; }
         /// <summary>
         /// Contains configuration options specific to the compression method used during indexing or querying.
-        /// Please note <see cref="VectorSearchCompressionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ScalarQuantizationCompressionConfiguration"/>.
+        /// Please note <see cref="VectorSearchCompression"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
         /// </summary>
-        public IList<VectorSearchCompressionConfiguration> Compressions { get; }
+        public IList<VectorSearchCompression> Compressions { get; }
     }
 }

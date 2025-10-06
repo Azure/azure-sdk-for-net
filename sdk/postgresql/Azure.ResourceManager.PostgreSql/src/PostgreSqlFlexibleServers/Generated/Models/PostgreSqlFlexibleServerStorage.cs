@@ -54,24 +54,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="storageSizeInGB"> Max storage allowed for a server. </param>
         /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
         /// <param name="tier"> Name of storage tier for IOPS. </param>
-        /// <param name="iops"> Storage tier IOPS quantity. </param>
+        /// <param name="iops"> Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS. </param>
+        /// <param name="throughput"> Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS. </param>
+        /// <param name="storageType"> Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS, and default is Premium_LRS if not specified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
             Tier = tier;
             Iops = iops;
+            Throughput = throughput;
+            StorageType = storageType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
         /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
+        [WirePath("autoGrow")]
         public StorageAutoGrow? AutoGrow { get; set; }
         /// <summary> Name of storage tier for IOPS. </summary>
+        [WirePath("tier")]
         public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
-        /// <summary> Storage tier IOPS quantity. </summary>
-        public int? Iops { get; }
+        /// <summary> Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS. </summary>
+        [WirePath("iops")]
+        public int? Iops { get; set; }
+        /// <summary> Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS. </summary>
+        [WirePath("throughput")]
+        public int? Throughput { get; set; }
+        /// <summary> Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS, and default is Premium_LRS if not specified. </summary>
+        [WirePath("type")]
+        public PostgreSqlFlexibleServersStorageType? StorageType { get; set; }
     }
 }

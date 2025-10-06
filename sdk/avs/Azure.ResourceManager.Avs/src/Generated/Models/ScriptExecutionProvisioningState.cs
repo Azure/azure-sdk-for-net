@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of the script execution resource. </summary>
+    /// <summary> Script Execution provisioning state. </summary>
     public readonly partial struct ScriptExecutionProvisioningState : IEquatable<ScriptExecutionProvisioningState>
     {
         private readonly string _value;
@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PendingValue = "Pending";
-        private const string RunningValue = "Running";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string PendingValue = "Pending";
+        private const string RunningValue = "Running";
         private const string CancellingValue = "Cancelling";
         private const string CancelledValue = "Cancelled";
         private const string DeletingValue = "Deleting";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Pending. </summary>
-        public static ScriptExecutionProvisioningState Pending { get; } = new ScriptExecutionProvisioningState(PendingValue);
-        /// <summary> Running. </summary>
-        public static ScriptExecutionProvisioningState Running { get; } = new ScriptExecutionProvisioningState(RunningValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static ScriptExecutionProvisioningState Succeeded { get; } = new ScriptExecutionProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static ScriptExecutionProvisioningState Failed { get; } = new ScriptExecutionProvisioningState(FailedValue);
-        /// <summary> Cancelling. </summary>
-        public static ScriptExecutionProvisioningState Cancelling { get; } = new ScriptExecutionProvisioningState(CancellingValue);
-        /// <summary> Cancelled. </summary>
-        public static ScriptExecutionProvisioningState Cancelled { get; } = new ScriptExecutionProvisioningState(CancelledValue);
-        /// <summary> Deleting. </summary>
-        public static ScriptExecutionProvisioningState Deleting { get; } = new ScriptExecutionProvisioningState(DeletingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static ScriptExecutionProvisioningState Canceled { get; } = new ScriptExecutionProvisioningState(CanceledValue);
+        /// <summary> is pending. </summary>
+        public static ScriptExecutionProvisioningState Pending { get; } = new ScriptExecutionProvisioningState(PendingValue);
+        /// <summary> is running. </summary>
+        public static ScriptExecutionProvisioningState Running { get; } = new ScriptExecutionProvisioningState(RunningValue);
+        /// <summary> is cancelling. </summary>
+        public static ScriptExecutionProvisioningState Cancelling { get; } = new ScriptExecutionProvisioningState(CancellingValue);
+        /// <summary> is cancelled. </summary>
+        public static ScriptExecutionProvisioningState Cancelled { get; } = new ScriptExecutionProvisioningState(CancelledValue);
+        /// <summary> is deleting. </summary>
+        public static ScriptExecutionProvisioningState Deleting { get; } = new ScriptExecutionProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ScriptExecutionProvisioningState left, ScriptExecutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ScriptExecutionProvisioningState left, ScriptExecutionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptExecutionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptExecutionProvisioningState"/>. </summary>
         public static implicit operator ScriptExecutionProvisioningState(string value) => new ScriptExecutionProvisioningState(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

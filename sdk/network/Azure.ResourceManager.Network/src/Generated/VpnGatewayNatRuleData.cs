@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -57,22 +56,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the NAT Rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of NAT rule for VPN NAT. </summary>
+        [WirePath("properties.type")]
         public VpnNatRuleType? VpnNatRuleType { get; set; }
         /// <summary> The Source NAT direction of a VPN NAT. </summary>
+        [WirePath("properties.mode")]
         public VpnNatRuleMode? Mode { get; set; }
         /// <summary> The private IP address internal mapping for NAT. </summary>
+        [WirePath("properties.internalMappings")]
         public IList<VpnNatRuleMapping> InternalMappings { get; }
         /// <summary> The private IP address external mapping for NAT. </summary>
+        [WirePath("properties.externalMappings")]
         public IList<VpnNatRuleMapping> ExternalMappings { get; }
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
+        [WirePath("properties.ipConfigurationId")]
         public string IPConfigurationId { get; set; }
         /// <summary> List of egress VpnSiteLinkConnections. </summary>
+        [WirePath("properties.egressVpnSiteLinkConnections")]
         public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections { get; }
         /// <summary> List of ingress VpnSiteLinkConnections. </summary>
+        [WirePath("properties.ingressVpnSiteLinkConnections")]
         public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections { get; }
     }
 }

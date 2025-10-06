@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
@@ -160,7 +190,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,6 +232,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CommitmentPlanData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CommitmentPlanData data)
@@ -224,7 +270,7 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -255,7 +301,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 201:
                     {
                         CommitmentPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,13 +335,29 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 201:
                     {
                         CommitmentPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
@@ -376,6 +438,20 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdatePlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, CommitmentPlanData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdatePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, CommitmentPlanData data)
         {
             var message = _pipeline.CreateMessage();
@@ -394,7 +470,7 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -454,7 +530,21 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        internal HttpMessage CreateUpdatePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch)
+        internal RequestUriBuilder CreateUpdatePlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdatePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -472,7 +562,7 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(commitmentPlan, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -482,18 +572,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
-        /// <param name="patch"> The parameters to provide for the created commitment plan. </param>
+        /// <param name="commitmentPlan"> The parameters to provide for the created commitment plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlan"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdatePlanAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePlanAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(commitmentPlan, nameof(commitmentPlan));
 
-            using var message = CreateUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, patch);
+            using var message = CreateUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlan);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -509,18 +599,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
-        /// <param name="patch"> The parameters to provide for the created commitment plan. </param>
+        /// <param name="commitmentPlan"> The parameters to provide for the created commitment plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlan"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdatePlan(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdatePlan(string subscriptionId, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(commitmentPlan, nameof(commitmentPlan));
 
-            using var message = CreateUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, patch);
+            using var message = CreateUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlan);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -530,6 +620,20 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeletePlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeletePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName)
@@ -604,6 +708,20 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateGetPlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -644,7 +762,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +793,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -684,6 +802,19 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPlansByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListPlansByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -723,7 +854,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -750,13 +881,24 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPlansBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListPlansBySubscriptionRequest(string subscriptionId)
@@ -792,7 +934,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -817,13 +959,28 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAssociationsRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAssociationsRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName)
@@ -867,7 +1024,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -896,13 +1053,29 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAssociationRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations/", false);
+            uri.AppendPath(commitmentPlanAssociationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAssociationRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
@@ -949,7 +1122,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -982,7 +1155,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -991,6 +1164,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAssociationRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations/", false);
+            uri.AppendPath(commitmentPlanAssociationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateAssociationRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data)
@@ -1013,7 +1202,7 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1075,6 +1264,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAssociationRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations/", false);
+            uri.AppendPath(commitmentPlanAssociationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAssociationRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
@@ -1155,6 +1360,14 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
@@ -1191,7 +1404,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1222,13 +1435,21 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPlansByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPlansByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1265,7 +1486,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1294,13 +1515,21 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPlansBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPlansBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -1335,7 +1564,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1362,13 +1591,21 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAssociationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAssociationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string commitmentPlanName)
@@ -1407,7 +1644,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1438,7 +1675,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

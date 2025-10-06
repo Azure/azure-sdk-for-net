@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using SharesClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
-    Azure.Storage.Files.Shares.ShareServiceClient,
-    Azure.Storage.Files.Shares.ShareClientOptions>;
+    BaseShares::Azure.Storage.Files.Shares.ShareServiceClient,
+    BaseShares::Azure.Storage.Files.Shares.ShareClientOptions>;
 using System.Threading;
 using Azure.Core;
 
@@ -58,6 +59,67 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             shareName ??= clientBuilder.GetNewShareName();
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
             return await DisposingShare.CreateAsync(share, metadata);
+        }
+
+        public static async Task<DisposingShare> GetTestShareSasAsync(
+            this SharesClientBuilder clientBuilder,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            service ??= clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+            ShareServiceClient sasService = new ShareServiceClient(service.GenerateAccountSasUri(
+                Sas.AccountSasPermissions.All,
+                clientBuilder.Recording.UtcNow.AddDays(1),
+                Sas.AccountSasResourceTypes.All),
+                clientBuilder.GetOptions());
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(sasService.GetShareClient(shareName));
+            return await DisposingShare.CreateAsync(share, metadata);
+        }
+
+        public static async Task<DisposingShare> GetTestShareSasNfsAsync(
+            this SharesClientBuilder clientBuilder,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            service ??= clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumFile, options);
+            ShareServiceClient sasService = new ShareServiceClient(service.GenerateAccountSasUri(
+                Sas.AccountSasPermissions.All,
+                clientBuilder.Recording.UtcNow.AddDays(1),
+                Sas.AccountSasResourceTypes.All),
+                clientBuilder.GetOptions());
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(sasService.GetShareClient(shareName));
+            return await DisposingShare.CreateNfsAsync(share, metadata);
+        }
+
+        public static async Task<DisposingShare> GetTestShareOauthNfsAsync(
+            this SharesClientBuilder clientBuilder,
+            TokenCredential tokenCredential,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            options ??= clientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            service ??= clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigPremiumFile, tokenCredential, options);
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
+            return await DisposingShare.CreateNfsAsync(share, metadata);
         }
     }
 }

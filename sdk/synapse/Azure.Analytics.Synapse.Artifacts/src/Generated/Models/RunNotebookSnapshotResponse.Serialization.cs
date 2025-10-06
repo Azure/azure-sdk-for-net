@@ -42,12 +42,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new RunNotebookSnapshotResponse(message, result);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RunNotebookSnapshotResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRunNotebookSnapshotResponse(document.RootElement);
+        }
+
         internal partial class RunNotebookSnapshotResponseConverter : JsonConverter<RunNotebookSnapshotResponse>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookSnapshotResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override RunNotebookSnapshotResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

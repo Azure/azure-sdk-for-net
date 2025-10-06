@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
     {
         internal DocumentMock() { }
 
-        internal DocumentMock(IList<KeyValuePairString> properties) : base(DocumentIngressDocumentType.Request, new List<string>(), properties)
+        internal DocumentMock(IList<KeyValuePairString> properties) : base(DocumentType.Request, new List<string>(), properties)
         {
         }
 

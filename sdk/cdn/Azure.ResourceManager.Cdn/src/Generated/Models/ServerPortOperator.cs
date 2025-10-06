@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: ServerPortOperator
+    /// </summary>
     public readonly partial struct ServerPortOperator : IEquatable<ServerPortOperator>
     {
         private readonly string _value;
@@ -33,31 +36,61 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: ServerPortOperator.Any
+        /// </summary>
         public static ServerPortOperator Any { get; } = new ServerPortOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: ServerPortOperator.Equal
+        /// </summary>
         public static ServerPortOperator Equal { get; } = new ServerPortOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: ServerPortOperator.Contains
+        /// </summary>
         public static ServerPortOperator Contains { get; } = new ServerPortOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: ServerPortOperator.BeginsWith
+        /// </summary>
         public static ServerPortOperator BeginsWith { get; } = new ServerPortOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: ServerPortOperator.EndsWith
+        /// </summary>
         public static ServerPortOperator EndsWith { get; } = new ServerPortOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: ServerPortOperator.LessThan
+        /// </summary>
         public static ServerPortOperator LessThan { get; } = new ServerPortOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: ServerPortOperator.LessThanOrEqual
+        /// </summary>
         public static ServerPortOperator LessThanOrEqual { get; } = new ServerPortOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: ServerPortOperator.GreaterThan
+        /// </summary>
         public static ServerPortOperator GreaterThan { get; } = new ServerPortOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: ServerPortOperator.GreaterThanOrEqual
+        /// </summary>
         public static ServerPortOperator GreaterThanOrEqual { get; } = new ServerPortOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: ServerPortOperator.RegEx
+        /// </summary>
         public static ServerPortOperator RegEx { get; } = new ServerPortOperator(RegExValue);
         /// <summary> Determines if two <see cref="ServerPortOperator"/> values are the same. </summary>
         public static bool operator ==(ServerPortOperator left, ServerPortOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerPortOperator"/> values are not the same. </summary>
         public static bool operator !=(ServerPortOperator left, ServerPortOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerPortOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerPortOperator"/>. </summary>
         public static implicit operator ServerPortOperator(string value) => new ServerPortOperator(value);
 
         /// <inheritdoc />
@@ -68,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

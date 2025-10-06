@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/:import?api-version=2025-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "785",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250717.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2022-05-01",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "CustomSingleLabelClassification",
+          "storageInputContainerName": "single-class-example",
+          "settings": {},
+          "projectName": null,
+          "multilingual": false,
+          "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+          "language": "en"
+        },
+        "assets": {
+          "projectKind": "CustomSingleLabelClassification",
+          "classes": [
+            {
+              "category": "Date"
+            },
+            {
+              "category": "LenderName"
+            },
+            {
+              "category": "LenderAddress"
+            }
+          ],
+          "documents": [
+            {
+              "class": {
+                "category": "Date"
+              },
+              "location": "01.txt",
+              "language": "en"
+            },
+            {
+              "class": {
+                "category": "LenderName"
+              },
+              "location": "02.txt",
+              "language": "en"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "a997f644-7bb8-425e-93d3-6a18f99fb782",
+        "Content-Length": "0",
+        "Date": "Fri, 18 Jul 2025 00:52:33 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/import/jobs/f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000?api-version=2025-05-15-preview",
+        "request-id": "a997f644-7bb8-425e-93d3-6a18f99fb782",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "189",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/import/jobs/f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250717.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "77407c2e-e922-4426-83fc-ba0e7604d4d7",
+        "Content-Length": "219",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Jul 2025 00:52:33 GMT",
+        "request-id": "77407c2e-e922-4426-83fc-ba0e7604d4d7",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "39",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000",
+        "createdDateTime": "2025-07-18T00:52:33Z",
+        "lastUpdatedDateTime": "2025-07-18T00:52:33Z",
+        "expirationDateTime": "2025-07-25T00:52:33Z",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/import/jobs/f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250717.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "862edfda-0e75-44e5-b74e-3b12397385a0",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Jul 2025 00:52:34 GMT",
+        "request-id": "862edfda-0e75-44e5-b74e-3b12397385a0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "37",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000",
+        "createdDateTime": "2025-07-18T00:52:33Z",
+        "lastUpdatedDateTime": "2025-07-18T00:52:34Z",
+        "expirationDateTime": "2025-07-25T00:52:33Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "129444462"
+  }
+}

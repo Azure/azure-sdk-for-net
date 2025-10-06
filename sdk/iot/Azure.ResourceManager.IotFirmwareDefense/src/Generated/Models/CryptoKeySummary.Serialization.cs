@@ -10,66 +10,56 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CryptoKeySummary : IUtf8JsonSerializable, IJsonModel<CryptoKeySummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoKeySummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoKeySummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CryptoKeySummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeySummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TotalKeys))
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(TotalKeyCount))
             {
-                writer.WritePropertyName("totalKeys"u8);
-                writer.WriteNumberValue(TotalKeys.Value);
+                writer.WritePropertyName("totalKeyCount"u8);
+                writer.WriteNumberValue(TotalKeyCount.Value);
             }
-            if (Optional.IsDefined(PublicKeys))
+            if (Optional.IsDefined(PublicKeyCount))
             {
-                writer.WritePropertyName("publicKeys"u8);
-                writer.WriteNumberValue(PublicKeys.Value);
+                writer.WritePropertyName("publicKeyCount"u8);
+                writer.WriteNumberValue(PublicKeyCount.Value);
             }
-            if (Optional.IsDefined(PrivateKeys))
+            if (Optional.IsDefined(PrivateKeyCount))
             {
-                writer.WritePropertyName("privateKeys"u8);
-                writer.WriteNumberValue(PrivateKeys.Value);
+                writer.WritePropertyName("privateKeyCount"u8);
+                writer.WriteNumberValue(PrivateKeyCount.Value);
             }
-            if (Optional.IsDefined(PairedKeys))
+            if (Optional.IsDefined(PairedKeyCount))
             {
-                writer.WritePropertyName("pairedKeys"u8);
-                writer.WriteNumberValue(PairedKeys.Value);
+                writer.WritePropertyName("pairedKeyCount"u8);
+                writer.WriteNumberValue(PairedKeyCount.Value);
             }
-            if (Optional.IsDefined(ShortKeySize))
+            if (Optional.IsDefined(ShortKeySizeCount))
             {
-                writer.WritePropertyName("shortKeySize"u8);
-                writer.WriteNumberValue(ShortKeySize.Value);
+                writer.WritePropertyName("shortKeySizeCount"u8);
+                writer.WriteNumberValue(ShortKeySizeCount.Value);
             }
-            writer.WritePropertyName("summaryType"u8);
-            writer.WriteStringValue(SummaryType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         CryptoKeySummary IJsonModel<CryptoKeySummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,7 +67,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeySummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,65 +76,66 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CryptoKeySummary DeserializeCryptoKeySummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? totalKeys = default;
-            long? publicKeys = default;
-            long? privateKeys = default;
-            long? pairedKeys = default;
-            long? shortKeySize = default;
+            long? totalKeyCount = default;
+            long? publicKeyCount = default;
+            long? privateKeyCount = default;
+            long? pairedKeyCount = default;
+            long? shortKeySizeCount = default;
             FirmwareAnalysisSummaryType summaryType = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalKeys"u8))
+                if (property.NameEquals("totalKeyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalKeys = property.Value.GetInt64();
+                    totalKeyCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("publicKeys"u8))
+                if (property.NameEquals("publicKeyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicKeys = property.Value.GetInt64();
+                    publicKeyCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("privateKeys"u8))
+                if (property.NameEquals("privateKeyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateKeys = property.Value.GetInt64();
+                    privateKeyCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("pairedKeys"u8))
+                if (property.NameEquals("pairedKeyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pairedKeys = property.Value.GetInt64();
+                    pairedKeyCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("shortKeySize"u8))
+                if (property.NameEquals("shortKeySizeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shortKeySize = property.Value.GetInt64();
+                    shortKeySizeCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("summaryType"u8))
@@ -152,20 +143,30 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CryptoKeySummary(
                 summaryType,
+                provisioningState,
                 serializedAdditionalRawData,
-                totalKeys,
-                publicKeys,
-                privateKeys,
-                pairedKeys,
-                shortKeySize);
+                totalKeyCount,
+                publicKeyCount,
+                privateKeyCount,
+                pairedKeyCount,
+                shortKeySizeCount);
         }
 
         BinaryData IPersistableModel<CryptoKeySummary>.Write(ModelReaderWriterOptions options)
@@ -175,9 +176,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,11 +190,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCryptoKeySummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support reading '{options.Format}' format.");
             }
         }
 

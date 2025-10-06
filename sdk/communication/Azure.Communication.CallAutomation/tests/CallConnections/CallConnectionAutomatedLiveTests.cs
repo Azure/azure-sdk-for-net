@@ -32,14 +32,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null;
+            string? callConnectionId = null, uniqueId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -78,7 +78,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     };
                     Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
                     Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
-                    Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
+                    string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext1;
+                    Assert.AreEqual(expectedOperationContext, removePartResponse.Value.OperationContext);
 
                     // call should be disconnected after removing participant
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -98,7 +99,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -121,12 +122,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
             var client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             var targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null;
+            string? callConnectionId = null, uniqueId = null;
 
             try
             {
                 // setup service bus
-                var uniqueId = await ServiceBusWithNewCall(user, target);
+                uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
                 var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -157,7 +158,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     OperationContext = operationContext,
                 };
                 var addParticipantResponse = await callConnection.AddParticipantAsync(addParticipantOptions);
-                Assert.AreEqual(operationContext, addParticipantResponse.Value.OperationContext);
+
+                string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext;
+                Assert.AreEqual(expectedOperationContext, addParticipantResponse.Value.OperationContext);
                 Assert.IsNotNull(addParticipantResponse.Value.InvitationId);
 
                 // ensure invitation has arrived
@@ -182,7 +185,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
     }

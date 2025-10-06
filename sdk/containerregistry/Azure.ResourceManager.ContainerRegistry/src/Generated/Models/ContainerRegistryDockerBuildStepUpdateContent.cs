@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -45,16 +44,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The fully qualified image names including the repository and tag. </summary>
+        [WirePath("imageNames")]
         public IList<string> ImageNames { get; }
         /// <summary> The value of this property indicates whether the image built should be pushed to the registry or not. </summary>
+        [WirePath("isPushEnabled")]
         public bool? IsPushEnabled { get; set; }
         /// <summary> The value of this property indicates whether the image cache is enabled or not. </summary>
+        [WirePath("noCache")]
         public bool? NoCache { get; set; }
         /// <summary> The Docker file path relative to the source context. </summary>
+        [WirePath("dockerFilePath")]
         public string DockerFilePath { get; set; }
         /// <summary> The collection of override arguments to be used when executing this build step. </summary>
+        [WirePath("arguments")]
         public IList<ContainerRegistryRunArgument> Arguments { get; }
         /// <summary> The name of the target build stage for the docker build. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
     }
 }

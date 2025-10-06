@@ -7,11 +7,11 @@ azure-arm: true
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
-tag: package-resources-2022-04
+tag: package-resources-2025-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 model-namespace: true
@@ -20,9 +20,26 @@ head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
+
+rename-mapping:
+  DecompileOperationSuccessResponse: DecompileOperationSuccessResult
+  FileDefinition: DecompiledFileDefinition
+  DataBoundary: DataBoundaryRegion
+  DataBoundaryDefinition: DataBoundary
+  DefaultName: DataBoundaryName
+  ArmDeploymentPropertiesExtended.outputResources: OutputResourceDetails
+  ArmDeploymentPropertiesExtended.validatedResources: ValidatedResourceDetails
+  ResourceReference: ArmResourceReference
+  DeploymentExtensionDefinition: ArmDeploymentExtensionDefinition
+  DeploymentExtensionConfigItem: ArmDeploymentExtensionConfigItem
+  DeploymentExternalInput: ArmDeploymentExternalInput
+  DeploymentExternalInputDefinition: ArmDeploymentExternalInputDefinition
+  ContainerConfiguration: ScriptContainerConfiguration
+  ContainerGroupSubnetId: ScriptContainerGroupSubnet
 
 patch-initializer-customization:
   ArmDeploymentContent:
@@ -46,6 +63,19 @@ request-path-to-scope-resource-types:
     - resourceGroups
     - managementGroups
     - tenant
+  /{scope}/providers/Microsoft.Resources/deploymentStacks:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+  /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+  /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+
 override-operation-name:
   DeploymentOperations_ListAtScope: GetDeploymentOperations
   DeploymentOperations_GetAtScope: GetDeploymentOperation
@@ -59,6 +89,8 @@ override-operation-name:
   Deployments_CheckExistenceAtScope: CheckExistence
   jitRequests_ListBySubscription: GetJitRequestDefinitions
   Deployments_CalculateTemplateHash: CalculateDeploymentTemplateHash
+  DeploymentStacks_ExportTemplateAtScope: ExportTemplate
+  DeploymentStacks_ValidateStackAtScope: ValidateStack
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
@@ -100,7 +132,7 @@ models-to-treat-empty-string-as-null:
   - ArmApplicationPackageSupportUris
 
 suppress-abstract-base-class:
-- ArmDeploymentScriptData
+  - ArmDeploymentScriptData
 
 directive:
   - remove-operation: checkResourceName
@@ -150,6 +182,25 @@ directive:
   - remove-operation: Applications_DeleteById
   - remove-operation: Applications_CreateOrUpdateById
   - remove-operation: Applications_UpdateById
+  - remove-operation: DeploymentStacks_ExportTemplateAtSubscription
+  - remove-operation: DeploymentStacks_ExportTemplateAtResourceGroup
+  - remove-operation: DeploymentStacks_ExportTemplateAtManagementGroup
+  - remove-operation: DeploymentStacks_ValidateStackAtResourceGroup
+  - remove-operation: DeploymentStacks_ValidateStackAtSubscription
+  - remove-operation: DeploymentStacks_ValidateStackAtManagementGroup
+  - remove-operation: DeploymentStacks_ListAtResourceGroup
+  - remove-operation: DeploymentStacks_ListAtSubscription
+  - remove-operation: DeploymentStacks_ListAtManagementGroup
+  - remove-operation: DeploymentStacks_CreateOrUpdateAtResourceGroup
+  - remove-operation: DeploymentStacks_GetAtResourceGroup
+  - remove-operation: DeploymentStacks_DeleteAtResourceGroup
+  - remove-operation: DeploymentStacks_CreateOrUpdateAtSubscription
+  - remove-operation: DeploymentStacks_GetAtSubscription
+  - remove-operation: DeploymentStacks_DeleteAtSubscription
+  - remove-operation: DeploymentStacks_CreateOrUpdateAtManagementGroup
+  - remove-operation: DeploymentStacks_GetAtManagementGroup
+  - remove-operation: DeploymentStacks_DeleteAtManagementGroup
+  - remove-operation: Operations_List
 
   - from: managedapplications.json
     where: $['x-ms-paths']
@@ -281,6 +332,15 @@ directive:
       $.TemplateLink['x-ms-client-name'] = 'ArmDeploymentTemplateLink';
       $.WhatIfChange.properties.changeType['x-ms-enum'].name = 'WhatIfChangeType';
       $.WhatIfPropertyChange.properties.propertyChangeType['x-ms-enum'].name = 'WhatIfPropertyChangeType';
+      $.ResourceReference.properties.id["x-ms-format"] = "arm-id";
+  - from: dataBoundaries.json
+    where: $.definitions
+    transform: >
+      $.DataBoundaryProperties.properties.provisioningState['x-ms-enum'].name = 'DataBoundaryProvisioningState';
+  - from: dataBoundaries.json
+    where: $.paths..parameters[?(@.name === 'default')]
+    transform: >
+      $['x-ms-client-name'] = 'name';
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -339,16 +399,316 @@ directive:
     where: $.definitions.DeploymentProperties
     transform:
       delete $.properties.parameters.additionalProperties
+  # Specify the duration format
+  - from: deploymentStacks.json
+    where: $.definitions
+    transform: >
+      $.DeploymentStackProperties.properties.duration['format'] = 'duration';
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post
+    transform: >
+      $['x-ms-examples'] = {
+        "Predict template changes at tenant scope": {
+          "$ref": "./examples/PostDeploymentWhatIfOnTenant.json"
+        }
+      }
+  - from: resources.json
+    where: $.definitions.DeploymentExtensionConfigItem
+    transform: >
+      $.properties.keyVaultReference["$ref"] = "../2024-03-01/deploymentStacks.json#/definitions/KeyVaultParameterReference"
+  # Add scope operations
+  - from: deploymentStacks.json
+    where: $.paths
+    transform: >
+      $['/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate'] = {
+        "post": {
+          "tags": [
+            "DeploymentStacks"
+          ],
+          "operationId": "DeploymentStacks_ExportTemplateAtScope",
+          "description": "Exports the template used to create the Deployment stack.",
+          "parameters": [
+            {
+              "$ref": "../2025-04-01/resources.json#/parameters/ScopeParameter"
+            },
+            {
+              "$ref": "#/parameters/DeploymentStackNameParameter"
+            },
+            {
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Returns the Template or TemplateLink payload of the deployment stack.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStackTemplateDefinition"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStacksError"
+              }
+            }
+          }
+        }
+      };
+      $['/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate'] = {
+        "post": {
+          "tags": [
+            "DeploymentStacks"
+          ],
+          "operationId": "DeploymentStacks_ValidateStackAtScope",
+          "description": "Runs preflight validation on the specific scoped Deployment stack template to verify its acceptance to Azure Resource Manager.",
+          "x-ms-long-running-operation": true,
+          "x-ms-long-running-operation-options": {
+            "final-state-via": "location"
+          },
+          "parameters": [
+            {
+              "$ref": "../2025-04-01/resources.json#/parameters/ScopeParameter"
+            },
+            {
+              "$ref": "#/parameters/DeploymentStackNameParameter"
+            },
+            {
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
+            },
+            {
+              "name": "deploymentStack",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/DeploymentStack"
+              },
+              "description": "Deployment stack to validate."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - The validation operation result.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStackValidateResult"
+              }
+            },
+            "202": {
+              "description": "Accepted - The validation request has been accepted for processing and the operation will complete asynchronously.",
+              "headers": {
+                "Location": {
+                  "type": "string"
+                },
+                "Retry-After": {
+                  "type": "string",
+                  "description": "Number of seconds to wait before polling for status."
+                }
+              }
+            },
+            "400": {
+              "description": "Failed - The validation operation result.",
+              "x-ms-error-response": false,
+              "schema": {
+                "$ref": "#/definitions/DeploymentStackValidateResult"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStacksError"
+              }
+            }
+          }
+        }
+      };
+      $['/{scope}/providers/Microsoft.Resources/deploymentStacks'] = {
+        "get": {
+          "tags": [
+            "DeploymentStacks"
+          ],
+          "operationId": "DeploymentStacks_ListAtScope",
+          "description": "Lists all the Deployment stacks within the specified scope.",
+          "parameters": [
+            {
+              "$ref": "../2025-04-01/resources.json#/parameters/ScopeParameter"
+            },
+            {
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Returns an array of Deployment stacks.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStackListResult"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStacksError"
+              }
+            }
+          },
+          "x-ms-pageable": {
+            "nextLinkName": "nextLink"
+          }
+        }
+      };
+      $['/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}'] = {
+        "put": {
+          "tags": [
+            "DeploymentStacks"
+          ],
+          "operationId": "DeploymentStacks_CreateOrUpdateAtScope",
+          "x-ms-long-running-operation": true,
+          "x-ms-long-running-operation-options": {
+            "final-state-via": "azure-async-operation"
+          },
+          "description": "Creates or updates a Deployment stack at specific scope.",
+          "parameters": [
+            {
+              "$ref": "../2025-04-01/resources.json#/parameters/ScopeParameter"
+            },
+            {
+              "$ref": "#/parameters/DeploymentStackNameParameter"
+            },
+            {
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
+            },
+            {
+              "name": "deploymentStack",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/DeploymentStack"
+              },
+              "description": "Deployment stack supplied to the operation."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - The Deployment stack update request has succeeded.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStack"
+              }
+            },
+            "201": {
+              "description": "Deployment stack created.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStack"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStacksError"
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "DeploymentStacks"
+          ],
+          "operationId": "DeploymentStacks_GetAtScope",
+          "description": "Gets a Deployment stack with a given name at specific scope.",
+          "parameters": [
+            {
+              "$ref": "../2025-04-01/resources.json#/parameters/ScopeParameter"
+            },
+            {
+              "$ref": "#/parameters/DeploymentStackNameParameter"
+            },
+            {
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Returns information about the Deployment stack.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStack"
+              }
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStacksError"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "DeploymentStacks"
+          ],
+          "operationId": "DeploymentStacks_DeleteAtScope",
+          "description": "Deletes a Deployment stack by name at specific scope. When operation completes, status code 200 returned without content.",
+          "x-ms-long-running-operation": true,
+          "x-ms-long-running-operation-options": {
+            "final-state-via": "location"
+          },
+          "parameters": [
+            {
+              "$ref": "../2025-04-01/resources.json#/parameters/ScopeParameter"
+            },
+            {
+              "$ref": "#/parameters/DeploymentStackNameParameter"
+            },
+            {
+              "$ref": "#/parameters/DeleteResourceParameter"
+            },
+            {
+              "$ref": "#/parameters/DeleteResourceGroupParameter"
+            },
+            {
+              "$ref": "#/parameters/DeleteManagementGroupParameter"
+            },
+            {
+              "$ref": "#/parameters/BypassStackOutOfSyncErrorParameter"
+            },
+            {
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Deployment stack deleted."
+            },
+            "202": {
+              "description": "Accepted - Check location header for deletion status.",
+              "headers": {
+                "Location": {
+                  "type": "string"
+                }
+              }
+            },
+            "204": {
+              "description": "Deployment stack does not exist."
+            },
+            "default": {
+              "description": "Error response describing why the operation failed.",
+              "schema": {
+                "$ref": "#/definitions/DeploymentStacksError"
+              }
+            }
+          }
+        }
+      };
 ```
 
-### Tag: package-resources-2022-04
+### Tag: package-resources-2025-04
 
-These settings apply only when `--tag=package-resources-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-resources-2025-04` is specified on the command line.
 
-```yaml $(tag) == 'package-resources-2022-04'
+
+```yaml $(tag) == 'package-resources-2025-04'
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/deploymentScripts.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2025-04-01/resources.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
 ```

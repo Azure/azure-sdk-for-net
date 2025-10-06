@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Name of the guest configuration assignment resource setting. </summary>
+        [WirePath("resourceId")]
         public string AssignmentResourceSettingName { get; }
         /// <summary> Compliance reason and reason code for a resource. </summary>
+        [WirePath("reasons")]
         public IList<AssignmentReportResourceComplianceReason> Reasons { get; }
         /// <summary>
         /// Properties of a guest configuration assignment resource.
@@ -103,6 +105,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; }
     }
 }

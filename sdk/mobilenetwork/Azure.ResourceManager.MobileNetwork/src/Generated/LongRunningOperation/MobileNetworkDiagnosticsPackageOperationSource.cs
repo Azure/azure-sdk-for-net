@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
 
         MobileNetworkDiagnosticsPackageResource IOperationSource<MobileNetworkDiagnosticsPackageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(document.RootElement);
+            var data = ModelReaderWriter.Read<MobileNetworkDiagnosticsPackageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
             return new MobileNetworkDiagnosticsPackageResource(_client, data);
         }
 
         async ValueTask<MobileNetworkDiagnosticsPackageResource> IOperationSource<MobileNetworkDiagnosticsPackageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(document.RootElement);
-            return new MobileNetworkDiagnosticsPackageResource(_client, data);
+            var data = ModelReaderWriter.Read<MobileNetworkDiagnosticsPackageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            return await Task.FromResult(new MobileNetworkDiagnosticsPackageResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

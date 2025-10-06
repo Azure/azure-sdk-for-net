@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The Storage Account Container URL to upload diagnostics to. </summary>
+        [WirePath("storageAccountContainerUrl")]
         public Uri StorageAccountContainerUri { get; set; }
     }
 }

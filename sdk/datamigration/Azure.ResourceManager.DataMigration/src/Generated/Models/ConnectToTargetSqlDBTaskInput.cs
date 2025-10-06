@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
-        public ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo)
+        public ConnectToTargetSqlDBTaskInput(DataMigrationSqlConnectionInfo targetConnectionInfo)
         {
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
-        /// <param name="queryObjectCounts"> Boolean flag indicating whether to query object counts for each database on the target server. </param>
+        /// <param name="shouldQueryObjectCounts"> Boolean flag indicating whether to query object counts for each database on the target server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo, bool? queryObjectCounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetSqlDBTaskInput(DataMigrationSqlConnectionInfo targetConnectionInfo, bool? shouldQueryObjectCounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetConnectionInfo = targetConnectionInfo;
-            QueryObjectCounts = queryObjectCounts;
+            ShouldQueryObjectCounts = shouldQueryObjectCounts;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,8 +72,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for target SQL DB. </summary>
-        public SqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Boolean flag indicating whether to query object counts for each database on the target server. </summary>
-        public bool? QueryObjectCounts { get; set; }
+        public bool? ShouldQueryObjectCounts { get; set; }
     }
 }

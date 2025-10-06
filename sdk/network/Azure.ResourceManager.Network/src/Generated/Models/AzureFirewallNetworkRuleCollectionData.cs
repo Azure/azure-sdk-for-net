@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -42,12 +40,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Priority of the network rule collection resource. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> The action type of a rule collection. </summary>
         internal AzureFirewallRCAction Action { get; set; }
         /// <summary> The type of action. </summary>
+        [WirePath("properties.action.type")]
         public AzureFirewallRCActionType? ActionType
         {
             get => Action is null ? default : Action.ActionType;
@@ -60,8 +61,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Collection of rules used by a network rule collection. </summary>
+        [WirePath("properties.rules")]
         public IList<AzureFirewallNetworkRule> Rules { get; }
         /// <summary> The provisioning state of the network rule collection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

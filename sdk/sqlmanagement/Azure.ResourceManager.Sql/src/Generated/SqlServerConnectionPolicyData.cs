@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The server connection type. </summary>
+        [WirePath("properties.connectionType")]
         public ServerConnectionType? ConnectionType { get; set; }
     }
 }

@@ -65,14 +65,16 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
         /// <param name="caption"> Caption associated with the figure. </param>
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
+        /// <param name="id"> Figure ID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFigure(IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentFigure(IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BoundingRegions = boundingRegions;
             Spans = spans;
             Elements = elements;
             Caption = caption;
             Footnotes = footnotes;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +93,7 @@ namespace Azure.AI.DocumentIntelligence
         public DocumentCaption Caption { get; }
         /// <summary> List of footnotes associated with the figure. </summary>
         public IReadOnlyList<DocumentFootnote> Footnotes { get; }
+        /// <summary> Figure ID. </summary>
+        public string Id { get; }
     }
 }

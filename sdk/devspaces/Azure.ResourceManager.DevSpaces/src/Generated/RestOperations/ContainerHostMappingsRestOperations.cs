@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevSpaces.Models;
@@ -37,6 +36,21 @@ namespace Azure.ResourceManager.DevSpaces
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetContainerHostMappingRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevSpaces/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkContainerHostMapping", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetContainerHostMappingRequest(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.DevSpaces
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerHostMapping);
+            content.JsonWriter.WriteObjectValue(containerHostMapping, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -83,7 +97,7 @@ namespace Azure.ResourceManager.DevSpaces
                 case 200:
                     {
                         ContainerHostMapping value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerHostMapping.DeserializeContainerHostMapping(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +129,7 @@ namespace Azure.ResourceManager.DevSpaces
                 case 200:
                     {
                         ContainerHostMapping value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerHostMapping.DeserializeContainerHostMapping(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

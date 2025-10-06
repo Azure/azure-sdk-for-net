@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,12 +78,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network group Id. </summary>
+        [WirePath("networkGroupId")]
         public string NetworkGroupId { get; set; }
         /// <summary> Flag if need to use hub gateway. </summary>
+        [WirePath("useHubGateway")]
         public HubGatewayUsageFlag? UseHubGateway { get; set; }
         /// <summary> Flag if global is supported. </summary>
+        [WirePath("isGlobal")]
         public GlobalMeshSupportFlag? IsGlobal { get; set; }
         /// <summary> Group connectivity type. </summary>
+        [WirePath("groupConnectivity")]
         public GroupConnectivity GroupConnectivity { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> placement policy type. </summary>
+    /// <summary> Placement Policy type. </summary>
     internal readonly partial struct PlacementPolicyType : IEquatable<PlacementPolicyType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(PlacementPolicyType left, PlacementPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlacementPolicyType"/> values are not the same. </summary>
         public static bool operator !=(PlacementPolicyType left, PlacementPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlacementPolicyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlacementPolicyType"/>. </summary>
         public static implicit operator PlacementPolicyType(string value) => new PlacementPolicyType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

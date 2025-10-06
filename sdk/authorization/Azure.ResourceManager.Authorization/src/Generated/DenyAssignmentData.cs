@@ -87,20 +87,28 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> The display name of the deny assignment. </summary>
+        [WirePath("properties.denyAssignmentName")]
         public string DenyAssignmentName { get; }
         /// <summary> The description of the deny assignment. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> An array of permissions that are denied by the deny assignment. </summary>
+        [WirePath("properties.permissions")]
         public IReadOnlyList<DenyAssignmentPermission> Permissions { get; }
         /// <summary> The deny assignment scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> Determines if the deny assignment applies to child scopes. Default value is false. </summary>
+        [WirePath("properties.doNotApplyToChildScopes")]
         public bool? IsAppliedToChildScopes { get; }
         /// <summary> Array of principals to which the deny assignment applies. </summary>
+        [WirePath("properties.principals")]
         public IReadOnlyList<RoleManagementPrincipal> Principals { get; }
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
+        [WirePath("properties.excludePrincipals")]
         public IReadOnlyList<RoleManagementPrincipal> ExcludePrincipals { get; }
         /// <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
+        [WirePath("properties.isSystemProtected")]
         public bool? IsSystemProtected { get; }
     }
 }

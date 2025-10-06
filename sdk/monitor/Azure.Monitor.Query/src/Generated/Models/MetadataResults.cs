@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The metadata response for the app, including available tables, etc. </summary>
     internal partial class MetadataResults
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetadataResults"/>. </summary>
         internal MetadataResults()
         {
@@ -39,7 +71,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="workspaces"> The list of Log Analytics workspaces that were referenced in the metadata request. </param>
         /// <param name="resources"> The list of Azure resources that were referenced in the metadata request. </param>
         /// <param name="permissions"> The list of permission rules that affected the metadata request. </param>
-        internal MetadataResults(IReadOnlyList<MetadataCategory> categories, IReadOnlyList<MetadataResourceType> resourceTypes, IReadOnlyList<MetadataSolution> solutions, IReadOnlyList<MetadataTable> tables, IReadOnlyList<MetadataFunction> functions, IReadOnlyList<MetadataQuery> queries, IReadOnlyList<MetadataApplication> applications, IReadOnlyList<MetadataWorkspace> workspaces, IReadOnlyList<object> resources, IReadOnlyList<MetadataPermissions> permissions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataResults(IReadOnlyList<MetadataCategory> categories, IReadOnlyList<MetadataResourceType> resourceTypes, IReadOnlyList<MetadataSolution> solutions, IReadOnlyList<MetadataTable> tables, IReadOnlyList<MetadataFunction> functions, IReadOnlyList<MetadataQuery> queries, IReadOnlyList<MetadataApplication> applications, IReadOnlyList<MetadataWorkspace> workspaces, IReadOnlyList<object> resources, IReadOnlyList<MetadataPermissions> permissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Categories = categories;
             ResourceTypes = resourceTypes;
@@ -51,6 +84,7 @@ namespace Azure.Monitor.Query.Models
             Workspaces = workspaces;
             Resources = resources;
             Permissions = permissions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of categories that are referenced in this metadata response. </summary>

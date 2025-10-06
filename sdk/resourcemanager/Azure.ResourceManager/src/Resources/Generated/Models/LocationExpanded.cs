@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -76,20 +75,28 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The subscription ID. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> The location name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The location type. </summary>
+        [WirePath("type")]
         public LocationType? LocationType { get; }
         /// <summary> The display name of the location. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The display name of the location and its region. </summary>
+        [WirePath("regionalDisplayName")]
         public string RegionalDisplayName { get; }
         /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
+        [WirePath("metadata")]
         public LocationMetadata Metadata { get; }
         /// <summary> The availability zone mappings for this region. </summary>
+        [WirePath("availabilityZoneMappings")]
         public IReadOnlyList<AvailabilityZoneMappings> AvailabilityZoneMappings { get; }
     }
 }

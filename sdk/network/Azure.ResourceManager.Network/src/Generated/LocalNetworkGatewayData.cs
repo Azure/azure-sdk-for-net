@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
@@ -50,29 +49,25 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Local network site address space. </summary>
-        internal AddressSpace LocalNetworkAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> LocalNetworkAddressPrefixes
-        {
-            get
-            {
-                if (LocalNetworkAddressSpace is null)
-                    LocalNetworkAddressSpace = new AddressSpace();
-                return LocalNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
+        [WirePath("properties.localNetworkAddressSpace")]
+        public VirtualNetworkAddressSpace LocalNetworkAddressSpace { get; set; }
         /// <summary> IP address of local network gateway. </summary>
+        [WirePath("properties.gatewayIpAddress")]
         public string GatewayIPAddress { get; set; }
         /// <summary> FQDN of local network gateway. </summary>
+        [WirePath("properties.fqdn")]
         public string Fqdn { get; set; }
         /// <summary> Local network gateway's BGP speaker settings. </summary>
+        [WirePath("properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The resource GUID property of the local network gateway resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the local network gateway resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

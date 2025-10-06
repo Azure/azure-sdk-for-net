@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isHidden"> A flag indicating whether the rule is hidden (from the UI). </param>
         /// <param name="isEnabledByDefault"> A flag indicating whether the rule is enabled by default. </param>
         /// <param name="isInPreview"> A flag indicating whether the rule is in preview. </param>
-        /// <param name="supportsEmailNotifications"> A flag indicating whether email notifications are supported for detections for this rule. </param>
+        /// <param name="isEmailNotificationsSupported"> A flag indicating whether email notifications are supported for detections for this rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name, string displayName, string description, Uri helpUri, bool? isHidden, bool? isEnabledByDefault, bool? isInPreview, bool? supportsEmailNotifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name, string displayName, string description, Uri helpUri, bool? isHidden, bool? isEnabledByDefault, bool? isInPreview, bool? isEmailNotificationsSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -69,25 +69,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IsHidden = isHidden;
             IsEnabledByDefault = isEnabledByDefault;
             IsInPreview = isInPreview;
-            SupportsEmailNotifications = supportsEmailNotifications;
+            IsEmailNotificationsSupported = isEmailNotificationsSupported;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The rule name. </summary>
+        [WirePath("Name")]
         public string Name { get; set; }
         /// <summary> The rule name as it is displayed in UI. </summary>
+        [WirePath("DisplayName")]
         public string DisplayName { get; set; }
         /// <summary> The rule description. </summary>
+        [WirePath("Description")]
         public string Description { get; set; }
         /// <summary> URL which displays additional info about the proactive detection rule. </summary>
+        [WirePath("HelpUrl")]
         public Uri HelpUri { get; set; }
         /// <summary> A flag indicating whether the rule is hidden (from the UI). </summary>
+        [WirePath("IsHidden")]
         public bool? IsHidden { get; set; }
         /// <summary> A flag indicating whether the rule is enabled by default. </summary>
+        [WirePath("IsEnabledByDefault")]
         public bool? IsEnabledByDefault { get; set; }
         /// <summary> A flag indicating whether the rule is in preview. </summary>
+        [WirePath("IsInPreview")]
         public bool? IsInPreview { get; set; }
         /// <summary> A flag indicating whether email notifications are supported for detections for this rule. </summary>
-        public bool? SupportsEmailNotifications { get; set; }
+        [WirePath("SupportsEmailNotifications")]
+        public bool? IsEmailNotificationsSupported { get; set; }
     }
 }

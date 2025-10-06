@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of locations. </summary>
+        [WirePath("regions")]
         public IList<string> Regions { get; }
         /// <summary> List of deployment types. </summary>
+        [WirePath("deploymentTypes")]
         public IList<NetworkConfigurationDeploymentType> DeploymentTypes { get; }
         /// <summary> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </summary>
+        [WirePath("skipToken")]
         public string SkipToken { get; set; }
     }
 }

@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> List storage account local users. </summary>
+    /// <summary> List of local users requested, and if paging is required, a URL to the next page of local users. </summary>
     internal partial class LocalUsers
     {
         /// <summary>
@@ -53,15 +52,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalUsers"/>. </summary>
-        /// <param name="value"> The local users associated with the storage account. </param>
+        /// <param name="value"> The list of local users associated with the storage account. </param>
+        /// <param name="nextLink"> Request URL that can be used to query next page of local users. Returned when total number of requested local users exceeds the maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The local users associated with the storage account. </summary>
+        /// <summary> The list of local users associated with the storage account. </summary>
         public IReadOnlyList<StorageAccountLocalUserData> Value { get; }
+        /// <summary> Request URL that can be used to query next page of local users. Returned when total number of requested local users exceeds the maximum page size. </summary>
+        public string NextLink { get; }
     }
 }

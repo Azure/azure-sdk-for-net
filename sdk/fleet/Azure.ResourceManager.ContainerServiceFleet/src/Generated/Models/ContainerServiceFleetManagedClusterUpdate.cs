@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -75,15 +74,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The upgrade to apply to the ManagedClusters. </summary>
         public ContainerServiceFleetManagedClusterUpgradeSpec Upgrade { get; set; }
         /// <summary> The node image upgrade to be applied to the target nodes in update run. </summary>
-        internal NodeImageSelection NodeImageSelection { get; set; }
-        /// <summary> The node image upgrade type. </summary>
-        public NodeImageSelectionType? SelectionType
-        {
-            get => NodeImageSelection is null ? default(NodeImageSelectionType?) : NodeImageSelection.SelectionType;
-            set
-            {
-                NodeImageSelection = value.HasValue ? new NodeImageSelection(value.Value) : null;
-            }
-        }
+        public NodeImageSelection NodeImageSelection { get; set; }
     }
 }

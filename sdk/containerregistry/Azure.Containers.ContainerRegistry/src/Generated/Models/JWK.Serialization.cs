@@ -38,5 +38,13 @@ namespace Azure.Containers.ContainerRegistry
             }
             return new JWK(jwk, alg);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JWK FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeJWK(document.RootElement);
+        }
     }
 }

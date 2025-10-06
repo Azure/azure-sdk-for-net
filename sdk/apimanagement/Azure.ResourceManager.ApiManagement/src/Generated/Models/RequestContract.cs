@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -70,12 +69,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Operation request description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Collection of operation request query parameters. </summary>
+        [WirePath("queryParameters")]
         public IList<ParameterContract> QueryParameters { get; }
         /// <summary> Collection of operation request headers. </summary>
+        [WirePath("headers")]
         public IList<ParameterContract> Headers { get; }
         /// <summary> Collection of operation request representations. </summary>
+        [WirePath("representations")]
         public IList<RepresentationContract> Representations { get; }
     }
 }

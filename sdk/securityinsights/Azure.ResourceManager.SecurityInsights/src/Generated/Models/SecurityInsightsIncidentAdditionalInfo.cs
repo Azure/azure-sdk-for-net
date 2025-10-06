@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -51,6 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             AlertProductNames = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
@@ -59,26 +59,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="commentsCount"> The number of comments in the incident. </param>
         /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
         /// <param name="tactics"> The tactics associated with incident. </param>
+        /// <param name="techniques"> The techniques associated with incident's tactics. </param>
+        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, Uri providerIncidentUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsCount = alertsCount;
             BookmarksCount = bookmarksCount;
             CommentsCount = commentsCount;
             AlertProductNames = alertProductNames;
             Tactics = tactics;
+            Techniques = techniques;
+            ProviderIncidentUri = providerIncidentUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of alerts in the incident. </summary>
+        [WirePath("alertsCount")]
         public int? AlertsCount { get; }
         /// <summary> The number of bookmarks in the incident. </summary>
+        [WirePath("bookmarksCount")]
         public int? BookmarksCount { get; }
         /// <summary> The number of comments in the incident. </summary>
+        [WirePath("commentsCount")]
         public int? CommentsCount { get; }
         /// <summary> List of product names of alerts in the incident. </summary>
+        [WirePath("alertProductNames")]
         public IReadOnlyList<string> AlertProductNames { get; }
         /// <summary> The tactics associated with incident. </summary>
+        [WirePath("tactics")]
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
+        /// <summary> The techniques associated with incident's tactics. </summary>
+        [WirePath("techniques")]
+        public IReadOnlyList<string> Techniques { get; }
+        /// <summary> The provider incident url to the incident in Microsoft 365 Defender portal. </summary>
+        [WirePath("providerIncidentUrl")]
+        public Uri ProviderIncidentUri { get; }
     }
 }

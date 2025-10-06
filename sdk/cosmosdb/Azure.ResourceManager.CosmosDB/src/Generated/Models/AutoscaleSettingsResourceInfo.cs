@@ -71,10 +71,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Represents maximum throughput container can scale up to. </summary>
+        [WirePath("maxThroughput")]
         public int MaxThroughput { get; set; }
         /// <summary> Cosmos DB resource auto-upgrade policy. </summary>
         internal AutoUpgradePolicyResourceInfo AutoUpgradePolicy { get; set; }
         /// <summary> Represents throughput policy which service must adhere to for auto-upgrade. </summary>
+        [WirePath("autoUpgradePolicy.throughputPolicy")]
         public ThroughputPolicyResourceInfo AutoUpgradeThroughputPolicy
         {
             get => AutoUpgradePolicy is null ? default : AutoUpgradePolicy.ThroughputPolicy;
@@ -87,6 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Represents target maximum throughput container can scale up to once offer is no longer in pending state. </summary>
+        [WirePath("targetMaxThroughput")]
         public int? TargetMaxThroughput { get; }
     }
 }

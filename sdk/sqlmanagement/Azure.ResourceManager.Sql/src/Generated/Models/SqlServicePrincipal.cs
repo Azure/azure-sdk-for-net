@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The Azure Active Directory application object id. </summary>
+        [WirePath("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The Azure Active Directory application client id. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; }
         /// <summary> The Azure Active Directory tenant id. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Service principal type. </summary>
+        [WirePath("type")]
         public SqlServicePrincipalType? PrincipalType { get; set; }
     }
 }

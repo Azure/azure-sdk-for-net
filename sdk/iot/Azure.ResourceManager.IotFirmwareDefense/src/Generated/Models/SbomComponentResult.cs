@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> SBOM analysis result resource. </summary>
+    /// <summary> The object representing a firmware analysis SBOM component result resource. </summary>
     public partial class SbomComponentResult : ResourceData
     {
         /// <summary>
@@ -63,15 +62,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
         /// <param name="license"> License for the component. </param>
-        /// <param name="filePaths"> File paths related to the component. </param>
+        /// <param name="filePaths"> File paths related to the component. Note, relatedFiles should be used instead of this property. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IList<string> filePaths, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IList<string> filePaths, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentId = componentId;
             ComponentName = componentName;
             Version = version;
             License = license;
             FilePaths = filePaths;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,7 +84,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string Version { get; set; }
         /// <summary> License for the component. </summary>
         public string License { get; set; }
-        /// <summary> File paths related to the component. </summary>
+        /// <summary> File paths related to the component. Note, relatedFiles should be used instead of this property. </summary>
         public IList<string> FilePaths { get; }
+        /// <summary> The status of the last operation. </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -92,8 +91,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("template")]
         public BinaryData Template { get; }
         /// <summary> The template export error. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

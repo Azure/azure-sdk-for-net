@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RankingsResponseTablesPropertiesItemsItem. </summary>
+    /// <summary>
+    /// The RankingsResponseTablesPropertiesItemsItem.
+    /// Serialized Name: RankingsResponseTablesPropertiesItemsItem
+    /// </summary>
     public partial class RankingsResponseTablesPropertiesItemsItem
     {
         /// <summary>
@@ -53,8 +55,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="metrics"></param>
+        /// <param name="name"> Serialized Name: RankingsResponseTablesPropertiesItemsItem.name. </param>
+        /// <param name="metrics"> Serialized Name: RankingsResponseTablesPropertiesItemsItem.metrics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RankingsResponseTablesPropertiesItemsItem(string name, IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +65,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: RankingsResponseTablesPropertiesItemsItem.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the metrics. </summary>
+        /// <summary> Serialized Name: RankingsResponseTablesPropertiesItemsItem.metrics. </summary>
         public IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> Metrics { get; }
     }
 }

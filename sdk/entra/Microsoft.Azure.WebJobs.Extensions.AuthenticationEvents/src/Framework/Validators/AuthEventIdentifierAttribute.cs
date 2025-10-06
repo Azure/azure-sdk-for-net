@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Confirms that a field is set to one of the valid event identifiers.</summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
@@ -22,7 +22,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
             {
                 if (_eventIds == null)
                 {
-                    _eventIds = Enum.GetValues(typeof(EventDefinition)).Cast<EventDefinition>().Select(x => x.GetAttribute<AuthenticationEventMetadataAttribute>().EventIdentifier.ToLower(CultureInfo.CurrentCulture)).ToArray();
+                    _eventIds = Enum.GetValues(typeof(WebJobsAuthenticationEventDefinition))
+                        .Cast<WebJobsAuthenticationEventDefinition>()
+                        .Select(x => x.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>().EventIdentifier.ToLower(CultureInfo.CurrentCulture))
+                        .ToArray();
                 }
 
                 return _eventIds;
@@ -33,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
         /// <returns>An instance of the formatted error message.</returns>
         public override string FormatErrorMessage(string name)
         {
-            return String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Val_One_Of, name) + string.Join(", ", EventIds);
+            return string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Val_One_Of, name) + string.Join(", ", EventIds);
         }
 
         /// <summary>Returns true if the value is a valid event identifier.</summary>

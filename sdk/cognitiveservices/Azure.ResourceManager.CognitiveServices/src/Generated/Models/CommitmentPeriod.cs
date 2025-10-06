@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Commitment period commitment tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; set; }
         /// <summary> Commitment period commitment count. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> Cognitive Services account commitment quota. </summary>
+        [WirePath("quota")]
         public CommitmentQuota Quota { get; }
         /// <summary> Commitment period start date. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Commitment period end date. </summary>
+        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; }
     }
 }

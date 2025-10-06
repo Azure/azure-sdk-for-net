@@ -7,53 +7,39 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> QuickBooks server linked service. </summary>
+    /// <summary> QuickBooks server linked service. This linked service has supported version property. The Version 1.0 is scheduled for deprecation while your pipeline will continue to run after EOL but without any bug fix or new features. </summary>
     public partial class QuickBooksLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
-        /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
+        /// <param name="consumerKey"> The consumer key for OAuth 2.0 authentication. </param>
         /// <param name="consumerSecret">
-        /// The consumer secret for OAuth 1.0 authentication.
+        /// The consumer secret for OAuth 2.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        /// <param name="accessToken">
-        /// The access token for OAuth 1.0 authentication.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
-        /// </param>
-        /// <param name="accessTokenSecret">
-        /// The access token secret for OAuth 1.0 authentication.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="companyId"/>, <paramref name="consumerKey"/>, <paramref name="consumerSecret"/>, <paramref name="accessToken"/> or <paramref name="accessTokenSecret"/> is null. </exception>
-        public QuickBooksLinkedService(object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="companyId"/>, <paramref name="consumerKey"/> or <paramref name="consumerSecret"/> is null. </exception>
+        public QuickBooksLinkedService(object endpoint, object companyId, object consumerKey, SecretBase consumerSecret)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(companyId, nameof(companyId));
             Argument.AssertNotNull(consumerKey, nameof(consumerKey));
             Argument.AssertNotNull(consumerSecret, nameof(consumerSecret));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
-            Argument.AssertNotNull(accessTokenSecret, nameof(accessTokenSecret));
 
             Endpoint = endpoint;
             CompanyId = companyId;
             ConsumerKey = consumerKey;
             ConsumerSecret = consumerSecret;
-            AccessToken = accessToken;
-            AccessTokenSecret = accessTokenSecret;
             Type = "QuickBooks";
         }
 
         /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -62,25 +48,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="connectionProperties"> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
-        /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
+        /// <param name="consumerKey"> The consumer key for OAuth 2.0 authentication. </param>
         /// <param name="consumerSecret">
-        /// The consumer secret for OAuth 1.0 authentication.
+        /// The consumer secret for OAuth 2.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="accessToken">
-        /// The access token for OAuth 1.0 authentication.
+        /// The access token for OAuth 2.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="accessTokenSecret">
-        /// The access token secret for OAuth 1.0 authentication.
+        /// The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="refreshToken">
+        /// The refresh token for OAuth 2.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal QuickBooksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, object useEncryptedEndpoints, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, SecretBase refreshToken, object useEncryptedEndpoints, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -89,6 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ConsumerSecret = consumerSecret;
             AccessToken = accessToken;
             AccessTokenSecret = accessTokenSecret;
+            RefreshToken = refreshToken;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "QuickBooks";
@@ -100,26 +92,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Endpoint { get; set; }
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>
         public object CompanyId { get; set; }
-        /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
+        /// <summary> The consumer key for OAuth 2.0 authentication. </summary>
         public object ConsumerKey { get; set; }
         /// <summary>
-        /// The consumer secret for OAuth 1.0 authentication.
+        /// The consumer secret for OAuth 2.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase ConsumerSecret { get; set; }
         /// <summary>
-        /// The access token for OAuth 1.0 authentication.
+        /// The access token for OAuth 2.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase AccessToken { get; set; }
         /// <summary>
-        /// The access token secret for OAuth 1.0 authentication.
+        /// The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase AccessTokenSecret { get; set; }
+        /// <summary>
+        /// The refresh token for OAuth 2.0 authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
+        public SecretBase RefreshToken { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>

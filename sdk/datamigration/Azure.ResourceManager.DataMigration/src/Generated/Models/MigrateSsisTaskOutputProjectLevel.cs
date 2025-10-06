@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         internal MigrateSsisTaskOutputProjectLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "SsisProjectLevelOutput";
         }
 
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSsisTaskOutputProjectLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string folderName, string projectName, MigrationState? state, SsisMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSsisTaskOutputProjectLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string folderName, string projectName, DataMigrationState? state, SsisMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             FolderName = folderName;
             ProjectName = projectName;
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of the project. </summary>
         public string ProjectName { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Stage of SSIS migration. </summary>
         public SsisMigrationStage? Stage { get; }
         /// <summary> Migration start time. </summary>
@@ -61,6 +60,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

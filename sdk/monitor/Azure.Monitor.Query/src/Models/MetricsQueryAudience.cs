@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.Monitor.Query
 {

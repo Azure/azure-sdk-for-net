@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(IotHubNetworkRuleSetDefaultAction left, IotHubNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubNetworkRuleSetDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(IotHubNetworkRuleSetDefaultAction left, IotHubNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotHubNetworkRuleSetDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubNetworkRuleSetDefaultAction"/>. </summary>
         public static implicit operator IotHubNetworkRuleSetDefaultAction(string value) => new IotHubNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -68,12 +67,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The user friendly description of the scope map. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The list of scope permissions for registry artifacts.
         /// E.g. repositories/repository-name/pull,
         /// repositories/repository-name/delete
         /// </summary>
+        [WirePath("properties.actions")]
         public IList<string> Actions { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        public GeoJsonFeatureCollection(IEnumerable<GeoJsonFeature> features)
+        internal GeoJsonFeatureCollection(IEnumerable<GeoJsonFeature> features)
         {
             Argument.AssertNotNull(features, nameof(features));
 
@@ -28,14 +28,15 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IList<GeoJsonFeature> features) : base(type)
+        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, IReadOnlyList<GeoJsonFeature> features) : base(type, boundingBox)
         {
             Features = features;
             Type = type;
         }
 
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>
-        public IList<GeoJsonFeature> Features { get; }
+        public IReadOnlyList<GeoJsonFeature> Features { get; }
     }
 }

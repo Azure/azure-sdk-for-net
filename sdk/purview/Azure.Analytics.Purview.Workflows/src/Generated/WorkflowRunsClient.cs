@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -84,9 +83,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/WorkflowRunsClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -112,9 +111,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/WorkflowRunsClient.xml" path="doc/members/member[@name='GetWorkflowRuns(string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowRuns(string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateGetWorkflowRunsRequest(string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)

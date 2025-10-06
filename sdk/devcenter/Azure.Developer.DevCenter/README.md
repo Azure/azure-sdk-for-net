@@ -6,7 +6,7 @@ Use the client library for Azure DevCenter to:
 > Create, access, manage, and delete [Dev Box](https://learn.microsoft.com/azure/dev-box) resources
 > Create, deploy, manage, and delete [Environment](https://learn.microsoft.com/azure/deployment-environments) resources
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/src) | [Package (NuGet)](https://www.nuget.org/packages/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/src) | [Package (NuGet)](https://www.nuget.org/packages/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure)
 
 ## Getting started
 
@@ -20,9 +20,9 @@ dotnet add package Azure.Developer.DevCenter --prerelease
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
-You must have [configured](https://learn.microsoft.com/azure/dev-box/quickstart-configure-dev-box-service) a DevCenter, Project, Network Connection, Dev Box Definition, and Pool before you can create Dev Boxes 
+You must have [configured](https://learn.microsoft.com/azure/dev-box/quickstart-configure-dev-box-service) a DevCenter, Project, Network Connection, Dev Box Definition, and Pool before you can create Dev Boxes
 
 You must have configured a DevCenter, Project, Catalog, and Environment Type before you can create Environments
 
@@ -52,6 +52,13 @@ var devBoxesClient = new DevBoxesClient(endpoint, credential);
 var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 ```
 
+Alternatively  use `DevCenterClient` to create `DevBoxesClient` and `DeploymentEnvironmentsClient` sharing same endpoint and credential across clients.
+
+```C# Snippet:Azure_DevCenter_CreateClientsFromDevCenterClient_Scenario
+devBoxesClient = devCenterClient.GetDevBoxesClient();
+environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
+```
+
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -76,12 +83,13 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 `DevCenterClient` allows you to list projects and retrieve projects by their name.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
-string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetProjectName = result.GetProperty("name").ToString();
-}
+string devCenterUri = "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com";
+var endpoint = new Uri(devCenterUri);
+var credential = new DefaultAzureCredential();
+var devCenterClient = new DevCenterClient(endpoint, credential);
+
+List<DevCenterProject> projects = await devCenterClient.GetProjectsAsync().ToEnumerableAsync();
+var projectName = projects.FirstOrDefault().Name;
 ```
 
 ### List available Dev Box Pools
@@ -89,12 +97,12 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, n
 Interaction with DevBox pools is facilitated through the `DevBoxesClient`. Pools can be listed for a specific project or fetched individually.
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
-string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetPoolName = result.GetProperty("name").ToString();
-}
+// Create DevBox-es client from existing DevCenter client
+var devBoxesClient = devCenterClient.GetDevBoxesClient();
+
+// Grab a pool
+List<DevBoxPool> pools = await devBoxesClient.GetPoolsAsync(projectName).ToEnumerableAsync();
+var poolName = pools.FirstOrDefault().Name;
 ```
 
 ### Provision a Dev Box
@@ -102,21 +110,17 @@ await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName
 To create a new DevBox, provide the pool name in the content and specify the desired DevBox name. Upon successful execution of this operation, a DevBox should appear in the portal.
 
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
-var content = new
-{
-    poolName = targetPoolName,
-};
+var devBoxName = "MyDevBox";
+var devBox = new DevBox(devBoxName, poolName);
 
-Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
+Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
-    targetProjectName,
+    projectName,
     "me",
-    "MyDevBox",
-    RequestContent.Create(content));
+    devBox);
 
-BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
-JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
-Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
+devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
 ```
 
 ### Connect to your Dev Box
@@ -124,25 +128,24 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 Once a DevBox is provisioned, you can connect to it using an RDP connection string. Below is a sample code that demonstrates how to retrieve it.
 
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
-    targetProjectName,
+RemoteConnection remoteConnection = await devBoxesClient.GetRemoteConnectionAsync(
+    projectName,
     "me",
-    "MyDevBox",
-    null);
-JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
-Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
+    devBoxName);
+
+Console.WriteLine($"Connect using web URL {remoteConnection.WebUri}.");
 ```
 
 ### Delete the Dev Box
 
-Deleting a DevBox is easy. It's much faster operation than creating a new DevBox. 
+Deleting a DevBox is easy. It's much faster operation than creating a new DevBox.
 
 ```C# Snippet:Azure_DevCenter_DeleteDevBox_Scenario
 Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
     WaitUntil.Completed,
-    targetProjectName,
+    projectName,
     "me",
-    "MyDevBox");
+    devBoxName);
 await devBoxDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed dev box deletion.");
 ```
@@ -152,13 +155,18 @@ Console.WriteLine($"Completed dev box deletion.");
 `DeploymentEnvironmentsClient` can be used to issue a request to get all catalogs in a project.
 
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
-string catalogName = null;
+// Create deployment environments client from existing DevCenter client
+var environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
 
-await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, null, null))
+//List all catalogs and grab the first one
+//Using foreach, but could also use a List
+string catalogName = default;
+await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(projectName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    catalogName = result.GetProperty("name").ToString();
+    catalogName = catalog.Name;
+    break;
 }
+Console.WriteLine($"Using catalog {catalogName}");
 ```
 
 ## Get all environment definitions in a project for a catalog
@@ -166,12 +174,14 @@ await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectNam
 Environment definitions are a part of the catalog associated with your project. If you don't see the expected environment definitions in the results, please ensure that you have pushed your changes to the catalog repository and synchronized the catalog.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
-string environmentDefinitionName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1, context: new()))
+//List all environment definition for a catalog and grab the first one
+string environmentDefinitionName = default;
+await foreach (EnvironmentDefinition environmentDefinition in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    environmentDefinitionName = result.GetProperty("name").ToString();
+    environmentDefinitionName = environmentDefinition.Name;
+    break;
 }
+Console.WriteLine($"Using environment definition {environmentDefinitionName}");
 ```
 
 ## Get all environment types in a project
@@ -179,12 +189,14 @@ await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsBy
 Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
-string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, null, null))
+//List all environment types and grab the first one
+string environmentTypeName = default;
+await foreach (DevCenterEnvironmentType environmentType in environmentsClient.GetEnvironmentTypesAsync(projectName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    environmentTypeName = result.GetProperty("name").ToString();
+    environmentTypeName = environmentType.Name;
+    break;
 }
+Console.WriteLine($"Using environment type {environmentTypeName}");
 ```
 
 ## Create an environment
@@ -192,24 +204,23 @@ await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(pr
 Issue a request to create an environment using a specific definition item and environment type.
 
 ```C# Snippet:Azure_DevCenter_CreateEnvironment_Scenario
-var content = new
-{
-    catalogName = catalogName,
-    environmentType = environmentTypeName,
-    environmentDefinitionName = environmentDefinitionName,
-};
+var requestEnvironment = new DevCenterEnvironment
+(
+    "DevEnvironment",
+    environmentTypeName,
+    catalogName,
+    environmentDefinitionName
+);
 
 // Deploy the environment
-Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
+Operation<DevCenterEnvironment> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
     WaitUntil.Completed,
     projectName,
     "me",
-    "DevEnvironment",
-    RequestContent.Create(content));
+    requestEnvironment);
 
-BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
-JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
-Console.WriteLine($"Completed provisioning for environment with status {environment.GetProperty("provisioningState")}.");
+DevCenterEnvironment environment = await environmentCreateOperation.WaitForCompletionAsync();
+Console.WriteLine($"Completed provisioning for environment with status {environment.ProvisioningState}.");
 ```
 
 ## Delete an environment
@@ -246,14 +257,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [azdevcenter_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/CONTRIBUTING.md
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/devcenter/Azure.Developer.DevCenter/README.png)
 
 ## Next steps
 

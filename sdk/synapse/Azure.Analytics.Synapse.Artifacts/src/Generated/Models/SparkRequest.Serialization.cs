@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -193,12 +191,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 numExecutors);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkRequest(document.RootElement);
+        }
+
         internal partial class SparkRequestConverter : JsonConverter<SparkRequest>
         {
             public override void Write(Utf8JsonWriter writer, SparkRequest model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override SparkRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

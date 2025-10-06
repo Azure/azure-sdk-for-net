@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network interface and it's custom security rules. </summary>
+        [WirePath("networkInterfaceAssociation")]
         public NetworkInterfaceAssociation NetworkInterfaceAssociation { get; }
         /// <summary> Subnet and it's custom security rules. </summary>
+        [WirePath("subnetAssociation")]
         public SubnetAssociation SubnetAssociation { get; }
         /// <summary> Collection of default security rules of the network security group. </summary>
+        [WirePath("defaultSecurityRules")]
         public IReadOnlyList<SecurityRuleData> DefaultSecurityRules { get; }
         /// <summary> Collection of effective security rules. </summary>
+        [WirePath("effectiveSecurityRules")]
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
     }
 }

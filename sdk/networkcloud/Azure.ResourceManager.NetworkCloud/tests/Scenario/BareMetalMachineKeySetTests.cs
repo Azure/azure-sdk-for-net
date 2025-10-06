@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             (
                 cluster.Data.Location,
                 cluster.Data.ClusterExtendedLocation,
-                "fake-id",
+                TestEnvironment.BMMKeySetGroupId,
                 TestEnvironment.DayFromNow,
                 new List<IPAddress>(),
                 BareMetalMachineKeySetPrivilegeLevel.Standard,
@@ -47,8 +48,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     new KeySetUser
                     (
                         "userABC",
-                        new NetworkCloudSshPublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCYnWX/sth0/ikG/d+ahWdO4sTp1stHP1jnEcxt0Vr4YcoKYh6cic2yZr3Mjb4NxcuJKAw4kmJ7bSRl5na8MEJkSFyMberQaqapahv+lx7Pm8ZTZVlVcvq0Q83yrHA/62RNtLqLF03RaTaBMrNXZoC76euPEHK4LNgk9UxhTfE0GDHGHOHGRafh24pTgVhyd7nSTuYyY+OlIfv6J726wGsRFZ8OXtE7xfHEtfzsFJBpf15YOEEtdrIQ0w+xj53nO2FOk+gLhExxlfj4gizQZPXtNI+nM7d25rlZWQW4RngFAvon63/3HNELCEHmAaEPpoAQpgESl19AtTQzUf5hl3RAyL75CM7V95/NcUG0UJ+3t1wI+Kc3WpTkHZmbcgOBYSi6+JPpmqB/oxEkjDUIvyyenLB9UFyTj8keQ2vCYzaTBLjcndDJWFYM+MbKHCSx/XxZXDkFiPQeLgkWixFAWLmufnwULIx/tr/VRdQFSZI6MoUmfUqaQhv7a2eVikiqLEk= fake-public-key")
-                    ),
+                        new NetworkCloudSshPublicKey(TestEnvironment.BMMKeySetSSHPublicKey)
+                    )
+                    {
+                        UserPrincipalName = "userABC@contoso.com"
+                    }
                 }
             )
             {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
     using System.Collections.Generic;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
     using Xunit;
 
@@ -15,9 +16,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             CollectionConfigurationError[] errors;
             var filterGroupInfo = new FilterConjunctionGroupInfo(new List<FilterInfo>() {
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "apple"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "dog"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "red")
+                                        new FilterInfo("StringField", PredicateType.Contains, "apple"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "dog"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "red")
                                       });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock() { StringField = "This string contains all valuable words: 'apple', 'dog', and 'red'." };
@@ -38,9 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             CollectionConfigurationError[] errors;
             var filterGroupInfo = new FilterConjunctionGroupInfo(new List<FilterInfo>() {
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "apple"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "dog"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "red")
+                                        new FilterInfo("StringField", PredicateType.Contains, "apple"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "dog"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "red")
                                       });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock()
@@ -84,9 +85,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             CollectionConfigurationError[] errors;
             var filterGroupInfo = new FilterConjunctionGroupInfo(new List<FilterInfo>() {
-                                    new FilterInfo("NonExistentField", FilterInfoPredicate.Contains, "apple"),
-                                    new FilterInfo("BooleanField", FilterInfoPredicate.Contains, "dog"),
-                                    new FilterInfo("StringField", FilterInfoPredicate.Contains, "red")
+                                    new FilterInfo("NonExistentField", PredicateType.Contains, "apple"),
+                                    new FilterInfo("BooleanField", PredicateType.Contains, "dog"),
+                                    new FilterInfo("StringField", PredicateType.Contains, "red")
                                     });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock() { StringField = "red" };
@@ -104,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.Equal(
                 "Failed to create a filter NonExistentField Contains apple.",
                 errors[0].Message);
-            Assert.Contains("Error finding property NonExistentField in the type Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests.DocumentMock", errors[0].FullException);
+            Assert.Contains($"Error finding property NonExistentField in the type {typeof(DocumentMock).FullName}", errors[0].FullException);
             Assert.Equal(3, errors[0].Data.Count);
             Assert.Equal("NonExistentField", errors[0].Data.GetValue("FilterFieldName"));
             Assert.Equal(Predicate.Contains.ToString(), errors[0].Data.GetValue("FilterPredicate"));

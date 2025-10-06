@@ -156,6 +156,18 @@ file.Flush(SampleFileContent.Length);
 Response<FileDownloadInfo> fileContents = file.Read();
 ```
 
+### Reading Streaming Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+Response<DataLakeFileReadStreamingResult> fileContents = file.ReadStreaming();
+Stream readStream = fileContents.Value.Content;
+```
+
+### Reading Content Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_ReadContent
+Response<DataLakeFileReadResult> fileContents = file.ReadContent();
+BinaryData readData = fileContents.Value.Content;
+```
+
 ### Listing/Traversing through a DataLake Filesystem
 ```C# Snippet:SampleSnippetDataLakeFileClient_List
 foreach (PathItem pathItem in filesystem.GetPaths())
@@ -219,6 +231,8 @@ PathProperties directoryPathProperties = directoryClient.GetProperties();
 All File DataLake service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ## Next steps
 
@@ -242,28 +256,27 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2FREADME.png)
-
 <!-- LINKS -->
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.storage.files.datalake
-[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/filesystem
-[product_docs]: https://docs.microsoft.com/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+[docs]: https://learn.microsoft.com/dotnet/api/azure.storage.files.datalake
+[rest_docs]: https://learn.microsoft.com/rest/api/storageservices/datalakestoragegen2/filesystem
+[product_docs]: https://learn.microsoft.com/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
+[error_codes]: https://learn.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

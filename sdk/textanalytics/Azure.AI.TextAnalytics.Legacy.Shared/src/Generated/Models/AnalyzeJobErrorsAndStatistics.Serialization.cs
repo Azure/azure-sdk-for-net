@@ -48,5 +48,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new AnalyzeJobErrorsAndStatistics(errors ?? new ChangeTrackingList<TextAnalyticsError>(), statistics);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnalyzeJobErrorsAndStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAnalyzeJobErrorsAndStatistics(document.RootElement);
+        }
     }
 }

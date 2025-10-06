@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration
@@ -12,6 +13,9 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Role definition permissions. </summary>
     public partial class KeyVaultPermission
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
         public KeyVaultPermission()
         {
@@ -26,20 +30,25 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="dataActions"> Data action permissions that are granted. </param>
         /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
-        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             NotActions = notActions;
             DataActions = dataActions;
             NotDataActions = notDataActions;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Action permissions that are granted. </summary>
         public IList<string> Actions { get; }
+
         /// <summary> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
         public IList<string> NotActions { get; }
+
         /// <summary> Data action permissions that are granted. </summary>
         public IList<KeyVaultDataAction> DataActions { get; }
+
         /// <summary> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
         public IList<KeyVaultDataAction> NotDataActions { get; }
     }

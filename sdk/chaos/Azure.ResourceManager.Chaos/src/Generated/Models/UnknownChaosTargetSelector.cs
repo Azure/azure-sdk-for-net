@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosTargetSelector. </summary>
+    /// <summary> Unknown version of ChaosTargetSelector. </summary>
     internal partial class UnknownChaosTargetSelector : ChaosTargetSelector
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetSelector"/>. </summary>
-        /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
+        /// <param name="type"> Chaos target selector discriminator type. </param>
         /// <param name="filter">
         /// Model that represents available filter types that can be applied to a targets list.
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
         /// </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownChaosTargetSelector(SelectorType selectorType, string id, ChaosTargetFilter filter, IDictionary<string, BinaryData> additionalProperties) : base(selectorType, id, filter, additionalProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownChaosTargetSelector(string id, SelectorType type, ChaosTargetFilter filter, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, type, filter, serializedAdditionalRawData)
         {
-            SelectorType = selectorType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetSelector"/> for deserialization. </summary>

@@ -47,30 +47,30 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
-        /// <param name="score">
+        /// <param name="confidence">
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
-        internal DetectedLanguage(string language, float score)
+        internal DetectedLanguage(string language, float confidence)
         {
             Argument.AssertNotNull(language, nameof(language));
 
             Language = language;
-            Score = score;
+            Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
-        /// <param name="score">
+        /// <param name="confidence">
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedLanguage(string language, float score, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DetectedLanguage(string language, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Language = language;
-            Score = score;
+            Confidence = confidence;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,6 +85,6 @@ namespace Azure.AI.Translation.Text
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </summary>
-        public float Score { get; }
+        public float Confidence { get; }
     }
 }

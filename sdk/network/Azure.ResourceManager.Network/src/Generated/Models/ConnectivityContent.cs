@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -82,14 +81,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The source of the connection. </summary>
+        [WirePath("source")]
         public ConnectivitySource Source { get; }
         /// <summary> The destination of connection. </summary>
+        [WirePath("destination")]
         public ConnectivityDestination Destination { get; }
         /// <summary> Network protocol. </summary>
+        [WirePath("protocol")]
         public NetworkWatcherProtocol? Protocol { get; set; }
         /// <summary> Configuration of the protocol. </summary>
         internal ProtocolConfiguration ProtocolConfiguration { get; set; }
         /// <summary> HTTP configuration of the connectivity check. </summary>
+        [WirePath("protocolConfiguration.HTTPConfiguration")]
         public NetworkHttpConfiguration HttpProtocolConfiguration
         {
             get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpProtocolConfiguration;
@@ -102,6 +105,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Preferred IP version of the connection. </summary>
+        [WirePath("preferredIPVersion")]
         public NetworkIPVersion? PreferredIPVersion { get; set; }
     }
 }

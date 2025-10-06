@@ -10,48 +10,43 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AddonHcxProperties : IUtf8JsonSerializable, IJsonModel<AddonHcxProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddonHcxProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddonHcxProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AddonHcxProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AddonHcxProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("offer"u8);
             writer.WriteStringValue(Offer);
-            writer.WritePropertyName("addonType"u8);
-            writer.WriteStringValue(AddonType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ManagementNetwork))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("managementNetwork"u8);
+                writer.WriteStringValue(ManagementNetwork);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(UplinkNetwork))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("uplinkNetwork"u8);
+                writer.WriteStringValue(UplinkNetwork);
             }
-            writer.WriteEndObject();
         }
 
         AddonHcxProperties IJsonModel<AddonHcxProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,7 +54,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddonHcxProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,22 +63,34 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AddonHcxProperties DeserializeAddonHcxProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string offer = default;
+            string managementNetwork = default;
+            string uplinkNetwork = default;
             AddonType addonType = default;
             AddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offer"u8))
                 {
                     offer = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("managementNetwork"u8))
+                {
+                    managementNetwork = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("uplinkNetwork"u8))
+                {
+                    uplinkNetwork = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("addonType"u8))
@@ -102,11 +109,17 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonHcxProperties(addonType, provisioningState, serializedAdditionalRawData, offer);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AddonHcxProperties(
+                addonType,
+                provisioningState,
+                serializedAdditionalRawData,
+                offer,
+                managementNetwork,
+                uplinkNetwork);
         }
 
         BinaryData IPersistableModel<AddonHcxProperties>.Write(ModelReaderWriterOptions options)
@@ -116,9 +129,9 @@ namespace Azure.ResourceManager.Avs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,11 +143,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAddonHcxProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddonHcxProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

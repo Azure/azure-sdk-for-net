@@ -31,11 +31,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="subnetId">The ARM resource identifier of the virtual
         /// network subnet which Compute Nodes running Tasks from the Job will
-        /// join for the duration of the Task. This will only work with a
-        /// VirtualMachineConfiguration Pool.</param>
-        public JobNetworkConfiguration(string subnetId)
+        /// join for the duration of the Task.</param>
+        /// <param name="skipWithdrawFromVNet">Whether to withdraw Compute
+        /// Nodes from the virtual network to DNC when the job is terminated or
+        /// deleted.</param>
+        public JobNetworkConfiguration(string subnetId, bool? skipWithdrawFromVNet = default(bool?))
         {
             SubnetId = subnetId;
+            SkipWithdrawFromVNet = skipWithdrawFromVNet;
             CustomInit();
         }
 
@@ -47,8 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the ARM resource identifier of the virtual network
         /// subnet which Compute Nodes running Tasks from the Job will join for
-        /// the duration of the Task. This will only work with a
-        /// VirtualMachineConfiguration Pool.
+        /// the duration of the Task.
         /// </summary>
         /// <remarks>
         /// The virtual network must be in the same region and subscription as
@@ -71,10 +73,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// well as port 22 for Linux and port 3389 for Windows. Port 443 is
         /// also required to be open for outbound connections for
         /// communications to Azure Storage. For more details see:
-        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
+        /// https://docs.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
         /// </remarks>
         [JsonProperty(PropertyName = "subnetId")]
         public string SubnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to withdraw Compute Nodes from the virtual
+        /// network to DNC when the job is terminated or deleted.
+        /// </summary>
+        /// <remarks>
+        /// If true, nodes will remain joined to the virtual network to DNC. If
+        /// false, nodes will automatically withdraw when the job ends.
+        /// Defaults to false.
+        /// </remarks>
+        [JsonProperty(PropertyName = "skipWithdrawFromVNet")]
+        public bool? SkipWithdrawFromVNet { get; set; }
 
     }
 }

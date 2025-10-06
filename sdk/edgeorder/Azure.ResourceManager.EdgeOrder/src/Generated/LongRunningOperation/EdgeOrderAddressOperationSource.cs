@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.EdgeOrder
 
         EdgeOrderAddressResource IOperationSource<EdgeOrderAddressResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
+            var data = ModelReaderWriter.Read<EdgeOrderAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeOrderContext.Default);
             return new EdgeOrderAddressResource(_client, data);
         }
 
         async ValueTask<EdgeOrderAddressResource> IOperationSource<EdgeOrderAddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
-            return new EdgeOrderAddressResource(_client, data);
+            var data = ModelReaderWriter.Read<EdgeOrderAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeOrderContext.Default);
+            return await Task.FromResult(new EdgeOrderAddressResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

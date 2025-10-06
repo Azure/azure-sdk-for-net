@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -63,8 +62,10 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
 
         /// <summary>
-        /// The Custom Context which contains SIP and voip headers.
+        /// Overrides default client source by a MicrosoftTeamsAppIdentifier type source.
+        /// Required for creating call with Teams resource account ID.
+        /// This is per-operation setting and does not change the client's default source.
         /// </summary>
-        public CustomCallingContext CustomCallingContext { get; }
+        public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownGcpOrganizationalData. </summary>
+    /// <summary> Unknown version of GcpOrganizationalData. </summary>
     internal partial class UnknownGcpOrganizationalData : GcpOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/>. </summary>

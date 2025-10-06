@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -22,6 +21,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             ThreatIntelligence = new ChangeTrackingList<SecurityInsightsThreatIntelligence>();
             Protocols = new ChangeTrackingList<string>();
+            Owners = new ChangeTrackingList<string>();
+            NicEntityIds = new ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.IotDevice;
         }
 
@@ -51,7 +52,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
-        internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="owners"> A list of owners of the IoTDevice entity. </param>
+        /// <param name="nicEntityIds"> A list of Nic entity ids of the IoTDevice entity. </param>
+        /// <param name="site"> The site of the device. </param>
+        /// <param name="zone"> The zone location of the device within a site. </param>
+        /// <param name="sensor"> The sensor the device is monitored by. </param>
+        /// <param name="deviceSubType"> The subType of the device ('PLC', 'HMI', 'EWS', etc.). </param>
+        /// <param name="importance"> Device importance, determines if the device classified as 'crown jewel'. </param>
+        /// <param name="purdueLayer"> The Purdue Layer of the device. </param>
+        /// <param name="isAuthorized"> Determines whether the device classified as authorized device. </param>
+        /// <param name="isProgramming"> Determines whether the device classified as programming device. </param>
+        /// <param name="isScanner"> Is the device classified as a scanner device. </param>
+        internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols, IReadOnlyList<string> owners, IReadOnlyList<string> nicEntityIds, string site, string zone, string sensor, string deviceSubType, DeviceImportance? importance, string purdueLayer, bool? isAuthorized, bool? isProgramming, bool? isScanner) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -72,6 +84,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IPAddressEntityId = ipAddressEntityId;
             ThreatIntelligence = threatIntelligence;
             Protocols = protocols;
+            Owners = owners;
+            NicEntityIds = nicEntityIds;
+            Site = site;
+            Zone = zone;
+            Sensor = sensor;
+            DeviceSubType = deviceSubType;
+            Importance = importance;
+            PurdueLayer = purdueLayer;
+            IsAuthorized = isAuthorized;
+            IsProgramming = isProgramming;
+            IsScanner = isScanner;
             Kind = kind;
         }
 
@@ -105,42 +128,94 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The ID of the IoT Device in the IoT Hub. </summary>
+        [WirePath("properties.deviceId")]
         public string DeviceId { get; }
         /// <summary> The friendly name of the device. </summary>
+        [WirePath("properties.deviceName")]
         public string DeviceName { get; }
         /// <summary> The source of the device. </summary>
+        [WirePath("properties.source")]
         public string Source { get; }
         /// <summary> The ID of the security agent running on the device. </summary>
+        [WirePath("properties.iotSecurityAgentId")]
         public Guid? IotSecurityAgentId { get; }
         /// <summary> The type of the device. </summary>
+        [WirePath("properties.deviceType")]
         public string DeviceType { get; }
         /// <summary> The vendor of the device. </summary>
+        [WirePath("properties.vendor")]
         public string Vendor { get; }
         /// <summary> The ID of the edge device. </summary>
+        [WirePath("properties.edgeId")]
         public string EdgeId { get; }
         /// <summary> The MAC address of the device. </summary>
+        [WirePath("properties.macAddress")]
         public string MacAddress { get; }
         /// <summary> The model of the device. </summary>
+        [WirePath("properties.model")]
         public string Model { get; }
         /// <summary> The serial number of the device. </summary>
+        [WirePath("properties.serialNumber")]
         public string SerialNumber { get; }
         /// <summary> The firmware version of the device. </summary>
+        [WirePath("properties.firmwareVersion")]
         public string FirmwareVersion { get; }
         /// <summary> The operating system of the device. </summary>
+        [WirePath("properties.operatingSystem")]
         public string OperatingSystem { get; }
         /// <summary> The AzureResource entity id of the IoT Hub. </summary>
+        [WirePath("properties.iotHubEntityId")]
         public string IotHubEntityId { get; }
         /// <summary> The Host entity id of this device. </summary>
+        [WirePath("properties.hostEntityId")]
         public string HostEntityId { get; }
         /// <summary> The IP entity if of this device. </summary>
+        [WirePath("properties.ipAddressEntityId")]
         public string IPAddressEntityId { get; }
         /// <summary> A list of TI contexts attached to the IoTDevice entity. </summary>
+        [WirePath("properties.threatIntelligence")]
         public IReadOnlyList<SecurityInsightsThreatIntelligence> ThreatIntelligence { get; }
         /// <summary> A list of protocols of the IoTDevice entity. </summary>
+        [WirePath("properties.protocols")]
         public IReadOnlyList<string> Protocols { get; }
+        /// <summary> A list of owners of the IoTDevice entity. </summary>
+        [WirePath("properties.owners")]
+        public IReadOnlyList<string> Owners { get; }
+        /// <summary> A list of Nic entity ids of the IoTDevice entity. </summary>
+        [WirePath("properties.nicEntityIds")]
+        public IReadOnlyList<string> NicEntityIds { get; }
+        /// <summary> The site of the device. </summary>
+        [WirePath("properties.site")]
+        public string Site { get; }
+        /// <summary> The zone location of the device within a site. </summary>
+        [WirePath("properties.zone")]
+        public string Zone { get; }
+        /// <summary> The sensor the device is monitored by. </summary>
+        [WirePath("properties.sensor")]
+        public string Sensor { get; }
+        /// <summary> The subType of the device ('PLC', 'HMI', 'EWS', etc.). </summary>
+        [WirePath("properties.deviceSubType")]
+        public string DeviceSubType { get; }
+        /// <summary> Device importance, determines if the device classified as 'crown jewel'. </summary>
+        [WirePath("properties.importance")]
+        public DeviceImportance? Importance { get; set; }
+        /// <summary> The Purdue Layer of the device. </summary>
+        [WirePath("properties.purdueLayer")]
+        public string PurdueLayer { get; }
+        /// <summary> Determines whether the device classified as authorized device. </summary>
+        [WirePath("properties.isAuthorized")]
+        public bool? IsAuthorized { get; }
+        /// <summary> Determines whether the device classified as programming device. </summary>
+        [WirePath("properties.isProgramming")]
+        public bool? IsProgramming { get; }
+        /// <summary> Is the device classified as a scanner device. </summary>
+        [WirePath("properties.isScanner")]
+        public bool? IsScanner { get; }
     }
 }

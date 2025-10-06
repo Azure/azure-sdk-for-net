@@ -100,7 +100,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             => InstrumentClient(
                 new DataLakeServiceClient(
                     (new Uri(config.BlobServiceEndpoint)).ToHttps(),
-                    Tenants.GetOAuthCredential(config),
+                    TestEnvironment.Credential,
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_OAuth()
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 TestConfigHierarchicalNamespace.AccountKey);
 
         public TokenCredential GetOAuthHnsCredential()
-            => Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            => TestEnvironment.Credential;
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {
@@ -409,6 +409,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             return base.GetCustomAccountSas(permissions, services, resourceType, sharedKeyCredential);
         }
 
+        public Dictionary<string, string> BuildTags()
+            => new Dictionary<string, string>
+            {
+                { "tagKey0", "tagValue0" },
+                { "tagKey1", "tagValue1" }
+            };
+
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
@@ -438,5 +445,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 "baz/foo/bar",
                 "baz/bar/foo"
             };
+
+        public void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
+        {
+            DataLakeSasQueryParameters sas = new DataLakeUriBuilder(uri).Sas;
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
+    };
 }

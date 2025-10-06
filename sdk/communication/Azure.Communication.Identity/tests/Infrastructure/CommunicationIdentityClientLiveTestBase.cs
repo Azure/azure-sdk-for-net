@@ -27,8 +27,8 @@ namespace Azure.Communication.Identity.Tests
             JsonPathSanitizers.Add("$..userId");
             JsonPathSanitizers.Add("$..id");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.Communication.Identity.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
-                    (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
+                    (Mode == RecordedTestMode.Playback) ? new MockCredential() : TestEnvironment.Credential,
                     CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
         private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs(ServiceVersion? version)
@@ -87,10 +87,12 @@ namespace Azure.Communication.Identity.Tests
                     "https://auth.msft.communication.azure.com/Teams.ManageChats"
                 };
 
+#pragma warning disable CS0618 // Suppress obsolete warning for test-only usage
                 AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     TestEnvironment.CommunicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+#pragma warning restore CS0618
                 options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
             return options;

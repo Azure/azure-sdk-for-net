@@ -48,12 +48,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SparkServiceError(message, errorCode, source);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkServiceError(document.RootElement);
+        }
+
         internal partial class SparkServiceErrorConverter : JsonConverter<SparkServiceError>
         {
             public override void Write(Utf8JsonWriter writer, SparkServiceError model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override SparkServiceError Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

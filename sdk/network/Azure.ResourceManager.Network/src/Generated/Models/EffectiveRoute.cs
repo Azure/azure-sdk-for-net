@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -75,18 +74,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the user defined route. This is optional. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> If true, on-premises routes are not propagated to the network interfaces in the subnet. </summary>
+        [WirePath("disableBgpRoutePropagation")]
         public bool? DisableBgpRoutePropagation { get; }
         /// <summary> Who created the route. </summary>
+        [WirePath("source")]
         public EffectiveRouteSource? Source { get; }
         /// <summary> The value of effective route. </summary>
+        [WirePath("state")]
         public EffectiveRouteState? State { get; }
         /// <summary> The address prefixes of the effective routes in CIDR notation. </summary>
+        [WirePath("addressPrefix")]
         public IReadOnlyList<string> AddressPrefix { get; }
         /// <summary> The IP address of the next hop of the effective route. </summary>
+        [WirePath("nextHopIpAddress")]
         public IReadOnlyList<string> NextHopIPAddress { get; }
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
+        [WirePath("nextHopType")]
         public RouteNextHopType? NextHopType { get; }
     }
 }

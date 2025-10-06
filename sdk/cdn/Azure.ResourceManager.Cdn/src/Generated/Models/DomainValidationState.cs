@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </summary>
+    /// <summary>
+    /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation.
+    /// Serialized Name: DomainValidationState
+    /// </summary>
     public readonly partial struct DomainValidationState : IEquatable<DomainValidationState>
     {
         private readonly string _value;
@@ -32,29 +35,56 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RefreshingValidationTokenValue = "RefreshingValidationToken";
         private const string InternalErrorValue = "InternalError";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: DomainValidationState.Unknown
+        /// </summary>
         public static DomainValidationState Unknown { get; } = new DomainValidationState(UnknownValue);
-        /// <summary> Submitting. </summary>
+        /// <summary>
+        /// Submitting
+        /// Serialized Name: DomainValidationState.Submitting
+        /// </summary>
         public static DomainValidationState Submitting { get; } = new DomainValidationState(SubmittingValue);
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: DomainValidationState.Pending
+        /// </summary>
         public static DomainValidationState Pending { get; } = new DomainValidationState(PendingValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: DomainValidationState.Rejected
+        /// </summary>
         public static DomainValidationState Rejected { get; } = new DomainValidationState(RejectedValue);
-        /// <summary> TimedOut. </summary>
+        /// <summary>
+        /// TimedOut
+        /// Serialized Name: DomainValidationState.TimedOut
+        /// </summary>
         public static DomainValidationState TimedOut { get; } = new DomainValidationState(TimedOutValue);
-        /// <summary> PendingRevalidation. </summary>
+        /// <summary>
+        /// PendingRevalidation
+        /// Serialized Name: DomainValidationState.PendingRevalidation
+        /// </summary>
         public static DomainValidationState PendingRevalidation { get; } = new DomainValidationState(PendingRevalidationValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: DomainValidationState.Approved
+        /// </summary>
         public static DomainValidationState Approved { get; } = new DomainValidationState(ApprovedValue);
-        /// <summary> RefreshingValidationToken. </summary>
+        /// <summary>
+        /// RefreshingValidationToken
+        /// Serialized Name: DomainValidationState.RefreshingValidationToken
+        /// </summary>
         public static DomainValidationState RefreshingValidationToken { get; } = new DomainValidationState(RefreshingValidationTokenValue);
-        /// <summary> InternalError. </summary>
+        /// <summary>
+        /// InternalError
+        /// Serialized Name: DomainValidationState.InternalError
+        /// </summary>
         public static DomainValidationState InternalError { get; } = new DomainValidationState(InternalErrorValue);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are the same. </summary>
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are not the same. </summary>
         public static bool operator !=(DomainValidationState left, DomainValidationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainValidationState"/>. </summary>
         public static implicit operator DomainValidationState(string value) => new DomainValidationState(value);
 
         /// <inheritdoc />
@@ -65,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

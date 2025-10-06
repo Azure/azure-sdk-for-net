@@ -2,13 +2,14 @@
   <PropertyGroup>
     <Description>A library for ingesting data to Azure Monitor.</Description>
     <AssemblyTitle>Azure Monitor Ingestion client library</AssemblyTitle>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.1</ApiCompatVersion>
+    <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Azure Monitor Ingestion</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462</TargetFrameworks>
     <NoWarn>$(NoWarn);CA1835</NoWarn> <!--TODO: Suppressing warning in shared source-->
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -19,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

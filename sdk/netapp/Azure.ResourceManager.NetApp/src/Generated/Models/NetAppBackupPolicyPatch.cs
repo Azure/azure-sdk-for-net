@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="backupPolicyId"> Backup Policy GUID ID. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
         /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Backup Policy Resource ID. </summary>
+        /// <summary> Backup Policy GUID ID. </summary>
         public ResourceIdentifier BackupPolicyId { get; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

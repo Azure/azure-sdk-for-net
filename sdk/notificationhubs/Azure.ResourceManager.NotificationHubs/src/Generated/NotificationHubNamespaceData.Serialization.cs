@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,55 +18,28 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     public partial class NotificationHubNamespaceData : IUtf8JsonSerializable, IJsonModel<NotificationHubNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("sku"u8);
+            writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamespaceName))
@@ -73,50 +47,15 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(OperationProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
+                writer.WriteStringValue(OperationProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Region))
-            {
-                writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MetricId))
-            {
-                writer.WritePropertyName("metricId"u8);
-                writer.WriteStringValue(MetricId);
-            }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(NamespaceStatus))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(UpdatedOn))
-            {
-                writer.WritePropertyName("updatedAt"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ServiceBusEndpoint))
-            {
-                writer.WritePropertyName("serviceBusEndpoint"u8);
-                writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
-            if (Optional.IsDefined(ScaleUnit))
-            {
-                writer.WritePropertyName("scaleUnit"u8);
-                writer.WriteStringValue(ScaleUnit);
+                writer.WriteStringValue(NamespaceStatus.Value.ToString());
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -128,31 +67,85 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(IsCritical.Value);
             }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MetricId))
+            {
+                writer.WritePropertyName("metricId"u8);
+                writer.WriteStringValue(MetricId);
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedAt"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(HubNamespaceType))
+            {
+                writer.WritePropertyName("namespaceType"u8);
+                writer.WriteStringValue(HubNamespaceType.Value.ToString());
+            }
+            if (Optional.IsDefined(ReplicationRegion))
+            {
+                writer.WritePropertyName("replicationRegion"u8);
+                writer.WriteStringValue(ReplicationRegion.Value.ToString());
+            }
+            if (Optional.IsDefined(ZoneRedundancy))
+            {
+                writer.WritePropertyName("zoneRedundancy"u8);
+                writer.WriteStringValue(ZoneRedundancy.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                writer.WritePropertyName("networkAcls"u8);
+                writer.WriteObjectValue(NetworkAcls, options);
+            }
+            if (Optional.IsDefined(PnsCredentials))
+            {
+                writer.WritePropertyName("pnsCredentials"u8);
+                writer.WriteObjectValue(PnsCredentials, options);
+            }
+            if (Optional.IsDefined(ServiceBusEndpoint))
+            {
+                writer.WritePropertyName("serviceBusEndpoint"u8);
+                writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ScaleUnit))
+            {
+                writer.WritePropertyName("scaleUnit"u8);
+                writer.WriteStringValue(ScaleUnit);
+            }
             if (Optional.IsDefined(DataCenter))
             {
                 writer.WritePropertyName("dataCenter"u8);
                 writer.WriteStringValue(DataCenter);
             }
-            if (Optional.IsDefined(NamespaceType))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("namespaceType"u8);
-                writer.WriteStringValue(NamespaceType.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -162,7 +155,7 @@ namespace Azure.ResourceManager.NotificationHubs
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +164,7 @@ namespace Azure.ResourceManager.NotificationHubs
 
         internal static NotificationHubNamespaceData DeserializeNotificationHubNamespaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -185,29 +178,31 @@ namespace Azure.ResourceManager.NotificationHubs
             ResourceType type = default;
             SystemData systemData = default;
             string name0 = default;
-            string provisioningState = default;
-            string region = default;
-            string metricId = default;
-            string status = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
-            Uri serviceBusEndpoint = default;
-            string subscriptionId = default;
-            string scaleUnit = default;
+            OperationProvisioningState? provisioningState = default;
+            NotificationHubNamespaceStatus? status = default;
             bool? enabled = default;
             bool? critical = default;
+            string subscriptionId = default;
+            string region = default;
+            string metricId = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            NotificationHubNamespaceTypeExt? namespaceType = default;
+            AllowedReplicationRegion? replicationRegion = default;
+            ZoneRedundancyPreference? zoneRedundancy = default;
+            NotificationHubNetworkAcls networkAcls = default;
+            PnsCredentials pnsCredentials = default;
+            Uri serviceBusEndpoint = default;
+            IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default;
+            string scaleUnit = default;
             string dataCenter = default;
-            NotificationHubNamespaceType? namespaceType = default;
+            NotificationHubPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
                     continue;
                 }
@@ -251,7 +246,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNotificationHubsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -270,59 +265,20 @@ namespace Azure.ResourceManager.NotificationHubs
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("region"u8))
-                        {
-                            region = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("metricId"u8))
-                        {
-                            metricId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new OperationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
                         {
-                            status = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"u8))
-                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("updatedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updatedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceBusEndpoint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceBusEndpoint = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionId"u8))
-                        {
-                            subscriptionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("scaleUnit"u8))
-                        {
-                            scaleUnit = property0.Value.GetString();
+                            status = new NotificationHubNamespaceStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -343,9 +299,37 @@ namespace Azure.ResourceManager.NotificationHubs
                             critical = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("dataCenter"u8))
+                        if (property0.NameEquals("subscriptionId"u8))
                         {
-                            dataCenter = property0.Value.GetString();
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("region"u8))
+                        {
+                            region = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("metricId"u8))
+                        {
+                            metricId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("createdAt"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createdAt = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedAt"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("namespaceType"u8))
@@ -354,7 +338,85 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            namespaceType = property0.Value.GetString().ToNotificationHubNamespaceType();
+                            namespaceType = new NotificationHubNamespaceTypeExt(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("replicationRegion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replicationRegion = new AllowedReplicationRegion(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("zoneRedundancy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            zoneRedundancy = new ZoneRedundancyPreference(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkAcls = NotificationHubNetworkAcls.DeserializeNotificationHubNetworkAcls(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("pnsCredentials"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pnsCredentials = PnsCredentials.DeserializePnsCredentials(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceBusEndpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceBusEndpoint = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NotificationHubPrivateEndpointConnectionData> array = new List<NotificationHubPrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(item, options));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("scaleUnit"u8))
+                        {
+                            scaleUnit = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataCenter"u8))
+                        {
+                            dataCenter = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new NotificationHubPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -362,10 +424,10 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubNamespaceData(
                 id,
                 name,
@@ -373,21 +435,27 @@ namespace Azure.ResourceManager.NotificationHubs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                sku,
                 name0,
                 provisioningState,
-                region,
-                metricId,
                 status,
-                createdAt,
-                updatedAt,
-                serviceBusEndpoint,
-                subscriptionId,
-                scaleUnit,
                 enabled,
                 critical,
-                dataCenter,
+                subscriptionId,
+                region,
+                metricId,
+                createdAt,
+                updatedAt,
                 namespaceType,
-                sku,
+                replicationRegion,
+                zoneRedundancy,
+                networkAcls,
+                pnsCredentials,
+                serviceBusEndpoint,
+                privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>(),
+                scaleUnit,
+                dataCenter,
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 
@@ -398,9 +466,9 @@ namespace Azure.ResourceManager.NotificationHubs
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -412,11 +480,11 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNotificationHubNamespaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

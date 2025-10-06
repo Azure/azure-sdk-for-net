@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkedServiceListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkedServiceListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLinkedServiceListResponse(document.RootElement);
+        }
+
         internal partial class LinkedServiceListResponseConverter : JsonConverter<LinkedServiceListResponse>
         {
             public override void Write(Utf8JsonWriter writer, LinkedServiceListResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override LinkedServiceListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

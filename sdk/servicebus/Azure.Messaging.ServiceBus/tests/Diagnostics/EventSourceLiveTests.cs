@@ -128,6 +128,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CancelScheduledMessageStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CancelScheduledMessageCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
+                // Delete and purge
+                await SendMessagesAsync(client, scope.QueueName, 11);
+
+                await receiver.DeleteMessagesAsync(1);
+                _listener.SingleEventById(ServiceBusEventSource.DeleteMessagesStartEvent, e => e.Payload.Contains(receiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.DeleteMessagesCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
+
+                await receiver.PurgeMessagesAsync();
+                _listener.SingleEventById(ServiceBusEventSource.PurgeMessagesStartEvent, e => e.Payload.Contains(receiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.PurgeMessagesCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
+
+                // Link and client close/dispose
                 await receiver.DisposeAsync();
                 _listener.SingleEventById(ServiceBusEventSource.ClientCloseStartEvent, e => e.Payload.Contains(nameof(ServiceBusReceiver)) && e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ClientCloseCompleteEvent, e => e.Payload.Contains(nameof(ServiceBusReceiver)) && e.Payload.Contains(receiver.Identifier));
@@ -230,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
@@ -590,7 +602,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString,
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential,
                     new ServiceBusClientOptions { EnableCrossEntityTransactions = true });
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -612,7 +624,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString,
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace,
+                    TestEnvironment.Credential,
                     new ServiceBusClientOptions { EnableCrossEntityTransactions = true });
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -630,11 +643,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         }
 
         [Test]
-        public async Task CancellingReceiveLogsVerboseCancellationEvent()
+        public async Task CancelingReceiveLogsVerboseCancellationEvent()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var receiver = client.CreateReceiver(scope.QueueName);
 
                 var cts = new CancellationTokenSource();
@@ -650,7 +663,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task ReceiveFromNonExistentQueueLogsErrorEvent()
         {
-            await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             var receiver = client.CreateReceiver("nonexistentqueue");
 
             await AsyncAssert.ThrowsAsync<ServiceBusException>(

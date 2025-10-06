@@ -9,21 +9,25 @@ generate-model-factory: true
 csharp: true
 library-name: DesktopVirtualization
 namespace: Azure.ResourceManager.DesktopVirtualization
-require: https://github.com/Azure/azure-rest-api-specs/blob/9d449f35c2a8707d446a86d80c3732c909b1872f/specification/desktopvirtualization/resource-manager/readme.md
-# tag: package-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/ec07fc78c6c25b68107f8ff419d137ffecced005/specification/desktopvirtualization/resource-manager/readme.md
+# tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
+
+models-to-treat-empty-string-as-null:
+  - SessionHostData
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -59,63 +63,68 @@ acronym-mapping:
   RTC: Rtc
 
 rename-mapping:
-  Application: VirtualApplication
+  AgentUpdatePatchProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
+  AgentUpdatePatchProperties: SessionHostAgentUpdatePatchProperties
+  AgentUpdateProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
+  AgentUpdateProperties: SessionHostAgentUpdateProperties
+  AppAttachPackageArchitectures.ALL: All
+  AppAttachPackageArchitectures.ARM: Arm
+  AppAttachPackageArchitectures.ARM64: Arm64
+  AppAttachPackageInfoProperties.certificateExpiry: CertificateExpireOn
+  AppAttachPackageInfoProperties.lastUpdated: LastUpdatedOn
+  AppAttachPackagePatchProperties.keyVaultURL: KeyVaultUri|uri
+  AppAttachPackageProperties.keyVaultURL: KeyVaultUri|uri
   Application.properties.iconContent: -|any
-  ApplicationType: VirtualApplicationType
-  ApplicationGroup: VirtualApplicationGroup
+  Application: VirtualApplication
   ApplicationGroup.properties.cloudPcResource: IsCloudPcResource
   ApplicationGroup.properties.hostPoolArmPath: HostPoolId|arm-id
   ApplicationGroup.properties.workspaceArmPath: WorkspaceId|arm-id
+  ApplicationGroup: VirtualApplicationGroup
   ApplicationGroupType: VirtualApplicationGroupType
+  ApplicationType: VirtualApplicationType
   CommandLineSetting: VirtualApplicationCommandLineSetting
-  Desktop: VirtualDesktop
   Desktop.properties.iconContent: -|any
-  DesktopGroup: VirtualDesktopGroup
-  Workspace: VirtualWorkspace
+  Desktop: VirtualDesktop
+  ExpandMsixImage.properties.lastUpdated: LastUpdatedOn
+  HealthCheckName: SessionHostHealthCheckName
+  HealthCheckResult: SessionHostHealthCheckResult
   HostPool.properties.cloudPcResource: IsCloudPcResource
   HostPool.properties.ssoadfsAuthority: SsoAdfsAuthority
   HostPool.properties.validationEnvironment: IsValidationEnvironment
   HostPoolPatch.properties.ssoadfsAuthority: SsoAdfsAuthority
   HostPoolPatch.properties.validationEnvironment: IsValidationEnvironment
+  HostpoolPublicNetworkAccess: HostPoolPublicNetworkAccess
   HostPoolType.BYODesktop: BringYourOwnDesktop
-  MsixPackage.properties.lastUpdated: LastUpdatedOn
-  ResourceModelWithAllowedPropertySet.managedBy: -|arm-id
-  SessionHost.properties.lastUpdateTime: LastUpdatedOn
-  SessionHost.properties.lastHeartBeat: LastHeartBeatOn
-  SessionHost.properties.resourceId: -|arm-id
-  SessionHost.properties.virtualMachineId: VmId
-  Workspace.properties.cloudPcResource: IsCloudPcResource
-  Status: SessionHostStatus
-  Operation: MigrationOperation
-  ExpandMsixImage.properties.lastUpdated: LastUpdatedOn
-  HealthCheckName: SessionHostHealthCheckName
-  HealthCheckResult: SessionHostHealthCheckResult
-  SSOSecretType: HostPoolSsoSecretType
   LoadBalancerType: HostPoolLoadBalancerType
-  MigrationRequestProperties: DesktopVirtualizationMigrationProperties
+  MaintenanceWindowProperties: SessionHostMaintenanceWindowProperties
+  MsixPackage.properties.lastUpdated: LastUpdatedOn
+  MsixPackageApplications.rawIcon: -|any
+  MsixPackageApplications.rawPng: -|any
+  PrivateEndpointConnectionWithSystemData: DesktopVirtualizationPrivateEndpointConnectionData
+  PrivateLinkResource: DesktopVirtualizationPrivateLinkResourceData
+  ProvisioningState: AppAttachPackageProvisioningState
+  PublicNetworkAccess: DesktopVirtualizationPublicNetworkAccess
   RegistrationInfo: HostPoolRegistrationInfo
   RegistrationInfoPatch: HostPoolRegistrationInfoPatch
   RegistrationTokenOperation: HostPoolRegistrationTokenOperation
+  ResourceModelWithAllowedPropertySet.managedBy: -|arm-id
   ScalingHostPoolReference.hostPoolArmPath: HostPoolId|arm-id
   ScalingHostPoolReference.scalingPlanEnabled: IsScalingPlanEnabled
-  SendMessage: UserSessionMessage
-  SessionState: UserSessionState
-  StartMenuItem: DesktopVirtualizationStartMenuItem
-  StopHostsWhen: DesktopVirtualizationStopHostsWhen
-  UpdateState: SessionHostUpdateState
-  MsixPackageApplications.rawIcon: -|any
-  MsixPackageApplications.rawPng: -|any
   ScalingPlan.properties.hostPoolType: ScalingHostPoolType
+  SendMessage: UserSessionMessage
+  SessionHost.properties.lastHeartBeat: LastHeartBeatOn
+  SessionHost.properties.lastUpdateTime: LastUpdatedOn
+  SessionHost.properties.resourceId: -|arm-id
+  SessionHost.properties.virtualMachineId: VmId
+  SessionState: UserSessionState
+  SSOSecretType: HostPoolSsoSecretType
+  StartMenuItem: DesktopVirtualizationStartMenuItem
+  Status: SessionHostStatus
+  StopHostsWhen: DesktopVirtualizationStopHostsWhen
   Time: ScalingActionTime
-  AgentUpdateProperties: SessionHostAgentUpdateProperties
-  AgentUpdateProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
-  AgentUpdatePatchProperties: SessionHostAgentUpdatePatchProperties
-  AgentUpdatePatchProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
-  MaintenanceWindowProperties: SessionHostMaintenanceWindowProperties
-  HostpoolPublicNetworkAccess: HostPoolPublicNetworkAccess
-  PrivateLinkResource: DesktopVirtualizationPrivateLinkResourceData
-  PrivateEndpointConnectionWithSystemData: DesktopVirtualizationPrivateEndpointConnectionData
-  PublicNetworkAccess: DesktopVirtualizationPublicNetworkAccess
+  UpdateState: SessionHostUpdateState
+  Workspace.properties.cloudPcResource: IsCloudPcResource
+  Workspace: VirtualWorkspace
 
 prepend-rp-prefix:
   - DayOfWeek

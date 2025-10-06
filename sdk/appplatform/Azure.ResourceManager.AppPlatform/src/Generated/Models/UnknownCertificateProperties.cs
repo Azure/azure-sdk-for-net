@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The UnknownCertificateProperties. </summary>
+    /// <summary> Unknown version of CertificateProperties. </summary>
     internal partial class UnknownCertificateProperties : AppPlatformCertificateProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCertificateProperties"/>. </summary>

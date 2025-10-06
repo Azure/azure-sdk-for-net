@@ -574,7 +574,13 @@ namespace Azure.Storage.Blobs.Samples
                 string delimiter = "/";
 
                 #region Snippet:SampleSnippetsBlobMigration_ListHierarchy
-                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
+
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Prefix = blobPrefix,
+                    Delimiter = delimiter
+                };
+                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(options);
                 await foreach (BlobHierarchyItem item in results)
                 {
                     MyConsumeBlobItemFunc(item);
@@ -860,6 +866,139 @@ namespace Azure.Storage.Blobs.Samples
         }
 
         [Test]
+        public async Task UserDelegationSasBuilder()
+        {
+            string accountName = StorageAccountName;
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-blob");
+            BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // setup blob
+            BlobContainerClient container = new BlobContainerClient(ConnectionString, containerName);
+
+            try
+            {
+                await container.CreateAsync();
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
+
+                #region Snippet:SampleSnippetsBlobMigration_UserDelegationSasBuilder
+                // Create BlobSasBuilder and specify parameters
+                BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+                {
+                    // with no url in a client to read from, container and blob name must be provided if applicable
+                    BlobContainerName = containerName,
+                    BlobName = blobName
+                };
+
+                // Create full, self-authenticating URI to the resource
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
+                {
+                    BlobContainerName = containerName,
+                    BlobName = blobName,
+                    Sas = sasBuilder.ToSasQueryParameters(userDelegationKey, accountName)
+                };
+                Uri sasUri = uriBuilder.ToUri();
+                #endregion
+
+                // successful download indicates pass
+                await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task GenerateUserDelegationSas()
+        {
+            string accountName = StorageAccountName;
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-blob");
+            BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // setup blob
+            BlobContainerClient container = new BlobContainerClient(ConnectionString, containerName);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(container.Uri) { BlobName = blobName };
+            Uri blobUri = uriBuilder.ToUri();
+
+            try
+            {
+                await container.CreateAsync();
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
+
+                #region Snippet:SampleSnippetsBlobMigration_GenerateUserDelegationSas
+                // Create a BlobClient
+                BlobClient blobClient = new BlobClient(blobUri);
+
+                // Create full, self-authenticating URI to the resource from the BlobClient
+                Uri sasUri = blobClient.GenerateUserDelegationSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1), userDelegationKey);
+                #endregion
+
+                // Use newly made SAS URI to download the blob
+                await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task GenerateUserDelegationSas_Builder()
+        {
+            string accountName = StorageAccountName;
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-blob");
+            BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // setup blob
+            BlobContainerClient container = new BlobContainerClient(ConnectionString, containerName);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(container.Uri) { BlobName = blobName };
+            Uri blobUri = uriBuilder.ToUri();
+
+            try
+            {
+                await container.CreateAsync();
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
+
+                #region Snippet:SampleSnippetsBlobMigration_GenerateUserDelegationSas_Builder
+                // Create a BlobClient
+                BlobClient blobClient = new BlobClient(blobUri);
+                // Create BlobSasBuilder and specify parameters
+                BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+                {
+                    // Since we are generating from the client, the client will have the container and blob name
+                    // Specify any optional paremeters here
+                    StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
+                };
+
+                // Create full, self-authenticating URI to the resource from the BlobClient
+                Uri sasUri = blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+                #endregion
+
+                // Use newly made SAS URI to download the blob
+                await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
         public async Task BlobContentHash()
         {
             string data = "hello world";
@@ -1055,7 +1194,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 #region Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
                 cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
                 Stream targetStream = new MemoryStream();
                 await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);

@@ -12,17 +12,17 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Core.Experimental.csproj" />
+    <ProjectReference Include="..\..\System.ClientModel\tests\System.ClientModel.Tests.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Remove="perf/**/*.*" />
     <Compile Remove="public/**" />
   </ItemGroup>
-  
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
   </ItemGroup>
-
 </Project>

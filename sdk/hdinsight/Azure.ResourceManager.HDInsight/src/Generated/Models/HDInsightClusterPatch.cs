@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -54,14 +54,18 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. Setting this property will override the existing identity configuration of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; set; }
+        /// <summary> The identity of the cluster, if configured. Setting this property will override the existing identity configuration of the cluster. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -71,16 +70,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the Detector. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
         /// <summary> Detector Definition. </summary>
+        [WirePath("detectorDefinition")]
         public DetectorDefinition DetectorDefinition { get; set; }
         /// <summary> Source Metrics. </summary>
+        [WirePath("metrics")]
         public IList<DiagnosticMetricSet> Metrics { get; }
         /// <summary> Additional Source Data. </summary>
+        [WirePath("data")]
         public IList<IList<AppServiceNameValuePair>> Data { get; }
         /// <summary> Detector Meta Data. </summary>
         internal DetectorMetadata DetectorMetaData { get; set; }
         /// <summary> Source of the Data. </summary>
+        [WirePath("detectorMetaData.dataSource")]
         public DetectorDataSource DataSource
         {
             get => DetectorMetaData is null ? default : DetectorMetaData.DataSource;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing the GeoBackupPolicy data model.
-    /// A database geo backup policy.
+    /// A Geo backup policy.
     /// </summary>
     public partial class GeoBackupPolicyData : ResourceData
     {
@@ -52,10 +52,8 @@ namespace Azure.ResourceManager.Sql
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyData"/>. </summary>
-        /// <param name="state"> The state of the geo backup policy. </param>
-        public GeoBackupPolicyData(GeoBackupPolicyState state)
+        public GeoBackupPolicyData()
         {
-            State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyData"/>. </summary>
@@ -63,32 +61,31 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Backup policy location. </param>
-        /// <param name="state"> The state of the geo backup policy. </param>
+        /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
+        /// <param name="geoBackupPolicyState"> The state of the geo backup policy. </param>
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, GeoBackupPolicyState state, string storageType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, GeoBackupPolicyState? geoBackupPolicyState, string storageType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Kind = kind;
             Location = location;
-            State = state;
+            Kind = kind;
+            GeoBackupPolicyState = geoBackupPolicyState;
             StorageType = storageType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyData"/> for deserialization. </summary>
-        internal GeoBackupPolicyData()
-        {
-        }
-
-        /// <summary> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </summary>
-        public string Kind { get; }
         /// <summary> Backup policy location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
+        /// <summary> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
+        public string Kind { get; }
         /// <summary> The state of the geo backup policy. </summary>
-        public GeoBackupPolicyState State { get; set; }
+        [WirePath("properties.state")]
+        public GeoBackupPolicyState? GeoBackupPolicyState { get; set; }
         /// <summary> The storage type of the geo backup policy. </summary>
+        [WirePath("properties.storageType")]
         public string StorageType { get; }
     }
 }

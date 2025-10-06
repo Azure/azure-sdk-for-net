@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -44,6 +43,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
             }
             return new SasDefinitionListResult(value ?? new ChangeTrackingList<SasDefinitionItem>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SasDefinitionListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSasDefinitionListResult(document.RootElement);
         }
     }
 }

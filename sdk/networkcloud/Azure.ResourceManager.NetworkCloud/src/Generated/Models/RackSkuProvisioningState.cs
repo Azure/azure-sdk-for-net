@@ -22,15 +22,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string CanceledValue = "Canceled";
+        private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
+        /// <summary> Canceled. </summary>
+        public static RackSkuProvisioningState Canceled { get; } = new RackSkuProvisioningState(CanceledValue);
+        /// <summary> Failed. </summary>
+        public static RackSkuProvisioningState Failed { get; } = new RackSkuProvisioningState(FailedValue);
         /// <summary> Succeeded. </summary>
         public static RackSkuProvisioningState Succeeded { get; } = new RackSkuProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="RackSkuProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RackSkuProvisioningState left, RackSkuProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RackSkuProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(RackSkuProvisioningState left, RackSkuProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RackSkuProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RackSkuProvisioningState"/>. </summary>
         public static implicit operator RackSkuProvisioningState(string value) => new RackSkuProvisioningState(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

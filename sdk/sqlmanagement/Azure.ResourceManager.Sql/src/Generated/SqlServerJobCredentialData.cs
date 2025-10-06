@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The credential user name. </summary>
+        [WirePath("properties.username")]
         public string Username { get; set; }
         /// <summary> The credential password. </summary>
+        [WirePath("properties.password")]
         public string Password { get; set; }
     }
 }

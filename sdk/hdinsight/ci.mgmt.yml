@@ -12,7 +12,6 @@ pr:
     include:
     - sdk/hdinsight/ci.mgmt.yml
     - sdk/hdinsight/Azure.ResourceManager.HDInsight/
-    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -22,5 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HDInsight
       safeName: AzureResourceManagerHDInsight
-    - name: Azure.ResourceManager.HDInsight.Containers
-      safeName: AzureResourceManagerHDInsightContainers
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.HDInsight
+      ExpectedWarningsFilepath: None

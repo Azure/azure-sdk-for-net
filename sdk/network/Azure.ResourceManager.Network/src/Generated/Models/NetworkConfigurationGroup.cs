@@ -53,25 +53,34 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkConfigurationGroup"/>. </summary>
         /// <param name="id"> Network group ID. </param>
         /// <param name="description"> A description of the network group. </param>
+        /// <param name="memberType"> The type of the group member. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkConfigurationGroup(string id, string description, NetworkGroupMemberType? memberType, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Description = description;
+            MemberType = memberType;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network group ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> A description of the network group. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
+        /// <summary> The type of the group member. </summary>
+        [WirePath("properties.memberType")]
+        public NetworkGroupMemberType? MemberType { get; }
         /// <summary> The provisioning state of the scope assignment resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
     }
 }

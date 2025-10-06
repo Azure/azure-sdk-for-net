@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -74,18 +73,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The severity of the incident. </summary>
+        [WirePath("severity")]
         public SecurityInsightsIncidentSeverity? Severity { get; set; }
         /// <summary> The status of the incident. </summary>
+        [WirePath("status")]
         public SecurityInsightsIncidentStatus? Status { get; set; }
         /// <summary> The reason the incident was closed. </summary>
+        [WirePath("classification")]
         public SecurityInsightsIncidentClassification? Classification { get; set; }
         /// <summary> The classification reason the incident was closed with. </summary>
+        [WirePath("classificationReason")]
         public SecurityInsightsIncidentClassificationReason? ClassificationReason { get; set; }
         /// <summary> Describes the reason the incident was closed. </summary>
+        [WirePath("classificationComment")]
         public string ClassificationComment { get; set; }
         /// <summary> Information on the user an incident is assigned to. </summary>
+        [WirePath("owner")]
         public SecurityInsightsIncidentOwnerInfo Owner { get; set; }
         /// <summary> List of labels to add to the incident. </summary>
+        [WirePath("labels")]
         public IList<SecurityInsightsIncidentLabel> Labels { get; }
     }
 }

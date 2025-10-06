@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Start time of the access policy. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiry time of the access policy. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> List of abbreviated permissions. </summary>
+        [WirePath("permission")]
         public string Permission { get; set; }
     }
 }

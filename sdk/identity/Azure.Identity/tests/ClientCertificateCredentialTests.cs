@@ -22,7 +22,11 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             return InstrumentClient(
                 new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
@@ -41,14 +45,24 @@ namespace Azure.Identity.Tests
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
                 options.Transport = config.Transport;
             }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             return InstrumentClient(
                 new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, config.MockConfidentialMsalClient)
@@ -61,7 +75,11 @@ namespace Azure.Identity.Tests
             var tenantId = Guid.NewGuid().ToString();
             var clientId = Guid.NewGuid().ToString();
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, mockCert));
             Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, certificatePath));
@@ -122,7 +140,11 @@ namespace Azure.Identity.Tests
             var expectedClientId = Guid.NewGuid().ToString();
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
 
@@ -149,7 +171,11 @@ namespace Azure.Identity.Tests
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
@@ -176,7 +202,11 @@ namespace Azure.Identity.Tests
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
@@ -205,7 +235,11 @@ namespace Azure.Identity.Tests
             expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
@@ -228,7 +262,11 @@ namespace Azure.Identity.Tests
             expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
             options = new ClientCertificateCredentialOptions
             {
                 AuthorityHost = new Uri("https://localhost")

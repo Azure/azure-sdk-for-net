@@ -4,7 +4,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## Upload custom logs with max concurrency
 
-You can create a client and call the client's `Upload` method. Take note of the data ingestion [limits](https://docs.microsoft.com/azure/azure-monitor/service-limits#custom-logs). To upload multiple log requests in parallel, set the `UploadLogsOptions.MaxConcurrency` property.
+You can create a client and call the client's `Upload` method. Take note of the data ingestion [limits](https://learn.microsoft.com/azure/azure-monitor/service-limits#custom-logs). To upload multiple log requests in parallel, set the `UploadLogsOptions.MaxConcurrency` property.
 
 ```C# Snippet:UploadWithMaxConcurrency
 var endpoint = new Uri("<data_collection_endpoint_uri>");

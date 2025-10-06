@@ -31,6 +31,26 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
@@ -48,6 +68,16 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAutoRegistered))
+            {
+                writer.WritePropertyName("isAutoRegistered"u8);
+                writer.WriteBooleanValue(IsAutoRegistered.Value);
             }
             if (Optional.IsCollectionDefined(ARecords))
             {
@@ -183,7 +213,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -208,7 +237,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
@@ -218,7 +246,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -227,7 +254,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -242,7 +268,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ttl = property0.Value.GetInt64();
@@ -257,7 +282,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isAutoRegistered = property0.Value.GetBoolean();
@@ -267,7 +291,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsARecordInfo> array = new List<PrivateDnsARecordInfo>();
@@ -282,7 +305,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsAaaaRecordInfo> array = new List<PrivateDnsAaaaRecordInfo>();
@@ -297,7 +319,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateDnsCnameRecordInfo = PrivateDnsCnameRecordInfo.DeserializePrivateDnsCnameRecordInfo(property0.Value);
@@ -307,7 +328,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsMXRecordInfo> array = new List<PrivateDnsMXRecordInfo>();
@@ -322,7 +342,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsPtrRecordInfo> array = new List<PrivateDnsPtrRecordInfo>();
@@ -337,7 +356,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateDnsSoaRecordInfo = PrivateDnsSoaRecordInfo.DeserializePrivateDnsSoaRecordInfo(property0.Value);
@@ -347,7 +365,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsSrvRecordInfo> array = new List<PrivateDnsSrvRecordInfo>();
@@ -362,7 +379,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsTxtRecordInfo> array = new List<PrivateDnsTxtRecordInfo>();
@@ -409,7 +425,7 @@ namespace Azure.ResourceManager.PrivateDns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsRecordData)} does not support '{options.Format}' format.");
             }

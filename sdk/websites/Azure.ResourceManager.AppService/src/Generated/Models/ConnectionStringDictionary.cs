@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Connection strings. </summary>
+        [WirePath("properties")]
         public IDictionary<string, ConnStringValueTypePair> Properties { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

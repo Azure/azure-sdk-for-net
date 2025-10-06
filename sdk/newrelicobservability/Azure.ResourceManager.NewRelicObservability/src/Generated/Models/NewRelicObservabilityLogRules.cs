@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -71,15 +70,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Flag specifying if AAD logs should be sent for the Monitor resource. </summary>
+        [WirePath("sendAadLogs")]
         public NewRelicObservabilitySendAadLogsStatus? SendAadLogs { get; set; }
         /// <summary> Flag specifying if subscription logs should be sent for the Monitor resource. </summary>
+        [WirePath("sendSubscriptionLogs")]
         public NewRelicObservabilitySendSubscriptionLogsStatus? SendSubscriptionLogs { get; set; }
         /// <summary> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </summary>
+        [WirePath("sendActivityLogs")]
         public NewRelicObservabilitySendActivityLogsStatus? SendActivityLogs { get; set; }
         /// <summary>
         /// List of filtering tags to be used for capturing logs. This only takes effect if SendActivityLogs flag is enabled. If empty, all resources will be captured.
         /// If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
         /// </summary>
+        [WirePath("filteringTags")]
         public IList<NewRelicObservabilityFilteringTag> FilteringTags { get; }
     }
 }

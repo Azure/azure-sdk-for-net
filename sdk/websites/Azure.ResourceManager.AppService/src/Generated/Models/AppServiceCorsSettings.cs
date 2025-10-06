@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,12 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use "*" to allow all.
         /// </summary>
+        [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
         /// <summary>
         /// Gets or sets whether CORS requests with credentials are allowed. See
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </summary>
+        [WirePath("supportCredentials")]
         public bool? IsCredentialsSupported { get; set; }
     }
 }

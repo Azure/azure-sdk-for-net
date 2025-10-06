@@ -62,8 +62,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="logScrubbing"> To scrub sensitive log fields. </param>
+        /// <param name="jsChallengeCookieExpirationInMins"> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, int? jsChallengeCookieExpirationInMins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Mode = mode;
@@ -76,30 +77,45 @@ namespace Azure.ResourceManager.Network.Models
             CustomBlockResponseStatusCode = customBlockResponseStatusCode;
             CustomBlockResponseBody = customBlockResponseBody;
             LogScrubbing = logScrubbing;
+            JsChallengeCookieExpirationInMins = jsChallengeCookieExpirationInMins;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the policy. </summary>
+        [WirePath("state")]
         public WebApplicationFirewallEnabledState? State { get; set; }
         /// <summary> The mode of the policy. </summary>
+        [WirePath("mode")]
         public WebApplicationFirewallMode? Mode { get; set; }
         /// <summary> Whether to allow WAF to check request Body. </summary>
+        [WirePath("requestBodyCheck")]
         public bool? RequestBodyCheck { get; set; }
         /// <summary> Max inspection limit in KB for request body inspection for WAF. </summary>
+        [WirePath("requestBodyInspectLimitInKB")]
         public int? RequestBodyInspectLimitInKB { get; set; }
         /// <summary> Whether allow WAF to enforce request body limits. </summary>
+        [WirePath("requestBodyEnforcement")]
         public bool? RequestBodyEnforcement { get; set; }
         /// <summary> Maximum request body size in Kb for WAF. </summary>
+        [WirePath("maxRequestBodySizeInKb")]
         public int? MaxRequestBodySizeInKb { get; set; }
         /// <summary> Whether allow WAF to enforce file upload limits. </summary>
+        [WirePath("fileUploadEnforcement")]
         public bool? FileUploadEnforcement { get; set; }
         /// <summary> Maximum file upload size in Mb for WAF. </summary>
+        [WirePath("fileUploadLimitInMb")]
         public int? FileUploadLimitInMb { get; set; }
         /// <summary> If the action type is block, customer can override the response status code. </summary>
+        [WirePath("customBlockResponseStatusCode")]
         public int? CustomBlockResponseStatusCode { get; set; }
         /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>
+        [WirePath("customBlockResponseBody")]
         public string CustomBlockResponseBody { get; set; }
         /// <summary> To scrub sensitive log fields. </summary>
+        [WirePath("logScrubbing")]
         public PolicySettingsLogScrubbing LogScrubbing { get; set; }
+        /// <summary> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </summary>
+        [WirePath("jsChallengeCookieExpirationInMins")]
+        public int? JsChallengeCookieExpirationInMins { get; set; }
     }
 }

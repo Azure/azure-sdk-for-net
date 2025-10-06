@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -34,11 +33,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
-        internal ItemPathBasedRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix) : base(objectType, serializedAdditionalRawData)
+        /// <param name="renameTo"> Rename the item to be restored. Restore will rename the itemPath to this new name if the value is specified otherwise the itemPath will be restored as same name. </param>
+        internal ItemPathBasedRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix, string renameTo) : base(objectType, serializedAdditionalRawData)
         {
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
             SubItemPathPrefix = subItemPathPrefix;
+            RenameTo = renameTo;
             ObjectType = objectType ?? "ItemPathBasedRestoreCriteria";
         }
 
@@ -53,5 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public bool IsPathRelativeToBackupItem { get; }
         /// <summary> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </summary>
         public IList<string> SubItemPathPrefix { get; }
+        /// <summary> Rename the item to be restored. Restore will rename the itemPath to this new name if the value is specified otherwise the itemPath will be restored as same name. </summary>
+        public string RenameTo { get; set; }
     }
 }

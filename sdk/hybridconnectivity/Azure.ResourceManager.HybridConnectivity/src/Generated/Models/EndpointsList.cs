@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridConnectivity;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
-        internal EndpointsList()
+        /// <param name="value"> The list of endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EndpointsList(IEnumerable<HybridConnectivityEndpointData> value)
         {
-            Value = new ChangeTrackingList<EndpointResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
         /// <param name="value"> The list of endpoint. </param>
+        /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointsList(string nextLink, IReadOnlyList<EndpointResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EndpointsList(IReadOnlyList<HybridConnectivityEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of endpoints list. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="EndpointsList"/> for deserialization. </summary>
+        internal EndpointsList()
+        {
+        }
+
         /// <summary> The list of endpoint. </summary>
-        public IReadOnlyList<EndpointResourceData> Value { get; }
+        public IReadOnlyList<HybridConnectivityEndpointData> Value { get; }
+        /// <summary> The link used to get the next page of endpoints list. </summary>
+        public Uri NextLink { get; }
     }
 }

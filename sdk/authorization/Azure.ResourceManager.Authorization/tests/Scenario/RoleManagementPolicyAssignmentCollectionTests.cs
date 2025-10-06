@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         }
 
         [Ignore("Not implemented exception")]
-        [Test]
+        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             var resourceGroup = await CreateResourceGroupAsync();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.AreEqual(name, policyAssignment.Data.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var resourceGroup = await CreateResourceGroupAsync();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(policyAssignmentList.Count, 0);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             var resourceGroup = await CreateResourceGroupAsync();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists()
         {
             var resourceGroup = await CreateResourceGroupAsync();

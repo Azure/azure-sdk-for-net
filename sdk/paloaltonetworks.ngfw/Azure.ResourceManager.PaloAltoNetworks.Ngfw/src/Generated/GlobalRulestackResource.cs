@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 
@@ -692,7 +690,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_commit</description>
+        /// <description>GlobalRulestack_Commit</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -734,7 +732,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_commit</description>
+        /// <description>GlobalRulestack_Commit</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -776,7 +774,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_getChangeLog</description>
+        /// <description>GlobalRulestack_GetChangeLog</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -814,7 +812,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_getChangeLog</description>
+        /// <description>GlobalRulestack_GetChangeLog</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -852,7 +850,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listAdvancedSecurityObjects</description>
+        /// <description>GlobalRulestack_ListAdvancedSecurityObjects</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -893,7 +891,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listAdvancedSecurityObjects</description>
+        /// <description>GlobalRulestack_ListAdvancedSecurityObjects</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -934,7 +932,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listAppIds</description>
+        /// <description>GlobalRulestack_ListAppIds</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -967,7 +965,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listAppIds</description>
+        /// <description>GlobalRulestack_ListAppIds</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1000,7 +998,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listCountries</description>
+        /// <description>GlobalRulestack_ListCountries</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1031,7 +1029,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listCountries</description>
+        /// <description>GlobalRulestack_ListCountries</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1062,7 +1060,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listFirewalls</description>
+        /// <description>GlobalRulestack_ListFirewalls</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1091,7 +1089,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listFirewalls</description>
+        /// <description>GlobalRulestack_ListFirewalls</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1120,7 +1118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listPredefinedUrlCategories</description>
+        /// <description>GlobalRulestack_ListPredefinedUrlCategories</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1151,7 +1149,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listPredefinedUrlCategories</description>
+        /// <description>GlobalRulestack_ListPredefinedUrlCategories</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1182,7 +1180,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listSecurityServices</description>
+        /// <description>GlobalRulestack_ListSecurityServices</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1223,7 +1221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_listSecurityServices</description>
+        /// <description>GlobalRulestack_ListSecurityServices</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1264,7 +1262,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_revert</description>
+        /// <description>GlobalRulestack_Revert</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1302,7 +1300,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_revert</description>
+        /// <description>GlobalRulestack_Revert</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

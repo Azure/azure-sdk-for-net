@@ -1,0 +1,4 @@
+directory: specification/dell/Dell.Storage.Management
+commit: 4c39a891c707ec257dc19162ed290fc2037cbed3
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

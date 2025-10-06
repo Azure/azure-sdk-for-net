@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandInput"/>. </summary>
         /// <param name="databaseName"> Name of database. </param>
-        /// <param name="commitTimeStamp"> Time stamp to complete. </param>
+        /// <param name="completedOn"> Time stamp to complete. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateSyncCompleteCommandInput(string databaseName, DateTimeOffset? commitTimeStamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateSyncCompleteCommandInput(string databaseName, DateTimeOffset? completedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
-            CommitTimeStamp = commitTimeStamp;
+            CompletedOn = completedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,6 +74,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of database. </summary>
         public string DatabaseName { get; set; }
         /// <summary> Time stamp to complete. </summary>
-        public DateTimeOffset? CommitTimeStamp { get; set; }
+        public DateTimeOffset? CompletedOn { get; set; }
     }
 }

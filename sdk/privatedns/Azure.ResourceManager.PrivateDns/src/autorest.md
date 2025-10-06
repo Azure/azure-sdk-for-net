@@ -8,17 +8,22 @@ azure-arm: true
 csharp: true
 library-name: PrivateDns
 namespace: Azure.ResourceManager.PrivateDns
-require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/privatedns/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1aa912658531534e4e57ea613591075f7b97897c/specification/privatedns/resource-manager/readme.md
+#tag: package-2024-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -62,6 +67,7 @@ acronym-mapping:
   SrvRecord: PrivateDnsSrvRecordInfo
   TxtRecord: PrivateDnsTxtRecordInfo
   ProvisioningState : PrivateDnsProvisioningState
+  ResolutionPolicy: PrivateDnsResolutionPolicy
 
 override-operation-name:
   RecordSets_List: GetRecords

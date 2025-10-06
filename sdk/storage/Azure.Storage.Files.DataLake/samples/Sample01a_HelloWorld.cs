@@ -326,6 +326,115 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
+        /// Download a DataLake File's streaming data to a file.
+        /// </summary>
+        [Test]
+        public void ReadStreaming()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-read" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem-read");
+            filesystem.Create();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient("sample-file");
+
+                // First upload something the DataLake file so we have something to download
+                file.Upload(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents and save it to a file
+                // The ReadStreamingAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadTo()
+                #region Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+                Response<DataLakeFileReadStreamingResult> fileContents = file.ReadStreaming();
+                Stream readStream = fileContents.Value.Content;
+                #endregion Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+                using (FileStream stream = File.OpenWrite(downloadPath))
+                {
+                    readStream.CopyTo(stream);
+                }
+
+                // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Download a DataLake File's content data to a file.
+        /// </summary>
+        [Test]
+        public void ReadContent()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-read" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem-read");
+            filesystem.Create();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient("sample-file");
+
+                // First upload something the DataLake file so we have something to download
+                file.Upload(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents and save it to a file
+                // The ReadContentAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadTo()
+                #region Snippet:SampleSnippetDataLakeFileClient_ReadContent
+                Response<DataLakeFileReadResult> fileContents = file.ReadContent();
+                BinaryData readData = fileContents.Value.Content;
+                #endregion Snippet:SampleSnippetDataLakeFileClient_ReadContent
+                byte[] data = readData.ToArray();
+                using (FileStream stream = File.OpenWrite(downloadPath))
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+               // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
         /// Download a DataLake File to a file.
         /// </summary>
         [Test]
@@ -461,7 +570,13 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Keep track of all the names we encounter
                 List<string> names = new List<string>();
-                foreach (PathItem pathItem in filesystem.GetPaths(recursive: true))
+
+                DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+                {
+                    Recursive = true
+                };
+
+                foreach (PathItem pathItem in filesystem.GetPaths(options))
                 {
                     names.Add(pathItem.Name);
                 }

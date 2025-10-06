@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -93,8 +92,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("templateData")]
         public BinaryData TemplateData { get; set; }
         /// <summary> Workbook galleries supported by the template. </summary>
+        [WirePath("galleries")]
         public IList<WorkbookTemplateGallery> Galleries { get; }
     }
 }

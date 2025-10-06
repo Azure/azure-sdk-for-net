@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         public static bool operator ==(EasmResourceProvisioningState left, EasmResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EasmResourceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(EasmResourceProvisioningState left, EasmResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EasmResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EasmResourceProvisioningState"/>. </summary>
         public static implicit operator EasmResourceProvisioningState(string value) => new EasmResourceProvisioningState(value);
 
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

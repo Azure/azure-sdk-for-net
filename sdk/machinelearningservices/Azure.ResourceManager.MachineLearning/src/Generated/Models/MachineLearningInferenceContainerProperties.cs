@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The route to check the liveness of the inference server container. </summary>
+        [WirePath("livenessRoute")]
         public MachineLearningInferenceContainerRoute LivenessRoute { get; set; }
         /// <summary> The route to check the readiness of the inference server container. </summary>
+        [WirePath("readinessRoute")]
         public MachineLearningInferenceContainerRoute ReadinessRoute { get; set; }
         /// <summary> The port to send the scoring requests to, within the inference server container. </summary>
+        [WirePath("scoringRoute")]
         public MachineLearningInferenceContainerRoute ScoringRoute { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -59,6 +58,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="version"> Version of the guest configuration. </param>
         /// <param name="contentUri"> Uri of the storage where guest configuration package is uploaded. </param>
         /// <param name="contentHash"> Combined hash of the guest configuration package and configuration parameters. </param>
+        /// <param name="contentManagedIdentity"> Managed identity with storage access of the guest configuration package and configuration parameters. </param>
         /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
         /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
         /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
@@ -66,13 +66,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, string contentManagedIdentity, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Name = name;
             Version = version;
             ContentUri = contentUri;
             ContentHash = contentHash;
+            ContentManagedIdentity = contentManagedIdentity;
             AssignmentType = assignmentType;
             AssignmentSource = assignmentSource;
             ContentType = contentType;
@@ -83,26 +84,40 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Kind of the guest configuration. For example:DSC. </summary>
+        [WirePath("kind")]
         public GuestConfigurationKind? Kind { get; set; }
         /// <summary> Name of the guest configuration. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Version of the guest configuration. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Uri of the storage where guest configuration package is uploaded. </summary>
+        [WirePath("contentUri")]
         public Uri ContentUri { get; set; }
         /// <summary> Combined hash of the guest configuration package and configuration parameters. </summary>
+        [WirePath("contentHash")]
         public string ContentHash { get; set; }
+        /// <summary> Managed identity with storage access of the guest configuration package and configuration parameters. </summary>
+        [WirePath("contentManagedIdentity")]
+        public string ContentManagedIdentity { get; set; }
         /// <summary> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </summary>
+        [WirePath("assignmentType")]
         public GuestConfigurationAssignmentType? AssignmentType { get; set; }
         /// <summary> Specifies the origin of the configuration. </summary>
+        [WirePath("assignmentSource")]
         public string AssignmentSource { get; }
         /// <summary> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </summary>
+        [WirePath("contentType")]
         public string ContentType { get; }
         /// <summary> The configuration parameters for the guest configuration. </summary>
+        [WirePath("configurationParameter")]
         public IList<GuestConfigurationParameter> ConfigurationParameters { get; }
         /// <summary> The protected configuration parameters for the guest configuration. </summary>
+        [WirePath("configurationProtectedParameter")]
         public IList<GuestConfigurationParameter> ConfigurationProtectedParameters { get; }
         /// <summary> The configuration setting for the guest configuration. </summary>
+        [WirePath("configurationSetting")]
         public LcmConfigurationSetting ConfigurationSetting { get; }
     }
 }

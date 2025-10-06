@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,6 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public InMageRcmUpdateReplicationProtectedItemContent()
         {
             VmNics = new ChangeTrackingList<InMageRcmNicContent>();
+            TargetVmTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            TargetManagedDiskTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            TargetNicTags = new ChangeTrackingList<UserCreatedResourceTag>();
             InstanceType = "InMageRcm";
         }
 
@@ -36,7 +38,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testNetworkId"> The test network ARM Id. </param>
         /// <param name="vmNics"> The list of NIC details. </param>
         /// <param name="licenseType"> The license type. </param>
-        internal InMageRcmUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<InMageRcmNicContent> vmNics, SiteRecoveryLicenseType? licenseType) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        internal InMageRcmUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<InMageRcmNicContent> vmNics, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string userSelectedOSName, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags) : base(instanceType, serializedAdditionalRawData)
         {
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
@@ -49,6 +57,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TestNetworkId = testNetworkId;
             VmNics = vmNics;
             LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
+            LinuxLicenseType = linuxLicenseType;
+            UserSelectedOSName = userSelectedOSName;
+            TargetVmTags = targetVmTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
             InstanceType = instanceType ?? "InMageRcm";
         }
 
@@ -74,5 +88,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IList<InMageRcmNicContent> VmNics { get; }
         /// <summary> The license type. </summary>
         public SiteRecoveryLicenseType? LicenseType { get; set; }
+        /// <summary> The SQL Server license type. </summary>
+        public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> The license type for Linux VM's. </summary>
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
+        /// <summary> The OS name selected by user. </summary>
+        public string UserSelectedOSName { get; set; }
+        /// <summary> The target VM tags. </summary>
+        public IList<UserCreatedResourceTag> TargetVmTags { get; }
+        /// <summary> The tags for the target managed disks. </summary>
+        public IList<UserCreatedResourceTag> TargetManagedDiskTags { get; }
+        /// <summary> The tags for the target NICs. </summary>
+        public IList<UserCreatedResourceTag> TargetNicTags { get; }
     }
 }

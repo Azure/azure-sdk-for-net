@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         TrafficControllerResource IOperationSource<TrafficControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
+            var data = ModelReaderWriter.Read<TrafficControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
             return new TrafficControllerResource(_client, data);
         }
 
         async ValueTask<TrafficControllerResource> IOperationSource<TrafficControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
-            return new TrafficControllerResource(_client, data);
+            var data = ModelReaderWriter.Read<TrafficControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            return await Task.FromResult(new TrafficControllerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

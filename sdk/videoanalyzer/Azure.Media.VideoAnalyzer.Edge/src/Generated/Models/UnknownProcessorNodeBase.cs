@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The UnknownProcessorNodeBase. </summary>
+    /// <summary> Unknown version of ProcessorNodeBase. </summary>
     internal partial class UnknownProcessorNodeBase : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProcessorNodeBase"/>. </summary>

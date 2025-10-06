@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A list of NSX Virtual Machines. </summary>
+    /// <summary> The response of a WorkloadNetworkVirtualMachine list operation. </summary>
     internal partial class WorkloadNetworkVirtualMachinesList
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachinesList"/>. </summary>
-        internal WorkloadNetworkVirtualMachinesList()
+        /// <param name="value"> The WorkloadNetworkVirtualMachine items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal WorkloadNetworkVirtualMachinesList(IEnumerable<WorkloadNetworkVirtualMachineData> value)
         {
-            Value = new ChangeTrackingList<WorkloadNetworkVirtualMachineData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachinesList"/>. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> URL to get the next page if any. </param>
+        /// <param name="value"> The WorkloadNetworkVirtualMachine items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVirtualMachinesList(IReadOnlyList<WorkloadNetworkVirtualMachineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkVirtualMachinesList(IReadOnlyList<WorkloadNetworkVirtualMachineData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The items on the page. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachinesList"/> for deserialization. </summary>
+        internal WorkloadNetworkVirtualMachinesList()
+        {
+        }
+
+        /// <summary> The WorkloadNetworkVirtualMachine items on this page. </summary>
         public IReadOnlyList<WorkloadNetworkVirtualMachineData> Value { get; }
-        /// <summary> URL to get the next page if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

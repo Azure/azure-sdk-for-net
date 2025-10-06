@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -46,16 +45,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The resource of private end point. </summary>
+        [WirePath("properties.privateEndpoint")]
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The consumer link id. </summary>
+        [WirePath("properties.linkIdentifier")]
         public string LinkIdentifier { get; }
         /// <summary> The location of the private endpoint. </summary>
+        [WirePath("properties.privateEndpointLocation")]
         public string PrivateEndpointLocation { get; }
     }
 }

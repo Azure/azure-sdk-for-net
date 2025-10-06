@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupsListResult"/>. </summary>
         internal DistributedAvailabilityGroupsListResult()
         {
-            Value = new ChangeTrackingList<DistributedAvailabilityGroupData>();
+            Value = new ChangeTrackingList<SqlDistributedAvailabilityGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupsListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DistributedAvailabilityGroupsListResult(IReadOnlyList<DistributedAvailabilityGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DistributedAvailabilityGroupsListResult(IReadOnlyList<SqlDistributedAvailabilityGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DistributedAvailabilityGroupData> Value { get; }
+        public IReadOnlyList<SqlDistributedAvailabilityGroupData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Array of incident alerts. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SecurityInsightsAlert> Value { get; }
     }
 }

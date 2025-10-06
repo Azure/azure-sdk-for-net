@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dns
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -93,7 +91,9 @@ namespace Azure.ResourceManager.Dns
             try
             {
                 var response = await _dnsZoneZonesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()));
+                var uri = _dnsZoneZonesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,9 @@ namespace Azure.ResourceManager.Dns
             try
             {
                 var response = _dnsZoneZonesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()));
+                var uri = _dnsZoneZonesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +216,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +261,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +292,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +323,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +366,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +409,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +454,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

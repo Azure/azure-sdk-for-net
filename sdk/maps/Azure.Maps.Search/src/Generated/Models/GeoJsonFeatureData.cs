@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
-        public GeoJsonFeatureData(GeoJsonGeometry geometry)
+        internal GeoJsonFeatureData(GeoJsonGeometry geometry)
         {
             Argument.AssertNotNull(geometry, nameof(geometry));
 
@@ -49,12 +49,12 @@ namespace Azure.Maps.Search.Models
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </summary>
-        public GeoJsonGeometry Geometry { get; set; }
+        public GeoJsonGeometry Geometry { get; }
         /// <summary> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </summary>
-        public object Properties { get; set; }
+        public object Properties { get; }
         /// <summary> Identifier for the feature. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
         /// <summary> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </summary>
-        public string FeatureType { get; set; }
+        public string FeatureType { get; }
     }
 }

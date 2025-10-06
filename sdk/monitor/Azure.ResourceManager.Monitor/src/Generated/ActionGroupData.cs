@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Monitor
             AzureFunctionReceivers = new ChangeTrackingList<MonitorAzureFunctionReceiver>();
             ArmRoleReceivers = new ChangeTrackingList<MonitorArmRoleReceiver>();
             EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
+            IncidentReceivers = new ChangeTrackingList<IncidentReceiver>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
@@ -88,8 +89,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IList<IncidentReceiver> incidentReceivers, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupShortName = groupShortName;
             IsEnabled = isEnabled;
@@ -104,6 +107,8 @@ namespace Azure.ResourceManager.Monitor
             AzureFunctionReceivers = azureFunctionReceivers;
             ArmRoleReceivers = armRoleReceivers;
             EventHubReceivers = eventHubReceivers;
+            IncidentReceivers = incidentReceivers;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -138,5 +143,9 @@ namespace Azure.ResourceManager.Monitor
         public IList<MonitorArmRoleReceiver> ArmRoleReceivers { get; }
         /// <summary> The list of event hub receivers that are part of this action group. </summary>
         public IList<MonitorEventHubReceiver> EventHubReceivers { get; }
+        /// <summary> The list of incident receivers that are part of this action group. </summary>
+        public IList<IncidentReceiver> IncidentReceivers { get; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

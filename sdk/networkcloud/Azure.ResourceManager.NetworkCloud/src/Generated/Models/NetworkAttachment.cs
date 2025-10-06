@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkAttachment"/>. </summary>
-        /// <param name="attachedNetworkId">
+        /// <param name="attachedNetworkArmId">
         /// The resource ID of the associated network attached to the virtual machine.
         /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.
         /// </param>
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// Dynamic and Static are only valid for l3Network which may also specify Disabled.
         /// Otherwise, Disabled is the only permitted value.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkId"/> is null. </exception>
-        public NetworkAttachment(string attachedNetworkId, VirtualMachineIPAllocationMethod ipAllocationMethod)
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkArmId"/> is null. </exception>
+        public NetworkAttachment(ResourceIdentifier attachedNetworkArmId, VirtualMachineIPAllocationMethod ipAllocationMethod)
         {
-            Argument.AssertNotNull(attachedNetworkId, nameof(attachedNetworkId));
+            Argument.AssertNotNull(attachedNetworkArmId, nameof(attachedNetworkArmId));
 
-            AttachedNetworkId = attachedNetworkId;
+            AttachedNetworkArmId = attachedNetworkArmId;
             IPAllocationMethod = ipAllocationMethod;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkAttachment"/>. </summary>
-        /// <param name="attachedNetworkId">
+        /// <param name="attachedNetworkArmId">
         /// The resource ID of the associated network attached to the virtual machine.
         /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.
         /// </param>
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// For a CloudServicesNetwork resource, this name will be ignored.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkAttachment(string attachedNetworkId, DefaultGateway? defaultGateway, VirtualMachineIPAllocationMethod ipAllocationMethod, string ipv4Address, string ipv6Address, string macAddress, string networkAttachmentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkAttachment(ResourceIdentifier attachedNetworkArmId, DefaultGateway? defaultGateway, VirtualMachineIPAllocationMethod ipAllocationMethod, string ipv4Address, string ipv6Address, string macAddress, string networkAttachmentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AttachedNetworkId = attachedNetworkId;
+            AttachedNetworkArmId = attachedNetworkArmId;
             DefaultGateway = defaultGateway;
             IPAllocationMethod = ipAllocationMethod;
             IPv4Address = ipv4Address;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// The resource ID of the associated network attached to the virtual machine.
         /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.
         /// </summary>
-        public string AttachedNetworkId { get; set; }
+        public ResourceIdentifier AttachedNetworkArmId { get; set; }
         /// <summary>
         /// The indicator of whether this is the default gateway.
         /// Only one of the attached networks (including the CloudServicesNetwork attachment) for a single machine may be specified as True.

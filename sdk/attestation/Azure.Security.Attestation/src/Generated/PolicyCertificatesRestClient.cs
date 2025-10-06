@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -63,7 +62,7 @@ namespace Azure.Security.Attestation
                 case 200:
                     {
                         PolicyCertificatesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyCertificatesResponse.DeserializePolicyCertificatesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -83,7 +82,7 @@ namespace Azure.Security.Attestation
                 case 200:
                     {
                         PolicyCertificatesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyCertificatesResponse.DeserializePolicyCertificatesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -128,7 +127,7 @@ namespace Azure.Security.Attestation
                 case 200:
                     {
                         PolicyCertificatesModifyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -155,7 +154,7 @@ namespace Azure.Security.Attestation
                 case 200:
                     {
                         PolicyCertificatesModifyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +199,7 @@ namespace Azure.Security.Attestation
                 case 200:
                     {
                         PolicyCertificatesModifyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +226,7 @@ namespace Azure.Security.Attestation
                 case 200:
                     {
                         PolicyCertificatesModifyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

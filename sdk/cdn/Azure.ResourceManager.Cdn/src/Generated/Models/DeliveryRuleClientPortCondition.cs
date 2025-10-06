@@ -7,15 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the ClientPort condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the ClientPort condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleClientPortCondition
+    /// </summary>
     public partial class DeliveryRuleClientPortCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleClientPortCondition"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleClientPortCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleClientPortCondition(ClientPortMatchCondition properties)
         {
@@ -26,9 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleClientPortCondition"/>. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleClientPortCondition.parameters
+        /// </param>
         internal DeliveryRuleClientPortCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, ClientPortMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
@@ -40,7 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleClientPortCondition.parameters
+        /// </summary>
         public ClientPortMatchCondition Properties { get; set; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The full resource Id of the private link scope resource. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The private link scope unique Identifier. </summary>
+        [WirePath("scopeId")]
         public string ScopeId { get; }
     }
 }

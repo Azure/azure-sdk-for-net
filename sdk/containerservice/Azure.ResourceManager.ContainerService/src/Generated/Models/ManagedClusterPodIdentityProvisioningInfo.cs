@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -63,6 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Pod identity assignment error (if any). </summary>
         internal ManagedClusterPodIdentityProvisioningError Error { get; }
         /// <summary> Details about the error. </summary>
+        [WirePath("error.error")]
         public ResponseError ErrorDetail
         {
             get => Error?.ErrorDetail;

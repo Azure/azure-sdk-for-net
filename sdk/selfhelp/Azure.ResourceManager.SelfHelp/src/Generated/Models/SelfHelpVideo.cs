@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class SelfHelpVideo : VideoGroupVideo
     {
         /// <summary> Initializes a new instance of <see cref="SelfHelpVideo"/>. </summary>
-        public SelfHelpVideo()
+        internal SelfHelpVideo()
         {
         }
 
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Place holder used in HTML Content replace control with the insight content. </summary>
-        public string ReplacementKey { get; set; }
+        public string ReplacementKey { get; }
     }
 }

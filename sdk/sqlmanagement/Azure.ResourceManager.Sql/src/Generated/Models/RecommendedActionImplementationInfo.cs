@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the method in which this recommended action can be manually implemented. e.g., TSql, AzurePowerShell. </summary>
+        [WirePath("method")]
         public ImplementationMethod? Method { get; }
         /// <summary> Gets the manual implementation script. e.g., T-SQL script that could be executed on the database. </summary>
+        [WirePath("script")]
         public string Script { get; }
     }
 }

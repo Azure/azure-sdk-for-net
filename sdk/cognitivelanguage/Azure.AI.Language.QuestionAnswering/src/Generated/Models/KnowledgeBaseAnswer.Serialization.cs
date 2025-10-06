@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -113,6 +112,14 @@ namespace Azure.AI.Language.QuestionAnswering
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 dialog,
                 answerSpan);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KnowledgeBaseAnswer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseAnswer(document.RootElement);
         }
     }
 }

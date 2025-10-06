@@ -1,6 +1,6 @@
 # React to Settings Change Notifications
 
-The AppConfiguration service supports [EventGrid-based setting change notifications](https://docs.microsoft.com/azure/azure-app-configuration/howto-app-configuration-event). This sample shows how to use the Azure.Data.AppConfiguration library to process these notifications.
+The AppConfiguration service supports [EventGrid-based setting change notifications](https://learn.microsoft.com/azure/azure-app-configuration/howto-app-configuration-event). This sample shows how to use the Azure.Data.AppConfiguration library to process these notifications.
 
 This sample assumes you have a shared long-lived instance of `ConfigurationClient`:
 

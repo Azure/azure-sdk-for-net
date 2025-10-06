@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static bool operator ==(EmissionDestinationType left, EmissionDestinationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmissionDestinationType"/> values are not the same. </summary>
         public static bool operator !=(EmissionDestinationType left, EmissionDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EmissionDestinationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EmissionDestinationType"/>. </summary>
         public static implicit operator EmissionDestinationType(string value) => new EmissionDestinationType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

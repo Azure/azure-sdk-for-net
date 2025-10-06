@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The response to a list geo backup policies request. </summary>
+    /// <summary> The list of geo backup policies. </summary>
     internal partial class GeoBackupPolicyListResult
     {
         /// <summary>
@@ -53,15 +52,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyListResult"/>. </summary>
-        /// <param name="value"> The list of geo backup policies. </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicyData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of geo backup policies. </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<GeoBackupPolicyData> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

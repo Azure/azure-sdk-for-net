@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes an resiliency policy - resilientVMCreationPolicy and/or resilientVMDeletionPolicy. </summary>
+    /// <summary> Describes an resiliency policy - AutomaticZoneRebalancingPolicy, ResilientVMCreationPolicy and/or ResilientVMDeletionPolicy. </summary>
     public partial class ResiliencyPolicy
     {
         /// <summary>
@@ -53,11 +53,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>
         /// <param name="resilientVmCreationPolicy"> The configuration parameters used while performing resilient VM creation. </param>
         /// <param name="resilientVmDeletionPolicy"> The configuration parameters used while performing resilient VM deletion. </param>
+        /// <param name="automaticZoneRebalancingPolicy"> The configuration parameters used while performing automatic AZ balancing. </param>
+        /// <param name="zoneAllocationPolicy"> The configuration parameters used while performing zone allocation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResiliencyPolicy(ResilientVmCreationPolicy resilientVmCreationPolicy, ResilientVmDeletionPolicy resilientVmDeletionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResiliencyPolicy(ResilientVmCreationPolicy resilientVmCreationPolicy, ResilientVmDeletionPolicy resilientVmDeletionPolicy, AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy, ZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResilientVmCreationPolicy = resilientVmCreationPolicy;
             ResilientVmDeletionPolicy = resilientVmDeletionPolicy;
+            AutomaticZoneRebalancingPolicy = automaticZoneRebalancingPolicy;
+            ZoneAllocationPolicy = zoneAllocationPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,5 +92,10 @@ namespace Azure.ResourceManager.Compute.Models
                 ResilientVmDeletionPolicy.Enabled = value;
             }
         }
+
+        /// <summary> The configuration parameters used while performing automatic AZ balancing. </summary>
+        public AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get; set; }
+        /// <summary> The configuration parameters used while performing zone allocation. </summary>
+        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
     }
 }

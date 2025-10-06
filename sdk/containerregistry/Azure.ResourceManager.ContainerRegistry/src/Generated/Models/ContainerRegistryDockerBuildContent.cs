@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -72,24 +71,33 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The fully qualified image names including the repository and tag. </summary>
+        [WirePath("imageNames")]
         public IList<string> ImageNames { get; }
         /// <summary> The value of this property indicates whether the image built should be pushed to the registry or not. </summary>
+        [WirePath("isPushEnabled")]
         public bool? IsPushEnabled { get; set; }
         /// <summary> The value of this property indicates whether the image cache is enabled or not. </summary>
+        [WirePath("noCache")]
         public bool? NoCache { get; set; }
         /// <summary> The Docker file path relative to the source location. </summary>
+        [WirePath("dockerFilePath")]
         public string DockerFilePath { get; set; }
         /// <summary> The name of the target build stage for the docker build. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
         /// <summary> The collection of override arguments to be used when executing the run. </summary>
+        [WirePath("arguments")]
         public IList<ContainerRegistryRunArgument> Arguments { get; }
         /// <summary> Run timeout in seconds. </summary>
+        [WirePath("timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
+        [WirePath("platform")]
         public ContainerRegistryPlatformProperties Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
         internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
+        [WirePath("agentConfiguration.cpu")]
         public int? AgentCpu
         {
             get => AgentConfiguration is null ? default : AgentConfiguration.Cpu;
@@ -105,8 +113,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// The URL(absolute or relative) of the source context. It can be an URL to a tar or git repository.
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </summary>
+        [WirePath("sourceLocation")]
         public string SourceLocation { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
+        [WirePath("credentials")]
         public ContainerRegistryCredentials Credentials { get; set; }
     }
 }

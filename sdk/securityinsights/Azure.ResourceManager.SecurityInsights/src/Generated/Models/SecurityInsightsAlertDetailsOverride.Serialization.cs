@@ -8,25 +8,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsAlertDetailsOverride : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlertDetailsOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertDetailsOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertDetailsOverride>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsAlertDetailsOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertDetailsOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AlertDisplayNameFormat))
             {
                 writer.WritePropertyName("alertDisplayNameFormat"u8);
@@ -47,6 +56,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertSeverityColumnName"u8);
                 writer.WriteStringValue(AlertSeverityColumnName);
             }
+            if (Optional.IsCollectionDefined(AlertDynamicProperties))
+            {
+                writer.WritePropertyName("alertDynamicProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in AlertDynamicProperties)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,14 +74,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SecurityInsightsAlertDetailsOverride IJsonModel<SecurityInsightsAlertDetailsOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertDetailsOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAlertDetailsOverride DeserializeSecurityInsightsAlertDetailsOverride(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,8 +107,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string alertDescriptionFormat = default;
             string alertTacticsColumnName = default;
             string alertSeverityColumnName = default;
+            IList<SecurityInsightsAlertPropertyMapping> alertDynamicProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertDisplayNameFormat"u8))
@@ -113,13 +132,163 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alertSeverityColumnName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("alertDynamicProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SecurityInsightsAlertPropertyMapping> array = new List<SecurityInsightsAlertPropertyMapping>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SecurityInsightsAlertPropertyMapping.DeserializeSecurityInsightsAlertPropertyMapping(item, options));
+                    }
+                    alertDynamicProperties = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertDetailsOverride(alertDisplayNameFormat, alertDescriptionFormat, alertTacticsColumnName, alertSeverityColumnName, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityInsightsAlertDetailsOverride(
+                alertDisplayNameFormat,
+                alertDescriptionFormat,
+                alertTacticsColumnName,
+                alertSeverityColumnName,
+                alertDynamicProperties ?? new ChangeTrackingList<SecurityInsightsAlertPropertyMapping>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDisplayNameFormat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertDisplayNameFormat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertDisplayNameFormat))
+                {
+                    builder.Append("  alertDisplayNameFormat: ");
+                    if (AlertDisplayNameFormat.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertDisplayNameFormat}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertDisplayNameFormat}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDescriptionFormat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertDescriptionFormat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertDescriptionFormat))
+                {
+                    builder.Append("  alertDescriptionFormat: ");
+                    if (AlertDescriptionFormat.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertDescriptionFormat}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertDescriptionFormat}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertTacticsColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertTacticsColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertTacticsColumnName))
+                {
+                    builder.Append("  alertTacticsColumnName: ");
+                    if (AlertTacticsColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertTacticsColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertTacticsColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertSeverityColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertSeverityColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertSeverityColumnName))
+                {
+                    builder.Append("  alertSeverityColumnName: ");
+                    if (AlertSeverityColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AlertSeverityColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AlertSeverityColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDynamicProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertDynamicProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AlertDynamicProperties))
+                {
+                    if (AlertDynamicProperties.Any())
+                    {
+                        builder.Append("  alertDynamicProperties: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AlertDynamicProperties)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  alertDynamicProperties: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertDetailsOverride>.Write(ModelReaderWriterOptions options)
@@ -129,9 +298,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,11 +314,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityInsightsAlertDetailsOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

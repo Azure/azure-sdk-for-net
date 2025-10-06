@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osProfile"> The virtual machine scale set OS profile. </param>
         /// <param name="storageProfile"> The virtual machine scale set storage profile. </param>
         /// <param name="networkProfile"> The virtual machine scale set network profile. </param>
+        /// <param name="securityPostureReference"> The virtual machine scale set security posture reference. </param>
         /// <param name="securityProfile"> The virtual machine scale set Security profile. </param>
         /// <param name="diagnosticsProfile"> The virtual machine scale set diagnostics profile. </param>
         /// <param name="extensionProfile"> The virtual machine scale set extension profile. </param>
@@ -63,11 +64,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
+            SecurityPostureReference = securityPostureReference;
             SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
             ExtensionProfile = extensionProfile;
@@ -85,6 +87,8 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetUpdateStorageProfile StorageProfile { get; set; }
         /// <summary> The virtual machine scale set network profile. </summary>
         public VirtualMachineScaleSetUpdateNetworkProfile NetworkProfile { get; set; }
+        /// <summary> The virtual machine scale set security posture reference. </summary>
+        public SecurityPostureReferenceUpdate SecurityPostureReference { get; set; }
         /// <summary> The virtual machine scale set Security profile. </summary>
         public SecurityProfile SecurityProfile { get; set; }
         /// <summary> The virtual machine scale set diagnostics profile. </summary>

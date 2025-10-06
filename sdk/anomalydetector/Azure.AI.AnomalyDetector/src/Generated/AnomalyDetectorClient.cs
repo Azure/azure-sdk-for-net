@@ -6,20 +6,38 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.AnomalyDetector
 {
     // Data plane generated client.
-    /// <summary> The AnomalyDetector service client. </summary>
+    /// <summary>
+    /// The Anomaly Detector API detects anomalies automatically in time series data.
+    /// It supports both a stateless detection mode and a
+    /// stateful detection mode. In stateless mode, there are three functionalities. Entire
+    /// Detect is for detecting the whole series, with the model trained by the time series.
+    /// Last Detect is for detecting the last point, with the model trained by points before.
+    /// ChangePoint Detect is for detecting trend changes in the time series. In stateful
+    /// mode, the user can store time series. The stored time series will be used for
+    /// detection anomalies. In this mode, the user can still use the preceding three
+    /// functionalities by only giving a time range without preparing time series on the
+    /// client side. Besides the preceding three functionalities, the stateful model
+    /// provides group-based detection and labeling services. By using the labeling
+    /// service, the user can provide labels for each detection result. These labels will be
+    /// used for retuning or regenerating detection models. Inconsistency detection is
+    /// a kind of group-based detection that finds inconsistencies in
+    /// a set of time series. By using the anomaly detector service, business customers can
+    /// discover incidents and establish a logic flow for root cause analysis.
+    /// </summary>
     public partial class AnomalyDetectorClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -61,28 +79,22 @@ namespace Azure.AI.AnomalyDetector
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of Univariate. </summary>
-        /// <param name="apiVersion"> Api Version. Allowed values: "v1.1". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Univariate GetUnivariateClient(string apiVersion = "v1.1")
-        {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+        private Univariate _cachedUnivariate;
+        private Multivariate _cachedMultivariate;
 
-            return new Univariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
+        /// <summary> Initializes a new instance of Univariate. </summary>
+        public virtual Univariate GetUnivariateClient()
+        {
+            return Volatile.Read(ref _cachedUnivariate) ?? Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, _apiVersion), null) ?? _cachedUnivariate;
         }
 
         /// <summary> Initializes a new instance of Multivariate. </summary>
-        /// <param name="apiVersion"> Api Version. Allowed values: "v1.1". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Multivariate GetMultivariateClient(string apiVersion = "v1.1")
+        public virtual Multivariate GetMultivariateClient()
         {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
-
-            return new Multivariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedMultivariate) ?? Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, _apiVersion), null) ?? _cachedMultivariate;
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="UpdateRunList"/>. </summary>
         internal UpdateRunList()
         {
-            Value = new ChangeTrackingList<UpdateRunData>();
+            Value = new ChangeTrackingList<HciClusterUpdateRunData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateRunList"/>. </summary>
         /// <param name="value"> List of Update runs. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRunList(IReadOnlyList<UpdateRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateRunList(IReadOnlyList<HciClusterUpdateRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of Update runs. </summary>
-        public IReadOnlyList<UpdateRunData> Value { get; }
+        public IReadOnlyList<HciClusterUpdateRunData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The header field name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The header field value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

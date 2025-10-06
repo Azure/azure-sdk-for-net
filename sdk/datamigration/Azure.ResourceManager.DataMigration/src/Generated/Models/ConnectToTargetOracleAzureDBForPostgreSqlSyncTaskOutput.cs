@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
             DatabaseSchemaMap = new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>();
         }
 
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <param name="databaseSchemaMap"> Mapping of schemas per database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(string targetServerVersion, IReadOnlyList<string> databases, string targetServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> databaseSchemaMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(string targetServerVersion, IReadOnlyList<string> databases, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> validationErrors, IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> databaseSchemaMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetServerVersion = targetServerVersion;
             Databases = databases;
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
         /// <summary> Validation errors associated with the task. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
         /// <summary> Mapping of schemas per database. </summary>
         public IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> DatabaseSchemaMap { get; }
     }

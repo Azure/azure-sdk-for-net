@@ -205,6 +205,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
+            MessageLoggingPolicy = new ObservablePolicy("LoggingPolicy"),
             Transport = new ObservableTransport("Transport")
         };
 
@@ -246,7 +247,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(27, observations.Count);
+        Assert.AreEqual(29, observations.Count);
 
         Assert.AreEqual("Request:ClientPerCallPolicyA", observations[index++]);
         Assert.AreEqual("Request:ClientPerCallPolicyB", observations[index++]);
@@ -262,6 +263,8 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.AreEqual("Request:UserPerTryPolicyA", observations[index++]);
         Assert.AreEqual("Request:UserPerTryPolicyB", observations[index++]);
 
+        Assert.AreEqual("Request:LoggingPolicy", observations[index++]);
+
         Assert.AreEqual("Request:ClientBeforeTransportPolicyA", observations[index++]);
         Assert.AreEqual("Request:ClientBeforeTransportPolicyB", observations[index++]);
 
@@ -275,6 +278,8 @@ public class ClientPipelineTests : SyncAsyncTestBase
 
         Assert.AreEqual("Response:ClientBeforeTransportPolicyB", observations[index++]);
         Assert.AreEqual("Response:ClientBeforeTransportPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:LoggingPolicy", observations[index++]);
 
         Assert.AreEqual("Response:UserPerTryPolicyB", observations[index++]);
         Assert.AreEqual("Response:UserPerTryPolicyA", observations[index++]);
@@ -296,6 +301,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
     {
         ClientPipelineOptions pipelineOptions = new ClientPipelineOptions();
         pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
+        pipelineOptions.MessageLoggingPolicy = new ObservablePolicy("LoggingPolicy");
         pipelineOptions.Transport = new ObservableTransport("Transport");
 
         ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions);
@@ -312,15 +318,64 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(9, observations.Count);
+        Assert.AreEqual(11, observations.Count);
         Assert.AreEqual("Request:A", observations[index++]);
         Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:B", observations[index++]);
+        Assert.AreEqual("Request:LoggingPolicy", observations[index++]);
         Assert.AreEqual("Request:C", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:C", observations[index++]);
+        Assert.AreEqual("Response:LoggingPolicy", observations[index++]);
         Assert.AreEqual("Response:B", observations[index++]);
         Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
+    }
+
+        [Test]
+    public void CreateMessageWithUriMethodAndClassifierSetsProperties()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "POST";
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Create(ReadOnlySpan<ushort>.Empty);
+
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod, testClassifier);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(testClassifier, message.ResponseClassifier);
+        Assert.IsNotNull(message.NetworkTimeout);
+    }
+
+    [Test]
+    public void CreateMessageThrowsOnNullUriOrMethod()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "GET";
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Default;
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(null!, testMethod, testClassifier));
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(testUri, null!, testClassifier));
+    }
+
+    [Test]
+    public void CreateMessageWithUriAndMethodUsesDefaultClassifier()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "DELETE";
+
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(PipelineMessageClassifier.Default, message.ResponseClassifier);
     }
 }

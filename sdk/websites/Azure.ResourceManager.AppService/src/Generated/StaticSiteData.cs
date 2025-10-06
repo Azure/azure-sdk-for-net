@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.AppService
             CustomDomains = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
+            DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteData"/>. </summary>
@@ -82,10 +84,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="contentDistributionEndpoint"> The content distribution endpoint for the static site. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
+        /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="databaseConnections"> Database connections for the static site. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, string provider, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StaticSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, string provider, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus, string publicNetworkAccess, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -102,7 +108,11 @@ namespace Azure.ResourceManager.AppService
             ContentDistributionEndpoint = contentDistributionEndpoint;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             UserProvidedFunctionApps = userProvidedFunctionApps;
+            LinkedBackends = linkedBackends;
             Provider = provider;
+            EnterpriseGradeCdnStatus = enterpriseGradeCdnStatus;
+            PublicNetworkAccess = publicNetworkAccess;
+            DatabaseConnections = databaseConnections;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -113,38 +123,67 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
+        [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; set; }
         /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default autogenerated hostname for the static site. </summary>
+        [WirePath("properties.defaultHostname")]
         public string DefaultHostname { get; }
         /// <summary> URL for the repository of the static site. </summary>
+        [WirePath("properties.repositoryUrl")]
         public Uri RepositoryUri { get; set; }
         /// <summary> The target branch in the repository. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary> The custom domains associated with this static site. </summary>
+        [WirePath("properties.customDomains")]
         public IReadOnlyList<string> CustomDomains { get; }
         /// <summary> A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. </summary>
+        [WirePath("properties.repositoryToken")]
         public string RepositoryToken { get; set; }
         /// <summary> Build properties to configure on the repository. </summary>
+        [WirePath("properties.buildProperties")]
         public StaticSiteBuildProperties BuildProperties { get; set; }
         /// <summary> Private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> State indicating whether staging environments are allowed or not allowed for a static web app. </summary>
+        [WirePath("properties.stagingEnvironmentPolicy")]
         public StagingEnvironmentPolicy? StagingEnvironmentPolicy { get; set; }
         /// <summary> &lt;code&gt;false&lt;/code&gt; if config file is locked for this static web app; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("properties.allowConfigFileUpdates")]
         public bool? AllowConfigFileUpdates { get; set; }
         /// <summary> Template options for generating a new repository. </summary>
+        [WirePath("properties.templateProperties")]
         public StaticSiteTemplate TemplateProperties { get; set; }
         /// <summary> The content distribution endpoint for the static site. </summary>
+        [WirePath("properties.contentDistributionEndpoint")]
         public string ContentDistributionEndpoint { get; }
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>
+        [WirePath("properties.keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity { get; }
         /// <summary> User provided function apps registered with the static site. </summary>
+        [WirePath("properties.userProvidedFunctionApps")]
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
+        /// <summary> Backends linked to the static side. </summary>
+        [WirePath("properties.linkedBackends")]
+        public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; }
         /// <summary> The provider that submitted the last deployment to the primary environment of the static site. </summary>
-        public string Provider { get; }
-        /// <summary> Kind of resource. </summary>
+        [WirePath("properties.provider")]
+        public string Provider { get; set; }
+        /// <summary> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </summary>
+        [WirePath("properties.enterpriseGradeCdnStatus")]
+        public EnterpriseGradeCdnStatus? EnterpriseGradeCdnStatus { get; set; }
+        /// <summary> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+        /// <summary> Database connections for the static site. </summary>
+        [WirePath("properties.databaseConnections")]
+        public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

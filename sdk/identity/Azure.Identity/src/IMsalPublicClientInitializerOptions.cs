@@ -10,8 +10,15 @@ namespace Azure.Identity
     internal interface IMsalPublicClientInitializerOptions
     {
         Action<PublicClientApplicationBuilder> BeforeBuildClient { get; }
-        bool IsProofOfPossessionRequired { get; set; }
 
-        bool UseOperatingSystemAccount { get; set; }
+        bool UseDefaultBrokerAccount { get; set; }
+    }
+
+    [Friend("Azure.Identity.Broker")]
+    internal interface IMsalSettablePublicClientInitializerOptions
+    {
+        Action<PublicClientApplicationBuilder> BeforeBuildClient { get; set; }
+
+        bool UseDefaultBrokerAccount { get; set; }
     }
 }

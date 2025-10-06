@@ -10,101 +10,56 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CveSummary : IUtf8JsonSerializable, IJsonModel<CveSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CveSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CveSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Critical))
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(CriticalCveCount))
             {
-                if (Critical != null)
-                {
-                    writer.WritePropertyName("critical"u8);
-                    writer.WriteNumberValue(Critical.Value);
-                }
-                else
-                {
-                    writer.WriteNull("critical");
-                }
+                writer.WritePropertyName("criticalCveCount"u8);
+                writer.WriteNumberValue(CriticalCveCount.Value);
             }
-            if (Optional.IsDefined(High))
+            if (Optional.IsDefined(HighCveCount))
             {
-                if (High != null)
-                {
-                    writer.WritePropertyName("high"u8);
-                    writer.WriteNumberValue(High.Value);
-                }
-                else
-                {
-                    writer.WriteNull("high");
-                }
+                writer.WritePropertyName("highCveCount"u8);
+                writer.WriteNumberValue(HighCveCount.Value);
             }
-            if (Optional.IsDefined(Medium))
+            if (Optional.IsDefined(MediumCveCount))
             {
-                if (Medium != null)
-                {
-                    writer.WritePropertyName("medium"u8);
-                    writer.WriteNumberValue(Medium.Value);
-                }
-                else
-                {
-                    writer.WriteNull("medium");
-                }
+                writer.WritePropertyName("mediumCveCount"u8);
+                writer.WriteNumberValue(MediumCveCount.Value);
             }
-            if (Optional.IsDefined(Low))
+            if (Optional.IsDefined(LowCveCount))
             {
-                if (Low != null)
-                {
-                    writer.WritePropertyName("low"u8);
-                    writer.WriteNumberValue(Low.Value);
-                }
-                else
-                {
-                    writer.WriteNull("low");
-                }
+                writer.WritePropertyName("lowCveCount"u8);
+                writer.WriteNumberValue(LowCveCount.Value);
             }
-            if (Optional.IsDefined(Unknown))
+            if (Optional.IsDefined(UnknownCveCount))
             {
-                if (Unknown != null)
-                {
-                    writer.WritePropertyName("unknown"u8);
-                    writer.WriteNumberValue(Unknown.Value);
-                }
-                else
-                {
-                    writer.WriteNull("unknown");
-                }
+                writer.WritePropertyName("unknownCveCount"u8);
+                writer.WriteNumberValue(UnknownCveCount.Value);
             }
-            writer.WritePropertyName("summaryType"u8);
-            writer.WriteStringValue(SummaryType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         CveSummary IJsonModel<CveSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -112,7 +67,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,70 +76,66 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CveSummary DeserializeCveSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? critical = default;
-            long? high = default;
-            long? medium = default;
-            long? low = default;
-            long? unknown = default;
+            long? criticalCveCount = default;
+            long? highCveCount = default;
+            long? mediumCveCount = default;
+            long? lowCveCount = default;
+            long? unknownCveCount = default;
             FirmwareAnalysisSummaryType summaryType = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("critical"u8))
+                if (property.NameEquals("criticalCveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        critical = null;
                         continue;
                     }
-                    critical = property.Value.GetInt64();
+                    criticalCveCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("high"u8))
+                if (property.NameEquals("highCveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        high = null;
                         continue;
                     }
-                    high = property.Value.GetInt64();
+                    highCveCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("medium"u8))
+                if (property.NameEquals("mediumCveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        medium = null;
                         continue;
                     }
-                    medium = property.Value.GetInt64();
+                    mediumCveCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("low"u8))
+                if (property.NameEquals("lowCveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        low = null;
                         continue;
                     }
-                    low = property.Value.GetInt64();
+                    lowCveCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unknown"u8))
+                if (property.NameEquals("unknownCveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        unknown = null;
                         continue;
                     }
-                    unknown = property.Value.GetInt64();
+                    unknownCveCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("summaryType"u8))
@@ -192,20 +143,30 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CveSummary(
                 summaryType,
+                provisioningState,
                 serializedAdditionalRawData,
-                critical,
-                high,
-                medium,
-                low,
-                unknown);
+                criticalCveCount,
+                highCveCount,
+                mediumCveCount,
+                lowCveCount,
+                unknownCveCount);
         }
 
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)
@@ -215,9 +176,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CveSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,11 +190,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCveSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

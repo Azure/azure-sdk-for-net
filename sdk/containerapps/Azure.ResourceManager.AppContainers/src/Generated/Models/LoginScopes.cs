@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }
 }

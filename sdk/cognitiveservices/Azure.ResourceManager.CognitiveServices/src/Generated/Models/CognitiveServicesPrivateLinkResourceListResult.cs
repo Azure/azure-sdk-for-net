@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CognitiveServicesPrivateLinkResource> Value { get; }
     }
 }

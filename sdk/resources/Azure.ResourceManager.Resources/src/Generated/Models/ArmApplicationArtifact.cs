@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,10 +78,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application artifact name. </summary>
+        [WirePath("name")]
         public ArmApplicationArtifactName Name { get; }
         /// <summary> The managed application artifact blob uri. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; }
         /// <summary> The managed application artifact type. </summary>
+        [WirePath("type")]
         public ArmApplicationArtifactType ArtifactType { get; }
     }
 }

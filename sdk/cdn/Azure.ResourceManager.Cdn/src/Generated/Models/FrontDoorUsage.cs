@@ -8,11 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes resource usage. </summary>
+    /// <summary>
+    /// Describes resource usage.
+    /// Serialized Name: Usage
+    /// </summary>
     public partial class FrontDoorUsage
     {
         /// <summary>
@@ -48,10 +50,22 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
-        /// <param name="unit"> An enum describing the unit of measurement. </param>
-        /// <param name="currentValue"> The current value of the usage. </param>
-        /// <param name="limit"> The limit of usage. </param>
-        /// <param name="name"> The name of the type of usage. </param>
+        /// <param name="unit">
+        /// An enum describing the unit of measurement.
+        /// Serialized Name: Usage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// The current value of the usage.
+        /// Serialized Name: Usage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// The limit of usage.
+        /// Serialized Name: Usage.limit
+        /// </param>
+        /// <param name="name">
+        /// The name of the type of usage.
+        /// Serialized Name: Usage.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal FrontDoorUsage(FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name)
         {
@@ -64,11 +78,26 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
-        /// <param name="id"> Resource identifier. </param>
-        /// <param name="unit"> An enum describing the unit of measurement. </param>
-        /// <param name="currentValue"> The current value of the usage. </param>
-        /// <param name="limit"> The limit of usage. </param>
-        /// <param name="name"> The name of the type of usage. </param>
+        /// <param name="id">
+        /// Resource identifier.
+        /// Serialized Name: Usage.id
+        /// </param>
+        /// <param name="unit">
+        /// An enum describing the unit of measurement.
+        /// Serialized Name: Usage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// The current value of the usage.
+        /// Serialized Name: Usage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// The limit of usage.
+        /// Serialized Name: Usage.limit
+        /// </param>
+        /// <param name="name">
+        /// The name of the type of usage.
+        /// Serialized Name: Usage.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorUsage(ResourceIdentifier id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,15 +114,30 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Resource identifier. </summary>
+        /// <summary>
+        /// Resource identifier.
+        /// Serialized Name: Usage.id
+        /// </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> An enum describing the unit of measurement. </summary>
+        /// <summary>
+        /// An enum describing the unit of measurement.
+        /// Serialized Name: Usage.unit
+        /// </summary>
         public FrontDoorUsageUnit Unit { get; }
-        /// <summary> The current value of the usage. </summary>
+        /// <summary>
+        /// The current value of the usage.
+        /// Serialized Name: Usage.currentValue
+        /// </summary>
         public long CurrentValue { get; }
-        /// <summary> The limit of usage. </summary>
+        /// <summary>
+        /// The limit of usage.
+        /// Serialized Name: Usage.limit
+        /// </summary>
         public long Limit { get; }
-        /// <summary> The name of the type of usage. </summary>
+        /// <summary>
+        /// The name of the type of usage.
+        /// Serialized Name: Usage.name
+        /// </summary>
         public FrontDoorUsageResourceName Name { get; }
     }
 }

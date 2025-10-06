@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Id of a physical partition. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Throughput of a physical partition. </summary>
+        [WirePath("throughput")]
         public double? Throughput { get; set; }
     }
 }

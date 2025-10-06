@@ -77,14 +77,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Full resource id of the original storage account. </summary>
+        [WirePath("properties.storageAccountResourceId")]
         public ResourceIdentifier StorageAccountResourceId { get; }
         /// <summary> Location of the deleted account. </summary>
+        [WirePath("properties.location")]
         public AzureLocation? Location { get; }
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
+        [WirePath("properties.restoreReference")]
         public string RestoreReference { get; }
         /// <summary> Creation time of the deleted account. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Deletion time of the deleted account. </summary>
+        [WirePath("properties.deletionTime")]
         public DateTimeOffset? DeletedOn { get; }
     }
 }

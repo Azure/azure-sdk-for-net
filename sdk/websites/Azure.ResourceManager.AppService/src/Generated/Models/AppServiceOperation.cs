@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -77,20 +75,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Operation ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Operation name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The current status of the operation. </summary>
+        [WirePath("status")]
         public AppServiceOperationStatus? Status { get; }
-        /// <summary> Any errors associate with the operation. </summary>
-        public IReadOnlyList<ResponseError> Errors { get; }
         /// <summary> Time when operation has started. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Time when operation has been updated. </summary>
+        [WirePath("modifiedTime")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Time when operation will expire. </summary>
+        [WirePath("expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Applicable only for stamp operation ids. </summary>
+        [WirePath("geoMasterOperationId")]
         public Guid? GeoMasterOperationId { get; }
     }
 }

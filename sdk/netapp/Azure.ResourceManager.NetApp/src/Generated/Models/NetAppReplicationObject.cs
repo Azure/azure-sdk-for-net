@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -48,13 +47,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
-        public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
+        public NetAppReplicationObject()
         {
-            Argument.AssertNotNull(remoteVolumeResourceId, nameof(remoteVolumeResourceId));
-
-            RemoteVolumeResourceId = remoteVolumeResourceId;
+            DestinationReplications = new ChangeTrackingList<NetAppDestinationReplication>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
@@ -64,8 +59,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
         /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
+        /// <param name="destinationReplications"> A list of destination replications. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -73,15 +69,9 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemotePath = remotePath;
             RemoteVolumeRegion = remoteVolumeRegion;
+            DestinationReplications = destinationReplications;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/> for deserialization. </summary>
-        internal NetAppReplicationObject()
-        {
-        }
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public NetAppEndpointType? EndpointType { get; set; }
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
@@ -90,5 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public RemotePath RemotePath { get; set; }
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; set; }
+        /// <summary> A list of destination replications. </summary>
+        public IReadOnlyList<NetAppDestinationReplication> DestinationReplications { get; }
     }
 }

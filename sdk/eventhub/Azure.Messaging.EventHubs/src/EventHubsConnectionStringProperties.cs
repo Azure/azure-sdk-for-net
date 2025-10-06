@@ -244,13 +244,6 @@ namespace Azure.Messaging.EventHubs
             {
                 throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
             }
-
-            // Ensure that the namespace reflects the local host when the development emulator is being used.
-
-            if ((UseDevelopmentEmulator) && (!Endpoint.IsLoopback))
-            {
-                throw new ArgumentException(Resources.InvalidEmulatorEndpoint, connectionStringArgumentName);
-            }
         }
 
         /// <summary>
@@ -334,6 +327,17 @@ namespace Azure.Messaging.EventHubs
                         {
                             endpointUri = null;
                         }
+                        else if (string.IsNullOrEmpty(endpointUri.Host) && (CountChar(':', value.AsSpan()) == 1))
+                        {
+                            // If the host was empty after parsing and the value has a single port/scheme separator,
+                            // then the parsing likely failed to recognize the host due to the lack of a scheme.  Add
+                            // an artificial scheme and try to parse again.
+
+                            if (!Uri.TryCreate(string.Concat(EventHubsEndpointScheme, value), UriKind.Absolute, out endpointUri))
+                            {
+                                endpointUri = null;
+                            }
+                        }
 
                         var endpointBuilder = endpointUri switch
                         {
@@ -399,6 +403,31 @@ namespace Azure.Messaging.EventHubs
             }
 
             return parsedValues;
+        }
+
+        /// <summary>
+        ///   Counts the number of times a character occurs in a given span.
+        /// </summary>
+        ///
+        /// <param name="span">The span to evaluate.</param>
+        /// <param name="value">The character to count.</param>
+        ///
+        /// <returns>The number of times the <paramref name="value"/> occurs in <paramref name="span"/>.</returns>
+        ///
+        private static int CountChar(char value,
+                                     ReadOnlySpan<char> span)
+        {
+            var count = 0;
+
+            foreach (var character in span)
+            {
+                if (character == value)
+                {
+                    ++count;
+                }
+            }
+
+            return count;
         }
     }
 }

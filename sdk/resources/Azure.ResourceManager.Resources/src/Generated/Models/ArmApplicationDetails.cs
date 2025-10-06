@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The client Oid. </summary>
+        [WirePath("oid")]
         public Guid? ObjectId { get; }
         /// <summary> The client Puid. </summary>
+        [WirePath("puid")]
         public string Puid { get; }
         /// <summary> The client application Id. </summary>
+        [WirePath("applicationId")]
         public Guid? ApplicationId { get; }
     }
 }

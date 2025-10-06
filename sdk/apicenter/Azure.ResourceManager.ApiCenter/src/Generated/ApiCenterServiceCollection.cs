@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiCenter
@@ -55,7 +53,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Create or update service
+        /// Creates new or updates existing API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -76,8 +74,8 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serviceName"> Service name. </param>
-        /// <param name="data"> The service entity. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
@@ -91,7 +89,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = await _apiCenterServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiCenterArmOperation<ApiCenterServiceResource>(Response.FromValue(new ApiCenterServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _apiCenterServiceServicesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<ApiCenterServiceResource>(Response.FromValue(new ApiCenterServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Create or update service
+        /// Creates new or updates existing API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serviceName"> Service name. </param>
-        /// <param name="data"> The service entity. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
@@ -140,7 +140,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = _apiCenterServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken);
-                var operation = new ApiCenterArmOperation<ApiCenterServiceResource>(Response.FromValue(new ApiCenterServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _apiCenterServiceServicesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<ApiCenterServiceResource>(Response.FromValue(new ApiCenterServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Get service
+        /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +175,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -198,7 +200,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Get service
+        /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -210,7 +212,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Lists services within a resource group
+        /// Returns a collection of services within the resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -255,7 +257,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,7 +275,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Lists services within a resource group
+        /// Returns a collection of services within the resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -285,7 +287,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +317,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +325,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -358,7 +360,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,7 +368,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -401,7 +403,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -409,7 +411,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -446,7 +448,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +456,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>

@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
@@ -21,7 +18,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         private ClientDiagnostics _cloudHsmClusterClientDiagnostics;
         private CloudHsmClustersRestOperations _cloudHsmClusterRestClient;
         private ClientDiagnostics _dedicatedHsmClientDiagnostics;
-        private DedicatedHsmRestOperations _dedicatedHsmRestClient;
+        private DedicatedHsmsRestOperations _dedicatedHsmRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesSubscriptionResource"/> class for mocking. </summary>
         protected MockableHardwareSecurityModulesSubscriptionResource()
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         private ClientDiagnostics CloudHsmClusterClientDiagnostics => _cloudHsmClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
         private CloudHsmClustersRestOperations CloudHsmClusterRestClient => _cloudHsmClusterRestClient ??= new CloudHsmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudHsmClusterResource.ResourceType));
         private ClientDiagnostics DedicatedHsmClientDiagnostics => _dedicatedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", DedicatedHsmResource.ResourceType.Namespace, Diagnostics);
-        private DedicatedHsmRestOperations DedicatedHsmRestClient => _dedicatedHsmRestClient ??= new DedicatedHsmRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DedicatedHsmResource.ResourceType));
+        private DedicatedHsmsRestOperations DedicatedHsmRestClient => _dedicatedHsmRestClient ??= new DedicatedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DedicatedHsmResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,11 +52,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ListBySubscription</description>
+        /// <description>CloudHsmCluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -86,11 +83,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ListBySubscription</description>
+        /// <description>CloudHsmCluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -121,7 +118,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-30</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

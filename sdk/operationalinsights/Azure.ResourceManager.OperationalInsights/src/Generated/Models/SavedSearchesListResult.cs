@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The array of result values. </summary>
+        [WirePath("value")]
         public IReadOnlyList<OperationalInsightsSavedSearchData> Value { get; }
     }
 }

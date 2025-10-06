@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -82,12 +81,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Name for the IP restriction rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Describe the IP restriction rule that is being sent to the container-app. This is an optional field. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> CIDR notation to match incoming IP address. </summary>
+        [WirePath("ipAddressRange")]
         public string IPAddressRange { get; set; }
         /// <summary> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </summary>
+        [WirePath("action")]
         public ContainerAppIPRuleAction Action { get; set; }
     }
 }

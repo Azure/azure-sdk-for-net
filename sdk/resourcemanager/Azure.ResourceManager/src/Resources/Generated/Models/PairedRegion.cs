@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the paired region. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The subscription ID. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
     }
 }

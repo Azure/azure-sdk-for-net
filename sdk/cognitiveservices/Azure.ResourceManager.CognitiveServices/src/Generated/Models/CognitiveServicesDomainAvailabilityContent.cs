@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -78,10 +77,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The subdomain name to use. </summary>
+        [WirePath("subdomainName")]
         public string SubdomainName { get; }
         /// <summary> The Type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
         /// <summary> The Kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

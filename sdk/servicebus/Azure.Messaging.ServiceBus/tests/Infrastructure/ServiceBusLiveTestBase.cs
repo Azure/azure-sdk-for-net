@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
-using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
@@ -31,9 +30,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         MaxRetries = maxRetries
                     }
                 };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
+            return new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
         }
 
         protected static async Task SendMessagesAsync(
@@ -49,7 +46,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 batch ??= await sender.CreateMessageBatchAsync();
 
-                while ((numberOfMessages > 0) && (batch.TryAddMessage(new ServiceBusMessage(Guid.NewGuid().ToString()))))
+                while ((numberOfMessages > 0)
+                    && (batch.Count < 4000)
+                    && (batch.TryAddMessage(new ServiceBusMessage(Guid.NewGuid().ToString()))))
                 {
                     --numberOfMessages;
                 }

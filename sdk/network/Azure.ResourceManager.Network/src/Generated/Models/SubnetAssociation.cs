@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Subnet ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Collection of custom security rules. </summary>
+        [WirePath("securityRules")]
         public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }
 }

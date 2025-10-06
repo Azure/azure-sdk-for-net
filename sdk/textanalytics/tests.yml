@@ -7,18 +7,12 @@ parameters:
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: '${{ parameters.Location }}'
-      UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
-      China:
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
-    SupportedClouds: 'Public,UsGov,China'
     # temporary env vars for custom text features
     EnvVars:
         AZURE_SUBSCRIPTION_ID: $(azure-subscription-id)

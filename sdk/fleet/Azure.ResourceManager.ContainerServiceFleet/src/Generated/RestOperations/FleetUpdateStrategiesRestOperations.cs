@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-10-15";
+            _apiVersion = apiVersion ?? "2025-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFleetRequestUri(string subscriptionId, string resourceGroupName, string fleetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFleetRequest(string subscriptionId, string resourceGroupName, string fleetName)
@@ -59,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> List FleetUpdateStrategy resources by Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetUpdateStrategyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FleetUpdateStrategyListResult.DeserializeFleetUpdateStrategyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -88,7 +102,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> List FleetUpdateStrategy resources by Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetUpdateStrategyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FleetUpdateStrategyListResult.DeserializeFleetUpdateStrategyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies/", false);
+            uri.AppendPath(updateStrategyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName)
@@ -139,7 +169,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Get a FleetUpdateStrategy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
@@ -160,7 +190,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetUpdateStrategyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -172,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Get a FleetUpdateStrategy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
@@ -193,7 +223,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetUpdateStrategyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,6 +232,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, FleetUpdateStrategyData data, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies/", false);
+            uri.AppendPath(updateStrategyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, FleetUpdateStrategyData data, string ifMatch, string ifNoneMatch)
@@ -232,14 +278,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create a FleetUpdateStrategy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
@@ -270,7 +316,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Create a FleetUpdateStrategy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
@@ -300,6 +346,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies/", false);
+            uri.AppendPath(updateStrategyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -327,7 +389,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Delete a FleetUpdateStrategy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
@@ -356,7 +418,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Delete a FleetUpdateStrategy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
@@ -384,6 +446,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        internal RequestUriBuilder CreateListByFleetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string fleetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByFleetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string fleetName)
         {
             var message = _pipeline.CreateMessage();
@@ -400,7 +470,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> List FleetUpdateStrategy resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -420,7 +490,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetUpdateStrategyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FleetUpdateStrategyListResult.DeserializeFleetUpdateStrategyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -431,7 +501,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> List FleetUpdateStrategy resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -451,7 +521,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetUpdateStrategyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FleetUpdateStrategyListResult.DeserializeFleetUpdateStrategyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

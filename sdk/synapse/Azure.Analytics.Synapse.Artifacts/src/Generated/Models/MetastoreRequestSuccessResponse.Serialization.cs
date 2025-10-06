@@ -36,12 +36,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new MetastoreRequestSuccessResponse(status);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetastoreRequestSuccessResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetastoreRequestSuccessResponse(document.RootElement);
+        }
+
         internal partial class MetastoreRequestSuccessResponseConverter : JsonConverter<MetastoreRequestSuccessResponse>
         {
             public override void Write(Utf8JsonWriter writer, MetastoreRequestSuccessResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MetastoreRequestSuccessResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

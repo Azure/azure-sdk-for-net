@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A list of the available script packages. </summary>
+    /// <summary> The response of a ScriptPackage list operation. </summary>
     internal partial class ScriptPackagesList
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptPackagesList"/>. </summary>
-        internal ScriptPackagesList()
+        /// <param name="value"> The ScriptPackage items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ScriptPackagesList(IEnumerable<ScriptPackageData> value)
         {
-            Value = new ChangeTrackingList<ScriptPackageData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptPackagesList"/>. </summary>
-        /// <param name="value"> List of script package resources. </param>
-        /// <param name="nextLink"> URL to get the next page if any. </param>
+        /// <param name="value"> The ScriptPackage items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptPackagesList(IReadOnlyList<ScriptPackageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptPackagesList(IReadOnlyList<ScriptPackageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of script package resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptPackagesList"/> for deserialization. </summary>
+        internal ScriptPackagesList()
+        {
+        }
+
+        /// <summary> The ScriptPackage items on this page. </summary>
         public IReadOnlyList<ScriptPackageData> Value { get; }
-        /// <summary> URL to get the next page if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

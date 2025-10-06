@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -73,6 +72,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The resource IDs of the database resources to be unlinked. </summary>
+        [WirePath("ids")]
         public IList<ResourceIdentifier> Ids { get; }
     }
 }

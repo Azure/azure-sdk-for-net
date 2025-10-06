@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies ProxyAgent settings while creating the virtual machine. Minimum api-version: 2023-09-01. </summary>
+    /// <summary> Specifies ProxyAgent settings for the virtual machine or virtual machine scale set. Minimum api-version: 2023-09-01. </summary>
     public partial class ProxyAgentSettings
     {
         /// <summary>
@@ -52,22 +52,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
         /// <param name="enabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
-        /// <param name="mode"> Specifies the mode that ProxyAgent will execute on if the feature is enabled. ProxyAgent will start to audit or monitor but not enforce access control over requests to host endpoints in Audit mode, while in Enforce mode it will enforce access control. The default value is Enforce mode. </param>
-        /// <param name="keyIncarnationId"> Increase the value of this property allows user to reset the key used for securing communication channel between guest and host. </param>
+        /// <param name="mode"> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </param>
+        /// <param name="keyIncarnationId"> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
+        /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Mode = mode;
             KeyIncarnationId = keyIncarnationId;
+            WireServer = wireServer;
+            Imds = imds;
+            AddProxyAgentExtension = addProxyAgentExtension;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> Specifies the mode that ProxyAgent will execute on if the feature is enabled. ProxyAgent will start to audit or monitor but not enforce access control over requests to host endpoints in Audit mode, while in Enforce mode it will enforce access control. The default value is Enforce mode. </summary>
+        /// <summary> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </summary>
         public Mode? Mode { get; set; }
-        /// <summary> Increase the value of this property allows user to reset the key used for securing communication channel between guest and host. </summary>
+        /// <summary> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </summary>
         public int? KeyIncarnationId { get; set; }
+        /// <summary> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </summary>
+        public HostEndpointSettings WireServer { get; set; }
+        /// <summary> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </summary>
+        public HostEndpointSettings Imds { get; set; }
+        /// <summary> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </summary>
+        public bool? AddProxyAgentExtension { get; set; }
     }
 }

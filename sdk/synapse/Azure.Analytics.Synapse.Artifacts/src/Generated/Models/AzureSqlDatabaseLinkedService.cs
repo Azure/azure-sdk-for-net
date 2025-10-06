@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,28 +13,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class AzureSqlDatabaseLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="AzureSqlDatabaseLinkedService"/>. </summary>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public AzureSqlDatabaseLinkedService(object connectionString)
+        public AzureSqlDatabaseLinkedService()
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
             Type = "AzureSqlDatabase";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureSqlDatabaseLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="server"> The name or network address of the instance of SQL Server to which to connect, used by recommended version. Type: string (or Expression with resultType string). </param>
+        /// <param name="database"> The name of the database, used by recommended version. Type: string (or Expression with resultType string). </param>
+        /// <param name="encrypt"> Indicate whether TLS encryption is required for all data sent between the client and server, used by recommended version. Possible values are true/yes/mandatory, false/no/optional and strict. Type: string (or Expression with resultType string). </param>
+        /// <param name="trustServerCertificate"> Indicate whether the channel will be encrypted while bypassing walking the certificate chain to validate trust, used by recommended version. Type: Boolean (or Expression with resultType boolean). </param>
+        /// <param name="hostNameInCertificate"> The host name to use when validating the server certificate for the connection. When not specified, the server name from the Data Source is used for certificate validation, used by recommended version. Type: string (or Expression with resultType string). </param>
+        /// <param name="applicationIntent"> The application workload type when connecting to a server, used by recommended version. Possible values are ReadOnly and ReadWrite. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectTimeout"> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error, used by recommended version. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="connectRetryCount"> The number of re-connections attempted after identifying that there was an idle connection failure, used by recommended version. This must be an integer between 0 and 255. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="connectRetryInterval"> The amount of time (in seconds) between each re-connection attempt after identifying that there was an idle connection failure, used by recommended version. This must be an integer between 1 and 60. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="loadBalanceTimeout"> The minimum time, in seconds, for the connection to live in the connection pool before being destroyed, used by recommended version. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="commandTimeout"> The default wait time (in seconds) before terminating the attempt to execute a command and generating an error, used by recommended version. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="integratedSecurity"> Indicate whether User ID and Password are specified in the connection (when false) or whether the current Windows account credentials are used for authentication (when true), used by recommended version. Type: Boolean (or Expression with resultType boolean). </param>
+        /// <param name="failoverPartner"> The name or address of the partner server to connect to if the primary server is down, used by recommended version. Type: string (or Expression with resultType string). </param>
+        /// <param name="maxPoolSize"> The maximum number of connections allowed in the connection pool for this specific connection string, used by recommended version. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="minPoolSize"> The minimum number of connections allowed in the connection pool for this specific connection string, used by recommended version. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="multipleActiveResultSets"> When true, an application can maintain multiple active result sets (MARS). When false, an application must process or cancel all result sets from one batch before it can execute any other batch on that connection. Type: Boolean (or Expression with resultType boolean). </param>
+        /// <param name="multiSubnetFailover"> If your application is connecting to an AlwaysOn availability group (AG) on different subnets, setting MultiSubnetFailover=true provides faster detection of and connection to the (currently) active server, used by recommended version. Type: Boolean (or Expression with resultType boolean). </param>
+        /// <param name="packetSize"> The size in bytes of the network packets used to communicate with an instance of server, used by recommended version. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="pooling"> Indicate whether the connection will be pooled or explicitly opened every time that the connection is requested, used by recommended version. Type: Boolean (or Expression with resultType boolean). </param>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
+        /// <param name="userName"> The user name to be used when connecting to server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against Azure SQL Database.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredential">
+        /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
@@ -45,12 +66,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureSqlDatabaseLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureSqlDatabaseLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object database, object encrypt, object trustServerCertificate, object hostNameInCertificate, object applicationIntent, object connectTimeout, object connectRetryCount, object connectRetryInterval, object loadBalanceTimeout, object commandTimeout, object integratedSecurity, object failoverPartner, object maxPoolSize, object minPoolSize, object multipleActiveResultSets, object multiSubnetFailover, object packetSize, object pooling, object connectionString, AzureSqlDatabaseAuthenticationType? authenticationType, object userName, AzureKeyVaultSecretReference password, object servicePrincipalId, SecretBase servicePrincipalKey, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object tenant, object azureCloudType, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, object encryptedCredential, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
+            Server = server;
+            Database = database;
+            Encrypt = encrypt;
+            TrustServerCertificate = trustServerCertificate;
+            HostNameInCertificate = hostNameInCertificate;
+            ApplicationIntent = applicationIntent;
+            ConnectTimeout = connectTimeout;
+            ConnectRetryCount = connectRetryCount;
+            ConnectRetryInterval = connectRetryInterval;
+            LoadBalanceTimeout = loadBalanceTimeout;
+            CommandTimeout = commandTimeout;
+            IntegratedSecurity = integratedSecurity;
+            FailoverPartner = failoverPartner;
+            MaxPoolSize = maxPoolSize;
+            MinPoolSize = minPoolSize;
+            MultipleActiveResultSets = multipleActiveResultSets;
+            MultiSubnetFailover = multiSubnetFailover;
+            PacketSize = packetSize;
+            Pooling = pooling;
             ConnectionString = connectionString;
+            AuthenticationType = authenticationType;
+            UserName = userName;
             Password = password;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalCredential = servicePrincipalCredential;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
             AlwaysEncryptedSettings = alwaysEncryptedSettings;
@@ -59,8 +103,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "AzureSqlDatabase";
         }
 
+        /// <summary> The name or network address of the instance of SQL Server to which to connect, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        public object Server { get; set; }
+        /// <summary> The name of the database, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        public object Database { get; set; }
+        /// <summary> Indicate whether TLS encryption is required for all data sent between the client and server, used by recommended version. Possible values are true/yes/mandatory, false/no/optional and strict. Type: string (or Expression with resultType string). </summary>
+        public object Encrypt { get; set; }
+        /// <summary> Indicate whether the channel will be encrypted while bypassing walking the certificate chain to validate trust, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        public object TrustServerCertificate { get; set; }
+        /// <summary> The host name to use when validating the server certificate for the connection. When not specified, the server name from the Data Source is used for certificate validation, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        public object HostNameInCertificate { get; set; }
+        /// <summary> The application workload type when connecting to a server, used by recommended version. Possible values are ReadOnly and ReadWrite. Type: string (or Expression with resultType string). </summary>
+        public object ApplicationIntent { get; set; }
+        /// <summary> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        public object ConnectTimeout { get; set; }
+        /// <summary> The number of re-connections attempted after identifying that there was an idle connection failure, used by recommended version. This must be an integer between 0 and 255. Type: integer (or Expression with resultType integer). </summary>
+        public object ConnectRetryCount { get; set; }
+        /// <summary> The amount of time (in seconds) between each re-connection attempt after identifying that there was an idle connection failure, used by recommended version. This must be an integer between 1 and 60. Type: integer (or Expression with resultType integer). </summary>
+        public object ConnectRetryInterval { get; set; }
+        /// <summary> The minimum time, in seconds, for the connection to live in the connection pool before being destroyed, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        public object LoadBalanceTimeout { get; set; }
+        /// <summary> The default wait time (in seconds) before terminating the attempt to execute a command and generating an error, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        public object CommandTimeout { get; set; }
+        /// <summary> Indicate whether User ID and Password are specified in the connection (when false) or whether the current Windows account credentials are used for authentication (when true), used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        public object IntegratedSecurity { get; set; }
+        /// <summary> The name or address of the partner server to connect to if the primary server is down, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        public object FailoverPartner { get; set; }
+        /// <summary> The maximum number of connections allowed in the connection pool for this specific connection string, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        public object MaxPoolSize { get; set; }
+        /// <summary> The minimum number of connections allowed in the connection pool for this specific connection string, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        public object MinPoolSize { get; set; }
+        /// <summary> When true, an application can maintain multiple active result sets (MARS). When false, an application must process or cancel all result sets from one batch before it can execute any other batch on that connection. Type: Boolean (or Expression with resultType boolean). </summary>
+        public object MultipleActiveResultSets { get; set; }
+        /// <summary> If your application is connecting to an AlwaysOn availability group (AG) on different subnets, setting MultiSubnetFailover=true provides faster detection of and connection to the (currently) active server, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        public object MultiSubnetFailover { get; set; }
+        /// <summary> The size in bytes of the network packets used to communicate with an instance of server, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        public object PacketSize { get; set; }
+        /// <summary> Indicate whether the connection will be pooled or explicitly opened every time that the connection is requested, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        public object Pooling { get; set; }
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
+        /// <summary> The type used for authentication. Type: string. </summary>
+        public AzureSqlDatabaseAuthenticationType? AuthenticationType { get; set; }
+        /// <summary> The user name to be used when connecting to server. Type: string (or Expression with resultType string). </summary>
+        public object UserName { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </summary>
@@ -71,6 +157,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
+        public object ServicePrincipalCredentialType { get; set; }
+        /// <summary>
+        /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
+        public SecretBase ServicePrincipalCredential { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public object Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>

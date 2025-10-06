@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -113,14 +111,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
         /// <returns> A new <see cref="DataShare.ShareDataSetData"/> instance for mocking. </returns>
-        public static ShareDataSetData ShareDataSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static ShareDataSetData ShareDataSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new ShareDataSetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new DataSetKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -131,14 +129,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set mapping. </param>
         /// <returns> A new <see cref="DataShare.ShareDataSetMappingData"/> instance for mocking. </returns>
-        public static ShareDataSetMappingData ShareDataSetMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static ShareDataSetMappingData ShareDataSetMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new ShareDataSetMappingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new DataSetMappingKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -433,14 +431,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization setting. </param>
         /// <returns> A new <see cref="DataShare.DataShareSynchronizationSettingData"/> instance for mocking. </returns>
-        public static DataShareSynchronizationSettingData DataShareSynchronizationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static DataShareSynchronizationSettingData DataShareSynchronizationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new DataShareSynchronizationSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new SynchronizationSettingKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -451,14 +449,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization on trigger. </param>
         /// <returns> A new <see cref="DataShare.DataShareTriggerData"/> instance for mocking. </returns>
-        public static DataShareTriggerData DataShareTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static DataShareTriggerData DataShareTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new DataShareTriggerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new TriggerKind(kind),
                 serializedAdditionalRawData: null);
         }
 

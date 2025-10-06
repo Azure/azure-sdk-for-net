@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -20,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
-            writer.WriteObjectValue(LogPath);
+            writer.WriteObjectValue<object>(LogPath);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("typeProperties"u8);
@@ -33,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
-                writer.WriteObjectValue(LogRefreshInterval);
+                writer.WriteObjectValue<object>(LogRefreshInterval);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -95,12 +94,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisLogLocation(logPath, type, accessCredential, logRefreshInterval);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisLogLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSsisLogLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SsisLogLocationConverter : JsonConverter<SsisLogLocation>
         {
             public override void Write(Utf8JsonWriter writer, SsisLogLocation model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SsisLogLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -51,23 +51,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
-        /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
         /// <param name="maxTrials"> Maximum number of AutoML iterations. </param>
         /// <param name="timeout"> AutoML job timeout. </param>
+        /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageLimitSettings(int? maxTrials, TimeSpan? timeout, int? maxConcurrentTrials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxConcurrentTrials = maxConcurrentTrials;
             MaxTrials = maxTrials;
             Timeout = timeout;
+            MaxConcurrentTrials = maxConcurrentTrials;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Maximum number of concurrent AutoML iterations. </summary>
-        public int? MaxConcurrentTrials { get; set; }
         /// <summary> Maximum number of AutoML iterations. </summary>
+        [WirePath("maxTrials")]
         public int? MaxTrials { get; set; }
         /// <summary> AutoML job timeout. </summary>
+        [WirePath("timeout")]
         public TimeSpan? Timeout { get; set; }
+        /// <summary> Maximum number of concurrent AutoML iterations. </summary>
+        [WirePath("maxConcurrentTrials")]
+        public int? MaxConcurrentTrials { get; set; }
     }
 }

@@ -161,6 +161,23 @@ var client = new WebPubSubServiceClient(connectionString, "some_hub");
 client.RemoveConnectionFromAllGroups("some_connection");
 ```
 
+#### List connections in group
+Synchronous version:
+```C# Snippet:WebPubSubListConnectionsInGroup
+foreach (WebPubSubGroupMember member in client.ListConnectionsInGroup("groupName"))
+{
+    Console.WriteLine($"ConnectionId: {member.ConnectionId}, UserId: {member.UserId}");
+}
+```
+
+Asynchronous version:
+```C# Snippet:WebPubSubListConnectionsInGroupAsync
+await foreach (WebPubSubGroupMember member in client.ListConnectionsInGroupAsync("groupName"))
+{
+    Console.WriteLine($"ConnectionId: {member.ConnectionId}, UserId: {member.UserId}");
+}
+```
+
 ## Troubleshooting
 
 ### Setting up console logging
@@ -187,8 +204,6 @@ You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/tests/Samples/

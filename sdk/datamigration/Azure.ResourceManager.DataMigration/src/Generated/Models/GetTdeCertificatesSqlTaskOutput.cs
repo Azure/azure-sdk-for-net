@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="GetTdeCertificatesSqlTaskOutput"/>. </summary>
         internal GetTdeCertificatesSqlTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetTdeCertificatesSqlTaskOutput"/>. </summary>
         /// <param name="base64EncodedCertificates"> Mapping from certificate name to base 64 encoded format. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetTdeCertificatesSqlTaskOutput(string base64EncodedCertificates, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetTdeCertificatesSqlTaskOutput(string base64EncodedCertificates, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Base64EncodedCertificates = base64EncodedCertificates;
             ValidationErrors = validationErrors;
@@ -66,6 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Mapping from certificate name to base 64 encoded format. </summary>
         public string Base64EncodedCertificates { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

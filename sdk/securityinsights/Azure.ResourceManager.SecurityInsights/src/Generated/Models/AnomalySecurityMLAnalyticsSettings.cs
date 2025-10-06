@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -68,20 +66,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The description of the SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The display name for settings created by this SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Determines whether this settings is enabled or disabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The last time that this SecurityMLAnalyticsSettings has been modified. </summary>
+        [WirePath("properties.lastModifiedUtc")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The required data sources for this SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.requiredDataConnectors")]
         public IList<SecurityMLAnalyticsSettingsDataSource> RequiredDataConnectors { get; }
         /// <summary> The tactics of the SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.tactics")]
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
         /// <summary> The techniques of the SecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.techniques")]
         public IList<string> Techniques { get; }
         /// <summary> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </summary>
+        [WirePath("properties.anomalyVersion")]
         public string AnomalyVersion { get; set; }
         /// <summary>
         /// The customizable observations of the AnomalySecurityMLAnalyticsSettings.
@@ -113,16 +119,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.customizableObservations")]
         public BinaryData CustomizableObservations { get; set; }
         /// <summary> The frequency that this SecurityMLAnalyticsSettings will be run. </summary>
+        [WirePath("properties.frequency")]
         public TimeSpan? Frequency { get; set; }
         /// <summary> The anomaly SecurityMLAnalyticsSettings status. </summary>
+        [WirePath("properties.settingsStatus")]
         public AnomalySecurityMLAnalyticsSettingsStatus? SettingsStatus { get; set; }
         /// <summary> Determines whether this anomaly security ml analytics settings is a default settings. </summary>
+        [WirePath("properties.isDefaultSettings")]
         public bool? IsDefaultSettings { get; set; }
         /// <summary> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </summary>
+        [WirePath("properties.anomalySettingsVersion")]
         public int? AnomalySettingsVersion { get; set; }
         /// <summary> The anomaly settings definition Id. </summary>
+        [WirePath("properties.settingsDefinitionId")]
         public Guid? SettingsDefinitionId { get; set; }
     }
 }

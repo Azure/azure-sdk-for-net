@@ -7,7 +7,7 @@
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> The UnknownVariable. </summary>
+    /// <summary> Unknown version of Variable. </summary>
     internal partial class UnknownVariable : TimeSeriesVariable
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVariable"/>. </summary>

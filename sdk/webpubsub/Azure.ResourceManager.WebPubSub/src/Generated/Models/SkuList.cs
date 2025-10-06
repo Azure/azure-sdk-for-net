@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -67,11 +66,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The list of skus available for the resource. </summary>
+        [WirePath("value")]
         public IReadOnlyList<WebPubSubSku> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

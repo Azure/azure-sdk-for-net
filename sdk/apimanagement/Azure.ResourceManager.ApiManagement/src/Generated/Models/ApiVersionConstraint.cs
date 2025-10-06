@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Limit control plane API calls to API Management service with version equal to or newer than this value. </summary>
+        [WirePath("minApiVersion")]
         public string MinApiVersion { get; set; }
     }
 }

@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -55,32 +53,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             Argument.AssertNotNull(status, nameof(status));
 
-            Status = status;
             Operations = new ChangeTrackingList<NetworkCloudOperationStatusResult>();
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudOperationStatusResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="exitCode"> For actions that run commands or scripts, the exit code of the script execution. </param>
+        /// <param name="outputHead"> For actions that run commands or scripts, the leading bytes of the output of the script execution. </param>
+        /// <param name="resultRef"> For actions that run commands or scripts, a reference to the location of the result. </param>
+        /// <param name="resultUri"> For actions that run commands or scripts, the URL where the full output of the script output can be retrieved. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkCloudOperationStatusResult> operations, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudOperationStatusResult(DateTimeOffset? endOn, ResponseError error, ResourceIdentifier id, string name, IReadOnlyList<NetworkCloudOperationStatusResult> operations, float? percentComplete, ResourceIdentifier resourceId, DateTimeOffset? startOn, string status, string exitCode, string outputHead, Uri resultRef, Uri resultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            ResourceId = resourceId;
-            Name = name;
-            Status = status;
-            PercentComplete = percentComplete;
-            StartOn = startOn;
             EndOn = endOn;
-            Operations = operations;
             Error = error;
+            Id = id;
+            Name = name;
+            Operations = operations;
+            PercentComplete = percentComplete;
+            ResourceId = resourceId;
+            StartOn = startOn;
+            Status = status;
+            ExitCode = exitCode;
+            OutputHead = outputHead;
+            ResultRef = resultRef;
+            ResultUri = resultUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,23 +95,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
-        /// <summary> Fully qualified ID for the async operation. </summary>
-        public ResourceIdentifier Id { get; }
-        /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>
-        public ResourceIdentifier ResourceId { get; }
-        /// <summary> Name of the async operation. </summary>
-        public string Name { get; }
-        /// <summary> Operation status. </summary>
-        public string Status { get; }
-        /// <summary> Percent of the operation that is complete. </summary>
-        public float? PercentComplete { get; }
-        /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the operation. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> The operations list. </summary>
-        public IReadOnlyList<NetworkCloudOperationStatusResult> Operations { get; }
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
+        /// <summary> Fully qualified ID for the async operation. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> Name of the async operation. </summary>
+        public string Name { get; }
+        /// <summary> The operations list. </summary>
+        public IReadOnlyList<NetworkCloudOperationStatusResult> Operations { get; }
+        /// <summary> Percent of the operation that is complete. </summary>
+        public float? PercentComplete { get; }
+        /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>
+        public ResourceIdentifier ResourceId { get; }
+        /// <summary> The start time of the operation. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> Operation status. </summary>
+        public string Status { get; }
+        /// <summary> For actions that run commands or scripts, the exit code of the script execution. </summary>
+        public string ExitCode { get; }
+        /// <summary> For actions that run commands or scripts, the leading bytes of the output of the script execution. </summary>
+        public string OutputHead { get; }
+        /// <summary> For actions that run commands or scripts, a reference to the location of the result. </summary>
+        public Uri ResultRef { get; }
+        /// <summary> For actions that run commands or scripts, the URL where the full output of the script output can be retrieved. </summary>
+        public Uri ResultUri { get; }
     }
 }

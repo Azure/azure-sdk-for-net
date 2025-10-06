@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public CognitiveServicesPrivateLinkResourceProperties Properties { get; set; }
     }
 }

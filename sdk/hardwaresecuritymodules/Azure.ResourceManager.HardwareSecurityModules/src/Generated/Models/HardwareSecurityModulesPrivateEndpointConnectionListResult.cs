@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HardwareSecurityModules;
+using System.Linq;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
+    /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
     internal partial class HardwareSecurityModulesPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionListResult"/>. </summary>
-        internal HardwareSecurityModulesPrivateEndpointConnectionListResult()
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal HardwareSecurityModulesPrivateEndpointConnectionListResult(IEnumerable<CloudHsmClusterPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<HardwareSecurityModulesPrivateEndpointConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
-        /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HardwareSecurityModulesPrivateEndpointConnectionListResult(IReadOnlyList<HardwareSecurityModulesPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareSecurityModulesPrivateEndpointConnectionListResult(IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<HardwareSecurityModulesPrivateEndpointConnectionData> Value { get; }
-        /// <summary> The URL to get the next set of private endpoint connections. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionListResult"/> for deserialization. </summary>
+        internal HardwareSecurityModulesPrivateEndpointConnectionListResult()
+        {
+        }
+
+        /// <summary> The PrivateEndpointConnection items on this page. </summary>
+        public IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

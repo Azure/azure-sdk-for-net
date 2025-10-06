@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication.Sms;
 
 namespace Azure.Communication.Sms.Models
 {

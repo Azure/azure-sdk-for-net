@@ -7,7 +7,7 @@ This sample shows how to call GetCropProductAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = await client.GetCropProductAsync("<cropProductId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetCropProductAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = await client.GetCropProductAsync("<cropProductId>", null);
 
@@ -49,7 +49,7 @@ This sample shows how to call GetCropProduct and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = client.GetCropProduct("<cropProductId>", null);
 
@@ -60,7 +60,7 @@ This sample shows how to call GetCropProduct with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = client.GetCropProduct("<cropProductId>", null);
 
@@ -91,7 +91,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<cropProductId>", content);
@@ -103,7 +103,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -161,7 +161,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<cropProductId>", content);
@@ -173,7 +173,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -231,7 +231,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = await client.DeleteAsync("<cropProductId>");
 
@@ -241,7 +241,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = await client.DeleteAsync("<cropProductId>");
 
@@ -254,7 +254,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = client.Delete("<cropProductId>");
 
@@ -264,7 +264,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 Response response = client.Delete("<cropProductId>");
 
@@ -277,7 +277,7 @@ This sample shows how to call GetCropProductsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 await foreach (BinaryData item in client.GetCropProductsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -289,7 +289,7 @@ This sample shows how to call GetCropProductsAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 await foreach (BinaryData item in client.GetCropProductsAsync(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -321,7 +321,7 @@ This sample shows how to call GetCropProducts and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 foreach (BinaryData item in client.GetCropProducts(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -333,7 +333,7 @@ This sample shows how to call GetCropProducts with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
 foreach (BinaryData item in client.GetCropProducts(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 
@@ -76,5 +75,15 @@ namespace Azure.Storage.Files.Shares
         public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : null;
         /// <summary> The current lease status of the file. </summary>
         public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : null;
+        /// <summary> NFS only. The mode of the file or directory. </summary>
+        public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
+        /// <summary> NFS only. The owner of the file or directory. </summary>
+        public string Owner => _response.Headers.TryGetValue("x-ms-owner", out string value) ? value : null;
+        /// <summary> NFS only. The owning group of the file or directory. </summary>
+        public string Group => _response.Headers.TryGetValue("x-ms-group", out string value) ? value : null;
+        /// <summary> NFS only. The link count of the file or directory. </summary>
+        public long? LinkCount => _response.Headers.TryGetValue("x-ms-link-count", out long? value) ? value : null;
+        /// <summary> NFS only. Type of the file or directory. </summary>
+        public NfsFileType? NfsFileType => _response.Headers.TryGetValue("x-ms-file-file-type", out string value) ? new NfsFileType(value) : (NfsFileType?)null;
     }
 }

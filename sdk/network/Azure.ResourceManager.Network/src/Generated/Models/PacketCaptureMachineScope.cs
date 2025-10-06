@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of AzureVMSS instances to run packet capture on. </summary>
+        [WirePath("include")]
         public IList<string> Include { get; }
         /// <summary> List of AzureVMSS instances which has to be excluded from the AzureVMSS from running packet capture. </summary>
+        [WirePath("exclude")]
         public IList<string> Exclude { get; }
     }
 }

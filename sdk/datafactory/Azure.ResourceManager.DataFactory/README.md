@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Data Factory management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.DataFactory --prerelease
+dotnet add package Azure.ResourceManager.DataFactory
 ```
 
 ### Prerequisites
@@ -39,7 +39,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
@@ -109,12 +109,12 @@ var service = new AmazonS3CompatibleLinkedService()
 
 #### Assign `DataFactoryElement` from KeyVault secret reference
 ```C# Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
-var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
     "referenceName");
-var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
+var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
 var service = new AmazonS3CompatibleLinkedService()
 {
-    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference),
+    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference),
 };
 ```
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration sub state details. </summary>
-    internal partial class PostgreSqlMigrationSubStateDetails
+    public partial class PostgreSqlMigrationSubStateDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,18 +48,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         internal PostgreSqlMigrationSubStateDetails()
         {
+            DbDetails = new ChangeTrackingDictionary<string, DbMigrationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         /// <param name="currentSubState"> Migration sub state. </param>
+        /// <param name="dbDetails"> Dictionary of &lt;DbMigrationStatus&gt;. </param>
+        /// <param name="validationDetails"> Details for the validation for migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentSubState = currentSubState;
+            DbDetails = dbDetails;
+            ValidationDetails = validationDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Migration sub state. </summary>
+        [WirePath("currentSubState")]
         public PostgreSqlMigrationSubState? CurrentSubState { get; }
+        /// <summary> Dictionary of &lt;DbMigrationStatus&gt;. </summary>
+        [WirePath("dbDetails")]
+        public IReadOnlyDictionary<string, DbMigrationStatus> DbDetails { get; }
+        /// <summary> Details for the validation for migration. </summary>
+        [WirePath("validationDetails")]
+        public PostgreSqlFlexibleServersValidationDetails ValidationDetails { get; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsResolverOutboundEndpointResource IOperationSource<DnsResolverOutboundEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement);
+            var data = ModelReaderWriter.Read<DnsResolverOutboundEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsResolverOutboundEndpointResource(_client, data);
         }
 
         async ValueTask<DnsResolverOutboundEndpointResource> IOperationSource<DnsResolverOutboundEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement);
-            return new DnsResolverOutboundEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<DnsResolverOutboundEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            return await Task.FromResult(new DnsResolverOutboundEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

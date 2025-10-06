@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -14,9 +15,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     internal partial class DocumentStreamInfo
     {
         /// <summary> Initializes a new instance of <see cref="DocumentStreamInfo"/>. </summary>
-        internal DocumentStreamInfo()
+        /// <param name="id"> Identifier of the document stream initiated by a UX. </param>
+        /// <param name="documentFilterGroups"> Gets or sets an OR-connected collection of filter groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="documentFilterGroups"/> is null. </exception>
+        internal DocumentStreamInfo(string id, IEnumerable<DocumentFilterConjunctionGroupInfo> documentFilterGroups)
         {
-            DocumentFilterGroups = new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>();
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(documentFilterGroups, nameof(documentFilterGroups));
+
+            Id = id;
+            DocumentFilterGroups = documentFilterGroups.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentStreamInfo"/>. </summary>

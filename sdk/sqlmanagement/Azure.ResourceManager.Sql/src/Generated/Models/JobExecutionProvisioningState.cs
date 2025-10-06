@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(JobExecutionProvisioningState left, JobExecutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobExecutionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(JobExecutionProvisioningState left, JobExecutionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobExecutionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobExecutionProvisioningState"/>. </summary>
         public static implicit operator JobExecutionProvisioningState(string value) => new JobExecutionProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

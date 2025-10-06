@@ -56,5 +56,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new DocumentLanguage(id, detectedLanguage, warnings, statistics);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentLanguage FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDocumentLanguage(document.RootElement);
+        }
     }
 }

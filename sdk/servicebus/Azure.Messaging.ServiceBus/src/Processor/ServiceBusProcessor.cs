@@ -254,9 +254,9 @@ namespace Azure.Messaging.ServiceBus
 
             if (isSessionEntity)
             {
-                Options.MaxConcurrentCalls = _sessionIds.Length > 0
+                Options.MaxConcurrentCalls = (_sessionIds.Length > 0
                     ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
-                    : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
+                    : _maxConcurrentSessions) * _maxConcurrentCallsPerSession;
             }
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
@@ -1061,9 +1061,9 @@ namespace Azure.Messaging.ServiceBus
 
             lock (_optionsLock)
             {
-                Options.MaxConcurrentCalls = _sessionIds.Length > 0
+                Options.MaxConcurrentCalls = (_sessionIds.Length > 0
                     ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
-                    : maxConcurrentSessions * maxConcurrentCallsPerSession;
+                    : maxConcurrentSessions) * maxConcurrentCallsPerSession;
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
                 WakeLoop();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -76,12 +75,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Operation response HTTP status code. </summary>
+        [WirePath("statusCode")]
         public int StatusCode { get; set; }
         /// <summary> Operation response description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Collection of operation response representations. </summary>
+        [WirePath("representations")]
         public IList<RepresentationContract> Representations { get; }
         /// <summary> Collection of operation response headers. </summary>
+        [WirePath("headers")]
         public IList<ParameterContract> Headers { get; }
     }
 }

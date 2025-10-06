@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Admin credentials for virtual machine. </summary>
+        [WirePath("administratorAccount")]
         public MachineLearningVmSshCredentials AdministratorAccount { get; }
     }
 }

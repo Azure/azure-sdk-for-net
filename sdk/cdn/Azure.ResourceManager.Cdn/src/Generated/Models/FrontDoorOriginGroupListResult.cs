@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results.
+    /// Serialized Name: AFDOriginGroupListResult
+    /// </summary>
     internal partial class FrontDoorOriginGroupListResult
     {
         /// <summary>
@@ -53,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupListResult"/>. </summary>
-        /// <param name="value"> List of CDN origin groups within an endpoint. </param>
-        /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
+        /// <param name="value">
+        /// List of Azure Front Door origin groups within an Azure Front Door endpoint
+        /// Serialized Name: AFDOriginGroupListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of origin objects if there are any.
+        /// Serialized Name: AFDOriginGroupListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorOriginGroupListResult(IReadOnlyList<FrontDoorOriginGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of CDN origin groups within an endpoint. </summary>
+        /// <summary>
+        /// List of Azure Front Door origin groups within an Azure Front Door endpoint
+        /// Serialized Name: AFDOriginGroupListResult.value
+        /// </summary>
         public IReadOnlyList<FrontDoorOriginGroupData> Value { get; }
-        /// <summary> URL to get the next set of origin objects if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of origin objects if there are any.
+        /// Serialized Name: AFDOriginGroupListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

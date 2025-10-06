@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -49,10 +48,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Base64 encoded value of the template/definition file content. </summary>
+        [WirePath("encodedTaskContent")]
         public string EncodedTaskContent { get; set; }
         /// <summary> Base64 encoded value of the parameters/values file content. </summary>
+        [WirePath("encodedValuesContent")]
         public string EncodedValuesContent { get; set; }
         /// <summary> The collection of overridable values that can be passed when running a task. </summary>
+        [WirePath("values")]
         public IList<ContainerRegistryTaskOverridableValue> Values { get; }
     }
 }

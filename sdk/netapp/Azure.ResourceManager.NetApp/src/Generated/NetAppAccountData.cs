@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -73,9 +72,9 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="isMultiAdEnabled"> This will have true value only if account is Multiple AD enabled. </param>
+        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, bool? isMultiAdEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.NetApp
             Encryption = encryption;
             DisableShowmount = disableShowmount;
             NfsV4IdDomain = nfsV4IdDomain;
-            IsMultiAdEnabled = isMultiAdEnabled;
+            MultiAdStatus = multiAdStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
         public bool? DisableShowmount { get; }
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
         public string NfsV4IdDomain { get; set; }
-        /// <summary> This will have true value only if account is Multiple AD enabled. </summary>
-        public bool? IsMultiAdEnabled { get; }
+        /// <summary> MultiAD Status for the account. </summary>
+        public MultiAdStatus? MultiAdStatus { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -58,22 +57,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             Hours = hours.ToList();
             Minutes = minutes.ToList();
-            MonthDays = new ChangeTrackingList<int>();
             WeekDays = new ChangeTrackingList<MachineLearningDayOfWeek>();
+            MonthDays = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceSchedule"/>. </summary>
         /// <param name="hours"> [Required] List of hours for the schedule. </param>
         /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
-        /// <param name="monthDays"> List of month days for the schedule. </param>
         /// <param name="weekDays"> List of days for the schedule. </param>
+        /// <param name="monthDays"> List of month days for the schedule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningRecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<int> monthDays, IList<MachineLearningDayOfWeek> weekDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningRecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<MachineLearningDayOfWeek> weekDays, IList<int> monthDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hours = hours;
             Minutes = minutes;
-            MonthDays = monthDays;
             WeekDays = weekDays;
+            MonthDays = monthDays;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,12 +82,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] List of hours for the schedule. </summary>
+        [WirePath("hours")]
         public IList<int> Hours { get; }
         /// <summary> [Required] List of minutes for the schedule. </summary>
+        [WirePath("minutes")]
         public IList<int> Minutes { get; }
-        /// <summary> List of month days for the schedule. </summary>
-        public IList<int> MonthDays { get; set; }
         /// <summary> List of days for the schedule. </summary>
+        [WirePath("weekDays")]
         public IList<MachineLearningDayOfWeek> WeekDays { get; set; }
+        /// <summary> List of month days for the schedule. </summary>
+        [WirePath("monthDays")]
+        public IList<int> MonthDays { get; set; }
     }
 }

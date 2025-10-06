@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -79,14 +78,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values. </summary>
+        [WirePath("5qi")]
         public int? FiveQi { get; set; }
         /// <summary> QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        [WirePath("allocationAndRetentionPriorityLevel")]
         public int? AllocationAndRetentionPriorityLevel { get; set; }
         /// <summary> QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        [WirePath("preemptionCapability")]
         public MobileNetworkPreemptionCapability? PreemptionCapability { get; set; }
         /// <summary> QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        [WirePath("preemptionVulnerability")]
         public MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get; set; }
         /// <summary> The maximum bit rate (MBR) for all service data flows that use this data flow policy rule or service. </summary>
+        [WirePath("maximumBitRate")]
         public Ambr MaximumBitRate { get; set; }
     }
 }

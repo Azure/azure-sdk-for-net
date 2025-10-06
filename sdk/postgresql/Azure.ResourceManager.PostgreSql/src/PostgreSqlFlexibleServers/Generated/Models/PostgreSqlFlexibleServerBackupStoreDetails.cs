@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>
+        [WirePath("sasUriList")]
         public IList<string> SasUriList { get; }
     }
 }

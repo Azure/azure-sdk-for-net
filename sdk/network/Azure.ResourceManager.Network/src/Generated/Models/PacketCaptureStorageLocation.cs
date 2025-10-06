@@ -52,23 +52,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureStorageLocation"/>. </summary>
-        /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </param>
+        /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no localPath or filePath is provided. </param>
         /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
-        /// <param name="filePath"> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
+        /// <param name="filePath"> This path is invalid if 'Continuous Capture' is provided with 'true' or 'false'. A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
+        /// <param name="localPath"> This path is valid if 'Continuous Capture' is provided with 'true' or 'false' and required if no storage ID is provided, otherwise optional. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureStorageLocation(ResourceIdentifier storageId, string storagePath, string filePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PacketCaptureStorageLocation(ResourceIdentifier storageId, string storagePath, string filePath, string localPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageId = storageId;
             StoragePath = storagePath;
             FilePath = filePath;
+            LocalPath = localPath;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </summary>
+        /// <summary> The ID of the storage account to save the packet capture session. Required if no localPath or filePath is provided. </summary>
+        [WirePath("storageId")]
         public ResourceIdentifier StorageId { get; set; }
         /// <summary> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </summary>
+        [WirePath("storagePath")]
         public string StoragePath { get; set; }
-        /// <summary> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </summary>
+        /// <summary> This path is invalid if 'Continuous Capture' is provided with 'true' or 'false'. A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </summary>
+        [WirePath("filePath")]
         public string FilePath { get; set; }
+        /// <summary> This path is valid if 'Continuous Capture' is provided with 'true' or 'false' and required if no storage ID is provided, otherwise optional. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. </summary>
+        [WirePath("localPath")]
+        public string LocalPath { get; set; }
     }
 }

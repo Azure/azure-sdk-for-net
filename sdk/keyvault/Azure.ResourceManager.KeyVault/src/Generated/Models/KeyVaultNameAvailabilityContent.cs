@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The vault name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }

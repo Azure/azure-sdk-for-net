@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -66,6 +65,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
             return new DocumentFieldSchema(type, description, example, items, properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentFieldSchema FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDocumentFieldSchema(document.RootElement);
         }
     }
 }

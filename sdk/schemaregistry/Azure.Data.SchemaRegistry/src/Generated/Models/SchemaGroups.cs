@@ -5,32 +5,40 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Data.SchemaRegistry;
+using System.Linq;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> Object received from the registry containing the list of schema groups and link to next batch page. </summary>
+    /// <summary> The list of schema group names with server paging support. </summary>
     internal partial class SchemaGroups
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
-        internal SchemaGroups()
+        /// <param name="value"> The collection of pageable schema group name items. </param>
+        internal SchemaGroups(IEnumerable<string> value)
         {
-            Groups = new ChangeTrackingList<string>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
-        /// <param name="groups"> Array of schema groups. </param>
-        /// <param name="nextLink"> URl to next batch of schema groups. </param>
-        internal SchemaGroups(IReadOnlyList<string> groups, string nextLink)
+        /// <param name="value"> The collection of pageable schema group name items. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaGroups(IList<string> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Groups = groups;
+            Value = value;
             NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Array of schema groups. </summary>
-        public IReadOnlyList<string> Groups { get; }
-        /// <summary> URl to next batch of schema groups. </summary>
-        public string NextLink { get; }
+        /// <summary> The collection of pageable schema group name items. </summary>
+        public IList<string> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

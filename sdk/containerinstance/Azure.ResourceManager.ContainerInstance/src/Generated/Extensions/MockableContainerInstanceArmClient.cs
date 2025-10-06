@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Mocking
 {
@@ -46,6 +44,42 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             ContainerGroupResource.ValidateResourceId(id);
             return new ContainerGroupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NGroupResource.CreateResourceIdentifier" /> to create a <see cref="NGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NGroupResource"/> object. </returns>
+        public virtual NGroupResource GetNGroupResource(ResourceIdentifier id)
+        {
+            NGroupResource.ValidateResourceId(id);
+            return new NGroupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerGroupProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerGroupProfileResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupProfileResource"/> object. </returns>
+        public virtual ContainerGroupProfileResource GetContainerGroupProfileResource(ResourceIdentifier id)
+        {
+            ContainerGroupProfileResource.ValidateResourceId(id);
+            return new ContainerGroupProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerGroupProfileRevisionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerGroupProfileRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupProfileRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupProfileRevisionResource"/> object. </returns>
+        public virtual ContainerGroupProfileRevisionResource GetContainerGroupProfileRevisionResource(ResourceIdentifier id)
+        {
+            ContainerGroupProfileRevisionResource.ValidateResourceId(id);
+            return new ContainerGroupProfileRevisionResource(Client, id);
         }
     }
 }

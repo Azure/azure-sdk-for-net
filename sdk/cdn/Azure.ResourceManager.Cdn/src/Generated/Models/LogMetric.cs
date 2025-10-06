@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The LogMetric. </summary>
+    /// <summary>
+    /// The LogMetric.
+    /// Serialized Name: LogMetric
+    /// </summary>
     public readonly partial struct LogMetric : IEquatable<LogMetric>
     {
         private readonly string _value;
@@ -29,23 +32,41 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OriginRequestBandwidthValue = "originRequestBandwidth";
         private const string TotalLatencyValue = "totalLatency";
 
-        /// <summary> clientRequestCount. </summary>
+        /// <summary>
+        /// clientRequestCount
+        /// Serialized Name: LogMetric.clientRequestCount
+        /// </summary>
         public static LogMetric ClientRequestCount { get; } = new LogMetric(ClientRequestCountValue);
-        /// <summary> clientRequestTraffic. </summary>
+        /// <summary>
+        /// clientRequestTraffic
+        /// Serialized Name: LogMetric.clientRequestTraffic
+        /// </summary>
         public static LogMetric ClientRequestTraffic { get; } = new LogMetric(ClientRequestTrafficValue);
-        /// <summary> clientRequestBandwidth. </summary>
+        /// <summary>
+        /// clientRequestBandwidth
+        /// Serialized Name: LogMetric.clientRequestBandwidth
+        /// </summary>
         public static LogMetric ClientRequestBandwidth { get; } = new LogMetric(ClientRequestBandwidthValue);
-        /// <summary> originRequestTraffic. </summary>
+        /// <summary>
+        /// originRequestTraffic
+        /// Serialized Name: LogMetric.originRequestTraffic
+        /// </summary>
         public static LogMetric OriginRequestTraffic { get; } = new LogMetric(OriginRequestTrafficValue);
-        /// <summary> originRequestBandwidth. </summary>
+        /// <summary>
+        /// originRequestBandwidth
+        /// Serialized Name: LogMetric.originRequestBandwidth
+        /// </summary>
         public static LogMetric OriginRequestBandwidth { get; } = new LogMetric(OriginRequestBandwidthValue);
-        /// <summary> totalLatency. </summary>
+        /// <summary>
+        /// totalLatency
+        /// Serialized Name: LogMetric.totalLatency
+        /// </summary>
         public static LogMetric TotalLatency { get; } = new LogMetric(TotalLatencyValue);
         /// <summary> Determines if two <see cref="LogMetric"/> values are the same. </summary>
         public static bool operator ==(LogMetric left, LogMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetric"/> values are not the same. </summary>
         public static bool operator !=(LogMetric left, LogMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetric"/>. </summary>
         public static implicit operator LogMetric(string value) => new LogMetric(value);
 
         /// <inheritdoc />
@@ -56,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

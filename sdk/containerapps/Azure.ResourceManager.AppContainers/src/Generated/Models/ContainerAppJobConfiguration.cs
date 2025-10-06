@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -55,6 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             TriggerType = triggerType;
             ReplicaTimeout = replicaTimeout;
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
+            IdentitySettings = new ChangeTrackingList<ContainerAppIdentitySettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobConfiguration"/>. </summary>
@@ -66,8 +66,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="scheduleTriggerConfig"> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </param>
         /// <param name="eventTriggerConfig"> Trigger configuration of an event driven job. </param>
         /// <param name="registries"> Collection of private container registry credentials used by a Container apps job. </param>
+        /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App Job. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, EventTriggerConfiguration eventTriggerConfig, IList<ContainerAppRegistryCredentials> registries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, EventTriggerConfiguration eventTriggerConfig, IList<ContainerAppRegistryCredentials> registries, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             TriggerType = triggerType;
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ScheduleTriggerConfig = scheduleTriggerConfig;
             EventTriggerConfig = eventTriggerConfig;
             Registries = registries;
+            IdentitySettings = identitySettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,20 +88,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of secrets used by a Container Apps Job. </summary>
+        [WirePath("secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary> Trigger type of the job. </summary>
+        [WirePath("triggerType")]
         public ContainerAppJobTriggerType TriggerType { get; set; }
         /// <summary> Maximum number of seconds a replica is allowed to run. </summary>
+        [WirePath("replicaTimeout")]
         public int ReplicaTimeout { get; set; }
         /// <summary> Maximum number of retries before failing the job. </summary>
+        [WirePath("replicaRetryLimit")]
         public int? ReplicaRetryLimit { get; set; }
         /// <summary> Manual trigger configuration for a single execution job. Properties replicaCompletionCount and parallelism would be set to 1 by default. </summary>
+        [WirePath("manualTriggerConfig")]
         public JobConfigurationManualTriggerConfig ManualTriggerConfig { get; set; }
         /// <summary> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
+        [WirePath("scheduleTriggerConfig")]
         public JobConfigurationScheduleTriggerConfig ScheduleTriggerConfig { get; set; }
         /// <summary> Trigger configuration of an event driven job. </summary>
+        [WirePath("eventTriggerConfig")]
         public EventTriggerConfiguration EventTriggerConfig { get; set; }
         /// <summary> Collection of private container registry credentials used by a Container apps job. </summary>
+        [WirePath("registries")]
         public IList<ContainerAppRegistryCredentials> Registries { get; }
+        /// <summary> Optional settings for Managed Identities that are assigned to the Container App Job. If a Managed Identity is not specified here, default settings will be used. </summary>
+        [WirePath("identitySettings")]
+        public IList<ContainerAppIdentitySettings> IdentitySettings { get; }
     }
 }

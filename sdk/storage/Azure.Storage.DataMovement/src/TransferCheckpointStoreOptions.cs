@@ -10,25 +10,41 @@ namespace Azure.Storage.DataMovement
     public class TransferCheckpointStoreOptions
     {
         /// <summary>
-        /// The local folder where the checkpoint information will be stored.
+        /// Whether checkpointing should be enabled or not.
         /// </summary>
-        public string CheckpointerPath { get; private set; }
+        internal bool Enabled { get; private set; }
 
         /// <summary>
-        /// Sets the checkpointer options to use a Local Checkpointer where
-        /// the checkpoint information is stored at a local folder.
+        /// The folder where the checkpoint information will be stored.
         /// </summary>
-        /// <param name="localCheckpointerPath">
-        /// The local folder where the checkpoint information will be stored.
-        /// </param>
-        public TransferCheckpointStoreOptions(string localCheckpointerPath)
+        internal string CheckpointPath { get; private set; }
+
+        /// <summary>
+        /// Sets the checkpoint options to disable transfer checkpointing.
+        /// <para>NOTE: All pause/resume functionality will be disabled.</para>
+        /// </summary>
+        /// <returns></returns>
+        public static TransferCheckpointStoreOptions DisableCheckpoint()
         {
-            CheckpointerPath = localCheckpointerPath;
+            return new TransferCheckpointStoreOptions(false, default);
         }
 
-        internal TransferCheckpointStoreOptions(TransferCheckpointStoreOptions options)
+        /// <summary>
+        /// Sets the checkpoint options to use a Local Checkpointer where
+        /// the checkpoint information is stored at a local folder.
+        /// </summary>
+        /// <param name="localCheckpointPath">
+        /// The local folder where the checkpoint information will be stored.
+        /// </param>
+        public static TransferCheckpointStoreOptions CreateLocalStore(string localCheckpointPath)
         {
-            CheckpointerPath = options.CheckpointerPath;
+            return new TransferCheckpointStoreOptions(true, localCheckpointPath);
+        }
+
+        internal TransferCheckpointStoreOptions(bool enabled, string localCheckpointPath)
+        {
+            Enabled = enabled;
+            CheckpointPath = localCheckpointPath;
         }
     }
 }

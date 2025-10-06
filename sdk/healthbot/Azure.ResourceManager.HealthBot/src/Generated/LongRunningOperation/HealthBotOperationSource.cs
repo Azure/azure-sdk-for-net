@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthBot
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.HealthBot
 
         HealthBotResource IOperationSource<HealthBotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HealthBotData.DeserializeHealthBotData(document.RootElement);
+            var data = ModelReaderWriter.Read<HealthBotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthBotContext.Default);
             return new HealthBotResource(_client, data);
         }
 
         async ValueTask<HealthBotResource> IOperationSource<HealthBotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HealthBotData.DeserializeHealthBotData(document.RootElement);
-            return new HealthBotResource(_client, data);
+            var data = ModelReaderWriter.Read<HealthBotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthBotContext.Default);
+            return await Task.FromResult(new HealthBotResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

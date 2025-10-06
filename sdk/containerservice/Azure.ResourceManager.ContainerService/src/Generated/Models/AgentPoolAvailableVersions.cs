@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -68,6 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> List of versions available for agent pool. </summary>
+        [WirePath("properties.agentPoolVersions")]
         public IReadOnlyList<AgentPoolAvailableVersion> AgentPoolVersions { get; }
     }
 }

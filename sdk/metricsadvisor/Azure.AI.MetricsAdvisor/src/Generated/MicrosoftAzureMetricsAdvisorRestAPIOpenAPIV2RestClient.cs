@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
@@ -62,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         UsageStats value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UsageStats.DeserializeUsageStats(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -82,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         UsageStats value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UsageStats.DeserializeUsageStats(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,7 +117,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyAlertConfiguration.DeserializeAnomalyAlertConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -139,7 +138,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyAlertConfiguration.DeserializeAnomalyAlertConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +185,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyAlertConfiguration.DeserializeAnomalyAlertConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -214,7 +213,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyAlertConfiguration.DeserializeAnomalyAlertConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +382,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AlertResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertResultList.DeserializeAlertResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +412,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AlertResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertResultList.DeserializeAlertResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,7 +468,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -499,7 +498,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +554,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -585,7 +584,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -621,7 +620,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,7 +641,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -689,7 +688,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -717,7 +716,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -875,7 +874,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertingConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyAlertingConfigurationList.DeserializeAnomalyAlertingConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -898,7 +897,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertingConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyAlertingConfigurationList.DeserializeAnomalyAlertingConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -946,7 +945,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         SeriesResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SeriesResultList.DeserializeSeriesResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -974,7 +973,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         SeriesResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SeriesResultList.DeserializeSeriesResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1032,7 +1031,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1062,7 +1061,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1120,7 +1119,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDimensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDimensionList.DeserializeAnomalyDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1150,7 +1149,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDimensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDimensionList.DeserializeAnomalyDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1203,7 +1202,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1232,7 +1231,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1279,7 +1278,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1302,7 +1301,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1348,7 +1347,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         RootCauseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RootCauseList.DeserializeRootCauseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1376,7 +1375,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         RootCauseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RootCauseList.DeserializeRootCauseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1484,7 +1483,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1506,7 +1505,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1553,7 +1552,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialEntity value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1581,7 +1580,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialEntity value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1664,7 +1663,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialEntity value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1685,7 +1684,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialEntity value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1754,7 +1753,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFeedList.DeserializeDataFeedList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1781,7 +1780,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFeedList.DeserializeDataFeedList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1881,7 +1880,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedDetail value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFeedDetail.DeserializeDataFeedDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1902,7 +1901,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedDetail value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFeedDetail.DeserializeDataFeedDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1949,7 +1948,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedDetail value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFeedDetail.DeserializeDataFeedDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1977,7 +1976,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedDetail value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFeedDetail.DeserializeDataFeedDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2060,7 +2059,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedback value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricFeedback.DeserializeMetricFeedback(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2081,7 +2080,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedback value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricFeedback.DeserializeMetricFeedback(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2136,7 +2135,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedbackList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricFeedbackList.DeserializeMetricFeedbackList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2165,7 +2164,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedbackList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricFeedbackList.DeserializeMetricFeedbackList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2278,7 +2277,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         HookList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HookList.DeserializeHookList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2301,7 +2300,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         HookList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HookList.DeserializeHookList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2401,7 +2400,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         NotificationHook value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2422,7 +2421,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         NotificationHook value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2469,7 +2468,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         NotificationHook value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2497,7 +2496,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         NotificationHook value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2602,7 +2601,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IngestionStatusList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IngestionStatusList.DeserializeIngestionStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2632,7 +2631,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IngestionStatusList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IngestionStatusList.DeserializeIngestionStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2735,7 +2734,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedIngestionProgress value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFeedIngestionProgress.DeserializeDataFeedIngestionProgress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2756,7 +2755,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedIngestionProgress value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFeedIngestionProgress.DeserializeDataFeedIngestionProgress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2804,7 +2803,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDataList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricDataList.DeserializeMetricDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2832,7 +2831,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDataList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricDataList.DeserializeMetricDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2890,7 +2889,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricSeriesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricSeriesList.DeserializeMetricSeriesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2920,7 +2919,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricSeriesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricSeriesList.DeserializeMetricSeriesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2978,7 +2977,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDimensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricDimensionList.DeserializeMetricDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3008,7 +3007,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDimensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricDimensionList.DeserializeMetricDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3055,7 +3054,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDetectionConfigurationList.DeserializeAnomalyDetectionConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3078,7 +3077,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDetectionConfigurationList.DeserializeAnomalyDetectionConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3136,7 +3135,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         EnrichmentStatusList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnrichmentStatusList.DeserializeEnrichmentStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3166,7 +3165,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         EnrichmentStatusList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnrichmentStatusList.DeserializeEnrichmentStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3217,7 +3216,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AlertResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertResultList.DeserializeAlertResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3249,7 +3248,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AlertResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertResultList.DeserializeAlertResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3300,7 +3299,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3332,7 +3331,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3383,7 +3382,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDimensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDimensionList.DeserializeAnomalyDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3415,7 +3414,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDimensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDimensionList.DeserializeAnomalyDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3466,7 +3465,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedbackList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricFeedbackList.DeserializeMetricFeedbackList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3498,7 +3497,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedbackList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricFeedbackList.DeserializeMetricFeedbackList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3549,7 +3548,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IngestionStatusList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IngestionStatusList.DeserializeIngestionStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3581,7 +3580,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IngestionStatusList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IngestionStatusList.DeserializeIngestionStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3632,7 +3631,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricSeriesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricSeriesList.DeserializeMetricSeriesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3664,7 +3663,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricSeriesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricSeriesList.DeserializeMetricSeriesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3715,7 +3714,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDimensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricDimensionList.DeserializeMetricDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3747,7 +3746,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDimensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricDimensionList.DeserializeMetricDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3798,7 +3797,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         EnrichmentStatusList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnrichmentStatusList.DeserializeEnrichmentStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3830,7 +3829,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         EnrichmentStatusList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnrichmentStatusList.DeserializeEnrichmentStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3879,7 +3878,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AlertResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertResultList.DeserializeAlertResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3914,7 +3913,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AlertResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertResultList.DeserializeAlertResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3963,7 +3962,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3998,7 +3997,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4047,7 +4046,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4082,7 +4081,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4126,7 +4125,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertingConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyAlertingConfigurationList.DeserializeAnomalyAlertingConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4156,7 +4155,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyAlertingConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyAlertingConfigurationList.DeserializeAnomalyAlertingConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4205,7 +4204,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4240,7 +4239,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyResultList.DeserializeAnomalyResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4289,7 +4288,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDimensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDimensionList.DeserializeAnomalyDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4324,7 +4323,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDimensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDimensionList.DeserializeAnomalyDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4372,7 +4371,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4406,7 +4405,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4450,7 +4449,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4480,7 +4479,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IncidentResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentResultList.DeserializeIncidentResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4523,7 +4522,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4552,7 +4551,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataSourceCredentialList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4600,7 +4599,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFeedList.DeserializeDataFeedList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4634,7 +4633,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         DataFeedList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFeedList.DeserializeDataFeedList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4682,7 +4681,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedbackList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricFeedbackList.DeserializeMetricFeedbackList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4716,7 +4715,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricFeedbackList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricFeedbackList.DeserializeMetricFeedbackList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4760,7 +4759,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         HookList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HookList.DeserializeHookList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4790,7 +4789,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         HookList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HookList.DeserializeHookList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4839,7 +4838,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IngestionStatusList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IngestionStatusList.DeserializeIngestionStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4874,7 +4873,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         IngestionStatusList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IngestionStatusList.DeserializeIngestionStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4923,7 +4922,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricSeriesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricSeriesList.DeserializeMetricSeriesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -4958,7 +4957,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricSeriesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricSeriesList.DeserializeMetricSeriesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -5007,7 +5006,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDimensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricDimensionList.DeserializeMetricDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -5042,7 +5041,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         MetricDimensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricDimensionList.DeserializeMetricDimensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -5086,7 +5085,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnomalyDetectionConfigurationList.DeserializeAnomalyDetectionConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -5116,7 +5115,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         AnomalyDetectionConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnomalyDetectionConfigurationList.DeserializeAnomalyDetectionConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -5165,7 +5164,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         EnrichmentStatusList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnrichmentStatusList.DeserializeEnrichmentStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -5200,7 +5199,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 200:
                     {
                         EnrichmentStatusList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnrichmentStatusList.DeserializeEnrichmentStatusList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

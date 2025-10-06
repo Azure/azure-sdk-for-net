@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The UnknownTaskStepProperties. </summary>
+    /// <summary> Unknown version of TaskStepProperties. </summary>
     internal partial class UnknownTaskStepProperties : ContainerRegistryTaskStepProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTaskStepProperties"/>. </summary>

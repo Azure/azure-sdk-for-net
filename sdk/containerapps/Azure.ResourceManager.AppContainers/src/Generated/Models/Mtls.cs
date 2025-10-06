@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsMtlsEnabled { get; set; }
     }
 }

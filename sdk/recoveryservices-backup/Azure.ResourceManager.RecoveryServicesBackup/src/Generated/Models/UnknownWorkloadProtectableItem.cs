@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownWorkloadProtectableItem. </summary>
+    /// <summary> Unknown version of WorkloadProtectableItem. </summary>
     internal partial class UnknownWorkloadProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWorkloadProtectableItem"/>. </summary>

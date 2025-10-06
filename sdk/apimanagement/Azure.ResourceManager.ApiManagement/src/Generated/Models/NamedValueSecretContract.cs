@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> This is secret value of the NamedValue entity. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

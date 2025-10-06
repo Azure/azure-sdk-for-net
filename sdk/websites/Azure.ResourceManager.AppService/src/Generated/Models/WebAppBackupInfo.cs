@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -78,16 +77,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the backup. </summary>
+        [WirePath("properties.backupName")]
         public string BackupName { get; set; }
         /// <summary> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> SAS URL to the container. </summary>
+        [WirePath("properties.storageAccountUrl")]
         public Uri StorageAccountUri { get; set; }
         /// <summary> Schedule for the backup if it is executed periodically. </summary>
+        [WirePath("properties.backupSchedule")]
         public WebAppBackupSchedule BackupSchedule { get; set; }
         /// <summary> Databases included in the backup. </summary>
+        [WirePath("properties.databases")]
         public IList<AppServiceDatabaseBackupSetting> Databases { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

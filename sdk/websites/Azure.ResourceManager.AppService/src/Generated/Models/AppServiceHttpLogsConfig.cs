@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Http logs to file system configuration. </summary>
+        [WirePath("fileSystem")]
         public FileSystemHttpLogsConfig FileSystem { get; set; }
         /// <summary> Http logs to azure blob storage configuration. </summary>
+        [WirePath("azureBlobStorage")]
         public AppServiceBlobStorageHttpLogsConfig AzureBlobStorage { get; set; }
     }
 }

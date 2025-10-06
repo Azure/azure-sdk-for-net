@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The approval setting. </summary>
+        [WirePath("setting")]
         public RoleManagementApprovalSettings Settings { get; set; }
     }
 }

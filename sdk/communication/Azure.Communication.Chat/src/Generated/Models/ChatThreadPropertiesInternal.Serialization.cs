@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -25,6 +24,8 @@ namespace Azure.Communication.Chat
             DateTimeOffset createdOn = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             DateTimeOffset? deletedOn = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            ChatRetentionPolicyInternal retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,8 +57,46 @@ namespace Azure.Communication.Chat
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("retentionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retentionPolicy = ChatRetentionPolicyInternal.DeserializeChatRetentionPolicyInternal(property.Value);
+                    continue;
+                }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, deletedOn);
+            return new ChatThreadPropertiesInternal(
+                id,
+                topic,
+                createdOn,
+                createdByCommunicationIdentifier,
+                deletedOn,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                retentionPolicy);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatThreadPropertiesInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeChatThreadPropertiesInternal(document.RootElement);
         }
     }
 }

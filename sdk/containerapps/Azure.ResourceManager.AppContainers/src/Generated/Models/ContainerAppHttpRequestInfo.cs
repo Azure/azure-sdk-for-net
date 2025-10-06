@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -77,14 +76,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </summary>
+        [WirePath("host")]
         public string Host { get; set; }
         /// <summary> Custom headers to set in the request. HTTP allows repeated headers. </summary>
+        [WirePath("httpHeaders")]
         public IList<ContainerAppHttpHeaderInfo> HttpHeaders { get; }
         /// <summary> Path to access on the HTTP server. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </summary>
+        [WirePath("port")]
         public int Port { get; set; }
         /// <summary> Scheme to use for connecting to the host. Defaults to HTTP. </summary>
+        [WirePath("scheme")]
         public ContainerAppHttpScheme? Scheme { get; set; }
     }
 }

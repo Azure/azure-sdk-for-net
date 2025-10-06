@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -88,10 +87,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource identifier of the source Azure Container Registry. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
+        [WirePath("registryUri")]
         public string RegistryAddress { get; set; }
         /// <summary> Credentials used when importing from a registry uri. </summary>
+        [WirePath("credentials")]
         public ContainerRegistryImportSourceCredentials Credentials { get; set; }
         /// <summary>
         /// Repository name of the source image.
@@ -99,6 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Specify an image by tag ('hello-world:latest').
         /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </summary>
+        [WirePath("sourceImage")]
         public string SourceImage { get; }
     }
 }

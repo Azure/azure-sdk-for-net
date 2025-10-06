@@ -1,8 +1,112 @@
 # Release History
 
-## 12.0.0-beta.5 (Unreleased)
+## 12.3.0-beta.2 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+- [BREAKING BEHAVIOR CHANGE] Transfers that are in a `Paused` or `Completed` state will now throw an `ArgumentException` when attempting to call `PauseAsync` on them. Before transfers in a `Paused` or `Completed` state would not throw an exception when calling `PauseAsync`.
+
+### Bugs Fixed
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` disposes the `CancellationTokenSource` after transfer reaches a `Completed` or `Paused` state
+    - `TransferManager` uses a `CancellationTokenSource` also does not link the`CancellationToken` passed to it's methods
+    - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
+- Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
+- Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
+
+### Other Changes
+
+## 12.3.0-beta.1 (2025-09-16)
+
+### Features Added
+- This release contains features and bug fixes to improve quality.
+
+## 12.2.2 (2025-09-10)
+
+### Bugs Fixed
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
+
+## 12.2.1 (2025-08-06)
+
+### Bugs Fixed
+- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
+
+## 12.2.0 (2025-07-21)
+
+### Features Added
+- Includes all features from 12.2.0-beta.1
+
+### Bugs Fixed
+- Fixed an issue with Copy transfers where if the source file/directory name contained certain special characters, the destination file name would incorrectly contain the encoded version of these characters.
+- Fixed an issue with Upload transfers where file/directory names containing certain URL-encoded characters could cause the transfer to fail.
+
+
+## 12.2.0-beta.1 (2025-06-17)
+
+### Bugs Fixed
+- Fixed issue where transfers added concurrently to the local checkpointer would throw collision exceptions intermittently.
+
+## 12.1.0 (2025-02-27)
+
+### Bugs Fixed
+- Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
+
+## 12.0.0 (2025-02-11)
+
+### Breaking Changes
+- Removed `DataTransferProperty` and `DataTransferProperty<T>`
+- Renamed the following types/properties:
+    - `DataTransfer` -> `TransferOperation`
+        - Addtionally renamed the `TransferStatus` property to `Status`
+    - `DataTransferEventArgs` -> `TransferEventArgs`
+    - `DataTransferOptions` -> `TransferOptions`
+    - `DataTransferOrder` -> `TransferOrder`
+    - `DataTransferProgress` -> `TransferProgress`
+    - `DataTransferProperties` -> `TransferProperties`
+    - `DataTransferState` -> `TransferState`
+    - `DataTransferStatus` -> `TransferStatus`
+    - `DataTransferErrorMode` -> `TransferErrorMode`
+    - `ProgressHandlerOptions` -> `TransferProgressHandlerOptions`
+        - Also removed the constructor since properties are settable.
+    - `StorageResourceCheckpointData` -> `StorageResourceCheckpointDetails`
+    - `StorageResource.GetDestinationCheckpointData` -> `StorageResource.GetDestinationCheckpointDetails`
+    - `StorageResource.GetSourceCheckpointData` -> `StorageResource.GetSourceCheckpointDetails`
+    - `TransferProperties.DestinationCheckpointData` -> `TransferProperties.DestinationCheckpointDetails`
+    - `TransferProperties.SourceCheckpointData` -> `TransferProperties.SourceCheckpointDetails`
+    - `StorageResourceCreationPreference` -> `StorageResourceCreateMode`
+    - `TransferManager.PauseTransferIfRunningAsync` -> `TransferManager.PauseTransferAsync`
+    - `TransferManagerOptions.ErrorHandling` -> `TransferManagerOptions.ErrorMode`
+    - `TransferManagerOptions.CheckpointerOptions` -> `TransferManagerOptions.CheckpointStoreOptions`
+    - `TransferItemCompletedEventArgs.SourceResource` -> `TransferItemCompletedEventArgs.Source` and `TransferItemCompletedEventArgs.DestinationResource` -> `TransferItemCompletedEventArgs.Destination`
+    - `TransferItemFailedEventArgs.SourceResource` -> `TransferItemFailedEventArgs.Source` and `TransferItemFailedEventArgs.DestinationResource` -> `TransferItemFailedEventArgs.Destination`
+    - `TransferItemSkippedEventArgs.SourceResource` -> `TransferItemSkippedEventArgs.Source` and `TransferItemSkippedEventArgs.DestinationResource` -> `TransferItemSkippedEventArgs.Destination`
+    - `TransferCheckpointStoreOptions.Local` -> `TransferCheckpointStoreOptions.CreateLocalStore`
+    - `TransferCheckpointStoreOptions.Disabled` -> `TransferCheckpointStoreOptions.DisableCheckpoint`
+- Renamed `TransferOptions.CreationPreference` to `TransferOptions.CreateMode`
+- Removed properties from `StorageResourceItemProperties` constructor since properties are settable.
+- Changed type of `StorageResourceItemProperties.RawProperties` to `IDictionary`.
+- Changed `List<StorageResourceProvider> TransferManagerOptions.ResumeProviders` to `IList<StorageResourceProvider> TransferManagerOptions.ProvidersForResuming`
+- Changed the following `LocalFilesStorageResourceProvider` methods to `static` methods:
+    - `FromFile(string)`
+    - `FromDirectory(string)`
+
+### Bugs Fixed
+- Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.
+
+## 12.0.0-beta.6 (2024-10-14)
+
+### Features Added
+- Added support to disable checkpointing via `TransferCheckpointStoreOptions.Disabled`.
+
+### Breaking Changes
+- Removed the constructor for `TransferCheckpointStoreOptions` and replaced with a static builder method `Local`.
+- Changed `TransferCheckpointStoreOptions.CheckpointerPath` to internal.
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.0.0-beta.5 (2024-07-16)
 
 ### Breaking Changes
 - Renamed `StorageResourceProperties` to `StorageResourceItemProperties`
@@ -13,8 +117,6 @@
 
 ### Bugs Fixed
 - Fixed a bug where `ChannelClosedException` could occur and be sent as an event to `ItemTransferFailed` when there was a failure during a transfer.
-
-### Other Changes
 
 ## 12.0.0-beta.4 (2023-12-05)
 

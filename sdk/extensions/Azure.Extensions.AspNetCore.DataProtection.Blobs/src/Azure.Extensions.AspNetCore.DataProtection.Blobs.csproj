@@ -4,16 +4,17 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Description>Microsoft Azure Blob storage support as key store (https://docs.microsoft.com/aspnet/core/security/data-protection/implementation/key-storage-providers).</Description>
     <PackageTags>aspnetcore;dataprotection;azure;blob;key store</PackageTags>
-    <Version>1.4.0-beta.1</Version>
+    <Version>1.6.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.3.3</ApiCompatVersion>
+    <ApiCompatVersion>1.5.1</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);AZC0102</NoWarn>
+    <NoWarn>$(NoWarn);AZC0102;AZC0035</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 

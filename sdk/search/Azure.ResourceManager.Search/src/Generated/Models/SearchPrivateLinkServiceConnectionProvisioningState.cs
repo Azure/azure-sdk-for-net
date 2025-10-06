@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The provisioning state of the private link service connection. Can be Updating, Deleting, Failed, Succeeded, or Incomplete. </summary>
+    /// <summary> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, Incomplete, or Canceled. </summary>
     public readonly partial struct SearchPrivateLinkServiceConnectionProvisioningState : IEquatable<SearchPrivateLinkServiceConnectionProvisioningState>
     {
         private readonly string _value;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
         public static implicit operator SearchPrivateLinkServiceConnectionProvisioningState(string value) => new SearchPrivateLinkServiceConnectionProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

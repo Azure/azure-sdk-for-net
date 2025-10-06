@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -47,25 +46,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/>. </summary>
-        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
+        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>
-        public MachineLearningObjective(MachineLearningGoal goal, string primaryMetric)
+        public MachineLearningObjective(string primaryMetric, MachineLearningGoal goal)
         {
             Argument.AssertNotNull(primaryMetric, nameof(primaryMetric));
 
-            Goal = goal;
             PrimaryMetric = primaryMetric;
+            Goal = goal;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/>. </summary>
-        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
+        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningObjective(MachineLearningGoal goal, string primaryMetric, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningObjective(string primaryMetric, MachineLearningGoal goal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Goal = goal;
             PrimaryMetric = primaryMetric;
+            Goal = goal;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,9 +73,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> [Required] Defines supported metric goals for hyperparameter tuning. </summary>
-        public MachineLearningGoal Goal { get; set; }
         /// <summary> [Required] Name of the metric to optimize. </summary>
+        [WirePath("primaryMetric")]
         public string PrimaryMetric { get; set; }
+        /// <summary> [Required] Defines supported metric goals for hyperparameter tuning. </summary>
+        [WirePath("goal")]
+        public MachineLearningGoal Goal { get; set; }
     }
 }

@@ -7,14 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// The MonitoringSignalBase.
     /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/>, <see cref="GenerationSafetyQualityMonitoringSignal"/>, <see cref="GenerationTokenStatisticsSignal"/>, <see cref="ModelPerformanceSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
+    /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
     /// </summary>
     public abstract partial class MonitoringSignalBase
     {
@@ -53,27 +51,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
         protected MonitoringSignalBase()
         {
+            NotificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
-        /// <param name="mode"> The current notification mode for this signal. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringSignalBase(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringSignalBase(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
-            Properties = properties;
             SignalType = signalType;
+            NotificationTypes = notificationTypes;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The current notification mode for this signal. </summary>
-        public MonitoringNotificationMode? Mode { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>
         internal MonitoringSignalType SignalType { get; set; }
+        /// <summary> The current notification mode for this signal. </summary>
+        [WirePath("notificationTypes")]
+        public IList<MonitoringNotificationType> NotificationTypes { get; set; }
+        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        [WirePath("properties")]
+        public IDictionary<string, string> Properties { get; set; }
     }
 }

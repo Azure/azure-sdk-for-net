@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
     using Xunit;
 
     public class AccumulatedValuesTest
@@ -12,10 +13,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         {
             // ARRANGE
             double[] accumulatedValues = { 1d, 3d };
-            AccumulatedValues accumulatorAverage = new AccumulatedValues("Metric1", AggregationType.Avg);
-            AccumulatedValues accumulatorSum = new AccumulatedValues("Metric1", AggregationType.Sum);
-            AccumulatedValues accumulatorMin = new AccumulatedValues("Metric1", AggregationType.Min);
-            AccumulatedValues accumulatorMax = new AccumulatedValues("Metric1", AggregationType.Max);
+            AccumulatedValues accumulatorAverage = new AccumulatedValues("Metric1", AggregationTypeEnum.Avg);
+            AccumulatedValues accumulatorSum = new AccumulatedValues("Metric1", AggregationTypeEnum.Sum);
+            AccumulatedValues accumulatorMin = new AccumulatedValues("Metric1", AggregationTypeEnum.Min);
+            AccumulatedValues accumulatorMax = new AccumulatedValues("Metric1", AggregationTypeEnum.Max);
 
             // ACT
             ArrayHelpers.ForEach(accumulatedValues, accumulatorAverage.AddValue);
@@ -44,10 +45,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void AccumulatedValuesAggregatesCorrectlyForEmptyDataSet()
         {
             // ARRANGE
-            AccumulatedValues accumulatorAverage = new AccumulatedValues("Metric1", AggregationType.Avg);
-            AccumulatedValues accumulatorSum = new AccumulatedValues("Metric1", AggregationType.Sum);
-            AccumulatedValues accumulatorMin = new AccumulatedValues("Metric1", AggregationType.Min);
-            AccumulatedValues accumulatorMax = new AccumulatedValues("Metric1", AggregationType.Max);
+            AccumulatedValues accumulatorAverage = new AccumulatedValues("Metric1", AggregationTypeEnum.Avg);
+            AccumulatedValues accumulatorSum = new AccumulatedValues("Metric1", AggregationTypeEnum.Sum);
+            AccumulatedValues accumulatorMin = new AccumulatedValues("Metric1", AggregationTypeEnum.Min);
+            AccumulatedValues accumulatorMax = new AccumulatedValues("Metric1", AggregationTypeEnum.Max);
 
             // ACT
             double avg = accumulatorAverage.CalculateAggregation(out long avgCount);

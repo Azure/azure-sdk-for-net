@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.6 (Unreleased)
+## 1.4.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -10,18 +10,80 @@
 
 ### Other Changes
 
+## 1.4.0-beta.3 (2025-07-31)
+
+### Features Added
+
+- Upgraded api-version tag to 'package-preview-2024-11-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0d68729fe5000a0e7dcdccd2c5f5e6e712f901a9/specification/sql/resource-manager/readme.md.
+
+## 1.4.0-beta.2 (2025-07-30)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Sql` AOT-compatible.
+
+### Other Changes
+
+- Marked all classes and methods that are dependent on the retiring 2014-04-01 API version as obsolete. Further information at https://learn.microsoft.com/rest/api/sql/retirement.
+
+## 1.4.0-beta.1 (2025-05-14)
+
+### Features Added
+
+- Upgraded api-version tag to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317a5961138fd058ed78401/specification/sql/resource-manager/readme.md.
+
+## 1.3.0 (2025-05-01)
+
+### Features Added
+
+- Upgraded api-version tag to 'package-2023-08'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317a5961138fd058ed78401/specification/sql/resource-manager/readme.md.
+
+## 1.3.0-beta.10 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.3.0-beta.9 (2024-07-15)
+
+### Features Added
+
+- Upgraded api-version tag to latest 'composite-v5'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f45a76fc39f033947ed12faf4b6416e1e19724cd/specification/sql/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.40.0
+
+## 1.3.0-beta.8 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.3.0-beta.7 (2024-04-29)
+
+### Features Added
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.3.0-beta.6 (2024-03-26)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
 ## 1.3.0-beta.5 (2024-02-08)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added TLS 1.3 to list of valid TLS versions. Also created custom classes needed since the type of MinimalTlsVersion was changed from String to Enum.
 
 ## 1.3.0-beta.4 (2023-11-21)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -47,7 +109,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added support for `ManagedInstanceServerConfigurationOption`, `ManagedInstanceStartStopSchedule` and `ManagedLedgerDigestUpload` resources.
 - Added `filter` and `expand` parameters to `Get` and `Exists` methods of `RestorableDroppedDatabaseCollection` and `SqlDatabaseCollection`.
 - Added `filter` and `expand` parameters to `Get` methods of `RestorableDroppedDatabaseResource` and `SqlDatabaseResource`.
@@ -114,8 +176,8 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
@@ -129,12 +191,12 @@ Polishing since last public beta release:
 
 ### Features Added
 
-- Add Update methods in resource classes.
+- Added Update methods in resource classes.
 
 ### Breaking Changes
 
-- Rename private endpoint resource names with `Sql` prefix.
-- Rename `PrivateLinkServiceConnectionState` properties to `ConnectionState`.
+- Renamed private endpoint resource names with `Sql` prefix.
+- Renamed `PrivateLinkServiceConnectionState` properties to `ConnectionState`.
 
 ### Bugs Fixed
 
@@ -208,4 +270,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

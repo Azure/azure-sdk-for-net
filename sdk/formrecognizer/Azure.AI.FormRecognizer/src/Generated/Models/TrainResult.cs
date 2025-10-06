@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models

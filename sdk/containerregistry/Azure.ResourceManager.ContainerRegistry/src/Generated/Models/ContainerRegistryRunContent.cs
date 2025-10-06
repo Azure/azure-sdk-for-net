@@ -72,10 +72,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The type of the run request. </summary>
         internal string RunRequestType { get; set; }
         /// <summary> The value that indicates whether archiving is enabled for the run or not. </summary>
+        [WirePath("isArchiveEnabled")]
         public bool? IsArchiveEnabled { get; set; }
         /// <summary> The dedicated agent pool for the run. </summary>
+        [WirePath("agentPoolName")]
         public string AgentPoolName { get; set; }
         /// <summary> The template that describes the repository and tag information for run log artifact. </summary>
+        [WirePath("logTemplate")]
         public string LogTemplate { get; set; }
     }
 }

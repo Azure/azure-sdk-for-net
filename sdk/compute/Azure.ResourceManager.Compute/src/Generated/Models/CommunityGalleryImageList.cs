@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -59,9 +58,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageList"/>. </summary>
         /// <param name="value"> A list of community gallery images. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of community gallery images. Call ListNext() with this to fetch the next page of community gallery images. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryImageList(IReadOnlyList<CommunityGalleryImageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommunityGalleryImageList(IReadOnlyList<CommunityGalleryImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> A list of community gallery images. </summary>
         public IReadOnlyList<CommunityGalleryImageData> Value { get; }
-        /// <summary> The URI to fetch the next page of community gallery images. Call ListNext() with this to fetch the next page of community gallery images. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

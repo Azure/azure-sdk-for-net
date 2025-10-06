@@ -5,7 +5,10 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -26,10 +29,11 @@ public sealed partial class ClientPipeline
 
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
+    private readonly bool _enableLogging;
 
     private readonly TimeSpan _networkTimeout;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, TimeSpan networkTimeout, int perCallIndex, int perTryIndex, int beforeTransportIndex)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, TimeSpan networkTimeout, int perCallIndex, int perTryIndex, int beforeTransportIndex, bool enableLogging)
     {
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
@@ -47,6 +51,7 @@ public sealed partial class ClientPipeline
         _beforeTransportIndex = beforeTransportIndex;
 
         _networkTimeout = networkTimeout;
+        _enableLogging = enableLogging;
     }
 
     #region Factory methods for creating a pipeline instance
@@ -101,6 +106,7 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
+        options.ClientLoggingOptions?.ValidateOptions();
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -111,6 +117,7 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
+        pipelineLength += options.AddMessageLoggingPolicy ? 1 : 0; // for message logging policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -130,7 +137,7 @@ public sealed partial class ClientPipeline
         int perCallIndex = index;
 
         // Add retry policy.
-        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
+        policies[index++] = options.RetryPolicy ?? options.GetClientRetryPolicy();
 
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
@@ -143,6 +150,13 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        // Add logging policy just before the transport.
+
+        if (options.AddMessageLoggingPolicy)
+        {
+            policies[index++] = options.MessageLoggingPolicy ?? options.GetMessageLoggingPolicy();
+        }
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
@@ -157,11 +171,13 @@ public sealed partial class ClientPipeline
         int beforeTransportIndex = index;
 
         // Add the transport.
-        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
+        policies[index++] = options.Transport ?? options.GetHttpClientPipelineTransport();
+
+        bool enableLogging = options.ClientLoggingOptions?.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging;
 
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,
-            perCallIndex, perTryIndex, beforeTransportIndex);
+            perCallIndex, perTryIndex, beforeTransportIndex, enableLogging);
     }
 
     #endregion
@@ -175,6 +191,30 @@ public sealed partial class ClientPipeline
     {
         PipelineMessage message = _transport.CreateMessage();
         message.NetworkTimeout = _networkTimeout;
+        return message;
+    }
+
+    /// <summary>
+    /// Creates a <see cref="PipelineMessage"/> that can be sent using this
+    /// pipeline instance with the specified URI, HTTP method, and response
+    /// classifier.
+    /// </summary>
+    /// <param name="uri">The <see cref="Uri"/> for the HTTP request.</param>
+    /// <param name="method">The HTTP method for the request.</param>
+    /// <param name="classifier">The <see cref="PipelineMessageClassifier"/>
+    /// to use for determining response success and retry behavior. If not provided,
+    /// <see cref="PipelineMessageClassifier.Default"/> will be used.</param>
+    /// <returns>The created <see cref="PipelineMessage"/> with the specified
+    /// URI, method, and classifier configured.</returns>
+    public PipelineMessage CreateMessage(Uri uri, string method, PipelineMessageClassifier? classifier = default)
+    {
+        Argument.AssertNotNull(uri, nameof(uri));
+        Argument.AssertNotNull(method, nameof(method));
+
+        PipelineMessage message = CreateMessage();
+        message.Request.Uri = uri;
+        message.Request.Method = method;
+        message.ResponseClassifier = classifier ?? PipelineMessageClassifier.Default;
         return message;
     }
 
@@ -193,7 +233,11 @@ public sealed partial class ClientPipeline
     /// </remarks>
     public void Send(PipelineMessage message)
     {
+        Argument.AssertNotNull(message, nameof(message));
+        message.Request.ClientRequestId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
+
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
+
         policies[0].Process(message, policies, 0);
     }
 
@@ -212,7 +256,11 @@ public sealed partial class ClientPipeline
     /// </remarks>
     public async ValueTask SendAsync(PipelineMessage message)
     {
+        Argument.AssertNotNull(message, nameof(message));
+        message.Request.ClientRequestId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
+
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
+
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 

@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -38,5 +38,17 @@ namespace Azure.Storage.Files.Shares
         public string FileId => _response.Headers.TryGetValue("x-ms-file-id", out string value) ? value : null;
         /// <summary> The parent fileId of the file. </summary>
         public string FileParentId => _response.Headers.TryGetValue("x-ms-file-parent-id", out string value) ? value : null;
+        /// <summary> NFS only. The mode of the file or directory. </summary>
+        public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
+        /// <summary> NFS only. The owner of the file or directory. </summary>
+        public string Owner => _response.Headers.TryGetValue("x-ms-owner", out string value) ? value : null;
+        /// <summary> NFS only. The owning group of the file or directory. </summary>
+        public string Group => _response.Headers.TryGetValue("x-ms-group", out string value) ? value : null;
+        /// <summary> NFS only. Type of the file or directory. </summary>
+        public NfsFileType? NfsFileType => _response.Headers.TryGetValue("x-ms-file-file-type", out string value) ? new NfsFileType(value) : (NfsFileType?)null;
+        /// <summary> If the file has an MD5 hash and the request is to read the full file, this response header is returned so that the client can check for message content integrity. If the request is to read a specified range and the 'x-ms-range-get-content-md5' is set to true, then the request returns an MD5 hash for the range, as long as the range size is less than or equal to 4 MB. If neither of these sets of conditions is true, then no value is returned for the 'Content-MD5' header. </summary>
+        public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
+        /// <summary> The number of bytes present in the response body. </summary>
+        public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
     }
 }

@@ -69,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeNetHostName = "net.host.name";
 
         public const string AttributeEnduserId = "enduser.id";
+        public const string AttributeEnduserPseudoId = "enduser.pseudo.id";
         public const string AttributeEnduserRole = "enduser.role";
         public const string AttributeEnduserScope = "enduser.scope";
 
@@ -106,11 +107,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeDbHBaseNamespace = "db.hbase.namespace";
         public const string AttributeDbRedisDatabaseIndex = "db.redis.database_index";
         public const string AttributeDbMongoDbCollection = "db.mongodb.collection";
-
-        public const string AttributeRpcMethod = "rpc.method";
-        public const string AttributeRpcStatus = "rpc.grpc.status_code";
-        public const string AttributeRpcService = "rpc.service";
-        public const string AttributeRpcSystem = "rpc.system";
 
         public const string AttributeMessageType = "message.type";
         public const string AttributeMessageId = "message.id";

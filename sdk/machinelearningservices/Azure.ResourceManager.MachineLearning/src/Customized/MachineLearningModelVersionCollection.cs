@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningModelVersionResource> GetAllAsync(string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAllAsync(new MachineLearningModelVersionCollectionGetAllOptions() { Skip = skip, OrderBy = orderBy, Top = top, Version = version, Description = description, Offset = offset, Tags = tags, Properties = properties, Feed = feed, ListViewType = listViewType, Stage = null }, cancellationToken);
+            => GetAllAsync(new MachineLearningModelVersionCollectionGetAllOptions() { Skip = skip, OrderBy = orderBy, Top = top, Version = version, Description = description, Offset = offset, Tags = tags, Properties = properties, Feed = feed, ListViewType = listViewType }, cancellationToken);
 
         /// <summary>
         /// List model versions.
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningModelVersionResource> GetAll(string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAll(new MachineLearningModelVersionCollectionGetAllOptions() { Skip = skip, OrderBy = orderBy, Top = top, Version = version, Description = description, Offset = offset, Tags = tags, Properties = properties, Feed = feed, ListViewType = listViewType, Stage = null }, cancellationToken);
+            => GetAll(new MachineLearningModelVersionCollectionGetAllOptions() { Skip = skip, OrderBy = orderBy, Top = top, Version = version, Description = description, Offset = offset, Tags = tags, Properties = properties, Feed = feed, ListViewType = listViewType }, cancellationToken);
     }
 }

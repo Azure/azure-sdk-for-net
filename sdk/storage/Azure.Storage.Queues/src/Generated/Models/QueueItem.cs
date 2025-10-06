@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
@@ -20,7 +19,7 @@ namespace Azure.Storage.Queues.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal QueueItem(string name)
         {
-            Common.Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Metadata = new ChangeTrackingDictionary<string, string>();

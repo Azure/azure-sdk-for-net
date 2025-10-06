@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownTestMigrateProviderSpecificContent. </summary>
+    /// <summary> Unknown version of TestMigrateProviderSpecificInput. </summary>
     internal partial class UnknownTestMigrateProviderSpecificContent : TestMigrateProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTestMigrateProviderSpecificContent"/>. </summary>

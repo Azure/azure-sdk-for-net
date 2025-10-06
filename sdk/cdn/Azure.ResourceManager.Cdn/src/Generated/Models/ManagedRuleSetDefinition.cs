@@ -8,12 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes a managed rule set definition. </summary>
+    /// <summary>
+    /// Describes a managed rule set definition.
+    /// Serialized Name: ManagedRuleSetDefinition
+    /// </summary>
     public partial class ManagedRuleSetDefinition : ResourceData
     {
         /// <summary>
@@ -59,11 +61,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
-        /// <param name="ruleSetType"> Type of the managed rule set. </param>
-        /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
-        /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
+        /// <param name="sku">
+        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
+        /// Serialized Name: ManagedRuleSetDefinition.sku
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.provisioningState
+        /// </param>
+        /// <param name="ruleSetType">
+        /// Type of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetType
+        /// </param>
+        /// <param name="ruleSetVersion">
+        /// Version of the managed rule set type.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetVersion
+        /// </param>
+        /// <param name="ruleGroups">
+        /// Rule groups of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleGroups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CdnSku sku, string provisioningState, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,9 +92,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
+        /// <summary>
+        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
+        /// Serialized Name: ManagedRuleSetDefinition.sku
+        /// </summary>
         internal CdnSku Sku { get; set; }
-        /// <summary> Name of the pricing tier. </summary>
+        /// <summary>
+        /// Name of the pricing tier.
+        /// Serialized Name: Sku.name
+        /// </summary>
         public CdnSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -89,13 +112,25 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> Provisioning state of the managed rule set. </summary>
+        /// <summary>
+        /// Provisioning state of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Type of the managed rule set. </summary>
+        /// <summary>
+        /// Type of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetType
+        /// </summary>
         public string RuleSetType { get; }
-        /// <summary> Version of the managed rule set type. </summary>
+        /// <summary>
+        /// Version of the managed rule set type.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetVersion
+        /// </summary>
         public string RuleSetVersion { get; }
-        /// <summary> Rule groups of the managed rule set. </summary>
+        /// <summary>
+        /// Rule groups of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleGroups
+        /// </summary>
         public IReadOnlyList<ManagedRuleGroupDefinition> RuleGroups { get; }
     }
 }

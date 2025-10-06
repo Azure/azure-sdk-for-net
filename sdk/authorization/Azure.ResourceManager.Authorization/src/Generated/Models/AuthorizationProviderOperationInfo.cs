@@ -70,12 +70,16 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The operation name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The operation display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The operation description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The operation origin. </summary>
+        [WirePath("origin")]
         public string Origin { get; }
         /// <summary>
         /// The operation properties.
@@ -107,8 +111,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; }
         /// <summary> The dataAction flag to specify the operation type. </summary>
+        [WirePath("isDataAction")]
         public bool? IsDataAction { get; }
     }
 }

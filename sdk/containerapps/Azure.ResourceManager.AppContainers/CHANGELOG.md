@@ -1,12 +1,60 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.5.0 (2025-10-09)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag 'package-2024-03' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/33a2135c8115465b292b71a521ea50c1cc336c8c/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md.
+   - Support Logic App Extension
+   - Support async for connected environment sub resources
+   - Support ingressConfiguration
+   - Support advanced ingress 
+   - Support private endpoint connections for managed environment
+   - Support app health check configuration for DAPR
+   - Support key vault for environment storage
 
-### Breaking Changes
+## 1.4.1 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.AppContainers` AOT-compatible
+
+## 1.4.0 (2025-05-22)
+
+### Features Added
+
+Stable release of api-version tag 'package-2025-01-01'.
+
+## 1.4.0-beta.1 (2025-04-01)
+
+### Features Added
+
+- Upgraded api-version tag 'package-2024-03' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/24b224b17e698746d3c34e32f84dab7de5e4f2a8/specification/app/resource-manager/readme.md.
+  - Support keda scaler auth using MSI
+  - Support RunningStatus for ContainerApp
+  - Support Java Components 
+  - Support Azure Container Apps SessionPool
+  - Support env msi and cert from key vault
+
+## 1.3.0 (2024-09-09)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.3.0-beta.1 (2024-09-06)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.2.0 (2024-06-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Bugs Fixed
 
@@ -14,11 +62,14 @@
 
 ### Other Changes
 
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+
 ## 1.1.1 (2023-11-27)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -56,7 +107,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -143,4 +194,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

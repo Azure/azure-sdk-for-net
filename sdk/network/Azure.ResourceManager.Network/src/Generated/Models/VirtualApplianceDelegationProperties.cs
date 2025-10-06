@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceDelegationProperties"/>. </summary>
         /// <param name="serviceName"> The service name to which the NVA is delegated. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualApplianceDelegationProperties(string serviceName, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The service name to which the NVA is delegated. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; set; }
-        /// <summary> The current provisioning state. </summary>
+        /// <summary> Provisioning states of a resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

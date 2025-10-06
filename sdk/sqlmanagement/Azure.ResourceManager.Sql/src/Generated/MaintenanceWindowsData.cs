@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets the time ranges. </summary>
+        [WirePath("properties.timeRanges")]
         public IList<MaintenanceWindowTimeRange> TimeRanges { get; }
     }
 }

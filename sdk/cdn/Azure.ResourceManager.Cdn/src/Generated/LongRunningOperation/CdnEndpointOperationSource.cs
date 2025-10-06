@@ -5,13 +5,11 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -33,16 +31,14 @@ namespace Azure.ResourceManager.Cdn
 
         CdnEndpointResource IOperationSource<CdnEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
+            var data = ScrubId(ModelReaderWriter.Read<CdnEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
             return new CdnEndpointResource(_client, data);
         }
 
         async ValueTask<CdnEndpointResource> IOperationSource<CdnEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
-            return new CdnEndpointResource(_client, data);
+            var data = ScrubId(ModelReaderWriter.Read<CdnEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
+            return await Task.FromResult(new CdnEndpointResource(_client, data)).ConfigureAwait(false);
         }
 
         private CdnEndpointData ScrubId(CdnEndpointData data)
@@ -80,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 data.HostName,
                 data.Origins,
                 data.OriginGroups,
-                data.CustomDomains,
+                data.DeepCreatedCustomDomains,
                 data.ResourceState,
                 data.ProvisioningState,
                 null);

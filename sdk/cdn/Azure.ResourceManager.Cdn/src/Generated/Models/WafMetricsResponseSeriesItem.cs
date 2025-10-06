@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafMetricsResponseSeriesItem. </summary>
+    /// <summary>
+    /// The WafMetricsResponseSeriesItem.
+    /// Serialized Name: WafMetricsResponseSeriesItem
+    /// </summary>
     public partial class WafMetricsResponseSeriesItem
     {
         /// <summary>
@@ -54,10 +56,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesItem"/>. </summary>
-        /// <param name="metric"></param>
-        /// <param name="unit"></param>
-        /// <param name="groups"></param>
-        /// <param name="data"></param>
+        /// <param name="metric"> Serialized Name: WafMetricsResponseSeriesItem.metric. </param>
+        /// <param name="unit"> Serialized Name: WafMetricsResponseSeriesItem.unit. </param>
+        /// <param name="groups"> Serialized Name: WafMetricsResponseSeriesItem.groups. </param>
+        /// <param name="data"> Serialized Name: WafMetricsResponseSeriesItem.data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WafMetricsResponseSeriesItem(string metric, WafMetricsResponseSeriesItemUnit? unit, IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,13 +70,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the metric. </summary>
+        /// <summary> Serialized Name: WafMetricsResponseSeriesItem.metric. </summary>
         public string Metric { get; }
-        /// <summary> Gets the unit. </summary>
+        /// <summary> Serialized Name: WafMetricsResponseSeriesItem.unit. </summary>
         public WafMetricsResponseSeriesItemUnit? Unit { get; }
-        /// <summary> Gets the groups. </summary>
+        /// <summary> Serialized Name: WafMetricsResponseSeriesItem.groups. </summary>
         public IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> Groups { get; }
-        /// <summary> Gets the data. </summary>
+        /// <summary> Serialized Name: WafMetricsResponseSeriesItem.data. </summary>
         public IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> Data { get; }
     }
 }

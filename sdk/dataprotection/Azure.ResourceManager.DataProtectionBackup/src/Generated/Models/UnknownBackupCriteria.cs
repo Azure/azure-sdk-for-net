@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownBackupCriteria. </summary>
+    /// <summary> Unknown version of BackupCriteria. </summary>
     internal partial class UnknownBackupCriteria : DataProtectionBackupCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupCriteria"/>. </summary>

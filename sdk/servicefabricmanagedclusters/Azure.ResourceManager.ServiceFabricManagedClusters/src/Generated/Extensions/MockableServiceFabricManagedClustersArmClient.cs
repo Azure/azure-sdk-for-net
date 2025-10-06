@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 {
@@ -37,6 +35,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource"/> object. </returns>
+        public virtual ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(ResourceIdentifier id)
+        {
+            ServiceFabricManagedApplicationResource.ValidateResourceId(id);
+            return new ServiceFabricManagedApplicationResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceFabricManagedApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -58,18 +68,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         {
             ServiceFabricManagedApplicationTypeVersionResource.ValidateResourceId(id);
             return new ServiceFabricManagedApplicationTypeVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource"/> object. </returns>
-        public virtual ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(ResourceIdentifier id)
-        {
-            ServiceFabricManagedApplicationResource.ValidateResourceId(id);
-            return new ServiceFabricManagedApplicationResource(Client, id);
         }
 
         /// <summary>

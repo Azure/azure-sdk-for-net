@@ -9,9 +9,9 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -57,7 +57,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -85,7 +85,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 case 201:
                     {
                         AssetConversionProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -116,7 +116,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 case 201:
                     {
                         AssetConversionProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 case 200:
                     {
                         AssetConversionProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -185,7 +185,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 case 200:
                     {
                         AssetConversionProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownRuleDataSource. </summary>
+    /// <summary> Unknown version of RuleDataSource. </summary>
     internal partial class UnknownRuleDataSource : RuleDataSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRuleDataSource"/>. </summary>

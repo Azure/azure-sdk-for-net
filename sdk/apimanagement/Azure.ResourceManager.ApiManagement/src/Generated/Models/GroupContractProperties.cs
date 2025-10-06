@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -79,14 +78,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Group name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Group description. Can contain HTML formatting tags. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
+        [WirePath("builtIn")]
         public bool? IsBuiltIn { get; }
         /// <summary> Group type. </summary>
+        [WirePath("type")]
         public ApiManagementGroupType? ApiManagementGroupType { get; }
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
+        [WirePath("externalId")]
         public string ExternalId { get; }
     }
 }

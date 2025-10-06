@@ -24,16 +24,19 @@ namespace Azure.Search.Documents.Models
 
         private const string PostFilterValue = "postFilter";
         private const string PreFilterValue = "preFilter";
+        private const string StrictPostFilterValue = "strictPostFilter";
 
         /// <summary> The filter will be applied after the candidate set of vector results is returned. Depending on the filter selectivity, this can result in fewer results than requested by the parameter 'k'. </summary>
         public static VectorFilterMode PostFilter { get; } = new VectorFilterMode(PostFilterValue);
         /// <summary> The filter will be applied before the search query. </summary>
         public static VectorFilterMode PreFilter { get; } = new VectorFilterMode(PreFilterValue);
+        /// <summary> The filter will be applied after the global top-k candidate set of vector results is returned. This will result in fewer results than requested by the parameter 'k'. </summary>
+        public static VectorFilterMode StrictPostFilter { get; } = new VectorFilterMode(StrictPostFilterValue);
         /// <summary> Determines if two <see cref="VectorFilterMode"/> values are the same. </summary>
         public static bool operator ==(VectorFilterMode left, VectorFilterMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorFilterMode"/> values are not the same. </summary>
         public static bool operator !=(VectorFilterMode left, VectorFilterMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VectorFilterMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorFilterMode"/>. </summary>
         public static implicit operator VectorFilterMode(string value) => new VectorFilterMode(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

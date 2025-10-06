@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The total number of operation steps. </summary>
+        [WirePath("totalSteps")]
         public string TotalSteps { get; }
         /// <summary> The number of current operation steps. </summary>
+        [WirePath("currentStep")]
         public int? CurrentStep { get; }
         /// <summary> The operation steps list. </summary>
+        [WirePath("stepsList")]
         public IReadOnlyList<UpsertManagedServerOperationStep> StepsList { get; }
     }
 }

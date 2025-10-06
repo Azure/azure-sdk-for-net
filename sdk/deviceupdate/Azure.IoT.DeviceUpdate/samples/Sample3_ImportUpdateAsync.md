@@ -6,7 +6,7 @@ This sample demonstrates using `DeviceUpdateClient` class in this library to imp
  
 Let's assume you have device update (provided by device builder) and you want to import it into your Device Update for IoT Hub instance. 
 For device update to be importable you need not only the actual payload file but also the corresponding import manifest document. 
-See [Import-Concepts](https://docs.microsoft.com/azure/iot-hub-device-update/import-concepts) for details about import manifest.
+See [Import-Concepts](https://learn.microsoft.com/azure/iot-hub-device-update/import-concepts) for details about import manifest.
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 

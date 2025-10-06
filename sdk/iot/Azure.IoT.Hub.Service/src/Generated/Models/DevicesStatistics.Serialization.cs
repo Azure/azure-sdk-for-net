@@ -52,5 +52,13 @@ namespace Azure.IoT.Hub.Service.Models
             }
             return new DevicesStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DevicesStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDevicesStatistics(document.RootElement);
+        }
     }
 }

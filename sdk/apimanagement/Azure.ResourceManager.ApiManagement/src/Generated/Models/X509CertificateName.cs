@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Common Name of the Certificate. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Thumbprint for the Issuer of the Certificate. </summary>
+        [WirePath("issuerCertificateThumbprint")]
         public string IssuerCertificateThumbprint { get; set; }
     }
 }

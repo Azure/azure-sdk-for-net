@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The category of endpoints accessed by the AKS agent node, e.g. azure-resource-management, apiserver, etc. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> The endpoints that AKS agent nodes connect to. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<ContainerServiceEndpointDependency> Endpoints { get; }
     }
 }

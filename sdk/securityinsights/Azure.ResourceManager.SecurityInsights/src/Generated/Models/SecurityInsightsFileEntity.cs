@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -78,16 +77,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The full path to the file. </summary>
+        [WirePath("properties.directory")]
         public string Directory { get; }
         /// <summary> The file hash entity identifiers associated with this file. </summary>
+        [WirePath("properties.fileHashEntityIds")]
         public IReadOnlyList<string> FileHashEntityIds { get; }
         /// <summary> The file name without path (some alerts might not include path). </summary>
+        [WirePath("properties.fileName")]
         public string FileName { get; }
         /// <summary> The Host entity id which the file belongs to. </summary>
+        [WirePath("properties.hostEntityId")]
         public string HostEntityId { get; }
     }
 }

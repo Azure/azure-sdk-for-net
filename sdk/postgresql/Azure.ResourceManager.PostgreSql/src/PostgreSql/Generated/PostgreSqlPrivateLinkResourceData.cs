@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties")]
         public PostgreSqlPrivateLinkResourceProperties Properties { get; }
     }
 }

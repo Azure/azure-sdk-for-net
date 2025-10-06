@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Template Spec version description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The timestamp of when the version was created. </summary>
+        [WirePath("timeCreated")]
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> The timestamp of when the version was last modified. </summary>
+        [WirePath("timeModified")]
         public DateTimeOffset? TimeModified { get; }
     }
 }

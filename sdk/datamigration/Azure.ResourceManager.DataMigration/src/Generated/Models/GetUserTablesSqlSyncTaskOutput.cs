@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         internal GetUserTablesSqlSyncTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tableValidationErrors"> Mapping from database name to list of validation errors. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables, string databasesToTargetTables, string tableValidationErrors, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables, string databasesToTargetTables, string tableValidationErrors, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabasesToSourceTables = databasesToSourceTables;
             DatabasesToTargetTables = databasesToTargetTables;
@@ -74,6 +73,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Mapping from database name to list of validation errors. </summary>
         public string TableValidationErrors { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiProperties"/>. </summary>
-        /// <param name="serverVersion"> Describes the ServerVersion of an a MongoDB account. </param>
+        /// <param name="serverVersion"> Describes the version of the MongoDB account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiProperties(CosmosDBServerVersion? serverVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        /// <summary> Describes the version of the MongoDB account. </summary>
+        [WirePath("serverVersion")]
         public CosmosDBServerVersion? ServerVersion { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2025-10-01)
+
+### Features Added
+- Add support for read receipt and typing indicator.
+
+## 1.3.0-beta.1 (2025-04-14)
+
+### Features Added
+
+- Add Unified Messaging.
+
+## 1.2.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added Interactive Message.
+- Added Reaction Message.
+- Added Sticker Message.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.1.0 (2024-10-18)
+
+### Features Added
+- Added support for additional media message types: documents, videos, and audio.
+- Introduced the following new models for enhanced media notifications:
+  - `DocumentNotificationContent`: for sending document notifications.
+  - `VideoNotificationContent`: for sending video notifications.
+  - `AudioNotificationContent`: for sending audio notifications.
+  - `ImageNotificationContent`: for sending image notifications.
+
+### Other Changes
+- The `MediaNotificationContent` model, previously used for sending image notifications, is being deprecated. A deprecation warning will inform users to transition to the new `ImageNotificationContent` model for future use.
 
 ## 1.0.0 (2024-02-29)
 

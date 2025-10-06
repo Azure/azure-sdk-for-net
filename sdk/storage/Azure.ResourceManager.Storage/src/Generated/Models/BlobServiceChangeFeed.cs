@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether change feed event logging is enabled for the Blob service. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Indicates the duration of changeFeed retention in days. Minimum value is 1 day and maximum value is 146000 days (400 years). A null value indicates an infinite retention of the change feed. </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
     }
 }

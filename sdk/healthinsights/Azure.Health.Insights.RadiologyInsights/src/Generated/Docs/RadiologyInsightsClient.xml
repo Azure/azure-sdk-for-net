@@ -1,245 +1,394 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)">
+    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call InferRadiologyInsightsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
-{
-    new PatientRecord("<id>")
-});
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+RadiologyInsightsJob resource = new RadiologyInsightsJob();
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsightsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+RadiologyInsightsJob resource = new RadiologyInsightsJob
 {
-    new PatientRecord("<id>")
+    JobData = new RadiologyInsightsData(new PatientRecord[]
     {
-        Info = new PatientDetails
+        new PatientRecord("<id>")
         {
-            Sex = PatientSex.Female,
-            BirthDate = DateTimeOffset.Parse("2022-05-10"),
-            ClinicalInfo = {new FhirR4Resource("<resourceType>")
+            Details = new PatientDetails
             {
-                Id = "<id>",
-                Meta = new FhirR4Meta
+                Sex = PatientSex.Female,
+                BirthDate = DateTimeOffset.Parse("2022-05-10"),
+                ClinicalInfo = {new FhirR4Resource("<resourceType>")
                 {
-                    VersionId = "<versionId>",
-                    LastUpdated = "<lastUpdated>",
-                    Source = "<source>",
-                    Profile = {"<profile>"},
-                    Security = {new FhirR4Coding
+                    Id = "<id>",
+                    Meta = new FhirR4Meta
                     {
-                        System = "<system>",
-                        Version = "<version>",
-                        Code = "<code>",
-                        Display = "<display>",
-                    }},
-                    Tag = {default},
-                },
-                ImplicitRules = "<implicitRules>",
-                Language = "<language>",
-            }},
-        },
-        Encounters = {new Encounter("<id>")
-        {
-            Period = new TimePeriod
-            {
-                Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-            },
-            Class = EncounterClass.InPatient,
-        }},
-        PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
-        {
-            ClinicalType = ClinicalDocumentType.Consultation,
-            Language = "<language>",
-            CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-            Authors = {new DocumentAuthor
-            {
-                Id = "<id>",
-                FullName = "<fullName>",
-            }},
-            SpecialtyType = SpecialtyType.Pathology,
-            AdministrativeMetadata = new DocumentAdministrativeMetadata
-            {
-                OrderedProcedures = {new FhirR4Extendible
-                {
-                    Extension = {default},
-                    Code = default,
-                    Description = "<description>",
+                        VersionId = "<versionId>",
+                        LastUpdated = "<lastUpdated>",
+                        Source = "<source>",
+                        Profile = {"<profile>"},
+                        Security = {new FhirR4Coding
+                        {
+                            System = "<system>",
+                            Version = "<version>",
+                            Code = "<code>",
+                            Display = "<display>",
+                            Id = "<id>",
+                            Extension = {new FhirR4Extension("<url>")
+                            {
+                                ValueQuantity = new FhirR4Quantity
+                                {
+                                    Value = 123.45,
+                                    Comparator = "<comparator>",
+                                    Unit = "<unit>",
+                                    System = "<system>",
+                                    Code = "<code>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueCodeableConcept = new FhirR4CodeableConcept
+                                {
+                                    Coding = {default},
+                                    Text = "<text>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueString = "<valueString>",
+                                ValueBoolean = true,
+                                ValueInteger = 1234,
+                                ValueRange = new FhirR4Range
+                                {
+                                    Low = default,
+                                    High = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueRatio = new FhirR4Ratio
+                                {
+                                    Numerator = default,
+                                    Denominator = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+                                {
+                                    Factor = 123.45,
+                                    LowerLimit = 123.45,
+                                    UpperLimit = 123.45,
+                                    Data = "<data>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueTime = TimeSpan.Parse("01:23:45"),
+                                ValueDateTime = "<valueDateTime>",
+                                ValuePeriod = new FhirR4Period
+                                {
+                                    Start = "<start>",
+                                    End = "<end>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueReference = new FhirR4Reference
+                                {
+                                    Reference = "<reference>",
+                                    Type = "<type>",
+                                    Identifier = new FhirR4Identifier
+                                    {
+                                        Use = "<use>",
+                                        Type = default,
+                                        System = "<system>",
+                                        Value = "<value>",
+                                        Period = default,
+                                        Assigner = default,
+                                        Id = "<id>",
+                                        Extension = {default},
+                                    },
+                                    Display = "<display>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                Id = "<id>",
+                                Extension = {default},
+                            }},
+                        }},
+                        Tag = {default},
+                    },
+                    ImplicitRules = "<implicitRules>",
+                    Language = "<language>",
                 }},
-                EncounterId = "<encounterId>",
             },
-        }},
-    }
-})
-{
-    Configuration = new RadiologyInsightsModelConfiguration
+            Encounters = {new PatientEncounter("<id>")
+            {
+                Period = new TimePeriod
+                {
+                    Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                    End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                },
+                Class = EncounterClass.InPatient,
+            }},
+            PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
+            {
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<language>",
+                CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                Authors = {new ClinicalDocumentAuthor
+                {
+                    Id = "<id>",
+                    FullName = "<fullName>",
+                }},
+                SpecialtyType = SpecialtyType.Pathology,
+                AdministrativeMetadata = new DocumentAdministrativeMetadata
+                {
+                    OrderedProcedures = {new OrderedProcedure
+                    {
+                        Code = default,
+                        Description = "<description>",
+                        Extension = {default},
+                    }},
+                    EncounterId = "<encounterId>",
+                },
+            }},
+        }
+    })
     {
-        Verbose = true,
-        IncludeEvidence = true,
-        InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-        InferenceOptions = new RadiologyInsightsInferenceOptions
+        Configuration = new RadiologyInsightsModelConfiguration
         {
-            FollowupRecommendationOptions = new FollowupRecommendationOptions
+            Verbose = true,
+            IncludeEvidence = true,
+            InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+            InferenceOptions = new RadiologyInsightsInferenceOptions
             {
-                IncludeRecommendationsWithNoSpecifiedModality = true,
-                IncludeRecommendationsInReferences = true,
-                ProvideFocusedSentenceEvidence = true,
+                FollowupRecommendationOptions = new FollowupRecommendationOptions
+                {
+                    IncludeRecommendationsWithNoSpecifiedModality = true,
+                    IncludeRecommendationsInReferences = true,
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                FindingOptions = new FindingOptions
+                {
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                GuidanceOptions = new GuidanceOptions(true),
+                QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
             },
-            FindingOptions = new FindingOptions
-            {
-                ProvideFocusedSentenceEvidence = true,
-            },
+            Locale = "<locale>",
         },
-        Locale = "<locale>",
     },
 };
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)">
+    <member name="InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call InferRadiologyInsights.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
-{
-    new PatientRecord("<id>")
-});
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+RadiologyInsightsJob resource = new RadiologyInsightsJob();
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsights with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+RadiologyInsightsJob resource = new RadiologyInsightsJob
 {
-    new PatientRecord("<id>")
+    JobData = new RadiologyInsightsData(new PatientRecord[]
     {
-        Info = new PatientDetails
+        new PatientRecord("<id>")
         {
-            Sex = PatientSex.Female,
-            BirthDate = DateTimeOffset.Parse("2022-05-10"),
-            ClinicalInfo = {new FhirR4Resource("<resourceType>")
+            Details = new PatientDetails
             {
-                Id = "<id>",
-                Meta = new FhirR4Meta
+                Sex = PatientSex.Female,
+                BirthDate = DateTimeOffset.Parse("2022-05-10"),
+                ClinicalInfo = {new FhirR4Resource("<resourceType>")
                 {
-                    VersionId = "<versionId>",
-                    LastUpdated = "<lastUpdated>",
-                    Source = "<source>",
-                    Profile = {"<profile>"},
-                    Security = {new FhirR4Coding
+                    Id = "<id>",
+                    Meta = new FhirR4Meta
                     {
-                        System = "<system>",
-                        Version = "<version>",
-                        Code = "<code>",
-                        Display = "<display>",
-                    }},
-                    Tag = {default},
-                },
-                ImplicitRules = "<implicitRules>",
-                Language = "<language>",
-            }},
-        },
-        Encounters = {new Encounter("<id>")
-        {
-            Period = new TimePeriod
-            {
-                Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-            },
-            Class = EncounterClass.InPatient,
-        }},
-        PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
-        {
-            ClinicalType = ClinicalDocumentType.Consultation,
-            Language = "<language>",
-            CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-            Authors = {new DocumentAuthor
-            {
-                Id = "<id>",
-                FullName = "<fullName>",
-            }},
-            SpecialtyType = SpecialtyType.Pathology,
-            AdministrativeMetadata = new DocumentAdministrativeMetadata
-            {
-                OrderedProcedures = {new FhirR4Extendible
-                {
-                    Extension = {default},
-                    Code = default,
-                    Description = "<description>",
+                        VersionId = "<versionId>",
+                        LastUpdated = "<lastUpdated>",
+                        Source = "<source>",
+                        Profile = {"<profile>"},
+                        Security = {new FhirR4Coding
+                        {
+                            System = "<system>",
+                            Version = "<version>",
+                            Code = "<code>",
+                            Display = "<display>",
+                            Id = "<id>",
+                            Extension = {new FhirR4Extension("<url>")
+                            {
+                                ValueQuantity = new FhirR4Quantity
+                                {
+                                    Value = 123.45,
+                                    Comparator = "<comparator>",
+                                    Unit = "<unit>",
+                                    System = "<system>",
+                                    Code = "<code>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueCodeableConcept = new FhirR4CodeableConcept
+                                {
+                                    Coding = {default},
+                                    Text = "<text>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueString = "<valueString>",
+                                ValueBoolean = true,
+                                ValueInteger = 1234,
+                                ValueRange = new FhirR4Range
+                                {
+                                    Low = default,
+                                    High = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueRatio = new FhirR4Ratio
+                                {
+                                    Numerator = default,
+                                    Denominator = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+                                {
+                                    Factor = 123.45,
+                                    LowerLimit = 123.45,
+                                    UpperLimit = 123.45,
+                                    Data = "<data>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueTime = TimeSpan.Parse("01:23:45"),
+                                ValueDateTime = "<valueDateTime>",
+                                ValuePeriod = new FhirR4Period
+                                {
+                                    Start = "<start>",
+                                    End = "<end>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueReference = new FhirR4Reference
+                                {
+                                    Reference = "<reference>",
+                                    Type = "<type>",
+                                    Identifier = new FhirR4Identifier
+                                    {
+                                        Use = "<use>",
+                                        Type = default,
+                                        System = "<system>",
+                                        Value = "<value>",
+                                        Period = default,
+                                        Assigner = default,
+                                        Id = "<id>",
+                                        Extension = {default},
+                                    },
+                                    Display = "<display>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                Id = "<id>",
+                                Extension = {default},
+                            }},
+                        }},
+                        Tag = {default},
+                    },
+                    ImplicitRules = "<implicitRules>",
+                    Language = "<language>",
                 }},
-                EncounterId = "<encounterId>",
             },
-        }},
-    }
-})
-{
-    Configuration = new RadiologyInsightsModelConfiguration
+            Encounters = {new PatientEncounter("<id>")
+            {
+                Period = new TimePeriod
+                {
+                    Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                    End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                },
+                Class = EncounterClass.InPatient,
+            }},
+            PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
+            {
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<language>",
+                CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                Authors = {new ClinicalDocumentAuthor
+                {
+                    Id = "<id>",
+                    FullName = "<fullName>",
+                }},
+                SpecialtyType = SpecialtyType.Pathology,
+                AdministrativeMetadata = new DocumentAdministrativeMetadata
+                {
+                    OrderedProcedures = {new OrderedProcedure
+                    {
+                        Code = default,
+                        Description = "<description>",
+                        Extension = {default},
+                    }},
+                    EncounterId = "<encounterId>",
+                },
+            }},
+        }
+    })
     {
-        Verbose = true,
-        IncludeEvidence = true,
-        InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-        InferenceOptions = new RadiologyInsightsInferenceOptions
+        Configuration = new RadiologyInsightsModelConfiguration
         {
-            FollowupRecommendationOptions = new FollowupRecommendationOptions
+            Verbose = true,
+            IncludeEvidence = true,
+            InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+            InferenceOptions = new RadiologyInsightsInferenceOptions
             {
-                IncludeRecommendationsWithNoSpecifiedModality = true,
-                IncludeRecommendationsInReferences = true,
-                ProvideFocusedSentenceEvidence = true,
+                FollowupRecommendationOptions = new FollowupRecommendationOptions
+                {
+                    IncludeRecommendationsWithNoSpecifiedModality = true,
+                    IncludeRecommendationsInReferences = true,
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                FindingOptions = new FindingOptions
+                {
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                GuidanceOptions = new GuidanceOptions(true),
+                QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
             },
-            FindingOptions = new FindingOptions
-            {
-                ProvideFocusedSentenceEvidence = true,
-            },
+            Locale = "<locale>",
         },
-        Locale = "<locale>",
     },
 };
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsightsAsync(WaitUntil,RequestContent,RequestContext)">
+    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call InferRadiologyInsightsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
-{
-    patients = new object[]
-    {
-        new
-        {
-            id = "<id>",
-        }
-    },
-});
-Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, content);
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -249,242 +398,256 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code>
 This sample shows how to call InferRadiologyInsightsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    patients = new object[]
+    jobData = new
     {
-        new
+        patients = new object[]
         {
-            id = "<id>",
-            info = new
+            new
             {
-                sex = "female",
-                birthDate = "2022-05-10",
-                clinicalInfo = new object[]
+                id = "<id>",
+                details = new
                 {
-                    new
+                    sex = "female",
+                    birthDate = "2022-05-10",
+                    clinicalInfo = new object[]
                     {
-                        resourceType = "<resourceType>",
-                        id = "<id>",
-                        meta = new
+                        new
                         {
-                            versionId = "<versionId>",
-                            lastUpdated = "<lastUpdated>",
-                            source = "<source>",
-                            profile = new object[]
+                            resourceType = "<resourceType>",
+                            id = "<id>",
+                            meta = new
                             {
-                                "<profile>"
-                            },
-                            security = new object[]
-                            {
-                                new
+                                versionId = "<versionId>",
+                                lastUpdated = "<lastUpdated>",
+                                source = "<source>",
+                                profile = new object[]
                                 {
-                                    system = "<system>",
-                                    version = "<version>",
-                                    code = "<code>",
-                                    display = "<display>",
-                                    id = "<id>",
-                                    extension = new object[]
+                                    "<profile>"
+                                },
+                                security = new object[]
+                                {
+                                    new
                                     {
-                                        new
+                                        system = "<system>",
+                                        version = "<version>",
+                                        code = "<code>",
+                                        display = "<display>",
+                                        id = "<id>",
+                                        extension = new object[]
                                         {
-                                            url = "<url>",
-                                            valueQuantity = new
+                                            new
                                             {
-                                                value = 123.45,
-                                                comparator = "<comparator>",
-                                                unit = "<unit>",
-                                                system = "<system>",
-                                                code = "<code>",
-                                                id = "<id>",
-                                                extension = new object[]
+                                                url = "<url>",
+                                                valueQuantity = new
                                                 {
-                                                    null
-                                                },
-                                            },
-                                            valueCodeableConcept = new
-                                            {
-                                                coding = new object[]
-                                                {
-                                                    null
-                                                },
-                                                text = "<text>",
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueString = "<valueString>",
-                                            valueBoolean = true,
-                                            valueInteger = 1234,
-                                            valueRange = new
-                                            {
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueRatio = new
-                                            {
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueSampledData = new
-                                            {
-                                                period = 123.45,
-                                                factor = 123.45,
-                                                lowerLimit = 123.45,
-                                                upperLimit = 123.45,
-                                                dimensions = 1234,
-                                                data = "<data>",
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueTime = "01:23:45",
-                                            valueDateTime = "<valueDateTime>",
-                                            valuePeriod = new
-                                            {
-                                                start = "<start>",
-                                                end = "<end>",
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueReference = new
-                                            {
-                                                reference = "<reference>",
-                                                type = "<type>",
-                                                identifier = new
-                                                {
-                                                    use = "<use>",
+                                                    value = 123.45,
+                                                    comparator = "<comparator>",
+                                                    unit = "<unit>",
                                                     system = "<system>",
-                                                    value = "<value>",
+                                                    code = "<code>",
                                                     id = "<id>",
                                                     extension = new object[]
                                                     {
                                                         null
                                                     },
                                                 },
-                                                display = "<display>",
+                                                valueCodeableConcept = new
+                                                {
+                                                    coding = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                    text = "<text>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueString = "<valueString>",
+                                                valueBoolean = true,
+                                                valueInteger = 1234,
+                                                valueRange = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueRatio = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueSampledData = new
+                                                {
+                                                    period = 123.45,
+                                                    factor = 123.45,
+                                                    lowerLimit = 123.45,
+                                                    upperLimit = 123.45,
+                                                    dimensions = 1234,
+                                                    data = "<data>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueTime = "01:23:45",
+                                                valueDateTime = "<valueDateTime>",
+                                                valuePeriod = new
+                                                {
+                                                    start = "<start>",
+                                                    end = "<end>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueReference = new
+                                                {
+                                                    reference = "<reference>",
+                                                    type = "<type>",
+                                                    identifier = new
+                                                    {
+                                                        use = "<use>",
+                                                        system = "<system>",
+                                                        value = "<value>",
+                                                        id = "<id>",
+                                                        extension = new object[]
+                                                        {
+                                                            null
+                                                        },
+                                                    },
+                                                    display = "<display>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
                                                 id = "<id>",
                                                 extension = new object[]
                                                 {
                                                     null
                                                 },
-                                            },
-                                            id = "<id>",
-                                            extension = new object[]
-                                            {
-                                                null
-                                            },
-                                        }
-                                    },
-                                }
-                            },
-                            tag = new object[]
-                            {
-                                null
-                            },
-                        },
-                        implicitRules = "<implicitRules>",
-                        language = "<language>",
-                    }
-                },
-            },
-            encounters = new object[]
-            {
-                new Dictionary<string, object>
-                {
-                    ["id"] = "<id>",
-                    ["period"] = new
-                    {
-                        start = "2022-05-10T14:57:31.2311892-04:00",
-                        end = "2022-05-10T14:57:31.2311892-04:00",
-                    },
-                    ["class"] = "inpatient"
-                }
-            },
-            patientDocuments = new object[]
-            {
-                new
-                {
-                    type = "note",
-                    clinicalType = "consultation",
-                    id = "<id>",
-                    language = "<language>",
-                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-                    authors = new object[]
-                    {
-                        new
-                        {
-                            id = "<id>",
-                            fullName = "<fullName>",
-                        }
-                    },
-                    specialtyType = "pathology",
-                    administrativeMetadata = new
-                    {
-                        orderedProcedures = new object[]
-                        {
-                            new
-                            {
-                                extension = new object[]
+                                            }
+                                        },
+                                    }
+                                },
+                                tag = new object[]
                                 {
                                     null
                                 },
-                                description = "<description>",
+                            },
+                            implicitRules = "<implicitRules>",
+                            language = "<language>",
+                        }
+                    },
+                },
+                encounters = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["id"] = "<id>",
+                        ["period"] = new
+                        {
+                            start = "2022-05-10T18:57:31.2311892Z",
+                            end = "2022-05-10T18:57:31.2311892Z",
+                        },
+                        ["class"] = "inpatient"
+                    }
+                },
+                patientDocuments = new object[]
+                {
+                    new
+                    {
+                        type = "note",
+                        clinicalType = "consultation",
+                        id = "<id>",
+                        language = "<language>",
+                        createdAt = "2022-05-10T18:57:31.2311892Z",
+                        authors = new object[]
+                        {
+                            new
+                            {
+                                id = "<id>",
+                                fullName = "<fullName>",
                             }
                         },
-                        encounterId = "<encounterId>",
-                    },
-                    content = new
+                        specialtyType = "pathology",
+                        administrativeMetadata = new
+                        {
+                            orderedProcedures = new object[]
+                            {
+                                new
+                                {
+                                    description = "<description>",
+                                    extension = new object[]
+                                    {
+                                        null
+                                    },
+                                }
+                            },
+                            encounterId = "<encounterId>",
+                        },
+                        content = new
+                        {
+                            sourceType = "inline",
+                            value = "<value>",
+                        },
+                    }
+                },
+            }
+        },
+        configuration = new
+        {
+            verbose = true,
+            includeEvidence = true,
+            inferenceTypes = new object[]
+            {
+                "ageMismatch"
+            },
+            inferenceOptions = new
+            {
+                followupRecommendationOptions = new
+                {
+                    includeRecommendationsWithNoSpecifiedModality = true,
+                    includeRecommendationsInReferences = true,
+                    provideFocusedSentenceEvidence = true,
+                },
+                findingOptions = new
+                {
+                    provideFocusedSentenceEvidence = true,
+                },
+                guidanceOptions = new
+                {
+                    showGuidanceInHistory = true,
+                },
+                qualityMeasureOptions = new
+                {
+                    measureTypes = new object[]
                     {
-                        sourceType = "inline",
-                        value = "<value>",
+                        "mips76"
                     },
-                }
+                },
             },
-        }
-    },
-    configuration = new
-    {
-        verbose = true,
-        includeEvidence = true,
-        inferenceTypes = new object[]
-        {
-            "ageMismatch"
+            locale = "<locale>",
         },
-        inferenceOptions = new
-        {
-            followupRecommendationOptions = new
-            {
-                includeRecommendationsWithNoSpecifiedModality = true,
-                includeRecommendationsInReferences = true,
-                provideFocusedSentenceEvidence = true,
-            },
-            findingOptions = new
-            {
-                provideFocusedSentenceEvidence = true,
-            },
-        },
-        locale = "<locale>",
     },
 });
-Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, content);
+Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -573,25 +736,16 @@ Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inference
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsights(WaitUntil,RequestContent,RequestContext)">
+    <member name="InferRadiologyInsights(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call InferRadiologyInsights and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
-{
-    patients = new object[]
-    {
-        new
-        {
-            id = "<id>",
-        }
-    },
-});
-Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, content);
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -601,242 +755,256 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code>
 This sample shows how to call InferRadiologyInsights with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    patients = new object[]
+    jobData = new
     {
-        new
+        patients = new object[]
         {
-            id = "<id>",
-            info = new
+            new
             {
-                sex = "female",
-                birthDate = "2022-05-10",
-                clinicalInfo = new object[]
+                id = "<id>",
+                details = new
                 {
-                    new
+                    sex = "female",
+                    birthDate = "2022-05-10",
+                    clinicalInfo = new object[]
                     {
-                        resourceType = "<resourceType>",
-                        id = "<id>",
-                        meta = new
+                        new
                         {
-                            versionId = "<versionId>",
-                            lastUpdated = "<lastUpdated>",
-                            source = "<source>",
-                            profile = new object[]
+                            resourceType = "<resourceType>",
+                            id = "<id>",
+                            meta = new
                             {
-                                "<profile>"
-                            },
-                            security = new object[]
-                            {
-                                new
+                                versionId = "<versionId>",
+                                lastUpdated = "<lastUpdated>",
+                                source = "<source>",
+                                profile = new object[]
                                 {
-                                    system = "<system>",
-                                    version = "<version>",
-                                    code = "<code>",
-                                    display = "<display>",
-                                    id = "<id>",
-                                    extension = new object[]
+                                    "<profile>"
+                                },
+                                security = new object[]
+                                {
+                                    new
                                     {
-                                        new
+                                        system = "<system>",
+                                        version = "<version>",
+                                        code = "<code>",
+                                        display = "<display>",
+                                        id = "<id>",
+                                        extension = new object[]
                                         {
-                                            url = "<url>",
-                                            valueQuantity = new
+                                            new
                                             {
-                                                value = 123.45,
-                                                comparator = "<comparator>",
-                                                unit = "<unit>",
-                                                system = "<system>",
-                                                code = "<code>",
-                                                id = "<id>",
-                                                extension = new object[]
+                                                url = "<url>",
+                                                valueQuantity = new
                                                 {
-                                                    null
-                                                },
-                                            },
-                                            valueCodeableConcept = new
-                                            {
-                                                coding = new object[]
-                                                {
-                                                    null
-                                                },
-                                                text = "<text>",
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueString = "<valueString>",
-                                            valueBoolean = true,
-                                            valueInteger = 1234,
-                                            valueRange = new
-                                            {
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueRatio = new
-                                            {
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueSampledData = new
-                                            {
-                                                period = 123.45,
-                                                factor = 123.45,
-                                                lowerLimit = 123.45,
-                                                upperLimit = 123.45,
-                                                dimensions = 1234,
-                                                data = "<data>",
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueTime = "01:23:45",
-                                            valueDateTime = "<valueDateTime>",
-                                            valuePeriod = new
-                                            {
-                                                start = "<start>",
-                                                end = "<end>",
-                                                id = "<id>",
-                                                extension = new object[]
-                                                {
-                                                    null
-                                                },
-                                            },
-                                            valueReference = new
-                                            {
-                                                reference = "<reference>",
-                                                type = "<type>",
-                                                identifier = new
-                                                {
-                                                    use = "<use>",
+                                                    value = 123.45,
+                                                    comparator = "<comparator>",
+                                                    unit = "<unit>",
                                                     system = "<system>",
-                                                    value = "<value>",
+                                                    code = "<code>",
                                                     id = "<id>",
                                                     extension = new object[]
                                                     {
                                                         null
                                                     },
                                                 },
-                                                display = "<display>",
+                                                valueCodeableConcept = new
+                                                {
+                                                    coding = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                    text = "<text>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueString = "<valueString>",
+                                                valueBoolean = true,
+                                                valueInteger = 1234,
+                                                valueRange = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueRatio = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueSampledData = new
+                                                {
+                                                    period = 123.45,
+                                                    factor = 123.45,
+                                                    lowerLimit = 123.45,
+                                                    upperLimit = 123.45,
+                                                    dimensions = 1234,
+                                                    data = "<data>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueTime = "01:23:45",
+                                                valueDateTime = "<valueDateTime>",
+                                                valuePeriod = new
+                                                {
+                                                    start = "<start>",
+                                                    end = "<end>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueReference = new
+                                                {
+                                                    reference = "<reference>",
+                                                    type = "<type>",
+                                                    identifier = new
+                                                    {
+                                                        use = "<use>",
+                                                        system = "<system>",
+                                                        value = "<value>",
+                                                        id = "<id>",
+                                                        extension = new object[]
+                                                        {
+                                                            null
+                                                        },
+                                                    },
+                                                    display = "<display>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
                                                 id = "<id>",
                                                 extension = new object[]
                                                 {
                                                     null
                                                 },
-                                            },
-                                            id = "<id>",
-                                            extension = new object[]
-                                            {
-                                                null
-                                            },
-                                        }
-                                    },
-                                }
-                            },
-                            tag = new object[]
-                            {
-                                null
-                            },
-                        },
-                        implicitRules = "<implicitRules>",
-                        language = "<language>",
-                    }
-                },
-            },
-            encounters = new object[]
-            {
-                new Dictionary<string, object>
-                {
-                    ["id"] = "<id>",
-                    ["period"] = new
-                    {
-                        start = "2022-05-10T14:57:31.2311892-04:00",
-                        end = "2022-05-10T14:57:31.2311892-04:00",
-                    },
-                    ["class"] = "inpatient"
-                }
-            },
-            patientDocuments = new object[]
-            {
-                new
-                {
-                    type = "note",
-                    clinicalType = "consultation",
-                    id = "<id>",
-                    language = "<language>",
-                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-                    authors = new object[]
-                    {
-                        new
-                        {
-                            id = "<id>",
-                            fullName = "<fullName>",
-                        }
-                    },
-                    specialtyType = "pathology",
-                    administrativeMetadata = new
-                    {
-                        orderedProcedures = new object[]
-                        {
-                            new
-                            {
-                                extension = new object[]
+                                            }
+                                        },
+                                    }
+                                },
+                                tag = new object[]
                                 {
                                     null
                                 },
-                                description = "<description>",
+                            },
+                            implicitRules = "<implicitRules>",
+                            language = "<language>",
+                        }
+                    },
+                },
+                encounters = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["id"] = "<id>",
+                        ["period"] = new
+                        {
+                            start = "2022-05-10T18:57:31.2311892Z",
+                            end = "2022-05-10T18:57:31.2311892Z",
+                        },
+                        ["class"] = "inpatient"
+                    }
+                },
+                patientDocuments = new object[]
+                {
+                    new
+                    {
+                        type = "note",
+                        clinicalType = "consultation",
+                        id = "<id>",
+                        language = "<language>",
+                        createdAt = "2022-05-10T18:57:31.2311892Z",
+                        authors = new object[]
+                        {
+                            new
+                            {
+                                id = "<id>",
+                                fullName = "<fullName>",
                             }
                         },
-                        encounterId = "<encounterId>",
-                    },
-                    content = new
+                        specialtyType = "pathology",
+                        administrativeMetadata = new
+                        {
+                            orderedProcedures = new object[]
+                            {
+                                new
+                                {
+                                    description = "<description>",
+                                    extension = new object[]
+                                    {
+                                        null
+                                    },
+                                }
+                            },
+                            encounterId = "<encounterId>",
+                        },
+                        content = new
+                        {
+                            sourceType = "inline",
+                            value = "<value>",
+                        },
+                    }
+                },
+            }
+        },
+        configuration = new
+        {
+            verbose = true,
+            includeEvidence = true,
+            inferenceTypes = new object[]
+            {
+                "ageMismatch"
+            },
+            inferenceOptions = new
+            {
+                followupRecommendationOptions = new
+                {
+                    includeRecommendationsWithNoSpecifiedModality = true,
+                    includeRecommendationsInReferences = true,
+                    provideFocusedSentenceEvidence = true,
+                },
+                findingOptions = new
+                {
+                    provideFocusedSentenceEvidence = true,
+                },
+                guidanceOptions = new
+                {
+                    showGuidanceInHistory = true,
+                },
+                qualityMeasureOptions = new
+                {
+                    measureTypes = new object[]
                     {
-                        sourceType = "inline",
-                        value = "<value>",
+                        "mips76"
                     },
-                }
+                },
             },
-        }
-    },
-    configuration = new
-    {
-        verbose = true,
-        includeEvidence = true,
-        inferenceTypes = new object[]
-        {
-            "ageMismatch"
+            locale = "<locale>",
         },
-        inferenceOptions = new
-        {
-            followupRecommendationOptions = new
-            {
-                includeRecommendationsWithNoSpecifiedModality = true,
-                includeRecommendationsInReferences = true,
-                provideFocusedSentenceEvidence = true,
-            },
-            findingOptions = new
-            {
-                provideFocusedSentenceEvidence = true,
-            },
-        },
-        locale = "<locale>",
     },
 });
-Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, content);
+Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

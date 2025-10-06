@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The status of the DNS refresh operation. </summary>
+        [WirePath("properties.status")]
         public DnsRefreshConfigurationPropertiesStatus? Status { get; }
     }
 }

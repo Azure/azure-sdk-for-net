@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> Gets the supported v cores. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> SupportedVCores { get; }
+        [WirePath("supportedVcores")]
+        public IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> SupportedVCores => SupportedVCoresInternal;
+        internal List<PostgreSqlFlexibleServerVCoreCapability> SupportedVCoresInternal { get; set; }
     }
 }

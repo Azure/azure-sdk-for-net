@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -106,36 +105,52 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Connection monitor location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Connection monitor tags. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Describes the source of connection monitor. </summary>
+        [WirePath("properties.source")]
         public ConnectionMonitorSource Source { get; }
         /// <summary> Describes the destination of connection monitor. </summary>
+        [WirePath("properties.destination")]
         public ConnectionMonitorDestination Destination { get; }
         /// <summary> Determines if the connection monitor will start automatically once created. </summary>
+        [WirePath("properties.autoStart")]
         public bool? AutoStart { get; }
         /// <summary> Monitoring interval in seconds. </summary>
+        [WirePath("properties.monitoringIntervalInSeconds")]
         public int? MonitoringIntervalInSeconds { get; }
         /// <summary> List of connection monitor endpoints. </summary>
+        [WirePath("properties.endpoints")]
         public IReadOnlyList<ConnectionMonitorEndpoint> Endpoints { get; }
         /// <summary> List of connection monitor test configurations. </summary>
+        [WirePath("properties.testConfigurations")]
         public IReadOnlyList<ConnectionMonitorTestConfiguration> TestConfigurations { get; }
         /// <summary> List of connection monitor test groups. </summary>
+        [WirePath("properties.testGroups")]
         public IReadOnlyList<ConnectionMonitorTestGroup> TestGroups { get; }
         /// <summary> List of connection monitor outputs. </summary>
+        [WirePath("properties.outputs")]
         public IReadOnlyList<ConnectionMonitorOutput> Outputs { get; }
         /// <summary> Optional notes to be associated with the connection monitor. </summary>
+        [WirePath("properties.notes")]
         public string Notes { get; }
         /// <summary> The provisioning state of the connection monitor. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The date and time when the connection monitor was started. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The monitoring status of the connection monitor. </summary>
+        [WirePath("properties.monitoringStatus")]
         public string MonitoringStatus { get; }
         /// <summary> Type of connection monitor. </summary>
+        [WirePath("properties.connectionMonitorType")]
         public ConnectionMonitorType? ConnectionMonitorType { get; }
     }
 }

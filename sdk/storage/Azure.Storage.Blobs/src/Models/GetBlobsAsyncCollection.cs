@@ -18,17 +18,20 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _prefix;
+        private readonly string _startFrom;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
             BlobTraits traits,
             BlobStates states,
-            string prefix)
+            string prefix,
+            string startFrom)
         {
             _client = client;
             _traits = traits;
             _states = states;
             _prefix = prefix;
+            _startFrom = startFrom;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
@@ -46,6 +49,7 @@ namespace Azure.Storage.Blobs.Models
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
+                    startFrom: _startFrom,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -58,6 +62,7 @@ namespace Azure.Storage.Blobs.Models
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
+                    startFrom: _startFrom,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -65,7 +70,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             return Page<BlobItem>.FromValues(
-                response.Value.Segment.BlobItems.ToBlobItems().ToArray(),
+                response.Value.Segment.BlobItems.ToBlobItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

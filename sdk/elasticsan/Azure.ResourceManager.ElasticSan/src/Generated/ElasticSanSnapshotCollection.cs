@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
@@ -26,8 +24,8 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanSnapshotCollection : ArmCollection, IEnumerable<ElasticSanSnapshotResource>, IAsyncEnumerable<ElasticSanSnapshotResource>
     {
-        private readonly ClientDiagnostics _elasticSanSnapshotVolumeSnapshotsClientDiagnostics;
-        private readonly VolumeSnapshotsRestOperations _elasticSanSnapshotVolumeSnapshotsRestClient;
+        private readonly ClientDiagnostics _elasticSanSnapshotSnapshotsClientDiagnostics;
+        private readonly SnapshotsRestOperations _elasticSanSnapshotSnapshotsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotCollection"/> class for mocking. </summary>
         protected ElasticSanSnapshotCollection()
@@ -39,9 +37,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ElasticSanSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticSanSnapshotVolumeSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanSnapshotResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ElasticSanSnapshotResource.ResourceType, out string elasticSanSnapshotVolumeSnapshotsApiVersion);
-            _elasticSanSnapshotVolumeSnapshotsRestClient = new VolumeSnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanSnapshotVolumeSnapshotsApiVersion);
+            _elasticSanSnapshotSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ElasticSanSnapshotResource.ResourceType, out string elasticSanSnapshotSnapshotsApiVersion);
+            _elasticSanSnapshotSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanSnapshotSnapshotsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,11 +60,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Create</description>
+        /// <description>Snapshot_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,12 +83,12 @@ namespace Azure.ResourceManager.ElasticSan
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotVolumeSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,11 +109,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Create</description>
+        /// <description>Snapshot_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,12 +132,12 @@ namespace Azure.ResourceManager.ElasticSan
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotVolumeSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data, cancellationToken);
+                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,11 +158,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,11 +178,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
@@ -205,11 +203,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,11 +223,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
@@ -250,11 +248,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_ListByVolumeGroup</description>
+        /// <description>Snapshot_ListByVolumeGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,9 +265,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An async collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanSnapshotResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,11 +279,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_ListByVolumeGroup</description>
+        /// <description>Snapshot_ListByVolumeGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,9 +296,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> A collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanSnapshotResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,11 +310,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,11 +330,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,11 +353,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -375,11 +373,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,11 +396,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -418,11 +416,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ElasticSanSnapshotResource>(response.GetRawResponse());
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
@@ -443,11 +441,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,11 +461,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ElasticSanSnapshotResource>(response.GetRawResponse());
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());

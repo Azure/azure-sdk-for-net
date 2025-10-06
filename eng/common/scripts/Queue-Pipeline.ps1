@@ -57,21 +57,20 @@ param(
 
   [string]$VsoQueuedPipelines,
 
-  # Already base 64 encoded authentication token
-  [string]$Base64EncodedAuthToken,
+  # Unencoded authentication token from a PAT
+  [string]$AuthToken=$null,
 
-  # Unencoded authentication token
-  [string]$AuthToken,
+  # Temp access token from the logged in az cli user for azure devops resource
+  [string]$BearerToken=$null,
 
   [Parameter(Mandatory = $false)]
   [string]$BuildParametersJson
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
-
-if (!$Base64EncodedAuthToken)
-{
-  $Base64EncodedAuthToken = Get-Base64EncodedToken $AuthToken
+$Base64EncodedToken=$null
+if (![string]::IsNullOrWhiteSpace($AuthToken)) {
+  $Base64EncodedToken = Get-Base64EncodedToken $AuthToken
 }
 
 # Skip if SourceBranch is empty because it we cannot generate a target branch
@@ -80,7 +79,7 @@ if ($CancelPreviousBuilds -and $SourceBranch)
 {
   try {
     $queuedBuilds = Get-DevOpsBuilds -BranchName "refs/heads/$SourceBranch" -Definitions $DefinitionId `
-    -StatusFilter "inProgress, notStarted" -Base64EncodedAuthToken $Base64EncodedAuthToken
+    -StatusFilter "inProgress, notStarted" -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken
 
     if ($queuedBuilds.count -eq 0) {
       LogDebug "There is no previous build still inprogress or about to start."
@@ -89,7 +88,7 @@ if ($CancelPreviousBuilds -and $SourceBranch)
     foreach ($build in $queuedBuilds.Value) {
       $buildID = $build.id
       LogDebug "Canceling build [ $($build._links.web.href) ]"
-      Update-DevOpsBuild -BuildId $buildID -Status "cancelling" -Base64EncodedAuthToken $Base64EncodedAuthToken
+      Update-DevOpsBuild -BuildId $buildID -Status "cancelling" -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken
     }
   }
   catch {
@@ -104,7 +103,8 @@ try {
     -Project $Project `
     -SourceBranch $SourceBranch `
     -DefinitionId $DefinitionId `
-    -Base64EncodedAuthToken $Base64EncodedAuthToken `
+    -Base64EncodedToken $Base64EncodedToken `
+    -BearerToken $BearerToken `
     -BuildParametersJson $BuildParametersJson
 }
 catch {

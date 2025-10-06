@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Tests.Models
         [TestCase("\"0123abcd\"", "\"0123abcd\"")]
         public void ParsesETag(string value, string expected)
         {
-            SearchIndexerDataSourceConnection sut = new(null, null, SearchIndexerDataSourceType.AzureBlob, null, null, null, null, null, value, null);
+            SearchIndexerDataSourceConnection sut = new(null, null, SearchIndexerDataSourceType.AzureBlob, null, null, null, null, null, null, null, value, null, serializedAdditionalRawData: null);
             Assert.AreEqual(expected, sut.ETag?.ToString());
         }
     }

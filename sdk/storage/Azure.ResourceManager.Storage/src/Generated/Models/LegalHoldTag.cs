@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The tag value. </summary>
+        [WirePath("tag")]
         public string Tag { get; }
         /// <summary> Returns the date and time the tag was added. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Returns the Object ID of the user who added the tag. </summary>
+        [WirePath("objectIdentifier")]
         public string ObjectIdentifier { get; }
         /// <summary> Returns the Tenant ID that issued the token for the user who added the tag. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who added the tag. </summary>
+        [WirePath("upn")]
         public string Upn { get; }
     }
 }

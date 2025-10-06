@@ -63,7 +63,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             AdditionalDataDisks = new ChangeTrackingList<NodeTypeVmssDataDisk>();
             Zones = new ChangeTrackingList<string>();
             VmSetupActions = new ChangeTrackingList<VmSetupAction>();
+            NatConfigurations = new ChangeTrackingList<NodeTypeNatConfig>();
             AdditionalNetworkInterfaceConfigurations = new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>();
+            VmApplications = new ChangeTrackingList<ServiceFabricManagedVmApplication>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -72,9 +74,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> The node type sku. </param>
         /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. &lt;br /&gt;&lt;br /&gt;**Values:** &lt;br /&gt;-1 - Use when auto scale rules are configured or sku.capacity is defined &lt;br /&gt; 0 - Not supported &lt;br /&gt; &gt;0 - Use for manual scale. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
         /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
         /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
@@ -110,21 +111,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
         /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
         /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
-        /// <param name="securityType"> Specifies the security type of the nodeType. Only TrustedLaunch is currently supported. </param>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </param>
+        /// <param name="securityType"> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </param>
+        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob and VMGuestStateOnly for encryption of just the VMGuestState blob. Note: It can be set for only Confidential VMs. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </param>
         /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </param>
         /// <param name="isNodePublicIPv6Enabled"> Specifies whether each node is allocated its own public IPv6 address. This is only supported on secondary node types with custom Load Balancers. </param>
         /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
         /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
+        /// <param name="natConfigurations"> Specifies the NAT configuration on default public Load Balancer for the node type. This is only supported for node types use the default public Load Balancer. </param>
         /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
         /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. </param>
         /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
         /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
-        /// <param name="tags"> Azure resource tags. </param>
+        /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
+        /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
+        /// <param name="isZoneBalanceEnabled"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The node type sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, IDictionary<string, string> tags, NodeTypeSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Sku = sku;
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
             DataDiskSizeInGB = dataDiskSizeInGB;
@@ -163,24 +169,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             SubnetId = subnetId;
             VmSetupActions = vmSetupActions;
             SecurityType = securityType;
+            SecurityEncryptionType = securityEncryptionType;
             IsSecureBootEnabled = isSecureBootEnabled;
             IsNodePublicIPEnabled = isNodePublicIPEnabled;
             IsNodePublicIPv6Enabled = isNodePublicIPv6Enabled;
             VmSharedGalleryImageId = vmSharedGalleryImageId;
             NatGatewayId = natGatewayId;
+            NatConfigurations = natConfigurations;
             VmImagePlan = vmImagePlan;
             ServiceArtifactReferenceId = serviceArtifactReferenceId;
             DscpConfigurationId = dscpConfigurationId;
             AdditionalNetworkInterfaceConfigurations = additionalNetworkInterfaceConfigurations;
+            ComputerNamePrefix = computerNamePrefix;
+            VmApplications = vmApplications;
+            IsZoneBalanceEnabled = isZoneBalanceEnabled;
             Tags = tags;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The node type sku. </summary>
-        public NodeTypeSku Sku { get; set; }
         /// <summary> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </summary>
         public bool? IsPrimary { get; set; }
-        /// <summary> The number of nodes in the node type. &lt;br /&gt;&lt;br /&gt;**Values:** &lt;br /&gt;-1 - Use when auto scale rules are configured or sku.capacity is defined &lt;br /&gt; 0 - Not supported &lt;br /&gt; &gt;0 - Use for manual scale. </summary>
+        /// <summary> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </summary>
         public int? VmInstanceCount { get; set; }
         /// <summary> Disk size for the managed disk attached to the vms on the node type in GBs. </summary>
         public int? DataDiskSizeInGB { get; set; }
@@ -263,9 +273,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </summary>
         public IList<VmSetupAction> VmSetupActions { get; }
-        /// <summary> Specifies the security type of the nodeType. Only TrustedLaunch is currently supported. </summary>
+        /// <summary> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </summary>
         public ServiceFabricManagedClusterSecurityType? SecurityType { get; set; }
-        /// <summary> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </summary>
+        /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob and VMGuestStateOnly for encryption of just the VMGuestState blob. Note: It can be set for only Confidential VMs. </summary>
+        public NodeTypeSecurityEncryptionType? SecurityEncryptionType { get; set; }
+        /// <summary> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </summary>
         public bool? IsSecureBootEnabled { get; set; }
         /// <summary> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </summary>
         public bool? IsNodePublicIPEnabled { get; set; }
@@ -275,6 +287,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public ResourceIdentifier VmSharedGalleryImageId { get; set; }
         /// <summary> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </summary>
         public ResourceIdentifier NatGatewayId { get; set; }
+        /// <summary> Specifies the NAT configuration on default public Load Balancer for the node type. This is only supported for node types use the default public Load Balancer. </summary>
+        public IList<NodeTypeNatConfig> NatConfigurations { get; }
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </summary>
         public VmImagePlan VmImagePlan { get; set; }
         /// <summary> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. </summary>
@@ -283,7 +297,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public ResourceIdentifier DscpConfigurationId { get; set; }
         /// <summary> Specifies the settings for any additional secondary network interfaces to attach to the node type. </summary>
         public IList<AdditionalNetworkInterfaceConfiguration> AdditionalNetworkInterfaceConfigurations { get; }
-        /// <summary> Azure resource tags. </summary>
+        /// <summary> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </summary>
+        public string ComputerNamePrefix { get; set; }
+        /// <summary> Specifies the gallery applications that should be made available to the underlying VMSS. </summary>
+        public IList<ServiceFabricManagedVmApplication> VmApplications { get; }
+        /// <summary> Setting this to true allows stateless node types to scale out without equal distribution across zones. </summary>
+        public bool? IsZoneBalanceEnabled { get; set; }
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The node type sku. </summary>
+        public NodeTypeSku Sku { get; set; }
     }
 }

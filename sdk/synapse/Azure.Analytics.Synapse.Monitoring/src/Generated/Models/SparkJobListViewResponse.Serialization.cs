@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Analytics.Synapse.Monitoring;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
@@ -48,6 +47,14 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                 }
             }
             return new SparkJobListViewResponse(nJobs, sparkJobs ?? new ChangeTrackingList<SparkJob>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobListViewResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkJobListViewResponse(document.RootElement);
         }
     }
 }

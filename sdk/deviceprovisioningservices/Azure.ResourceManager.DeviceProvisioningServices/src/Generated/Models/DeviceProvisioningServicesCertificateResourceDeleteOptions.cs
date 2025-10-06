@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get; set; }
         /// <summary> Time the certificate is created. </summary>
         public DateTimeOffset? CertificateCreatedOn { get; set; }
-        /// <summary> Time the certificate is last updated. </summary>
+        /// <summary> Certificate last updated time. </summary>
         public DateTimeOffset? CertificateLastUpdatedOn { get; set; }
         /// <summary> Indicates if the certificate contains a private key. </summary>
         public bool? CertificateHasPrivateKey { get; set; }

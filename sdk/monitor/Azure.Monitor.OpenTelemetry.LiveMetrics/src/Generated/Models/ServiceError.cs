@@ -9,22 +9,24 @@ using System;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Optional http response body, whose existance carries additional error descriptions. </summary>
+    /// <summary> Optional http response body, whose existence carries additional error descriptions. </summary>
     internal partial class ServiceError
     {
         /// <summary> Initializes a new instance of <see cref="ServiceError"/>. </summary>
-        internal ServiceError()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceError"/>. </summary>
-        /// <param name="requestId"> A guid of the request that triggers the service error. </param>
+        /// <param name="requestId"> A globally unique identifier to identify the diagnostic context. It defaults to the empty GUID. </param>
         /// <param name="responseDateTime"> Service error response date time. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="exception"> Message of the exception that triggers the error response. </param>
-        internal ServiceError(string requestId, DateTimeOffset? responseDateTime, string code, string message, string exception)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/>, <paramref name="responseDateTime"/>, <paramref name="code"/>, <paramref name="message"/> or <paramref name="exception"/> is null. </exception>
+        internal ServiceError(string requestId, string responseDateTime, string code, string message, string exception)
         {
+            Argument.AssertNotNull(requestId, nameof(requestId));
+            Argument.AssertNotNull(responseDateTime, nameof(responseDateTime));
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(exception, nameof(exception));
+
             RequestId = requestId;
             ResponseDateTime = responseDateTime;
             Code = code;
@@ -32,10 +34,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             Exception = exception;
         }
 
-        /// <summary> A guid of the request that triggers the service error. </summary>
+        /// <summary> A globally unique identifier to identify the diagnostic context. It defaults to the empty GUID. </summary>
         public string RequestId { get; }
         /// <summary> Service error response date time. </summary>
-        public DateTimeOffset? ResponseDateTime { get; }
+        public string ResponseDateTime { get; }
         /// <summary> Error code. </summary>
         public string Code { get; }
         /// <summary> Error message. </summary>

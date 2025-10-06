@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -53,23 +52,36 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppQueueScaleRule"/>. </summary>
+        /// <param name="accountName"> Storage account name. required if using managed identity to authenticate. </param>
         /// <param name="queueName"> Queue name. </param>
         /// <param name="queueLength"> Queue length. </param>
         /// <param name="auth"> Authentication secrets for the queue scale rule. </param>
+        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppQueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppQueueScaleRule(string accountName, string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            AccountName = accountName;
             QueueName = queueName;
             QueueLength = queueLength;
             Auth = auth;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Storage account name. required if using managed identity to authenticate. </summary>
+        [WirePath("accountName")]
+        public string AccountName { get; set; }
         /// <summary> Queue name. </summary>
+        [WirePath("queueName")]
         public string QueueName { get; set; }
         /// <summary> Queue length. </summary>
+        [WirePath("queueLength")]
         public int? QueueLength { get; set; }
         /// <summary> Authentication secrets for the queue scale rule. </summary>
+        [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
+        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </summary>
+        [WirePath("identity")]
+        public string Identity { get; set; }
     }
 }

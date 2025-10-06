@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -79,20 +78,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the URL of the proxy to be used. </summary>
+        [WirePath("proxyUrl")]
         public Uri ProxyUri { get; }
         /// <summary> Specifies the list of ports that the agent will be able to listen on. </summary>
+        [WirePath("incomingConnectionsPorts")]
         public IReadOnlyList<string> IncomingConnectionsPorts { get; }
         /// <summary> Array of extensions that are allowed to be installed or updated. </summary>
+        [WirePath("extensionsAllowList")]
         public IReadOnlyList<HybridComputeConfigurationExtension> ExtensionsAllowList { get; }
         /// <summary> Array of extensions that are blocked (cannot be installed or updated). </summary>
+        [WirePath("extensionsBlockList")]
         public IReadOnlyList<HybridComputeConfigurationExtension> ExtensionsBlockList { get; }
         /// <summary> List of service names which should not use the specified proxy server. </summary>
+        [WirePath("proxyBypass")]
         public IReadOnlyList<string> ProxyBypass { get; }
         /// <summary> Specifies whether the extension service is enabled or disabled. </summary>
+        [WirePath("extensionsEnabled")]
         public string ExtensionsEnabled { get; }
         /// <summary> Specified whether the guest configuration service is enabled or disabled. </summary>
+        [WirePath("guestConfigurationEnabled")]
         public string GuestConfigurationEnabled { get; }
         /// <summary> Name of configuration mode to use. Modes are pre-defined configurations of security controls, extension allowlists and guest configuration, maintained by Microsoft. </summary>
+        [WirePath("configMode")]
         public AgentConfigurationMode? ConfigMode { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the hostname. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </summary>
+        [WirePath("siteNames")]
         public IReadOnlyList<string> SiteNames { get; }
         /// <summary> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </summary>
+        [WirePath("azureResourceName")]
         public string AzureResourceName { get; }
         /// <summary> Type of the Azure resource the hostname is assigned to. </summary>
+        [WirePath("azureResourceType")]
         public AppServiceResourceType? AzureResourceType { get; }
         /// <summary> Type of the DNS record. </summary>
+        [WirePath("customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; }
         /// <summary> Type of the hostname. </summary>
+        [WirePath("hostNameType")]
         public AppServiceHostNameType? HostNameType { get; }
     }
 }

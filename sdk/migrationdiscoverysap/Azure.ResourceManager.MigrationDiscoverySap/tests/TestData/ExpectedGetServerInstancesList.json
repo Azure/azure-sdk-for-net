@@ -1,0 +1,123 @@
+﻿[
+    {
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/APP_azsapdeva01",
+        "name": "APP_azsapdeva01",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
+        "properties": {
+            "serverName": "azsapdeva01",
+            "sapInstanceType": "APP",
+            "instanceSid": "ADP",
+            "sapProduct": "SAP ERP",
+            "sapProductVersion": "6.0 EHP8",
+            "operatingSystem": "Windows Server",
+            "configurationData": {
+                "saps": 10000,
+                "cpu": 8,
+                "cpuType": "Xeon E5-2673 v4",
+                "cpuInMhz": 2300,
+                "ram": 64,
+                "hardwareManufacturer": "Azure",
+                "model": "Virtual Machine",
+                "totalDiskSizeGB": 128,
+                "totalDiskIops": 5000,
+                "databaseType": "NotApplicable"
+            },
+            "performanceData": {
+                "dataSource": "Excel",
+                "maxCpuLoad": 11
+            },
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/APP_azsapdeva02",
+        "name": "APP_azsapdeva02",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
+        "properties": {
+            "serverName": "azsapdeva02",
+            "sapInstanceType": "APP",
+            "instanceSid": "ADP",
+            "sapProduct": "SAP ERP",
+            "sapProductVersion": "6.0 EHP8",
+            "operatingSystem": "Windows Server",
+            "configurationData": {
+                "saps": 10000,
+                "cpu": 8,
+                "cpuType": "Xeon E5-2673 v4",
+                "cpuInMhz": 2300,
+                "ram": 64,
+                "hardwareManufacturer": "Azure",
+                "model": "Virtual Machine",
+                "totalDiskSizeGB": 128,
+                "totalDiskIops": 5000,
+                "databaseType": "NotApplicable"
+            },
+            "performanceData": {
+                "dataSource": "Excel",
+                "maxCpuLoad": 11
+            },
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/ASCS_azsapdevcl",
+        "name": "ASCS_azsapdevcl",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
+        "properties": {
+            "serverName": "azsapdevcl",
+            "sapInstanceType": "ASCS",
+            "instanceSid": "ADP",
+            "sapProduct": "SAP ERP",
+            "sapProductVersion": "6.0 EHP8",
+            "operatingSystem": "Windows Server",
+            "configurationData": {
+                "saps": 5000,
+                "cpu": 4,
+                "cpuType": "Xeon E5-2673 v4",
+                "cpuInMhz": 2300,
+                "ram": 32,
+                "hardwareManufacturer": "Azure",
+                "model": "Virtual Machine",
+                "totalDiskSizeGB": 128,
+                "totalDiskIops": 5000,
+                "databaseType": "NotApplicable"
+            },
+            "performanceData": {
+                "dataSource": "Excel",
+                "maxCpuLoad": 11
+            },
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/DB_azsapdevdb",
+        "name": "DB_azsapdevdb",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
+        "properties": {
+            "serverName": "azsapdevdb",
+            "sapInstanceType": "DB",
+            "instanceSid": "ADP",
+            "sapProduct": "SAP ERP",
+            "sapProductVersion": "6.0 EHP8",
+            "operatingSystem": "SUSE",
+            "configurationData": {
+                "saps": 50000,
+                "cpu": 64,
+                "cpuType": "Xeon E5-2673 v4",
+                "cpuInMhz": 2300,
+                "ram": 1792,
+                "hardwareManufacturer": "Azure",
+                "model": "Virtual Machine",
+                "totalDiskSizeGB": 5048,
+                "totalDiskIops": 40000,
+                "databaseType": "HANA"
+            },
+            "performanceData": {
+                "dataSource": "Excel",
+                "maxCpuLoad": 11,
+                "totalSourceDbSizeGB": 4000
+            },
+            "provisioningState": "Succeeded"
+        }
+    }
+]

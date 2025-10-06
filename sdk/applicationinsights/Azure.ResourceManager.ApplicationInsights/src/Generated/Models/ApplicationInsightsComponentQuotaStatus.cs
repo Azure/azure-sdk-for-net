@@ -53,21 +53,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentQuotaStatus"/>. </summary>
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
-        /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
+        /// <param name="expireOn"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, string expirationTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppId = appId;
             ShouldBeThrottled = shouldBeThrottled;
-            ExpirationTime = expirationTime;
+            ExpireOn = expireOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Application ID for the Application Insights component. </summary>
+        [WirePath("AppId")]
         public string AppId { get; }
         /// <summary> The daily data volume cap is met, and data ingestion will be stopped. </summary>
+        [WirePath("ShouldBeThrottled")]
         public bool? ShouldBeThrottled { get; }
         /// <summary> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </summary>
-        public string ExpirationTime { get; }
+        [WirePath("ExpirationTime")]
+        public DateTimeOffset? ExpireOn { get; }
     }
 }

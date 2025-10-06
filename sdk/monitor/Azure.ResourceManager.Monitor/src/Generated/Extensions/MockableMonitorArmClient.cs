@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor.Mocking
@@ -346,7 +343,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric values for a resource**.
+        /// **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -377,7 +374,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric values for a resource**.
+        /// **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -742,6 +739,18 @@ namespace Azure.ResourceManager.Monitor.Mocking
         {
             MonitorWorkspaceResource.ValidateResourceId(id);
             return new MonitorWorkspaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PipelineGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PipelineGroupResource.CreateResourceIdentifier" /> to create a <see cref="PipelineGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PipelineGroupResource"/> object. </returns>
+        public virtual PipelineGroupResource GetPipelineGroupResource(ResourceIdentifier id)
+        {
+            PipelineGroupResource.ValidateResourceId(id);
+            return new PipelineGroupResource(Client, id);
         }
     }
 }

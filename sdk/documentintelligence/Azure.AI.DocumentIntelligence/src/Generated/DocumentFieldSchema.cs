@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -47,23 +46,23 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
-        /// <param name="type"> Semantic data type of the field value. </param>
-        internal DocumentFieldSchema(DocumentFieldType type)
+        /// <param name="fieldType"> Semantic data type of the field value. </param>
+        public DocumentFieldSchema(DocumentFieldType fieldType)
         {
-            Type = type;
+            FieldType = fieldType;
             Properties = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
-        /// <param name="type"> Semantic data type of the field value. </param>
+        /// <param name="fieldType"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
         /// <param name="example"> Example field content. </param>
         /// <param name="items"> Field type schema of each array element. </param>
         /// <param name="properties"> Named sub-fields of the object field. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFieldSchema(DocumentFieldType type, string description, string example, DocumentFieldSchema items, IReadOnlyDictionary<string, DocumentFieldSchema> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentFieldSchema(DocumentFieldType fieldType, string description, string example, DocumentFieldSchema items, IDictionary<string, DocumentFieldSchema> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            FieldType = fieldType;
             Description = description;
             Example = example;
             Items = items;
@@ -77,14 +76,14 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Semantic data type of the field value. </summary>
-        public DocumentFieldType Type { get; }
+        public DocumentFieldType FieldType { get; set; }
         /// <summary> Field description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> Example field content. </summary>
-        public string Example { get; }
+        public string Example { get; set; }
         /// <summary> Field type schema of each array element. </summary>
-        public DocumentFieldSchema Items { get; }
+        public DocumentFieldSchema Items { get; set; }
         /// <summary> Named sub-fields of the object field. </summary>
-        public IReadOnlyDictionary<string, DocumentFieldSchema> Properties { get; }
+        public IDictionary<string, DocumentFieldSchema> Properties { get; }
     }
 }

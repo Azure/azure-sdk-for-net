@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string virtualHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
+            uri.AppendPath(virtualHubName, true);
+            uri.AppendPath("/bgpConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string virtualHubName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ListVirtualHubBgpConnectionResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListVirtualHubBgpConnectionResults.DeserializeListVirtualHubBgpConnectionResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,30 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ListVirtualHubBgpConnectionResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListVirtualHubBgpConnectionResults.DeserializeListVirtualHubBgpConnectionResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListLearnedRoutesRequestUri(string subscriptionId, string resourceGroupName, string hubName, string connectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/bgpConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/learnedRoutes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListLearnedRoutesRequest(string subscriptionId, string resourceGroupName, string hubName, string connectionName)
@@ -193,6 +224,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListAdvertisedRoutesRequestUri(string subscriptionId, string resourceGroupName, string hubName, string connectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/bgpConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/advertisedRoutes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAdvertisedRoutesRequest(string subscriptionId, string resourceGroupName, string hubName, string connectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -270,6 +318,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName)
         {
             var message = _pipeline.CreateMessage();
@@ -306,7 +362,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ListVirtualHubBgpConnectionResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListVirtualHubBgpConnectionResults.DeserializeListVirtualHubBgpConnectionResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -337,7 +393,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ListVirtualHubBgpConnectionResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListVirtualHubBgpConnectionResults.DeserializeListVirtualHubBgpConnectionResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

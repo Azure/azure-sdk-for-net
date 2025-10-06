@@ -52,5 +52,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new IncidentRootCause(rootCause, path, score, description);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IncidentRootCause FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIncidentRootCause(document.RootElement);
+        }
     }
 }

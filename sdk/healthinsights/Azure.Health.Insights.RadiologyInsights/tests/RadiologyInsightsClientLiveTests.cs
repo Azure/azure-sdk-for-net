@@ -11,6 +11,7 @@ using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using Azure.Health.Insights.RadiologyInsights;
 using System.Text.Json;
+using System;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
@@ -37,7 +38,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             var client = CreateRadiologyInsightsClient();
 
             var request = GetRequestContent("RadiologyInsightsClientTest.request.json");
-            var operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, request);
+            var jobId = "job1714464002036";
+            var operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, request);
 
             Assert.IsNotNull(operation);
             Response response = operation.GetRawResponse();

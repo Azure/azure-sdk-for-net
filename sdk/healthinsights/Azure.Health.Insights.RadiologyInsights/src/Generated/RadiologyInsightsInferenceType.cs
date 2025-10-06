@@ -32,6 +32,9 @@ namespace Azure.Health.Insights.RadiologyInsights
         private const string FollowupRecommendationValue = "followupRecommendation";
         private const string FollowupCommunicationValue = "followupCommunication";
         private const string RadiologyProcedureValue = "radiologyProcedure";
+        private const string ScoringAndAssessmentValue = "scoringAndAssessment";
+        private const string GuidanceValue = "guidance";
+        private const string QualityMeasureValue = "qualityMeasure";
 
         /// <summary> Age mismatch inference type. </summary>
         public static RadiologyInsightsInferenceType AgeMismatch { get; } = new RadiologyInsightsInferenceType(AgeMismatchValue);
@@ -53,11 +56,17 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static RadiologyInsightsInferenceType FollowupCommunication { get; } = new RadiologyInsightsInferenceType(FollowupCommunicationValue);
         /// <summary> Radiology Procedure inference type. </summary>
         public static RadiologyInsightsInferenceType RadiologyProcedure { get; } = new RadiologyInsightsInferenceType(RadiologyProcedureValue);
+        /// <summary> Scoring and assessment inference type. </summary>
+        public static RadiologyInsightsInferenceType ScoringAndAssessment { get; } = new RadiologyInsightsInferenceType(ScoringAndAssessmentValue);
+        /// <summary> Guidance inference type. </summary>
+        public static RadiologyInsightsInferenceType Guidance { get; } = new RadiologyInsightsInferenceType(GuidanceValue);
+        /// <summary> Guidance measure inference type. </summary>
+        public static RadiologyInsightsInferenceType QualityMeasure { get; } = new RadiologyInsightsInferenceType(QualityMeasureValue);
         /// <summary> Determines if two <see cref="RadiologyInsightsInferenceType"/> values are the same. </summary>
         public static bool operator ==(RadiologyInsightsInferenceType left, RadiologyInsightsInferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RadiologyInsightsInferenceType"/> values are not the same. </summary>
         public static bool operator !=(RadiologyInsightsInferenceType left, RadiologyInsightsInferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RadiologyInsightsInferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RadiologyInsightsInferenceType"/>. </summary>
         public static implicit operator RadiologyInsightsInferenceType(string value) => new RadiologyInsightsInferenceType(value);
 
         /// <inheritdoc />
@@ -68,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

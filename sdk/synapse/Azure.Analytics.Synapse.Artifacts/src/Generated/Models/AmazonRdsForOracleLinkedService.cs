@@ -5,56 +5,106 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> AmazonRdsForOracle database. </summary>
+    /// <summary> AmazonRdsForOracle database. This linked service has supported version property. The Version 1.0 is scheduled for deprecation while your pipeline will continue to run after EOL but without any bug fix or new features. </summary>
     public partial class AmazonRdsForOracleLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/>. </summary>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public AmazonRdsForOracleLinkedService(object connectionString)
+        public AmazonRdsForOracleLinkedService()
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
             Type = "AmazonRdsForOracle";
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </param>
+        /// <param name="server"> The location of AmazonRdsForOracle database you want to connect to, the supported forms include connector descriptor, Easy Connect (Plus) Naming and Oracle Net Services Name (Only self-hosted IR). Type: string. Only used for Version 2.0. </param>
+        /// <param name="authenticationType"> Authentication type for connecting to the AmazonRdsForOracle database. Only used for Version 2.0. </param>
+        /// <param name="username"> The AmazonRdsForOracle database username. Type: string. Only used for Version 2.0. </param>
         /// <param name="password">
         /// The Azure key vault secret reference of password in connection string.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
+        /// <param name="encryptionClient"> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </param>
+        /// <param name="encryptionTypesClient"> Specifies the encryption algorithms that client can use. Supported values are AES128, AES192, AES256, 3DES112, 3DES168, default value is (AES256). Type: string. Only used for Version 2.0. </param>
+        /// <param name="cryptoChecksumClient"> Specifies the desired data integrity behavior when this client connects to a server. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </param>
+        /// <param name="cryptoChecksumTypesClient"> Specifies the crypto-checksum algorithms that client can use. Supported values are SHA1, SHA256, SHA384, SHA512, default value is (SHA512). Type: string. Only used for Version 2.0. </param>
+        /// <param name="initialLobFetchSize"> Specifies the amount that the source initially fetches for LOB columns, default value is 0. Type: integer. Only used for Version 2.0. </param>
+        /// <param name="fetchSize"> Specifies the number of bytes that the driver allocates to fetch the data in one database round-trip, default value is 10485760. Type: integer. Only used for Version 2.0. </param>
+        /// <param name="statementCacheSize"> Specifies the number of cursors or statements to be cached for each database connection, default value is 0. Type: integer. Only used for Version 2.0. </param>
+        /// <param name="initializationString"> Specifies a command that is issued immediately after connecting to the database to manage session settings. Type: string. Only used for Version 2.0. </param>
+        /// <param name="enableBulkLoad"> Specifies whether to use bulk copy or batch insert when loading data into the database, default value is true. Type: boolean. Only used for Version 2.0. </param>
+        /// <param name="supportV1DataTypes"> Specifies whether to use the Version 1.0 data type mappings. Do not set this to true unless you want to keep backward compatibility with Version 1.0's data type mappings, default value is false. Type: boolean. Only used for Version 2.0. </param>
+        /// <param name="fetchTswtzAsTimestamp"> Specifies whether the driver returns column value with the TIMESTAMP WITH TIME ZONE data type as DateTime or string. This setting is ignored if supportV1DataTypes is not true, default value is true. Type: boolean. Only used for Version 2.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonRdsForOracleLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRdsForOracleLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, AmazonRdsForOracleAuthenticationType? authenticationType, object username, SecretBase password, object encryptionClient, object encryptionTypesClient, object cryptoChecksumClient, object cryptoChecksumTypesClient, object initialLobFetchSize, object fetchSize, object statementCacheSize, object initializationString, object enableBulkLoad, object supportV1DataTypes, object fetchTswtzAsTimestamp, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
+            Server = server;
+            AuthenticationType = authenticationType;
+            Username = username;
             Password = password;
+            EncryptionClient = encryptionClient;
+            EncryptionTypesClient = encryptionTypesClient;
+            CryptoChecksumClient = cryptoChecksumClient;
+            CryptoChecksumTypesClient = cryptoChecksumTypesClient;
+            InitialLobFetchSize = initialLobFetchSize;
+            FetchSize = fetchSize;
+            StatementCacheSize = statementCacheSize;
+            InitializationString = initializationString;
+            EnableBulkLoad = enableBulkLoad;
+            SupportV1DataTypes = supportV1DataTypes;
+            FetchTswtzAsTimestamp = fetchTswtzAsTimestamp;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "AmazonRdsForOracle";
         }
 
-        /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </summary>
         public object ConnectionString { get; set; }
+        /// <summary> The location of AmazonRdsForOracle database you want to connect to, the supported forms include connector descriptor, Easy Connect (Plus) Naming and Oracle Net Services Name (Only self-hosted IR). Type: string. Only used for Version 2.0. </summary>
+        public object Server { get; set; }
+        /// <summary> Authentication type for connecting to the AmazonRdsForOracle database. Only used for Version 2.0. </summary>
+        public AmazonRdsForOracleAuthenticationType? AuthenticationType { get; set; }
+        /// <summary> The AmazonRdsForOracle database username. Type: string. Only used for Version 2.0. </summary>
+        public object Username { get; set; }
         /// <summary>
         /// The Azure key vault secret reference of password in connection string.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase Password { get; set; }
+        /// <summary> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
+        public object EncryptionClient { get; set; }
+        /// <summary> Specifies the encryption algorithms that client can use. Supported values are AES128, AES192, AES256, 3DES112, 3DES168, default value is (AES256). Type: string. Only used for Version 2.0. </summary>
+        public object EncryptionTypesClient { get; set; }
+        /// <summary> Specifies the desired data integrity behavior when this client connects to a server. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
+        public object CryptoChecksumClient { get; set; }
+        /// <summary> Specifies the crypto-checksum algorithms that client can use. Supported values are SHA1, SHA256, SHA384, SHA512, default value is (SHA512). Type: string. Only used for Version 2.0. </summary>
+        public object CryptoChecksumTypesClient { get; set; }
+        /// <summary> Specifies the amount that the source initially fetches for LOB columns, default value is 0. Type: integer. Only used for Version 2.0. </summary>
+        public object InitialLobFetchSize { get; set; }
+        /// <summary> Specifies the number of bytes that the driver allocates to fetch the data in one database round-trip, default value is 10485760. Type: integer. Only used for Version 2.0. </summary>
+        public object FetchSize { get; set; }
+        /// <summary> Specifies the number of cursors or statements to be cached for each database connection, default value is 0. Type: integer. Only used for Version 2.0. </summary>
+        public object StatementCacheSize { get; set; }
+        /// <summary> Specifies a command that is issued immediately after connecting to the database to manage session settings. Type: string. Only used for Version 2.0. </summary>
+        public object InitializationString { get; set; }
+        /// <summary> Specifies whether to use bulk copy or batch insert when loading data into the database, default value is true. Type: boolean. Only used for Version 2.0. </summary>
+        public object EnableBulkLoad { get; set; }
+        /// <summary> Specifies whether to use the Version 1.0 data type mappings. Do not set this to true unless you want to keep backward compatibility with Version 1.0's data type mappings, default value is false. Type: boolean. Only used for Version 2.0. </summary>
+        public object SupportV1DataTypes { get; set; }
+        /// <summary> Specifies whether the driver returns column value with the TIMESTAMP WITH TIME ZONE data type as DateTime or string. This setting is ignored if supportV1DataTypes is not true, default value is true. Type: boolean. Only used for Version 2.0. </summary>
+        public object FetchTswtzAsTimestamp { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

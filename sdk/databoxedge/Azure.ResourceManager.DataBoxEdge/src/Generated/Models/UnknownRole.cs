@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The UnknownRole. </summary>
+    /// <summary> Unknown version of Role. </summary>
     internal partial class UnknownRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRole"/>. </summary>

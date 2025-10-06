@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -22,8 +21,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             Techniques = new ChangeTrackingList<string>();
+            SubTechniques = new ChangeTrackingList<string>();
             CustomDetails = new ChangeTrackingDictionary<string, string>();
             EntityMappings = new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
+            SentinelEntitiesMappings = new ChangeTrackingList<SentinelEntityMapping>();
             Kind = AlertRuleKind.Scheduled;
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
         /// <param name="createdDateUTC"> The time that this alert rule template has been added. </param>
@@ -48,13 +49,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
         /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule template. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
         /// <param name="version"> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </param>
         /// <param name="eventGroupingSettings"> The event grouping settings. </param>
         /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
         /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
         /// <param name="alertDetailsOverride"> The alert details override settings. </param>
-        internal ScheduledAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string version, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
+        internal ScheduledAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IList<string> subTechniques, string version, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, IList<SentinelEntityMapping> sentinelEntitiesMappings) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
             CreatedDateUTC = createdDateUTC;
@@ -71,49 +74,71 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             TriggerThreshold = triggerThreshold;
             Tactics = tactics;
             Techniques = techniques;
+            SubTechniques = subTechniques;
             Version = version;
             EventGroupingSettings = eventGroupingSettings;
             CustomDetails = customDetails;
             EntityMappings = entityMappings;
             AlertDetailsOverride = alertDetailsOverride;
+            SentinelEntitiesMappings = sentinelEntitiesMappings;
             Kind = kind;
         }
 
         /// <summary> the number of alert rules that were created by this template. </summary>
+        [WirePath("properties.alertRulesCreatedByTemplateCount")]
         public int? AlertRulesCreatedByTemplateCount { get; set; }
         /// <summary> The time that this alert rule template has been added. </summary>
+        [WirePath("properties.createdDateUTC")]
         public DateTimeOffset? CreatedDateUTC { get; }
         /// <summary> The time that this alert rule template was last updated. </summary>
+        [WirePath("properties.lastUpdatedDateUTC")]
         public DateTimeOffset? LastUpdatedDateUTC { get; }
         /// <summary> The description of the alert rule template. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The display name for alert rule template. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The required data connectors for this template. </summary>
+        [WirePath("properties.requiredDataConnectors")]
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
         /// <summary> The alert rule template status. </summary>
+        [WirePath("properties.status")]
         public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
         /// <summary> The query that creates alerts for this rule. </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
         /// <summary> The frequency (in ISO 8601 duration format) for this alert rule to run. </summary>
+        [WirePath("properties.queryFrequency")]
         public TimeSpan? QueryFrequency { get; set; }
         /// <summary> The period (in ISO 8601 duration format) that this alert rule looks at. </summary>
+        [WirePath("properties.queryPeriod")]
         public TimeSpan? QueryPeriod { get; set; }
         /// <summary> The severity for alerts created by this alert rule. </summary>
+        [WirePath("properties.severity")]
         public SecurityInsightsAlertSeverity? Severity { get; set; }
         /// <summary> The operation against the threshold that triggers alert rule. </summary>
+        [WirePath("properties.triggerOperator")]
         public SecurityInsightsAlertRuleTriggerOperator? TriggerOperator { get; set; }
         /// <summary> The threshold triggers this alert rule. </summary>
+        [WirePath("properties.triggerThreshold")]
         public int? TriggerThreshold { get; set; }
         /// <summary> The tactics of the alert rule template. </summary>
+        [WirePath("properties.tactics")]
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The techniques of the alert rule template. </summary>
+        /// <summary> The techniques of the alert rule. </summary>
+        [WirePath("properties.techniques")]
         public IList<string> Techniques { get; }
+        /// <summary> The sub-techniques of the alert rule. </summary>
+        [WirePath("properties.subTechniques")]
+        public IList<string> SubTechniques { get; }
         /// <summary> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> The event grouping settings. </summary>
         internal EventGroupingSettings EventGroupingSettings { get; set; }
         /// <summary> The event grouping aggregation kinds. </summary>
+        [WirePath("properties.eventGroupingSettings.aggregationKind")]
         public EventGroupingAggregationKind? EventGroupingAggregationKind
         {
             get => EventGroupingSettings is null ? default : EventGroupingSettings.AggregationKind;
@@ -126,10 +151,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Dictionary of string key-value pairs of columns to be attached to the alert. </summary>
+        [WirePath("properties.customDetails")]
         public IDictionary<string, string> CustomDetails { get; }
         /// <summary> Array of the entity mappings of the alert rule. </summary>
+        [WirePath("properties.entityMappings")]
         public IList<SecurityInsightsAlertRuleEntityMapping> EntityMappings { get; }
         /// <summary> The alert details override settings. </summary>
+        [WirePath("properties.alertDetailsOverride")]
         public SecurityInsightsAlertDetailsOverride AlertDetailsOverride { get; set; }
+        /// <summary> Array of the sentinel entity mappings of the alert rule. </summary>
+        [WirePath("properties.sentinelEntitiesMappings")]
+        public IList<SentinelEntityMapping> SentinelEntitiesMappings { get; }
     }
 }

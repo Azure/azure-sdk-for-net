@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -74,7 +73,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         GetInstancesPage value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetInstancesPage.DeserializeGetInstancesPage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -96,7 +95,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         GetInstancesPage value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetInstancesPage.DeserializeGetInstancesPage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -147,7 +146,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         InstancesBatchResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InstancesBatchResponse.DeserializeInstancesBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +174,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         InstancesBatchResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InstancesBatchResponse.DeserializeInstancesBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -226,7 +225,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         InstancesSuggestResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InstancesSuggestResponse.DeserializeInstancesSuggestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +253,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         InstancesSuggestResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InstancesSuggestResponse.DeserializeInstancesSuggestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -310,7 +309,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         SearchInstancesResponsePage value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchInstancesResponsePage.DeserializeSearchInstancesResponsePage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,7 +338,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         SearchInstancesResponsePage value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchInstancesResponsePage.DeserializeSearchInstancesResponsePage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

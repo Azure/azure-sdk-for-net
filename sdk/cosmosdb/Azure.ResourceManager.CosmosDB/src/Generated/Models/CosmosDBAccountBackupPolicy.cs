@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Describes the mode of backups. </summary>
         internal BackupPolicyType BackupPolicyType { get; set; }
         /// <summary> The object representing the state of the migration between the backup policies. </summary>
+        [WirePath("migrationState")]
         public BackupPolicyMigrationState MigrationState { get; set; }
     }
 }

@@ -53,25 +53,34 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppAzureFileProperties"/>. </summary>
         /// <param name="accountName"> Storage account name for azure file. </param>
         /// <param name="accountKey"> Storage account key for azure file. </param>
+        /// <param name="accountKeyVaultProperties"> Storage account key stored as an Azure Key Vault secret. </param>
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> Azure file share name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAzureFileProperties(string accountName, string accountKey, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppAzureFileProperties(string accountName, string accountKey, ContainerAppSecretKeyVaultProperties accountKeyVaultProperties, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
             AccountKey = accountKey;
+            AccountKeyVaultProperties = accountKeyVaultProperties;
             AccessMode = accessMode;
             ShareName = shareName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage account name for azure file. </summary>
+        [WirePath("accountName")]
         public string AccountName { get; set; }
         /// <summary> Storage account key for azure file. </summary>
+        [WirePath("accountKey")]
         public string AccountKey { get; set; }
+        /// <summary> Storage account key stored as an Azure Key Vault secret. </summary>
+        [WirePath("accountKeyVaultProperties")]
+        public ContainerAppSecretKeyVaultProperties AccountKeyVaultProperties { get; set; }
         /// <summary> Access mode for storage. </summary>
+        [WirePath("accessMode")]
         public ContainerAppAccessMode? AccessMode { get; set; }
         /// <summary> Azure file share name. </summary>
+        [WirePath("shareName")]
         public string ShareName { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,149 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-04-01'
+- Added `VirtualMachineScaleSet.ScaleOut` Operation.
+- Added `Tags` to `VirtualMachineScaleSetNetworkConfiguration`, `VirtualMachineScaleSetIPConfiguration`, `VirtualMachineScaleSetPublicIPAddressConfiguration` and `VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings` classes.
+- Added `Placement` property to `VirtualMachineScaleSet` class.
+- Added `ZoneAllocationPolicy` property to `ResiliencyPolicy` class.
+- Added `MaxInstancePercentPerZonePolicy` property to `AutomaticZoneRebalancingPolicy` class.
+- Added `ReservationType` property to `CapacityReservationGroup` class.
+- Added `ScheduleProfile` property to `CapacityReservation` class.
+- Added `AddProxyAgentExtension` property to `ProxyAgentSettings` class.
+- Added `ScriptShellTypes` enum to `RunCommandScriptSource` class.
+- Added `GalleryScriptReferenceId` property to `RunCommandScriptSource` class.
+- Added `AllInstancesDown` property to `ScheduledEventsPolicy` class.
+- Added `ScheduledEventsApiVersion` property to `EventGridAndResourceGraph` class.
+- Added `AutomaticZoneRebalancing` property to `OrchetrationServiceNames` class.
+- Added `highSpeedInterconnectPlacement` property to `VirtualMachineScaleSetProperties` class.
+- Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
+
+
+## 1.11.0 (2025-08-12)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Compute` AOT-compatible
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f03ae6d4107a964b20a48aa87fa520052750bb9/specification/compute/resource-manager/readme.md.
+  - Added new classes: `SupportedSecurityOption`, `AvailabilityPolicyDiskDelay`, `SnapshotAccessState`, `AvailabilityPolicy`.
+  - Added `SecurityMetadataUri` and `InstantAccessDurationMinutes` properties to `DiskCreationData` class.
+  - Added `SecurityMetadataAccessSas` property to `AccessUri` class.
+  - Added `AvailabilityPolicy` property to `ManagedDiskData` and `ManagedDiskUpdateData` classes.
+  - Added `SupportedSecurityOption` property to `SupportedCapabilities` class.
+  - Added `SnapshotAccessState` to `SnapshotData` and `SnapshotUpdateData` classes.
+
+### Breaking Changes
+
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+
+## 1.10.0 (2025-06-30)
+
+### Features Added
+
+- Added `Properties` property in `VirtualMachineScaleSetVmData` class.
+  - This property contains the properties of the VirtualMachineScaleSetVm. It supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
+  - Please use the properties in `VirtualMachineScaleSetVmData.Properties` to set the properties of the VirtualMachineScaleSetVm, instead of using those properties at the root level of `VirtualMachineScaleSetVmData` class.
+
+## 1.9.0 (2025-03-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-11-04' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-sdk-for-net/blob/6b1e2c24d807ffb6faf338f670cca5f35b01428c/sdk/compute/Azure.ResourceManager.Compute/src/autorest.md.
+  - Added operation `AvailabilitySets.StartMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.CancelMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.ValidateMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.ConvertToVirtualMachineScaleSet`.
+  - Added operation `GetVirtualMachineImagesWithProperties`
+  - Added operation `VirtualMachines.MigrateToVirtualMachineScaleSet`.
+  - Added new classes :`AutomaticZoneRebalancingPolicy`, `ConvertToVirtualMachineScaleSetContent`, `HostEndpointSettings`, `MigrateToVirtualMachineScaleSetInput`, `MigrateVmToVirtualMachineScaleSetContent`, `VmssRebalanceStrategy`, `VmssRebalanceBehavior`, `SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions`, `VirtualMachineImagesWithPropertiesListResult`, `VirtualMachineScaleSetMigrationInfo`,
+
+## 1.9.0-beta.1 (2025-02-22)
+
+### Features Added
+
+- Enabled AnyZone Capability preview.
+
+## 1.8.0 (2025-02-05)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-11-03' to 'package-2024-11-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md.
+- Added a new property named `IsBootstrapCertificate` to `CloudServiceRoleProfile` class.
+
+### Bugs Fixed
+
+- Change a few parameters in one of the overload of `ArmComputeModelFactory.VirtualMachineScaleSetData` to required to reduce the possibility of ambiguous invocation.
+
+## 1.7.0 (2024-12-29)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-11-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b09c9ec927456021dc549e111fa2cac3b4b00659/specification/compute/resource-manager/readme.md.
+    - Added new classes named `GalleryInVmAccessControlProfileCollection`, `ComputeGalleryValidationProfile`, `GalleryImageExecutedValidation`, `AdditionalReplicaSet`, `GallerySoftDeleted`, `GallerySoftDeletedResourceList`, `ComputeGalleryEndpointAccess`, `ComputeGalleryEndpointTypes`, and `ComputeGalleryPlatformAttribute`.
+    - Added a new property named `IsBlockedDeletionBeforeEndOfLife` to `GalleryImageVersionSafetyProfile` class.
+    - Added a new property named `StartsAtVersion` to `GalleryImageFeature` class.
+    - Added a new property named `AllowUpdateImage` to `GalleryImageData` class.
+    - Added new properties named `ValidationsProfile` and `EnableRestore` to `GalleryImageVersionData` class.
+    - Added a new property named `IsRestoreEnabled` to `GalleryImageVersionPatch` class.
+    - Added a new property named `SecurityUefiSettings` to `GalleryList` class.
+    - Added a new property named `ScriptBehaviorAfterReboot` to `UserARtifactSettings` class.
+    - Added a new property named `AdditionalReplicaSets` to `TargetRegion` class.
+    - Added a new property named `Identity` to `GalleryData` class.
+`
+### Other Changes
+
+- Upgraded Azure.Core from 1.42.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
+
+## 1.7.0-beta.2 (2024-12-11)
+
+### Features Added
+
+- Please use the properties in `VirtualMachineScaleSetData.Properties` to set the properties of the VMSS, instead of using those properties at the root level of `VirtualMachineScaleSetData` class.
+- Please use the properties in `VirtualMachineScaleSetPatch.Properties` to set the properties of the VMSS, instead of using those properties at the root level of `VirtualMachineScaleSetPatch` class.
+- Added `VirtualMachineScaleSetProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
+- Added `AdditionalProperties` to `VirtualMachineSizeProperties` and `VirtualMachineScaleSetUpgradePolicy` classes to support private/internal properties supported by the service.
+
+## 1.7.0-beta.1 (2024-10-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.6.0 (2024-08-26)
+
+### Features Added
+
+- Added a new read-only property `LogicalSectorSize` to `DiskRestorePointData` class.
+- Added new properties `SkuProfile` and `ZonalPlatformFaultDomainAlignMode` to `VirtualMachineScaleSetData` class.
+- Added new properties `Zones`, `ZonalPlatformFaultDomainAlignMode`, and `SkuProfile` to `VirtualMachineScaleSetPatch` class.
+- Added a new property `ScheduledEventsPolicy` to `AvailabilitySetPatch` and `AvailabilitySetData` class.
+
+### Breaking Changes
+
+- `ExcludeExtensions` property in `ComputeSecurityPostureReference` is replaced by `ExcludeExtensionNames` property which takes in a list of strings.
+- `IsVmAgentPlatformUpdatesEnabled` property in `WindowsConfiguration` class is now read-only.
+
+## 1.5.0 (2024-05-10)
+
+### Features Added
+
+- Updated the CRP api-version from 'package-2023-09-01' to the newer 'package-2024-03-01'. This is for the latest Compute RP release (VM, VMSS, etc).
+
+## 1.5.0-beta.1 (2024-04-25)
+
+### Features Added
+
+- Support long-running operation rehydration.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.11.1.
 
 ## 1.4.0 (2024-02-21)
 
@@ -133,8 +276,8 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
@@ -259,7 +402,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.Compute` to `Azure.ResourceManager.Compute`

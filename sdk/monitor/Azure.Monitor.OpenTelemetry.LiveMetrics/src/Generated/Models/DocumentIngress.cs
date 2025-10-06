@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -28,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
-        internal DocumentIngress(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties)
+        internal DocumentIngress(DocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties)
         {
             DocumentType = documentType;
             DocumentStreamIds = documentStreamIds;
@@ -36,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         }
 
         /// <summary> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </summary>
-        internal DocumentIngressDocumentType DocumentType { get; set; }
+        internal DocumentType DocumentType { get; set; }
         /// <summary> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </summary>
         public IList<string> DocumentStreamIds { get; }
         /// <summary> Collection of custom properties. </summary>

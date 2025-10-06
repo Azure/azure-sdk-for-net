@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
@@ -27,8 +25,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServiceCollection : ArmCollection, IEnumerable<DeviceProvisioningServiceResource>, IAsyncEnumerable<DeviceProvisioningServiceResource>
     {
-        private readonly ClientDiagnostics _deviceProvisioningServiceIotDpsResourceClientDiagnostics;
-        private readonly IotDpsResourceRestOperations _deviceProvisioningServiceIotDpsResourceRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics;
+        private readonly ProvisioningServiceDescriptionsRestOperations _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServiceCollection"/> class for mocking. </summary>
         protected DeviceProvisioningServiceCollection()
@@ -40,9 +38,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceProvisioningServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServiceIotDpsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceProvisioningServiceResource.ResourceType, out string deviceProvisioningServiceIotDpsResourceApiVersion);
-            _deviceProvisioningServiceIotDpsResourceRestClient = new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceIotDpsResourceApiVersion);
+            _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeviceProvisioningServiceResource.ResourceType, out string deviceProvisioningServiceProvisioningServiceDescriptionsApiVersion);
+            _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceProvisioningServiceDescriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,11 +61,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CreateOrUpdate</description>
+        /// <description>ProvisioningServiceDescription_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -76,7 +74,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service to create or update. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="data"> Description of the provisioning service to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -86,12 +84,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,11 +110,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CreateOrUpdate</description>
+        /// <description>ProvisioningServiceDescription_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,7 +123,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service to create or update. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="data"> Description of the provisioning service to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -135,12 +133,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -161,11 +159,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,11 +179,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
@@ -206,11 +204,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,11 +224,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
@@ -251,11 +249,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListByResourceGroup</description>
+        /// <description>ProvisioningServiceDescription_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,9 +265,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,11 +279,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListByResourceGroup</description>
+        /// <description>ProvisioningServiceDescription_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,9 +295,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,11 +309,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,11 +329,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,11 +352,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -374,11 +372,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,11 +395,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,11 +415,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DeviceProvisioningServiceResource>(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
@@ -442,11 +440,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,11 +460,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DeviceProvisioningServiceResource>(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());

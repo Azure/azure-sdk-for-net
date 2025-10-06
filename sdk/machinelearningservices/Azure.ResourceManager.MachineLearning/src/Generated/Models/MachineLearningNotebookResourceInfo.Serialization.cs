@@ -8,44 +8,54 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningNotebookResourceInfo : IUtf8JsonSerializable, IJsonModel<MachineLearningNotebookResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningNotebookResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningNotebookResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningNotebookResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNotebookResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(IsPrivateLinkEnabled))
-            {
-                writer.WritePropertyName("isPrivateLinkEnabled"u8);
-                writer.WriteBooleanValue(IsPrivateLinkEnabled.Value);
-            }
-            if (Optional.IsDefined(NotebookPreparationError))
-            {
-                writer.WritePropertyName("notebookPreparationError"u8);
-                writer.WriteObjectValue(NotebookPreparationError);
-            }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(NotebookPreparationError))
+            {
+                if (NotebookPreparationError != null)
+                {
+                    writer.WritePropertyName("notebookPreparationError"u8);
+                    writer.WriteObjectValue(NotebookPreparationError, options);
+                }
+                else
+                {
+                    writer.WriteNull("notebookPreparationError");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,14 +65,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningNotebookResourceInfo IJsonModel<MachineLearningNotebookResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNotebookResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,18 +88,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningNotebookResourceInfo DeserializeMachineLearningNotebookResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string fqdn = default;
-            bool? isPrivateLinkEnabled = default;
-            MachineLearningNotebookPreparationError notebookPreparationError = default;
             string resourceId = default;
+            MachineLearningNotebookPreparationError notebookPreparationError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -98,36 +106,104 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrivateLinkEnabled"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isPrivateLinkEnabled = property.Value.GetBoolean();
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("notebookPreparationError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notebookPreparationError = null;
                         continue;
                     }
                     notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
-                {
-                    resourceId = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningNotebookResourceInfo(fqdn, isPrivateLinkEnabled, notebookPreparationError, resourceId, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fqdn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Fqdn))
+                {
+                    builder.Append("  fqdn: ");
+                    if (Fqdn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Fqdn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Fqdn}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    builder.Append("  resourceId: ");
+                    if (ResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotebookPreparationError), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notebookPreparationError: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotebookPreparationError))
+                {
+                    builder.Append("  notebookPreparationError: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NotebookPreparationError, options, 2, false, "  notebookPreparationError: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningNotebookResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -137,9 +213,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,11 +229,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningNotebookResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

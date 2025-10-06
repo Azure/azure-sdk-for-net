@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -80,12 +79,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Rule Id is auto-generated for each new rule on destination account. It is required for put policy on source account. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
         /// <summary> Required. Source container name. </summary>
+        [WirePath("sourceContainer")]
         public string SourceContainer { get; set; }
         /// <summary> Required. Destination container name. </summary>
+        [WirePath("destinationContainer")]
         public string DestinationContainer { get; set; }
         /// <summary> Optional. An object that defines the filter set. </summary>
+        [WirePath("filters")]
         public ObjectReplicationPolicyFilter Filters { get; set; }
     }
 }

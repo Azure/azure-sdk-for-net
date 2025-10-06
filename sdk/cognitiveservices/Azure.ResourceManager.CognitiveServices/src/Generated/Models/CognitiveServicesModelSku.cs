@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -50,6 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesModelSku()
         {
             RateLimits = new ChangeTrackingList<ServiceAccountCallRateLimit>();
+            Cost = new ChangeTrackingList<BillingMeterInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelSku"/>. </summary>
@@ -58,26 +58,36 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="rateLimits"> The list of rateLimit. </param>
+        /// <param name="cost"> The list of billing meter info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits, IList<BillingMeterInfo> cost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             UsageName = usageName;
             DeprecationOn = deprecationOn;
             Capacity = capacity;
             RateLimits = rateLimits;
+            Cost = cost;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the model SKU. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The usage name of the model SKU. </summary>
+        [WirePath("usageName")]
         public string UsageName { get; set; }
         /// <summary> The datetime of deprecation of the model SKU. </summary>
+        [WirePath("deprecationDate")]
         public DateTimeOffset? DeprecationOn { get; set; }
         /// <summary> The capacity configuration. </summary>
+        [WirePath("capacity")]
         public CognitiveServicesCapacityConfig Capacity { get; set; }
         /// <summary> The list of rateLimit. </summary>
+        [WirePath("rateLimits")]
         public IReadOnlyList<ServiceAccountCallRateLimit> RateLimits { get; }
+        /// <summary> The list of billing meter info. </summary>
+        [WirePath("cost")]
+        public IList<BillingMeterInfo> Cost { get; }
     }
 }

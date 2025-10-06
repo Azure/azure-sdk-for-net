@@ -1,19 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
+extern alias DMShare;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
-    [ShareClientTestFixture(true)]
-    [ShareClientTestFixture(false)]
+    [DataMovementShareClientTestFixture(true)]
+    [DataMovementShareClientTestFixture(false)]
     internal class ShareDirectoryStartTransferUploadTests : StartTransferUploadDirectoryTestBase<
         ShareServiceClient,
         ShareDirectoryClient,
@@ -22,7 +25,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         StorageTestEnvironment>
     {
         /// <summary>
-        /// A <see cref="DisposingShare"/> but exposes a directory client within that share.
+        /// A <see cref="Storage.Files.Shares.Tests.DisposingShare"/> but exposes a directory client within that share.
         /// Still cleans up the whole share. Helpful for parameterizing tests to use a root
         /// directory vs a subdir.
         /// </summary>
@@ -47,6 +50,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         public bool UseNonRootDirectory { get; }
+        // When the file is created, the last modified time is set to the current time.
+        // We need to set the last modified time to a fixed value to make the test recordable/predictable.
+        private readonly DateTimeOffset? _defaultFileLastWrittenOn = new DateTimeOffset(2024, 11, 24, 11, 23, 45, TimeSpan.FromHours(10));
 
         public ShareDirectoryStartTransferUploadTests(bool async, ShareClientOptions.ServiceVersion serviceVersion, bool useNonRootDirectory)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
@@ -72,7 +78,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         protected override StorageResourceContainer GetStorageResourceContainer(ShareDirectoryClient containerClient)
         {
-            return new ShareDirectoryStorageResourceContainer(containerClient, null);
+            ShareFileStorageResourceOptions options = new();
+            if (Mode == Core.TestFramework.RecordedTestMode.Record ||
+                Mode == Core.TestFramework.RecordedTestMode.Playback)
+            {
+                options.FileLastWrittenOn = _defaultFileLastWrittenOn;
+            }
+            return new ShareDirectoryStorageResourceContainer(containerClient, options);
         }
 
         protected override TransferValidator.ListFilesAsync GetStorageResourceLister(ShareDirectoryClient containerClient)

@@ -46,5 +46,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new Match(confidenceScore, text, offset, length);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Match FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMatch(document.RootElement);
+        }
     }
 }

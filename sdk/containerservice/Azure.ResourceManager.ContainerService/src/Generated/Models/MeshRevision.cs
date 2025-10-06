@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The revision of the mesh release. </summary>
+        [WirePath("revision")]
         public string Revision { get; set; }
         /// <summary> List of revisions available for upgrade of a specific mesh revision. </summary>
+        [WirePath("upgrades")]
         public IList<string> Upgrades { get; }
         /// <summary> List of items this revision of service mesh is compatible with, and their associated versions. </summary>
+        [WirePath("compatibleWith")]
         public IList<CompatibleVersions> CompatibleWith { get; }
     }
 }

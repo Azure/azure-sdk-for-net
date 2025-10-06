@@ -16,12 +16,14 @@ parameters:
 steps:
   - pwsh: |
       if ($env:AGENT_JOBSTATUS -eq "Failed") {
+        Write-Host "Setting artifact name to ${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt) because there were failures." 
         Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
       } else {
+        Write-Host "Setting artifact name to ${{ parameters.ArtifactName }}" 
         Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
       }
     condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
-    displayName: Set Artifact Name $(Agent.JobStatus)
+    displayName: Set Artifact Name 
 
   - task: 1ES.PublishPipelineArtifact@1
     condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
@@ -29,4 +31,8 @@ steps:
     inputs:
       artifactName: '$(PublishArtifactName)'
       targetPath: '${{ parameters.ArtifactPath }}'
-      sbomEnabled: ${{ parameters.SbomEnabled }}
+      # Disable sbom generation by default for our public or pull request validation builds to avoid unnecessary work
+      ${{ if or(eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+        sbomEnabled: false
+      ${{ else }}:
+        sbomEnabled: ${{ parameters.SbomEnabled }}

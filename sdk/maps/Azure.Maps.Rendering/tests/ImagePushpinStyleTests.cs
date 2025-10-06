@@ -61,7 +61,7 @@ namespace Azure.Maps.Rendering.Tests
             };
 
             Assert.AreEqual("default||12.56 22.56|14.561 19.801|'A label'7.9 44|'B label'11.73 25.02", simplePinStyle.ToQueryString());
-            Assert.AreEqual("default|coF5F5FF|sc1.75|ro-47|ls1.1||'B label'11.73 25.02|14.561 19.801|12.56 22.56|'A label'7.9 44", complexPinStyle1.ToQueryString());
+            Assert.AreEqual("default|coF5F5DC|sc1.75|ro-47|ls1.1||'B label'11.73 25.02|14.561 19.801|12.56 22.56|'A label'7.9 44", complexPinStyle1.ToQueryString());
             Assert.AreEqual("custom|sc1.05|an4 -5|lc802DDF|ls0.9|la5 -6||'B label'11.73 25.02|'A label'7.9 44||http://contoso.com/pushpins/red.png", complexPinStyle2.ToQueryString());
         }
     }

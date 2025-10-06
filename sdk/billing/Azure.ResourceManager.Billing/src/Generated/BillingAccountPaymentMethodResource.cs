@@ -9,11 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -21,7 +18,7 @@ namespace Azure.ResourceManager.Billing
     /// A Class representing a BillingAccountPaymentMethod along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPaymentMethodResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetBillingAccountPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingAccountPaymentMethod method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingAccountPaymentMethod method.
     /// </summary>
     public partial class BillingAccountPaymentMethodResource : ArmResource
     {
@@ -102,7 +99,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +139,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

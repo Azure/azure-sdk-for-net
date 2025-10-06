@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsZoneResource.CreateResourceIdentifier(string,string,string)" /> to create a <see cref="PrivateDnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsZoneResource(ResourceIdentifier)"/> instead.</description>
@@ -74,7 +72,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsARecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsARecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsARecordResource(ResourceIdentifier)"/> instead.</description>
@@ -93,7 +91,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsAaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsAaaaRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsAaaaRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsCnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsCnameRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsCnameRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -131,7 +129,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsMXRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsMXRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsMXRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -150,7 +148,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsPtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsPtrRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsPtrRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -169,7 +167,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsSoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsSoaRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsSoaRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsSrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsSrvRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsSrvRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -207,7 +205,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsTxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateDnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="PrivateDnsTxtRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetPrivateDnsTxtRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -254,7 +252,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +290,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -330,7 +328,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +365,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

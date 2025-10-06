@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SparkJobDefinitionsListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobDefinitionsListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkJobDefinitionsListResponse(document.RootElement);
+        }
+
         internal partial class SparkJobDefinitionsListResponseConverter : JsonConverter<SparkJobDefinitionsListResponse>
         {
             public override void Write(Utf8JsonWriter writer, SparkJobDefinitionsListResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override SparkJobDefinitionsListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Creation timestamp of the log file. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Last modified timestamp of the log file. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; set; }
         /// <summary> The size in kb of the logFile. </summary>
+        [WirePath("properties.sizeInKb")]
         public long? SizeInKb { get; set; }
         /// <summary> Type of the log file. </summary>
+        [WirePath("properties.type")]
         public string TypePropertiesType { get; set; }
         /// <summary> The url to download the log file from. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
     }
 }

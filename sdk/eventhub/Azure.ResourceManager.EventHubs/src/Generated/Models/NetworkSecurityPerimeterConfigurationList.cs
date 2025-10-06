@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> A collection of NetworkSecurityPerimeterConfigurations. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration> Value { get; }
     }
 }

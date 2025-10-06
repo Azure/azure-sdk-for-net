@@ -91,5 +91,13 @@ namespace Azure.Quantum.Jobs.Models
                 limit,
                 period);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static QuantumJobQuota FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeQuantumJobQuota(document.RootElement);
+        }
     }
 }

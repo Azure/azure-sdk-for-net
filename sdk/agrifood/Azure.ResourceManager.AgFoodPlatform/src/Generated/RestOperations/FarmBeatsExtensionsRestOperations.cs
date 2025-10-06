@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AgFoodPlatform.Models;
@@ -36,6 +35,47 @@ namespace Azure.ResourceManager.AgFoodPlatform
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions", false);
+            if (farmBeatsExtensionIds != null && !(farmBeatsExtensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in farmBeatsExtensionIds)
+                {
+                    uri.AppendQuery("farmBeatsExtensionIds", param, true);
+                }
+            }
+            if (farmBeatsExtensionNames != null && !(farmBeatsExtensionNames is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in farmBeatsExtensionNames)
+                {
+                    uri.AppendQuery("farmBeatsExtensionNames", param, true);
+                }
+            }
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in extensionCategories)
+                {
+                    uri.AppendQuery("extensionCategories", param, true);
+                }
+            }
+            if (publisherIds != null && !(publisherIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in publisherIds)
+                {
+                    uri.AppendQuery("publisherIds", param, true);
+                }
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
@@ -104,7 +144,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsExtensionListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsExtensionListResponse.DeserializeFarmBeatsExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -132,13 +172,23 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsExtensionListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsExtensionListResponse.DeserializeFarmBeatsExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string farmBeatsExtensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/", false);
+            uri.AppendPath(farmBeatsExtensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string farmBeatsExtensionId)
@@ -173,7 +223,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsExtensionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +250,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsExtensionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,6 +259,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
@@ -248,7 +306,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsExtensionListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsExtensionListResponse.DeserializeFarmBeatsExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,7 +338,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsExtensionListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsExtensionListResponse.DeserializeFarmBeatsExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

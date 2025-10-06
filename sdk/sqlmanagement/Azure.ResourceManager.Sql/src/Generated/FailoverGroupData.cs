@@ -72,8 +72,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
         /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <param name="secondaryType"> Databases secondary type on partner server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> failoverDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> failoverDatabases, FailoverGroupDatabasesSecondaryType? secondaryType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -83,24 +84,36 @@ namespace Azure.ResourceManager.Sql
             ReplicationState = replicationState;
             PartnerServers = partnerServers;
             FailoverDatabases = failoverDatabases;
+            SecondaryType = secondaryType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
+        [WirePath("properties.readWriteEndpoint")]
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
+        [WirePath("properties.readOnlyEndpoint")]
         public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> Local replication role of the failover group instance. </summary>
+        [WirePath("properties.replicationRole")]
         public FailoverGroupReplicationRole? ReplicationRole { get; }
         /// <summary> Replication state of the failover group instance. </summary>
+        [WirePath("properties.replicationState")]
         public string ReplicationState { get; }
         /// <summary> List of partner server information for the failover group. </summary>
+        [WirePath("properties.partnerServers")]
         public IList<PartnerServerInfo> PartnerServers { get; }
         /// <summary> List of databases in the failover group. </summary>
+        [WirePath("properties.databases")]
         public IList<ResourceIdentifier> FailoverDatabases { get; }
+        /// <summary> Databases secondary type on partner server. </summary>
+        [WirePath("properties.secondaryType")]
+        public FailoverGroupDatabasesSecondaryType? SecondaryType { get; set; }
     }
 }

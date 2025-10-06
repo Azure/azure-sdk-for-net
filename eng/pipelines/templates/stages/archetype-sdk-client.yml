@@ -1,127 +1,122 @@
-resources:
-  repositories:
-    - repository: azure-sdk-build-tools
-      type: git
-      name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20230829.1
-
 parameters:
-- name: Artifacts
-  type: object
-  default: []
-- name: TestPipeline
-  type: boolean
-  default: false
-- name: ArtifactName
-  type: string
-  default: packages
-- name: SDKType
-  type: string
-  default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: TargetDocRepoOwner
-  type: string
-  default: Azure
-- name: TargetDocRepoName
-  type: string
-  default: azure-docs-sdk-dotnet
-- name: BuildSnippets
-  type: boolean
-  default: true
-- name: CheckAOTCompat
-  type: boolean
-  default: false
-- name: AOTTestInputs
-  type: object
-  default: []
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: TestTimeoutInMinutes
-  type: number
-  default: 60
-- name: MatrixConfigs
-  type: object
-  default:
-    - Name: NET_ci_test_base
-      Path: eng/pipelines/templates/stages/platform-matrix.json
-      Selection: sparse
-      GenerateVMJobs: true
-- name: AdditionalMatrixConfigs
-  type: object
-  default: []
-- name: MatrixFilters
-  type: object
-  default: []
-- name: MatrixReplace
-  type: object
-  default: []
-- name: TestDependsOnDependency
-  type: string
-  default: not-specified
-- name: LimitForPullRequest
-  type: boolean
-  default: false
-- name: LiveTestStages
-  type: stageList
-  default: []
-- name: ReleaseDependsOnLiveTests
-  type: string
-  default: not-specified
+  - name: Artifacts
+    type: object
+    default: []
+  - name: TestPipeline
+    type: boolean
+    default: false
+  - name: ArtifactName
+    type: string
+    default: packages
+  - name: SDKType
+    type: string
+    default: all
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: BuildSnippets
+    type: boolean
+    default: true
+  - name: CheckAOTCompat
+    type: boolean
+    default: false
+  - name: AOTTestInputs
+    type: object
+    default: []
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: TestTimeoutInMinutes
+    type: number
+    default: 60
+  - name: MatrixConfigs
+    type: object
+    default:
+      - Name: NET_ci_test_base
+        Path: eng/pipelines/templates/stages/platform-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
+  - name: AdditionalMatrixConfigs
+    type: object
+    default: []
+  - name: MatrixFilters
+    type: object
+    default: []
+  - name: MatrixReplace
+    type: object
+    default: []
+  - name: TestDependsOnDependency
+    type: string
+    default: not-specified
+  - name: LimitForPullRequest
+    type: boolean
+    default: false
+  - name: oneESTemplateTag
+    type: string
+    default: true
+  - name: ExcludePaths
+    type: object
+    default: []
+  - name: PublicFeed
+    type: string
+    default: 'Nuget.org'
+  - name: PublicPublishEnvironment
+    type: string
+    default: package-publish
 
-variables:
-  - template: ../variables/globals.yml
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
+    stages:
+      - stage: Build
+        variables:
+          - template: /eng/pipelines/templates/variables/globals.yml
+          - template: /eng/pipelines/templates/variables/image.yml
+        jobs:
+          - template: /eng/pipelines/templates/jobs/ci.yml
+            parameters:
+              SDKType: ${{ parameters.SDKType }}
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              Artifacts: ${{ parameters.Artifacts }}
+              ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+                TestPipeline: true
+              ArtifactName: packages
+              LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
+              BuildSnippets: ${{ parameters.BuildSnippets }}
+              CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+              AOTTestInputs: ${{ parameters.AOTTestInputs }}
+              TestSetupSteps: ${{ parameters.TestSetupSteps }}
+              TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+              MatrixConfigs:
+                - ${{ each config in parameters.MatrixConfigs }}:
+                    - ${{ config }}
+                - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+                    - ${{ config }}
+              MatrixFilters: ${{ parameters.MatrixFilters }}
+              MatrixReplace:
+                # For nightly/release pipelines we build and test release only
+                - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+                    - BuildConfiguration=Debug/Release
+                - ${{ parameters.MatrixReplace }}
+              TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
-stages:
-  - stage: Build
-    jobs:
-    - template: /eng/pipelines/templates/jobs/ci.yml
-      parameters:
-        SDKType: ${{ parameters.SDKType }}
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        Artifacts: ${{ parameters.Artifacts }}
-        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
-          TestPipeline: true
-        ArtifactName: packages
-        LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
-        BuildSnippets: ${{ parameters.BuildSnippets }}
-        CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-        AOTTestInputs: ${{ parameters.AOTTestInputs }}
-        TestSetupSteps: ${{ parameters.TestSetupSteps }}
-        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-        MatrixConfigs:
-          - ${{ each config in parameters.MatrixConfigs }}:
-            -  ${{ config }}
-          - ${{ each config in parameters.AdditionalMatrixConfigs }}:
-            -  ${{ config }}
-        MatrixFilters: ${{ parameters.MatrixFilters }}
-        MatrixReplace:
-          # For nightly/release pipelines we build and test release only
-          - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            - BuildConfiguration=Debug/Release
-          - ${{ parameters.MatrixReplace }}
-        TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+      # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
+      - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
 
-  # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
-  - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
-    - ${{ parameters.LiveTestStages }}
+        - template: archetype-net-release.yml
+          parameters:
+            SDKType: ${{ parameters.SDKType }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            DependsOn:
+              - Build
+            Artifacts:
+              - ${{ each artifact in parameters.Artifacts }}:
+                 - ${{ if ne(artifact.createReleaseStage, 'false') }}:
+                    - ${{ artifact }}
+            ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+              TestPipeline: true
+            ArtifactName: packages
+            PublicFeed: ${{ parameters.PublicFeed }}
+            PublicPublishEnvironment: ${{ parameters.PublicPublishEnvironment }}
 
-    - template: archetype-net-release.yml
-      parameters:
-        SDKType: ${{ parameters.SDKType }}
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        DependsOn:
-          - Build
-          # Only depend on live test stages if the build depends on live tests and the build reason is manual.
-          # This prevents check-in builds and scheduled builds from having a requirement on live test stages.
-          - ${{ if eq(parameters.ReleaseDependsOnLiveTests, 'true') }}:
-            - ${{ each liveTestStage in parameters.LiveTestStages }}:
-              - ${{ liveTestStage.stage }}
-        Artifacts: ${{ parameters.Artifacts }}
-        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
-          TestPipeline: true
-        ArtifactName: packages
-        TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-        TargetDocRepoName: ${{ parameters.TargetDocRepoName }}

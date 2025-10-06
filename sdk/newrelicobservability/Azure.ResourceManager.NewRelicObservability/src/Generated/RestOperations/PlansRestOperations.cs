@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NewRelicObservability.Models;
@@ -33,8 +32,27 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string accountId, string organizationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/NewRelic.Observability/plans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (accountId != null)
+            {
+                uri.AppendQuery("accountId", accountId, true);
+            }
+            if (organizationId != null)
+            {
+                uri.AppendQuery("organizationId", organizationId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string accountId, string organizationId)
@@ -80,7 +98,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +125,21 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string accountId, string organizationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string accountId, string organizationId)
@@ -150,7 +176,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +205,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

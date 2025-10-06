@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the value of key 1. </summary>
+        [WirePath("key1")]
         public string Key1 { get; }
         /// <summary> Gets the value of key 2. </summary>
+        [WirePath("key2")]
         public string Key2 { get; }
     }
 }

@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile");
+                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+            }
             if (Optional.IsCollectionDefined(DnsPtrRecords))
             {
                 writer.WritePropertyName("PTRRecords"u8);
@@ -128,12 +133,13 @@ namespace Azure.ResourceManager.Dns
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             IDictionary<string, string> metadata = default;
             long? ttl = default;
             string fqdn = default;
             string provisioningState = default;
             WritableSubResource targetResource = default;
+            WritableSubResource trafficManagementProfile = default;
             IList<DnsPtrRecordInfo> ptrRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -252,6 +258,7 @@ namespace Azure.ResourceManager.Dns
                 fqdn,
                 provisioningState,
                 targetResource,
+                trafficManagementProfile,
                 ptrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>(),
                 serializedAdditionalRawData);
         }
@@ -262,7 +269,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsPtrRecordData)} does not support '{options.Format}' format.");
             }

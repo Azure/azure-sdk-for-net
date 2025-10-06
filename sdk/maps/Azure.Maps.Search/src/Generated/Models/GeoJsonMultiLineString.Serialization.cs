@@ -7,55 +7,21 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonMultiLineString : IUtf8JsonSerializable
+    internal partial class GeoJsonMultiLineString
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates"u8);
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    if (item0 == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (var item1 in item0)
-                    {
-                        writer.WriteNumberValue(item1);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonMultiLineString DeserializeGeoJsonMultiLineString(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IList<IList<double>>> coordinates = default;
+            IReadOnlyList<IList<IList<double>>> coordinates = default;
             GeoJsonObjectType type = default;
+            IReadOnlyList<double> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -94,11 +60,33 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("boundingBox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    boundingBox = array;
                     continue;
                 }
             }
-            return new GeoJsonMultiLineString(type, coordinates);
+            return new GeoJsonMultiLineString(type, boundingBox ?? new ChangeTrackingList<double>(), coordinates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonMultiLineString FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGeoJsonMultiLineString(document.RootElement);
         }
     }
 }

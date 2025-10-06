@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/fabric/Azure.ResourceManager.Fabric",
+  "Tag": "net/fabric/Azure.ResourceManager.Fabric_b70fb6b0f0"
+}

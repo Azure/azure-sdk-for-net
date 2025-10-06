@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The key vault server error. </summary>
     internal partial class KeyVaultServiceError
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="KeyVaultServiceError"/>. </summary>
         internal KeyVaultServiceError()
         {
@@ -19,17 +24,21 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="innerError"> The key vault server error. </param>
-        internal KeyVaultServiceError(string code, string message, KeyVaultServiceError innerError)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultServiceError(string code, string message, KeyVaultServiceError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             InnerError = innerError;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The error code. </summary>
         public string Code { get; }
+
         /// <summary> The error message. </summary>
         public string Message { get; }
+
         /// <summary> The key vault server error. </summary>
         public KeyVaultServiceError InnerError { get; }
     }

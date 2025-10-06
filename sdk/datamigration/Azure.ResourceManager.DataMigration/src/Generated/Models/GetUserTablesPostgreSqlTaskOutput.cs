@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,8 +48,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskOutput"/>. </summary>
         internal GetUserTablesPostgreSqlTaskOutput()
         {
-            Tables = new ChangeTrackingList<DatabaseTable>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            Tables = new ChangeTrackingList<DataMigrationDatabaseTable>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskOutput"/>. </summary>
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tables"> List of valid tables found for this database. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesPostgreSqlTaskOutput(string databaseName, IReadOnlyList<DatabaseTable> tables, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesPostgreSqlTaskOutput(string databaseName, IReadOnlyList<DataMigrationDatabaseTable> tables, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             Tables = tables;
@@ -69,8 +68,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> The database this result is for. </summary>
         public string DatabaseName { get; }
         /// <summary> List of valid tables found for this database. </summary>
-        public IReadOnlyList<DatabaseTable> Tables { get; }
+        public IReadOnlyList<DataMigrationDatabaseTable> Tables { get; }
         /// <summary> Validation errors associated with the task. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

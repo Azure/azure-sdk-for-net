@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -52,18 +51,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Array of FirewallPolicyRuleNetworkProtocols. </summary>
+        [WirePath("ipProtocols")]
         public IList<FirewallPolicyRuleNetworkProtocol> IPProtocols { get; }
         /// <summary> List of source IP addresses for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses or Service Tags. </summary>
+        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
         /// <summary> List of destination IpGroups for this rule. </summary>
+        [WirePath("destinationIpGroups")]
         public IList<string> DestinationIPGroups { get; }
         /// <summary> List of destination FQDNs. </summary>
+        [WirePath("destinationFqdns")]
         public IList<string> DestinationFqdns { get; }
     }
 }

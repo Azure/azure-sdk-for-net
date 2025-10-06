@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="identity"> The identity to use when dead-lettering events. </param>
         /// <param name="deadLetterDestination">
         /// Information about the destination where events have to be delivered for the event subscription.
-        /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
+        /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during dead-lettering.
         /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </param>
@@ -67,13 +67,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The identity to use when dead-lettering events. </summary>
+        [WirePath("identity")]
         public EventSubscriptionIdentity Identity { get; set; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
-        /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
+        /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during dead-lettering.
         /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </summary>
+        [WirePath("deadLetterDestination")]
         public DeadLetterDestination DeadLetterDestination { get; set; }
     }
 }

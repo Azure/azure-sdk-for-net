@@ -149,32 +149,50 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     public void CannotModifyOptionsAfterFrozen()
     {
         ClientPipelineOptions options = new();
+        options.ClientLoggingOptions = new();
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         Assert.Throws<InvalidOperationException>(()
             => options.RetryPolicy = new MockRetryPolicy());
+        Assert.Throws<InvalidOperationException>(()
+            => options.MessageLoggingPolicy = new MockPipelinePolicy());
         Assert.Throws<InvalidOperationException>(()
             => options.Transport = new MockPipelineTransport("Transport"));
         Assert.Throws<InvalidOperationException>(()
             => options.NetworkTimeout = TimeSpan.MinValue);
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions = new());
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions.EnableLogging = true);
+        Assert.Throws<InvalidOperationException>(()
+            => options.EnableDistributedTracing = true);
     }
 
     [Test]
     public void CannotModifyOptionsAfterExplicitlyFrozen()
     {
         ClientPipelineOptions options = new();
+        options.ClientLoggingOptions = new();
         options.Freeze();
 
         Assert.Throws<InvalidOperationException>(()
             => options.RetryPolicy = new MockRetryPolicy());
+        Assert.Throws<InvalidOperationException>(()
+            => options.MessageLoggingPolicy = new MockPipelinePolicy());
         Assert.Throws<InvalidOperationException>(()
             => options.Transport = new MockPipelineTransport("Transport"));
         Assert.Throws<InvalidOperationException>(()
             => options.NetworkTimeout = TimeSpan.MinValue);
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions = new());
+        Assert.Throws<InvalidOperationException>(()
+            => options.ClientLoggingOptions.EnableLogging = true);
+        Assert.Throws<InvalidOperationException>(()
+            => options.EnableDistributedTracing = true);
     }
 
     #region Helpers

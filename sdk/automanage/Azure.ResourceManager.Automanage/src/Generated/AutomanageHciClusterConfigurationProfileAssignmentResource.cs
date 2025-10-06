@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -35,8 +33,8 @@ namespace Azure.ResourceManager.Automanage
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics;
-        private readonly ConfigurationProfileHCIAssignmentsRestOperations _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient;
+        private readonly ClientDiagnostics _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics;
+        private readonly ConfigurationProfileHCIAssignmentsRestOperations _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +59,9 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomanageHciClusterConfigurationProfileAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsApiVersion);
-            _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient = new ConfigurationProfileHCIAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsApiVersion);
+            _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsApiVersion);
+            _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient = new ConfigurationProfileHCIAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -183,11 +181,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Get");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -223,11 +221,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomanageHciClusterConfigurationProfileAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Get");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -264,12 +262,14 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Delete");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation(response);
+                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,12 +306,14 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Delete");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AutomanageArmOperation(response);
+                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -352,12 +354,14 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Update");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -398,12 +402,14 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Update");
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHciAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

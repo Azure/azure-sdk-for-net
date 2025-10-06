@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -61,16 +60,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="etag"> The ETag value to implement optimistic concurrency. </param>
         /// <param name="extensionId"> Extension Id. </param>
         /// <param name="extensionCategory"> Extension category. e.g. weather/sensor/satellite. </param>
         /// <param name="installedExtensionVersion"> Installed extension version. </param>
         /// <param name="extensionAuthLink"> Extension auth link. </param>
         /// <param name="extensionApiDocsLink"> Extension api docs link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string extensionId, string extensionCategory, string installedExtensionVersion, string extensionAuthLink, string extensionApiDocsLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string extensionId, string extensionCategory, string installedExtensionVersion, string extensionAuthLink, string extensionApiDocsLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             ExtensionId = extensionId;
             ExtensionCategory = extensionCategory;
             InstalledExtensionVersion = installedExtensionVersion;

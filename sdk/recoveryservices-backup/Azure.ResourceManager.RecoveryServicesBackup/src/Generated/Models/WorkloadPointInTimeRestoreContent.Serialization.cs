@@ -10,97 +10,36 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class WorkloadPointInTimeRestoreContent : IUtf8JsonSerializable, IJsonModel<WorkloadPointInTimeRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadPointInTimeRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadPointInTimeRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadPointInTimeRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadPointInTimeRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PointInTime))
             {
                 writer.WritePropertyName("pointInTime"u8);
                 writer.WriteStringValue(PointInTime.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryType))
-            {
-                writer.WritePropertyName("recoveryType"u8);
-                writer.WriteStringValue(RecoveryType.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsCollectionDefined(PropertyBag))
-            {
-                writer.WritePropertyName("propertyBag"u8);
-                writer.WriteStartObject();
-                foreach (var item in PropertyBag)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(TargetInfo))
-            {
-                writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo);
-            }
-            if (Optional.IsDefined(RecoveryMode))
-            {
-                writer.WritePropertyName("recoveryMode"u8);
-                writer.WriteStringValue(RecoveryMode.Value.ToString());
-            }
-            if (Optional.IsDefined(TargetResourceGroupName))
-            {
-                writer.WritePropertyName("targetResourceGroupName"u8);
-                writer.WriteStringValue(TargetResourceGroupName);
-            }
-            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
-            {
-                writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
-            }
-            if (Optional.IsDefined(SnapshotRestoreParameters))
-            {
-                writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue(SnapshotRestoreParameters);
-            }
-            if (Optional.IsDefined(TargetVirtualMachineId))
-            {
-                writer.WritePropertyName("targetVirtualMachineId"u8);
-                writer.WriteStringValue(TargetVirtualMachineId);
-            }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         WorkloadPointInTimeRestoreContent IJsonModel<WorkloadPointInTimeRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -108,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadPointInTimeRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadPointInTimeRestoreContent DeserializeWorkloadPointInTimeRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,8 +73,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SnapshotRestoreContent snapshotRestoreParameters = default;
             ResourceIdentifier targetVirtualMachineId = default;
             string objectType = default;
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pointInTime"u8))
@@ -234,14 +174,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkloadPointInTimeRestoreContent(
                 objectType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 recoveryType,
                 sourceResourceId,
@@ -262,9 +217,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,11 +231,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkloadPointInTimeRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Azure Networking ACL Action. </summary>
+        [WirePath("defaultAction")]
         public SignalRNetworkAclAction? DefaultAction { get; set; }
         /// <summary> Network ACL. </summary>
+        [WirePath("publicNetwork")]
         public SignalRNetworkAcl PublicNetwork { get; set; }
         /// <summary> ACLs for requests from private endpoints. </summary>
+        [WirePath("privateEndpoints")]
         public IList<SignalRPrivateEndpointAcl> PrivateEndpoints { get; }
     }
 }

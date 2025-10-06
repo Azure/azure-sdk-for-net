@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

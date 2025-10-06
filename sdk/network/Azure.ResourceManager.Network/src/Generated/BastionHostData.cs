@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -49,7 +48,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
+        /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Zones = zones;
             ETag = etag;
@@ -66,15 +67,20 @@ namespace Azure.ResourceManager.Network
             EnableShareableLink = enableShareableLink;
             EnableTunneling = enableTunneling;
             EnableKerberos = enableKerberos;
+            EnableSessionRecording = enableSessionRecording;
+            EnablePrivateOnlyBastion = enablePrivateOnlyBastion;
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
         internal NetworkSku Sku { get; set; }
-        /// <summary> The name of this Bastion Host. </summary>
+        /// <summary> The name of the sku of this Bastion Host. </summary>
+        [WirePath("sku.name")]
         public BastionHostSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -87,12 +93,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> IP configuration of the Bastion Host resource. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IList<BastionHostIPConfiguration> IPConfigurations { get; }
         /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
+        [WirePath("properties.dnsName")]
         public string DnsName { get; set; }
         /// <summary> Reference to an existing virtual network required for Developer Bastion Host only. </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualNetwork.id")]
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
@@ -107,6 +116,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets the network acls. </summary>
         internal BastionHostPropertiesFormatNetworkAcls NetworkAcls { get; set; }
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
+        [WirePath("properties.networkAcls.ipRules")]
         public IList<BastionHostIPRule> NetworkAclsIPRules
         {
             get
@@ -118,20 +128,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the bastion host resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The scale units for the Bastion Host resource. </summary>
+        [WirePath("properties.scaleUnits")]
         public int? ScaleUnits { get; set; }
         /// <summary> Enable/Disable Copy/Paste feature of the Bastion Host resource. </summary>
+        [WirePath("properties.disableCopyPaste")]
         public bool? DisableCopyPaste { get; set; }
         /// <summary> Enable/Disable File Copy feature of the Bastion Host resource. </summary>
+        [WirePath("properties.enableFileCopy")]
         public bool? EnableFileCopy { get; set; }
         /// <summary> Enable/Disable IP Connect feature of the Bastion Host resource. </summary>
+        [WirePath("properties.enableIpConnect")]
         public bool? EnableIPConnect { get; set; }
         /// <summary> Enable/Disable Shareable Link of the Bastion Host resource. </summary>
+        [WirePath("properties.enableShareableLink")]
         public bool? EnableShareableLink { get; set; }
         /// <summary> Enable/Disable Tunneling feature of the Bastion Host resource. </summary>
+        [WirePath("properties.enableTunneling")]
         public bool? EnableTunneling { get; set; }
         /// <summary> Enable/Disable Kerberos feature of the Bastion Host resource. </summary>
+        [WirePath("properties.enableKerberos")]
         public bool? EnableKerberos { get; set; }
+        /// <summary> Enable/Disable Session Recording feature of the Bastion Host resource. </summary>
+        [WirePath("properties.enableSessionRecording")]
+        public bool? EnableSessionRecording { get; set; }
+        /// <summary> Enable/Disable Private Only feature of the Bastion Host resource. </summary>
+        [WirePath("properties.enablePrivateOnlyBastion")]
+        public bool? EnablePrivateOnlyBastion { get; set; }
     }
 }

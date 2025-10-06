@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A list of Virtual Machines. </summary>
+    /// <summary> The response of a VirtualMachine list operation. </summary>
     internal partial class VirtualMachinesList
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/>. </summary>
-        internal VirtualMachinesList()
+        /// <param name="value"> The VirtualMachine items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VirtualMachinesList(IEnumerable<AvsPrivateCloudClusterVirtualMachineData> value)
         {
-            Value = new ChangeTrackingList<AvsPrivateCloudClusterVirtualMachineData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/>. </summary>
-        /// <param name="value"> The items to be displayed on the page. </param>
-        /// <param name="nextLink"> URL to get the next page if any. </param>
+        /// <param name="value"> The VirtualMachine items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinesList(IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachinesList(IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The items to be displayed on the page. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/> for deserialization. </summary>
+        internal VirtualMachinesList()
+        {
+        }
+
+        /// <summary> The VirtualMachine items on this page. </summary>
         public IReadOnlyList<AvsPrivateCloudClusterVirtualMachineData> Value { get; }
-        /// <summary> URL to get the next page if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

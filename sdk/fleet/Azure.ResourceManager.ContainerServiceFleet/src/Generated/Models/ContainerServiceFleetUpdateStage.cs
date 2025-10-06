@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -55,18 +54,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             Name = name;
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroup>();
+            BeforeGates = new ChangeTrackingList<ContainerServiceFleetGateConfiguration>();
+            AfterGates = new ChangeTrackingList<ContainerServiceFleetGateConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/>. </summary>
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
         /// <param name="groups"> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </param>
         /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </param>
+        /// <param name="beforeGates"> A list of Gates that will be created before this Stage is executed. </param>
+        /// <param name="afterGates"> A list of Gates that will be created after this Stage is executed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Groups = groups;
             AfterStageWaitInSeconds = afterStageWaitInSeconds;
+            BeforeGates = beforeGates;
+            AfterGates = afterGates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,5 +86,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public IList<ContainerServiceFleetUpdateGroup> Groups { get; }
         /// <summary> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </summary>
         public int? AfterStageWaitInSeconds { get; set; }
+        /// <summary> A list of Gates that will be created before this Stage is executed. </summary>
+        public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }
+        /// <summary> A list of Gates that will be created after this Stage is executed. </summary>
+        public IList<ContainerServiceFleetGateConfiguration> AfterGates { get; }
     }
 }

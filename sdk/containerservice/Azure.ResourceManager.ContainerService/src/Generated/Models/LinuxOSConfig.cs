@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Sysctl settings for Linux agent nodes. </summary>
+        [WirePath("sysctls")]
         public SysctlConfig Sysctls { get; set; }
         /// <summary> Valid values are 'always', 'madvise', and 'never'. The default is 'always'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
+        [WirePath("transparentHugePageEnabled")]
         public string TransparentHugePageEnabled { get; set; }
         /// <summary> Valid values are 'always', 'defer', 'defer+madvise', 'madvise' and 'never'. The default is 'madvise'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
+        [WirePath("transparentHugePageDefrag")]
         public string TransparentHugePageDefrag { get; set; }
         /// <summary> The size in MB of a swap file that will be created on each node. </summary>
+        [WirePath("swapFileSizeMB")]
         public int? SwapFileSizeInMB { get; set; }
     }
 }

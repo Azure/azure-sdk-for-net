@@ -45,18 +45,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The 10th percentile value for the metric. </summary>
+        [WirePath("P10")]
         public double? P10 { get; }
         /// <summary> The 25th percentile value for the metric. </summary>
+        [WirePath("P25")]
         public double? P25 { get; }
         /// <summary> The 50th percentile value for the metric. </summary>
+        [WirePath("P50")]
         public double? P50 { get; }
         /// <summary> The 75th percentile value for the metric. </summary>
+        [WirePath("P75")]
         public double? P75 { get; }
         /// <summary> The 90th percentile value for the metric. </summary>
+        [WirePath("P90")]
         public double? P90 { get; }
         /// <summary> The 95th percentile value for the metric. </summary>
+        [WirePath("P95")]
         public double? P95 { get; }
         /// <summary> The 99th percentile value for the metric. </summary>
+        [WirePath("P99")]
         public double? P99 { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -73,8 +72,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Indicates name of the webhook. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="managedIdentity"> The principal id of the managed identity. The value can be "None", "SystemAssigned". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema, string managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutomationAccountId = automationAccountId;
             RunbookName = runbookName;
@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
             ServiceUri = serviceUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            ManagedIdentity = managedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,5 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public Uri ServiceUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
+        /// <summary> The principal id of the managed identity. The value can be "None", "SystemAssigned". </summary>
+        public string ManagedIdentity { get; set; }
     }
 }

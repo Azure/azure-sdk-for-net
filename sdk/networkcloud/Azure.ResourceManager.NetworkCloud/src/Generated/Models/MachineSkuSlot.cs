@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="disks"> The list of disks. </param>
         /// <param name="generation"> The generation of the architecture. </param>
         /// <param name="hardwareVersion"> The hardware version of the machine. </param>
-        /// <param name="memoryCapacityGB"> The maximum amount of memory in GB. </param>
+        /// <param name="memoryCapacityGB"> The maximum amount of memory. Measured in gibibytes. </param>
         /// <param name="model"> The model of the machine. </param>
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <param name="totalThreads"> The count of SMT and physical core threads for this machine. </param>
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string Generation { get; }
         /// <summary> The hardware version of the machine. </summary>
         public string HardwareVersion { get; }
-        /// <summary> The maximum amount of memory in GB. </summary>
+        /// <summary> The maximum amount of memory. Measured in gibibytes. </summary>
         public long? MemoryCapacityGB { get; }
         /// <summary> The model of the machine. </summary>
         public string Model { get; }

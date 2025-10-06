@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of specific signatures states. </summary>
+        [WirePath("signatureOverrides")]
         public IList<FirewallPolicyIntrusionDetectionSignatureSpecification> SignatureOverrides { get; }
         /// <summary> List of rules for traffic to bypass. </summary>
+        [WirePath("bypassTrafficSettings")]
         public IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> BypassTrafficSettings { get; }
         /// <summary> IDPS Private IP address ranges are used to identify traffic direction (i.e. inbound, outbound, etc.). By default, only ranges defined by IANA RFC 1918 are considered private IP addresses. To modify default ranges, specify your Private IP address ranges with this property. </summary>
+        [WirePath("privateRanges")]
         public IList<string> PrivateRanges { get; }
     }
 }

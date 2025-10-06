@@ -5,27 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRule>
+    internal class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRuleResource>
     {
-        InboundSecurityRule IOperationSource<InboundSecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal InboundSecurityRuleOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return InboundSecurityRule.DeserializeInboundSecurityRule(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<InboundSecurityRule> IOperationSource<InboundSecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        InboundSecurityRuleResource IOperationSource<InboundSecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return InboundSecurityRule.DeserializeInboundSecurityRule(document.RootElement);
+            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return new InboundSecurityRuleResource(_client, data);
+        }
+
+        async ValueTask<InboundSecurityRuleResource> IOperationSource<InboundSecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new InboundSecurityRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

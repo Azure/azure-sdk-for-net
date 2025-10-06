@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -59,6 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
             Priority = priority;
             RuleType = ruleType;
+            GroupBy = new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyGroupByVariable>();
             MatchConditions = matchConditions.ToList();
             Action = action;
         }
@@ -70,10 +70,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleType"> Describes type of rule. </param>
         /// <param name="rateLimitDurationInMinutes"> Time window for resetting the rate limit count. Default is 1 minute. </param>
         /// <param name="rateLimitThreshold"> Number of allowed requests per client within the time window. </param>
+        /// <param name="groupBy"> Describes the list of variables to group the rate limit requests. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, WebApplicationRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebApplicationCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, WebApplicationRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<FrontDoorWebApplicationFirewallPolicyGroupByVariable> groupBy, IList<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Priority = priority;
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RuleType = ruleType;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;
             RateLimitThreshold = rateLimitThreshold;
+            GroupBy = groupBy;
             MatchConditions = matchConditions;
             Action = action;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -103,6 +105,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public int? RateLimitDurationInMinutes { get; set; }
         /// <summary> Number of allowed requests per client within the time window. </summary>
         public int? RateLimitThreshold { get; set; }
+        /// <summary> Describes the list of variables to group the rate limit requests. </summary>
+        public IList<FrontDoorWebApplicationFirewallPolicyGroupByVariable> GroupBy { get; }
         /// <summary> List of match conditions. </summary>
         public IList<WebApplicationRuleMatchCondition> MatchConditions { get; }
         /// <summary> Describes what action to be applied when rule matches. </summary>

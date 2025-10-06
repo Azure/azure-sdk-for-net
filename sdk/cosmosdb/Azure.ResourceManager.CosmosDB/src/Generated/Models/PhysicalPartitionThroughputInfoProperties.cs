@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Array of physical partition throughput info objects. </summary>
+        [WirePath("physicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> PhysicalPartitionThroughputInfo { get; }
     }
 }

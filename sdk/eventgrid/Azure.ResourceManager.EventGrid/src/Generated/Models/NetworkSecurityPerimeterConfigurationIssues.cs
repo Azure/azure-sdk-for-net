@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -73,16 +72,22 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Provisioning issue name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Provisioning issue type. </summary>
+        [WirePath("properties.issueType")]
         public NetworkSecurityPerimeterConfigurationIssueType? IssueType { get; set; }
         /// <summary> Provisioning issue severity. </summary>
+        [WirePath("properties.severity")]
         public NetworkSecurityPerimeterConfigurationIssueSeverity? Severity { get; set; }
         /// <summary> Provisioning issue description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> ARM IDs of resources that can be associated to the same perimeter to remediate the issue. </summary>
+        [WirePath("properties.suggestedResourceIds")]
         public IList<string> SuggestedResourceIds { get; }
         /// <summary> Access rules that can be added to the same profile to remediate the issue. </summary>
+        [WirePath("properties.suggestedAccessRules")]
         public IList<string> SuggestedAccessRules { get; }
     }
 }

@@ -40,5 +40,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new AnomalyDimensionList(nextLink, value);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyDimensionList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAnomalyDimensionList(document.RootElement);
+        }
     }
 }

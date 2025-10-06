@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,8 +32,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Server version. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Supported servers versions to upgrade. </summary>
+        [WirePath("supportedVersionsToUpgrade")]
         public IReadOnlyList<string> SupportedVersionsToUpgrade { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </summary>
+        [WirePath("hasLegalHold")]
         public bool? HasLegalHold { get; }
         /// <summary> The list of LegalHold tags of a blob container. </summary>
+        [WirePath("tags")]
         public IReadOnlyList<LegalHoldTag> Tags { get; }
         /// <summary> Protected append blob writes history. </summary>
+        [WirePath("protectedAppendWritesHistory")]
         public ProtectedAppendWritesHistory ProtectedAppendWritesHistory { get; }
     }
 }

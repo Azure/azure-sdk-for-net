@@ -48,18 +48,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="FhirServiceAuthenticationConfiguration"/>. </summary>
         public FhirServiceAuthenticationConfiguration()
         {
+            SmartIdentityProviders = new ChangeTrackingList<SmartIdentityProviderConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceAuthenticationConfiguration"/>. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audience"> The audience url for the service. </param>
         /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
+        /// <param name="smartIdentityProviders"> The array of identity provider configurations for SMART on FHIR authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FhirServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled, IList<SmartIdentityProviderConfiguration> smartIdentityProviders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authority = authority;
             Audience = audience;
             IsSmartProxyEnabled = isSmartProxyEnabled;
+            SmartIdentityProviders = smartIdentityProviders;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +72,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public string Audience { get; set; }
         /// <summary> If the SMART on FHIR proxy is enabled. </summary>
         public bool? IsSmartProxyEnabled { get; set; }
+        /// <summary> The array of identity provider configurations for SMART on FHIR authentication. </summary>
+        public IList<SmartIdentityProviderConfiguration> SmartIdentityProviders { get; }
     }
 }

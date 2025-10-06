@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +16,25 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class GatewayCustomBgpIPAddressIPConfiguration : IUtf8JsonSerializable, IJsonModel<GatewayCustomBgpIPAddressIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayCustomBgpIPAddressIPConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayCustomBgpIPAddressIPConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GatewayCustomBgpIPAddressIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GatewayCustomBgpIPAddressIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ipConfigurationId"u8);
             writer.WriteStringValue(IPConfigurationId);
             writer.WritePropertyName("customBgpIpAddress"u8);
@@ -38,14 +47,13 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GatewayCustomBgpIPAddressIPConfiguration IJsonModel<GatewayCustomBgpIPAddressIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -53,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayCustomBgpIPAddressIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static GatewayCustomBgpIPAddressIPConfiguration DeserializeGatewayCustomBgpIPAddressIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             string ipConfigurationId = default;
             string customBgpIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipConfigurationId"u8))
@@ -86,11 +94,72 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIPAddress, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPConfigurationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipConfigurationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPConfigurationId))
+                {
+                    builder.Append("  ipConfigurationId: ");
+                    if (IPConfigurationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPConfigurationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPConfigurationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBgpIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBgpIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBgpIPAddress))
+                {
+                    builder.Append("  customBgpIpAddress: ");
+                    if (CustomBgpIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomBgpIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomBgpIPAddress}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<GatewayCustomBgpIPAddressIPConfiguration>.Write(ModelReaderWriterOptions options)
@@ -100,9 +169,11 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,11 +185,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGatewayCustomBgpIPAddressIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the Extension Target Properties. </summary>
+        [WirePath("extensionTargets")]
         public IDictionary<string, ExtensionTargetProperties> ExtensionTargets { get; }
     }
 }

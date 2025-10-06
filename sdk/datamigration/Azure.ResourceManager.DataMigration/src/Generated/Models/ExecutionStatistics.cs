@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -50,23 +48,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ExecutionStatistics"/>. </summary>
         internal ExecutionStatistics()
         {
-            WaitStats = new ChangeTrackingDictionary<string, WaitStatistics>();
+            WaitStats = new ChangeTrackingDictionary<string, MigrationValidationWaitStatistics>();
             SqlErrors = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecutionStatistics"/>. </summary>
         /// <param name="executionCount"> No. of query executions. </param>
-        /// <param name="cpuTimeMs"> CPU Time in millisecond(s) for the query execution. </param>
-        /// <param name="elapsedTimeMs"> Time taken in millisecond(s) for executing the query. </param>
+        /// <param name="cpuTimeInMilliseconds"> CPU Time in millisecond(s) for the query execution. </param>
+        /// <param name="elapsedTimeInMilliseconds"> Time taken in millisecond(s) for executing the query. </param>
         /// <param name="waitStats"> Dictionary of sql query execution wait types and the respective statistics. </param>
         /// <param name="hasErrors"> Indicates whether the query resulted in an error. </param>
         /// <param name="sqlErrors"> List of sql Errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionStatistics(long? executionCount, float? cpuTimeMs, float? elapsedTimeMs, IReadOnlyDictionary<string, WaitStatistics> waitStats, bool? hasErrors, IReadOnlyList<string> sqlErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecutionStatistics(long? executionCount, float? cpuTimeInMilliseconds, float? elapsedTimeInMilliseconds, IReadOnlyDictionary<string, MigrationValidationWaitStatistics> waitStats, bool? hasErrors, IReadOnlyList<string> sqlErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExecutionCount = executionCount;
-            CpuTimeMs = cpuTimeMs;
-            ElapsedTimeMs = elapsedTimeMs;
+            CpuTimeInMilliseconds = cpuTimeInMilliseconds;
+            ElapsedTimeInMilliseconds = elapsedTimeInMilliseconds;
             WaitStats = waitStats;
             HasErrors = hasErrors;
             SqlErrors = sqlErrors;
@@ -76,11 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> No. of query executions. </summary>
         public long? ExecutionCount { get; }
         /// <summary> CPU Time in millisecond(s) for the query execution. </summary>
-        public float? CpuTimeMs { get; }
+        public float? CpuTimeInMilliseconds { get; }
         /// <summary> Time taken in millisecond(s) for executing the query. </summary>
-        public float? ElapsedTimeMs { get; }
+        public float? ElapsedTimeInMilliseconds { get; }
         /// <summary> Dictionary of sql query execution wait types and the respective statistics. </summary>
-        public IReadOnlyDictionary<string, WaitStatistics> WaitStats { get; }
+        public IReadOnlyDictionary<string, MigrationValidationWaitStatistics> WaitStats { get; }
         /// <summary> Indicates whether the query resulted in an error. </summary>
         public bool? HasErrors { get; }
         /// <summary> List of sql Errors. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// A class representing the SharedSearchServicePrivateLinkResource data model.
-    /// Describes a Shared Private Link Resource managed by the Azure Cognitive Search service.
+    /// Describes a shared private link resource managed by the Azure AI Search service.
     /// </summary>
     public partial class SharedSearchServicePrivateLinkResourceData : ResourceData
     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Describes the properties of a Shared Private Link Resource managed by the Azure Cognitive Search service. </param>
+        /// <param name="properties"> Describes the properties of a shared private link resource managed by the Azure AI Search service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SharedSearchServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SharedSearchServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.Search
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Describes the properties of a Shared Private Link Resource managed by the Azure Cognitive Search service. </summary>
+        /// <summary> Describes the properties of a shared private link resource managed by the Azure AI Search service. </summary>
+        [WirePath("properties")]
         public SharedSearchServicePrivateLinkResourceProperties Properties { get; set; }
     }
 }

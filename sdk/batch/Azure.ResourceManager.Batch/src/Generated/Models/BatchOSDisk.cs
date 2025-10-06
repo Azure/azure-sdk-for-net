@@ -84,19 +84,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The type of caching to enable for the disk. </summary>
         public BatchDiskCachingType? Caching { get; set; }
         /// <summary> Gets or sets the managed disk. </summary>
-        internal ManagedDisk ManagedDisk { get; set; }
-        /// <summary> The storage account type for use in creating data disks or OS disk. </summary>
-        public BatchStorageAccountType? ManagedDiskStorageAccountType
-        {
-            get => ManagedDisk is null ? default : ManagedDisk.StorageAccountType;
-            set
-            {
-                if (ManagedDisk is null)
-                    ManagedDisk = new ManagedDisk();
-                ManagedDisk.StorageAccountType = value;
-            }
-        }
-
+        public ManagedDisk ManagedDisk { get; set; }
         /// <summary> The initial disk size in GB when creating new OS disk. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>

@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable or disable the Azure Managed Prometheus addon for Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable for details on enabling and disabling. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </summary>
+        [WirePath("kubeStateMetrics")]
         public ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The collection value. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerServicePrivateEndpointConnectionData> Value { get; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         FleetUpdateStrategyResource IOperationSource<FleetUpdateStrategyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(document.RootElement);
+            var data = ModelReaderWriter.Read<FleetUpdateStrategyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return new FleetUpdateStrategyResource(_client, data);
         }
 
         async ValueTask<FleetUpdateStrategyResource> IOperationSource<FleetUpdateStrategyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(document.RootElement);
-            return new FleetUpdateStrategyResource(_client, data);
+            var data = ModelReaderWriter.Read<FleetUpdateStrategyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            return await Task.FromResult(new FleetUpdateStrategyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

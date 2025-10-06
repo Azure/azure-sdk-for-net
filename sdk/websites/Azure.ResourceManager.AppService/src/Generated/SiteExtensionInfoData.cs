@@ -111,46 +111,67 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Site extension ID. </summary>
+        [WirePath("properties.extension_id")]
         public string ExtensionId { get; set; }
         /// <summary> Gets or sets the title. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Site extension type. </summary>
+        [WirePath("properties.extension_type")]
         public SiteExtensionType? ExtensionType { get; set; }
         /// <summary> Summary description. </summary>
+        [WirePath("properties.summary")]
         public string Summary { get; set; }
         /// <summary> Detailed description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Version information. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Extension URL. </summary>
+        [WirePath("properties.extension_url")]
         public Uri ExtensionUri { get; set; }
         /// <summary> Project URL. </summary>
+        [WirePath("properties.project_url")]
         public Uri ProjectUri { get; set; }
         /// <summary> Icon URL. </summary>
+        [WirePath("properties.icon_url")]
         public Uri IconUri { get; set; }
         /// <summary> License URL. </summary>
+        [WirePath("properties.license_url")]
         public Uri LicenseUri { get; set; }
         /// <summary> Feed URL. </summary>
+        [WirePath("properties.feed_url")]
         public Uri FeedUri { get; set; }
         /// <summary> List of authors. </summary>
+        [WirePath("properties.authors")]
         public IList<string> Authors { get; }
         /// <summary> Installer command line parameters. </summary>
+        [WirePath("properties.installer_command_line_params")]
         public string InstallerCommandLineParams { get; set; }
         /// <summary> Published timestamp. </summary>
+        [WirePath("properties.published_date_time")]
         public DateTimeOffset? PublishedOn { get; set; }
         /// <summary> Count of downloads. </summary>
+        [WirePath("properties.download_count")]
         public int? DownloadCount { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.local_is_latest_version")]
         public bool? LocalIsLatestVersion { get; set; }
         /// <summary> Local path. </summary>
+        [WirePath("properties.local_path")]
         public string LocalPath { get; set; }
         /// <summary> Installed timestamp. </summary>
+        [WirePath("properties.installed_date_time")]
         public DateTimeOffset? InstalledOn { get; set; }
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; set; }
         /// <summary> Site Extension comment. </summary>
+        [WirePath("properties.comment")]
         public string Comment { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

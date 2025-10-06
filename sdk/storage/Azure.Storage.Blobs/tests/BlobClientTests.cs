@@ -66,7 +66,9 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
+#pragma warning disable CS0618 // Type or member is obsolete
             BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+#pragma warning restore CS0618 // Type or member is obsolete
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
@@ -104,7 +106,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new BlobClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -218,7 +220,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -250,7 +252,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -282,7 +284,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -1020,7 +1022,11 @@ namespace Azure.Storage.Blobs.Test
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
+#if NET6_0_OR_GREATER
+                await stream.ReadExactlyAsync(buffer, 0, count);
+#else
                 await stream.ReadAsync(buffer, 0, count);
+#endif
 
                 TestHelper.AssertSequenceEqual(
                     buffer,
@@ -1337,7 +1343,7 @@ namespace Azure.Storage.Blobs.Test
             });
 
             BlobClientOptions options = GetOptions();
-            options.ExpectContinueBehavior = new() { Mode = ExpectContinueMode.On };
+            options.Request100ContinueOptions = new() { Mode = Request100ContinueMode.Always };
             options.AddPolicy(assertPolicy, Core.HttpPipelinePosition.BeforeTransport);
             await using DisposingContainer test = await GetTestContainerAsync(
                 BlobsClientBuilder.GetServiceClient_SharedKey(options));
@@ -1391,7 +1397,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Create a CancellationToken that times out after 60s
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
                 CancellationToken token = source.Token;
 
                 // Keep uploading a GB
@@ -1443,7 +1449,7 @@ namespace Azure.Storage.Blobs.Test
                 // Create a CancellationToken that times out after .01s
                 // Intentionally not delaying here, as DownloadToAsync operation should always cancel
                 // since it buffers the full response.
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
                 CancellationToken token = source.Token;
 
                 // Verifying DownloadTo will cancel
@@ -1522,7 +1528,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<BlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
     }
 }

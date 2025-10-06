@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -73,16 +72,22 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The time in days when approval request would be timed out. </summary>
+        [WirePath("approvalStageTimeOutInDays")]
         public int? ApprovalStageTimeOutInDays { get; set; }
         /// <summary> Determines whether approver need to provide justification for his decision. </summary>
+        [WirePath("isApproverJustificationRequired")]
         public bool? IsApproverJustificationRequired { get; set; }
         /// <summary> The time in minutes when the approval request would be escalated if the primary approver does not approve. </summary>
+        [WirePath("escalationTimeInMinutes")]
         public int? EscalationTimeInMinutes { get; set; }
         /// <summary> The primary approver of the request. </summary>
+        [WirePath("primaryApprovers")]
         public IList<RoleManagementUserInfo> PrimaryApprovers { get; }
         /// <summary> The value determine whether escalation feature is enabled. </summary>
+        [WirePath("isEscalationEnabled")]
         public bool? IsEscalationEnabled { get; set; }
         /// <summary> The escalation approver of the request. </summary>
+        [WirePath("escalationApprovers")]
         public IList<RoleManagementUserInfo> EscalationApprovers { get; }
     }
 }

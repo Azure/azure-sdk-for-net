@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Parameters supplied to the Patch Namespace operation. </summary>
+    /// <summary> Patch parameter for NamespaceResource. </summary>
     public partial class NotificationHubNamespacePatch
     {
         /// <summary>
@@ -53,19 +52,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespacePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <param name="sku"> The Sku description for a namespace. </param>
+        /// <param name="properties"> Represents namespace properties. </param>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespacePatch(IDictionary<string, string> tags, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubNamespacePatch(NotificationHubSku sku, NotificationHubNamespaceProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             Sku = sku;
+            Properties = properties;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The sku of the created namespace. </summary>
+        /// <summary> The Sku description for a namespace. </summary>
         public NotificationHubSku Sku { get; set; }
+        /// <summary> Represents namespace properties. </summary>
+        public NotificationHubNamespaceProperties Properties { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

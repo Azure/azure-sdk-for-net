@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> ImmutableId of the corresponding partner registration. </summary>
+        [WirePath("properties.partnerRegistrationImmutableId")]
         public Guid? PartnerRegistrationImmutableId { get; set; }
         /// <summary> Official name of the Partner. </summary>
+        [WirePath("properties.organizationName")]
         public string OrganizationName { get; set; }
         /// <summary> Display name of the verified partner. </summary>
+        [WirePath("properties.partnerDisplayName")]
         public string PartnerDisplayName { get; set; }
         /// <summary> Details of the partner topic scenario. </summary>
+        [WirePath("properties.partnerTopicDetails")]
         public PartnerDetails PartnerTopicDetails { get; set; }
         /// <summary> Details of the partner destination scenario. </summary>
+        [WirePath("properties.partnerDestinationDetails")]
         public PartnerDetails PartnerDestinationDetails { get; set; }
         /// <summary> Provisioning state of the verified partner. </summary>
+        [WirePath("properties.provisioningState")]
         public VerifiedPartnerProvisioningState? ProvisioningState { get; set; }
     }
 }

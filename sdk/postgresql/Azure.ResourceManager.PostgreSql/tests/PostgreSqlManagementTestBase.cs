@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 keyVault = keyVaultUpdateOperation.Value;
 
                 var graphClient = new GraphServiceClient(TestEnvironment.Credential);
-                var servicePrincipals = await graphClient.ServicePrincipals
-                    .Request()
-                    .Filter($"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')")
-                    .Top(1)
-                    .GetAsync();
-                var servicePrincipal = servicePrincipals.FirstOrDefault();
+                var servicePrincipals = await graphClient.ServicePrincipals.GetAsync((requestConfiguration) =>
+                {
+                    requestConfiguration.QueryParameters.Filter = $"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')";
+                    requestConfiguration.QueryParameters.Top = 1;
+                });
+                var servicePrincipal = servicePrincipals.Value.FirstOrDefault();
 
                 var keyAccessPolicies = new KeyVaultAccessPolicy[] {
                     new KeyVaultAccessPolicy(tenantId, servicePrincipal.Id, new IdentityAccessPermissions()

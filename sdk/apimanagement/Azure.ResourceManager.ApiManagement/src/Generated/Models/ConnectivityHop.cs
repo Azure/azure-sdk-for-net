@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -75,16 +74,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of the hop. </summary>
+        [WirePath("type")]
         public string ConnectivityHopType { get; }
         /// <summary> The ID of the hop. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The IP address of the hop. </summary>
+        [WirePath("address")]
         public IPAddress Address { get; }
         /// <summary> The ID of the resource corresponding to this hop. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> List of next hop identifiers. </summary>
+        [WirePath("nextHopIds")]
         public IReadOnlyList<string> NextHopIds { get; }
         /// <summary> List of issues. </summary>
+        [WirePath("issues")]
         public IReadOnlyList<ConnectivityIssue> Issues { get; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,33 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope, string startDate, string endDate, string filter, string apply)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/charges", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (apply != null)
+            {
+                uri.AppendQuery("$apply", apply, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope, string startDate, string endDate, string filter, string apply)
@@ -89,7 +115,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ChargesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChargesListResult.DeserializeChargesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -117,7 +143,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ChargesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChargesListResult.DeserializeChargesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

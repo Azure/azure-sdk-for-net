@@ -82,17 +82,34 @@ namespace Azure.Messaging.ServiceBus
                 return receiver;
             }
             catch (ServiceBusException e)
-                when (e.Reason == ServiceBusFailureReason.ServiceTimeout && isProcessor)
+                when (e.Reason == ServiceBusFailureReason.ServiceTimeout)
             {
                 await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                receiver.Logger.ProcessorAcceptSessionTimeout(receiver.FullyQualifiedNamespace, entityPath, e.ToString());
+
+                if (isProcessor)
+                {
+                    receiver.Logger.ProcessorAcceptSessionTimeout(receiver.FullyQualifiedNamespace, entityPath, e.ToString());
+                }
+                else
+                {
+                    receiver.Logger.ReceiverAcceptSessionTimeout(receiver.FullyQualifiedNamespace, entityPath, e.ToString());
+                }
+
                 throw;
             }
             catch (TaskCanceledException exception)
-                when (isProcessor)
             {
                 await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                receiver.Logger.ProcessorStoppingAcceptSessionCanceled(receiver.FullyQualifiedNamespace, entityPath, exception.ToString());
+
+                if (isProcessor)
+                {
+                    receiver.Logger.ProcessorStoppingAcceptSessionCanceled(receiver.FullyQualifiedNamespace, entityPath, exception.ToString());
+                }
+                else
+                {
+                    receiver.Logger.ReceiverAcceptSessionCanceled(receiver.FullyQualifiedNamespace, entityPath, exception.ToString());
+                }
+
                 throw;
             }
             catch (Exception ex)

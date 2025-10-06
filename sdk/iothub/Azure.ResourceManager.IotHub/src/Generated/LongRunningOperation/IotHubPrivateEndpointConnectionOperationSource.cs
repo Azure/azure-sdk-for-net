@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.IotHub
 
         IotHubPrivateEndpointConnectionResource IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<IotHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
             return new IotHubPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<IotHubPrivateEndpointConnectionResource> IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement);
-            return new IotHubPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<IotHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
+            return await Task.FromResult(new IotHubPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

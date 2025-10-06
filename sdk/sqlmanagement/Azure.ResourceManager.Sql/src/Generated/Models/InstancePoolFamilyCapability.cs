@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Family name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> List of supported license types. </summary>
+        [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
         /// <summary> List of supported virtual cores values. </summary>
+        [WirePath("supportedVcoresValues")]
         public IReadOnlyList<InstancePoolVcoresCapability> SupportedVcoresValues { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

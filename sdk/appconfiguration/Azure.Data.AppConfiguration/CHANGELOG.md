@@ -1,5 +1,49 @@
 # Release History
 
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.1 (2025-05-09)
+
+### Features Added
+
+- Added AOT annotations to support AOT compilation.
+
+## 1.6.0 (2025-03-11)
+
+### Features Added
+
+- Added support for specifying the token credential's Microsoft Entra audience when creating a client.
+
+## 1.5.0 (2024-08-06)
+
+### Features Added
+
+- Added support for listing labels.
+- Added support for filtering by tags.
+
+## 1.4.1 (2024-04-17)
+
+### Bugs Fixed
+- Fixed a bug introduced in version 1.3.0 where the `GetConfigurationSetting` method incorrectly logged 304 responses as failures in distributed tracing.
+
+## 1.4.0 (2024-04-10)
+
+### Features Added
+
+- Added `ConfigurationSettingPageableExtensions` class to support new `Pageable<ConfigurationSetting>.AsPages` and `AsyncPageable<ConfigurationSetting>.AsPages` extension methods. This replaces `SettingSelector.MatchConditions`.
+
+### Breaking Changes
+
+- Removed property `MatchConditions` from `SettingSelector`.
+
 ## 1.4.0-beta.1 (2024-03-07)
 
 ### Features Added
@@ -15,7 +59,7 @@
 ### Breaking Changes
 
 - Renamed `key` tag reported on `ConfigurationClient` activities to `az.appconfiguration.key` following OpenTelemetry attribute naming conventions.
-  
+
 ### Bugs Fixed
 
 ### Other Changes

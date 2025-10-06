@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -48,9 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
-        internal A2AProtectedManagedDiskDetails()
+        public A2AProtectedManagedDiskDetails()
         {
-            AllowedDiskLevelOperation = new ChangeTrackingList<string>();
+            SiteRecoveryAllowedDiskLevelOperation = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
         /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
         /// <param name="diskState"> The disk state. </param>
-        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
+        /// <param name="siteRecoveryAllowedDiskLevelOperation"> The disk level operations list. </param>
         /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
         /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
         /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IList<string> siteRecoveryAllowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DataPendingInStagingStorageAccountInMB = dataPendingInStagingStorageAccountInMB;
             DataPendingAtSourceAgentInMB = dataPendingAtSourceAgentInMB;
             DiskState = diskState;
-            AllowedDiskLevelOperation = allowedDiskLevelOperation;
+            SiteRecoveryAllowedDiskLevelOperation = siteRecoveryAllowedDiskLevelOperation;
             IsDiskEncrypted = isDiskEncrypted;
             SecretIdentifier = secretIdentifier;
             DekKeyVaultArmId = dekKeyVaultArmId;
@@ -117,60 +116,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The managed disk Arm id. </summary>
-        public string DiskId { get; }
+        public string DiskId { get; set; }
         /// <summary> The recovery disk resource group Arm Id. </summary>
-        public ResourceIdentifier RecoveryResourceGroupId { get; }
+        public ResourceIdentifier RecoveryResourceGroupId { get; set; }
         /// <summary> Recovery target disk Arm Id. </summary>
-        public ResourceIdentifier RecoveryTargetDiskId { get; }
+        public ResourceIdentifier RecoveryTargetDiskId { get; set; }
         /// <summary> Recovery replica disk Arm Id. </summary>
-        public ResourceIdentifier RecoveryReplicaDiskId { get; }
+        public ResourceIdentifier RecoveryReplicaDiskId { get; set; }
         /// <summary> Recovery original target disk Arm Id. </summary>
-        public ResourceIdentifier RecoveryOrignalTargetDiskId { get; }
+        public ResourceIdentifier RecoveryOrignalTargetDiskId { get; set; }
         /// <summary> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </summary>
-        public string RecoveryReplicaDiskAccountType { get; }
+        public string RecoveryReplicaDiskAccountType { get; set; }
         /// <summary> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </summary>
-        public string RecoveryTargetDiskAccountType { get; }
+        public string RecoveryTargetDiskAccountType { get; set; }
         /// <summary> The recovery disk encryption set Id. </summary>
-        public ResourceIdentifier RecoveryDiskEncryptionSetId { get; }
+        public ResourceIdentifier RecoveryDiskEncryptionSetId { get; set; }
         /// <summary> The primary disk encryption set Id. </summary>
-        public ResourceIdentifier PrimaryDiskEncryptionSetId { get; }
+        public ResourceIdentifier PrimaryDiskEncryptionSetId { get; set; }
         /// <summary> The disk name. </summary>
-        public string DiskName { get; }
+        public string DiskName { get; set; }
         /// <summary> The disk capacity in bytes. </summary>
-        public long? DiskCapacityInBytes { get; }
+        public long? DiskCapacityInBytes { get; set; }
         /// <summary> The primary staging storage account. </summary>
-        public ResourceIdentifier PrimaryStagingAzureStorageAccountId { get; }
+        public ResourceIdentifier PrimaryStagingAzureStorageAccountId { get; set; }
         /// <summary> The type of disk. </summary>
-        public string DiskType { get; }
+        public string DiskType { get; set; }
         /// <summary> A value indicating whether resync is required for this disk. </summary>
-        public bool? IsResyncRequired { get; }
+        public bool? IsResyncRequired { get; set; }
         /// <summary> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </summary>
-        public int? MonitoringPercentageCompletion { get; }
+        public int? MonitoringPercentageCompletion { get; set; }
         /// <summary> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </summary>
-        public string MonitoringJobType { get; }
+        public string MonitoringJobType { get; set; }
         /// <summary> The data pending for replication in MB at staging account. </summary>
-        public double? DataPendingInStagingStorageAccountInMB { get; }
+        public double? DataPendingInStagingStorageAccountInMB { get; set; }
         /// <summary> The data pending at source virtual machine in MB. </summary>
-        public double? DataPendingAtSourceAgentInMB { get; }
+        public double? DataPendingAtSourceAgentInMB { get; set; }
         /// <summary> The disk state. </summary>
-        public string DiskState { get; }
+        public string DiskState { get; set; }
         /// <summary> The disk level operations list. </summary>
-        public IReadOnlyList<string> AllowedDiskLevelOperation { get; }
+        public IList<string> SiteRecoveryAllowedDiskLevelOperation { get; }
         /// <summary> A value indicating whether vm has encrypted os disk or not. </summary>
-        public bool? IsDiskEncrypted { get; }
+        public bool? IsDiskEncrypted { get; set; }
         /// <summary> The secret URL / identifier (BEK). </summary>
-        public string SecretIdentifier { get; }
+        public string SecretIdentifier { get; set; }
         /// <summary> The KeyVault resource id for secret (BEK). </summary>
-        public ResourceIdentifier DekKeyVaultArmId { get; }
+        public ResourceIdentifier DekKeyVaultArmId { get; set; }
         /// <summary> A value indicating whether disk key got encrypted or not. </summary>
-        public bool? IsDiskKeyEncrypted { get; }
+        public bool? IsDiskKeyEncrypted { get; set; }
         /// <summary> The key URL / identifier (KEK). </summary>
-        public string KeyIdentifier { get; }
+        public string KeyIdentifier { get; set; }
         /// <summary> The KeyVault resource id for key (KEK). </summary>
-        public ResourceIdentifier KekKeyVaultArmId { get; }
+        public ResourceIdentifier KekKeyVaultArmId { get; set; }
         /// <summary> The failover name for the managed disk. </summary>
-        public string FailoverDiskName { get; }
+        public string FailoverDiskName { get; set; }
         /// <summary> The test failover name for the managed disk. </summary>
-        public string TfoDiskName { get; }
+        public string TfoDiskName { get; set; }
     }
 }

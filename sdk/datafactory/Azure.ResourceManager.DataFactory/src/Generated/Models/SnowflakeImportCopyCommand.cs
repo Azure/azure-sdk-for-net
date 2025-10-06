@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,10 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }. </param>
         /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "FORCE": "TRUE", "LOAD_UNCERTAIN_FILES": "'FALSE'" }. </param>
-        internal SnowflakeImportCopyCommand(string importSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions) : base(importSettingsType, additionalProperties)
+        /// <param name="storageIntegration"> The name of the snowflake storage integration to use for the copy operation. Type: string (or Expression with resultType string). </param>
+        internal SnowflakeImportCopyCommand(string importSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions, DataFactoryElement<string> storageIntegration) : base(importSettingsType, additionalProperties)
         {
             AdditionalCopyOptions = additionalCopyOptions;
             AdditionalFormatOptions = additionalFormatOptions;
+            StorageIntegration = storageIntegration;
             ImportSettingsType = importSettingsType ?? "SnowflakeImportCopyCommand";
         }
 
@@ -96,5 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> AdditionalFormatOptions { get; }
+        /// <summary> The name of the snowflake storage integration to use for the copy operation. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StorageIntegration { get; set; }
     }
 }

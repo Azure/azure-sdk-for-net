@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -49,19 +48,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceListResult"/>. </summary>
         internal HardwareSecurityModulesPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<HardwareSecurityModulesPrivateLinkData>();
+            Value = new ChangeTrackingList<CloudHsmClusterPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<CloudHsmClusterPrivateLinkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<HardwareSecurityModulesPrivateLinkData> Value { get; }
+        public IReadOnlyList<CloudHsmClusterPrivateLinkData> Value { get; }
+        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
+        public Uri NextLink { get; }
     }
 }

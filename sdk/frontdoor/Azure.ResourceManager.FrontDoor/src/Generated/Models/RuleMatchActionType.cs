@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
+        private const string AnomalyScoringValue = "AnomalyScoring";
+        private const string JSChallengeValue = "JSChallenge";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Allow. </summary>
         public static RuleMatchActionType Allow { get; } = new RuleMatchActionType(AllowValue);
@@ -35,11 +38,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RuleMatchActionType Log { get; } = new RuleMatchActionType(LogValue);
         /// <summary> Redirect. </summary>
         public static RuleMatchActionType Redirect { get; } = new RuleMatchActionType(RedirectValue);
+        /// <summary> AnomalyScoring. </summary>
+        public static RuleMatchActionType AnomalyScoring { get; } = new RuleMatchActionType(AnomalyScoringValue);
+        /// <summary> JSChallenge. </summary>
+        public static RuleMatchActionType JSChallenge { get; } = new RuleMatchActionType(JSChallengeValue);
+        /// <summary> CAPTCHA. </summary>
+        public static RuleMatchActionType Captcha { get; } = new RuleMatchActionType(CaptchaValue);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
         public static bool operator ==(RuleMatchActionType left, RuleMatchActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are not the same. </summary>
         public static bool operator !=(RuleMatchActionType left, RuleMatchActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RuleMatchActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleMatchActionType"/>. </summary>
         public static implicit operator RuleMatchActionType(string value) => new RuleMatchActionType(value);
 
         /// <inheritdoc />
@@ -50,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

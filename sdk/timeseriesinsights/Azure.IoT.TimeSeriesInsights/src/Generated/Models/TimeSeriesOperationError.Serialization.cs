@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -76,6 +75,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 innerError,
                 details ?? new ChangeTrackingList<TimeSeriesOperationErrorDetails>(),
                 additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesOperationError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTimeSeriesOperationError(document.RootElement);
         }
     }
 }

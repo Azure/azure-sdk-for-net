@@ -200,8 +200,10 @@ namespace Azure.ResourceManager.Sql
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </summary>
+        [WirePath("properties.isDevopsAuditEnabled")]
         public bool? IsDevopsAuditEnabled { get; set; }
         /// <summary> Specifies the number of days to keep in the audit logs in the storage account. </summary>
+        [WirePath("properties.retentionDays")]
         public int? RetentionDays { get; set; }
         /// <summary>
         /// Specifies the Actions-Groups and Actions to audit.
@@ -266,8 +268,10 @@ namespace Azure.ResourceManager.Sql
         ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </summary>
+        [WirePath("properties.auditActionsAndGroups")]
         public IList<string> AuditActionsAndGroups { get; }
         /// <summary> Specifies whether storageAccountAccessKey value is the storage's secondary key. </summary>
+        [WirePath("properties.isStorageSecondaryKeyInUse")]
         public bool? IsStorageSecondaryKeyInUse { get; set; }
         /// <summary>
         /// Specifies whether audit events are sent to Azure Monitor.
@@ -283,17 +287,22 @@ namespace Azure.ResourceManager.Sql
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </summary>
+        [WirePath("properties.isAzureMonitorTargetEnabled")]
         public bool? IsAzureMonitorTargetEnabled { get; set; }
         /// <summary>
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </summary>
+        [WirePath("properties.queueDelayMs")]
         public int? QueueDelayMs { get; set; }
         /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
+        [WirePath("properties.isManagedIdentityInUse")]
         public bool? IsManagedIdentityInUse { get; set; }
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
+        [WirePath("properties.state")]
         public BlobAuditingPolicyState? State { get; set; }
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
+        [WirePath("properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
         /// <summary>
         /// Specifies the identifier key of the auditing storage account.
@@ -303,8 +312,10 @@ namespace Azure.ResourceManager.Sql
         /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </summary>
+        [WirePath("properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
         /// <summary> Specifies the blob storage subscription Id. </summary>
+        [WirePath("properties.storageAccountSubscriptionId")]
         public Guid? StorageAccountSubscriptionId { get; set; }
     }
 }

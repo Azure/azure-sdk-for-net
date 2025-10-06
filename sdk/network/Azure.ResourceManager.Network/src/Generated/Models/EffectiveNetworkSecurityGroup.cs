@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -73,16 +72,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of network security group that is applied. </summary>
         internal WritableSubResource NetworkSecurityGroup { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("networkSecurityGroup.id")]
         public ResourceIdentifier NetworkSecurityGroupId
         {
             get => NetworkSecurityGroup?.Id;
         }
 
         /// <summary> Associated resources. </summary>
+        [WirePath("association")]
         public EffectiveNetworkSecurityGroupAssociation Association { get; }
         /// <summary> A collection of effective security rules. </summary>
+        [WirePath("effectiveSecurityRules")]
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
         /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
+        [WirePath("tagMap")]
         public IReadOnlyDictionary<string, IList<string>> TagToIPAddresses { get; }
     }
 }

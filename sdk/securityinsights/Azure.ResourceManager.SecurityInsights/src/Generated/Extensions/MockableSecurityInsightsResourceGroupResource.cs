@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableSecurityInsightsResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _ipGeodataClientDiagnostics;
+        private IPGeodataRestOperations _ipGeodataRestClient;
+        private ClientDiagnostics _domainWhoisClientDiagnostics;
+        private DomainWhoisRestOperations _domainWhoisRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableSecurityInsightsResourceGroupResource"/> class for mocking. </summary>
         protected MockableSecurityInsightsResourceGroupResource()
         {
@@ -25,10 +34,167 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         {
         }
 
+        private ClientDiagnostics IPGeodataClientDiagnostics => _ipGeodataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private IPGeodataRestOperations IPGeodataRestClient => _ipGeodataRestClient ??= new IPGeodataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DomainWhoisClientDiagnostics => _domainWhoisClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DomainWhoisRestOperations DomainWhoisRestClient => _domainWhoisRestClient ??= new DomainWhoisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Get geodata for a single IP address
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPGeodata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        public virtual async Task<Response<EnrichmentIPGeodata>> GetIPGeodatumAsync(string ipAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+
+            using var scope = IPGeodataClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetIPGeodatum");
+            scope.Start();
+            try
+            {
+                var response = await IPGeodataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAddress, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get geodata for a single IP address
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPGeodata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        public virtual Response<EnrichmentIPGeodata> GetIPGeodatum(string ipAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+
+            using var scope = IPGeodataClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetIPGeodatum");
+            scope.Start();
+            try
+            {
+                var response = IPGeodataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAddress, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get whois information for a single domain name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainWhois_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
+        public virtual async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(string domain, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(domain, nameof(domain));
+
+            using var scope = DomainWhoisClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetDomainWhoisInformation");
+            scope.Start();
+            try
+            {
+                var response = await DomainWhoisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domain, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get whois information for a single domain name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainWhois_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
+        public virtual Response<EnrichmentDomainWhois> GetDomainWhoisInformation(string domain, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(domain, nameof(domain));
+
+            using var scope = DomainWhoisClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetDomainWhoisInformation");
+            scope.Start();
+            try
+            {
+                var response = DomainWhoisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domain, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> Properties of Cognitive Services account deployment model. </summary>
+    /// <summary> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </summary>
     public partial class CognitiveServicesAccountDeploymentScaleSettings
     {
         /// <summary>
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Deployment scale type. </summary>
+        [WirePath("scaleType")]
         public CognitiveServicesAccountDeploymentScaleType? ScaleType { get; set; }
         /// <summary> Deployment capacity. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
         /// <summary> Deployment active capacity. This value might be different from `capacity` if customer recently updated `capacity`. </summary>
+        [WirePath("activeCapacity")]
         public int? ActiveCapacity { get; }
     }
 }

@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Redis instance SSL port. </summary>
+        [WirePath("sslPort")]
         public int? SslPort { get; }
         /// <summary> If enableNonSslPort is true, provides Redis instance Non-SSL port. </summary>
+        [WirePath("nonSslPort")]
         public int? NonSslPort { get; }
         /// <summary> If the Cache uses availability zones, specifies availability zone where this instance is located. </summary>
+        [WirePath("zone")]
         public string Zone { get; }
         /// <summary> If clustering is enabled, the Shard ID of Redis Instance. </summary>
+        [WirePath("shardId")]
         public int? ShardId { get; }
         /// <summary> Specifies whether the instance is a primary node. </summary>
+        [WirePath("isMaster")]
         public bool? IsMaster { get; }
         /// <summary> Specifies whether the instance is a primary node. </summary>
+        [WirePath("isPrimary")]
         public bool? IsPrimary { get; }
     }
 }

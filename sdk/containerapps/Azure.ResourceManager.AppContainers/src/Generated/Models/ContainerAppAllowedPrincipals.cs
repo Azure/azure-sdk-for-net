@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The list of the allowed groups. </summary>
+        [WirePath("groups")]
         public IList<string> Groups { get; }
         /// <summary> The list of the allowed identities. </summary>
+        [WirePath("identities")]
         public IList<string> Identities { get; }
     }
 }

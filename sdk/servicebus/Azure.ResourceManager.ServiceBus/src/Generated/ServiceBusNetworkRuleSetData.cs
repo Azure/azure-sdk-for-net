@@ -82,16 +82,22 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
+        [WirePath("properties.trustedServiceAccessEnabled")]
         public bool? IsTrustedServiceAccessEnabled { get; set; }
         /// <summary> Default Action for Network Rule Set. </summary>
+        [WirePath("properties.defaultAction")]
         public ServiceBusNetworkRuleSetDefaultAction? DefaultAction { get; set; }
         /// <summary> List VirtualNetwork Rules. </summary>
+        [WirePath("properties.virtualNetworkRules")]
         public IList<ServiceBusNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
+        [WirePath("properties.ipRules")]
         public IList<ServiceBusNetworkRuleSetIPRules> IPRules { get; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public ServiceBusPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

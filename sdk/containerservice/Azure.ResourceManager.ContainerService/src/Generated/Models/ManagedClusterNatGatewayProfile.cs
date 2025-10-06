@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -69,6 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Profile of the managed outbound IP resources of the cluster NAT gateway. </summary>
         internal ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
         /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>
+        [WirePath("managedOutboundIPProfile.count")]
         public int? ManagedOutboundIPCount
         {
             get => ManagedOutboundIPProfile is null ? default : ManagedOutboundIPProfile.Count;
@@ -81,8 +81,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The effective outbound IP resources of the cluster NAT gateway. </summary>
+        [WirePath("effectiveOutboundIPs")]
         public IList<WritableSubResource> EffectiveOutboundIPs { get; }
         /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </summary>
+        [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
     }
 }

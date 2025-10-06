@@ -91,12 +91,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The location of the Template Spec Version. It must match the location of the parent Template Spec. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Template Spec version description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> An array of linked template artifacts. </summary>
+        [WirePath("properties.linkedTemplates")]
         public IList<LinkedTemplateArtifact> LinkedTemplates { get; }
         /// <summary>
         /// The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs.
@@ -128,6 +132,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary>
         /// The main Azure Resource Manager template content.
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.mainTemplate")]
         public BinaryData MainTemplate { get; set; }
         /// <summary>
         /// The Azure Resource Manager template UI definition content.
@@ -190,6 +196,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.uiFormDefinition")]
         public BinaryData UiFormDefinition { get; set; }
     }
 }

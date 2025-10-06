@@ -2,13 +2,17 @@
 	<PropertyGroup>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-		<Version>1.0.0-beta.6</Version>
+		<Version>1.2.0-beta.1</Version>
+		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+		<ApiCompatVersion>1.1.0</ApiCompatVersion>
 		<Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Azure.WebJobs" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" />
+		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
 	</ItemGroup>
 
@@ -23,9 +27,9 @@
 
 	<ItemGroup>
 		<Compile Update="AuthenticationEventResource.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>AuthenticationEventResource.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AuthenticationEventResource.resx</DependentUpon>
 		</Compile>
 		<Compile Update="AuthEventResourceAuthEventResource.Designer.cs">
 			<DesignTime>True</DesignTime>

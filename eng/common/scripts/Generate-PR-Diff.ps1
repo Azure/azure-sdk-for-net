@@ -13,39 +13,73 @@ The path under which changes will be detected.
 #>
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory = $True)]
   [string] $ArtifactPath,
-  [Parameter(Mandatory=$True)]
-  [string] $TargetPath
+  [Parameter(Mandatory = $True)]
+  [string] $TargetPath,
+  [Parameter(Mandatory=$false)]
+  [AllowEmptyCollection()]
+  [array] $ExcludePaths
 )
 
-. (Join-Path $PSScriptRoot "Helpers" git-helpers.ps1)
+. (Join-Path $PSScriptRoot "Helpers" "git-helpers.ps1")
 
-function Get-ChangedServices {
-    Param (
-        [Parameter(Mandatory=$True)]
-        [string[]] $ChangedFiles
-    )
-    
-    $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
+function Get-ChangedServices
+{
+  Param (
+    [Parameter(Mandatory = $True)]
+    [string[]] $ChangedFiles
+  )
 
-    return $changedServices
+  [string[]] $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
+
+  return , $changedServices
 }
 
-if (!(Test-Path $ArtifactPath)) {
-    New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
+if (!(Test-Path $ArtifactPath))
+{
+  New-Item -ItemType Directory -Path $ArtifactPath | Out-Null
 }
 
 $ArtifactPath = Resolve-Path $ArtifactPath
 $ArtifactName = Join-Path $ArtifactPath "diff.json"
 
-$changedFiles = Get-ChangedFiles -DiffPath $TargetPath
-$changedServices = Get-ChangedServices -ChangedFiles $changedFiles
+$changedFiles = @()
+$changedServices = @()
 
-$result = [PSCustomObject]@{
-    "ChangedFiles" = $changedFiles
-    "ChangedServices" = $changedServices
-    "PRNumber" = $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER
+$changedFiles = Get-ChangedFiles -DiffPath $TargetPath
+$deletedFiles = Get-ChangedFiles -DiffPath $TargetPath -DiffFilterType "D"
+
+if ($changedFiles) {
+  $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
+}
+else {
+  # ensure we default this to an empty array if not set
+  $changedFiles = @()
 }
 
-$result | ConvertTo-Json | Out-File $ArtifactName
+# ExcludePaths is an object array with the default of [] which evaluates to null.
+# If the value is null, set it to empty list to ensure that the empty list is
+# stored in the json
+if (-not $ExcludePaths) {
+  $ExcludePaths = @()
+}
+if (-not $deletedFiles) {
+  $deletedFiles = @()
+}
+if (-not $changedServices) {
+  $changedServices = @()
+}
+$result = [PSCustomObject]@{
+  "ChangedFiles"    = $changedFiles
+  "ChangedServices" = $changedServices
+  "ExcludePaths"    = $ExcludePaths
+  "DeletedFiles"    = $deletedFiles
+  "PRNumber"        = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
+}
+
+$json = $result | ConvertTo-Json
+$json | Out-File $ArtifactName
+
+Write-Host "`nGenerated diff.json file at $ArtifactName"
+Write-Host "  $($json -replace "`n", "`n  ")"

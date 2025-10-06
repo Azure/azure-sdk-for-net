@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CustomerInsights
@@ -91,7 +89,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _hubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, hubName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<HubResource>(Response.FromValue(new HubResource(Client, response), response.GetRawResponse()));
+                var uri = _hubRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, hubName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation<HubResource>(Response.FromValue(new HubResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +140,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _hubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, hubName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<HubResource>(Response.FromValue(new HubResource(Client, response), response.GetRawResponse()));
+                var uri = _hubRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, hubName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation<HubResource>(Response.FromValue(new HubResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

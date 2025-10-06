@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -49,12 +48,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new KqlScriptsResourceCollectionResponse(value ?? new ChangeTrackingList<KqlScriptResource>(), nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KqlScriptsResourceCollectionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKqlScriptsResourceCollectionResponse(document.RootElement);
+        }
+
         internal partial class KqlScriptsResourceCollectionResponseConverter : JsonConverter<KqlScriptsResourceCollectionResponse>
         {
             public override void Write(Utf8JsonWriter writer, KqlScriptsResourceCollectionResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override KqlScriptsResourceCollectionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

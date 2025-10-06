@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -69,10 +68,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> IPTags of instance-level public IPs. </summary>
+        [WirePath("nodePublicIPTags")]
         public IList<ContainerServiceIPTag> NodePublicIPTags { get; }
         /// <summary> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </summary>
+        [WirePath("allowedHostPorts")]
         public IList<AgentPoolNetworkPortRange> AllowedHostPorts { get; }
         /// <summary> The IDs of the application security groups which agent pool will associate when created. </summary>
+        [WirePath("applicationSecurityGroups")]
         public IList<ResourceIdentifier> ApplicationSecurityGroups { get; }
     }
 }

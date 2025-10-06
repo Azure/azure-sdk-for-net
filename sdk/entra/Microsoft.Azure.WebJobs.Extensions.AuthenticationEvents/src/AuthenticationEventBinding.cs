@@ -12,13 +12,14 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
-using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
+using Microsoft.Extensions.Logging;
+
+using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EmptyResponse;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal const string InstanceIdBindingPropertyName = "instanceId";
         private const string DataBindingPropertyName = "data";
 
-        private readonly AuthenticationEventsTriggerAttribute _authEventTriggerAttr;
+        private readonly WebJobsAuthenticationEventsTriggerAttribute _authEventTriggerAttr;
         private readonly AuthenticationEventConfigProvider _configuration;
         private readonly ParameterInfo _parameterInfo;
         private readonly IReadOnlyDictionary<string, Type> _contract;
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="authEventTriggerAttr">The authentication event trigger attribute.</param>
         /// <param name="configProvider">The configuration provider.</param>
         /// <param name="parameterInfo">Initial parameter details.</param>
-        internal AuthenticationEventBinding(AuthenticationEventsTriggerAttribute authEventTriggerAttr, AuthenticationEventConfigProvider configProvider, ParameterInfo parameterInfo)
+        internal AuthenticationEventBinding(WebJobsAuthenticationEventsTriggerAttribute authEventTriggerAttr, AuthenticationEventConfigProvider configProvider, ParameterInfo parameterInfo)
         {
             _authEventTriggerAttr = authEventTriggerAttr;
             _configuration = configProvider;
@@ -85,8 +86,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
             var request = (HttpRequestMessage)value;
-            AuthenticationEventResponseHandler eventResponseHandler =
-                (AuthenticationEventResponseHandler)request.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
+#if NET8_0_OR_GREATER
+            HttpRequestOptionsKey<WebJobsAuthenticationEventResponseHandler> httpRequestOptionsKey = new(WebJobsAuthenticationEventResponseHandler.EventResponseProperty);
+            request.Options.TryGetValue(httpRequestOptionsKey, out WebJobsAuthenticationEventResponseHandler eventResponseHandler);
+#else
+            WebJobsAuthenticationEventResponseHandler eventResponseHandler =
+                (WebJobsAuthenticationEventResponseHandler)request.Properties[WebJobsAuthenticationEventResponseHandler.EventResponseProperty];
+#endif
             try
             {
                 if (request == null)
@@ -127,12 +133,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="ex">The exception that caused the fault.</param>
         /// <returns>A TriggerData Object with the failed event request based on the event. With the related request status set.</returns>
         /// <seealso cref="TriggerData" />
-        /// <seealso cref="AuthenticationEventResponseHandler" />
+        /// <seealso cref="WebJobsAuthenticationEventResponseHandler" />
         private TriggerData GetFaultyRequest(
             ValueBindingContext context,
             object value,
             HttpRequestMessage request,
-            AuthenticationEventResponseHandler eventResponseHandler,
+            WebJobsAuthenticationEventResponseHandler eventResponseHandler,
             Exception ex)
         {
             eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthenticationEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
@@ -140,10 +146,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             eventResponseHandler.Request.RequestStatus = ex switch
             {
-                UnauthorizedAccessException => RequestStatusType.TokenInvalid,
-                ValidationException => RequestStatusType.ValidationError,
-                AuthenticationEventTriggerRequestValidationException => RequestStatusType.ValidationError,
-                _ => RequestStatusType.Failed,
+                UnauthorizedAccessException => WebJobsAuthenticationEventsRequestStatusType.TokenInvalid,
+                ValidationException => WebJobsAuthenticationEventsRequestStatusType.ValidationError,
+                AuthenticationEventTriggerRequestValidationException => WebJobsAuthenticationEventsRequestStatusType.ValidationError,
+                _ => WebJobsAuthenticationEventsRequestStatusType.Failed,
             };
 
             if (eventResponseHandler.Response != null)
@@ -171,8 +177,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="tokenClaims">The token claims.</param>
         /// <returns>The related EventRequest based on the event requested.<br /></returns>
         /// <seealso cref="AuthenticationEventMetadata" />
-        /// <seealso cref="AuthenticationEventRequestBase" />
-        private AuthenticationEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthenticationEventMetadata eventMetadata, Dictionary<string, string> tokenClaims)
+        /// <seealso cref="WebJobsAuthenticationEventRequestBase" />
+        private WebJobsAuthenticationEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthenticationEventMetadata eventMetadata, Dictionary<string, string> tokenClaims)
             => GetRequestForEvent(request, payload, eventMetadata, tokenClaims, null);
 
         /// <summary>Gets the request for event.
@@ -185,26 +191,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>The related EventRequest based on the event requested.</returns>
         /// <exception cref="Exception">An exception is thrown if the IRequestEvent could not be determined from the incoming HTTP request message.</exception>
         /// <seealso cref="AuthenticationEventMetadata" />
-        /// <seealso cref="AuthenticationEventRequestBase" />
-        private AuthenticationEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthenticationEventMetadata eventMetaData, Dictionary<string, string> tokenClaims, Exception ex)
+        /// <seealso cref="WebJobsAuthenticationEventRequestBase" />
+        private WebJobsAuthenticationEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthenticationEventMetadata eventMetaData, Dictionary<string, string> tokenClaims, Exception ex)
         {
-            AuthenticationEventRequestBase requestEvent = eventMetaData?.CreateEventRequestValidate(request, payload, tokenClaims);
+            WebJobsAuthenticationEventRequestBase requestEvent = eventMetaData?.CreateEventRequestValidate(request, payload, tokenClaims);
             if (requestEvent == null)
             {
                 throw new Exception(AuthenticationEventResource.Ex_Invalid_Event);
             }
             else if (requestEvent.GetType() != _parameterInfo.ParameterType && ex == null && _parameterInfo.ParameterType != typeof(string))
             {
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Parm_Mismatch, requestEvent.GetType(), _parameterInfo.ParameterType));
+                throw new Exception(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Parm_Mismatch,
+                        arg0: requestEvent.GetType(),
+                        arg1: _parameterInfo.ParameterType));
             }
 
             requestEvent.StatusMessage = ex == null ? AuthenticationEventResource.Status_Good : ex.Message;
-            requestEvent.RequestStatus = ex == null ? RequestStatusType.Successful : ex is UnauthorizedAccessException ? RequestStatusType.TokenInvalid : RequestStatusType.Failed;
+            requestEvent.RequestStatus = ex == null ? WebJobsAuthenticationEventsRequestStatusType.Successful : ex is UnauthorizedAccessException ? WebJobsAuthenticationEventsRequestStatusType.TokenInvalid : WebJobsAuthenticationEventsRequestStatusType.Failed;
 
             return requestEvent;
         }
 
-        private Dictionary<string, object> GetBindingData(ValueBindingContext context, object value, AuthenticationEventResponseHandler eventResponseHandler)
+        private Dictionary<string, object> GetBindingData(ValueBindingContext context, object value, WebJobsAuthenticationEventResponseHandler eventResponseHandler)
         {
             return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
             {
@@ -224,18 +235,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 return null;
             }
 
-            TokenValidator validator = ConfigurationManager.EZAuthEnabled && requestMessage.Headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY) ?
-                (TokenValidator)new TokenValidatorEZAuth() :
-                new TokenValidatorInternal();
+            TokenValidator validator = TokenValidatorHelper.IsEzAuthValid(requestMessage.Headers) ? new TokenValidatorEZAuth() : new TokenValidatorInternal();
 
-            (bool valid, Dictionary<string, string> claims) = await validator.GetClaimsAndValidate(requestMessage, configurationManager).ConfigureAwait(false);
-            if (valid)
+            try
             {
-                return claims;
+                return await validator.ValidateAndGetClaims(requestMessage, configurationManager).ConfigureAwait(false);
             }
-            else
+            catch (Exception exceptionIfFailed)
             {
-                throw new UnauthorizedAccessException();
+                _configuration.Log(exceptionIfFailed.Message, logLevel: LogLevel.Error);
+                throw;
             }
         }
 

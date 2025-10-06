@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of language extensions. </summary>
+        [WirePath("value")]
         public IList<KustoLanguageExtension> Value { get; }
     }
 }

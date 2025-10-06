@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of Custom DNS Servers. </summary>
+        [WirePath("servers")]
         public IList<string> Servers { get; }
         /// <summary> Enable DNS Proxy on Firewalls attached to the Firewall Policy. </summary>
+        [WirePath("enableProxy")]
         public bool? EnableProxy { get; set; }
         /// <summary> FQDNs in Network Rules are supported when set to true. </summary>
+        [WirePath("requireProxyForNetworkRules")]
         public bool? RequireProxyForNetworkRules { get; set; }
     }
 }

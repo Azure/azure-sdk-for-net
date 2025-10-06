@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -74,14 +73,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> List of allowed verbs. </summary>
+        [WirePath("verbs")]
         public IReadOnlyList<string> Verbs { get; }
         /// <summary> List of allowed apiGroups. </summary>
+        [WirePath("apiGroups")]
         public IReadOnlyList<string> ApiGroups { get; }
         /// <summary> List of allowed resources. </summary>
+        [WirePath("resources")]
         public IReadOnlyList<string> Resources { get; }
         /// <summary> List of allowed names. </summary>
+        [WirePath("resourceNames")]
         public IReadOnlyList<string> ResourceNames { get; }
         /// <summary> List of allowed nonResourceURLs. </summary>
+        [WirePath("nonResourceURLs")]
         public IReadOnlyList<string> NonResourceUrls { get; }
     }
 }

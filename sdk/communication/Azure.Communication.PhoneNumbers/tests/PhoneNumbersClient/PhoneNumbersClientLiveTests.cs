@@ -500,6 +500,84 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task StartPurchaseWithoutAgreementToNotResellAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            var client = CreateClient();
+
+            // France doesn't allow reselling phone numbers.
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("FR", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            await searchOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            try
+            {
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchId, agreeToNotResell: false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void StartPurchaseWithoutAgreementToNotResell()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            var client = CreateClient();
+
+            // France doesn't allow reselling phone numbers.
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("FR", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            try
+            {
+                var purchaseOperation = client.StartPurchasePhoneNumbers(searchId, agreeToNotResell: false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task GetPurchasedPhoneNumbersNextPageAsync()
         {
             var client = CreateClient();
@@ -641,7 +719,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
             PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
 
-            var updateOperation = client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType);
+            var updateOperation = InstrumentOperation(client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType));
 
             while (!updateOperation.HasCompleted)
             {
@@ -903,6 +981,42 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task GetMobileAreaCodesAsync()
+        {
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalitiesAsync("IE", PhoneNumberType.Mobile);
+            await foreach (PhoneNumberLocality firstLocality in availableLocalities)
+            {
+                var areaCodes = client.GetAvailableAreaCodesMobileAsync("IE", PhoneNumberAssignmentType.Application, firstLocality.LocalizedName);
+                await foreach (PhoneNumberAreaCode areaCode in areaCodes)
+                {
+                    Console.WriteLine("Mobile Area Code " + areaCode.AreaCode);
+                }
+                Assert.IsNotNull(areaCodes);
+                break;
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetMobileAreaCodes()
+        {
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalities("IE", PhoneNumberType.Mobile);
+            foreach (PhoneNumberLocality firstLocality in availableLocalities)
+            {
+                var areaCodes = client.GetAvailableAreaCodesMobile("IE", PhoneNumberAssignmentType.Application, firstLocality.LocalizedName);
+                foreach (PhoneNumberAreaCode areaCode in areaCodes)
+                {
+                    Console.WriteLine("Mobile Area Code " + areaCode.AreaCode);
+                }
+                Assert.IsNotNull(areaCodes);
+                break;
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task GetCountriesAsync()
         {
             List<string> countriesResponse = new List<string>();
@@ -1043,6 +1157,102 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Locality " + locality.LocalizedName);
             }
             Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetLocalitiesWithPhoneNumberTypeAsync()
+        {
+            var client = CreateClient();
+
+            var localities = client.GetAvailableLocalitiesAsync("IE", PhoneNumberType.Mobile);
+            await foreach (PhoneNumberLocality locality in localities)
+            {
+                Console.WriteLine("Locality " + locality.LocalizedName);
+            }
+            Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetLocalitiesWithPhoneNumberType()
+        {
+            var client = CreateClient();
+
+            var localities = client.GetAvailableLocalities("IE", PhoneNumberType.Mobile);
+            foreach (PhoneNumberLocality locality in localities)
+            {
+                Console.WriteLine("Locality " + locality.LocalizedName);
+            }
+            Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetLocalitiesWithPhoneNumberTypeAsyncAsPages()
+        {
+            var client = CreateClient();
+            var localities = await client.GetAvailableLocalitiesAsync("IE", PhoneNumberType.Mobile).ToEnumerableAsync();
+            var localitiesCount = localities.Count;
+            var expectedPageSize = localitiesCount;
+
+            if (localitiesCount >= 2)
+            {
+                expectedPageSize = localitiesCount / 2;
+            }
+            var pages = client.GetAvailableLocalitiesAsync("IE", PhoneNumberType.Mobile).AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(localitiesCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetLocalitiesWithPhoneNumberTypeAsPages()
+        {
+            var client = CreateClient();
+            var localities = client.GetAvailableLocalities("IE", PhoneNumberType.Mobile).ToList();
+            var localitiesCount = localities.Count;
+            var expectedPageSize = localitiesCount;
+
+            if (localitiesCount >= 2)
+            {
+                expectedPageSize = localitiesCount / 2;
+            }
+            var pages = client.GetAvailableLocalities("IE", PhoneNumberType.Mobile).AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(localitiesCount, actual);
         }
 
         [Test]
@@ -1281,6 +1491,128 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Offering " + offering.ToString());
             }
             Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncSucceeds()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+            Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationSucceeds()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = client.SearchOperatorInformation(phoneNumbers);
+            Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncOnlyAcceptsOnePhoneNumber()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber, phoneNumber };
+
+            var client = CreateClient();
+
+            try
+            {
+                var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                return;
+            }
+
+            Assert.Fail("SearchOperatorInformationAsync should have thrown an exception.");
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationOnlyAcceptsOnePhoneNumber()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber, phoneNumber };
+
+            var client = CreateClient();
+
+            try
+            {
+                var results = client.SearchOperatorInformation(phoneNumbers);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                return;
+            }
+
+            Assert.Fail("SearchOperatorInformation should have thrown an exception.");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncRespectsOptions()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
+            var operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNull(operatorInformation.IsoCountryCode);
+            Assert.IsNull(operatorInformation.OperatorDetails);
+
+            results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
+            operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNotNull(operatorInformation.IsoCountryCode);
+            Assert.IsNotNull(operatorInformation.OperatorDetails);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationRespectsOptions()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
+            var operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNull(operatorInformation.IsoCountryCode);
+            Assert.IsNull(operatorInformation.OperatorDetails);
+
+            results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
+            operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNotNull(operatorInformation.IsoCountryCode);
+            Assert.IsNotNull(operatorInformation.OperatorDetails);
         }
 
         private static bool IsSuccess(int statusCode)

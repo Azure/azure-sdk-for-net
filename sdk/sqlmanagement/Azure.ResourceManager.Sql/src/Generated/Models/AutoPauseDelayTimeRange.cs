@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Minimum value. </summary>
+        [WirePath("minValue")]
         public int? MinValue { get; }
         /// <summary> Maximum value. </summary>
+        [WirePath("maxValue")]
         public int? MaxValue { get; }
         /// <summary> Step value for discrete values between the minimum value and the maximum value. </summary>
+        [WirePath("stepSize")]
         public int? StepSize { get; }
         /// <summary> Default value is no value is provided. </summary>
+        [WirePath("default")]
         public int? Default { get; }
         /// <summary> Unit of time that delay is expressed in. </summary>
+        [WirePath("unit")]
         public PauseDelayTimeUnit? Unit { get; }
         /// <summary> Value that is used to not pause (infinite delay before pause). </summary>
+        [WirePath("doNotPauseValue")]
         public int? DoNotPauseValue { get; }
     }
 }

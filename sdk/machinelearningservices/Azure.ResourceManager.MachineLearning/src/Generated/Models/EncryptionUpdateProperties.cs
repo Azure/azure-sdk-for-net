@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -73,6 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the key vault properties. </summary>
         internal EncryptionKeyVaultUpdateProperties KeyVaultProperties { get; }
         /// <summary> Gets the key identifier. </summary>
+        [WirePath("keyVaultProperties.keyIdentifier")]
         public string KeyIdentifier
         {
             get => KeyVaultProperties?.KeyIdentifier;

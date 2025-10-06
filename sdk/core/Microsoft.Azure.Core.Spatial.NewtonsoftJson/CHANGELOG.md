@@ -16,11 +16,11 @@
 
 Thank you to our developer community members who helped to make the Microsoft.Spatial converters better with their contributions to this release:
 
-- Jack Bond ([GitHub](https://github.com/jackbond))
+- Jack Bond
 
 ### Features Added
 
-- Added converter support for the following types ([#24367](https://github.com/Azure/azure-sdk-for-net/issues/24367)):
+- Added converter support for the following types:
   - GeographyLineString
   - GeographyPolygon
   - GeographyMultiPoint

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -41,16 +40,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dataflow"> Data flow reference. </param>
         /// <param name="staging"> Staging info for execute data flow activity. </param>
         /// <param name="integrationRuntime"> The integration runtime reference. </param>
+        /// <param name="continuationSettings"> Continuation settings for execute data flow activity. </param>
         /// <param name="compute"> Compute properties for data flow activity. </param>
         /// <param name="traceLevel"> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
-        internal ExecuteDataFlowActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataflow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, object traceLevel, object continueOnError, object runConcurrently, object sourceStagingConcurrency) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal ExecuteDataFlowActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataflow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ContinuationSettingsReference continuationSettings, ExecuteDataFlowActivityTypePropertiesCompute compute, object traceLevel, object continueOnError, object runConcurrently, object sourceStagingConcurrency) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Dataflow = dataflow;
             Staging = staging;
             IntegrationRuntime = integrationRuntime;
+            ContinuationSettings = continuationSettings;
             Compute = compute;
             TraceLevel = traceLevel;
             ContinueOnError = continueOnError;
@@ -65,6 +66,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
+        /// <summary> Continuation settings for execute data flow activity. </summary>
+        public ContinuationSettingsReference ContinuationSettings { get; set; }
         /// <summary> Compute properties for data flow activity. </summary>
         public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
         /// <summary> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </summary>

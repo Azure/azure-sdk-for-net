@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    /// <summary> The UnknownFacet. </summary>
+    /// <summary> Unknown version of Facet. </summary>
     internal partial class UnknownFacet : Facet
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFacet"/>. </summary>

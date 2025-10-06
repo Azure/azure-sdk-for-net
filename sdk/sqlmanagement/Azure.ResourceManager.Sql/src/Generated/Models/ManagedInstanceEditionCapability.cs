@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -55,34 +54,40 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceEditionCapability"/>. </summary>
         /// <param name="name"> The managed server version name. </param>
+        /// <param name="isGeneralPurposeV2"> Whether or not this is a GPv2 variant of General Purpose edition. </param>
         /// <param name="supportedFamilies"> The supported families. </param>
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
-        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceEditionCapability(string name, IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies, IReadOnlyList<StorageCapability> supportedStorageCapabilities, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstanceEditionCapability(string name, bool? isGeneralPurposeV2, IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            IsGeneralPurposeV2 = isGeneralPurposeV2;
             SupportedFamilies = supportedFamilies;
             SupportedStorageCapabilities = supportedStorageCapabilities;
-            IsZoneRedundant = isZoneRedundant;
             Status = status;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed server version name. </summary>
+        [WirePath("name")]
         public string Name { get; }
+        /// <summary> Whether or not this is a GPv2 variant of General Purpose edition. </summary>
+        [WirePath("isGeneralPurposeV2")]
+        public bool? IsGeneralPurposeV2 { get; }
         /// <summary> The supported families. </summary>
+        [WirePath("supportedFamilies")]
         public IReadOnlyList<ManagedInstanceFamilyCapability> SupportedFamilies { get; }
         /// <summary> The list of supported storage capabilities for this edition. </summary>
+        [WirePath("supportedStorageCapabilities")]
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
-        /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
-        public bool? IsZoneRedundant { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

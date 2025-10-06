@@ -8,7 +8,6 @@
 using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.WorkloadMonitor;
 
 namespace Azure.ResourceManager.WorkloadMonitor.Models
 {

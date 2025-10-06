@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -82,6 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Windows agent pool names must be 6 characters or less. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

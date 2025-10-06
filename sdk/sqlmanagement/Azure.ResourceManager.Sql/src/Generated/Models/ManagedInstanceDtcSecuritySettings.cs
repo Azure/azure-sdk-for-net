@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Transaction Manager communication settings of managed instance DTC. </summary>
+        [WirePath("transactionManagerCommunicationSettings")]
         public ManagedInstanceDtcTransactionManagerCommunicationSettings TransactionManagerCommunicationSettings { get; set; }
         /// <summary> Allow XA Transactions to managed instance DTC. </summary>
+        [WirePath("xaTransactionsEnabled")]
         public bool? IsXATransactionsEnabled { get; set; }
         /// <summary> Allow SNA LU 6.2 Transactions to managed instance DTC. </summary>
+        [WirePath("snaLu6point2TransactionsEnabled")]
         public bool? SnaLu6Point2TransactionsEnabled { get; set; }
         /// <summary> Default timeout for XA Transactions (in seconds). </summary>
+        [WirePath("xaTransactionsDefaultTimeout")]
         public int? XATransactionsDefaultTimeoutInSeconds { get; set; }
         /// <summary> Maximum timeout for XA Transactions (in seconds). </summary>
+        [WirePath("xaTransactionsMaximumTimeout")]
         public int? XATransactionsMaximumTimeoutInSeconds { get; set; }
     }
 }

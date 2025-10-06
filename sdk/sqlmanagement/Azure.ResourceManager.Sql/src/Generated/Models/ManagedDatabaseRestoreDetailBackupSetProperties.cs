@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Backup set status. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> First stripe name. </summary>
+        [WirePath("firstStripeName")]
         public string FirstStripeName { get; }
         /// <summary> Number of stripes. </summary>
+        [WirePath("numberOfStripes")]
         public int? NumberOfStripes { get; }
         /// <summary> Backup size. </summary>
+        [WirePath("backupSizeMB")]
         public int? BackupSizeInMB { get; }
         /// <summary> Last restored file time. </summary>
+        [WirePath("restoreStartedTimestampUtc")]
         public DateTimeOffset? RestoreStartedOn { get; }
         /// <summary> Last restored file time. </summary>
+        [WirePath("restoreFinishedTimestampUtc")]
         public DateTimeOffset? RestoreFinishedOn { get; }
     }
 }

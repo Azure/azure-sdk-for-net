@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsForwardingRulesetResource IOperationSource<DnsForwardingRulesetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsForwardingRulesetResource(_client, data);
         }
 
         async ValueTask<DnsForwardingRulesetResource> IOperationSource<DnsForwardingRulesetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
-            return new DnsForwardingRulesetResource(_client, data);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            return await Task.FromResult(new DnsForwardingRulesetResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

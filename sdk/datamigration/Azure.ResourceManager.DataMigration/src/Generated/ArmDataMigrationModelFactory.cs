@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -37,25 +35,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlDBProperties"/>. </summary>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="targetSqlConnection"> Target SQL DB connection details. </param>
-        /// <param name="offline"> Offline configuration. </param>
+        /// <param name="isOfflineMigration"> Offline configuration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, SqlDBMigrationStatusDetails migrationStatusDetails = null, SqlConnectionInformation targetSqlConnection = null, bool? offline = null, IEnumerable<string> tableList = null)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = null, DataMigrationSqlConnectionInformation targetSqlConnection = null, bool? isOfflineMigration = null, IEnumerable<string> tableList = null)
         {
             tableList ??= new List<string>();
 
@@ -66,32 +64,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 targetSqlConnection,
-                offline != null ? new SqlDBOfflineConfiguration(offline, serializedAdditionalRawData: null) : null,
+                isOfflineMigration != null ? new DataMigrationSqlDBOfflineConfiguration(isOfflineMigration, serializedAdditionalRawData: null) : null,
                 tableList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SqlDBMigrationStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSqlDBMigrationStatusDetails"/>. </summary>
         /// <param name="migrationState"> Current State of Migration. </param>
         /// <param name="sqlDataCopyErrors"> Sql Data Copy errors, if any. </param>
         /// <param name="listOfCopyProgressDetails"> Details on progress of ADF copy activities. </param>
-        /// <returns> A new <see cref="Models.SqlDBMigrationStatusDetails"/> instance for mocking. </returns>
-        public static SqlDBMigrationStatusDetails SqlDBMigrationStatusDetails(string migrationState = null, IEnumerable<string> sqlDataCopyErrors = null, IEnumerable<CopyProgressDetails> listOfCopyProgressDetails = null)
+        /// <returns> A new <see cref="Models.DataMigrationSqlDBMigrationStatusDetails"/> instance for mocking. </returns>
+        public static DataMigrationSqlDBMigrationStatusDetails DataMigrationSqlDBMigrationStatusDetails(string migrationState = null, IEnumerable<string> sqlDataCopyErrors = null, IEnumerable<CopyProgressDetails> listOfCopyProgressDetails = null)
         {
             sqlDataCopyErrors ??= new List<string>();
             listOfCopyProgressDetails ??= new List<CopyProgressDetails>();
 
-            return new SqlDBMigrationStatusDetails(migrationState, sqlDataCopyErrors?.ToList(), listOfCopyProgressDetails?.ToList(), serializedAdditionalRawData: null);
+            return new DataMigrationSqlDBMigrationStatusDetails(migrationState, sqlDataCopyErrors?.ToList(), listOfCopyProgressDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CopyProgressDetails"/>. </summary>
@@ -103,11 +101,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="dataWritten"> Bytes written. </param>
         /// <param name="rowsRead"> Rows read. </param>
         /// <param name="rowsCopied"> Rows Copied. </param>
-        /// <param name="copyStart"> Copy Start. </param>
+        /// <param name="copyStartOn"> Copy Start. </param>
         /// <param name="copyThroughput"> Copy throughput in KBps. </param>
         /// <param name="copyDuration"> Copy Duration in seconds. </param>
         /// <returns> A new <see cref="Models.CopyProgressDetails"/> instance for mocking. </returns>
-        public static CopyProgressDetails CopyProgressDetails(string tableName = null, string status = null, string parallelCopyType = null, int? usedParallelCopies = null, long? dataRead = null, long? dataWritten = null, long? rowsRead = null, long? rowsCopied = null, DateTimeOffset? copyStart = null, double? copyThroughput = null, int? copyDuration = null)
+        public static CopyProgressDetails CopyProgressDetails(string tableName = null, string status = null, string parallelCopyType = null, int? usedParallelCopies = null, long? dataRead = null, long? dataWritten = null, long? rowsRead = null, long? rowsCopied = null, DateTimeOffset? copyStartOn = null, double? copyThroughput = null, int? copyDuration = null)
         {
             return new CopyProgressDetails(
                 tableName,
@@ -118,55 +116,82 @@ namespace Azure.ResourceManager.DataMigration.Models
                 dataWritten,
                 rowsRead,
                 rowsCopied,
-                copyStart,
+                copyStartOn,
                 copyThroughput,
                 copyDuration,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationProperties"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationProperties DatabaseMigrationProperties(string kind = "Unknown", string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null)
+        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null)
         {
-            return new UnknownDatabaseMigrationProperties(
-                kind,
+            return new DatabaseMigrationProperties(
+                new ResourceType("DatabaseMigrationProperties"),
                 scope,
                 provisioningState,
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationBaseProperties"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
+        /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
+        /// <param name="migrationStatus"> Migration status. </param>
+        /// <param name="startedOn"> Database migration start time. </param>
+        /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
+        /// <returns> A new <see cref="Models.DatabaseMigrationBaseProperties"/> instance for mocking. </returns>
+        public static DatabaseMigrationBaseProperties DatabaseMigrationBaseProperties(string kind = null, string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null)
+        {
+            return new UnknownDatabaseMigrationBaseProperties(
+                kind == null ? default : new ResourceType(kind),
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
                 provisioningError,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMigrationErrorInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
-        /// <returns> A new <see cref="Models.ErrorInfo"/> instance for mocking. </returns>
-        public static ErrorInfo ErrorInfo(string code = null, string message = null)
+        /// <returns> A new <see cref="Models.SqlMigrationErrorInfo"/> instance for mocking. </returns>
+        public static SqlMigrationErrorInfo SqlMigrationErrorInfo(string code = null, string message = null)
         {
-            return new ErrorInfo(code, message, serializedAdditionalRawData: null);
+            return new SqlMigrationErrorInfo(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlMIData"/>. </summary>
@@ -188,24 +213,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlMIProperties"/>. </summary>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlMIProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
+        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, DataMigrationStatusDetails migrationStatusDetails = null, DataMigrationBackupConfiguration backupConfiguration = null, DataMigrationOfflineConfiguration offlineConfiguration = null)
         {
             return new DatabaseMigrationSqlMIProperties(
                 ResourceType.SqlMI,
@@ -214,21 +239,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 backupConfiguration,
                 offlineConfiguration);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MigrationStatusDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationStatusDetails"/>. </summary>
         /// <param name="migrationState"> Current State of Migration. </param>
         /// <param name="fullBackupSetInfo"> Details of full backup set. </param>
         /// <param name="lastRestoredBackupSetInfo"> Last applied backup set information. </param>
@@ -242,14 +267,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="currentRestoringFilename"> File name that is currently being restored. </param>
         /// <param name="lastRestoredFilename"> Last restored file name. </param>
         /// <param name="pendingLogBackupsCount"> Total pending log backups. </param>
-        /// <returns> A new <see cref="Models.MigrationStatusDetails"/> instance for mocking. </returns>
-        public static MigrationStatusDetails MigrationStatusDetails(string migrationState = null, SqlBackupSetInfo fullBackupSetInfo = null, SqlBackupSetInfo lastRestoredBackupSetInfo = null, IEnumerable<SqlBackupSetInfo> activeBackupSets = null, IEnumerable<string> invalidFiles = null, string blobContainerName = null, bool? isFullBackupRestored = null, string restoreBlockingReason = null, string completeRestoreErrorMessage = null, IEnumerable<string> fileUploadBlockingErrors = null, string currentRestoringFilename = null, string lastRestoredFilename = null, int? pendingLogBackupsCount = null)
+        /// <returns> A new <see cref="Models.DataMigrationStatusDetails"/> instance for mocking. </returns>
+        public static DataMigrationStatusDetails DataMigrationStatusDetails(string migrationState = null, DataMigrationSqlBackupSetInfo fullBackupSetInfo = null, DataMigrationSqlBackupSetInfo lastRestoredBackupSetInfo = null, IEnumerable<DataMigrationSqlBackupSetInfo> activeBackupSets = null, IEnumerable<string> invalidFiles = null, string blobContainerName = null, bool? isFullBackupRestored = null, string restoreBlockingReason = null, string completeRestoreErrorMessage = null, IEnumerable<string> fileUploadBlockingErrors = null, string currentRestoringFilename = null, string lastRestoredFilename = null, int? pendingLogBackupsCount = null)
         {
-            activeBackupSets ??= new List<SqlBackupSetInfo>();
+            activeBackupSets ??= new List<DataMigrationSqlBackupSetInfo>();
             invalidFiles ??= new List<string>();
             fileUploadBlockingErrors ??= new List<string>();
 
-            return new MigrationStatusDetails(
+            return new DataMigrationStatusDetails(
                 migrationState,
                 fullBackupSetInfo,
                 lastRestoredBackupSetInfo,
@@ -266,7 +291,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SqlBackupSetInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSqlBackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Backup set id. </param>
         /// <param name="firstLSN"> First LSN of the backup set. </param>
         /// <param name="lastLSN"> Last LSN of the backup set. </param>
@@ -278,13 +303,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="hasBackupChecksums"> Has Backup Checksums. </param>
         /// <param name="familyCount"> Media family count. </param>
         /// <param name="ignoreReasons"> The reasons why the backup set is ignored. </param>
-        /// <returns> A new <see cref="Models.SqlBackupSetInfo"/> instance for mocking. </returns>
-        public static SqlBackupSetInfo SqlBackupSetInfo(Guid? backupSetId = null, string firstLSN = null, string lastLSN = null, string backupType = null, IEnumerable<SqlBackupFileInfo> listOfBackupFiles = null, DateTimeOffset? backupStartOn = null, DateTimeOffset? backupFinishOn = null, bool? isBackupRestored = null, bool? hasBackupChecksums = null, int? familyCount = null, IEnumerable<string> ignoreReasons = null)
+        /// <returns> A new <see cref="Models.DataMigrationSqlBackupSetInfo"/> instance for mocking. </returns>
+        public static DataMigrationSqlBackupSetInfo DataMigrationSqlBackupSetInfo(Guid? backupSetId = null, string firstLSN = null, string lastLSN = null, string backupType = null, IEnumerable<DataMigrationSqlBackupFileInfo> listOfBackupFiles = null, DateTimeOffset? backupStartOn = null, DateTimeOffset? backupFinishOn = null, bool? isBackupRestored = null, bool? hasBackupChecksums = null, int? familyCount = null, IEnumerable<string> ignoreReasons = null)
         {
-            listOfBackupFiles ??= new List<SqlBackupFileInfo>();
+            listOfBackupFiles ??= new List<DataMigrationSqlBackupFileInfo>();
             ignoreReasons ??= new List<string>();
 
-            return new SqlBackupSetInfo(
+            return new DataMigrationSqlBackupSetInfo(
                 backupSetId,
                 firstLSN,
                 lastLSN,
@@ -299,7 +324,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SqlBackupFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSqlBackupFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="status"> Status of the file. (Initial, Uploading, Uploaded, Restoring, Restored or Skipped). </param>
         /// <param name="totalSize"> File size in bytes. </param>
@@ -308,10 +333,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="copyThroughput"> Copy throughput in KBps. </param>
         /// <param name="copyDuration"> Copy Duration in seconds. </param>
         /// <param name="familySequenceNumber"> Media family sequence number. </param>
-        /// <returns> A new <see cref="Models.SqlBackupFileInfo"/> instance for mocking. </returns>
-        public static SqlBackupFileInfo SqlBackupFileInfo(string fileName = null, string status = null, long? totalSize = null, long? dataRead = null, long? dataWritten = null, double? copyThroughput = null, int? copyDuration = null, int? familySequenceNumber = null)
+        /// <returns> A new <see cref="Models.DataMigrationSqlBackupFileInfo"/> instance for mocking. </returns>
+        public static DataMigrationSqlBackupFileInfo DataMigrationSqlBackupFileInfo(string fileName = null, string status = null, long? totalSize = null, long? dataRead = null, long? dataWritten = null, double? copyThroughput = null, int? copyDuration = null, int? familySequenceNumber = null)
         {
-            return new SqlBackupFileInfo(
+            return new DataMigrationSqlBackupFileInfo(
                 fileName,
                 status,
                 totalSize,
@@ -323,14 +348,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SourceLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationBackupSourceLocation"/>. </summary>
         /// <param name="fileShare"> Source File share. </param>
         /// <param name="azureBlob"> Source Azure Blob. </param>
         /// <param name="fileStorageType"> Backup storage Type. </param>
-        /// <returns> A new <see cref="Models.SourceLocation"/> instance for mocking. </returns>
-        public static SourceLocation SourceLocation(SqlFileShare fileShare = null, AzureBlob azureBlob = null, string fileStorageType = null)
+        /// <returns> A new <see cref="Models.DataMigrationBackupSourceLocation"/> instance for mocking. </returns>
+        public static DataMigrationBackupSourceLocation DataMigrationBackupSourceLocation(DataMigrationSqlFileShare fileShare = null, SqlMigrationBlobDetails azureBlob = null, string fileStorageType = null)
         {
-            return new SourceLocation(fileShare, azureBlob, fileStorageType, serializedAdditionalRawData: null);
+            return new DataMigrationBackupSourceLocation(fileShare, azureBlob, fileStorageType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlVmData"/>. </summary>
@@ -352,24 +377,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlVmProperties"/>. </summary>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlVmProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
+        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, DataMigrationStatusDetails migrationStatusDetails = null, DataMigrationBackupConfiguration backupConfiguration = null, DataMigrationOfflineConfiguration offlineConfiguration = null)
         {
             return new DatabaseMigrationSqlVmProperties(
                 ResourceType.SqlVm,
@@ -378,15 +403,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 backupConfiguration,
                 offlineConfiguration);
@@ -418,13 +443,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AuthenticationKeys"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlMigrationAuthenticationKeys"/>. </summary>
         /// <param name="authKey1"> The first authentication key. </param>
         /// <param name="authKey2"> The second authentication key. </param>
-        /// <returns> A new <see cref="Models.AuthenticationKeys"/> instance for mocking. </returns>
-        public static AuthenticationKeys AuthenticationKeys(string authKey1 = null, string authKey2 = null)
+        /// <returns> A new <see cref="Models.SqlMigrationAuthenticationKeys"/> instance for mocking. </returns>
+        public static SqlMigrationAuthenticationKeys SqlMigrationAuthenticationKeys(string authKey1 = null, string authKey2 = null)
         {
-            return new AuthenticationKeys(authKey1, authKey2, serializedAdditionalRawData: null);
+            return new SqlMigrationAuthenticationKeys(authKey1, authKey2, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigration"/>. </summary>
@@ -435,7 +460,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties">
         /// Database Migration Resource properties.
         /// Please note <see cref="Models.DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DatabaseMigrationSqlDBProperties"/>, <see cref="Models.DatabaseMigrationSqlVmProperties"/> and <see cref="Models.DatabaseMigrationSqlMIProperties"/>.
+        /// The available derived classes include <see cref="Models.DatabaseMigrationSqlDBProperties"/>, <see cref="Models.DatabaseMigrationSqlMIProperties"/> and <see cref="Models.DatabaseMigrationSqlVmProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DatabaseMigration"/> instance for mocking. </returns>
         public static DatabaseMigration DatabaseMigration(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, DatabaseMigrationProperties properties = null)
@@ -449,18 +474,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeMonitoringData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeMonitoringResult"/>. </summary>
         /// <param name="name"> The name of Integration Runtime. </param>
         /// <param name="nodes"> Integration Runtime node monitoring data. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeMonitoringData"/> instance for mocking. </returns>
-        public static IntegrationRuntimeMonitoringData IntegrationRuntimeMonitoringData(string name = null, IEnumerable<NodeMonitoringData> nodes = null)
+        /// <returns> A new <see cref="Models.IntegrationRuntimeMonitoringResult"/> instance for mocking. </returns>
+        public static IntegrationRuntimeMonitoringResult IntegrationRuntimeMonitoringResult(string name = null, IEnumerable<IntegrationRuntimeMonitoringNode> nodes = null)
         {
-            nodes ??= new List<NodeMonitoringData>();
+            nodes ??= new List<IntegrationRuntimeMonitoringNode>();
 
-            return new IntegrationRuntimeMonitoringData(name, nodes?.ToList(), serializedAdditionalRawData: null);
+            return new IntegrationRuntimeMonitoringResult(name, nodes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NodeMonitoringData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeMonitoringNode"/>. </summary>
         /// <param name="additionalProperties"> Unmatched properties from the message are deserialized in this collection. </param>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
@@ -470,12 +495,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="sentBytes"> Sent bytes on the integration runtime node. </param>
         /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
-        /// <returns> A new <see cref="Models.NodeMonitoringData"/> instance for mocking. </returns>
-        public static NodeMonitoringData NodeMonitoringData(IReadOnlyDictionary<string, BinaryData> additionalProperties = null, string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, double? sentBytes = null, double? receivedBytes = null)
+        /// <returns> A new <see cref="Models.IntegrationRuntimeMonitoringNode"/> instance for mocking. </returns>
+        public static IntegrationRuntimeMonitoringNode IntegrationRuntimeMonitoringNode(IReadOnlyDictionary<string, BinaryData> additionalProperties = null, string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, double? sentBytes = null, double? receivedBytes = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new NodeMonitoringData(
+            return new IntegrationRuntimeMonitoringNode(
                 additionalProperties,
                 nodeName,
                 availableMemoryInMB,
@@ -488,10 +513,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
-        /// <param name="tier"> Specifies the tier of DMS in a scale set. </param>
+        /// <param name="tier"> Specifies the tier of DMS (classic) in a scale set. </param>
         /// <param name="size"> The Size of the SKU. </param>
         /// <param name="family"> The Family of this particular SKU. </param>
         /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>
@@ -501,16 +526,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        /// <returns> A new <see cref="Models.ResourceSku"/> instance for mocking. </returns>
-        public static ResourceSku ResourceSku(string resourceType = null, string name = null, string tier = null, string size = null, string family = null, string kind = null, ResourceSkuCapacity capacity = null, IEnumerable<string> locations = null, IEnumerable<string> apiVersions = null, IEnumerable<ResourceSkuCosts> costs = null, IEnumerable<ResourceSkuCapabilities> capabilities = null, IEnumerable<ResourceSkuRestrictions> restrictions = null)
+        /// <returns> A new <see cref="Models.DataMigrationSku"/> instance for mocking. </returns>
+        public static DataMigrationSku DataMigrationSku(string resourceType = null, string name = null, string tier = null, string size = null, string family = null, string kind = null, DataMigrationSkuCapacity capacity = null, IEnumerable<string> locations = null, IEnumerable<string> apiVersions = null, IEnumerable<DataMigrationSkuCosts> costs = null, IEnumerable<DataMigrationSkuCapabilities> capabilities = null, IEnumerable<DataMigrationSkuRestrictions> restrictions = null)
         {
             locations ??= new List<string>();
             apiVersions ??= new List<string>();
-            costs ??= new List<ResourceSkuCosts>();
-            capabilities ??= new List<ResourceSkuCapabilities>();
-            restrictions ??= new List<ResourceSkuRestrictions>();
+            costs ??= new List<DataMigrationSkuCosts>();
+            capabilities ??= new List<DataMigrationSkuCapabilities>();
+            restrictions ??= new List<DataMigrationSkuRestrictions>();
 
-            return new ResourceSku(
+            return new DataMigrationSku(
                 resourceType,
                 name,
                 tier,
@@ -526,58 +551,58 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scale type applicable to the SKU. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuCapacity"/> instance for mocking. </returns>
-        public static ResourceSkuCapacity ResourceSkuCapacity(long? minimum = null, long? maximum = null, long? @default = null, ResourceSkuCapacityScaleType? scaleType = null)
+        /// <returns> A new <see cref="Models.DataMigrationSkuCapacity"/> instance for mocking. </returns>
+        public static DataMigrationSkuCapacity DataMigrationSkuCapacity(long? minimum = null, long? maximum = null, long? @default = null, ResourceSkuCapacityScaleType? scaleType = null)
         {
-            return new ResourceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
+            return new DataMigrationSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCosts"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSkuCosts"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuCosts"/> instance for mocking. </returns>
-        public static ResourceSkuCosts ResourceSkuCosts(string meterId = null, long? quantity = null, string extendedUnit = null)
+        /// <returns> A new <see cref="Models.DataMigrationSkuCosts"/> instance for mocking. </returns>
+        public static DataMigrationSkuCosts DataMigrationSkuCosts(string meterId = null, long? quantity = null, string extendedUnit = null)
         {
-            return new ResourceSkuCosts(meterId, quantity, extendedUnit, serializedAdditionalRawData: null);
+            return new DataMigrationSkuCosts(meterId, quantity, extendedUnit, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapabilities"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuCapabilities"/> instance for mocking. </returns>
-        public static ResourceSkuCapabilities ResourceSkuCapabilities(string name = null, string value = null)
+        /// <returns> A new <see cref="Models.DataMigrationSkuCapabilities"/> instance for mocking. </returns>
+        public static DataMigrationSkuCapabilities DataMigrationSkuCapabilities(string name = null, string value = null)
         {
-            return new ResourceSkuCapabilities(name, value, serializedAdditionalRawData: null);
+            return new DataMigrationSkuCapabilities(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuRestrictions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason code for restriction. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuRestrictions"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictions ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, ResourceSkuRestrictionsReasonCode? reasonCode = null)
+        /// <returns> A new <see cref="Models.DataMigrationSkuRestrictions"/> instance for mocking. </returns>
+        public static DataMigrationSkuRestrictions DataMigrationSkuRestrictions(DataMigrationSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, ResourceSkuRestrictionsReasonCode? reasonCode = null)
         {
             values ??= new List<string>();
 
-            return new ResourceSkuRestrictions(restrictionsType, values?.ToList(), reasonCode, serializedAdditionalRawData: null);
+            return new DataMigrationSkuRestrictions(restrictionsType, values?.ToList(), reasonCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ODataError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationODataError"/>. </summary>
         /// <param name="code"> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </param>
         /// <param name="message"> The human-readable description of the error. </param>
         /// <param name="details"> Inner errors that caused this error. </param>
-        /// <returns> A new <see cref="Models.ODataError"/> instance for mocking. </returns>
-        public static ODataError ODataError(string code = null, string message = null, IEnumerable<ODataError> details = null)
+        /// <returns> A new <see cref="Models.DataMigrationODataError"/> instance for mocking. </returns>
+        public static DataMigrationODataError DataMigrationODataError(string code = null, string message = null, IEnumerable<DataMigrationODataError> details = null)
         {
-            details ??= new List<ODataError>();
+            details ??= new List<DataMigrationODataError>();
 
-            return new ODataError(code, message, details?.ToList(), serializedAdditionalRawData: null);
+            return new DataMigrationODataError(code, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationServiceData"/>. </summary>
@@ -595,9 +620,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
-        /// <param name="deleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
+        /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string kind = null, ServiceSku sku = null, ServiceProvisioningState? provisioningState = null, string publicKey = null, string virtualSubnetId = null, string virtualNicId = null, string autoStopDelay = null, bool? deleteResourcesOnStop = null)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string kind = null, DataMigrationServiceSku sku = null, DataMigrationServiceProvisioningState? provisioningState = null, string publicKey = null, string virtualSubnetId = null, string virtualNicId = null, string autoStopDelay = null, bool? shouldDeleteResourcesOnStop = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -616,7 +641,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 virtualSubnetId,
                 virtualNicId,
                 autoStopDelay,
-                deleteResourcesOnStop,
+                shouldDeleteResourcesOnStop,
                 serializedAdditionalRawData: null);
         }
 
@@ -640,39 +665,39 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationAvailableServiceSku"/>. </summary>
         /// <param name="resourceType"> The resource type, including the provider namespace. </param>
         /// <param name="sku"> SKU name, tier, etc. </param>
         /// <param name="capacity"> A description of the scaling capacities of the SKU. </param>
-        /// <returns> A new <see cref="Models.AvailableServiceSku"/> instance for mocking. </returns>
-        public static AvailableServiceSku AvailableServiceSku(string resourceType = null, AvailableServiceSkuSku sku = null, AvailableServiceSkuCapacity capacity = null)
+        /// <returns> A new <see cref="Models.DataMigrationAvailableServiceSku"/> instance for mocking. </returns>
+        public static DataMigrationAvailableServiceSku DataMigrationAvailableServiceSku(string resourceType = null, DataMigrationAvailableServiceSkuDetails sku = null, DataMigrationAvailableServiceSkuCapacity capacity = null)
         {
-            return new AvailableServiceSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
+            return new DataMigrationAvailableServiceSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSkuSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationAvailableServiceSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="family"> SKU family. </param>
         /// <param name="size"> SKU size. </param>
         /// <param name="tier"> The tier of the SKU, such as "Basic", "General Purpose", or "Business Critical". </param>
-        /// <returns> A new <see cref="Models.AvailableServiceSkuSku"/> instance for mocking. </returns>
-        public static AvailableServiceSkuSku AvailableServiceSkuSku(string name = null, string family = null, string size = null, string tier = null)
+        /// <returns> A new <see cref="Models.DataMigrationAvailableServiceSkuDetails"/> instance for mocking. </returns>
+        public static DataMigrationAvailableServiceSkuDetails DataMigrationAvailableServiceSkuDetails(string name = null, string family = null, string size = null, string tier = null)
         {
-            return new AvailableServiceSkuSku(name, family, size, tier, serializedAdditionalRawData: null);
+            return new DataMigrationAvailableServiceSkuDetails(name, family, size, tier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSkuCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationAvailableServiceSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity, usually 0 or 1. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scalability approach. </param>
-        /// <returns> A new <see cref="Models.AvailableServiceSkuCapacity"/> instance for mocking. </returns>
-        public static AvailableServiceSkuCapacity AvailableServiceSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, ServiceScalability? scaleType = null)
+        /// <returns> A new <see cref="Models.DataMigrationAvailableServiceSkuCapacity"/> instance for mocking. </returns>
+        public static DataMigrationAvailableServiceSkuCapacity DataMigrationAvailableServiceSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, DataMigrationServiceScalability? scaleType = null)
         {
-            return new AvailableServiceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
+            return new DataMigrationAvailableServiceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMigration.ProjectTaskData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -680,13 +705,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="etag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <param name="properties">
         /// Custom task properties
-        /// Please note <see cref="Models.ProjectTaskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataMigrationProjectTaskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ConnectToMongoDBTaskProperties"/>, <see cref="Models.ConnectToSourceMySqlTaskProperties"/>, <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/>, <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlMITaskProperties"/>, <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="Models.GetTdeCertificatesSqlTaskProperties"/>, <see cref="Models.GetUserTablesSqlSyncTaskProperties"/>, <see cref="Models.GetUserTablesSqlTaskProperties"/>, <see cref="Models.GetUserTablesMySqlTaskProperties"/>, <see cref="Models.GetUserTablesOracleTaskProperties"/>, <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/>, <see cref="Models.MigrateMongoDBTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMITaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/>, <see cref="Models.MigrateSsisTaskProperties"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="Models.CheckOciDriverTaskProperties"/>, <see cref="Models.InstallOciDriverTaskProperties"/>, <see cref="Models.UploadOciDriverTaskProperties"/>, <see cref="Models.ValidateMongoDBTaskProperties"/>, <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/> and <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>.
         /// </param>
-        /// <returns> A new <see cref="DataMigration.ProjectTaskData"/> instance for mocking. </returns>
-        public static ProjectTaskData ProjectTaskData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ProjectTaskProperties properties = null)
+        /// <returns> A new <see cref="DataMigration.DataMigrationProjectTaskData"/> instance for mocking. </returns>
+        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, DataMigrationProjectTaskProperties properties = null)
         {
-            return new ProjectTaskData(
+            return new DataMigrationProjectTaskData(
                 id,
                 name,
                 resourceType,
@@ -696,25 +721,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectTaskProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationProjectTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        /// <returns> A new <see cref="Models.ProjectTaskProperties"/> instance for mocking. </returns>
-        public static ProjectTaskProperties ProjectTaskProperties(string taskType = "Unknown", IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null)
+        /// <returns> A new <see cref="Models.DataMigrationProjectTaskProperties"/> instance for mocking. </returns>
+        public static DataMigrationProjectTaskProperties DataMigrationProjectTaskProperties(string taskType = null, IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
 
             return new UnknownProjectTaskProperties(
-                taskType,
+                taskType == null ? default : new DataMigrationTaskType(taskType),
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -722,29 +747,29 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CommandProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
-        /// <returns> A new <see cref="Models.CommandProperties"/> instance for mocking. </returns>
-        public static CommandProperties CommandProperties(string commandType = "Unknown", IEnumerable<ODataError> errors = null, CommandState? state = null)
+        /// <returns> A new <see cref="Models.DataMigrationCommandProperties"/> instance for mocking. </returns>
+        public static DataMigrationCommandProperties DataMigrationCommandProperties(string commandType = null, IEnumerable<DataMigrationODataError> errors = null, DataMigrationCommandState? state = null)
         {
-            errors ??= new List<ODataError>();
+            errors ??= new List<DataMigrationODataError>();
 
-            return new UnknownCommandProperties(commandType, errors?.ToList(), state, serializedAdditionalRawData: null);
+            return new UnknownCommandProperties(commandType == null ? default : new DataMigrationCommandType(commandType), errors?.ToList(), state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NameAvailabilityResponse"/>. </summary>
-        /// <param name="nameAvailable"> If true, the name is valid and available. If false, 'reason' describes why not. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationServiceNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> If true, the name is valid and available. If false, 'reason' describes why not. </param>
         /// <param name="reason"> The reason why the name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The localized reason why the name is not available, if nameAvailable is false. </param>
-        /// <returns> A new <see cref="Models.NameAvailabilityResponse"/> instance for mocking. </returns>
-        public static NameAvailabilityResponse NameAvailabilityResponse(bool? nameAvailable = null, NameCheckFailureReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DataMigrationServiceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DataMigrationServiceNameAvailabilityResult DataMigrationServiceNameAvailabilityResult(bool? isNameAvailable = null, DataMigrationServiceNameUnavailableReason? reason = null, string message = null)
         {
-            return new NameAvailabilityResponse(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new DataMigrationServiceNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMigration.ProjectData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -758,23 +783,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="createdOn"> UTC Date and time when project was created. </param>
         /// <param name="sourceConnectionInfo">
         /// Information for connecting to source
-        /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
+        /// Please note <see cref="ServerConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/> and <see cref="DataMigrationSqlConnectionInfo"/>.
         /// </param>
         /// <param name="targetConnectionInfo">
         /// Information for connecting to target
-        /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
+        /// Please note <see cref="ServerConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/> and <see cref="DataMigrationSqlConnectionInfo"/>.
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
-        /// <returns> A new <see cref="DataMigration.ProjectData"/> instance for mocking. </returns>
-        public static ProjectData ProjectData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ProjectSourcePlatform? sourcePlatform = null, AzureActiveDirectoryApp azureAuthenticationInfo = null, ProjectTargetPlatform? targetPlatform = null, DateTimeOffset? createdOn = null, ConnectionInfo sourceConnectionInfo = null, ConnectionInfo targetConnectionInfo = null, IEnumerable<DatabaseInfo> databasesInfo = null, ProjectProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DataMigrationProjectSourcePlatform? sourcePlatform = null, DataMigrationAadApp azureAuthenticationInfo = null, DataMigrationProjectTargetPlatform? targetPlatform = null, DateTimeOffset? createdOn = null, ServerConnectionInfo sourceConnectionInfo = null, ServerConnectionInfo targetConnectionInfo = null, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = null, DataMigrationProjectProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            databasesInfo ??= new List<DatabaseInfo>();
+            databasesInfo ??= new List<DataMigrationProjectDatabaseInfo>();
 
-            return new ProjectData(
+            return new DataMigrationProjectData(
                 id,
                 name,
                 resourceType,
@@ -793,16 +818,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Quota"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationQuota"/>. </summary>
         /// <param name="currentValue"> The current value of the quota. If null or missing, the current value cannot be determined in the context of the request. </param>
         /// <param name="id"> The resource ID of the quota object. </param>
         /// <param name="limit"> The maximum value of the quota. If null or missing, the quota has no maximum, in which case it merely tracks usage. </param>
         /// <param name="name"> The name of the quota. </param>
         /// <param name="unit"> The unit for the quota, such as Count, Bytes, BytesPerSecond, etc. </param>
-        /// <returns> A new <see cref="Models.Quota"/> instance for mocking. </returns>
-        public static Quota Quota(double? currentValue = null, string id = null, double? limit = null, QuotaName name = null, string unit = null)
+        /// <returns> A new <see cref="Models.DataMigrationQuota"/> instance for mocking. </returns>
+        public static DataMigrationQuota DataMigrationQuota(double? currentValue = null, string id = null, double? limit = null, DataMigrationQuotaName name = null, string unit = null)
         {
-            return new Quota(
+            return new DataMigrationQuota(
                 currentValue,
                 id,
                 limit,
@@ -811,26 +836,26 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuotaName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationQuotaName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the quota. </param>
         /// <param name="value"> The unlocalized name (or ID) of the quota. </param>
-        /// <returns> A new <see cref="Models.QuotaName"/> instance for mocking. </returns>
-        public static QuotaName QuotaName(string localizedValue = null, string value = null)
+        /// <returns> A new <see cref="Models.DataMigrationQuotaName"/> instance for mocking. </returns>
+        public static DataMigrationQuotaName DataMigrationQuotaName(string localizedValue = null, string value = null)
         {
-            return new QuotaName(localizedValue, value, serializedAdditionalRawData: null);
+            return new DataMigrationQuotaName(localizedValue, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMigration.ProjectFileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectFileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <param name="properties"> Custom file properties. </param>
-        /// <returns> A new <see cref="DataMigration.ProjectFileData"/> instance for mocking. </returns>
-        public static ProjectFileData ProjectFileData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ProjectFileProperties properties = null)
+        /// <returns> A new <see cref="DataMigration.DataMigrationProjectFileData"/> instance for mocking. </returns>
+        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, DataMigrationProjectFileProperties properties = null)
         {
-            return new ProjectFileData(
+            return new DataMigrationProjectFileData(
                 id,
                 name,
                 resourceType,
@@ -840,33 +865,33 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectFileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationProjectFileProperties"/>. </summary>
         /// <param name="extension"> Optional File extension. If submitted it should not have a leading period and must match the extension from filePath. </param>
         /// <param name="filePath"> Relative path of this file resource. This property can be set when creating or updating the file resource. </param>
-        /// <param name="lastModified"> Modification DateTime. </param>
+        /// <param name="lastModifiedOn"> Modification DateTime. </param>
         /// <param name="mediaType"> File content type. This property can be modified to reflect the file content type. </param>
         /// <param name="size"> File size. </param>
-        /// <returns> A new <see cref="Models.ProjectFileProperties"/> instance for mocking. </returns>
-        public static ProjectFileProperties ProjectFileProperties(string extension = null, string filePath = null, DateTimeOffset? lastModified = null, string mediaType = null, long? size = null)
+        /// <returns> A new <see cref="Models.DataMigrationProjectFileProperties"/> instance for mocking. </returns>
+        public static DataMigrationProjectFileProperties DataMigrationProjectFileProperties(string extension = null, string filePath = null, DateTimeOffset? lastModifiedOn = null, string mediaType = null, long? size = null)
         {
-            return new ProjectFileProperties(
+            return new DataMigrationProjectFileProperties(
                 extension,
                 filePath,
-                lastModified,
+                lastModifiedOn,
                 mediaType,
                 size,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FileStorageInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationFileStorageInfo"/>. </summary>
         /// <param name="uri"> A URI that can be used to access the file content. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
-        /// <returns> A new <see cref="Models.FileStorageInfo"/> instance for mocking. </returns>
-        public static FileStorageInfo FileStorageInfo(Uri uri = null, IReadOnlyDictionary<string, string> headers = null)
+        /// <returns> A new <see cref="Models.DataMigrationFileStorageInfo"/> instance for mocking. </returns>
+        public static DataMigrationFileStorageInfo DataMigrationFileStorageInfo(Uri uri = null, IReadOnlyDictionary<string, string> headers = null)
         {
             headers ??= new Dictionary<string, string>();
 
-            return new FileStorageInfo(uri, headers, serializedAdditionalRawData: null);
+            return new DataMigrationFileStorageInfo(uri, headers, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSyncCompleteCommandProperties"/>. </summary>
@@ -876,12 +901,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="output"> Command output. This is ignored if submitted. </param>
         /// <param name="commandId"> Command id. </param>
         /// <returns> A new <see cref="Models.MigrateSyncCompleteCommandProperties"/> instance for mocking. </returns>
-        public static MigrateSyncCompleteCommandProperties MigrateSyncCompleteCommandProperties(IEnumerable<ODataError> errors = null, CommandState? state = null, MigrateSyncCompleteCommandInput input = null, MigrateSyncCompleteCommandOutput output = null, string commandId = null)
+        public static MigrateSyncCompleteCommandProperties MigrateSyncCompleteCommandProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationCommandState? state = null, MigrateSyncCompleteCommandInput input = null, MigrateSyncCompleteCommandOutput output = null, string commandId = null)
         {
-            errors ??= new List<ODataError>();
+            errors ??= new List<DataMigrationODataError>();
 
             return new MigrateSyncCompleteCommandProperties(
-                CommandType.MigrateSyncCompleteDatabase,
+                DataMigrationCommandType.MigrateSyncCompleteDatabase,
                 errors?.ToList(),
                 state,
                 serializedAdditionalRawData: null,
@@ -894,24 +919,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
         /// <returns> A new <see cref="Models.MigrateSyncCompleteCommandOutput"/> instance for mocking. </returns>
-        public static MigrateSyncCompleteCommandOutput MigrateSyncCompleteCommandOutput(string id = null, IEnumerable<ReportableException> errors = null)
+        public static MigrateSyncCompleteCommandOutput MigrateSyncCompleteCommandOutput(string id = null, IEnumerable<DataMigrationReportableException> errors = null)
         {
-            errors ??= new List<ReportableException>();
+            errors ??= new List<DataMigrationReportableException>();
 
             return new MigrateSyncCompleteCommandOutput(id, errors?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReportableException"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationReportableException"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="actionableMessage"> Actionable steps for this exception. </param>
         /// <param name="filePath"> The path to the file where exception occurred. </param>
         /// <param name="lineNumber"> The line number where exception occurred. </param>
         /// <param name="hResult"> Coded numerical value that is assigned to a specific exception. </param>
         /// <param name="stackTrace"> Stack trace. </param>
-        /// <returns> A new <see cref="Models.ReportableException"/> instance for mocking. </returns>
-        public static ReportableException ReportableException(string message = null, string actionableMessage = null, string filePath = null, string lineNumber = null, int? hResult = null, string stackTrace = null)
+        /// <returns> A new <see cref="Models.DataMigrationReportableException"/> instance for mocking. </returns>
+        public static DataMigrationReportableException DataMigrationReportableException(string message = null, string actionableMessage = null, string filePath = null, string lineNumber = null, int? hResult = null, string stackTrace = null)
         {
-            return new ReportableException(
+            return new DataMigrationReportableException(
                 message,
                 actionableMessage,
                 filePath,
@@ -927,13 +952,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="inputSourceDatabaseName"> Command input. </param>
         /// <param name="outputErrors"> Command output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.MigrateMISyncCompleteCommandProperties"/> instance for mocking. </returns>
-        public static MigrateMISyncCompleteCommandProperties MigrateMISyncCompleteCommandProperties(IEnumerable<ODataError> errors = null, CommandState? state = null, string inputSourceDatabaseName = null, IEnumerable<ReportableException> outputErrors = null)
+        public static MigrateMISyncCompleteCommandProperties MigrateMISyncCompleteCommandProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationCommandState? state = null, string inputSourceDatabaseName = null, IEnumerable<DataMigrationReportableException> outputErrors = null)
         {
-            errors ??= new List<ODataError>();
-            outputErrors ??= new List<ReportableException>();
+            errors ??= new List<DataMigrationODataError>();
+            outputErrors ??= new List<DataMigrationReportableException>();
 
             return new MigrateMISyncCompleteCommandProperties(
-                CommandType.MigrateSqlServerAzureDBSqlMIComplete,
+                DataMigrationCommandType.MigrateSqlServerAzureDBSqlMIComplete,
                 errors?.ToList(),
                 state,
                 serializedAdditionalRawData: null,
@@ -941,7 +966,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 outputErrors != null ? new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList(), serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BackupSetInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationBackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Id for the set of backup files. </param>
         /// <param name="firstLsn"> First log sequence number of the backup file. </param>
         /// <param name="lastLsn"> Last log sequence number of the backup file. </param>
@@ -952,12 +977,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupStartOn"> Date and time that the backup operation began. </param>
         /// <param name="backupFinishedOn"> Date and time that the backup operation finished. </param>
         /// <param name="isBackupRestored"> Whether the backup set is restored or not. </param>
-        /// <returns> A new <see cref="Models.BackupSetInfo"/> instance for mocking. </returns>
-        public static BackupSetInfo BackupSetInfo(string backupSetId = null, string firstLsn = null, string lastLsn = null, DateTimeOffset? lastModifiedOn = null, BackupType? backupType = null, IEnumerable<BackupFileInfo> listOfBackupFiles = null, string databaseName = null, DateTimeOffset? backupStartOn = null, DateTimeOffset? backupFinishedOn = null, bool? isBackupRestored = null)
+        /// <returns> A new <see cref="Models.DataMigrationBackupSetInfo"/> instance for mocking. </returns>
+        public static DataMigrationBackupSetInfo DataMigrationBackupSetInfo(string backupSetId = null, string firstLsn = null, string lastLsn = null, DateTimeOffset? lastModifiedOn = null, DataMigrationBackupType? backupType = null, IEnumerable<DataMigrationBackupFileInfo> listOfBackupFiles = null, string databaseName = null, DateTimeOffset? backupStartOn = null, DateTimeOffset? backupFinishedOn = null, bool? isBackupRestored = null)
         {
-            listOfBackupFiles ??= new List<BackupFileInfo>();
+            listOfBackupFiles ??= new List<DataMigrationBackupFileInfo>();
 
-            return new BackupSetInfo(
+            return new DataMigrationBackupSetInfo(
                 backupSetId,
                 firstLsn,
                 lastLsn,
@@ -971,23 +996,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BackupFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationBackupFileInfo"/>. </summary>
         /// <param name="fileLocation"> Location of the backup file in shared folder. </param>
         /// <param name="familySequenceNumber"> Sequence number of the backup file in the backup set. </param>
         /// <param name="status"> Status of the backup file during migration. </param>
-        /// <returns> A new <see cref="Models.BackupFileInfo"/> instance for mocking. </returns>
-        public static BackupFileInfo BackupFileInfo(string fileLocation = null, int? familySequenceNumber = null, BackupFileStatus? status = null)
+        /// <returns> A new <see cref="Models.DataMigrationBackupFileInfo"/> instance for mocking. </returns>
+        public static DataMigrationBackupFileInfo DataMigrationBackupFileInfo(string fileLocation = null, int? familySequenceNumber = null, DataMigrationBackupFileStatus? status = null)
         {
-            return new BackupFileInfo(fileLocation, familySequenceNumber, status, serializedAdditionalRawData: null);
+            return new DataMigrationBackupFileInfo(fileLocation, familySequenceNumber, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OrphanedUserInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationSqlServerOrphanedUserInfo"/>. </summary>
         /// <param name="name"> Name of the orphaned user. </param>
         /// <param name="databaseName"> Parent database of the user. </param>
-        /// <returns> A new <see cref="Models.OrphanedUserInfo"/> instance for mocking. </returns>
-        public static OrphanedUserInfo OrphanedUserInfo(string name = null, string databaseName = null)
+        /// <returns> A new <see cref="Models.DataMigrationSqlServerOrphanedUserInfo"/> instance for mocking. </returns>
+        public static DataMigrationSqlServerOrphanedUserInfo DataMigrationSqlServerOrphanedUserInfo(string name = null, string databaseName = null)
         {
-            return new OrphanedUserInfo(name, databaseName, serializedAdditionalRawData: null);
+            return new DataMigrationSqlServerOrphanedUserInfo(name, databaseName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutput"/>. </summary>
@@ -1009,9 +1034,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskOutputTaskLevel ConnectToSourceSqlServerTaskOutputTaskLevel(string id = null, string databases = null, string logins = null, string agentJobs = null, string databaseTdeCertificateMapping = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToSourceSqlServerTaskOutputTaskLevel ConnectToSourceSqlServerTaskOutputTaskLevel(string id = null, string databases = null, string logins = null, string agentJobs = null, string databaseTdeCertificateMapping = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToSourceSqlServerTaskOutputTaskLevel(
                 id,
@@ -1034,9 +1059,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="compatibilityLevel"> SQL Server compatibility level of database. </param>
         /// <param name="databaseState"> State of the database. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskOutputDatabaseLevel ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id = null, string name = null, double? sizeMB = null, IEnumerable<DatabaseFileInfo> databaseFiles = null, DatabaseCompatLevel? compatibilityLevel = null, DatabaseState? databaseState = null)
+        public static ConnectToSourceSqlServerTaskOutputDatabaseLevel ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id = null, string name = null, double? sizeMB = null, IEnumerable<DataMigrationDatabaseFileInfo> databaseFiles = null, DataMigrationDatabaseCompatLevel? compatibilityLevel = null, DataMigrationSqlDatabaseState? databaseState = null)
         {
-            databaseFiles ??= new List<DatabaseFileInfo>();
+            databaseFiles ??= new List<DataMigrationDatabaseFileInfo>();
 
             return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(
                 id,
@@ -1049,7 +1074,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 databaseState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseFileInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationDatabaseFileInfo"/>. </summary>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="id"> Unique identifier for database file. </param>
         /// <param name="logicalName"> Logical name of the file. </param>
@@ -1057,10 +1082,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="restoreFullName"> Suggested full path of the file for restoring. </param>
         /// <param name="fileType"> Database file type. </param>
         /// <param name="sizeMB"> Size of the file in megabytes. </param>
-        /// <returns> A new <see cref="Models.DatabaseFileInfo"/> instance for mocking. </returns>
-        public static DatabaseFileInfo DatabaseFileInfo(string databaseName = null, string id = null, string logicalName = null, string physicalFullName = null, string restoreFullName = null, DatabaseFileType? fileType = null, double? sizeMB = null)
+        /// <returns> A new <see cref="Models.DataMigrationDatabaseFileInfo"/> instance for mocking. </returns>
+        public static DataMigrationDatabaseFileInfo DataMigrationDatabaseFileInfo(string databaseName = null, string id = null, string logicalName = null, string physicalFullName = null, string restoreFullName = null, DataMigrationSqlDatabaseFileType? fileType = null, double? sizeMB = null)
         {
-            return new DatabaseFileInfo(
+            return new DataMigrationDatabaseFileInfo(
                 databaseName,
                 id,
                 logicalName,
@@ -1079,7 +1104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isEnabled"> The state of the login. </param>
         /// <param name="migrationEligibility"> Information about eligibility of login for migration. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskOutputLoginLevel ConnectToSourceSqlServerTaskOutputLoginLevel(string id = null, string name = null, LoginType? loginType = null, string defaultDatabase = null, bool? isEnabled = null, MigrationEligibilityInfo migrationEligibility = null)
+        public static ConnectToSourceSqlServerTaskOutputLoginLevel ConnectToSourceSqlServerTaskOutputLoginLevel(string id = null, string name = null, DataMigrationLoginType? loginType = null, string defaultDatabase = null, bool? isEnabled = null, MigrationEligibilityInfo migrationEligibility = null)
         {
             return new ConnectToSourceSqlServerTaskOutputLoginLevel(
                 id,
@@ -1113,9 +1138,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="migrationEligibility"> Information about eligibility of agent job for migration. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskOutputAgentJobLevel ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id = null, string name = null, string jobCategory = null, bool? isEnabled = null, string jobOwner = null, DateTimeOffset? lastExecutedOn = null, IEnumerable<ReportableException> validationErrors = null, MigrationEligibilityInfo migrationEligibility = null)
+        public static ConnectToSourceSqlServerTaskOutputAgentJobLevel ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id = null, string name = null, string jobCategory = null, bool? isEnabled = null, string jobOwner = null, DateTimeOffset? lastExecutedOn = null, IEnumerable<DataMigrationReportableException> validationErrors = null, MigrationEligibilityInfo migrationEligibility = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(
                 id,
@@ -1137,10 +1162,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.ConnectToSourcePostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToSourcePostgreSqlSyncTaskOutput ConnectToSourcePostgreSqlSyncTaskOutput(string id = null, string sourceServerVersion = null, IEnumerable<string> databases = null, string sourceServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToSourcePostgreSqlSyncTaskOutput ConnectToSourcePostgreSqlSyncTaskOutput(string id = null, string sourceServerVersion = null, IEnumerable<string> databases = null, string sourceServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
             databases ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToSourcePostgreSqlSyncTaskOutput(
                 id,
@@ -1158,10 +1183,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetAzureDBForMySqlTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToTargetAzureDBForMySqlTaskOutput ConnectToTargetAzureDBForMySqlTaskOutput(string id = null, string serverVersion = null, IEnumerable<string> databases = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToTargetAzureDBForMySqlTaskOutput ConnectToTargetAzureDBForMySqlTaskOutput(string id = null, string serverVersion = null, IEnumerable<string> databases = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
             databases ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToTargetAzureDBForMySqlTaskOutput(
                 id,
@@ -1188,9 +1213,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetSqlMISyncTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlMISyncTaskOutput ConnectToTargetSqlMISyncTaskOutput(string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToTargetSqlMISyncTaskOutput ConnectToTargetSqlMISyncTaskOutput(string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion, targetServerBrandVersion, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -1203,11 +1228,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="agentJobs"> List of agent jobs on the target server. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetSqlMITaskOutput"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlMITaskOutput ConnectToTargetSqlMITaskOutput(string id = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<string> logins = null, IEnumerable<string> agentJobs = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToTargetSqlMITaskOutput ConnectToTargetSqlMITaskOutput(string id = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<string> logins = null, IEnumerable<string> agentJobs = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
             logins ??= new List<string>();
             agentJobs ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToTargetSqlMITaskOutput(
                 id,
@@ -1226,10 +1251,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(string id = null, string targetServerVersion = null, IEnumerable<string> databases = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(string id = null, string targetServerVersion = null, IEnumerable<string> databases = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
             databases ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(
                 id,
@@ -1245,29 +1270,29 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.GetUserTablesMySqlTaskOutput"/> instance for mocking. </returns>
-        public static GetUserTablesMySqlTaskOutput GetUserTablesMySqlTaskOutput(string id = null, string databasesToTables = null, IEnumerable<ReportableException> validationErrors = null)
+        public static GetUserTablesMySqlTaskOutput GetUserTablesMySqlTaskOutput(string id = null, string databasesToTables = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new GetUserTablesMySqlTaskOutput(id, databasesToTables, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseTable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationDatabaseTable"/>. </summary>
         /// <param name="hasRows"> Indicates whether table is empty or not. </param>
         /// <param name="name"> Schema-qualified name of the table. </param>
-        /// <returns> A new <see cref="Models.DatabaseTable"/> instance for mocking. </returns>
-        public static DatabaseTable DatabaseTable(bool? hasRows = null, string name = null)
+        /// <returns> A new <see cref="Models.DataMigrationDatabaseTable"/> instance for mocking. </returns>
+        public static DataMigrationDatabaseTable DataMigrationDatabaseTable(bool? hasRows = null, string name = null)
         {
-            return new DatabaseTable(hasRows, name, serializedAdditionalRawData: null);
+            return new DataMigrationDatabaseTable(hasRows, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetTdeCertificatesSqlTaskOutput"/>. </summary>
         /// <param name="base64EncodedCertificates"> Mapping from certificate name to base 64 encoded format. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.GetTdeCertificatesSqlTaskOutput"/> instance for mocking. </returns>
-        public static GetTdeCertificatesSqlTaskOutput GetTdeCertificatesSqlTaskOutput(string base64EncodedCertificates = null, IEnumerable<ReportableException> validationErrors = null)
+        public static GetTdeCertificatesSqlTaskOutput GetTdeCertificatesSqlTaskOutput(string base64EncodedCertificates = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -1278,9 +1303,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tableValidationErrors"> Mapping from database name to list of validation errors. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.GetUserTablesSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static GetUserTablesSqlSyncTaskOutput GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables = null, string databasesToTargetTables = null, string tableValidationErrors = null, IEnumerable<ReportableException> validationErrors = null)
+        public static GetUserTablesSqlSyncTaskOutput GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables = null, string databasesToTargetTables = null, string tableValidationErrors = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -1290,9 +1315,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.GetUserTablesSqlTaskOutput"/> instance for mocking. </returns>
-        public static GetUserTablesSqlTaskOutput GetUserTablesSqlTaskOutput(string id = null, string databasesToTables = null, IEnumerable<ReportableException> validationErrors = null)
+        public static GetUserTablesSqlTaskOutput GetUserTablesSqlTaskOutput(string id = null, string databasesToTables = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new GetUserTablesSqlTaskOutput(id, databasesToTables, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -1302,8 +1327,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -1316,15 +1341,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="taskId"> Task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskProperties"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlServerSqlDBTaskProperties MigrateSchemaSqlServerSqlDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSchemaSqlServerSqlDBTaskInput input = null, IEnumerable<MigrateSchemaSqlServerSqlDBTaskOutput> output = null, string createdOn = null, string taskId = null, bool? isCloneable = null)
+        public static MigrateSchemaSqlServerSqlDBTaskProperties MigrateSchemaSqlServerSqlDBTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSchemaSqlServerSqlDBTaskInput input = null, IEnumerable<MigrateSchemaSqlServerSqlDBTaskOutput> output = null, DateTimeOffset? createdOn = null, string taskId = null, bool? isCloneable = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSchemaSqlServerSqlDBTaskOutput>();
 
             return new MigrateSchemaSqlServerSqlDBTaskProperties(
-                TaskType.MigrateSchemaSqlServerSqlDB,
+                DataMigrationTaskType.MigrateSchemaSqlServerSqlDB,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -1356,7 +1381,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id = null, MigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null)
+        public static MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id = null, DataMigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null)
         {
             return new MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(
                 id,
@@ -1384,7 +1409,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="numberOfFailedOperations"> Number of failed operations for this database. </param>
         /// <param name="fileId"> Identifier for the file resource containing the schema of this database. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id = null, string databaseName = null, MigrationState? state = null, SchemaMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string databaseErrorResultPrefix = null, string schemaErrorResultPrefix = null, long? numberOfSuccessfulOperations = null, long? numberOfFailedOperations = null, string fileId = null)
+        public static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id = null, string databaseName = null, DataMigrationState? state = null, SchemaMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string databaseErrorResultPrefix = null, string schemaErrorResultPrefix = null, long? numberOfSuccessfulOperations = null, long? numberOfFailedOperations = null, string fileId = null)
         {
             return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
                 id,
@@ -1416,7 +1441,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSchemaSqlTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlTaskOutputError MigrateSchemaSqlTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateSchemaSqlTaskOutputError MigrateSchemaSqlTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateSchemaSqlTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -1468,10 +1493,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(
                 id,
@@ -1490,7 +1515,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -1501,7 +1526,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
         /// <param name="cdcUpdateCounter"> Number of applied updates. </param>
         /// <param name="cdcDeleteCounter"> Number of applied deletes. </param>
-        /// <param name="fullLoadEstFinishOn"> Estimate to finish full load. </param>
+        /// <param name="fullLoadEstFinishedOn"> Estimate to finish full load. </param>
         /// <param name="fullLoadStartedOn"> Full load start time. </param>
         /// <param name="fullLoadEndedOn"> Full load end time. </param>
         /// <param name="fullLoadTotalRows"> Number of rows applied in full load. </param>
@@ -1510,7 +1535,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, string cdcInsertCounter = null, string cdcUpdateCounter = null, string cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
+        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, string cdcInsertCounter = null, string cdcUpdateCounter = null, string cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishedOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(
                 id,
@@ -1521,7 +1546,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 cdcInsertCounter,
                 cdcUpdateCounter,
                 cdcDeleteCounter,
-                fullLoadEstFinishOn,
+                fullLoadEstFinishedOn,
                 fullLoadStartedOn,
                 fullLoadEndedOn,
                 fullLoadTotalRows,
@@ -1535,7 +1560,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputError MigrateMySqlAzureDBForMySqlSyncTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputError MigrateMySqlAzureDBForMySqlSyncTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -1569,7 +1594,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = null, PostgreSqlConnectionInfo targetConnectionInfo = null, PostgreSqlConnectionInfo sourceConnectionInfo = null, string encryptedKeyForSecureFields = null, DateTimeOffset? startedOn = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = null, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo = null, DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo = null, string encryptedKeyForSecureFields = null, DateTimeOffset? startedOn = null)
         {
             selectedDatabases ??= new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>();
 
@@ -1631,7 +1656,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> Migration status. </param>
         /// <param name="databaseCount"> Number of databases to include. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServer = null, string targetServerVersion = null, string targetServer = null, ScenarioSource? sourceServerType = null, ScenarioTarget? targetServerType = null, ReplicateMigrationState? state = null, float? databaseCount = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServer = null, string targetServerVersion = null, string targetServer = null, DataMigrationScenarioSource? sourceServerType = null, DataMigrationScenarioTarget? targetServerType = null, ReplicateMigrationState? state = null, float? databaseCount = null)
         {
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(
                 id,
@@ -1664,10 +1689,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(
                 id,
@@ -1686,7 +1711,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -1697,7 +1722,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
         /// <param name="cdcUpdateCounter"> Number of applied updates. </param>
         /// <param name="cdcDeleteCounter"> Number of applied deletes. </param>
-        /// <param name="fullLoadEstFinishOn"> Estimate to finish full load. </param>
+        /// <param name="fullLoadEstFinishedOn"> Estimate to finish full load. </param>
         /// <param name="fullLoadStartedOn"> Full load start time. </param>
         /// <param name="fullLoadEndedOn"> Full load end time. </param>
         /// <param name="fullLoadTotalRows"> Number of rows applied in full load. </param>
@@ -1706,7 +1731,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishedOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(
                 id,
@@ -1717,7 +1742,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 cdcInsertCounter,
                 cdcUpdateCounter,
                 cdcDeleteCounter,
-                fullLoadEstFinishOn,
+                fullLoadEstFinishedOn,
                 fullLoadStartedOn,
                 fullLoadEndedOn,
                 fullLoadTotalRows,
@@ -1732,7 +1757,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="error"> Migration error. </param>
         /// <param name="events"> List of error events. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id = null, ReportableException error = null, IEnumerable<SyncMigrationDatabaseErrorEvent> events = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id = null, DataMigrationReportableException error = null, IEnumerable<SyncMigrationDatabaseErrorEvent> events = null)
         {
             events ??= new List<SyncMigrationDatabaseErrorEvent>();
 
@@ -1800,10 +1825,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(
                 id,
@@ -1822,7 +1847,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -1833,7 +1858,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
         /// <param name="cdcUpdateCounter"> Number of applied updates. </param>
         /// <param name="cdcDeleteCounter"> Number of applied deletes. </param>
-        /// <param name="fullLoadEstFinishOn"> Estimate to finish full load. </param>
+        /// <param name="fullLoadEstFinishedOn"> Estimate to finish full load. </param>
         /// <param name="fullLoadStartedOn"> Full load start time. </param>
         /// <param name="fullLoadEndedOn"> Full load end time. </param>
         /// <param name="fullLoadTotalRows"> Number of rows applied in full load. </param>
@@ -1842,7 +1867,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskOutputTableLevel MigrateSqlServerSqlDBSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
+        public static MigrateSqlServerSqlDBSyncTaskOutputTableLevel MigrateSqlServerSqlDBSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishedOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
             return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(
                 id,
@@ -1853,7 +1878,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 cdcInsertCounter,
                 cdcUpdateCounter,
                 cdcDeleteCounter,
-                fullLoadEstFinishOn,
+                fullLoadEstFinishedOn,
                 fullLoadStartedOn,
                 fullLoadEndedOn,
                 fullLoadTotalRows,
@@ -1867,7 +1892,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskOutputError MigrateSqlServerSqlDBSyncTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateSqlServerSqlDBSyncTaskOutputError MigrateSqlServerSqlDBSyncTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateSqlServerSqlDBSyncTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -1911,9 +1936,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputMigrationLevel MigrateSqlServerSqlDBTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, long? durationInSeconds = null, MigrationStatus? status = null, string statusMessage = null, string message = null, string databases = null, string databaseSummary = null, MigrationValidationResult migrationValidationResult = null, MigrationReportResult migrationReportResult = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSqlServerSqlDBTaskOutputMigrationLevel MigrateSqlServerSqlDBTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, long? durationInSeconds = null, DataMigrationStatus? status = null, string statusMessage = null, string message = null, string databases = null, string databaseSummary = null, MigrationValidationResult migrationValidationResult = null, MigrationReportResult migrationReportResult = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(
                 id,
@@ -1942,7 +1967,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
         /// <returns> A new <see cref="Models.MigrationValidationResult"/> instance for mocking. </returns>
-        public static MigrationValidationResult MigrationValidationResult(string id = null, string migrationId = null, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, ValidationStatus? status = null)
+        public static MigrationValidationResult MigrationValidationResult(string id = null, string migrationId = null, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, MigrationValidationStatus? status = null)
         {
             summaryResults ??= new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
 
@@ -1958,7 +1983,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Validation end time. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
         /// <returns> A new <see cref="Models.MigrationValidationDatabaseSummaryResult"/> instance for mocking. </returns>
-        public static MigrationValidationDatabaseSummaryResult MigrationValidationDatabaseSummaryResult(string id = null, string migrationId = null, string sourceDatabaseName = null, string targetDatabaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ValidationStatus? status = null)
+        public static MigrationValidationDatabaseSummaryResult MigrationValidationDatabaseSummaryResult(string id = null, string migrationId = null, string sourceDatabaseName = null, string targetDatabaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationValidationStatus? status = null)
         {
             return new MigrationValidationDatabaseSummaryResult(
                 id,
@@ -1997,9 +2022,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <param name="objectSummary"> Summary of object results in the migration. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputDatabaseLevel MigrateSqlServerSqlDBTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationState? state = null, DatabaseMigrationStage? stage = null, string statusMessage = null, string message = null, long? numberOfObjects = null, long? numberOfObjectsCompleted = null, long? errorCount = null, string errorPrefix = null, string resultPrefix = null, IEnumerable<ReportableException> exceptionsAndWarnings = null, string objectSummary = null)
+        public static MigrateSqlServerSqlDBTaskOutputDatabaseLevel MigrateSqlServerSqlDBTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationState? state = null, DatabaseMigrationStage? stage = null, string statusMessage = null, string message = null, long? numberOfObjects = null, long? numberOfObjectsCompleted = null, long? errorCount = null, string errorPrefix = null, string resultPrefix = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null, string objectSummary = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(
                 id,
@@ -2033,7 +2058,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputTableLevel MigrateSqlServerSqlDBTaskOutputTableLevel(string id = null, string objectName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationState? state = null, string statusMessage = null, long? itemsCount = null, long? itemsCompletedCount = null, string errorPrefix = null, string resultPrefix = null)
+        public static MigrateSqlServerSqlDBTaskOutputTableLevel MigrateSqlServerSqlDBTaskOutputTableLevel(string id = null, string objectName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationState? state = null, string statusMessage = null, long? itemsCount = null, long? itemsCompletedCount = null, string errorPrefix = null, string resultPrefix = null)
         {
             return new MigrateSqlServerSqlDBTaskOutputTableLevel(
                 id,
@@ -2054,7 +2079,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputError MigrateSqlServerSqlDBTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateSqlServerSqlDBTaskOutputError MigrateSqlServerSqlDBTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateSqlServerSqlDBTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -2065,7 +2090,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputValidationResult"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputValidationResult MigrateSqlServerSqlDBTaskOutputValidationResult(string id = null, string migrationId = null, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, ValidationStatus? status = null)
+        public static MigrateSqlServerSqlDBTaskOutputValidationResult MigrateSqlServerSqlDBTaskOutputValidationResult(string id = null, string migrationId = null, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, MigrationValidationStatus? status = null)
         {
             summaryResults ??= new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
 
@@ -2090,7 +2115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="queryAnalysisValidationResult"> Results of some of the query execution result between source and target database. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id = null, string migrationId = null, string sourceDatabaseName = null, string targetDatabaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataIntegrityValidationResult dataIntegrityValidationResult = null, SchemaComparisonValidationResult schemaValidationResult = null, QueryAnalysisValidationResult queryAnalysisValidationResult = null, ValidationStatus? status = null)
+        public static MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id = null, string migrationId = null, string sourceDatabaseName = null, string targetDatabaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataIntegrityValidationResult dataIntegrityValidationResult = null, SchemaComparisonValidationResult schemaValidationResult = null, QueryAnalysisValidationResult queryAnalysisValidationResult = null, MigrationValidationStatus? status = null)
         {
             return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(
                 id,
@@ -2111,20 +2136,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="failedObjects"> List of failed table names of source and target pair. </param>
         /// <param name="validationErrors"> List of errors that happened while performing data integrity validation. </param>
         /// <returns> A new <see cref="Models.DataIntegrityValidationResult"/> instance for mocking. </returns>
-        public static DataIntegrityValidationResult DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects = null, ValidationError validationErrors = null)
+        public static DataIntegrityValidationResult DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects = null, MigrationValidationError validationErrors = null)
         {
             failedObjects ??= new Dictionary<string, string>();
 
             return new DataIntegrityValidationResult(failedObjects, validationErrors, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationValidationError"/>. </summary>
         /// <param name="text"> Error Text. </param>
         /// <param name="severity"> Severity of the error. </param>
-        /// <returns> A new <see cref="Models.ValidationError"/> instance for mocking. </returns>
-        public static ValidationError ValidationError(string text = null, Severity? severity = null)
+        /// <returns> A new <see cref="Models.MigrationValidationError"/> instance for mocking. </returns>
+        public static MigrationValidationError MigrationValidationError(string text = null, MigrationValidationSeverity? severity = null)
         {
-            return new ValidationError(text, severity, serializedAdditionalRawData: null);
+            return new MigrationValidationError(text, severity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SchemaComparisonValidationResult"/>. </summary>
@@ -2133,7 +2158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceDatabaseObjectCount"> Count of source database objects. </param>
         /// <param name="targetDatabaseObjectCount"> Count of target database objects. </param>
         /// <returns> A new <see cref="Models.SchemaComparisonValidationResult"/> instance for mocking. </returns>
-        public static SchemaComparisonValidationResult SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences = null, ValidationError validationErrors = null, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = null, IReadOnlyDictionary<string, long> targetDatabaseObjectCount = null)
+        public static SchemaComparisonValidationResult SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences = null, MigrationValidationError validationErrors = null, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = null, IReadOnlyDictionary<string, long> targetDatabaseObjectCount = null)
         {
             sourceDatabaseObjectCount ??= new Dictionary<string, long>();
             targetDatabaseObjectCount ??= new Dictionary<string, long>();
@@ -2146,7 +2171,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="objectType"> Type of the object that has the difference. e.g (Table/View/StoredProcedure). </param>
         /// <param name="updateAction"> Update action type with respect to target. </param>
         /// <returns> A new <see cref="Models.SchemaComparisonValidationResultType"/> instance for mocking. </returns>
-        public static SchemaComparisonValidationResultType SchemaComparisonValidationResultType(string objectName = null, ObjectType? objectType = null, UpdateActionType? updateAction = null)
+        public static SchemaComparisonValidationResultType SchemaComparisonValidationResultType(string objectName = null, DataMigrationDatabaseObjectType? objectType = null, MigrationValidatioUpdateActionType? updateAction = null)
         {
             return new SchemaComparisonValidationResultType(objectName, objectType, updateAction, serializedAdditionalRawData: null);
         }
@@ -2155,7 +2180,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="queryResults"> List of queries executed and it's execution results in source and target. </param>
         /// <param name="validationErrors"> Errors that are part of the execution. </param>
         /// <returns> A new <see cref="Models.QueryAnalysisValidationResult"/> instance for mocking. </returns>
-        public static QueryAnalysisValidationResult QueryAnalysisValidationResult(QueryExecutionResult queryResults = null, ValidationError validationErrors = null)
+        public static QueryAnalysisValidationResult QueryAnalysisValidationResult(QueryExecutionResult queryResults = null, MigrationValidationError validationErrors = null)
         {
             return new QueryAnalysisValidationResult(queryResults, validationErrors, serializedAdditionalRawData: null);
         }
@@ -2173,35 +2198,35 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ExecutionStatistics"/>. </summary>
         /// <param name="executionCount"> No. of query executions. </param>
-        /// <param name="cpuTimeMs"> CPU Time in millisecond(s) for the query execution. </param>
-        /// <param name="elapsedTimeMs"> Time taken in millisecond(s) for executing the query. </param>
+        /// <param name="cpuTimeInMilliseconds"> CPU Time in millisecond(s) for the query execution. </param>
+        /// <param name="elapsedTimeInMilliseconds"> Time taken in millisecond(s) for executing the query. </param>
         /// <param name="waitStats"> Dictionary of sql query execution wait types and the respective statistics. </param>
         /// <param name="hasErrors"> Indicates whether the query resulted in an error. </param>
         /// <param name="sqlErrors"> List of sql Errors. </param>
         /// <returns> A new <see cref="Models.ExecutionStatistics"/> instance for mocking. </returns>
-        public static ExecutionStatistics ExecutionStatistics(long? executionCount = null, float? cpuTimeMs = null, float? elapsedTimeMs = null, IReadOnlyDictionary<string, WaitStatistics> waitStats = null, bool? hasErrors = null, IEnumerable<string> sqlErrors = null)
+        public static ExecutionStatistics ExecutionStatistics(long? executionCount = null, float? cpuTimeInMilliseconds = null, float? elapsedTimeInMilliseconds = null, IReadOnlyDictionary<string, MigrationValidationWaitStatistics> waitStats = null, bool? hasErrors = null, IEnumerable<string> sqlErrors = null)
         {
-            waitStats ??= new Dictionary<string, WaitStatistics>();
+            waitStats ??= new Dictionary<string, MigrationValidationWaitStatistics>();
             sqlErrors ??= new List<string>();
 
             return new ExecutionStatistics(
                 executionCount,
-                cpuTimeMs,
-                elapsedTimeMs,
+                cpuTimeInMilliseconds,
+                elapsedTimeInMilliseconds,
                 waitStats,
                 hasErrors,
                 sqlErrors?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WaitStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationValidationWaitStatistics"/>. </summary>
         /// <param name="waitType"> Type of the Wait. </param>
-        /// <param name="waitTimeMs"> Total wait time in millisecond(s). </param>
+        /// <param name="waitTimeInMilliseconds"> Total wait time in millisecond(s). </param>
         /// <param name="waitCount"> Total no. of waits. </param>
-        /// <returns> A new <see cref="Models.WaitStatistics"/> instance for mocking. </returns>
-        public static WaitStatistics WaitStatistics(string waitType = null, float? waitTimeMs = null, long? waitCount = null)
+        /// <returns> A new <see cref="Models.MigrationValidationWaitStatistics"/> instance for mocking. </returns>
+        public static MigrationValidationWaitStatistics MigrationValidationWaitStatistics(string waitType = null, float? waitTimeInMilliseconds = null, long? waitCount = null)
         {
-            return new WaitStatistics(waitType, waitTimeMs, waitCount, serializedAdditionalRawData: null);
+            return new MigrationValidationWaitStatistics(waitType, waitTimeInMilliseconds, waitCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
@@ -2227,7 +2252,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="databaseErrorCount"> Number of database level errors. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id = null, int? databaseCount = null, MigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerName = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerName = null, string targetServerVersion = null, string targetServerBrandVersion = null, int? databaseErrorCount = null)
+        public static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id = null, int? databaseCount = null, DataMigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerName = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerName = null, string targetServerVersion = null, string targetServerBrandVersion = null, int? databaseErrorCount = null)
         {
             return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(
                 id,
@@ -2260,10 +2285,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isFullBackupRestored"> Whether full backup has been applied to the target database or not. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(string id = null, string sourceDatabaseName = null, DatabaseMigrationState? migrationState = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, BackupSetInfo fullBackupSetInfo = null, BackupSetInfo lastRestoredBackupSetInfo = null, IEnumerable<BackupSetInfo> activeBackupSets = null, string containerName = null, string errorPrefix = null, bool? isFullBackupRestored = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(string id = null, string sourceDatabaseName = null, DatabaseMigrationState? migrationState = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationBackupSetInfo fullBackupSetInfo = null, DataMigrationBackupSetInfo lastRestoredBackupSetInfo = null, IEnumerable<DataMigrationBackupSetInfo> activeBackupSets = null, string containerName = null, string errorPrefix = null, bool? isFullBackupRestored = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            activeBackupSets ??= new List<BackupSetInfo>();
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            activeBackupSets ??= new List<DataMigrationBackupSetInfo>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
                 id,
@@ -2286,7 +2311,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMISyncTaskOutputError MigrateSqlServerSqlMISyncTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateSqlServerSqlMISyncTaskOutputError MigrateSqlServerSqlMISyncTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateSqlServerSqlMISyncTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -2318,10 +2343,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskOutputMigrationLevel MigrateSqlServerSqlMITaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationStatus? status = null, MigrationState? state = null, string agentJobs = null, string logins = null, string message = null, string serverRoleResults = null, IEnumerable<OrphanedUserInfo> orphanedUsersInfo = null, string databases = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSqlServerSqlMITaskOutputMigrationLevel MigrateSqlServerSqlMITaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationStatus? status = null, DataMigrationState? state = null, string agentJobs = null, string logins = null, string message = null, string serverRoleResults = null, IEnumerable<DataMigrationSqlServerOrphanedUserInfo> orphanedUsersInfo = null, string databases = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            orphanedUsersInfo ??= new List<OrphanedUserInfo>();
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            orphanedUsersInfo ??= new List<DataMigrationSqlServerOrphanedUserInfo>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlMITaskOutputMigrationLevel(
                 id,
@@ -2355,9 +2380,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskOutputDatabaseLevel MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id = null, string databaseName = null, double? sizeMB = null, MigrationState? state = null, DatabaseMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSqlServerSqlMITaskOutputDatabaseLevel MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id = null, string databaseName = null, double? sizeMB = null, DataMigrationState? state = null, DatabaseMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(
                 id,
@@ -2383,9 +2408,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration errors and warnings per job. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutputAgentJobLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskOutputAgentJobLevel MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id = null, string name = null, bool? isEnabled = null, MigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSqlServerSqlMITaskOutputAgentJobLevel MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id = null, string name = null, bool? isEnabled = null, DataMigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(
                 id,
@@ -2410,9 +2435,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="message"> Login migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Login migration errors and warnings per login. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutputLoginLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskOutputLoginLevel MigrateSqlServerSqlMITaskOutputLoginLevel(string id = null, string loginName = null, MigrationState? state = null, LoginMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSqlServerSqlMITaskOutputLoginLevel MigrateSqlServerSqlMITaskOutputLoginLevel(string id = null, string loginName = null, DataMigrationState? state = null, LoginMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSqlServerSqlMITaskOutputLoginLevel(
                 id,
@@ -2431,7 +2456,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskOutputError MigrateSqlServerSqlMITaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateSqlServerSqlMITaskOutputError MigrateSqlServerSqlMITaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateSqlServerSqlMITaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -2458,9 +2483,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <param name="stage"> Stage of SSIS migration. </param>
         /// <returns> A new <see cref="Models.MigrateSsisTaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigrateSsisTaskOutputMigrationLevel MigrateSsisTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationStatus? status = null, string message = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> exceptionsAndWarnings = null, SsisMigrationStage? stage = null)
+        public static MigrateSsisTaskOutputMigrationLevel MigrateSsisTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationStatus? status = null, string message = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null, SsisMigrationStage? stage = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSsisTaskOutputMigrationLevel(
                 id,
@@ -2489,9 +2514,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <returns> A new <see cref="Models.MigrateSsisTaskOutputProjectLevel"/> instance for mocking. </returns>
-        public static MigrateSsisTaskOutputProjectLevel MigrateSsisTaskOutputProjectLevel(string id = null, string folderName = null, string projectName = null, MigrationState? state = null, SsisMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<ReportableException> exceptionsAndWarnings = null)
+        public static MigrateSsisTaskOutputProjectLevel MigrateSsisTaskOutputProjectLevel(string id = null, string folderName = null, string projectName = null, DataMigrationState? state = null, SsisMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string message = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateSsisTaskOutputProjectLevel(
                 id,
@@ -2507,45 +2532,45 @@ namespace Azure.ResourceManager.DataMigration.Models
                 exceptionsAndWarnings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCancelCommand"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBCancelCommand"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="inputObjectName"> Command input. </param>
-        /// <returns> A new <see cref="Models.MongoDBCancelCommand"/> instance for mocking. </returns>
-        public static MongoDBCancelCommand MongoDBCancelCommand(IEnumerable<ODataError> errors = null, CommandState? state = null, string inputObjectName = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBCancelCommand"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBCancelCommand DataMigrationMongoDBCancelCommand(IEnumerable<DataMigrationODataError> errors = null, DataMigrationCommandState? state = null, string inputObjectName = null)
         {
-            errors ??= new List<ODataError>();
+            errors ??= new List<DataMigrationODataError>();
 
-            return new MongoDBCancelCommand(CommandType.Cancel, errors?.ToList(), state, serializedAdditionalRawData: null, inputObjectName != null ? new MongoDBCommandInput(inputObjectName, serializedAdditionalRawData: null) : null);
+            return new DataMigrationMongoDBCancelCommand(DataMigrationCommandType.Cancel, errors?.ToList(), state, serializedAdditionalRawData: null, inputObjectName != null ? new DataMigrationMongoDBCommandInput(inputObjectName, serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBClusterInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
-        /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
+        /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
-        /// <returns> A new <see cref="Models.MongoDBClusterInfo"/> instance for mocking. </returns>
-        public static MongoDBClusterInfo MongoDBClusterInfo(IEnumerable<MongoDBDatabaseInfo> databases = null, bool supportsSharding = default, MongoDBClusterType clusterType = default, string version = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBClusterInfo"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBClusterInfo DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases = null, bool isShardingSupported = default, DataMigrationMongoDBClusterType clusterType = default, string version = null)
         {
-            databases ??= new List<MongoDBDatabaseInfo>();
+            databases ??= new List<DataMigrationMongoDBDatabaseInfo>();
 
-            return new MongoDBClusterInfo(databases?.ToList(), supportsSharding, clusterType, version, serializedAdditionalRawData: null);
+            return new DataMigrationMongoDBClusterInfo(databases?.ToList(), isShardingSupported, clusterType, version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBDatabaseInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBDatabaseInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
         /// <param name="name"> The unqualified name of the database or collection. </param>
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
         /// <param name="collections"> A list of supported collections in a MongoDB database. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
-        /// <returns> A new <see cref="Models.MongoDBDatabaseInfo"/> instance for mocking. </returns>
-        public static MongoDBDatabaseInfo MongoDBDatabaseInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, IEnumerable<MongoDBCollectionInfo> collections = null, bool supportsSharding = default)
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBDatabaseInfo"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBDatabaseInfo DataMigrationMongoDBDatabaseInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, IEnumerable<DataMigrationMongoDBCollectionInfo> collections = null, bool isShardingSupported = default)
         {
-            collections ??= new List<MongoDBCollectionInfo>();
+            collections ??= new List<DataMigrationMongoDBCollectionInfo>();
 
-            return new MongoDBDatabaseInfo(
+            return new DataMigrationMongoDBDatabaseInfo(
                 averageDocumentSize,
                 dataSize,
                 documentCount,
@@ -2553,10 +2578,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 qualifiedName,
                 serializedAdditionalRawData: null,
                 collections?.ToList(),
-                supportsSharding);
+                isShardingSupported);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBCollectionInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -2567,12 +2592,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isSystemCollection"> Whether the collection is system collection. </param>
         /// <param name="isView"> Whether the collection is a view of another collection. </param>
         /// <param name="shardKey"> The shard key on the collection, or null if the collection is not sharded. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <param name="viewOf"> The name of the collection that this is a view of, if IsView is true. </param>
-        /// <returns> A new <see cref="Models.MongoDBCollectionInfo"/> instance for mocking. </returns>
-        public static MongoDBCollectionInfo MongoDBCollectionInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, string databaseName = null, bool isCapped = default, bool isSystemCollection = default, bool isView = default, MongoDBShardKeyInfo shardKey = null, bool supportsSharding = default, string viewOf = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBCollectionInfo"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBCollectionInfo DataMigrationMongoDBCollectionInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, string databaseName = null, bool isCapped = default, bool isSystemCollection = default, bool isView = default, DataMigrationMongoDBShardKeyInfo shardKey = null, bool isShardingSupported = default, string viewOf = null)
         {
-            return new MongoDBCollectionInfo(
+            return new DataMigrationMongoDBCollectionInfo(
                 averageDocumentSize,
                 dataSize,
                 documentCount,
@@ -2584,31 +2609,31 @@ namespace Azure.ResourceManager.DataMigration.Models
                 isSystemCollection,
                 isView,
                 shardKey,
-                supportsSharding,
+                isShardingSupported,
                 viewOf);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBShardKeyInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBShardKeyInfo"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
-        /// <returns> A new <see cref="Models.MongoDBShardKeyInfo"/> instance for mocking. </returns>
-        public static MongoDBShardKeyInfo MongoDBShardKeyInfo(IEnumerable<MongoDBShardKeyField> fields = null, bool isUnique = default)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBShardKeyInfo"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBShardKeyInfo DataMigrationMongoDBShardKeyInfo(IEnumerable<DataMigrationMongoDBShardKeyField> fields = null, bool isUnique = default)
         {
-            fields ??= new List<MongoDBShardKeyField>();
+            fields ??= new List<DataMigrationMongoDBShardKeyField>();
 
-            return new MongoDBShardKeyInfo(fields?.ToList(), isUnique, serializedAdditionalRawData: null);
+            return new DataMigrationMongoDBShardKeyInfo(fields?.ToList(), isUnique, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBObjectInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBObjectInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
         /// <param name="name"> The unqualified name of the database or collection. </param>
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
-        /// <returns> A new <see cref="Models.MongoDBObjectInfo"/> instance for mocking. </returns>
-        public static MongoDBObjectInfo MongoDBObjectInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBObjectInfo"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBObjectInfo DataMigrationMongoDBObjectInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null)
         {
-            return new MongoDBObjectInfo(
+            return new DataMigrationMongoDBObjectInfo(
                 averageDocumentSize,
                 dataSize,
                 documentCount,
@@ -2617,7 +2642,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBCollectionProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -2631,12 +2656,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
-        /// <returns> A new <see cref="Models.MongoDBCollectionProgress"/> instance for mocking. </returns>
-        public static MongoDBCollectionProgress MongoDBCollectionProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBCollectionProgress"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBCollectionProgress DataMigrationMongoDBCollectionProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, DataMigrationMongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
         {
-            errors ??= new Dictionary<string, MongoDBError>();
+            errors ??= new Dictionary<string, DataMigrationMongoDBError>();
 
-            return new MongoDBCollectionProgress(
+            return new DataMigrationMongoDBCollectionProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
@@ -2647,14 +2672,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastReplayOn,
                 name,
                 qualifiedName,
-                MongoDBProgressResultType.Collection,
+                DataMigrationMongoDBProgressResultType.Collection,
                 state,
                 totalBytes,
                 totalDocuments,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -2669,10 +2694,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
-        /// <returns> A new <see cref="Models.MongoDBProgress"/> instance for mocking. </returns>
-        public static MongoDBProgress MongoDBProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, string resultType = "Unknown", MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBProgress"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBProgress DataMigrationMongoDBProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, string resultType = null, DataMigrationMongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
         {
-            errors ??= new Dictionary<string, MongoDBError>();
+            errors ??= new Dictionary<string, DataMigrationMongoDBError>();
 
             return new UnknownMongoDBProgress(
                 bytesCopied,
@@ -2685,25 +2710,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastReplayOn,
                 name,
                 qualifiedName,
-                resultType,
+                resultType == null ? default : new DataMigrationMongoDBProgressResultType(resultType),
                 state,
                 totalBytes,
                 totalDocuments,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBError"/>. </summary>
         /// <param name="code"> The non-localized, machine-readable code that describes the error or warning. </param>
         /// <param name="count"> The number of times the error or warning has occurred. </param>
         /// <param name="message"> The localized, human-readable message that describes the error or warning. </param>
         /// <param name="errorType"> The type of error or warning. </param>
-        /// <returns> A new <see cref="Models.MongoDBError"/> instance for mocking. </returns>
-        public static MongoDBError MongoDBError(string code = null, int? count = null, string message = null, MongoDBErrorType? errorType = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBError"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBError DataMigrationMongoDBError(string code = null, int? count = null, string message = null, DataMigrationMongoDBErrorType? errorType = null)
         {
-            return new MongoDBError(code, count, message, errorType, serializedAdditionalRawData: null);
+            return new DataMigrationMongoDBError(code, count, message, errorType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBDatabaseProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBDatabaseProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -2718,13 +2743,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <param name="collections"> The progress of the collections in the database. The keys are the unqualified names of the collections. </param>
-        /// <returns> A new <see cref="Models.MongoDBDatabaseProgress"/> instance for mocking. </returns>
-        public static MongoDBDatabaseProgress MongoDBDatabaseProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IReadOnlyDictionary<string, MongoDBCollectionProgress> collections = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBDatabaseProgress"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBDatabaseProgress DataMigrationMongoDBDatabaseProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, DataMigrationMongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IReadOnlyDictionary<string, DataMigrationMongoDBCollectionProgress> collections = null)
         {
-            errors ??= new Dictionary<string, MongoDBError>();
-            collections ??= new Dictionary<string, MongoDBCollectionProgress>();
+            errors ??= new Dictionary<string, DataMigrationMongoDBError>();
+            collections ??= new Dictionary<string, DataMigrationMongoDBCollectionProgress>();
 
-            return new MongoDBDatabaseProgress(
+            return new DataMigrationMongoDBDatabaseProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
@@ -2735,7 +2760,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastReplayOn,
                 name,
                 qualifiedName,
-                MongoDBProgressResultType.Database,
+                DataMigrationMongoDBProgressResultType.Database,
                 state,
                 totalBytes,
                 totalDocuments,
@@ -2743,19 +2768,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 collections);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBFinishCommand"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBFinishCommand"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="input"> Command input. </param>
-        /// <returns> A new <see cref="Models.MongoDBFinishCommand"/> instance for mocking. </returns>
-        public static MongoDBFinishCommand MongoDBFinishCommand(IEnumerable<ODataError> errors = null, CommandState? state = null, MongoDBFinishCommandInput input = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBFinishCommand"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBFinishCommand DataMigrationMongoDBFinishCommand(IEnumerable<DataMigrationODataError> errors = null, DataMigrationCommandState? state = null, DataMigrationMongoDBFinishCommandInput input = null)
         {
-            errors ??= new List<ODataError>();
+            errors ??= new List<DataMigrationODataError>();
 
-            return new MongoDBFinishCommand(CommandType.Finish, errors?.ToList(), state, serializedAdditionalRawData: null, input);
+            return new DataMigrationMongoDBFinishCommand(DataMigrationCommandType.Finish, errors?.ToList(), state, serializedAdditionalRawData: null, input);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBMigrationProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBMigrationProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -2770,13 +2795,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <param name="databases"> The progress of the databases in the migration. The keys are the names of the databases. </param>
-        /// <returns> A new <see cref="Models.MongoDBMigrationProgress"/> instance for mocking. </returns>
-        public static MongoDBMigrationProgress MongoDBMigrationProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IReadOnlyDictionary<string, MongoDBDatabaseProgress> databases = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBMigrationProgress"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBMigrationProgress DataMigrationMongoDBMigrationProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, DataMigrationMongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IReadOnlyDictionary<string, DataMigrationMongoDBDatabaseProgress> databases = null)
         {
-            errors ??= new Dictionary<string, MongoDBError>();
-            databases ??= new Dictionary<string, MongoDBDatabaseProgress>();
+            errors ??= new Dictionary<string, DataMigrationMongoDBError>();
+            databases ??= new Dictionary<string, DataMigrationMongoDBDatabaseProgress>();
 
-            return new MongoDBMigrationProgress(
+            return new DataMigrationMongoDBMigrationProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
@@ -2787,7 +2812,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastReplayOn,
                 name,
                 qualifiedName,
-                MongoDBProgressResultType.Migration,
+                DataMigrationMongoDBProgressResultType.Migration,
                 state,
                 totalBytes,
                 totalDocuments,
@@ -2795,16 +2820,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 databases);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBRestartCommand"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBRestartCommand"/>. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="inputObjectName"> Command input. </param>
-        /// <returns> A new <see cref="Models.MongoDBRestartCommand"/> instance for mocking. </returns>
-        public static MongoDBRestartCommand MongoDBRestartCommand(IEnumerable<ODataError> errors = null, CommandState? state = null, string inputObjectName = null)
+        /// <returns> A new <see cref="Models.DataMigrationMongoDBRestartCommand"/> instance for mocking. </returns>
+        public static DataMigrationMongoDBRestartCommand DataMigrationMongoDBRestartCommand(IEnumerable<DataMigrationODataError> errors = null, DataMigrationCommandState? state = null, string inputObjectName = null)
         {
-            errors ??= new List<ODataError>();
+            errors ??= new List<DataMigrationODataError>();
 
-            return new MongoDBRestartCommand(CommandType.Restart, errors?.ToList(), state, serializedAdditionalRawData: null, inputObjectName != null ? new MongoDBCommandInput(inputObjectName, serializedAdditionalRawData: null) : null);
+            return new DataMigrationMongoDBRestartCommand(DataMigrationCommandType.Restart, errors?.ToList(), state, serializedAdditionalRawData: null, inputObjectName != null ? new DataMigrationMongoDBCommandInput(inputObjectName, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceOracleSyncTaskOutput"/>. </summary>
@@ -2813,10 +2838,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceOracleSyncTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToSourceOracleSyncTaskOutput ConnectToSourceOracleSyncTaskOutput(string sourceServerVersion = null, IEnumerable<string> databases = null, string sourceServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToSourceOracleSyncTaskOutput ConnectToSourceOracleSyncTaskOutput(string sourceServerVersion = null, IEnumerable<string> databases = null, string sourceServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
             databases ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion, databases?.ToList(), sourceServerBrandVersion, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -2828,10 +2853,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <param name="databaseSchemaMap"> Mapping of schemas per database. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(string targetServerVersion = null, IEnumerable<string> databases = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> validationErrors = null, IEnumerable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> databaseSchemaMap = null)
+        public static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(string targetServerVersion = null, IEnumerable<string> databases = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> validationErrors = null, IEnumerable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> databaseSchemaMap = null)
         {
             databases ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
             databaseSchemaMap ??= new List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>();
 
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(
@@ -2859,10 +2884,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tables"> List of valid tables found for this schema. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.GetUserTablesOracleTaskOutput"/> instance for mocking. </returns>
-        public static GetUserTablesOracleTaskOutput GetUserTablesOracleTaskOutput(string schemaName = null, IEnumerable<DatabaseTable> tables = null, IEnumerable<ReportableException> validationErrors = null)
+        public static GetUserTablesOracleTaskOutput GetUserTablesOracleTaskOutput(string schemaName = null, IEnumerable<DataMigrationDatabaseTable> tables = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            tables ??= new List<DatabaseTable>();
-            validationErrors ??= new List<ReportableException>();
+            tables ??= new List<DataMigrationDatabaseTable>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new GetUserTablesOracleTaskOutput(schemaName, tables?.ToList(), validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -2872,10 +2897,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tables"> List of valid tables found for this database. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.GetUserTablesPostgreSqlTaskOutput"/> instance for mocking. </returns>
-        public static GetUserTablesPostgreSqlTaskOutput GetUserTablesPostgreSqlTaskOutput(string databaseName = null, IEnumerable<DatabaseTable> tables = null, IEnumerable<ReportableException> validationErrors = null)
+        public static GetUserTablesPostgreSqlTaskOutput GetUserTablesPostgreSqlTaskOutput(string databaseName = null, IEnumerable<DataMigrationDatabaseTable> tables = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            tables ??= new List<DatabaseTable>();
-            validationErrors ??= new List<ReportableException>();
+            tables ??= new List<DataMigrationDatabaseTable>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new GetUserTablesPostgreSqlTaskOutput(databaseName, tables?.ToList(), validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -2883,9 +2908,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
         /// <returns> A new <see cref="Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput"/> instance for mocking. </returns>
-        public static ValidateOracleAzureDBPostgreSqlSyncTaskOutput ValidateOracleAzureDBPostgreSqlSyncTaskOutput(IEnumerable<ReportableException> validationErrors = null)
+        public static ValidateOracleAzureDBPostgreSqlSyncTaskOutput ValidateOracleAzureDBPostgreSqlSyncTaskOutput(IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ValidateOracleAzureDBPostgreSqlSyncTaskOutput(validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -2937,10 +2962,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(
                 id,
@@ -2959,7 +2984,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -2970,7 +2995,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
         /// <param name="cdcUpdateCounter"> Number of applied updates. </param>
         /// <param name="cdcDeleteCounter"> Number of applied deletes. </param>
-        /// <param name="fullLoadEstFinishOn"> Estimate to finish full load. </param>
+        /// <param name="fullLoadEstFinishedOn"> Estimate to finish full load. </param>
         /// <param name="fullLoadStartedOn"> Full load start time. </param>
         /// <param name="fullLoadEndedOn"> Full load end time. </param>
         /// <param name="fullLoadTotalRows"> Number of rows applied in full load. </param>
@@ -2979,7 +3004,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
+        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishedOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(
                 id,
@@ -2990,7 +3015,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 cdcInsertCounter,
                 cdcUpdateCounter,
                 cdcDeleteCounter,
-                fullLoadEstFinishOn,
+                fullLoadEstFinishedOn,
                 fullLoadStartedOn,
                 fullLoadEndedOn,
                 fullLoadTotalRows,
@@ -3004,7 +3029,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputError MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputError MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }
@@ -3021,19 +3046,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", serializedAdditionalRawData: null, errorMessage, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OracleOciDriverInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationOracleOciDriverInfo"/>. </summary>
         /// <param name="driverName"> The name of the driver package. </param>
         /// <param name="driverSize"> The size in bytes of the driver package. </param>
         /// <param name="archiveChecksum"> The MD5 Base64 encoded checksum for the driver package. </param>
         /// <param name="oracleChecksum"> The checksum for the driver package provided by Oracle. </param>
         /// <param name="assemblyVersion"> Version listed in the OCI assembly 'oci.dll'. </param>
         /// <param name="supportedOracleVersions"> List of Oracle database versions supported by this driver. Only major minor of the version is listed. </param>
-        /// <returns> A new <see cref="Models.OracleOciDriverInfo"/> instance for mocking. </returns>
-        public static OracleOciDriverInfo OracleOciDriverInfo(string driverName = null, string driverSize = null, string archiveChecksum = null, string oracleChecksum = null, string assemblyVersion = null, IEnumerable<string> supportedOracleVersions = null)
+        /// <returns> A new <see cref="Models.DataMigrationOracleOciDriverInfo"/> instance for mocking. </returns>
+        public static DataMigrationOracleOciDriverInfo DataMigrationOracleOciDriverInfo(string driverName = null, string driverSize = null, string archiveChecksum = null, string oracleChecksum = null, string assemblyVersion = null, IEnumerable<string> supportedOracleVersions = null)
         {
             supportedOracleVersions ??= new List<string>();
 
-            return new OracleOciDriverInfo(
+            return new DataMigrationOracleOciDriverInfo(
                 driverName,
                 driverSize,
                 archiveChecksum,
@@ -3047,9 +3072,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="installedDriver"> Information about the installed driver if found and valid. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.CheckOciDriverTaskOutput"/> instance for mocking. </returns>
-        public static CheckOciDriverTaskOutput CheckOciDriverTaskOutput(OracleOciDriverInfo installedDriver = null, IEnumerable<ReportableException> validationErrors = null)
+        public static CheckOciDriverTaskOutput CheckOciDriverTaskOutput(DataMigrationOracleOciDriverInfo installedDriver = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new CheckOciDriverTaskOutput(installedDriver, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -3058,9 +3083,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="driverPackageName"> The name of the driver package that was validated and uploaded. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.UploadOciDriverTaskOutput"/> instance for mocking. </returns>
-        public static UploadOciDriverTaskOutput UploadOciDriverTaskOutput(string driverPackageName = null, IEnumerable<ReportableException> validationErrors = null)
+        public static UploadOciDriverTaskOutput UploadOciDriverTaskOutput(string driverPackageName = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new UploadOciDriverTaskOutput(driverPackageName, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -3068,9 +3093,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="Models.InstallOciDriverTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <returns> A new <see cref="Models.InstallOciDriverTaskOutput"/> instance for mocking. </returns>
-        public static InstallOciDriverTaskOutput InstallOciDriverTaskOutput(IEnumerable<ReportableException> validationErrors = null)
+        public static InstallOciDriverTaskOutput InstallOciDriverTaskOutput(IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new InstallOciDriverTaskOutput(validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -3080,22 +3105,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputServerVersion"> Input for the service task to check for OCI drivers. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.CheckOciDriverTaskProperties"/> instance for mocking. </returns>
-        public static CheckOciDriverTaskProperties CheckOciDriverTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, string inputServerVersion = null, IEnumerable<CheckOciDriverTaskOutput> output = null)
+        public static CheckOciDriverTaskProperties CheckOciDriverTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, string inputServerVersion = null, IEnumerable<CheckOciDriverTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<CheckOciDriverTaskOutput>();
 
             return new CheckOciDriverTaskProperties(
-                TaskType.ServiceCheckOci,
+                DataMigrationTaskType.ServiceCheckOci,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3110,22 +3135,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputDriverShare"> Input for the service task to upload an OCI driver. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.UploadOciDriverTaskProperties"/> instance for mocking. </returns>
-        public static UploadOciDriverTaskProperties UploadOciDriverTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, FileShare inputDriverShare = null, IEnumerable<UploadOciDriverTaskOutput> output = null)
+        public static UploadOciDriverTaskProperties UploadOciDriverTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationFileShareInfo inputDriverShare = null, IEnumerable<UploadOciDriverTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<UploadOciDriverTaskOutput>();
 
             return new UploadOciDriverTaskProperties(
-                TaskType.ServiceUploadOci,
+                DataMigrationTaskType.ServiceUploadOci,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3140,22 +3165,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputDriverPackageName"> Input for the service task to install an OCI driver. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.InstallOciDriverTaskProperties"/> instance for mocking. </returns>
-        public static InstallOciDriverTaskProperties InstallOciDriverTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, string inputDriverPackageName = null, IEnumerable<InstallOciDriverTaskOutput> output = null)
+        public static InstallOciDriverTaskProperties InstallOciDriverTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, string inputDriverPackageName = null, IEnumerable<InstallOciDriverTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<InstallOciDriverTaskOutput>();
 
             return new InstallOciDriverTaskProperties(
-                TaskType.ServiceInstallOci,
+                DataMigrationTaskType.ServiceInstallOci,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3170,22 +3195,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Describes a connection to a MongoDB data source. </param>
         /// <param name="output"> An array containing a single MongoDbClusterInfo object. </param>
         /// <returns> A new <see cref="Models.ConnectToMongoDBTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToMongoDBTaskProperties ConnectToMongoDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MongoDBConnectionInfo input = null, IEnumerable<MongoDBClusterInfo> output = null)
+        public static ConnectToMongoDBTaskProperties ConnectToMongoDBTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationMongoDBConnectionInfo input = null, IEnumerable<DataMigrationMongoDBClusterInfo> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
-            output ??= new List<MongoDBClusterInfo>();
+            output ??= new List<DataMigrationMongoDBClusterInfo>();
 
             return new ConnectToMongoDBTaskProperties(
-                TaskType.ConnectMongoDB,
+                DataMigrationTaskType.ConnectMongoDB,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3200,8 +3225,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3212,15 +3237,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </param>
         /// <param name="taskId"> Task id. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskProperties ConnectToSourceSqlServerTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceSqlServerTaskInput input = null, IEnumerable<ConnectToSourceSqlServerTaskOutput> output = null, string taskId = null)
+        public static ConnectToSourceSqlServerTaskProperties ConnectToSourceSqlServerTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceSqlServerTaskInput input = null, IEnumerable<ConnectToSourceSqlServerTaskOutput> output = null, string taskId = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceSqlServerTaskOutput>();
 
             return new ConnectToSourceSqlServerTaskProperties(
-                TaskType.ConnectToSourceSqlServer,
+                DataMigrationTaskType.ConnectToSourceSqlServer,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3236,8 +3261,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3247,15 +3272,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerSyncTaskProperties ConnectToSourceSqlServerSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceSqlServerTaskInput input = null, IEnumerable<ConnectToSourceSqlServerTaskOutput> output = null)
+        public static ConnectToSourceSqlServerSyncTaskProperties ConnectToSourceSqlServerSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceSqlServerTaskInput input = null, IEnumerable<ConnectToSourceSqlServerTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceSqlServerTaskOutput>();
 
             return new ConnectToSourceSqlServerSyncTaskProperties(
-                TaskType.ConnectToSourceSqlServerSync,
+                DataMigrationTaskType.ConnectToSourceSqlServerSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3270,22 +3295,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputSourceConnectionInfo"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToSourcePostgreSqlSyncTaskProperties ConnectToSourcePostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, PostgreSqlConnectionInfo inputSourceConnectionInfo = null, IEnumerable<ConnectToSourcePostgreSqlSyncTaskOutput> output = null)
+        public static ConnectToSourcePostgreSqlSyncTaskProperties ConnectToSourcePostgreSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationPostgreSqlConnectionInfo inputSourceConnectionInfo = null, IEnumerable<ConnectToSourcePostgreSqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourcePostgreSqlSyncTaskOutput>();
 
             return new ConnectToSourcePostgreSqlSyncTaskProperties(
-                TaskType.ConnectToSourcePostgreSqlSync,
+                DataMigrationTaskType.ConnectToSourcePostgreSqlSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3300,22 +3325,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceMySqlTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToSourceMySqlTaskProperties ConnectToSourceMySqlTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceMySqlTaskInput input = null, IEnumerable<ConnectToSourceNonSqlTaskOutput> output = null)
+        public static ConnectToSourceMySqlTaskProperties ConnectToSourceMySqlTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceMySqlTaskInput input = null, IEnumerable<ConnectToSourceNonSqlTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceNonSqlTaskOutput>();
 
             return new ConnectToSourceMySqlTaskProperties(
-                TaskType.ConnectToSourceMySql,
+                DataMigrationTaskType.ConnectToSourceMySql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3332,10 +3357,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databases"> List of databases on the server. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceNonSqlTaskOutput"/> instance for mocking. </returns>
-        public static ConnectToSourceNonSqlTaskOutput ConnectToSourceNonSqlTaskOutput(string id = null, string sourceServerBrandVersion = null, ServerProperties serverProperties = null, IEnumerable<string> databases = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ConnectToSourceNonSqlTaskOutput ConnectToSourceNonSqlTaskOutput(string id = null, string sourceServerBrandVersion = null, DataMigrationMySqlServerProperties serverProperties = null, IEnumerable<string> databases = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
             databases ??= new List<string>();
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ConnectToSourceNonSqlTaskOutput(
                 id,
@@ -3346,17 +3371,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMySqlServerProperties"/>. </summary>
         /// <param name="serverPlatform"> Name of the server platform. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="serverVersion"> Version of the database server. </param>
         /// <param name="serverEdition"> Edition of the database server. </param>
         /// <param name="serverOperatingSystemVersion"> Version of the operating system. </param>
         /// <param name="serverDatabaseCount"> Number of databases in the server. </param>
-        /// <returns> A new <see cref="Models.ServerProperties"/> instance for mocking. </returns>
-        public static ServerProperties ServerProperties(string serverPlatform = null, string serverName = null, string serverVersion = null, string serverEdition = null, string serverOperatingSystemVersion = null, int? serverDatabaseCount = null)
+        /// <returns> A new <see cref="Models.DataMigrationMySqlServerProperties"/> instance for mocking. </returns>
+        public static DataMigrationMySqlServerProperties DataMigrationMySqlServerProperties(string serverPlatform = null, string serverName = null, string serverVersion = null, string serverEdition = null, string serverOperatingSystemVersion = null, int? serverDatabaseCount = null)
         {
-            return new ServerProperties(
+            return new DataMigrationMySqlServerProperties(
                 serverPlatform,
                 serverName,
                 serverVersion,
@@ -3371,22 +3396,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputSourceConnectionInfo"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToSourceOracleSyncTaskProperties ConnectToSourceOracleSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, OracleConnectionInfo inputSourceConnectionInfo = null, IEnumerable<ConnectToSourceOracleSyncTaskOutput> output = null)
+        public static ConnectToSourceOracleSyncTaskProperties ConnectToSourceOracleSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationOracleConnectionInfo inputSourceConnectionInfo = null, IEnumerable<ConnectToSourceOracleSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceOracleSyncTaskOutput>();
 
             return new ConnectToSourceOracleSyncTaskProperties(
-                TaskType.ConnectToSourceOracleSync,
+                DataMigrationTaskType.ConnectToSourceOracleSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3401,23 +3426,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetSqlDBTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlDBTaskProperties ConnectToTargetSqlDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlDBTaskInput input = null, IEnumerable<ConnectToTargetSqlDBTaskOutput> output = null, string createdOn = null)
+        public static ConnectToTargetSqlDBTaskProperties ConnectToTargetSqlDBTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlDBTaskInput input = null, IEnumerable<ConnectToTargetSqlDBTaskOutput> output = null, DateTimeOffset? createdOn = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlDBTaskOutput>();
 
             return new ConnectToTargetSqlDBTaskProperties(
-                TaskType.ConnectToTargetSqlDB,
+                DataMigrationTaskType.ConnectToTargetSqlDB,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3433,22 +3458,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlDBSyncTaskProperties ConnectToTargetSqlDBSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlDBSyncTaskInput input = null, IEnumerable<ConnectToTargetSqlDBTaskOutput> output = null)
+        public static ConnectToTargetSqlDBSyncTaskProperties ConnectToTargetSqlDBSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlDBSyncTaskInput input = null, IEnumerable<ConnectToTargetSqlDBTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlDBTaskOutput>();
 
             return new ConnectToTargetSqlDBSyncTaskProperties(
-                TaskType.ConnectToTargetSqlDBSync,
+                DataMigrationTaskType.ConnectToTargetSqlDBSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3463,22 +3488,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetAzureDBForPostgreSqlSyncTaskInput input = null, IEnumerable<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput> output = null)
+        public static ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetAzureDBForPostgreSqlSyncTaskInput input = null, IEnumerable<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>();
 
             return new ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(
-                TaskType.ConnectToTargetAzureDBForPostgreSqlSync,
+                DataMigrationTaskType.ConnectToTargetAzureDBForPostgreSqlSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3493,22 +3518,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputTargetConnectionInfo"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, PostgreSqlConnectionInfo inputTargetConnectionInfo = null, IEnumerable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> output = null)
+        public static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationPostgreSqlConnectionInfo inputTargetConnectionInfo = null, IEnumerable<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>();
 
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(
-                TaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync,
+                DataMigrationTaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3523,23 +3548,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <param name="taskId"> Task id. </param>
         /// <returns> A new <see cref="Models.GetUserTablesSqlTaskProperties"/> instance for mocking. </returns>
-        public static GetUserTablesSqlTaskProperties GetUserTablesSqlTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesSqlTaskInput input = null, IEnumerable<GetUserTablesSqlTaskOutput> output = null, string taskId = null)
+        public static GetUserTablesSqlTaskProperties GetUserTablesSqlTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesSqlTaskInput input = null, IEnumerable<GetUserTablesSqlTaskOutput> output = null, string taskId = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesSqlTaskOutput>();
 
             return new GetUserTablesSqlTaskProperties(
-                TaskType.GetUserTablesSql,
+                DataMigrationTaskType.GetUserTablesSql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3555,22 +3580,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.GetUserTablesSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static GetUserTablesSqlSyncTaskProperties GetUserTablesSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesSqlSyncTaskInput input = null, IEnumerable<GetUserTablesSqlSyncTaskOutput> output = null)
+        public static GetUserTablesSqlSyncTaskProperties GetUserTablesSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesSqlSyncTaskInput input = null, IEnumerable<GetUserTablesSqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesSqlSyncTaskOutput>();
 
             return new GetUserTablesSqlSyncTaskProperties(
-                TaskType.GetUserTablesAzureSqlDBSync,
+                DataMigrationTaskType.GetUserTablesAzureSqlDBSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3585,22 +3610,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.GetUserTablesOracleTaskProperties"/> instance for mocking. </returns>
-        public static GetUserTablesOracleTaskProperties GetUserTablesOracleTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesOracleTaskInput input = null, IEnumerable<GetUserTablesOracleTaskOutput> output = null)
+        public static GetUserTablesOracleTaskProperties GetUserTablesOracleTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesOracleTaskInput input = null, IEnumerable<GetUserTablesOracleTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesOracleTaskOutput>();
 
             return new GetUserTablesOracleTaskProperties(
-                TaskType.GetUserTablesOracle,
+                DataMigrationTaskType.GetUserTablesOracle,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3615,22 +3640,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/> instance for mocking. </returns>
-        public static GetUserTablesPostgreSqlTaskProperties GetUserTablesPostgreSqlTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesPostgreSqlTaskInput input = null, IEnumerable<GetUserTablesPostgreSqlTaskOutput> output = null)
+        public static GetUserTablesPostgreSqlTaskProperties GetUserTablesPostgreSqlTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesPostgreSqlTaskInput input = null, IEnumerable<GetUserTablesPostgreSqlTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesPostgreSqlTaskOutput>();
 
             return new GetUserTablesPostgreSqlTaskProperties(
-                TaskType.GetUserTablesPostgreSql,
+                DataMigrationTaskType.GetUserTablesPostgreSql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3645,22 +3670,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.GetUserTablesMySqlTaskProperties"/> instance for mocking. </returns>
-        public static GetUserTablesMySqlTaskProperties GetUserTablesMySqlTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesMySqlTaskInput input = null, IEnumerable<GetUserTablesMySqlTaskOutput> output = null)
+        public static GetUserTablesMySqlTaskProperties GetUserTablesMySqlTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, GetUserTablesMySqlTaskInput input = null, IEnumerable<GetUserTablesMySqlTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesMySqlTaskOutput>();
 
             return new GetUserTablesMySqlTaskProperties(
-                TaskType.GetUserTablesMySql,
+                DataMigrationTaskType.GetUserTablesMySql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3675,22 +3700,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetSqlMITaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlMITaskProperties ConnectToTargetSqlMITaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlMITaskInput input = null, IEnumerable<ConnectToTargetSqlMITaskOutput> output = null)
+        public static ConnectToTargetSqlMITaskProperties ConnectToTargetSqlMITaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlMITaskInput input = null, IEnumerable<ConnectToTargetSqlMITaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlMITaskOutput>();
 
             return new ConnectToTargetSqlMITaskProperties(
-                TaskType.ConnectToTargetAzureSqlDBMI,
+                DataMigrationTaskType.ConnectToTargetAzureSqlDBMI,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3705,22 +3730,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlMISyncTaskProperties ConnectToTargetSqlMISyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlMISyncTaskInput input = null, IEnumerable<ConnectToTargetSqlMISyncTaskOutput> output = null)
+        public static ConnectToTargetSqlMISyncTaskProperties ConnectToTargetSqlMISyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetSqlMISyncTaskInput input = null, IEnumerable<ConnectToTargetSqlMISyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlMISyncTaskOutput>();
 
             return new ConnectToTargetSqlMISyncTaskProperties(
-                TaskType.ConnectToTargetAzureSqlDBMISyncLRS,
+                DataMigrationTaskType.ConnectToTargetAzureSqlDBMISyncLRS,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3735,22 +3760,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/> instance for mocking. </returns>
-        public static ConnectToTargetAzureDBForMySqlTaskProperties ConnectToTargetAzureDBForMySqlTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetAzureDBForMySqlTaskInput input = null, IEnumerable<ConnectToTargetAzureDBForMySqlTaskOutput> output = null)
+        public static ConnectToTargetAzureDBForMySqlTaskProperties ConnectToTargetAzureDBForMySqlTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToTargetAzureDBForMySqlTaskInput input = null, IEnumerable<ConnectToTargetAzureDBForMySqlTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetAzureDBForMySqlTaskOutput>();
 
             return new ConnectToTargetAzureDBForMySqlTaskProperties(
-                TaskType.ConnectToTargetAzureDBForMySql,
+                DataMigrationTaskType.ConnectToTargetAzureDBForMySql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3765,25 +3790,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Describes how a MongoDB data migration should be performed. </param>
         /// <param name="output">
-        /// Please note <see cref="Models.MongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MongoDBDatabaseProgress"/>, <see cref="Models.MongoDBMigrationProgress"/> and <see cref="Models.MongoDBCollectionProgress"/>.
+        /// Please note <see cref="Models.DataMigrationMongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCollectionProgress"/>, <see cref="Models.DataMigrationMongoDBDatabaseProgress"/> and <see cref="Models.DataMigrationMongoDBMigrationProgress"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateMongoDBTaskProperties"/> instance for mocking. </returns>
-        public static MigrateMongoDBTaskProperties MigrateMongoDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MongoDBMigrationSettings input = null, IEnumerable<MongoDBProgress> output = null)
+        public static MigrateMongoDBTaskProperties MigrateMongoDBTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationMongoDBMigrationSettings input = null, IEnumerable<DataMigrationMongoDBProgress> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
-            output ??= new List<MongoDBProgress>();
+            output ??= new List<DataMigrationMongoDBProgress>();
 
             return new MigrateMongoDBTaskProperties(
-                TaskType.MigrateMongoDB,
+                DataMigrationTaskType.MigrateMongoDB,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3798,8 +3823,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3813,15 +3838,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="parentTaskId"> parent task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskProperties"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskProperties MigrateSqlServerSqlMITaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlMITaskInput input = null, IEnumerable<MigrateSqlServerSqlMITaskOutput> output = null, string taskId = null, string createdOn = null, string parentTaskId = null, bool? isCloneable = null)
+        public static MigrateSqlServerSqlMITaskProperties MigrateSqlServerSqlMITaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlMITaskInput input = null, IEnumerable<MigrateSqlServerSqlMITaskOutput> output = null, string taskId = null, DateTimeOffset? createdOn = null, string parentTaskId = null, bool? isCloneable = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlMITaskOutput>();
 
             return new MigrateSqlServerSqlMITaskProperties(
-                TaskType.MigrateSqlServerAzureSqlDBMI,
+                DataMigrationTaskType.MigrateSqlServerAzureSqlDBMI,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3840,8 +3865,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3852,15 +3877,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMISyncTaskProperties MigrateSqlServerSqlMISyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlMISyncTaskInput input = null, IEnumerable<MigrateSqlServerSqlMISyncTaskOutput> output = null, string createdOn = null)
+        public static MigrateSqlServerSqlMISyncTaskProperties MigrateSqlServerSqlMISyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlMISyncTaskInput input = null, IEnumerable<MigrateSqlServerSqlMISyncTaskOutput> output = null, DateTimeOffset? createdOn = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlMISyncTaskOutput>();
 
             return new MigrateSqlServerSqlMISyncTaskProperties(
-                TaskType.MigrateSqlServerAzureSqlDBMISyncLRS,
+                DataMigrationTaskType.MigrateSqlServerAzureSqlDBMISyncLRS,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3876,8 +3901,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3890,15 +3915,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskProperties MigrateSqlServerSqlDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlDBTaskInput input = null, IEnumerable<MigrateSqlServerSqlDBTaskOutput> output = null, string taskId = null, bool? isCloneable = null, string createdOn = null)
+        public static MigrateSqlServerSqlDBTaskProperties MigrateSqlServerSqlDBTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlDBTaskInput input = null, IEnumerable<MigrateSqlServerSqlDBTaskOutput> output = null, string taskId = null, bool? isCloneable = null, DateTimeOffset? createdOn = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlDBTaskOutput>();
 
             return new MigrateSqlServerSqlDBTaskProperties(
-                TaskType.MigrateSqlServerSqlDB,
+                DataMigrationTaskType.MigrateSqlServerSqlDB,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3916,8 +3941,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3927,15 +3952,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskProperties MigrateSqlServerSqlDBSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlDBSyncTaskInput input = null, IEnumerable<MigrateSqlServerSqlDBSyncTaskOutput> output = null)
+        public static MigrateSqlServerSqlDBSyncTaskProperties MigrateSqlServerSqlDBSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlDBSyncTaskInput input = null, IEnumerable<MigrateSqlServerSqlDBSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlDBSyncTaskOutput>();
 
             return new MigrateSqlServerSqlDBSyncTaskProperties(
-                TaskType.MigrateSqlServerAzureSqlDBSync,
+                DataMigrationTaskType.MigrateSqlServerAzureSqlDBSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3950,8 +3975,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3961,15 +3986,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncTaskProperties MigrateMySqlAzureDBForMySqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateMySqlAzureDBForMySqlSyncTaskInput input = null, IEnumerable<MigrateMySqlAzureDBForMySqlSyncTaskOutput> output = null)
+        public static MigrateMySqlAzureDBForMySqlSyncTaskProperties MigrateMySqlAzureDBForMySqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateMySqlAzureDBForMySqlSyncTaskInput input = null, IEnumerable<MigrateMySqlAzureDBForMySqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateMySqlAzureDBForMySqlSyncTaskOutput>();
 
             return new MigrateMySqlAzureDBForMySqlSyncTaskProperties(
-                TaskType.MigrateMySqlAzureDBForMySqlSync,
+                DataMigrationTaskType.MigrateMySqlAzureDBForMySqlSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -3984,8 +4009,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3997,15 +4022,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <param name="taskId"> Task id. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskProperties MigrateMySqlAzureDBForMySqlOfflineTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateMySqlAzureDBForMySqlOfflineTaskInput input = null, IEnumerable<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output = null, bool? isCloneable = null, string taskId = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskProperties MigrateMySqlAzureDBForMySqlOfflineTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateMySqlAzureDBForMySqlOfflineTaskInput input = null, IEnumerable<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output = null, bool? isCloneable = null, string taskId = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
 
             return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(
-                TaskType.MigrateMySqlAzureDBForMySql,
+                DataMigrationTaskType.MigrateMySqlAzureDBForMySql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4031,8 +4056,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -4045,15 +4070,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput input = null, IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput> output = null, string taskId = null, string createdOn = null, bool? isCloneable = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput input = null, IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput> output = null, string taskId = null, DateTimeOffset? createdOn = null, bool? isCloneable = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>();
 
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(
-                TaskType.MigratePostgreSqlAzureDBForPostgreSqlSyncV2,
+                DataMigrationTaskType.MigratePostgreSqlAzureDBForPostgreSqlSyncV2,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4071,8 +4096,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -4082,15 +4107,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBForPostgreSqlSyncTaskProperties MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, IEnumerable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output = null)
+        public static MigrateOracleAzureDBForPostgreSqlSyncTaskProperties MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, IEnumerable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
 
             return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(
-                TaskType.MigrateOracleAzureDBForPostgreSqlSync,
+                DataMigrationTaskType.MigrateOracleAzureDBForPostgreSqlSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4105,22 +4130,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlDBSyncTaskProperties ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ValidateSyncMigrationInputSqlServerTaskInput input = null, IEnumerable<ValidateSyncMigrationInputSqlServerTaskOutput> output = null)
+        public static ValidateMigrationInputSqlServerSqlDBSyncTaskProperties ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ValidateSyncMigrationInputSqlServerTaskInput input = null, IEnumerable<ValidateSyncMigrationInputSqlServerTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateSyncMigrationInputSqlServerTaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(
-                TaskType.ValidateMigrationInputSqlServerSqlDBSync,
+                DataMigrationTaskType.ValidateMigrationInputSqlServerSqlDBSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4135,9 +4160,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
         /// <returns> A new <see cref="Models.ValidateSyncMigrationInputSqlServerTaskOutput"/> instance for mocking. </returns>
-        public static ValidateSyncMigrationInputSqlServerTaskOutput ValidateSyncMigrationInputSqlServerTaskOutput(string id = null, string name = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ValidateSyncMigrationInputSqlServerTaskOutput ValidateSyncMigrationInputSqlServerTaskOutput(string id = null, string name = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ValidateSyncMigrationInputSqlServerTaskOutput(id, name, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -4147,22 +4172,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskProperties"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlMITaskProperties ValidateMigrationInputSqlServerSqlMITaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ValidateMigrationInputSqlServerSqlMITaskInput input = null, IEnumerable<ValidateMigrationInputSqlServerSqlMITaskOutput> output = null)
+        public static ValidateMigrationInputSqlServerSqlMITaskProperties ValidateMigrationInputSqlServerSqlMITaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ValidateMigrationInputSqlServerSqlMITaskInput input = null, IEnumerable<ValidateMigrationInputSqlServerSqlMITaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateMigrationInputSqlServerSqlMITaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlMITaskProperties(
-                TaskType.ValidateMigrationInputSqlServerAzureSqlDBMI,
+                DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDBMI,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4182,13 +4207,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="existingBackupErrors"> Errors associated with existing backup files. </param>
         /// <param name="databaseBackupInfo"> Information about backup files when existing backup mode is used. </param>
         /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskOutput"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlMITaskOutput ValidateMigrationInputSqlServerSqlMITaskOutput(string id = null, string name = null, IEnumerable<ReportableException> restoreDatabaseNameErrors = null, IEnumerable<ReportableException> backupFolderErrors = null, IEnumerable<ReportableException> backupShareCredentialsErrors = null, IEnumerable<ReportableException> backupStorageAccountErrors = null, IEnumerable<ReportableException> existingBackupErrors = null, DatabaseBackupInfo databaseBackupInfo = null)
+        public static ValidateMigrationInputSqlServerSqlMITaskOutput ValidateMigrationInputSqlServerSqlMITaskOutput(string id = null, string name = null, IEnumerable<DataMigrationReportableException> restoreDatabaseNameErrors = null, IEnumerable<DataMigrationReportableException> backupFolderErrors = null, IEnumerable<DataMigrationReportableException> backupShareCredentialsErrors = null, IEnumerable<DataMigrationReportableException> backupStorageAccountErrors = null, IEnumerable<DataMigrationReportableException> existingBackupErrors = null, DataMigrationDatabaseBackupInfo databaseBackupInfo = null)
         {
-            restoreDatabaseNameErrors ??= new List<ReportableException>();
-            backupFolderErrors ??= new List<ReportableException>();
-            backupShareCredentialsErrors ??= new List<ReportableException>();
-            backupStorageAccountErrors ??= new List<ReportableException>();
-            existingBackupErrors ??= new List<ReportableException>();
+            restoreDatabaseNameErrors ??= new List<DataMigrationReportableException>();
+            backupFolderErrors ??= new List<DataMigrationReportableException>();
+            backupShareCredentialsErrors ??= new List<DataMigrationReportableException>();
+            backupStorageAccountErrors ??= new List<DataMigrationReportableException>();
+            existingBackupErrors ??= new List<DataMigrationReportableException>();
 
             return new ValidateMigrationInputSqlServerSqlMITaskOutput(
                 id,
@@ -4202,7 +4227,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseBackupInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataMigrationDatabaseBackupInfo"/>. </summary>
         /// <param name="databaseName"> Database name. </param>
         /// <param name="backupType"> Backup Type. </param>
         /// <param name="backupFiles"> The list of backup files for the current database. </param>
@@ -4210,13 +4235,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isDamaged"> Database was damaged when backed up, but the backup operation was requested to continue despite errors. </param>
         /// <param name="isCompressed"> Whether the backup set is compressed. </param>
         /// <param name="familyCount"> Number of files in the backup set. </param>
-        /// <param name="backupFinishOn"> Date and time when the backup operation finished. </param>
-        /// <returns> A new <see cref="Models.DatabaseBackupInfo"/> instance for mocking. </returns>
-        public static DatabaseBackupInfo DatabaseBackupInfo(string databaseName = null, BackupType? backupType = null, IEnumerable<string> backupFiles = null, int? position = null, bool? isDamaged = null, bool? isCompressed = null, int? familyCount = null, DateTimeOffset? backupFinishOn = null)
+        /// <param name="backupFinishedOn"> Date and time when the backup operation finished. </param>
+        /// <returns> A new <see cref="Models.DataMigrationDatabaseBackupInfo"/> instance for mocking. </returns>
+        public static DataMigrationDatabaseBackupInfo DataMigrationDatabaseBackupInfo(string databaseName = null, DataMigrationBackupType? backupType = null, IEnumerable<string> backupFiles = null, int? position = null, bool? isDamaged = null, bool? isCompressed = null, int? familyCount = null, DateTimeOffset? backupFinishedOn = null)
         {
             backupFiles ??= new List<string>();
 
-            return new DatabaseBackupInfo(
+            return new DataMigrationDatabaseBackupInfo(
                 databaseName,
                 backupType,
                 backupFiles?.ToList(),
@@ -4224,7 +4249,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 isDamaged,
                 isCompressed,
                 familyCount,
-                backupFinishOn,
+                backupFinishedOn,
                 serializedAdditionalRawData: null);
         }
 
@@ -4233,22 +4258,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlMISyncTaskProperties ValidateMigrationInputSqlServerSqlMISyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ValidateMigrationInputSqlServerSqlMISyncTaskInput input = null, IEnumerable<ValidateMigrationInputSqlServerSqlMISyncTaskOutput> output = null)
+        public static ValidateMigrationInputSqlServerSqlMISyncTaskProperties ValidateMigrationInputSqlServerSqlMISyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, ValidateMigrationInputSqlServerSqlMISyncTaskInput input = null, IEnumerable<ValidateMigrationInputSqlServerSqlMISyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlMISyncTaskProperties(
-                TaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS,
+                DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4263,9 +4288,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
         /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskOutput"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlMISyncTaskOutput ValidateMigrationInputSqlServerSqlMISyncTaskOutput(string id = null, string name = null, IEnumerable<ReportableException> validationErrors = null)
+        public static ValidateMigrationInputSqlServerSqlMISyncTaskOutput ValidateMigrationInputSqlServerSqlMISyncTaskOutput(string id = null, string name = null, IEnumerable<DataMigrationReportableException> validationErrors = null)
         {
-            validationErrors ??= new List<ReportableException>();
+            validationErrors ??= new List<DataMigrationReportableException>();
 
             return new ValidateMigrationInputSqlServerSqlMISyncTaskOutput(id, name, validationErrors?.ToList(), serializedAdditionalRawData: null);
         }
@@ -4275,22 +4300,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Describes how a MongoDB data migration should be performed. </param>
         /// <param name="output"> An array containing a single MongoDbMigrationProgress object. </param>
         /// <returns> A new <see cref="Models.ValidateMongoDBTaskProperties"/> instance for mocking. </returns>
-        public static ValidateMongoDBTaskProperties ValidateMongoDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MongoDBMigrationSettings input = null, IEnumerable<MongoDBMigrationProgress> output = null)
+        public static ValidateMongoDBTaskProperties ValidateMongoDBTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, DataMigrationMongoDBMigrationSettings input = null, IEnumerable<DataMigrationMongoDBMigrationProgress> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
-            output ??= new List<MongoDBMigrationProgress>();
+            output ??= new List<DataMigrationMongoDBMigrationProgress>();
 
             return new ValidateMongoDBTaskProperties(
-                TaskType.ValidateMongoDB,
+                DataMigrationTaskType.ValidateMongoDB,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4305,22 +4330,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Input for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations. </param>
         /// <param name="output"> An array containing a single validation error response object. </param>
         /// <returns> A new <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
-        public static ValidateOracleAzureDBForPostgreSqlSyncTaskProperties ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, IEnumerable<ValidateOracleAzureDBPostgreSqlSyncTaskOutput> output = null)
+        public static ValidateOracleAzureDBForPostgreSqlSyncTaskProperties ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, IEnumerable<ValidateOracleAzureDBPostgreSqlSyncTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
 
             return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(
-                TaskType.ValidateOracleAzureDBPostgreSqlSync,
+                DataMigrationTaskType.ValidateOracleAzureDBPostgreSqlSync,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4335,22 +4360,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.GetTdeCertificatesSqlTaskProperties"/> instance for mocking. </returns>
-        public static GetTdeCertificatesSqlTaskProperties GetTdeCertificatesSqlTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, GetTdeCertificatesSqlTaskInput input = null, IEnumerable<GetTdeCertificatesSqlTaskOutput> output = null)
+        public static GetTdeCertificatesSqlTaskProperties GetTdeCertificatesSqlTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, GetTdeCertificatesSqlTaskInput input = null, IEnumerable<GetTdeCertificatesSqlTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetTdeCertificatesSqlTaskOutput>();
 
             return new GetTdeCertificatesSqlTaskProperties(
-                TaskType.GetTDECertificatesSql,
+                DataMigrationTaskType.GetTDECertificatesSql,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4365,8 +4390,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/> and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -4376,15 +4401,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="Models.MigrateSsisTaskOutputMigrationLevel"/> and <see cref="Models.MigrateSsisTaskOutputProjectLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateSsisTaskProperties"/> instance for mocking. </returns>
-        public static MigrateSsisTaskProperties MigrateSsisTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSsisTaskInput input = null, IEnumerable<MigrateSsisTaskOutput> output = null)
+        public static MigrateSsisTaskProperties MigrateSsisTaskProperties(IEnumerable<DataMigrationODataError> errors = null, DataMigrationTaskState? state = null, IEnumerable<DataMigrationCommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSsisTaskInput input = null, IEnumerable<MigrateSsisTaskOutput> output = null)
         {
-            errors ??= new List<ODataError>();
-            commands ??= new List<CommandProperties>();
+            errors ??= new List<DataMigrationODataError>();
+            commands ??= new List<DataMigrationCommandProperties>();
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSsisTaskOutput>();
 
             return new MigrateSsisTaskProperties(
-                TaskType.MigrateSsis,
+                DataMigrationTaskType.MigrateSsis,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -4410,11 +4435,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, long? durationInSeconds = null, MigrationStatus? status = null, string statusMessage = null, string message = null, string databases = null, string databaseSummary = null, MigrationReportResult migrationReportResult = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<ReportableException> exceptionsAndWarnings = null, DateTimeOffset? lastStorageUpdate = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, long? durationInSeconds = null, DataMigrationStatus? status = null, string statusMessage = null, string message = null, string databases = null, string databaseSummary = null, MigrationReportResult migrationReportResult = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null, DateTimeOffset? lastStorageUpdatedOn = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(
                 id,
@@ -4434,7 +4459,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 targetServerVersion,
                 targetServerBrandVersion,
                 exceptionsAndWarnings?.ToList(),
-                lastStorageUpdate);
+                lastStorageUpdatedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>. </summary>
@@ -4452,12 +4477,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
         /// <param name="objectSummary"> Summary of object results in the migration. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationState? state = null, DatabaseMigrationStage? stage = null, string statusMessage = null, string message = null, long? numberOfObjects = null, long? numberOfObjectsCompleted = null, long? errorCount = null, string errorPrefix = null, string resultPrefix = null, IEnumerable<ReportableException> exceptionsAndWarnings = null, DateTimeOffset? lastStorageUpdate = null, string objectSummary = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationState? state = null, DatabaseMigrationStage? stage = null, string statusMessage = null, string message = null, long? numberOfObjects = null, long? numberOfObjectsCompleted = null, long? errorCount = null, string errorPrefix = null, string resultPrefix = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null, DateTimeOffset? lastStorageUpdatedOn = null, string objectSummary = null)
         {
-            exceptionsAndWarnings ??= new List<ReportableException>();
+            exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(
                 id,
@@ -4476,7 +4501,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 errorPrefix,
                 resultPrefix,
                 exceptionsAndWarnings?.ToList(),
-                lastStorageUpdate,
+                lastStorageUpdatedOn,
                 objectSummary);
         }
 
@@ -4491,9 +4516,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="itemsCompletedCount"> Number of successfully completed items. </param>
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(string id = null, string objectName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationState? state = null, string statusMessage = null, long? itemsCount = null, long? itemsCompletedCount = null, string errorPrefix = null, string resultPrefix = null, DateTimeOffset? lastStorageUpdate = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(string id = null, string objectName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationState? state = null, string statusMessage = null, long? itemsCount = null, long? itemsCompletedCount = null, string errorPrefix = null, string resultPrefix = null, DateTimeOffset? lastStorageUpdatedOn = null)
         {
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(
                 id,
@@ -4508,14 +4533,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 itemsCompletedCount,
                 errorPrefix,
                 resultPrefix,
-                lastStorageUpdate);
+                lastStorageUpdatedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="error"> Migration error. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputError MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(string id = null, ReportableException error = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputError MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(string id = null, DataMigrationReportableException error = null)
         {
             return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(id, "ErrorOutput", serializedAdditionalRawData: null, error);
         }

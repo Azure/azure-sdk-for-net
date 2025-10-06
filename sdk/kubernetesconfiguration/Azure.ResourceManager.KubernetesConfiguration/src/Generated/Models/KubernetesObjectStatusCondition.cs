@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Last time this status condition has changed. </summary>
+        [WirePath("lastTransitionTime")]
         public DateTimeOffset? LastTransitionOn { get; }
         /// <summary> A more verbose description of the object status condition. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Reason for the specified status condition type status. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> Status of the Kubernetes object condition type. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Object status condition type for this object. </summary>
+        [WirePath("type")]
         public string ObjectStatusConditionDefinitionType { get; }
     }
 }

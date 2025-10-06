@@ -61,5 +61,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new DocumentEntities(id, entities, warnings, statistics);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentEntities FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDocumentEntities(document.RootElement);
+        }
     }
 }

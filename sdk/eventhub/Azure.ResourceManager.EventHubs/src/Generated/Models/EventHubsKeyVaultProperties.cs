@@ -66,14 +66,18 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of the Key from KeyVault. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
         /// <summary> Uri of KeyVault. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
         /// <summary> Key Version. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
         /// <summary> Gets or sets the identity. </summary>
         internal UserAssignedIdentityProperties Identity { get; set; }
         /// <summary> ARM ID of user Identity selected for encryption. </summary>
+        [WirePath("identity.userAssignedIdentity")]
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;

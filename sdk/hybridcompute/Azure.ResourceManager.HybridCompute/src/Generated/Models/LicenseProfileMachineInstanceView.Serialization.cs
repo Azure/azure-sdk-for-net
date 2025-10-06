@@ -8,25 +8,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class LicenseProfileMachineInstanceView : IUtf8JsonSerializable, IJsonModel<LicenseProfileMachineInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LicenseProfileMachineInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(LicenseStatus))
             {
                 writer.WritePropertyName("licenseStatus"u8);
@@ -40,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(EsuProfile))
             {
                 writer.WritePropertyName("esuProfile"u8);
-                writer.WriteObjectValue(EsuProfile);
+                writer.WriteObjectValue(EsuProfile, options);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
@@ -54,20 +63,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
-            {
-                writer.WritePropertyName("billingStartDate"u8);
-                writer.WriteStringValue(BillingStartOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            {
+                writer.WritePropertyName("billingStartDate"u8);
+                writer.WriteStringValue(BillingStartOn.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            {
+                writer.WritePropertyName("billingEndDate"u8);
+                writer.WriteStringValue(BillingEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProductFeatures))
             {
@@ -75,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,14 +115,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LicenseProfileMachineInstanceView IJsonModel<LicenseProfileMachineInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -111,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +138,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static LicenseProfileMachineInstanceView DeserializeLicenseProfileMachineInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,13 +149,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LicenseProfileMachineInstanceViewEsuProperties esuProfile = default;
             LicenseProfileSubscriptionStatus? subscriptionStatus = default;
             LicenseProfileProductType? productType = default;
-            DateTimeOffset? billingStartDate = default;
             DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? billingStartDate = default;
             DateTimeOffset? disenrollmentDate = default;
+            DateTimeOffset? billingEndDate = default;
+            ResponseError error = default;
             IList<HybridComputeProductFeature> productFeatures = default;
             bool? softwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("licenseStatus"u8))
@@ -190,15 +210,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             productType = new LicenseProfileProductType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingStartDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingStartDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("enrollmentDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -208,6 +219,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             enrollmentDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("billingStartDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingStartDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                         if (property0.NameEquals("disenrollmentDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -215,6 +235,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                                 continue;
                             }
                             disenrollmentDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("billingEndDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingEndDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("error"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHybridComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("productFeatures"u8))
@@ -257,22 +295,246 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LicenseProfileMachineInstanceView(
                 licenseStatus,
                 licenseChannel,
                 esuProfile,
                 subscriptionStatus,
                 productType,
-                billingStartDate,
                 enrollmentDate,
+                billingStartDate,
                 disenrollmentDate,
+                billingEndDate,
+                error,
                 productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
                 softwareAssuranceCustomer,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  licenseStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LicenseStatus))
+                {
+                    builder.Append("  licenseStatus: ");
+                    builder.AppendLine($"'{LicenseStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseChannel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  licenseChannel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LicenseChannel))
+                {
+                    builder.Append("  licenseChannel: ");
+                    if (LicenseChannel.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LicenseChannel}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LicenseChannel}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EsuProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  esuProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EsuProfile))
+                {
+                    builder.Append("  esuProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EsuProfile, options, 2, false, "  esuProfile: ");
+                }
+            }
+
+            builder.Append("  productProfile:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subscriptionStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionStatus))
+                {
+                    builder.Append("    subscriptionStatus: ");
+                    builder.AppendLine($"'{SubscriptionStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    productType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductType))
+                {
+                    builder.Append("    productType: ");
+                    builder.AppendLine($"'{ProductType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnrollmentOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enrollmentDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnrollmentOn))
+                {
+                    builder.Append("    enrollmentDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EnrollmentOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    billingStartDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingStartOn))
+                {
+                    builder.Append("    billingStartDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(BillingStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisenrollmentOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    disenrollmentDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisenrollmentOn))
+                {
+                    builder.Append("    disenrollmentDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(DisenrollmentOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    billingEndDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingEndOn))
+                {
+                    builder.Append("    billingEndDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(BillingEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    error: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    builder.Append("    error: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Error, options, 4, false, "    error: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductFeatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    productFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ProductFeatures))
+                {
+                    if (ProductFeatures.Any())
+                    {
+                        builder.Append("    productFeatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ProductFeatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    productFeatures: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  softwareAssurance:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSoftwareAssuranceCustomer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    softwareAssuranceCustomer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSoftwareAssuranceCustomer))
+                {
+                    builder.Append("    softwareAssuranceCustomer: ");
+                    var boolValue = IsSoftwareAssuranceCustomer.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<LicenseProfileMachineInstanceView>.Write(ModelReaderWriterOptions options)
@@ -282,9 +544,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,11 +560,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLicenseProfileMachineInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

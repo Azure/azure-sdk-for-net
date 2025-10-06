@@ -34,5 +34,13 @@ namespace Azure.AI.TextAnalytics.Models
             }
             return new EntitiesTaskResult(kind, results);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EntitiesTaskResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEntitiesTaskResult(document.RootElement);
+        }
     }
 }

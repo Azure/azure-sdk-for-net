@@ -19,7 +19,7 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            string tilejson = default;
+            string tileJson = default;
             string name = default;
             string description = default;
             string version = default;
@@ -30,15 +30,15 @@ namespace Azure.Maps.Rendering
             IReadOnlyList<string> tiles = default;
             IReadOnlyList<string> grids = default;
             IReadOnlyList<string> data = default;
-            int? minzoom = default;
-            int? maxzoom = default;
+            int? minZoom = default;
+            int? maxZoom = default;
             IReadOnlyList<float> bounds = default;
             IReadOnlyList<float> center = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tilejson"u8))
+                if (property.NameEquals("tileJson"u8))
                 {
-                    tilejson = property.Value.GetString();
+                    tileJson = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -118,22 +118,22 @@ namespace Azure.Maps.Rendering
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("minzoom"u8))
+                if (property.NameEquals("minZoom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minzoom = property.Value.GetInt32();
+                    minZoom = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxzoom"u8))
+                if (property.NameEquals("maxZoom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxzoom = property.Value.GetInt32();
+                    maxZoom = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("bounds"u8))
@@ -166,7 +166,7 @@ namespace Azure.Maps.Rendering
                 }
             }
             return new MapTileSet(
-                tilejson,
+                tileJson,
                 name,
                 description,
                 version,
@@ -177,10 +177,18 @@ namespace Azure.Maps.Rendering
                 tiles ?? new ChangeTrackingList<string>(),
                 grids ?? new ChangeTrackingList<string>(),
                 data ?? new ChangeTrackingList<string>(),
-                minzoom,
-                maxzoom,
+                minZoom,
+                maxZoom,
                 bounds ?? new ChangeTrackingList<float>(),
                 center ?? new ChangeTrackingList<float>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapTileSet FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMapTileSet(document.RootElement);
         }
     }
 }

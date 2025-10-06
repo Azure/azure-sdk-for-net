@@ -29,7 +29,9 @@ namespace Azure.Storage.Tests
 
             var buffer = new byte[dataSize];
             var predictableStream = new PredictableStream();
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             predictableStream.Read(buffer, 0, dataSize);
+#pragma warning restore CA2022
             Assert.AreEqual(dataSize, predictableStream.Position);
 
             var expected = Enumerable.Range(0, dataSize).Select(val => (byte)(val % byte.MaxValue)).ToArray();
@@ -42,16 +44,20 @@ namespace Azure.Storage.Tests
         [TestCase(Constants.KB, 256)] // buffer split size smaller than data
         [TestCase(Constants.KB, 2 * Constants.KB)] // buffer split size larger than data.
         [TestCase(Constants.KB + 11, 256)] // content doesn't line up with buffers (extremely unlikely any array pool implementation will add exactly 11 bytes more than requested across 4 buffers)
-        public async Task ReadStream(int dataSize, int bufferPartitionSize)
+        public void ReadStream(int dataSize, int bufferPartitionSize)
         {
             PredictableStream originalStream = new PredictableStream();
-            PooledMemoryStream arrayPoolStream = await PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, _pool, bufferPartitionSize, true, default);
+            PooledMemoryStream arrayPoolStream = new(_pool, bufferPartitionSize);
+            originalStream.CopyToExactInternal(arrayPoolStream, dataSize, async: false, cancellationToken: default).EnsureCompleted();
             originalStream.Position = 0;
+            arrayPoolStream.Position = 0;
 
             byte[] originalStreamData = new byte[dataSize];
             byte[] poolStreamData = new byte[dataSize];
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             originalStream.Read(originalStreamData, 0, dataSize);
             arrayPoolStream.Read(poolStreamData, 0, dataSize);
+#pragma warning restore CA2022
 
             CollectionAssert.AreEqual(originalStreamData, poolStreamData);
         }
@@ -63,8 +69,9 @@ namespace Azure.Storage.Tests
             const long dataSize = (long)int.MaxValue + Constants.MB;
             const int bufferPartitionSize = 512 * Constants.MB;
             PredictableStream originalStream = new PredictableStream();
-            PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, _pool, bufferPartitionSize, false, default).EnsureCompleted();
-            originalStream.Position = 0;
+            PooledMemoryStream arrayPoolStream = new(_pool, bufferPartitionSize);
+            originalStream.CopyToExactInternal(arrayPoolStream, dataSize, async: false, cancellationToken: default).EnsureCompleted();
+            arrayPoolStream.Position = 0;
 
             // assert it holds the correct amount of data. other tests assert data validity and it's so expensive to do that here.
             // test without blowing up memory
@@ -95,7 +102,9 @@ namespace Azure.Storage.Tests
             // Act
             await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
             pooledMemoryStream.Position = 0;
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             await pooledMemoryStream.ReadAsync(readData, 0, dataSize);
+#pragma warning restore CA2022
 
             // Also testing that clear works.
             pooledMemoryStream.Clear();
@@ -121,7 +130,9 @@ namespace Azure.Storage.Tests
             if (initialReadSize > 0)
             {
                 byte[] readData = new byte[initialReadSize];
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
                 await pooledMemoryStream.ReadAsync(readData, 0, initialReadSize);
+#pragma warning restore CA2022
             }
 
             // Act

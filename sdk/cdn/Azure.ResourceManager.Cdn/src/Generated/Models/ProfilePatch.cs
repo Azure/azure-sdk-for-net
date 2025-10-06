@@ -7,11 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Properties required to update a profile. </summary>
+    /// <summary>
+    /// Properties required to update a profile.
+    /// Serialized Name: ProfileUpdateParameters
+    /// </summary>
     public partial class ProfilePatch
     {
         /// <summary>
@@ -53,19 +56,51 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfilePatch"/>. </summary>
-        /// <param name="tags"> Profile tags. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        /// <param name="tags">
+        /// Profile tags
+        /// Serialized Name: ProfileUpdateParameters.tags
+        /// </param>
+        /// <param name="identity">
+        /// Managed service identity (system assigned and/or user assigned identities).
+        /// Serialized Name: ProfileUpdateParameters.identity
+        /// </param>
+        /// <param name="originResponseTimeoutSeconds">
+        /// Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
+        /// Serialized Name: ProfileUpdateParameters.properties.originResponseTimeoutSeconds
+        /// </param>
+        /// <param name="logScrubbing">
+        /// Defines rules to scrub sensitive fields in logs
+        /// Serialized Name: ProfileUpdateParameters.properties.logScrubbing
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfilePatch(IDictionary<string, string> tags, int? originResponseTimeoutSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProfilePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Identity = identity;
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
+            LogScrubbing = logScrubbing;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Profile tags. </summary>
+        /// <summary>
+        /// Profile tags
+        /// Serialized Name: ProfileUpdateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        /// <summary>
+        /// Managed service identity (system assigned and/or user assigned identities).
+        /// Serialized Name: ProfileUpdateParameters.identity
+        /// </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary>
+        /// Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
+        /// Serialized Name: ProfileUpdateParameters.properties.originResponseTimeoutSeconds
+        /// </summary>
         public int? OriginResponseTimeoutSeconds { get; set; }
+        /// <summary>
+        /// Defines rules to scrub sensitive fields in logs
+        /// Serialized Name: ProfileUpdateParameters.properties.logScrubbing
+        /// </summary>
+        public ProfileLogScrubbing LogScrubbing { get; set; }
     }
 }

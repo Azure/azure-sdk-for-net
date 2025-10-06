@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static bool operator ==(ActionableRemediationState left, ActionableRemediationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionableRemediationState"/> values are not the same. </summary>
         public static bool operator !=(ActionableRemediationState left, ActionableRemediationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActionableRemediationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActionableRemediationState"/>. </summary>
         public static implicit operator ActionableRemediationState(string value) => new ActionableRemediationState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

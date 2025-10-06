@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net;
+using System.Net.Security;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        /// <summary>The required claims to execute management operations.</summary>
+        private static readonly string[] s_manageClaims = [ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send];
 
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private volatile bool _disposed;
@@ -169,6 +173,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private IWebProxy Proxy { get; }
 
         /// <summary>
+        ///   A <see cref="RemoteCertificateValidationCallback" /> delegate allowing custom logic to be considered for
+        ///   validation of the remote certificate responsible for encrypting communication.
+        /// </summary>
+        ///
+        private RemoteCertificateValidationCallback CertificateValidationCallback { get; }
+
+        /// <summary>
         ///   The AMQP connection that is active for the current scope.
         /// </summary>
         private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
@@ -199,6 +210,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
         /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         /// <param name="idleTimeout">The amount of time to allow a connection to have no observed traffic before considering it idle.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             Uri connectionEndpoint,
@@ -207,7 +219,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IWebProxy proxy,
             bool useSingleSession,
             TimeSpan operationTimeout,
-            TimeSpan idleTimeout)
+            TimeSpan idleTimeout,
+            RemoteCertificateValidationCallback certificateValidationCallback = default)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -219,11 +232,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
+            CertificateValidationCallback = certificateValidationCallback;
             Id = $"{ServiceEndpoint}-{Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8)}";
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, connectionEndpoint, Transport, Proxy, Id, timeout);
+            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, connectionEndpoint, Transport, Proxy, CertificateValidationCallback, Id, timeout);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
 
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(
@@ -451,6 +465,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionEndpoint">The endpoint to use for the initial connection to the Service Bus service.</param>
         /// <param name="transportType">The type of transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
         /// <param name="timeout">The timeout to consider when creating the connection.</param>
         /// <returns>An AMQP connection that may be used for communicating with the Service Bus service.</returns>
@@ -460,6 +475,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Uri connectionEndpoint,
             ServiceBusTransportType transportType,
             IWebProxy proxy,
+            RemoteCertificateValidationCallback certificateValidationCallback,
             string scopeIdentifier,
             TimeSpan timeout)
         {
@@ -469,7 +485,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             TransportSettings transportSettings = transportType.IsWebSocketTransport()
                 ? CreateTransportSettingsForWebSockets(connectionEndpoint, proxy)
-                : CreateTransportSettingsforTcp(connectionEndpoint);
+                : CreateTransportSettingsforTcp(connectionEndpoint, certificateValidationCallback);
 
             // Create and open the connection, respecting the timeout constraint
             // that was received.
@@ -549,7 +565,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Perform the initial authorization for the link.
 
-                string[] claims = { ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send };
                 var endpoint = new Uri(ServiceEndpoint, entityPath);
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
@@ -557,7 +572,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tokenProvider: TokenProvider,
                     endpoint: ServiceEndpoint,
                     audience: audience,
-                    requiredClaims: claims,
+                    requiredClaims: s_manageClaims,
                     timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                     identifier: identifier)
                     .ConfigureAwait(false);
@@ -579,7 +594,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tokenProvider: TokenProvider,
                     endpoint: ServiceEndpoint,
                     audience: audience,
-                    requiredClaims: claims,
+                    requiredClaims: s_manageClaims,
                     refreshTimeout: AuthorizationRefreshTimeout,
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
@@ -648,7 +663,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Perform the initial authorization for the link.
 
-                string[] authClaims = new string[] { ServiceBusClaim.Send };
+                string[] authClaims = [ServiceBusClaim.Send];
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
                     connection: connection,
@@ -818,7 +833,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 Uri destinationEndpoint = null;
 
                 destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                audience = new string[] { destinationEndpoint.AbsoluteUri };
+                audience = [destinationEndpoint.AbsoluteUri];
 
                 // Perform the initial authorization for the link.
 
@@ -952,10 +967,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     if (link is ReceivingAmqpLink)
                     {
                         // Track the send-via receiver in order to handle reconnecting in the proper order (sender first).
-                        if (_sendViaReceiverEntityPath == null)
-                        {
-                            _sendViaReceiverEntityPath = entityPath;
-                        }
+                        _sendViaReceiverEntityPath ??= entityPath;
                     }
                 }
             }
@@ -1315,9 +1327,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
-        private static TransportSettings CreateTransportSettingsforTcp(Uri connectionEndpoint)
+        private static TransportSettings CreateTransportSettingsforTcp(Uri connectionEndpoint, RemoteCertificateValidationCallback certificateValidationCallback)
         {
             var useTls = ShouldUseTls(connectionEndpoint.Scheme);
             var port = connectionEndpoint.Port < 0 ? (useTls ? AmqpConstants.DefaultSecurePort : AmqpConstants.DefaultPort) : connectionEndpoint.Port;
@@ -1343,7 +1356,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 _ => new TlsTransportSettings(tcpSettings)
                 {
-                    TargetHost = connectionEndpoint.Host
+                    TargetHost = connectionEndpoint.Host,
+                    CertificateValidationCallback = certificateValidationCallback
                 }
             };
         }
@@ -1436,22 +1450,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        internal void CloseLink(AmqpLink link)
+        internal void CloseLink(AmqpLink link, string identifier = default)
         {
+            ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
             {
                 link.Session?.SafeClose();
             }
             link.SafeClose();
+            ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
 
-        internal void CloseLink(RequestResponseAmqpLink link)
+        internal void CloseLink(RequestResponseAmqpLink link, string identifier = default)
         {
+            ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
             {
                 link.Session?.SafeClose();
             }
             link.SafeClose();
+            ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
     }
 }

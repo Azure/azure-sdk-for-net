@@ -14,6 +14,16 @@ namespace Azure.Core
     internal static class AuthorizationChallengeParser
     {
         /// <summary>
+        /// Determines if the specified <see cref="HttpMessage"/> is a CAE claims challenge.
+        /// </summary>
+        /// <param name="response">The response containing a WWW-Authenticate header.</param>
+        /// <returns>True</returns>
+        public static bool IsCaeClaimsChallenge(Response response){
+            string? error = GetChallengeParameterFromResponse(response, "Bearer", "error");
+            return error == "insufficient_claims";
+        }
+
+        /// <summary>
         /// Parses the specified parameter from a challenge hearder found in the specified <see cref="Response"/>.
         /// </summary>
         /// <param name="response">The <see cref="Response"/> to parse.</param>
@@ -22,7 +32,7 @@ namespace Azure.Core
         /// <returns>The value of the parameter name specified in <paramref name="challengeParameter"/> if it is found in the specified <paramref name="challengeScheme"/>.</returns>
         public static string? GetChallengeParameterFromResponse(Response response, string challengeScheme, string challengeParameter)
         {
-            if (response.Status != (int)HttpStatusCode.Unauthorized || !response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out string? headerValue))
+            if (!response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out string? headerValue))
             {
                 return null;
             }

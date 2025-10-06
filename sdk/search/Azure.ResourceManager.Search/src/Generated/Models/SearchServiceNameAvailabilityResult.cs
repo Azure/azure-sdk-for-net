@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> A value indicating whether the name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> The reason why the name is not available. 'Invalid' indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). 'AlreadyExists' indicates that the name is already in use and is therefore unavailable. </summary>
+        [WirePath("reason")]
         public SearchServiceNameUnavailableReason? Reason { get; }
         /// <summary> A message that explains why the name is invalid and provides resource naming requirements. Available only if 'Invalid' is returned in the 'reason' property. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

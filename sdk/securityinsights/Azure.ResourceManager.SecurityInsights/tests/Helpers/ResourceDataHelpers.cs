@@ -135,10 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             var data = new SecurityInsightsAscDataConnector()
             {
                 SubscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-                DataTypes = new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon()
-                {
-                    State = SecurityInsightsDataTypeConnectionState.Enabled
-                }, null)
+                AlertsState = SecurityInsightsDataTypeConnectionState.Enabled
             };
             return data;
         }
@@ -179,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         {
             return new SecurityInsightsWatchlistItemData()
             {
-                ItemsKeyValue = BinaryData.FromString("{\"ipaddress\":\"1.1.1.2\"}")
+                ItemsKeyValueDictionary = { { "ipaddress", BinaryData.FromString("\"1.1.1.2\"")} }
             };
         }
         #endregion

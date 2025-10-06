@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Resources;
 
@@ -624,7 +622,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetVMHostPayload</description>
+        /// <description>Monitors_GetVmHostPayload</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -662,7 +660,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetVMHostPayload</description>
+        /// <description>Monitors_GetVmHostPayload</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -820,7 +818,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetSSODetails</description>
+        /// <description>Monitors_GetSsoDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -859,7 +857,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_GetSSODetails</description>
+        /// <description>Monitors_GetSsoDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

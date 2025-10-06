@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -70,14 +69,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
+        [WirePath("unauthenticatedClientAction")]
         public ContainerAppUnauthenticatedClientActionV2? UnauthenticatedClientAction { get; set; }
         /// <summary>
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
         /// </summary>
+        [WirePath("redirectToProvider")]
         public string RedirectToProvider { get; set; }
         /// <summary> The paths for which unauthenticated flow would not be redirected to the login page. </summary>
+        [WirePath("excludedPaths")]
         public IList<string> ExcludedPaths { get; }
     }
 }

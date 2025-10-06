@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of the resource association. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Access Mode of the resource association. </summary>
+        [WirePath("accessMode")]
         public EventHubsResourceAssociationAccessMode? AccessMode { get; }
     }
 }

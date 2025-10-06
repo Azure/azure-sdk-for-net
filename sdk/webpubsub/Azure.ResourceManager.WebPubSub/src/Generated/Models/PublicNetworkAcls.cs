@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </summary>
+        [WirePath("allow")]
         public IList<WebPubSubRequestType> Allow { get; }
         /// <summary> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </summary>
+        [WirePath("deny")]
         public IList<WebPubSubRequestType> Deny { get; }
     }
 }

@@ -8,48 +8,78 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/b934efa9501672e73686c2adbc7a4dcdd26e86c2/specification/search/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2e0a040b078aaf7f67cc8bafc18214d355715ca4/specification/search/resource-manager/readme.md
+#tag: package-2025-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 rename-mapping:
   AadAuthFailureMode: SearchAadAuthFailureMode
+  AccessRule: SearchServiceNetworkSecurityPerimeterAccessRule
+  AccessRuleDirection: SearchServiceNetworkSecurityPerimeterAccessRuleDirection
+  AccessRuleProperties: SearchServiceNetworkSecurityPerimeterAccessRuleProperties
   AdminKeyKind: SearchServiceAdminKeyKind
   AdminKeyResult: SearchServiceAdminKeyResult
   CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
   CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
+  ComputeType: SearchServiceComputeType
   DataPlaneAuthOptions: SearchAadAuthDataPlaneAuthOptions
   EncryptionWithCmk: SearchEncryptionWithCmk
   HostingMode: SearchServiceHostingMode
   IpRule: SearchServiceIPRule
+  IssueType: SearchServiceNetworkSecurityPerimeterProvisioningIssueType
+  NetworkRuleSet: SearchServiceNetworkRuleSet
+  NetworkSecurityPerimeter: SearchServiceNetworkSecurityPerimeter
+  NetworkSecurityPerimeterConfiguration: SearchServiceNetworkSecurityPerimeterConfiguration
+  NetworkSecurityPerimeterConfigurationProperties: SearchServiceNetworkSecurityPerimeterConfigurationProperties
+  NetworkSecurityPerimeterConfigurationProvisioningState: SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState
+  NetworkSecurityProfile: SearchNetworkSecurityProfile
   PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
   PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
+  ProvisioningIssue: SearchServiceNetworkSecurityPerimeterProvisioningIssue
+  ProvisioningIssueProperties: SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties
   ProvisioningState: SearchServiceProvisioningState
-  PublicNetworkAccess: SearchServicePublicNetworkAccess
+  PublicNetworkAccess: SearchServicePublicInternetAccess
   QueryKey: SearchServiceQueryKey
+  ResourceAssociation: SearchServiceNetworkSecurityPerimeterResourceAssociation
+  ResourceAssociationAccessMode: SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
+  SearchService.properties.publicNetworkAccess: PublicInternetAccess
+  SearchService.properties.upgradeAvailable: IsUpgradeAvailable
+  SearchService.sku: SearchSku
   SearchServiceUpdate.properties.disableLocalAuth: isLocalAuthDisabled
+  SearchServiceUpdate.properties.publicNetworkAccess: PublicInternetAccess
+  SearchServiceUpdate.properties.upgradeAvailable: IsUpgradeAvailable
+  SearchServiceUpdate.sku: SearchSku
+  Severity: SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
   SharedPrivateLinkResourceProperties: SharedSearchServicePrivateLinkResourceProperties
   SharedPrivateLinkResourceProperties.privateLinkResourceId: -|arm-id
   SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
-  SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
-  SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
+  SharedPrivateLinkResourceProperties.status: SharedPrivateLinkResourceStatus
+  SharedPrivateLinkResourceProperties.provisioningState: SharedPrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceProvisioningState: SearchServiceSharedPrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
+  SkuName: SearchServiceSkuName
   UnavailableNameReason: SearchServiceNameUnavailableReason
-
+  UpgradeAvailable: SearchServiceUpgradeAvailable
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -80,12 +110,13 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
+  NSP: Nsp|nsp
 
 override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
 # Remove "stopped" enum from SearchServiceStatus
-
 directive:
   - from: search.json
     where: $.definitions.SearchServiceProperties.properties.status

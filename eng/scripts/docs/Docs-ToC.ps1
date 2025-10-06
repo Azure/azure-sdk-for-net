@@ -9,7 +9,7 @@ function Get-NamespacesFromDll($dllPath) {
             foreach ($typeHandle in $meta.TypeDefinitions) {
                 $type = $meta.GetTypeDefinition($typeHandle)
                 $attr = $type.Attributes
-                if ($attr -band 'Public' -and !$type.IsNested) {
+                if ($attr -band 'Public' -and !$type.IsNested -and !(hasEditorBrowsableNever $type $meta)) {
                     $namespaces += $meta.GetString($type.Namespace)
                 }
             }
@@ -21,6 +21,34 @@ function Get-NamespacesFromDll($dllPath) {
     }
     return $namespaces | Sort-Object -Unique
 }
+
+function hasEditorBrowsableNever($type, $meta) {
+  foreach ($attrHandle in $type.GetCustomAttributes()) {
+    $attr = $meta.GetCustomAttribute($attrHandle)
+
+    # EditorBrowsableAttribute is a MemberReference
+    if ($attr.Constructor.Kind -ne 'MemberReference') {
+      continue
+    }
+
+    $memberReference = $meta.GetMemberReference($attr.Constructor)
+    if ($memberReference.Parent.Kind -ne 'TypeReference') { 
+      continue 
+    }
+
+    $typeRef = $meta.GetTypeReference($memberReference.Parent)
+    $attrTypeName = $meta.GetString($typeRef.Name)
+    $attrTypeNamespace = $meta.GetString($typeRef.Namespace)
+
+    if ("$attrTypeNamespace.$attrTypeName" -eq 'System.ComponentModel.EditorBrowsableAttribute') {
+      $value = [System.ComponentModel.EditorBrowsableState]$meta.GetBlobContent($attr.Value)
+      return $value -eq [System.ComponentModel.EditorBrowsableState]::Never
+    }
+  }
+
+  return $false
+}
+
 
 function DownloadNugetPackage($package, $version, $destination) {
     # $PackageSourceOverride is a global variable provided in

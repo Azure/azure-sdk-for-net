@@ -26,27 +26,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
         /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
         /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
+        /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, IDictionary<string, BinaryData> additionalProperties)
+        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IDictionary<string, BinaryData> additionalProperties)
         {
             IsDataExportEnabled = isDataExportEnabled;
             ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
             IsLogAccessUsingOnlyResourcePermissionsEnabled = isLogAccessUsingOnlyResourcePermissionsEnabled;
             ClusterResourceId = clusterResourceId;
             IsLocalAuthDisabled = isLocalAuthDisabled;
+            IsUnifiedSentinelBillingOnly = isUnifiedSentinelBillingOnly;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Flag that indicate if data should be exported. </summary>
+        [WirePath("enableDataExport")]
         public bool? IsDataExportEnabled { get; set; }
         /// <summary> Flag that describes if we want to remove the data after 30 days. </summary>
+        [WirePath("immediatePurgeDataOn30Days")]
         public bool? ImmediatePurgeDataOn30Days { get; set; }
         /// <summary> Flag that indicate which permission to use - resource or workspace or both. </summary>
+        [WirePath("enableLogAccessUsingOnlyResourcePermissions")]
         public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled { get; set; }
         /// <summary> Dedicated LA cluster resourceId that is linked to the workspaces. </summary>
+        [WirePath("clusterResourceId")]
         public ResourceIdentifier ClusterResourceId { get; set; }
         /// <summary> Disable Non-AAD based Auth. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
+        /// <summary> An indication if the specify workspace is limited to sentinel's unified billing model only. </summary>
+        [WirePath("unifiedSentinelBillingOnly")]
+        public bool? IsUnifiedSentinelBillingOnly { get; }
         /// <summary>
         /// Additional Properties
         /// <para>
@@ -77,6 +87,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

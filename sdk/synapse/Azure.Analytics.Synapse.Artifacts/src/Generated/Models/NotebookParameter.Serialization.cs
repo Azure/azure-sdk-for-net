@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Value != null)
                 {
                     writer.WritePropertyName("value"u8);
-                    writer.WriteObjectValue(Value);
+                    writer.WriteObjectValue<object>(Value);
                 }
                 else
                 {
@@ -72,12 +71,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new NotebookParameter(value, type);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNotebookParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>
         {
             public override void Write(Utf8JsonWriter writer, NotebookParameter model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override NotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

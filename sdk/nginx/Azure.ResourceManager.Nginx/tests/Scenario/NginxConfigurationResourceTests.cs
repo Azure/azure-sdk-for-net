@@ -52,16 +52,28 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            const string nginxConfigurationName = "default";
+            const string virtualPath = "/etc/nginx/nginx.conf";
+            const string protectedVirtualPath = "/etc/nginx/protected.conf";
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath, protectedVirtualPath);
+            ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxConfigurationName);
 
             Assert.IsTrue(nginxConfiguration.HasData);
             Assert.NotNull(nginxConfiguration.Data);
             Assert.IsTrue(nginxConfiguration.Data.Name.Equals(nginxConfigurationName));
+            Assert.IsTrue(nginxConfiguration.Data.Id.Equals(nginxConfigurationResourceIdentifier));
+            Assert.IsTrue(nginxConfiguration.Data.ResourceType.Equals(NginxConfigurationResource.ResourceType));
+            Assert.IsNull(nginxConfiguration.Data.SystemData);
             Assert.IsNotNull(nginxConfiguration.Data.Properties.ProvisioningState);
             Assert.True(nginxConfiguration.Data.Properties.RootFile.Equals(virtualPath));
             Assert.True(nginxConfiguration.Data.Properties.Files.Count != 0);
+            Assert.True(nginxConfiguration.Data.Properties.Files[0].VirtualPath.Equals(virtualPath));
+            Assert.True(nginxConfiguration.Data.Properties.Files[0].Content.Equals(NginxConfigurationContent));
+            Assert.True(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0);
+            Assert.True(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath.Equals(protectedVirtualPath));
+            Assert.IsNotNull(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash);
+            Assert.IsNull(nginxConfiguration.Data.Properties.Package.Data);
+            Assert.True(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count == 0);
         }
 
         [TestCase]
@@ -71,9 +83,9 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            const string nginxConfigurationName = "default";
+            const string virtualPath = "/etc/nginx/nginx.conf";
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
             NginxConfigurationResource response = await nginxConfiguration.GetAsync();
 
             ResourceDataHelper.AssertResourceData(nginxConfiguration.Data, response.Data);
@@ -87,9 +99,9 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
             NginxConfigurationCollection collection = nginxDeployment.GetNginxConfigurations();
 
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            const string nginxConfigurationName = "default";
+            const string virtualPath = "/etc/nginx/nginx.conf";
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
             Assert.IsTrue(await collection.ExistsAsync(nginxConfigurationName));
 
             await nginxConfiguration.DeleteAsync(WaitUntil.Completed);
@@ -103,25 +115,70 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            const string nginxConfigurationName = "default";
+            const string virtualPath = "/etc/nginx/nginx.conf";
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
 
-            NginxConfigurationFile rootConfigFile = new NginxConfigurationFile();
-            rootConfigFile.Content = NginxConfigurationContent;
-            rootConfigFile.VirtualPath = "/etc/nginx/app.conf";
+            NginxConfigurationFile rootConfigFile = new NginxConfigurationFile
+            {
+                Content = NginxConfigurationContent,
+                VirtualPath = "/etc/nginx/app.conf"
+            };
 
-            NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties();
-            configurationProperties.RootFile = rootConfigFile.VirtualPath;
+            NginxConfigurationCreateOrUpdateProperties configurationProperties = new NginxConfigurationCreateOrUpdateProperties
+            {
+                RootFile = rootConfigFile.VirtualPath
+            };
             configurationProperties.Files.Add(rootConfigFile);
 
-            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData();
-            nginxConfigurationData.Location = Location;
-            nginxConfigurationData.Properties = configurationProperties;
-            NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationData)).Value;
+            NginxConfigurationCreateOrUpdateContent nginxConfigurationCreateOrUpdateContent = new NginxConfigurationCreateOrUpdateContent
+            {
+                Properties = configurationProperties
+            };
+            NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationCreateOrUpdateContent)).Value;
 
             Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, null)).Value);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Analysis()
+        {
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+
+            const string nginxConfigurationName = "default";
+            const string virtualPath = "/etc/nginx/nginx.conf";
+            const string protectedFileVirtualPath = "/etc/nginx/protected.conf";
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
+
+            NginxConfigurationFile rootConfigFile = new NginxConfigurationFile
+            {
+                Content = NginxConfigurationContent,
+                VirtualPath = virtualPath
+            };
+
+            NginxConfigurationProtectedFileContent protectedFile = new NginxConfigurationProtectedFileContent
+            {
+                Content = NginxConfigurationContent,
+                VirtualPath = protectedFileVirtualPath
+            };
+
+            NginxAnalysisConfig nginxAnalysisConfig = new NginxAnalysisConfig
+            {
+                RootFile = rootConfigFile.VirtualPath,
+            };
+            nginxAnalysisConfig.Files.Add(rootConfigFile);
+            nginxAnalysisConfig.ProtectedFiles.Add(protectedFile);
+
+            NginxAnalysisContent nginxAnalysisContent = new NginxAnalysisContent(nginxAnalysisConfig);
+            NginxAnalysisResult analysisResult = await nginxConfiguration.AnalysisAsync(nginxAnalysisContent);
+
+            Assert.IsNotNull(analysisResult);
+            Assert.IsNotNull(analysisResult.Status);
+            Assert.IsNotNull(analysisResult.Data.Errors);
+            Assert.IsNotNull(analysisResult.Data.Diagnostics);
         }
     }
 }

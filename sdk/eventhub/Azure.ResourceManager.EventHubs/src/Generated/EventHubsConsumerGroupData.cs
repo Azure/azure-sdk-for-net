@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Exact time the message was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </summary>
+        [WirePath("properties.userMetadata")]
         public string UserMetadata { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
         internal OfferingsListResult()
         {
-            Value = new ChangeTrackingList<ProviderDescription>();
+            Value = new ChangeTrackingList<QuantumProviderDescription>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
         /// <param name="value"> Result of a list Providers operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<ProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OfferingsListResult(IReadOnlyList<QuantumProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Result of a list Providers operation. </summary>
-        public IReadOnlyList<ProviderDescription> Value { get; }
+        public IReadOnlyList<QuantumProviderDescription> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </summary>
         public string NextLink { get; }
     }

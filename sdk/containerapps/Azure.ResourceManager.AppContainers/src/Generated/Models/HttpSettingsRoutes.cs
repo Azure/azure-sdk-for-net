@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
+        [WirePath("apiPrefix")]
         public string ApiPrefix { get; set; }
     }
 }

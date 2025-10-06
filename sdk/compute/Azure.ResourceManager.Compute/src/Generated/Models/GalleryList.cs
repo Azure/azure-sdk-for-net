@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -60,11 +59,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryList"/>. </summary>
         /// <param name="value"> A list of galleries. </param>
         /// <param name="nextLink"> The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries. </param>
+        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryList(IReadOnlyList<GalleryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryList(IReadOnlyList<GalleryData> value, Uri nextLink, ImageVersionSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            SecurityProfile = securityProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,6 +77,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of galleries. </summary>
         public IReadOnlyList<GalleryData> Value { get; }
         /// <summary> The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
+        /// <summary> The security profile of a gallery image version. </summary>
+        internal ImageVersionSecurityProfile SecurityProfile { get; }
+        /// <summary> Contains UEFI settings for the image version. </summary>
+        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        {
+            get => SecurityProfile?.UefiSettings;
+        }
     }
 }

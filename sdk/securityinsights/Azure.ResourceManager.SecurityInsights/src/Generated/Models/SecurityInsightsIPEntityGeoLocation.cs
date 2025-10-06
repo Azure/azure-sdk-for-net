@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="city"> City name. </param>
         /// <param name="countryCode"> The country code according to ISO 3166 format. </param>
         /// <param name="countryName"> Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name. </param>
-        /// <param name="latitude"> The longitude of the identified location, expressed as a floating point number with range of -180 to 180, with positive numbers representing East and negative numbers representing West. Latitude and longitude are derived from the city or postal code. </param>
-        /// <param name="longitude"> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90, with positive numbers representing North and negative numbers representing South. Latitude and longitude are derived from the city or postal code. </param>
+        /// <param name="latitude"> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code. </param>
+        /// <param name="longitude"> The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code. </param>
         /// <param name="state"> State name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIPEntityGeoLocation(int? asn, string city, string countryCode, string countryName, double? latitude, double? longitude, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Autonomous System Number. </summary>
+        [WirePath("asn")]
         public int? Asn { get; }
         /// <summary> City name. </summary>
+        [WirePath("city")]
         public string City { get; }
         /// <summary> The country code according to ISO 3166 format. </summary>
+        [WirePath("countryCode")]
         public string CountryCode { get; }
         /// <summary> Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name. </summary>
+        [WirePath("countryName")]
         public string CountryName { get; }
-        /// <summary> The longitude of the identified location, expressed as a floating point number with range of -180 to 180, with positive numbers representing East and negative numbers representing West. Latitude and longitude are derived from the city or postal code. </summary>
+        /// <summary> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code. </summary>
+        [WirePath("latitude")]
         public double? Latitude { get; }
-        /// <summary> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90, with positive numbers representing North and negative numbers representing South. Latitude and longitude are derived from the city or postal code. </summary>
+        /// <summary> The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code. </summary>
+        [WirePath("longitude")]
         public double? Longitude { get; }
         /// <summary> State name. </summary>
+        [WirePath("state")]
         public string State { get; }
     }
 }

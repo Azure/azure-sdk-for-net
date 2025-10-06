@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the properties. </summary>
+        [WirePath("properties")]
         public MachineLearningSynapseSparkProperties Properties { get; set; }
     }
 }

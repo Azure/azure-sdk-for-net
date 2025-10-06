@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.TestFramework
                 "Azure.ResourceManager.MachineLearning.Models.MachineLearningJobCollectionGetAllOptions",
                 "Azure.ResourceManager.MachineLearning.Models.MachineLearningModelVersionCollectionGetAllOptions",
                 "Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointCollectionGetAllOptions",
-                "Azure.ResourceManager.MachineLearning.Models.MachineLearningRegistryModelVersionCollectionGetAllOptions"
+                "Azure.ResourceManager.MachineLearning.Models.MachineLearningRegistryModelVersionCollectionGetAllOptions",
+                "Azure.ResourceManager.MachineLearning.Models.MachineLearningFeatureCollectionGetAllOptions"
             };
         }
     }

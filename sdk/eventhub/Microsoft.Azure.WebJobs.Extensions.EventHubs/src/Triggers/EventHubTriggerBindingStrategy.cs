@@ -54,6 +54,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             AddBindingContractMember(contract, "PartitionKey", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "Offset", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "OffsetString", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "SequenceNumber", typeof(long), isSingleDispatch);
             AddBindingContractMember(contract, "EnqueuedTimeUtc", typeof(DateTime), isSingleDispatch);
             AddBindingContractMember(contract, "Properties", typeof(IDictionary<string, object>), isSingleDispatch);
@@ -96,9 +97,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal static void AddBindingData(Dictionary<string, object> bindingData, EventData[] events)
         {
-            int length = events.Length;
+            var length = events.Length;
             var partitionKeys = new string[length];
             var offsets = new string[length];
+            var offsetStrings = new string[length];
             var sequenceNumbers = new long[length];
             var enqueuedTimesUtc = new DateTime[length];
             var properties = new IDictionary<string, object>[length];
@@ -106,6 +108,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             SafeAddValue(() => bindingData.Add("PartitionKeyArray", partitionKeys));
             SafeAddValue(() => bindingData.Add("OffsetArray", offsets));
+            SafeAddValue(() => bindingData.Add("OffsetStringArray", offsetStrings));
             SafeAddValue(() => bindingData.Add("SequenceNumberArray", sequenceNumbers));
             SafeAddValue(() => bindingData.Add("EnqueuedTimeUtcArray", enqueuedTimesUtc));
             SafeAddValue(() => bindingData.Add("PropertiesArray", properties));
@@ -113,8 +116,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             for (int i = 0; i < events.Length; i++)
             {
+                if (!long.TryParse(events[i].OffsetString, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offset))
+                {
+                    // Default to "beginning of stream" if parsing fails.  This will result in duplicates,
+                    // but ensures no data loss.
+
+                    offset = -1;
+                }
+
                 partitionKeys[i] = events[i].PartitionKey;
-                offsets[i] = events[i].Offset.ToString(CultureInfo.InvariantCulture);
+                offsets[i] = offset.ToString(CultureInfo.InvariantCulture);
+                offsetStrings[i] = events[i].OffsetString;
                 sequenceNumbers[i] = events[i].SequenceNumber;
                 enqueuedTimesUtc[i] = events[i].EnqueuedTime.DateTime;
                 properties[i] = events[i].Properties;
@@ -124,8 +136,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         private static void AddBindingData(Dictionary<string, object> bindingData, EventData eventData)
         {
+            if (!long.TryParse(eventData.OffsetString, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offset))
+            {
+                // Default to "beginning of stream" if parsing fails.  This will result in duplicates,
+                // but ensures no data loss.
+
+                offset = -1;
+            }
+
             SafeAddValue(() => bindingData.Add("PartitionKey", eventData.PartitionKey));
-            SafeAddValue(() => bindingData.Add("Offset", eventData.Offset));
+            SafeAddValue(() => bindingData.Add("Offset", offset.ToString(CultureInfo.InvariantCulture)));
+            SafeAddValue(() => bindingData.Add("OffsetString", eventData.OffsetString));
             SafeAddValue(() => bindingData.Add("SequenceNumber", eventData.SequenceNumber));
             SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", eventData.EnqueuedTime.DateTime));
             SafeAddValue(() => bindingData.Add("Properties", eventData.Properties));
@@ -140,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
             catch
             {
-                // some message propery getters can throw, based on the
+                // some message property getters can throw, based on the
                 // state of the message
             }
         }
@@ -154,8 +175,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
 
             // Following is needed to maintain structure of bindingdata: https://github.com/Azure/azure-webjobs-sdk/pull/1849
+
+            if (!long.TryParse(eventData.OffsetString, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offset))
+            {
+                // Default to "beginning of stream" if parsing fails.  This will result in duplicates,
+                // but ensures no data loss.
+
+                offset = -1;
+            }
+
             modifiedDictionary["SequenceNumber"] = eventData.SequenceNumber;
-            modifiedDictionary["Offset"] = eventData.Offset;
+            modifiedDictionary["Offset"] = offset;
+            modifiedDictionary["OffsetString"] = eventData.OffsetString;
             modifiedDictionary["PartitionKey"] = eventData.PartitionKey;
             modifiedDictionary["EnqueuedTimeUtc"] = eventData.EnqueuedTime.DateTime;
             return modifiedDictionary;

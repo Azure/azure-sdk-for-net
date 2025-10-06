@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Queries are stored pieces of KQL, along with a list of relevant metadata items. </summary>
     internal partial class MetadataQuery
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetadataQuery"/>. </summary>
         /// <param name="id"> The ID of the query. </param>
         /// <param name="body"> The KQL body of the query. </param>
@@ -37,7 +68,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="tags"> The tags associated with the query. </param>
         /// <param name="properties"> The properties of the query. </param>
         /// <param name="related"> The related metadata items for the query. </param>
-        internal MetadataQuery(string id, string displayName, string description, string body, IReadOnlyList<string> labels, object tags, object properties, MetadataQueryRelated related)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataQuery(string id, string displayName, string description, string body, IReadOnlyList<string> labels, object tags, object properties, MetadataQueryRelated related, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -47,6 +79,12 @@ namespace Azure.Monitor.Query.Models
             Tags = tags;
             Properties = properties;
             Related = related;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataQuery"/> for deserialization. </summary>
+        internal MetadataQuery()
+        {
         }
 
         /// <summary> The ID of the query. </summary>

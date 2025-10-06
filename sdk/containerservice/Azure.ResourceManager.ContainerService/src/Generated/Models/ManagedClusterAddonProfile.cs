@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -73,10 +72,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether the add-on is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Key-value pairs for configuring an add-on. </summary>
+        [WirePath("config")]
         public IDictionary<string, string> Config { get; }
         /// <summary> Information of user assigned identity used by this add-on. </summary>
+        [WirePath("identity")]
         public ManagedClusterAddonProfileIdentity Identity { get; }
     }
 }

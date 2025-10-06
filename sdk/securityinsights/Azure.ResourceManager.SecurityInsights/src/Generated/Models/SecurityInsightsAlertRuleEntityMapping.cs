@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The V3 type of the mapped entity. </summary>
+        [WirePath("entityType")]
         public SecurityInsightsAlertRuleEntityMappingType? EntityType { get; set; }
         /// <summary> array of field mappings for the given entity mapping. </summary>
+        [WirePath("fieldMappings")]
         public IList<SecurityInsightsFieldMapping> FieldMappings { get; }
     }
 }

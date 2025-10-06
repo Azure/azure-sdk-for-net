@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the family. </summary>
+        [WirePath("family")]
         public string Family { get; }
         /// <summary> Gets the tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
         /// <summary> Gets the v cores. </summary>
+        [WirePath("vCores")]
         public int? VCores { get; }
         /// <summary> Gets the storage size in gb. </summary>
+        [WirePath("storageSizeInGB")]
         public int? StorageSizeInGB { get; }
     }
 }

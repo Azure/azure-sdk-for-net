@@ -1,6 +1,19 @@
 # Release History
 
-## Unreleased
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.0 (2025-06-10)
+
+### Features Added
+- Updated service API version to use API version 2023-10-31 by default.
 
 ### Breaking changes
 
@@ -16,13 +29,13 @@
 
 ## 1.5.0 (2023-09-07)
 
-### New Features
+### Features Added
 - Updated service API version to use API version 2023-06-30 by default.
 - Added support for the new import job. You can now use a blob file in your storage account to import multiple models, twins and relationships at once.
 
 ## 1.4.0 (2022-06-30)
 
-### New Features
+### Features Added
 
 - Updated service API version to use API version 2022-05-31 by default.
 - Added support for the new, writeable property metadata `SourceTime` to `DigitalTwinPropertyMetadata`.
@@ -46,7 +59,7 @@
 
 ## 1.2.0 (2020-11-16)
 
-### New Features
+### Features Added
 
 - Added `DigitalTwinsModelFactory` to allow for the creation of certain model objects to enable mocking them for unit tests.
 
@@ -67,7 +80,7 @@
 
 ## 1.0.0 (2020-10-30)
 
-### New Features
+### Features Added
 
 - Regenerated protocol layer from service API version 2020-10-31.
 - Updated service API version to use service API version 2020-10-31 by default.

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of route prefixes. </summary>
+        [WirePath("routePrefix")]
         public IList<string> RoutePrefix { get; }
         /// <summary> List of BGP communities. </summary>
+        [WirePath("community")]
         public IList<string> Community { get; }
         /// <summary> List of AS paths. </summary>
+        [WirePath("asPath")]
         public IList<string> AsPath { get; }
     }
 }

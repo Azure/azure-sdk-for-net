@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -45,18 +43,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The private IP address of the IP configuration. </summary>
+        [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
         public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
+        [WirePath("properties.subnet")]
         public SubnetData Subnet { get; set; }
         /// <summary> Whether the ip configuration is primary or not. </summary>
+        [WirePath("properties.primary")]
         public bool? Primary { get; set; }
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
+        [WirePath("properties.privateIPAddressVersion")]
         public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="start"> Starting time with inclusive boundary. </param>
         /// <param name="end"> End time with inclusive boundary, if not ongoing. </param>
-        internal FhirR4Period(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string start, string end) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Period(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string start, string end) : base(id, extension, serializedAdditionalRawData)
         {
             Start = start;
             End = end;

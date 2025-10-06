@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -69,14 +68,16 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="etag"> The ETag of the virtual network link. </param>
         /// <param name="virtualNetwork"> The reference of the virtual network. </param>
         /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
+        /// <param name="privateDnsResolutionPolicy"> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </param>
         /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, bool? registrationEnabled, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
             RegistrationEnabled = registrationEnabled;
+            PrivateDnsResolutionPolicy = privateDnsResolutionPolicy;
             VirtualNetworkLinkState = virtualNetworkLinkState;
             PrivateDnsProvisioningState = privateDnsProvisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -88,10 +89,12 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> The ETag of the virtual network link. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The reference of the virtual network. </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualNetwork.id")]
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
@@ -104,10 +107,16 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </summary>
+        [WirePath("properties.registrationEnabled")]
         public bool? RegistrationEnabled { get; set; }
+        /// <summary> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </summary>
+        [WirePath("properties.resolutionPolicy")]
+        public PrivateDnsResolutionPolicy? PrivateDnsResolutionPolicy { get; set; }
         /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.virtualNetworkLinkState")]
         public VirtualNetworkLinkState? VirtualNetworkLinkState { get; }
         /// <summary> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("properties.provisioningState")]
         public PrivateDnsProvisioningState? PrivateDnsProvisioningState { get; }
     }
 }

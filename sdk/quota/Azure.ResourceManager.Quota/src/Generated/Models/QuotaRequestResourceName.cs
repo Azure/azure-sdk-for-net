@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Resource display name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

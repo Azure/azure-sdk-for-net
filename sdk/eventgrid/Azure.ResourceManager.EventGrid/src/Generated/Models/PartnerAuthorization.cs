@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -70,8 +69,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Time used to validate the authorization expiration time for each authorized partner. If DefaultMaximumExpirationTimeInDays is
         /// not specified, the default is 7 days. Otherwise, allowed values are between 1 and 365 days.
         /// </summary>
+        [WirePath("defaultMaximumExpirationTimeInDays")]
         public int? DefaultMaximumExpirationTimeInDays { get; set; }
         /// <summary> The list of authorized partners. </summary>
+        [WirePath("authorizedPartnersList")]
         public IList<EventGridPartnerContent> AuthorizedPartnersList { get; }
     }
 }

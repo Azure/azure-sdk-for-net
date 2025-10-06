@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -15,19 +13,15 @@ namespace Azure.Communication.CallAutomation
     internal partial class StartCallRecordingRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The call locator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
+        public StartCallRecordingRequestInternal()
         {
-            Argument.AssertNotNull(callLocator, nameof(callLocator));
-
-            CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();
             ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The call locator. </param>
+        /// <param name="callLocator"> The call locator. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="callConnectionId"> The call connection Id. (Only one of callLocator or callConnectionId to be used). </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="recordingContentType"> The content type of call recording. </param>
         /// <param name="recordingChannelType"> The channel type of call recording. </param>
@@ -44,23 +38,26 @@ namespace Azure.Communication.CallAutomation
         /// Channel-Participant mapping details can be found in the metadata of the recording.
         /// ///
         /// </param>
+        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
         /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
-        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which could be resumed. </param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, ExternalStorageInternal externalStorage, bool? pauseOnStart)
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
         {
             CallLocator = callLocator;
+            CallConnectionId = callConnectionId;
             RecordingStateCallbackUri = recordingStateCallbackUri;
             RecordingContentType = recordingContentType;
             RecordingChannelType = recordingChannelType;
             RecordingFormatType = recordingFormatType;
             AudioChannelParticipantOrdering = audioChannelParticipantOrdering;
             ChannelAffinity = channelAffinity;
-            ExternalStorage = externalStorage;
             PauseOnStart = pauseOnStart;
+            ExternalStorage = externalStorage;
         }
 
-        /// <summary> The call locator. </summary>
-        public CallLocatorInternal CallLocator { get; }
+        /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
+        public CallLocatorInternal CallLocator { get; set; }
+        /// <summary> The call connection Id. (Only one of callLocator or callConnectionId to be used). </summary>
+        public string CallConnectionId { get; set; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>
@@ -83,9 +80,9 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
-        /// <summary> Optional property to specify location where recording will be stored. </summary>
-        public ExternalStorageInternal ExternalStorage { get; set; }
-        /// <summary> When set to true will start recording in Pause mode, which could be resumed. </summary>
+        /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
         public bool? PauseOnStart { get; set; }
+        /// <summary> Optional property to specify location where recording will be stored. </summary>
+        public RecordingStorageInternal ExternalStorage { get; set; }
     }
 }

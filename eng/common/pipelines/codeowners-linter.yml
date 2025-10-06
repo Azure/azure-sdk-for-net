@@ -19,40 +19,56 @@ pr:
 stages:
 - stage: Run
   variables:
+    Codeql.SkipTaskAutoInjection: true
     skipComponentGovernanceDetection: true
     nugetMultiFeedWarnLevel: 'none'
+    baseBranchBaseline: ''
 
   jobs:
   - job: Run
     timeoutInMinutes: 120
     pool:
-      name: azsdk-pool-mms-ubuntu-2204-general
-      vmImage: ubuntu-22.04
+      name: azsdk-pool
+      demands: ImageOverride -equals ubuntu-24.04
 
     variables:
-      CodeownersLinterVersion: '1.0.0-dev.20240227.2'
+      CodeownersLinterVersion: '1.0.0-dev.20240926.2'
       DotNetDevOpsFeed: "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
       RepoLabelUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/repository-labels-blob"
       TeamUserUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/azure-sdk-write-teams-blob"
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
     steps:
-      # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
-      # as we require the github service connection to be loaded.
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            Paths:
-              - '/*'
-
-      - task: DotNetCoreCLI@2
-        displayName: 'Install CodeownersLinter'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"'
-          workingDirectory: '$(Build.SourcesDirectory)/eng/common'
       - pwsh: |
-          codeowners-linter --repoRoot $(Build.SourcesDirectory) --repoName $(Build.Repository.Name) -fbl -rUri "$(RepoLabelUri)" -tUri "$(TeamUserUri)" -uUri "$(UserOrgUri)"
+          dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
+        displayName: Install CodeownersLinter
+        workingDirectory: '$(Agent.WorkFolder)' # Some directory outside of the source clone to avoid hitting global.json files when any version of dotnet will work for this install
+
+      - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+        - pwsh: |
+            Write-Host "git checkout $ENV:SYSTEM_PULLREQUEST_TARGETBRANCH"
+            git checkout $ENV:SYSTEM_PULLREQUEST_TARGETBRANCH
+          displayName: Checkout the base branch
+
+        - pwsh: |
+            # Generate the base branch baseline file to the Build.BinariesDirectory. This will create
+            # a baseline error file against the CODEOWNERS in the base branch
+            $baseBranchBaselineFile = "$(Build.BinariesDirectory)/CODEOWNERS_BaseBranch_Baseline_errors.txt"
+            Write-Host "codeowners-linter --repoRoot $(Build.SourcesDirectory) --repoName $(Build.Repository.Name) -gbl -rUri ""$(RepoLabelUri)"" -tUri ""$(TeamUserUri)"" -uUri ""$(UserOrgUri)"" -bbf ""$baseBranchBaselineFile"""
+            codeowners-linter --repoRoot $(Build.SourcesDirectory) --repoName $(Build.Repository.Name) -gbl -rUri "$(RepoLabelUri)" -tUri "$(TeamUserUri)" -uUri "$(UserOrgUri)" -bbf "$baseBranchBaselineFile"
+            echo "##vso[task.setvariable variable=baseBranchBaseline]$baseBranchBaselineFile"
+          displayName: 'Generate baseline file for base branch'
+          workingDirectory: '$(Build.SourcesDirectory)/eng/common'
+
+        - pwsh: |
+            Write-Host "git checkout refs/remotes/pull/$ENV:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/merge"
+            git checkout refs/remotes/pull/$ENV:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/merge
+          displayName: Checkout the PR branch
+
+      - pwsh: |
+          # In the case of a PR, the baseBranchBaseline will be set which will be used to further filter results.
+          # For scheduled runs, the baseBranchBaseline won't be set and only the existing baseline file will be used to filter
+          Write-Host "codeowners-linter --repoRoot $(Build.SourcesDirectory) --repoName $(Build.Repository.Name) -fbl -rUri ""$(RepoLabelUri)"" -tUri ""$(TeamUserUri)"" -uUri ""$(UserOrgUri)"" -bbf ""$(baseBranchBaseline)"""
+          codeowners-linter --repoRoot $(Build.SourcesDirectory) --repoName $(Build.Repository.Name) -fbl -rUri "$(RepoLabelUri)" -tUri "$(TeamUserUri)" -uUri "$(UserOrgUri)" -bbf "$(baseBranchBaseline)"
         displayName: 'Lint CODEOWNERS and filter using baseline'
         workingDirectory: '$(Build.SourcesDirectory)/eng/common'

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -91,26 +90,32 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The format of this depends on the publisher of the events.
         /// Wildcard characters are not supported in this path.
         /// </summary>
+        [WirePath("subjectBeginsWith")]
         public string SubjectBeginsWith { get; set; }
         /// <summary>
         /// An optional string to filter events for an event subscription based on a resource path suffix.
         /// Wildcard characters are not supported in this path.
         /// </summary>
+        [WirePath("subjectEndsWith")]
         public string SubjectEndsWith { get; set; }
         /// <summary> A list of applicable event types that need to be part of the event subscription. If it is desired to subscribe to all default event types, set the IncludedEventTypes to null. </summary>
+        [WirePath("includedEventTypes")]
         public IList<string> IncludedEventTypes { get; }
         /// <summary>
         /// Specifies if the SubjectBeginsWith and SubjectEndsWith properties of the filter
         /// should be compared in a case sensitive manner.
         /// </summary>
+        [WirePath("isSubjectCaseSensitive")]
         public bool? IsSubjectCaseSensitive { get; set; }
         /// <summary> Allows advanced filters to be evaluated against an array of values instead of expecting a singular value. </summary>
+        [WirePath("enableAdvancedFilteringOnArrays")]
         public bool? IsAdvancedFilteringOnArraysEnabled { get; set; }
         /// <summary>
         /// An array of advanced filters that are used for filtering event subscriptions.
         /// Please note <see cref="AdvancedFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BoolEqualsAdvancedFilter"/>, <see cref="IsNotNullAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="NumberInAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/> and <see cref="StringNotInAdvancedFilter"/>.
         /// </summary>
+        [WirePath("advancedFilters")]
         public IList<AdvancedFilter> AdvancedFilters { get; }
     }
 }

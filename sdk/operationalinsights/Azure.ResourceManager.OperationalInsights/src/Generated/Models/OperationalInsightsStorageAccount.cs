@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -77,8 +76,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The Azure Resource Manager ID of the storage account resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> The storage account key. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

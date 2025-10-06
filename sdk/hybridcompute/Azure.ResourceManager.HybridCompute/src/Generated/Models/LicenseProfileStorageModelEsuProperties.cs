@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The guid id of the license. </summary>
+        [WirePath("assignedLicenseImmutableId")]
         public Guid? AssignedLicenseImmutableId { get; }
         /// <summary> The list of ESU keys. </summary>
+        [WirePath("esuKeys")]
         public IReadOnlyList<EsuKey> EsuKeys { get; }
     }
 }

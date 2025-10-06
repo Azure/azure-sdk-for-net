@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
@@ -21,8 +18,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDeviceProvisioningServicesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _deviceProvisioningServiceIotDpsResourceClientDiagnostics;
-        private IotDpsResourceRestOperations _deviceProvisioningServiceIotDpsResourceRestClient;
+        private ClientDiagnostics _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics;
+        private ProvisioningServiceDescriptionsRestOperations _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient;
+        private ClientDiagnostics _iotDpsResourceClientDiagnostics;
+        private IotDpsResourceRestOperations _iotDpsResourceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesSubscriptionResource"/> class for mocking. </summary>
         protected MockableDeviceProvisioningServicesSubscriptionResource()
@@ -36,8 +35,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         {
         }
 
-        private ClientDiagnostics DeviceProvisioningServiceIotDpsResourceClientDiagnostics => _deviceProvisioningServiceIotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
-        private IotDpsResourceRestOperations DeviceProvisioningServiceIotDpsResourceRestClient => _deviceProvisioningServiceIotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceProvisioningServiceResource.ResourceType));
+        private ClientDiagnostics DeviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics => _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
+        private ProvisioningServiceDescriptionsRestOperations DeviceProvisioningServiceProvisioningServiceDescriptionsRestClient => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceProvisioningServiceResource.ResourceType));
+        private ClientDiagnostics IotDpsResourceClientDiagnostics => _iotDpsResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private IotDpsResourceRestOperations IotDpsResourceRestClient => _iotDpsResourceRestClient ??= new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,11 +55,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListBySubscription</description>
+        /// <description>ProvisioningServiceDescription_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -70,9 +71,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,11 +85,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListBySubscription</description>
+        /// <description>ProvisioningServiceDescription_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,30 +115,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// <description>IotDpsResourceOperationGroup_CheckDeviceProvisioningServicesNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability");
+            using var scope = IotDpsResourceClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability");
             scope.Start();
             try
             {
-                var response = await DeviceProvisioningServiceIotDpsResourceRestClient.CheckProvisioningServiceNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await IotDpsResourceRestClient.CheckDeviceProvisioningServicesNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -156,30 +153,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// <description>IotDpsResourceOperationGroup_CheckDeviceProvisioningServicesNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DeviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability");
+            using var scope = IotDpsResourceClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability");
             scope.Start();
             try
             {
-                var response = DeviceProvisioningServiceIotDpsResourceRestClient.CheckProvisioningServiceNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = IotDpsResourceRestClient.CheckDeviceProvisioningServicesNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

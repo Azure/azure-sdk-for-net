@@ -1,0 +1,5 @@
+emit:
+  - "@azure-typespec/http-client-csharp-mgmt"
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    namespace: "MgmtTypeSpec"

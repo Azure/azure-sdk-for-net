@@ -1,0 +1,138 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/:import?api-version=2025-05-15-preview&format=Conversation",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "849",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250528.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2022-10-01-preview",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "Conversation",
+          "settings": {
+            "confidenceThreshold": 0
+          },
+          "projectName": null,
+          "multilingual": false,
+          "description": "",
+          "language": "en-us"
+        },
+        "assets": {
+          "projectKind": "Conversation",
+          "intents": [
+            {
+              "category": "None"
+            },
+            {
+              "category": "Buy"
+            }
+          ],
+          "entities": [
+            {
+              "category": "product",
+              "compositionSetting": "combineComponents"
+            }
+          ],
+          "utterances": [
+            {
+              "entities": [
+                {
+                  "category": "product",
+                  "offset": 16,
+                  "length": 5
+                }
+              ],
+              "text": "I want to buy a house",
+              "language": "en-us",
+              "intent": "Buy",
+              "dataset": "Train"
+            },
+            {
+              "entities": [
+                {
+                  "category": "product",
+                  "offset": 14,
+                  "length": 11
+                }
+              ],
+              "text": "I want to buy surface pro",
+              "language": "en-us",
+              "intent": "Buy",
+              "dataset": "Train"
+            },
+            {
+              "entities": [
+                {
+                  "category": "product",
+                  "offset": 14,
+                  "length": 4
+                }
+              ],
+              "text": "I want to buy xbox",
+              "language": "en-us",
+              "intent": "Buy",
+              "dataset": "Train"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "67f67dac-b33f-42c6-9c53-a2b063d07ede",
+        "Content-Length": "0",
+        "Date": "Wed, 28 May 2025 21:43:02 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/import/jobs/c731cc30-62f7-4cd0-8e25-da46f03172eb_638839872000000000?api-version=2025-05-15-preview",
+        "request-id": "67f67dac-b33f-42c6-9c53-a2b063d07ede",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "127",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/import/jobs/c731cc30-62f7-4cd0-8e25-da46f03172eb_638839872000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250528.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "eb33b437-5fd5-4ebe-a5cd-8a7cd1316ac2",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 May 2025 21:43:02 GMT",
+        "request-id": "eb33b437-5fd5-4ebe-a5cd-8a7cd1316ac2",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "26",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "c731cc30-62f7-4cd0-8e25-da46f03172eb_638839872000000000",
+        "createdDateTime": "2025-05-28T21:43:02Z",
+        "lastUpdatedDateTime": "2025-05-28T21:43:02Z",
+        "expirationDateTime": "2025-06-04T21:43:02Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1654464859"
+  }
+}

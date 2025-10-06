@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -62,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get RunNotebook Status for run id. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RunNotebookResponse>> GetStatusAsync(string runId, CancellationToken cancellationToken = default)
         {
@@ -80,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get RunNotebook Status for run id. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RunNotebookResponse> GetStatus(string runId, CancellationToken cancellationToken = default)
         {
@@ -98,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Cancel notebook run. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RunNotebookResponse>> CancelRunAsync(string runId, CancellationToken cancellationToken = default)
         {
@@ -116,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Cancel notebook run. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RunNotebookResponse> CancelRun(string runId, CancellationToken cancellationToken = default)
         {
@@ -134,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get RunNotebook Snapshot for run id. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RunNotebookSnapshotResponse>> GetSnapshotAsync(string runId, CancellationToken cancellationToken = default)
         {
@@ -152,7 +151,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get RunNotebook Snapshot for run id. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RunNotebookSnapshotResponse> GetSnapshot(string runId, CancellationToken cancellationToken = default)
         {
@@ -170,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Run notebook. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="runNotebookRequest"> Run notebook request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="runNotebookRequest"/> is null. </exception>
@@ -200,7 +199,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Run notebook. </summary>
-        /// <param name="runId"> Notebook run id. </param>
+        /// <param name="runId"> Notebook run id. For Create Run, you can generate a new GUID and use it here. For other actions, this is the same ID used in Create Run. </param>
         /// <param name="runNotebookRequest"> Run notebook request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="runNotebookRequest"/> is null. </exception>

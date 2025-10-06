@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeRoleType left, DataBoxEdgeRoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeRoleType left, DataBoxEdgeRoleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeRoleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeRoleType"/>. </summary>
         public static implicit operator DataBoxEdgeRoleType(string value) => new DataBoxEdgeRoleType(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

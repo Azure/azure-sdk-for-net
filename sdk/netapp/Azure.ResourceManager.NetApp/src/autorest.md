@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/f5aa38d3f04996bfab6b32dd7e61f02de0c81a7d/specification/netapp/resource-manager/readme.md
-tag: package-preview-2023-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/4d3d0a372b8680b55640240fa14690f360f4e954/specification/netapp/resource-manager/readme.md
+tag: package-2025-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -55,6 +55,7 @@ acronym-mapping:
   SAP: Sap
   TLS: Tls
   ZRS: Zrs
+
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}: NetAppAccountBackup
@@ -102,6 +103,12 @@ prepend-rp-prefix:
   - RegionInfo
   - EncryptionIdentity
   - BackupVault
+  - ChangeKeyVault
+  - DestinationReplication
+  - EncryptionTransitionRequest
+  - KeyVaultPrivateEndpoint
+  - ReplicationType
+  - VolumeLanguage
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -232,13 +239,25 @@ rename-mapping:
   BreakFileLocksRequest.clientIp: -|ip-address
   BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent
   BackupRestoreFiles.destinationVolumeId: -|arm-id
-  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent  
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
   VolumeRelocationProperties: NetAppVolumeRelocationProperties
   FileAccessLogs: NetAppFileAccessLog
   GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
   BackupsMigrationRequest: BackupsMigrationContent
   Backup.properties.volumeResourceId: -|arm-id
-
+  Backup.properties.backupPolicyResourceId: BackupPolicyArmResourceId
+  KeyVaultProperties.keyVaultResourceId: keyVaultArmResourceId
+  ClusterPeerCommandResponse: ClusterPeerCommandResult
+  SvmPeerCommandResponse: SvmPeerCommandResult
+  Volume.properties.snapshotId: -|string
+  VolumeRevert.snapshotId: -|string
+  Volume.properties.backupId: -|string
+  BackupsMigrationRequest.backupVaultId: -|string
+  ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
+  QuotaReport: NetAppVolumeQuotaReport
+  GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
+  UsageResult : NetAppUsageResult
+  UsageName: NetAppUsageName
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -247,7 +266,7 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-  # remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
 ```

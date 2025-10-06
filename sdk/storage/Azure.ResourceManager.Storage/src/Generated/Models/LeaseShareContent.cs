@@ -75,14 +75,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies the lease action. Can be one of the available actions. </summary>
+        [WirePath("action")]
         public LeaseShareAction Action { get; }
         /// <summary> Identifies the lease. Can be specified in any valid GUID string format. </summary>
+        [WirePath("leaseId")]
         public string LeaseId { get; set; }
         /// <summary> Optional. For a break action, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. </summary>
+        [WirePath("breakPeriod")]
         public int? BreakPeriod { get; set; }
         /// <summary> Required for acquire. Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. </summary>
+        [WirePath("leaseDuration")]
         public int? LeaseDuration { get; set; }
         /// <summary> Optional for acquire, required for change. Proposed lease ID, in a GUID string format. </summary>
+        [WirePath("proposedLeaseId")]
         public string ProposedLeaseId { get; set; }
     }
 }

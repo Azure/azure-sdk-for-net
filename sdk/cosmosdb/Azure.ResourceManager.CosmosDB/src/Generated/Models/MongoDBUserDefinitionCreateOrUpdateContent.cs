@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The user name for User Definition. </summary>
+        [WirePath("properties.userName")]
         public string UserName { get; set; }
         /// <summary> The password for User Definition. Response does not contain user password. </summary>
+        [WirePath("properties.password")]
         public string Password { get; set; }
         /// <summary> The database name for which access is being granted for this User Definition. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> A custom definition for the USer Definition. </summary>
+        [WirePath("properties.customData")]
         public string CustomData { get; set; }
         /// <summary> The set of roles inherited by the User Definition. </summary>
+        [WirePath("properties.roles")]
         public IList<MongoDBRole> Roles { get; }
         /// <summary> The Mongo Auth mechanism. For now, we only support auth mechanism SCRAM-SHA-256. </summary>
+        [WirePath("properties.mechanisms")]
         public string Mechanisms { get; set; }
     }
 }

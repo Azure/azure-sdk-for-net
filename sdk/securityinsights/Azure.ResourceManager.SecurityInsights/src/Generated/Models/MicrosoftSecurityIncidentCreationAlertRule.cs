@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
@@ -58,22 +56,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> the alerts' displayNames on which the cases will be generated. </summary>
+        [WirePath("properties.displayNamesFilter")]
         public IList<string> DisplayNamesFilter { get; }
         /// <summary> the alerts' displayNames on which the cases will not be generated. </summary>
+        [WirePath("properties.displayNamesExcludeFilter")]
         public IList<string> DisplayNamesExcludeFilter { get; }
         /// <summary> The alerts' productName on which the cases will be generated. </summary>
+        [WirePath("properties.productFilter")]
         public MicrosoftSecurityProductName? ProductFilter { get; set; }
         /// <summary> the alerts' severities on which the cases will be generated. </summary>
+        [WirePath("properties.severitiesFilter")]
         public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
+        [WirePath("properties.alertRuleTemplateName")]
         public string AlertRuleTemplateName { get; set; }
         /// <summary> The description of the alert rule. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The display name for alerts created by this alert rule. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The last time that this alert has been modified. </summary>
+        [WirePath("properties.lastModifiedUtc")]
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

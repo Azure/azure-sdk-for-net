@@ -79,24 +79,34 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Id of the principal. </summary>
+        [WirePath("principal.id")]
         public Guid? PrincipalId { get; }
         /// <summary> Display name of the principal. </summary>
+        [WirePath("principal.displayName")]
         public string PrincipalDisplayName { get; }
         /// <summary> Email id of the principal. </summary>
+        [WirePath("principal.email")]
         public string Email { get; }
         /// <summary> Type of the principal. </summary>
+        [WirePath("principal.type")]
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Id of the role definition. </summary>
+        [WirePath("roleDefinition.id")]
         public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> Display name of the role definition. </summary>
+        [WirePath("roleDefinition.displayName")]
         public string RoleDefinitionDisplayName { get; }
         /// <summary> The role type. </summary>
+        [WirePath("roleDefinition.type")]
         public AuthorizationRoleType? RoleType { get; }
         /// <summary> Scope id of the resource. </summary>
+        [WirePath("scope.id")]
         public ResourceIdentifier ScopeId { get; }
         /// <summary> Display name of the resource. </summary>
+        [WirePath("scope.displayName")]
         public string ScopeDisplayName { get; }
         /// <summary> Type of the scope. </summary>
+        [WirePath("scope.type")]
         public RoleManagementScopeType? ScopeType { get; }
     }
 }

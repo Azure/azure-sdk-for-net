@@ -77,13 +77,16 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Description for the Client Group resource. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The grouping query for the clients.
         /// Example : attributes.keyName IN ['a', 'b', 'c'].
         /// </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
         /// <summary> Provisioning state of the ClientGroup resource. </summary>
+        [WirePath("properties.provisioningState")]
         public ClientGroupProvisioningState? ProvisioningState { get; }
     }
 }

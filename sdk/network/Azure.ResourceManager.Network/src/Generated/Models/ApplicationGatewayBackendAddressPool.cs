@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -41,12 +39,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Collection of references to IPs defined in network interfaces. </summary>
+        [WirePath("properties.backendIPConfigurations")]
         public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
         /// <summary> Backend addresses. </summary>
+        [WirePath("properties.backendAddresses")]
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

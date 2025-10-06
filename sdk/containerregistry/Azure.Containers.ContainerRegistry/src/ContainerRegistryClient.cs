@@ -118,7 +118,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,7 +135,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositories(last: null, n: pageSizeHint, cancellationToken);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -176,7 +176,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: null, cancellationToken);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.RepositoriesProperty, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,6 +287,122 @@ namespace Azure.Containers.ContainerRegistry
                 tagOrDigest,
                 _clientDiagnostics,
                 _restClient);
+        }
+
+        /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token. </param>
+        /// <param name="accessToken"> AAD access token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
+        public virtual async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(
+            string service,
+            string tenant = null,
+            string refreshToken = null,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(service, nameof(service));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAadAccessTokenForAcrRefreshTokenAsync)}");
+            scope.Start();
+            try
+            {
+                return await _acrAuthClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(PostContentSchemaGrantType.AccessToken, service, tenant, refreshToken, accessToken, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token. </param>
+        /// <param name="accessToken"> AAD access token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
+        public virtual Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(
+            string service,
+            string tenant = null,
+            string refreshToken = null,
+            string accessToken = null,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(service, nameof(service));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAadAccessTokenForAcrRefreshToken)}");
+            scope.Start();
+            try
+            {
+                return _acrAuthClient.ExchangeAadAccessTokenForAcrRefreshToken(PostContentSchemaGrantType.AccessToken, service, tenant, refreshToken, accessToken, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Exchange ACR Refresh token for an ACR Access Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
+        /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
+        public virtual async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(
+            string service,
+            string scope,
+            string refreshToken,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(service, nameof(service));
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(refreshToken, nameof(refreshToken));
+
+            using DiagnosticScope diagnosticScope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAcrRefreshTokenForAcrAccessTokenAsync)}");
+            diagnosticScope.Start();
+            try
+            {
+                return await _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, refreshToken, TokenGrantType.RefreshToken, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                diagnosticScope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Exchange ACR Refresh token for an ACR Access Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
+        /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
+        public virtual Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(
+            string service,
+            string scope,
+            string refreshToken,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(service, nameof(service));
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(refreshToken, nameof(refreshToken));
+
+            using DiagnosticScope diagnosticScope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAcrRefreshTokenForAcrAccessToken)}");
+            diagnosticScope.Start();
+            try
+            {
+                return _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, refreshToken, TokenGrantType.RefreshToken, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                diagnosticScope.Failed(e);
+                throw;
+            }
         }
     }
 }

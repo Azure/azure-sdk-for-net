@@ -27,6 +27,7 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
 
     public override bool TryClassify(PipelineMessage message, out bool isError)
     {
+        Argument.AssertNotNull(message, nameof(message));
         message.AssertResponse();
 
         isError = !_successCodes[message.Response!.Status];
@@ -37,6 +38,8 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
 
     public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         bool classified = Default.TryClassify(message, exception, out isRetriable);
 
         Debug.Assert(classified);

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -60,37 +58,59 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="identity"> Namespace resource identity information. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration properties that can be updated. </param>
+        /// <param name="topicsConfiguration"> Topics configuration properties that can be updated. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridNamespacePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, NamespaceSku sku, UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventGridNamespacePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, NamespaceSku sku, UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration, UpdateTopicsConfigurationInfo topicsConfiguration, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
             Sku = sku;
             TopicSpacesConfiguration = topicSpacesConfiguration;
+            TopicsConfiguration = topicsConfiguration;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tags of the namespace resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Namespace resource identity information. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Represents available Sku pricing tiers. </summary>
+        [WirePath("sku")]
         public NamespaceSku Sku { get; set; }
         /// <summary> Topic spaces configuration properties that can be updated. </summary>
+        [WirePath("properties.topicSpacesConfiguration")]
         public UpdateTopicSpacesConfigurationInfo TopicSpacesConfiguration { get; set; }
+        /// <summary> Topics configuration properties that can be updated. </summary>
+        internal UpdateTopicsConfigurationInfo TopicsConfiguration { get; set; }
+        /// <summary> Custom domain info for topics configuration. </summary>
+        [WirePath("properties.topicsConfiguration.customDomains")]
+        public IList<CustomDomainConfiguration> TopicsCustomDomains
+        {
+            get
+            {
+                if (TopicsConfiguration is null)
+                    TopicsConfiguration = new UpdateTopicsConfigurationInfo();
+                return TopicsConfiguration.CustomDomains;
+            }
+        }
+
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
+        [WirePath("properties.inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
     }
 }

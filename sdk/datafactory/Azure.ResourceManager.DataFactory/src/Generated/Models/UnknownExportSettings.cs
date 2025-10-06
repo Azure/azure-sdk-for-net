@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownExportSettings. </summary>
+    /// <summary> Unknown version of ExportSettings. </summary>
     internal partial class UnknownExportSettings : ExportSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExportSettings"/>. </summary>

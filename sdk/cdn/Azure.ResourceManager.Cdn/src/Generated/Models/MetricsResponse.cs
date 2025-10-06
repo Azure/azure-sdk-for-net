@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Metrics Response. </summary>
+    /// <summary>
+    /// Metrics Response
+    /// Serialized Name: MetricsResponse
+    /// </summary>
     public partial class MetricsResponse
     {
         /// <summary>
@@ -53,10 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="series"></param>
+        /// <param name="dateTimeBegin"> Serialized Name: MetricsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: MetricsResponse.dateTimeEnd. </param>
+        /// <param name="granularity"> Serialized Name: MetricsResponse.granularity. </param>
+        /// <param name="series"> Serialized Name: MetricsResponse.series. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, MetricsResponseGranularity? granularity, IReadOnlyList<MetricsResponseSeriesItem> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +69,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the date time begin. </summary>
+        /// <summary> Serialized Name: MetricsResponse.dateTimeBegin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
-        /// <summary> Gets the date time end. </summary>
+        /// <summary> Serialized Name: MetricsResponse.dateTimeEnd. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
-        /// <summary> Gets the granularity. </summary>
+        /// <summary> Serialized Name: MetricsResponse.granularity. </summary>
         public MetricsResponseGranularity? Granularity { get; }
-        /// <summary> Gets the series. </summary>
+        /// <summary> Serialized Name: MetricsResponse.series. </summary>
         public IReadOnlyList<MetricsResponseSeriesItem> Series { get; }
     }
 }

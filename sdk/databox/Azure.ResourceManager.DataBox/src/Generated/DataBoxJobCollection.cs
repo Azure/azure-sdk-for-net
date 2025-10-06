@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataBox
@@ -27,8 +25,8 @@ namespace Azure.ResourceManager.DataBox
     /// </summary>
     public partial class DataBoxJobCollection : ArmCollection, IEnumerable<DataBoxJobResource>, IAsyncEnumerable<DataBoxJobResource>
     {
-        private readonly ClientDiagnostics _dataBoxJobJobsClientDiagnostics;
-        private readonly JobsRestOperations _dataBoxJobJobsRestClient;
+        private readonly ClientDiagnostics _dataBoxJobJobResourcesClientDiagnostics;
+        private readonly JobResourcesRestOperations _dataBoxJobJobResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DataBoxJobCollection"/> class for mocking. </summary>
         protected DataBoxJobCollection()
@@ -40,9 +38,9 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataBoxJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataBoxJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataBoxJobResource.ResourceType, out string dataBoxJobJobsApiVersion);
-            _dataBoxJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobJobsApiVersion);
+            _dataBoxJobJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataBoxJobResource.ResourceType, out string dataBoxJobJobResourcesApiVersion);
+            _dataBoxJobJobResourcesRestClient = new JobResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobJobResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,11 +61,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Create</description>
+        /// <description>JobResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -86,12 +84,12 @@ namespace Azure.ResourceManager.DataBox
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.CreateOrUpdate");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataBoxJobJobResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,11 +110,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Create</description>
+        /// <description>JobResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -135,12 +133,12 @@ namespace Azure.ResourceManager.DataBox
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.CreateOrUpdate");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _dataBoxJobJobResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -161,11 +159,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,11 +180,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.Get");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -207,11 +205,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,11 +226,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.Get");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -253,11 +251,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_ListByResourceGroup</description>
+        /// <description>JobResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,9 +268,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxJobResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -284,11 +282,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_ListByResourceGroup</description>
+        /// <description>JobResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,9 +299,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxJobResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,11 +313,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -336,11 +334,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.Exists");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,11 +357,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -380,11 +378,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.Exists");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,11 +401,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,11 +422,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.GetIfExists");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DataBoxJobResource>(response.GetRawResponse());
                 return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -449,11 +447,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,11 +468,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.GetIfExists");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DataBoxJobResource>(response.GetRawResponse());
                 return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());

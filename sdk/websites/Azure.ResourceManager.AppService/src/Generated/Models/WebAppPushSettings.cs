@@ -79,8 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets a flag indicating whether the Push endpoint is enabled. </summary>
+        [WirePath("properties.isPushEnabled")]
         public bool? IsPushEnabled { get; set; }
         /// <summary> Gets or sets a JSON string containing a list of tags that are whitelisted for use by the push registration endpoint. </summary>
+        [WirePath("properties.tagWhitelistJson")]
         public string TagWhitelistJson { get; set; }
         /// <summary>
         /// Gets or sets a JSON string containing a list of tags that require user authentication to be used in the push registration endpoint.
@@ -88,10 +90,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
         /// </summary>
+        [WirePath("properties.tagsRequiringAuth")]
         public string TagsRequiringAuth { get; set; }
         /// <summary> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </summary>
+        [WirePath("properties.dynamicTagsJson")]
         public string DynamicTagsJson { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

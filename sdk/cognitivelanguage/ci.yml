@@ -26,6 +26,12 @@ extends:
     ServiceDirectory: cognitivelanguage
     ArtifactName: packages
     Artifacts:
+    - name: Azure.AI.Language.Text.Authoring
+      safeName: AzureAILanguageTextAuthoring
+    - name: Azure.AI.Language.Conversations.Authoring
+      safeName: AzureAILanguageConversationsAuthoring
+    - name: Azure.AI.Language.Text
+      safeName: AzureAILanguageText
     - name: Azure.AI.Language.Conversations
       safeName: AzureAILanguageConversations
     - name: Azure.AI.Language.QuestionAnswering

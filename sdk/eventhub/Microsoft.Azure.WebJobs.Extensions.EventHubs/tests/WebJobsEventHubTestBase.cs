@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -64,11 +64,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             var hostBuilder = new HostBuilder();
             hostBuilder
+                .ConfigureServices(services =>
+                {
+                    services.AddAzureClients(clientBuilder =>
+                    {
+                        clientBuilder.UseCredential(EventHubsTestEnvironment.Instance.Credential);
+                    });
+                })
                 .ConfigureAppConfiguration(builder =>
                 {
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"webjobstesthub", _eventHubScope.EventHubName},
+                        {"AzureWebJobsStorage__accountName", StorageTestEnvironment.Instance.StorageAccountName}
                     });
                 })
                 .ConfigureDefaultTestHost<T>(b =>

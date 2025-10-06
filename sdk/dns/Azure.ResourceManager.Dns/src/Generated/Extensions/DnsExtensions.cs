@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Mocking;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
@@ -36,8 +34,27 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DnssecConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnssecConfigResource.CreateResourceIdentifier" /> to create a <see cref="DnssecConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnssecConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnssecConfigResource"/> object. </returns>
+        public static DnssecConfigResource GetDnssecConfigResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDnsArmClient(client).GetDnssecConfigResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DnsARecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsARecordResource(ResourceIdentifier)"/> instead.</description>
@@ -56,7 +73,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsAaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsAaaaRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -75,7 +92,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsCaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsCaaRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -94,7 +111,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsCnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsCnameRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -113,7 +130,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsMXRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsMXRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -132,7 +149,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsNSRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsNSRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -151,7 +168,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsPtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsPtrRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -170,7 +187,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsSoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsSoaRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -189,7 +206,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsSrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsSrvRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -208,7 +225,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets an object representing a <see cref="DnsTxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsTxtRecordResource(ResourceIdentifier)"/> instead.</description>
@@ -226,8 +243,65 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DnsTlsaRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsTlsaRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsTlsaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsTlsaRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsTlsaRecordResource"/> object. </returns>
+        public static DnsTlsaRecordResource GetDnsTlsaRecordResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDnsArmClient(client).GetDnsTlsaRecordResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsDSRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsDSRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsDSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsDSRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsDSRecordResource"/> object. </returns>
+        public static DnsDSRecordResource GetDnsDSRecordResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDnsArmClient(client).GetDnsDSRecordResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsNaptrRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsNaptrRecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="DnsNaptrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsNaptrRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsNaptrRecordResource"/> object. </returns>
+        public static DnsNaptrRecordResource GetDnsNaptrRecordResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDnsArmClient(client).GetDnsNaptrRecordResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier(string,string,string)" /> to create a <see cref="DnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsZoneResource(ResourceIdentifier)"/> instead.</description>
@@ -274,7 +348,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +386,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +424,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,7 +461,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,7 +498,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -456,7 +530,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

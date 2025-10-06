@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,89 +32,19 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateClassifyProblemsRequest(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content)
+        internal RequestUriBuilder CreateListRequestUri(string serviceName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Support/services/", false);
-            uri.AppendPath(problemServiceName, true);
-            uri.AppendPath("/classifyProblems", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/problemClassifications", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Classify the right problem classifications (categories) available for a specific Azure service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
-        /// <param name="content"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceProblemClassificationListResult>> ClassifyProblemsAsync(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceProblemClassificationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceProblemClassificationListResult.DeserializeServiceProblemClassificationListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Classify the right problem classifications (categories) available for a specific Azure service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
-        /// <param name="content"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceProblemClassificationListResult> ClassifyProblems(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceProblemClassificationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceProblemClassificationListResult.DeserializeServiceProblemClassificationListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string serviceName)
@@ -151,7 +80,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,13 +105,25 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string serviceName, string problemClassificationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/problemClassifications/", false);
+            uri.AppendPath(problemClassificationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string serviceName, string problemClassificationName)
@@ -204,7 +145,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Get problem classification details for a specific Azure service. </summary>
-        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="serviceName"> Name of the Azure service available for support. </param>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="problemClassificationName"/> is null. </exception>
@@ -221,7 +162,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProblemClassificationData.DeserializeProblemClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +174,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Get problem classification details for a specific Azure service. </summary>
-        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="serviceName"> Name of the Azure service available for support. </param>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="problemClassificationName"/> is null. </exception>
@@ -250,7 +191,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProblemClassificationData.DeserializeProblemClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

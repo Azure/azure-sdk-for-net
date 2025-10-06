@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Start time of the downtime. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the downtime. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> List of Possible Cause of downtime. </summary>
+        [WirePath("events")]
         public IList<DetectorAbnormalTimePeriod> Events { get; }
         /// <summary> List of proposed solutions. </summary>
+        [WirePath("solutions")]
         public IList<DiagnosticSolution> Solutions { get; }
     }
 }

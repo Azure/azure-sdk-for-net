@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -33,8 +31,8 @@ namespace Azure.ResourceManager.Quota
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _currentQuotaLimitBaseQuotaClientDiagnostics;
-        private readonly QuotaRestOperations _currentQuotaLimitBaseQuotaRestClient;
+        private readonly ClientDiagnostics _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics;
+        private readonly CurrentQuotaLimitBasesRestOperations _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient;
         private readonly CurrentQuotaLimitBaseData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +57,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CurrentQuotaLimitBaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _currentQuotaLimitBaseQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string currentQuotaLimitBaseQuotaApiVersion);
-            _currentQuotaLimitBaseQuotaRestClient = new QuotaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseQuotaApiVersion);
+            _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string currentQuotaLimitBaseCurrentQuotaLimitBasesApiVersion);
+            _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient = new CurrentQuotaLimitBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseCurrentQuotaLimitBasesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +95,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +110,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +135,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>CurrentQuotaLimitBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +150,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CurrentQuotaLimitBaseResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -179,11 +177,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Update</description>
+        /// <description>CurrentQuotaLimitBase_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,12 +197,12 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,11 +225,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Update</description>
+        /// <description>CurrentQuotaLimitBase_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -247,12 +245,12 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
+            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

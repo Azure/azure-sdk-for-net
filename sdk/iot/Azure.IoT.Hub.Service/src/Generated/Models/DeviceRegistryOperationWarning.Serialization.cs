@@ -44,5 +44,13 @@ namespace Azure.IoT.Hub.Service.Models
             }
             return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceRegistryOperationWarning FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeviceRegistryOperationWarning(document.RootElement);
+        }
     }
 }

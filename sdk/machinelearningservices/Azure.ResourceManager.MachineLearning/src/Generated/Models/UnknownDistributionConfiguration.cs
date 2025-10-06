@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDistributionConfiguration. </summary>
+    /// <summary> Unknown version of DistributionConfiguration. </summary>
     internal partial class UnknownDistributionConfiguration : MachineLearningDistributionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDistributionConfiguration"/>. </summary>

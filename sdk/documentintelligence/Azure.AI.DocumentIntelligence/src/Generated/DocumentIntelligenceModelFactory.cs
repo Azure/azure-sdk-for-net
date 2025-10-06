@@ -19,9 +19,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, InnerError innererror = null)
+        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, DocumentIntelligenceInnerError innerError = null)
         {
             details ??= new List<DocumentIntelligenceError>();
 
@@ -30,70 +30,18 @@ namespace Azure.AI.DocumentIntelligence
                 message,
                 target,
                 details?.ToList(),
-                innererror,
+                innerError,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.InnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="innerErrorObject"> Inner error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = null, string message = null, InnerError innerErrorObject = null)
+        /// <param name="innerError"> Inner error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/> instance for mocking. </returns>
+        public static DocumentIntelligenceInnerError DocumentIntelligenceInnerError(string code = null, string message = null, DocumentIntelligenceInnerError innerError = null)
         {
-            return new InnerError(code, message, innerErrorObject, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeResult"/>. </summary>
-        /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Document model ID used to produce this result. </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="contentFormat"> Format of the analyze result top-level content. </param>
-        /// <param name="content">
-        /// Concatenate string representation of all textual and visual elements in reading
-        /// order.
-        /// </param>
-        /// <param name="pages"> Analyzed pages. </param>
-        /// <param name="paragraphs"> Extracted paragraphs. </param>
-        /// <param name="tables"> Extracted tables. </param>
-        /// <param name="figures"> Extracted figures. </param>
-        /// <param name="lists"> Extracted lists. </param>
-        /// <param name="sections"> Extracted sections. </param>
-        /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
-        /// <param name="styles"> Extracted font styles. </param>
-        /// <param name="languages"> Detected languages. </param>
-        /// <param name="documents"> Extracted documents. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeResult"/> instance for mocking. </returns>
-        public static AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, StringIndexType stringIndexType = default, ContentFormat? contentFormat = null, string content = null, IEnumerable<DocumentPage> pages = null, IEnumerable<DocumentParagraph> paragraphs = null, IEnumerable<DocumentTable> tables = null, IEnumerable<DocumentFigure> figures = null, IEnumerable<DocumentList> lists = null, IEnumerable<DocumentSection> sections = null, IEnumerable<DocumentKeyValuePair> keyValuePairs = null, IEnumerable<DocumentStyle> styles = null, IEnumerable<DocumentLanguage> languages = null, IEnumerable<AnalyzedDocument> documents = null)
-        {
-            pages ??= new List<DocumentPage>();
-            paragraphs ??= new List<DocumentParagraph>();
-            tables ??= new List<DocumentTable>();
-            figures ??= new List<DocumentFigure>();
-            lists ??= new List<DocumentList>();
-            sections ??= new List<DocumentSection>();
-            keyValuePairs ??= new List<DocumentKeyValuePair>();
-            styles ??= new List<DocumentStyle>();
-            languages ??= new List<DocumentLanguage>();
-            documents ??= new List<AnalyzedDocument>();
-
-            return new AnalyzeResult(
-                apiVersion,
-                modelId,
-                stringIndexType,
-                contentFormat,
-                content,
-                pages?.ToList(),
-                paragraphs?.ToList(),
-                tables?.ToList(),
-                figures?.ToList(),
-                lists?.ToList(),
-                sections?.ToList(),
-                keyValuePairs?.ToList(),
-                styles?.ToList(),
-                languages?.ToList(),
-                documents?.ToList(),
-                serializedAdditionalRawData: null);
+            return new DocumentIntelligenceInnerError(code, message, innerError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentPage"/>. </summary>
@@ -162,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(string content = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentWord DocumentWord(string content = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -180,7 +128,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -217,7 +165,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentBarcode"/> instance for mocking. </returns>
-        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -242,7 +190,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFormula"/> instance for mocking. </returns>
-        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -378,8 +326,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
         /// <param name="caption"> Caption associated with the figure. </param>
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
+        /// <param name="id"> Figure ID. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFigure"/> instance for mocking. </returns>
-        public static DocumentFigure DocumentFigure(IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null)
+        public static DocumentFigure DocumentFigure(IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null, string id = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
@@ -392,40 +341,7 @@ namespace Azure.AI.DocumentIntelligence
                 elements?.ToList(),
                 caption,
                 footnotes?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentList"/>. </summary>
-        /// <param name="spans"> Location of the list in the reading order concatenated content. </param>
-        /// <param name="items"> Items in the list. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentList"/> instance for mocking. </returns>
-        public static DocumentList DocumentList(IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentListItem> items = null)
-        {
-            spans ??= new List<DocumentSpan>();
-            items ??= new List<DocumentListItem>();
-
-            return new DocumentList(spans?.ToList(), items?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentListItem"/>. </summary>
-        /// <param name="level"> Level of the list item (1-indexed). </param>
-        /// <param name="content"> Content of the list item. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the list item. </param>
-        /// <param name="spans"> Location of the list item in the reading order concatenated content. </param>
-        /// <param name="elements"> Child elements of the list item. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentListItem"/> instance for mocking. </returns>
-        public static DocumentListItem DocumentListItem(int level = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-            elements ??= new List<string>();
-
-            return new DocumentListItem(
-                level,
-                content,
-                boundingRegions?.ToList(),
-                spans?.ToList(),
-                elements?.ToList(),
+                id,
                 serializedAdditionalRawData: null);
         }
 
@@ -511,82 +427,6 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentLanguage(locale, spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzedDocument"/>. </summary>
-        /// <param name="docType"> Document type. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the document. </param>
-        /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
-        /// <param name="fields"> Dictionary of named field values. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string docType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-            fields ??= new Dictionary<string, DocumentField>();
-
-            return new AnalyzedDocument(
-                docType,
-                boundingRegions?.ToList(),
-                spans?.ToList(),
-                fields,
-                confidence,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentField"/>. </summary>
-        /// <param name="type"> Data type of the field value. </param>
-        /// <param name="valueString"> String value. </param>
-        /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
-        /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
-        /// <param name="valuePhoneNumber"> Phone number value in E.164 format (ex. +19876543210). </param>
-        /// <param name="valueDouble"> Floating point value. </param>
-        /// <param name="valueLong"> Integer value. </param>
-        /// <param name="valueSelectionMark"> Selection mark value. </param>
-        /// <param name="valueSignature"> Presence of signature. </param>
-        /// <param name="valueCountryRegion"> 3-letter country code value (ISO 3166-1 alpha-3). </param>
-        /// <param name="valueList"> Array of field values. </param>
-        /// <param name="valueDictionary"> Dictionary of named field values. </param>
-        /// <param name="valueCurrency"> Currency value. </param>
-        /// <param name="valueAddress"> Address value. </param>
-        /// <param name="valueBoolean"> Boolean value. </param>
-        /// <param name="valueSelectionGroup"> Selection group value. </param>
-        /// <param name="content"> Field content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the field. </param>
-        /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType type = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueDouble = null, long? valueLong = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueList = null, IReadOnlyDictionary<string, DocumentField> valueDictionary = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, IEnumerable<string> valueSelectionGroup = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
-        {
-            valueList ??= new List<DocumentField>();
-            valueDictionary ??= new Dictionary<string, DocumentField>();
-            valueSelectionGroup ??= new List<string>();
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentField(
-                type,
-                valueString,
-                valueDate,
-                valueTime,
-                valuePhoneNumber,
-                valueDouble,
-                valueLong,
-                valueSelectionMark,
-                valueSignature,
-                valueCountryRegion,
-                valueList?.ToList(),
-                valueDictionary,
-                valueCurrency,
-                valueAddress,
-                valueBoolean,
-                valueSelectionGroup?.ToList(),
-                content,
-                boundingRegions?.ToList(),
-                spans?.ToList(),
-                confidence,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
@@ -636,61 +476,163 @@ namespace Azure.AI.DocumentIntelligence
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentModelContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceWarning"/>. </summary>
+        /// <param name="code"> One of a server-defined set of warning codes. </param>
+        /// <param name="message"> A human-readable representation of the warning. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceWarning"/> instance for mocking. </returns>
+        public static DocumentIntelligenceWarning DocumentIntelligenceWarning(string code = null, string message = null, string target = null)
+        {
+            return new DocumentIntelligenceWarning(code, message, target, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeBatchDocumentsOptions"/>. </summary>
+        /// <param name="blobSource">
+        /// Azure Blob Storage location containing the batch documents.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="blobFileListSource">
+        /// Azure Blob Storage file list specifying the batch documents.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="resultContainerUri"> Azure Blob Storage container URL where analyze result files will be stored. </param>
+        /// <param name="resultPrefix"> Blob name prefix of result files. </param>
+        /// <param name="overwriteExisting"> Overwrite existing analyze result files?. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchDocumentsOptions"/> instance for mocking. </returns>
+        public static AnalyzeBatchDocumentsOptions AnalyzeBatchDocumentsOptions(BlobContentSource blobSource = null, BlobFileListContentSource blobFileListSource = null, Uri resultContainerUri = null, string resultPrefix = null, bool? overwriteExisting = null)
+        {
+            return new AnalyzeBatchDocumentsOptions(
+                blobSource,
+                blobFileListSource,
+                resultContainerUri,
+                resultPrefix,
+                overwriteExisting,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeBatchResult"/>. </summary>
+        /// <param name="succeededCount"> Number of documents that completed with status succeeded. </param>
+        /// <param name="failedCount"> Number of documents that completed with status failed. </param>
+        /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
+        /// <param name="details"> Operation detail for each document in the batch. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchResult"/> instance for mocking. </returns>
+        public static AnalyzeBatchResult AnalyzeBatchResult(int succeededCount = default, int failedCount = default, int skippedCount = default, IEnumerable<AnalyzeBatchResultDetails> details = null)
+        {
+            details ??= new List<AnalyzeBatchResultDetails>();
+
+            return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, details?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeBatchResultDetails"/>. </summary>
+        /// <param name="status"> Analyze status.  succeeded, failed, or skipped. </param>
+        /// <param name="sourceUri"> URL of the source document. </param>
+        /// <param name="resultUri"> URL of the analyze result JSON. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchResultDetails"/> instance for mocking. </returns>
+        public static AnalyzeBatchResultDetails AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status = default, Uri sourceUri = null, Uri resultUri = null, DocumentIntelligenceError error = null)
+        {
+            return new AnalyzeBatchResultDetails(status, sourceUri, resultUri, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeBatchOperationDetails"/>. </summary>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="status"> Operation status.  notStarted, running, succeeded, or failed. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was submitted. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="error"> Encountered error during batch document analysis. </param>
+        /// <param name="result"> Batch document analysis result. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchOperationDetails"/> instance for mocking. </returns>
+        public static AnalyzeBatchOperationDetails AnalyzeBatchOperationDetails(string resultId = null, DocumentIntelligenceOperationStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int? percentCompleted = null, DocumentIntelligenceError error = null, AnalyzeBatchResult result = null)
+        {
+            return new AnalyzeBatchOperationDetails(
+                resultId,
+                status,
+                createdOn,
+                lastUpdatedOn,
+                percentCompleted,
+                error,
+                result,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
-        /// <param name="azureBlobSource">
+        /// <param name="blobSource">
         /// Azure Blob Storage location containing the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
-        /// <param name="azureBlobFileListSource">
+        /// <param name="blobFileListSource">
         /// Azure Blob Storage file list specifying the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentModelContent"/> instance for mocking. </returns>
-        public static BuildDocumentModelContent BuildDocumentModelContent(string modelId = null, string description = null, DocumentBuildMode buildMode = default, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IDictionary<string, string> tags = null)
+        /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
+        /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentModelOptions"/> instance for mocking. </returns>
+        public static BuildDocumentModelOptions BuildDocumentModelOptions(string modelId = null, string description = null, DocumentBuildMode buildMode = default, BlobContentSource blobSource = null, BlobFileListContentSource blobFileListSource = null, IDictionary<string, string> tags = null, float? maxTrainingHours = null, bool? allowOverwrite = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BuildDocumentModelContent(
+            return new BuildDocumentModelOptions(
                 modelId,
                 description,
                 buildMode,
-                azureBlobSource,
-                azureBlobFileListSource,
+                blobSource,
+                blobFileListSource,
                 tags,
+                maxTrainingHours,
+                allowOverwrite,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.OperationDetails"/>. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelDetails"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document model will expire. </param>
+        /// <param name="modifiedOn"> Date and time (UTC) when the document model was last modified. </param>
+        /// <param name="apiVersion"> API version used to create this document model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
+        /// <param name="buildMode"> Custom document model build mode. </param>
+        /// <param name="blobSource">
+        /// Azure Blob Storage location containing the training data.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="blobFileListSource">
+        /// Azure Blob Storage file list specifying the training data.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="classifierId"> For composed models, the custom classifier to split and classify the input file. </param>
+        /// <param name="split"> For composed models, the file splitting behavior. </param>
+        /// <param name="documentTypes"> Supported document types. </param>
+        /// <param name="warnings"> List of warnings encountered while building the model. </param>
+        /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, DateTimeOffset? modifiedOn = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, BlobContentSource blobSource = null, BlobFileListContentSource blobFileListSource = null, string classifierId = null, SplitMode? split = null, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null, float? trainingHours = null)
         {
             tags ??= new Dictionary<string, string>();
+            documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
+            warnings ??= new List<DocumentIntelligenceWarning>();
 
-            return new UnknownOperationDetails(
-                operationId,
-                status,
-                percentCompleted,
+            return new DocumentModelDetails(
+                modelId,
+                description,
                 createdOn,
-                lastUpdatedOn,
-                kind,
-                resourceLocation,
+                expiresOn,
+                modifiedOn,
                 apiVersion,
                 tags,
-                error,
+                buildMode,
+                blobSource,
+                blobFileListSource,
+                classifierId,
+                split,
+                documentTypes,
+                warnings?.ToList(),
+                trainingHours,
                 serializedAdditionalRawData: null);
         }
 
@@ -706,7 +648,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -725,102 +667,34 @@ namespace Azure.AI.DocumentIntelligence
                 result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelDetails"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
-        /// <param name="expiresOn"> Date and time (UTC) when the document model will expire. </param>
-        /// <param name="apiVersion"> API version used to create this document model. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceOperationDetails"/>. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="kind"> Type of operation. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="buildMode"> Custom document model build mode. </param>
-        /// <param name="azureBlobSource">
-        /// Azure Blob Storage location containing the training data.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </param>
-        /// <param name="azureBlobFileListSource">
-        /// Azure Blob Storage file list specifying the training data.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </param>
-        /// <param name="docTypes"> Supported document types. </param>
-        /// <param name="warnings"> List of warnings encountered while building the model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
+        /// <param name="error"> Encountered error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceOperationDetails"/> instance for mocking. </returns>
+        public static DocumentIntelligenceOperationDetails DocumentIntelligenceOperationDetails(string operationId = null, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = null, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
         {
             tags ??= new Dictionary<string, string>();
-            docTypes ??= new Dictionary<string, DocumentTypeDetails>();
-            warnings ??= new List<DocumentIntelligenceWarning>();
 
-            return new DocumentModelDetails(
-                modelId,
-                description,
+            return new UnknownDocumentIntelligenceOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
                 createdOn,
-                expiresOn,
+                lastUpdatedOn,
+                kind == null ? default : new OperationKind(kind),
+                resourceLocation,
                 apiVersion,
                 tags,
-                buildMode,
-                azureBlobSource,
-                azureBlobFileListSource,
-                docTypes,
-                warnings?.ToList(),
+                error,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTypeDetails"/>. </summary>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="buildMode"> Custom document model build mode. </param>
-        /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
-        /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentTypeDetails"/> instance for mocking. </returns>
-        public static DocumentTypeDetails DocumentTypeDetails(string description = null, DocumentBuildMode? buildMode = null, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = null, IReadOnlyDictionary<string, float> fieldConfidence = null)
-        {
-            fieldSchema ??= new Dictionary<string, DocumentFieldSchema>();
-            fieldConfidence ??= new Dictionary<string, float>();
-
-            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFieldSchema"/>. </summary>
-        /// <param name="type"> Semantic data type of the field value. </param>
-        /// <param name="description"> Field description. </param>
-        /// <param name="example"> Example field content. </param>
-        /// <param name="items"> Field type schema of each array element. </param>
-        /// <param name="properties"> Named sub-fields of the object field. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentFieldSchema"/> instance for mocking. </returns>
-        public static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType type = default, string description = null, string example = null, DocumentFieldSchema items = null, IReadOnlyDictionary<string, DocumentFieldSchema> properties = null)
-        {
-            properties ??= new Dictionary<string, DocumentFieldSchema>();
-
-            return new DocumentFieldSchema(
-                type,
-                description,
-                example,
-                items,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceWarning"/>. </summary>
-        /// <param name="code"> One of a server-defined set of warning codes. </param>
-        /// <param name="message"> A human-readable representation of the warning. </param>
-        /// <param name="target"> The target of the error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceWarning"/> instance for mocking. </returns>
-        public static DocumentIntelligenceWarning DocumentIntelligenceWarning(string code = null, string message = null, string target = null)
-        {
-            return new DocumentIntelligenceWarning(code, message, target, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ComposeDocumentModelContent"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="componentModels"> List of component document models to compose. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ComposeDocumentModelContent"/> instance for mocking. </returns>
-        public static ComposeDocumentModelContent ComposeDocumentModelContent(string modelId = null, string description = null, IEnumerable<ComponentDocumentModelDetails> componentModels = null, IDictionary<string, string> tags = null)
-        {
-            componentModels ??= new List<ComponentDocumentModelDetails>();
-            tags ??= new Dictionary<string, string>();
-
-            return new ComposeDocumentModelContent(modelId, description, componentModels?.ToList(), tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>. </summary>
@@ -835,7 +709,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -854,18 +728,6 @@ namespace Azure.AI.DocumentIntelligence
                 result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AuthorizeCopyContent"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AuthorizeCopyContent"/> instance for mocking. </returns>
-        public static AuthorizeCopyContent AuthorizeCopyContent(string modelId = null, string description = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new AuthorizeCopyContent(modelId, description, tags, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
@@ -878,7 +740,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -897,45 +759,64 @@ namespace Azure.AI.DocumentIntelligence
                 result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ResourceDetails"/>. </summary>
-        /// <param name="customDocumentModels"> Details regarding custom document models. </param>
-        /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ResourceDetails"/> instance for mocking. </returns>
-        public static ResourceDetails ResourceDetails(CustomDocumentModelsDetails customDocumentModels = null, QuotaDetails customNeuralDocumentModelBuilds = null)
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierCopyToOperationDetails DocumentClassifierCopyToOperationDetails(string operationId = null, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
         {
-            return new ResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds, serializedAdditionalRawData: null);
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentClassifierCopyToOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdOn,
+                lastUpdatedOn,
+                OperationKind.DocumentClassifierCopyTo,
+                resourceLocation,
+                apiVersion,
+                tags,
+                error,
+                serializedAdditionalRawData: null,
+                result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/>. </summary>
-        /// <param name="count"> Number of custom document models in the current resource. </param>
-        /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
-        public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
-        {
-            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.QuotaDetails"/>. </summary>
-        /// <param name="used"> Amount of the resource quota used. </param>
-        /// <param name="quota"> Resource quota limit. </param>
-        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.QuotaDetails"/> instance for mocking. </returns>
-        public static QuotaDetails QuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetsOn = default)
-        {
-            return new QuotaDetails(used, quota, quotaResetsOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentClassifierContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
-        /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentClassifierContent"/> instance for mocking. </returns>
-        public static BuildDocumentClassifierContent BuildDocumentClassifierContent(string classifierId = null, string description = null, string baseClassifierId = null, IDictionary<string, ClassifierDocumentTypeDetails> docTypes = null)
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="modifiedOn"> Date and time (UTC) when the document model was last modified. </param>
+        /// <param name="apiVersion"> API version used to create this document classifier. </param>
+        /// <param name="baseClassifierId"> Base classifierId on top of which the classifier was trained. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, DateTimeOffset? modifiedOn = null, string apiVersion = null, string baseClassifierId = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
         {
-            docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+            warnings ??= new List<DocumentIntelligenceWarning>();
 
-            return new BuildDocumentClassifierContent(classifierId, description, baseClassifierId, docTypes, serializedAdditionalRawData: null);
+            return new DocumentClassifierDetails(
+                classifierId,
+                description,
+                createdOn,
+                expiresOn,
+                modifiedOn,
+                apiVersion,
+                baseClassifierId,
+                documentTypes,
+                warnings?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>. </summary>
@@ -950,7 +831,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -969,31 +850,88 @@ namespace Azure.AI.DocumentIntelligence
                 result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ComposeModelOptions"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="classifierId"> Custom classifier to split and classify the input file. </param>
+        /// <param name="split"> File splitting behavior. </param>
+        /// <param name="documentTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.ComposeModelOptions"/> instance for mocking. </returns>
+        public static ComposeModelOptions ComposeModelOptions(string modelId = null, string description = null, string classifierId = null, SplitMode? split = null, IDictionary<string, DocumentTypeDetails> documentTypes = null, IDictionary<string, string> tags = null)
+        {
+            documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
+            tags ??= new Dictionary<string, string>();
+
+            return new ComposeModelOptions(
+                modelId,
+                description,
+                classifierId,
+                split,
+                documentTypes,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AuthorizeModelCopyOptions"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AuthorizeModelCopyOptions"/> instance for mocking. </returns>
+        public static AuthorizeModelCopyOptions AuthorizeModelCopyOptions(string modelId = null, string description = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AuthorizeModelCopyOptions(modelId, description, tags, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceResourceDetails"/>. </summary>
+        /// <param name="customDocumentModels"> Details regarding custom document models. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceResourceDetails"/> instance for mocking. </returns>
+        public static DocumentIntelligenceResourceDetails DocumentIntelligenceResourceDetails(CustomDocumentModelsDetails customDocumentModels = null)
+        {
+            return new DocumentIntelligenceResourceDetails(customDocumentModels, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/>. </summary>
+        /// <param name="count"> Number of custom document models in the current resource. </param>
+        /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
+        public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
+        {
+            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildClassifierOptions"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
-        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
-        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
-        /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="baseClassifierId"> Base classifierId on top of which the classifier was trained. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, string baseClassifierId = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
+        /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <param name="allowOverwrite"> Allow overwriting an existing classifier with the same name. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.BuildClassifierOptions"/> instance for mocking. </returns>
+        public static BuildClassifierOptions BuildClassifierOptions(string classifierId = null, string description = null, string baseClassifierId = null, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null, bool? allowOverwrite = null)
         {
-            docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
-            warnings ??= new List<DocumentIntelligenceWarning>();
+            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
 
-            return new DocumentClassifierDetails(
+            return new BuildClassifierOptions(
                 classifierId,
                 description,
-                createdOn,
-                expiresOn,
-                apiVersion,
                 baseClassifierId,
-                docTypes,
-                warnings?.ToList(),
+                documentTypes,
+                allowOverwrite,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AuthorizeClassifierCopyOptions"/>. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document classifier. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AuthorizeClassifierCopyOptions"/> instance for mocking. </returns>
+        public static AuthorizeClassifierCopyOptions AuthorizeClassifierCopyOptions(string classifierId = null, string description = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AuthorizeClassifierCopyOptions(classifierId, description, tags, serializedAdditionalRawData: null);
         }
     }
 }

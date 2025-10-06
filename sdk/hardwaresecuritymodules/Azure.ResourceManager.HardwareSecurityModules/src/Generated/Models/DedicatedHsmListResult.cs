@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HardwareSecurityModules;
+using System.Linq;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> List of dedicated HSMs. </summary>
+    /// <summary> The response of a DedicatedHsm list operation. </summary>
     internal partial class DedicatedHsmListResult
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/>. </summary>
-        internal DedicatedHsmListResult()
+        /// <param name="value"> The DedicatedHsm items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DedicatedHsmListResult(IEnumerable<DedicatedHsmData> value)
         {
-            Value = new ChangeTrackingList<DedicatedHsmData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/>. </summary>
-        /// <param name="value"> The list of dedicated HSMs. </param>
-        /// <param name="nextLink"> The URL to get the next set of dedicated hsms. </param>
+        /// <param name="value"> The DedicatedHsm items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmListResult(IReadOnlyList<DedicatedHsmData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DedicatedHsmListResult(IReadOnlyList<DedicatedHsmData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of dedicated HSMs. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/> for deserialization. </summary>
+        internal DedicatedHsmListResult()
+        {
+        }
+
+        /// <summary> The DedicatedHsm items on this page. </summary>
         public IReadOnlyList<DedicatedHsmData> Value { get; }
-        /// <summary> The URL to get the next set of dedicated hsms. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

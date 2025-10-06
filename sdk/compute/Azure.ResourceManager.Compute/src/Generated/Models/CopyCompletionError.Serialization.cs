@@ -15,17 +15,25 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CopyCompletionError : IUtf8JsonSerializable, IJsonModel<CopyCompletionError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyCompletionError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyCompletionError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CopyCompletionError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CopyCompletionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyCompletionError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyCompletionError)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("errorCode"u8);
             writer.WriteStringValue(ErrorCode.ToString());
             writer.WritePropertyName("errorMessage"u8);
@@ -38,14 +46,13 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CopyCompletionError IJsonModel<CopyCompletionError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -53,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyCompletionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyCompletionError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyCompletionError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CopyCompletionError DeserializeCopyCompletionError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             CopyCompletionErrorReason errorCode = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -86,10 +93,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CopyCompletionError(errorCode, errorMessage, serializedAdditionalRawData);
         }
 
@@ -100,9 +107,9 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CopyCompletionError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyCompletionError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,11 +121,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCopyCompletionError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyCompletionError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyCompletionError)} does not support reading '{options.Format}' format.");
             }
         }
 

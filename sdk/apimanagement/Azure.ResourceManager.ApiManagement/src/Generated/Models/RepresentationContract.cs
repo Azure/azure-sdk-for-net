@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -82,14 +80,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies a registered or custom content type for this representation, e.g. application/xml. </summary>
+        [WirePath("contentType")]
         public string ContentType { get; set; }
         /// <summary> Schema identifier. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </summary>
+        [WirePath("schemaId")]
         public string SchemaId { get; set; }
         /// <summary> Type name defined by the schema. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </summary>
+        [WirePath("typeName")]
         public string TypeName { get; set; }
         /// <summary> Collection of form parameters. Required if 'contentType' value is either 'application/x-www-form-urlencoded' or 'multipart/form-data'.. </summary>
+        [WirePath("formParameters")]
         public IList<ParameterContract> FormParameters { get; }
         /// <summary> Exampled defined for the representation. </summary>
+        [WirePath("examples")]
         public IDictionary<string, ParameterExampleContract> Examples { get; }
     }
 }

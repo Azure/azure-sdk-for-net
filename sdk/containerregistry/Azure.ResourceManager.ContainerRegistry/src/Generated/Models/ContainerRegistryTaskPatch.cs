@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -87,16 +86,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The ARM resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The current status of task. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryTaskStatus? Status { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
+        [WirePath("properties.platform")]
         public ContainerRegistryPlatformUpdateContent Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
         internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
+        [WirePath("properties.agentConfiguration.cpu")]
         public int? AgentCpu
         {
             get => AgentConfiguration is null ? default : AgentConfiguration.Cpu;
@@ -109,20 +113,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The dedicated agent pool for the task. </summary>
+        [WirePath("properties.agentPoolName")]
         public string AgentPoolName { get; set; }
         /// <summary> Run timeout in seconds. </summary>
+        [WirePath("properties.timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary>
         /// The properties for updating a task step.
         /// Please note <see cref="ContainerRegistryTaskStepUpdateContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/> and <see cref="ContainerRegistryFileTaskStepUpdateContent"/>.
         /// </summary>
+        [WirePath("properties.step")]
         public ContainerRegistryTaskStepUpdateContent Step { get; set; }
         /// <summary> The properties for updating trigger properties. </summary>
+        [WirePath("properties.trigger")]
         public ContainerRegistryTriggerUpdateContent Trigger { get; set; }
         /// <summary> The parameters that describes a set of credentials that will be used when this run is invoked. </summary>
+        [WirePath("properties.credentials")]
         public ContainerRegistryCredentials Credentials { get; set; }
         /// <summary> The template that describes the repository and tag information for run log artifact. </summary>
+        [WirePath("properties.logTemplate")]
         public string LogTemplate { get; set; }
     }
 }

@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The command id. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> provisioning State. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> The exit code of the command. </summary>
+        [WirePath("properties.exitCode")]
         public int? ExitCode { get; }
         /// <summary> The time when the command started. </summary>
+        [WirePath("properties.startedAt")]
         public DateTimeOffset? StartedOn { get; }
         /// <summary> The time when the command finished. </summary>
+        [WirePath("properties.finishedAt")]
         public DateTimeOffset? FinishedOn { get; }
         /// <summary> The command output. </summary>
+        [WirePath("properties.logs")]
         public string Logs { get; }
         /// <summary> An explanation of why provisioningState is set to failed (if so). </summary>
+        [WirePath("properties.reason")]
         public string Reason { get; }
     }
 }

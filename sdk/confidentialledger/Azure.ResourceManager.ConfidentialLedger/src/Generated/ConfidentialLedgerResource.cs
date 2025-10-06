@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConfidentialLedger
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,6 +347,190 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
+        /// Backs up a Confidential Ledger Resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}/backup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Backup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Confidential Ledger Backup Request Body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfidentialLedgerBackupResult>> BackupAsync(WaitUntil waitUntil, ConfidentialLedgerBackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Backup");
+            scope.Start();
+            try
+            {
+                var response = await _confidentialLedgerLedgerRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerBackupResult>(new ConfidentialLedgerBackupResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Backs up a Confidential Ledger Resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}/backup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Backup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Confidential Ledger Backup Request Body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConfidentialLedgerBackupResult> Backup(WaitUntil waitUntil, ConfidentialLedgerBackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Backup");
+            scope.Start();
+            try
+            {
+                var response = _confidentialLedgerLedgerRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerBackupResult>(new ConfidentialLedgerBackupResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restores a Confidential Ledger Resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}/restore</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Restore</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Confidential Ledger Restore Request Body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfidentialLedgerRestoreResult>> RestoreAsync(WaitUntil waitUntil, ConfidentialLedgerRestoreContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Restore");
+            scope.Start();
+            try
+            {
+                var response = await _confidentialLedgerLedgerRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerRestoreResult>(new ConfidentialLedgerRestoreResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restores a Confidential Ledger Resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}/restore</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Restore</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Confidential Ledger Restore Request Body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConfidentialLedgerRestoreResult> Restore(WaitUntil waitUntil, ConfidentialLedgerRestoreContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Restore");
+            scope.Start();
+            try
+            {
+                var response = _confidentialLedgerLedgerRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerRestoreResult>(new ConfidentialLedgerRestoreResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -360,7 +543,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +605,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -484,7 +667,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -541,7 +724,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -598,7 +781,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -658,7 +841,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

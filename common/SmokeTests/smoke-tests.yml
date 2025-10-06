@@ -1,5 +1,6 @@
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
 
 jobs:
   - template: /eng/pipelines/templates/jobs/smoke.tests.yml

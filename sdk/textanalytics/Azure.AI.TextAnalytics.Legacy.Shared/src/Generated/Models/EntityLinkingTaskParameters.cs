@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics.Legacy;
-
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
     /// <summary> The EntityLinkingTaskParameters. </summary>

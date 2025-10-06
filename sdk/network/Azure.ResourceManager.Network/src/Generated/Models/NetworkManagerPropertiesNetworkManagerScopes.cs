@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of management groups. </summary>
+        [WirePath("managementGroups")]
         public IList<string> ManagementGroups { get; }
         /// <summary> List of subscriptions. </summary>
+        [WirePath("subscriptions")]
         public IList<string> Subscriptions { get; }
         /// <summary> List of cross tenant scopes. </summary>
+        [WirePath("crossTenantScopes")]
         public IReadOnlyList<CrossTenantScopes> CrossTenantScopes { get; }
     }
 }

@@ -1,17 +1,23 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
-#### RouterWorker && CreateWorkerOptions
-- Added `MaxConcurrentOffers`
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2024-04-12)
+
+### Features Added
+
+#### RouterWorker && CreateWorkerOptions
+- Added `MaxConcurrentOffers`
 
 ## 1.0.0 (2023-11-20)
 

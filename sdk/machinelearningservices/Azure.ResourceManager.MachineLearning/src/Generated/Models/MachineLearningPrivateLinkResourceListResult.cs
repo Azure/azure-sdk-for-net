@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningPrivateLinkResourceListResult(IReadOnlyList<MachineLearningPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +60,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<MachineLearningPrivateLinkResource> Value { get; }
     }
 }

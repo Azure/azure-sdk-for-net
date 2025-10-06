@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The UnknownTargetServiceBase. </summary>
+    /// <summary> Unknown version of TargetServiceBase. </summary>
     internal partial class UnknownTargetServiceBase : TargetServiceBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTargetServiceBase"/>. </summary>

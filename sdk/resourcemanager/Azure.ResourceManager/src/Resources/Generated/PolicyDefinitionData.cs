@@ -83,12 +83,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>
+        [WirePath("properties.policyType")]
         public PolicyType? PolicyType { get; set; }
         /// <summary> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </summary>
+        [WirePath("properties.mode")]
         public string Mode { get; set; }
         /// <summary> The display name of the policy definition. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The policy definition description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The policy rule.
@@ -120,6 +124,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.policyRule")]
         public BinaryData PolicyRule { get; set; }
         /// <summary>
         /// The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
@@ -151,8 +156,10 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameter> Parameters { get; }
     }
 }

@@ -5,15 +5,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/4307895c13b5bc76d3d6e5d6346a32577842ac17/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/222af3670e36c5083cb0dc8a9c2677a8f77f8958/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - ChangeDataCapture_CreateOrUpdate  # Missing required property
@@ -22,7 +21,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -60,6 +59,7 @@ acronym-mapping:
   URI: Uri
   MWS: Mws
   Etag: ETag|etag
+  ETag: ETag|eTag
   Db: DB|db
   CMK: Cmk
   ASC: Asc
@@ -71,6 +71,7 @@ acronym-mapping:
   Ml: ML
   VNet: Vnet
   Bw: BW
+  SQL: Sql
 
 keep-plural-enums:
   - ActivityOnInactiveMarkAs
@@ -124,6 +125,7 @@ rename-mapping:
   DatasetSchemaDataElement.name: SchemaColumnName
   DatasetSchemaDataElement.type: SchemaColumnType
   DatasetCompression.type: DatasetCompressionType
+  ValueType: DatasetSourceValueType
   DayOfWeek: DataFactoryDayOfWeek
   DaysOfWeek: DataFactoryDayOfWeek
   DelimitedTextDataset.typeProperties.location: DataLocation
@@ -134,6 +136,7 @@ rename-mapping:
   ExposureControlBatchResponse.exposureControlResponses: ExposureControlResults
   ExposureControlRequest: ExposureControlContent
   ExposureControlResponse: ExposureControlResult
+  ExpressionV2.value: V2Value;
   Factory: DataFactory
   FactoryListResponse: DataFactoryListResult
   FactoryRepoUpdate: FactoryRepoContent
@@ -148,6 +151,7 @@ rename-mapping:
   GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
+  HDInsightOnDemandLinkedService.typeProperties.version: Version
   HttpSource: DataFactoryHttpFileSource
   IntegrationRuntime: DataFactoryIntegrationRuntimeProperties
   IntegrationRuntimeAutoUpdate: IntegrationRuntimeAutoUpdateState
@@ -175,7 +179,6 @@ rename-mapping:
   LinkedServiceResource: DataFactoryLinkedService
   ManagedIdentityCredential: DataFactoryManagedIdentityCredentialProperties
   ManagedIdentityCredential.typeProperties.resourceId: -|arm-id
-  ManagedIdentityCredentialResource: DataFactoryManagedIdentityCredential
   ManagedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
   ManagedPrivateEndpoint: DataFactoryPrivateEndpointProperties
   ManagedPrivateEndpoint.privateLinkResourceId: -|arm-id
@@ -211,7 +214,7 @@ rename-mapping:
   QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
   ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
-  ScriptActivityScriptBlock.type: ScriptType
+  ScriptActivityScriptBlock.type: QueryType
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled
@@ -247,6 +250,13 @@ rename-mapping:
   VariableType: PipelineVariableType
   WranglingDataFlow: DataFactoryWranglingDataFlowProperties
   XmlDataset.typeProperties.location: DataLocation
+  CredentialResource: DataFactoryServiceCredential
+  AzureFunctionActivity.typeProperties.headers: RequestHeaders
+  WebActivity.typeProperties.headers: RequestHeaders
+  WebHookActivity.typeProperties.headers: RequestHeaders
+  LinkedService.version: LinkedServiceVersion
+  SapOdpLinkedService.typeProperties.sncMode: SncFlag
+  SapTableLinkedService.typeProperties.sncMode: SncFlag
 
 prepend-rp-prefix:
   - BlobEventsTrigger
@@ -286,6 +296,8 @@ prepend-rp-prefix:
   - ScriptAction
   - ScriptActivity
   - ScriptType
+  - ExpressionV2
+  - ExpressionV2Type
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun

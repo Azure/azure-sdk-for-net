@@ -18,6 +18,21 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:CreateDocumentIntelligenceClient
 #if SNIPPET
             string endpoint = "<endpoint>";
+            var credential = new DefaultAzureCredential();
+#else
+            string endpoint = TestEnvironment.Endpoint;
+            var credential = TestEnvironment.Credential;
+#endif
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
+        public void CreateDocumentIntelligenceClientApiKey()
+        {
+            #region Snippet:CreateDocumentIntelligenceClientApiKey
+#if SNIPPET
+            string endpoint = "<endpoint>";
             string apiKey = "<apiKey>";
 #else
             string endpoint = TestEnvironment.Endpoint;
@@ -28,30 +43,17 @@ namespace Azure.AI.DocumentIntelligence.Samples
         }
 
         [RecordedTest]
-        public void CreateDocumentIntelligenceClientTokenCredential()
-        {
-            #region Snippet:CreateDocumentIntelligenceClientTokenCredential
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
-            string endpoint = TestEnvironment.Endpoint;
-#endif
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
-            #endregion
-        }
-
-        [RecordedTest]
         public void CreateDocumentIntelligenceAdministrationClient()
         {
             #region Snippet:CreateDocumentIntelligenceAdministrationClient
 #if SNIPPET
             string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
+            var credential = new DefaultAzureCredential();
 #else
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -61,12 +63,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:Migration_CreateBothDocumentIntelligenceClients
 #if SNIPPET
             string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
+            var credential = new DefaultAzureCredential();
 #else
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            var credential = TestEnvironment.Credential;
 #endif
-            var credential = new AzureKeyCredential(apiKey);
 
             var documentIntelligenceClient = new DocumentIntelligenceClient(new Uri(endpoint), credential);
             var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
@@ -77,18 +78,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceBadRequest
-            var content = new AnalyzeDocumentContent()
-            {
-                UrlSource = new Uri("http://invalid.uri")
-            };
+            var uriSource = new Uri("http://invalid.uri");
+            var options = new AnalyzeDocumentOptions("prebuilt-receipt", uriSource);
 
             try
             {
-                Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+                Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             }
             catch (RequestFailedException e)
             {
@@ -101,8 +99,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task GetWordsSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:Migration_DocumentIntelligenceGetWordsUsage
 #if SNIPPET
@@ -111,12 +108,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
-            {
-                UrlSource = uriSource
-            };
+            var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             DocumentPage firstPage = result.Pages[0];

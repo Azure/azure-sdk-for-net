@@ -30,6 +30,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     out string traceparent,
                     out string tracestate))
             {
+                // link is required, parent is optional, but results in better experience
+                scope.AddLink(traceparent, tracestate);
                 scope.SetTraceContext(traceparent, tracestate);
             }
         }

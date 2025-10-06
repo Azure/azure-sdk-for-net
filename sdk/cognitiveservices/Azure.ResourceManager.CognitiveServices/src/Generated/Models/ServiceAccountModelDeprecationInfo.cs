@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The datetime of deprecation of the fineTune Model. </summary>
+        [WirePath("fineTune")]
         public DateTimeOffset? FineTuneOn { get; set; }
         /// <summary> The datetime of deprecation of the inference Model. </summary>
+        [WirePath("inference")]
         public DateTimeOffset? InferenceOn { get; set; }
     }
 }

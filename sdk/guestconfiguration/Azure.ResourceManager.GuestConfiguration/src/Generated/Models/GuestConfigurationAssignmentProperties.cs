@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -85,28 +84,40 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> VM resource Id. </summary>
+        [WirePath("targetResourceId")]
         public string TargetResourceId { get; }
         /// <summary> The guest configuration to assign. </summary>
+        [WirePath("guestConfiguration")]
         public GuestConfigurationNavigation GuestConfiguration { get; set; }
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Date and time when last compliance status was checked. </summary>
+        [WirePath("lastComplianceStatusChecked")]
         public DateTimeOffset? LastComplianceStatusCheckedOn { get; }
         /// <summary> Id of the latest report for the guest configuration assignment. </summary>
+        [WirePath("latestReportId")]
         public ResourceIdentifier LatestReportId { get; }
         /// <summary> parameter hash for the guest configuration assignment. </summary>
+        [WirePath("parameterHash")]
         public string ParameterHash { get; }
         /// <summary> Last reported guest configuration assignment report. </summary>
+        [WirePath("latestAssignmentReport")]
         public GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get; set; }
         /// <summary> The source which initiated the guest configuration assignment. Ex: Azure Policy. </summary>
+        [WirePath("context")]
         public string Context { get; set; }
         /// <summary> Combined hash of the configuration package and parameters. </summary>
+        [WirePath("assignmentHash")]
         public string AssignmentHash { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("provisioningState")]
         public GuestConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Type of the resource - VMSS / VM. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The list of VM Compliance data for VMSS. </summary>
+        [WirePath("vmssVMList")]
         public IList<GuestConfigurationVmssVmInfo> VmssVmList { get; set; }
     }
 }

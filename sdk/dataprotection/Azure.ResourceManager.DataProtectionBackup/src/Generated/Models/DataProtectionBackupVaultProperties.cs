@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -56,6 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(storageSettings, nameof(storageSettings));
 
             StorageSettings = storageSettings.ToList();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
             ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
@@ -69,9 +69,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security Level of Backup Vault. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -82,6 +84,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
             FeatureSettings = featureSettings;
             SecureScore = secureScore;
+            BcdrSecurityLevel = bcdrSecurityLevel;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             ReplicatedRegions = replicatedRegions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -119,6 +123,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultFeatureSettings FeatureSettings { get; set; }
         /// <summary> Secure Score of Backup Vault. </summary>
         public BackupVaultSecureScoreLevel? SecureScore { get; }
+        /// <summary> Security Level of Backup Vault. </summary>
+        public BcdrSecurityLevel? BcdrSecurityLevel { get; }
+        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
+        public IList<string> ResourceGuardOperationRequests { get; }
         /// <summary> List of replicated regions for Backup Vault. </summary>
         public IList<AzureLocation> ReplicatedRegions { get; }
     }

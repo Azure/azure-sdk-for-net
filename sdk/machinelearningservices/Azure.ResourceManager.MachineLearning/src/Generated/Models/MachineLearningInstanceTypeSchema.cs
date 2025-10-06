@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Node Selector. </summary>
+        [WirePath("nodeSelector")]
         public IDictionary<string, string> NodeSelector { get; set; }
         /// <summary> Resource requests/limits for this instance type. </summary>
+        [WirePath("resources")]
         public MachineLearningInstanceTypeSchemaResources Resources { get; set; }
     }
 }

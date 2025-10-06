@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Tags = new ChangeTrackingDictionary<string, string>();
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> UUID v4 used to identify the Backup. </summary>

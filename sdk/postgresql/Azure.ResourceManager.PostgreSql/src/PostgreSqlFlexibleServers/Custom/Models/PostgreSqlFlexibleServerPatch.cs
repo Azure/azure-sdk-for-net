@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> Max storage allowed for a server. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
         {
             get => Storage is null ? default : Storage.StorageSizeInGB;

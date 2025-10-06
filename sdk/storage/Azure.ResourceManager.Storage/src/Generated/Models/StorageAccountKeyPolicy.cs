@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The key expiration period in days. </summary>
+        [WirePath("keyExpirationPeriodInDays")]
         public int KeyExpirationPeriodInDays { get; set; }
     }
 }

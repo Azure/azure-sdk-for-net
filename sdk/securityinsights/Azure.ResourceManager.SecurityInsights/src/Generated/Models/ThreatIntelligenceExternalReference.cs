@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> External reference description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> External reference ID. </summary>
+        [WirePath("externalId")]
         public string ExternalId { get; set; }
         /// <summary> External reference source name. </summary>
+        [WirePath("sourceName")]
         public string SourceName { get; set; }
         /// <summary> External reference URL. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> External reference hashes. </summary>
+        [WirePath("hashes")]
         public IDictionary<string, string> Hashes { get; }
     }
 }

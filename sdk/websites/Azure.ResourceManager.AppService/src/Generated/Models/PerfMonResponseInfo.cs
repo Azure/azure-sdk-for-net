@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The response code. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> The message. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> The performance monitor counters. </summary>
+        [WirePath("data")]
         public PerfMonSet Data { get; }
     }
 }

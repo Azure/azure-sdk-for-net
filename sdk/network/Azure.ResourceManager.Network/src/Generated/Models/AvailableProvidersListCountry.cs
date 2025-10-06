@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The country name. </summary>
+        [WirePath("countryName")]
         public string CountryName { get; }
         /// <summary> A list of Internet service providers. </summary>
+        [WirePath("providers")]
         public IReadOnlyList<string> Providers { get; }
         /// <summary> List of available states in the country. </summary>
+        [WirePath("states")]
         public IReadOnlyList<AvailableProvidersListState> States { get; }
     }
 }

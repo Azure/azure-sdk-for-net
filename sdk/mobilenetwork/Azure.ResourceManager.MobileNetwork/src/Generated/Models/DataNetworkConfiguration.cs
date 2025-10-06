@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -101,6 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </summary>
         internal WritableSubResource DataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("dataNetwork.id")]
         public ResourceIdentifier DataNetworkId
         {
             get => DataNetwork is null ? default : DataNetwork.Id;
@@ -113,22 +113,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </summary>
+        [WirePath("sessionAmbr")]
         public Ambr SessionAmbr { get; set; }
         /// <summary> Default 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values. </summary>
+        [WirePath("5qi")]
         public int? FiveQi { get; set; }
         /// <summary> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        [WirePath("allocationAndRetentionPriorityLevel")]
         public int? AllocationAndRetentionPriorityLevel { get; set; }
         /// <summary> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        [WirePath("preemptionCapability")]
         public MobileNetworkPreemptionCapability? PreemptionCapability { get; set; }
         /// <summary> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
+        [WirePath("preemptionVulnerability")]
         public MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get; set; }
         /// <summary> The default PDU session type, which is used if the UE does not request a specific session type. </summary>
+        [WirePath("defaultSessionType")]
         public MobileNetworkPduSessionType? DefaultSessionType { get; set; }
         /// <summary> Allowed session types in addition to the default session type. Must not duplicate the default session type. </summary>
+        [WirePath("additionalAllowedSessionTypes")]
         public IList<MobileNetworkPduSessionType> AdditionalAllowedSessionTypes { get; }
         /// <summary> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </summary>
+        [WirePath("allowedServices")]
         public IList<WritableSubResource> AllowedServices { get; }
         /// <summary> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </summary>
+        [WirePath("maximumNumberOfBufferedPackets")]
         public int? MaximumNumberOfBufferedPackets { get; set; }
     }
 }

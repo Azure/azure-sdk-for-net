@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Gets the support plan. </summary>
+        [WirePath("supportPlan")]
         public IReadOnlyList<KubernetesSupportPlan> SupportPlan { get; }
     }
 }

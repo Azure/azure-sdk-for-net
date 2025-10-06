@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The ScriptOutputStreamType. </summary>
+    /// <summary> Script Output Stream type. </summary>
     public readonly partial struct ScriptOutputStreamType : IEquatable<ScriptOutputStreamType>
     {
         private readonly string _value;
@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Avs.Models
         private const string OutputValue = "Output";
         private const string ErrorValue = "Error";
 
-        /// <summary> Information. </summary>
+        /// <summary> is information. </summary>
         public static ScriptOutputStreamType Information { get; } = new ScriptOutputStreamType(InformationValue);
-        /// <summary> Warning. </summary>
+        /// <summary> is warning. </summary>
         public static ScriptOutputStreamType Warning { get; } = new ScriptOutputStreamType(WarningValue);
-        /// <summary> Output. </summary>
+        /// <summary> is output. </summary>
         public static ScriptOutputStreamType Output { get; } = new ScriptOutputStreamType(OutputValue);
-        /// <summary> Error. </summary>
+        /// <summary> is error. </summary>
         public static ScriptOutputStreamType Error { get; } = new ScriptOutputStreamType(ErrorValue);
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are the same. </summary>
         public static bool operator ==(ScriptOutputStreamType left, ScriptOutputStreamType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are not the same. </summary>
         public static bool operator !=(ScriptOutputStreamType left, ScriptOutputStreamType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptOutputStreamType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptOutputStreamType"/>. </summary>
         public static implicit operator ScriptOutputStreamType(string value) => new ScriptOutputStreamType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

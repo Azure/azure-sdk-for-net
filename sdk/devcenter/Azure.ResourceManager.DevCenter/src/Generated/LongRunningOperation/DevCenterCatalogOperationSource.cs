@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DevCenter
 
         DevCenterCatalogResource IOperationSource<DevCenterCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DevCenterCatalogData.DeserializeDevCenterCatalogData(document.RootElement);
+            var data = ModelReaderWriter.Read<DevCenterCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
             return new DevCenterCatalogResource(_client, data);
         }
 
         async ValueTask<DevCenterCatalogResource> IOperationSource<DevCenterCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DevCenterCatalogData.DeserializeDevCenterCatalogData(document.RootElement);
-            return new DevCenterCatalogResource(_client, data);
+            var data = ModelReaderWriter.Read<DevCenterCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            return await Task.FromResult(new DevCenterCatalogResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

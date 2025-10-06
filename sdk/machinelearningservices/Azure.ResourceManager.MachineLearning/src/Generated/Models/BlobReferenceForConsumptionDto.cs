@@ -56,18 +56,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Blob URI path for client to upload data.
         /// Example: https://blob.windows.core.net/Container/Path
         /// </param>
+        /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
         /// <param name="credential">
         /// Credential info to access storage account
         /// Please note <see cref="PendingUploadCredentialDto"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SasCredentialDto"/>.
         /// </param>
-        /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobReferenceForConsumptionDto(Uri blobUri, PendingUploadCredentialDto credential, ResourceIdentifier storageAccountArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobReferenceForConsumptionDto(Uri blobUri, ResourceIdentifier storageAccountArmId, PendingUploadCredentialDto credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
-            Credential = credential;
             StorageAccountArmId = storageAccountArmId;
+            Credential = credential;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,14 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Blob URI path for client to upload data.
         /// Example: https://blob.windows.core.net/Container/Path
         /// </summary>
+        [WirePath("blobUri")]
         public Uri BlobUri { get; }
+        /// <summary> Arm ID of the storage account to use. </summary>
+        [WirePath("storageAccountArmId")]
+        public ResourceIdentifier StorageAccountArmId { get; }
         /// <summary>
         /// Credential info to access storage account
         /// Please note <see cref="PendingUploadCredentialDto"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SasCredentialDto"/>.
         /// </summary>
+        [WirePath("credential")]
         public PendingUploadCredentialDto Credential { get; }
-        /// <summary> Arm ID of the storage account to use. </summary>
-        public ResourceIdentifier StorageAccountArmId { get; }
     }
 }

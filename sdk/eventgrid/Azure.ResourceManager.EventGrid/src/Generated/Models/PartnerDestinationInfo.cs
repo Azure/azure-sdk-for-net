@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -85,19 +84,24 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
         /// created under this Azure subscription.
         /// </summary>
+        [WirePath("azureSubscriptionId")]
         public string AzureSubscriptionId { get; set; }
         /// <summary>
         /// Azure Resource Group of the subscriber. The partner destination associated with the channel will be
         /// created under this resource group.
         /// </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
         /// <summary> Name of the partner destination associated with the channel. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Type of the endpoint for the partner destination. </summary>
         internal PartnerEndpointType EndpointType { get; set; }
         /// <summary> Additional context of the partner destination endpoint. </summary>
+        [WirePath("endpointServiceContext")]
         public string EndpointServiceContext { get; set; }
         /// <summary> Change history of the resource move. </summary>
+        [WirePath("resourceMoveChangeHistory")]
         public IList<ResourceMoveChangeHistory> ResourceMoveChangeHistory { get; }
     }
 }

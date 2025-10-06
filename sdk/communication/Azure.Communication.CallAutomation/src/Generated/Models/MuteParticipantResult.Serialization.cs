@@ -28,5 +28,13 @@ namespace Azure.Communication.CallAutomation
             }
             return new MuteParticipantResult(operationContext);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MuteParticipantResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMuteParticipantResult(document.RootElement);
+        }
     }
 }

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.4</Version>
+    <Version>1.1.0-beta.7</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ConfidentialLedger</PackageId>

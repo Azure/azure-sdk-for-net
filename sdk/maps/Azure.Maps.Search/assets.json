@@ -1,6 +1,6 @@
 {
-  "AssetsRepo": "Azure/azure-sdk-assets",
-  "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/maps/Azure.Maps.Search",
-  "Tag": "net/maps/Azure.Maps.Search_6b3d5e7100"
+    "AssetsRepo": "Azure/azure-sdk-assets",
+    "AssetsRepoPrefixPath": "net",
+    "TagPrefix": "net/maps/Azure.Maps.Search",
+    "Tag": "net/maps/Azure.Maps.Search_7355bc7ce8"
 }

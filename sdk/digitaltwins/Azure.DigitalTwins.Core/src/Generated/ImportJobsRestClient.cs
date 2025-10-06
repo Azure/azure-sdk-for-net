@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.DigitalTwins.Core.Models;
@@ -31,7 +30,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ImportJobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-06-30")
+        public ImportJobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-10-31")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -73,7 +72,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -98,7 +97,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -157,7 +156,7 @@ namespace Azure.DigitalTwins.Core
                 case 201:
                     {
                         ImportJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +196,7 @@ namespace Azure.DigitalTwins.Core
                 case 201:
                     {
                         ImportJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -246,7 +245,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,7 +279,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +304,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Deletes an import job.
+        /// Deletes an import job. This is simply used to remove a job id, so it may be reused later. It can not be used to stop entities from being imported.
         /// Status codes:
         /// * 204 No Content
         /// * 400 Bad Request
@@ -334,7 +333,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Deletes an import job.
+        /// Deletes an import job. This is simply used to remove a job id, so it may be reused later. It can not be used to stop entities from being imported.
         /// Status codes:
         /// * 204 No Content
         /// * 400 Bad Request
@@ -379,7 +378,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Cancels an import job.
+        /// Cancels an import job that is currently running. Service will stop any import operations triggered by the current import job that are in progress, and go to a cancelled state. Please note that this will leave your instance in an unknown state as there won't be any rollback operation.
         /// Status codes:
         /// * 200 Request Accepted
         /// * 400 Bad Request
@@ -403,7 +402,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +412,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Cancels an import job.
+        /// Cancels an import job that is currently running. Service will stop any import operations triggered by the current import job that are in progress, and go to a cancelled state. Please note that this will leave your instance in an unknown state as there won't be any rollback operation.
         /// Status codes:
         /// * 200 Request Accepted
         /// * 400 Bad Request
@@ -437,7 +436,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -486,7 +485,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -518,7 +517,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

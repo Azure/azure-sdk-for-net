@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -75,18 +74,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Source Kind to pull the configuration data from. </summary>
+        [WirePath("properties.sourceKind")]
         public KubernetesConfigurationSourceKind? SourceKind { get; set; }
         /// <summary> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </summary>
+        [WirePath("properties.suspend")]
         public bool? Suspend { get; set; }
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
+        [WirePath("properties.gitRepository")]
         public KubernetesGitRepositoryUpdateContent GitRepository { get; set; }
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
+        [WirePath("properties.bucket")]
         public KubernetesBucketUpdateContent Bucket { get; set; }
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
+        [WirePath("properties.azureBlob")]
         public KubernetesAzureBlobUpdateContent AzureBlob { get; set; }
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
+        [WirePath("properties.kustomizations")]
         public IDictionary<string, KustomizationUpdateContent> Kustomizations { get; set; }
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
+        [WirePath("properties.configurationProtectedSettings")]
         public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
     }
 }

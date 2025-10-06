@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> List of container definitions for the Container Apps Job. </summary>
+        [WirePath("containers")]
         public IList<JobExecutionContainer> Containers { get; }
         /// <summary> List of specialized containers that run before job containers. </summary>
+        [WirePath("initContainers")]
         public IList<JobExecutionContainer> InitContainers { get; }
     }
 }

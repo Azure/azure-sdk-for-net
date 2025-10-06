@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> body parameter name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> body parameter value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

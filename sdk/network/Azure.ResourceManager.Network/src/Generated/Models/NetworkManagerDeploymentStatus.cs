@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Commit Time. </summary>
+        [WirePath("commitTime")]
         public DateTimeOffset? CommitOn { get; }
         /// <summary> Region Name. </summary>
+        [WirePath("region")]
         public string Region { get; }
         /// <summary> Deployment Status. </summary>
+        [WirePath("deploymentStatus")]
         public NetworkManagerDeploymentState? DeploymentState { get; }
         /// <summary> List of configuration ids. </summary>
+        [WirePath("configurationIds")]
         public IReadOnlyList<string> ConfigurationIds { get; }
         /// <summary> Configuration Deployment Type. </summary>
+        [WirePath("deploymentType")]
         public NetworkConfigurationDeploymentType? DeploymentType { get; }
         /// <summary> Error Message. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

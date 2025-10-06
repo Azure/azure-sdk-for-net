@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </summary>
+        [WirePath("certificateUrl")]
         public Uri CertificateUri { get; set; }
         /// <summary> The provisioning state of the certificate. </summary>
+        [WirePath("provisioning")]
         public MobileNetworkCertificateProvisioning Provisioning { get; }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
@@ -106,6 +104,54 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         {
             DnsForwardingRulesetVirtualNetworkLinkResource.ValidateResourceId(id);
             return new DnsForwardingRulesetVirtualNetworkLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverPolicyResource"/> object. </returns>
+        public virtual DnsResolverPolicyResource GetDnsResolverPolicyResource(ResourceIdentifier id)
+        {
+            DnsResolverPolicyResource.ValidateResourceId(id);
+            return new DnsResolverPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsSecurityRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsSecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="DnsSecurityRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsSecurityRuleResource"/> object. </returns>
+        public virtual DnsSecurityRuleResource GetDnsSecurityRuleResource(ResourceIdentifier id)
+        {
+            DnsSecurityRuleResource.ValidateResourceId(id);
+            return new DnsSecurityRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverPolicyVirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> object. </returns>
+        public virtual DnsResolverPolicyVirtualNetworkLinkResource GetDnsResolverPolicyVirtualNetworkLinkResource(ResourceIdentifier id)
+        {
+            DnsResolverPolicyVirtualNetworkLinkResource.ValidateResourceId(id);
+            return new DnsResolverPolicyVirtualNetworkLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverDomainListResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverDomainListResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverDomainListResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverDomainListResource"/> object. </returns>
+        public virtual DnsResolverDomainListResource GetDnsResolverDomainListResource(ResourceIdentifier id)
+        {
+            DnsResolverDomainListResource.ValidateResourceId(id);
+            return new DnsResolverDomainListResource(Client, id);
         }
 
         /// <summary>

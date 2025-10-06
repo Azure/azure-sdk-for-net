@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -43,7 +41,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="conflictPolicy"> Gets or sets the Conflict Policy property. This property sets policy during conflict of resources during restore. </param>
         /// <param name="namespaceMappings"> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </param>
         /// <param name="restoreHookReferences"> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore. </param>
-        internal KubernetesClusterRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, PersistentVolumeRestoreMode? persistentVolumeRestoreMode, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy, IDictionary<string, string> namespaceMappings, IList<NamespacedName> restoreHookReferences) : base(objectType, serializedAdditionalRawData)
+        /// <param name="resourceModifierReference"> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </param>
+        internal KubernetesClusterRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, PersistentVolumeRestoreMode? persistentVolumeRestoreMode, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy, IDictionary<string, string> namespaceMappings, IList<NamespacedName> restoreHookReferences, NamespacedName resourceModifierReference) : base(objectType, serializedAdditionalRawData)
         {
             IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
             IncludedNamespaces = includedNamespaces;
@@ -55,6 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ConflictPolicy = conflictPolicy;
             NamespaceMappings = namespaceMappings;
             RestoreHookReferences = restoreHookReferences;
+            ResourceModifierReference = resourceModifierReference;
             ObjectType = objectType ?? "KubernetesClusterRestoreCriteria";
         }
 
@@ -83,5 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IDictionary<string, string> NamespaceMappings { get; }
         /// <summary> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore. </summary>
         public IList<NamespacedName> RestoreHookReferences { get; }
+        /// <summary> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </summary>
+        public NamespacedName ResourceModifierReference { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The list of the allowed groups. </summary>
+        [WirePath("groups")]
         public IList<string> Groups { get; }
         /// <summary> The list of the allowed identities. </summary>
+        [WirePath("identities")]
         public IList<string> Identities { get; }
     }
 }

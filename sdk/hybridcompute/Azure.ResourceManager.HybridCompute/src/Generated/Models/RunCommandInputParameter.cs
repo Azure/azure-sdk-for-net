@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The run command parameter name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The run command parameter value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

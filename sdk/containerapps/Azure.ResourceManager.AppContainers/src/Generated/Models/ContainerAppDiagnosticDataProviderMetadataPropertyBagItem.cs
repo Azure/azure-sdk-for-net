@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Property name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Property value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownIdentityConfiguration. </summary>
+    /// <summary> Unknown version of IdentityConfiguration. </summary>
     internal partial class UnknownIdentityConfiguration : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownIdentityConfiguration"/>. </summary>

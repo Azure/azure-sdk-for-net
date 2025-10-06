@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
+        [WirePath("templates")]
         public IList<SignalRUpstreamTemplate> Templates { get; }
     }
 }

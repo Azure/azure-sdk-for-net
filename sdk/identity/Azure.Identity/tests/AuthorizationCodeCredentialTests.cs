@@ -33,6 +33,8 @@ namespace Azure.Identity.Tests
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                RedirectUri = config.RedirectUri,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {

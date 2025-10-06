@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the key. </summary>
+        [WirePath("key")]
         public string Key { get; }
         /// <summary> Gets the renewal period. </summary>
+        [WirePath("renewalPeriod")]
         public float? RenewalPeriod { get; }
         /// <summary> Gets the count. </summary>
+        [WirePath("count")]
         public float? Count { get; }
         /// <summary> Gets the min count. </summary>
+        [WirePath("minCount")]
         public float? MinCount { get; }
         /// <summary> Gets the is dynamic throttling enabled. </summary>
+        [WirePath("dynamicThrottlingEnabled")]
         public bool? IsDynamicThrottlingEnabled { get; }
         /// <summary> Gets the match patterns. </summary>
+        [WirePath("matchPatterns")]
         public IReadOnlyList<ServiceAccountThrottlingMatchPattern> MatchPatterns { get; }
     }
 }

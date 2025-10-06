@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The column data type. </summary>
+        [WirePath("properties.columnType")]
         public SqlColumnDataType? ColumnType { get; set; }
         /// <summary> The table temporal type. </summary>
+        [WirePath("properties.temporalType")]
         public TableTemporalType? TemporalType { get; set; }
         /// <summary> Whether or not the column belongs to a memory optimized table. </summary>
+        [WirePath("properties.memoryOptimized")]
         public bool? IsMemoryOptimized { get; set; }
         /// <summary> Whether or not the column is computed. </summary>
+        [WirePath("properties.isComputed")]
         public bool? IsComputed { get; set; }
     }
 }

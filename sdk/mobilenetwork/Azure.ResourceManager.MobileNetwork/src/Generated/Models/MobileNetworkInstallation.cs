@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -72,16 +71,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The desired installation state. </summary>
+        [WirePath("desiredState")]
         public DesiredInstallationState? DesiredState { get; set; }
         /// <summary> Installation state. </summary>
+        [WirePath("state")]
         public MobileNetworkInstallationState? State { get; }
         /// <summary> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </summary>
+        [WirePath("reinstallRequired")]
         public MobileNetworkReinstallRequired? ReinstallRequired { get; }
         /// <summary> Reason(s) for the current installation state of the packet core. </summary>
+        [WirePath("reasons")]
         public IReadOnlyList<MobileNetworkInstallationReason> Reasons { get; }
         /// <summary> A reference to an in-progress installation operation. </summary>
         internal SubResource Operation { get; }
         /// <summary> Gets Id. </summary>
+        [WirePath("operation.id")]
         public ResourceIdentifier OperationId
         {
             get => Operation?.Id;

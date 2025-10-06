@@ -108,44 +108,64 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> The role eligibility schedule request scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> The role definition ID. </summary>
+        [WirePath("properties.roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The principal ID. </summary>
+        [WirePath("properties.principalId")]
         public Guid? PrincipalId { get; set; }
         /// <summary> The principal type of the assigned principal ID. </summary>
+        [WirePath("properties.principalType")]
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
+        [WirePath("properties.requestType")]
         public RoleManagementScheduleRequestType? RequestType { get; set; }
         /// <summary> The status of the role eligibility schedule request. </summary>
+        [WirePath("properties.status")]
         public RoleManagementScheduleStatus? Status { get; }
         /// <summary> The approvalId of the role eligibility schedule request. </summary>
+        [WirePath("properties.approvalId")]
         public string ApprovalId { get; }
         /// <summary> The resultant role eligibility schedule id or the role eligibility schedule id being updated. </summary>
+        [WirePath("properties.targetRoleEligibilityScheduleId")]
         public ResourceIdentifier TargetRoleEligibilityScheduleId { get; set; }
         /// <summary> The role eligibility schedule instance id being updated. </summary>
+        [WirePath("properties.targetRoleEligibilityScheduleInstanceId")]
         public ResourceIdentifier TargetRoleEligibilityScheduleInstanceId { get; set; }
         /// <summary> Justification for the role eligibility. </summary>
+        [WirePath("properties.justification")]
         public string Justification { get; set; }
         /// <summary> Ticket Info of the role eligibility. </summary>
+        [WirePath("properties.ticketInfo")]
         public RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
+        [WirePath("properties.condition")]
         public string Condition { get; set; }
         /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
+        [WirePath("properties.conditionVersion")]
         public string ConditionVersion { get; set; }
         /// <summary> DateTime when role eligibility schedule request was created. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Id of the user who created this request. </summary>
+        [WirePath("properties.requestorId")]
         public Guid? RequestorId { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
+        [WirePath("properties.expandedProperties")]
         public RoleManagementExpandedProperties ExpandedProperties { get; }
         /// <summary> Start DateTime of the role eligibility schedule. </summary>
+        [WirePath("properties.startDateTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Type of the role eligibility schedule expiration. </summary>
+        [WirePath("properties.type")]
         public RoleManagementScheduleExpirationType? ExpirationType { get; set; }
         /// <summary> End DateTime of the role eligibility schedule. </summary>
+        [WirePath("properties.endDateTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Duration of the role eligibility schedule in TimeSpan. </summary>
+        [WirePath("properties.duration")]
         public TimeSpan? Duration { get; set; }
     }
 }

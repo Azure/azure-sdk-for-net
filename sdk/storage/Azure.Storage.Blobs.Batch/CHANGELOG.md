@@ -1,6 +1,86 @@
 # Release History
 
-## 12.17.0-beta.2 (Unreleased)
+## 12.24.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for service version 2026-02-06.
+
+## 12.22.0 (2025-07-14)
+
+### Features Added
+- Includes all features from 12.22.0-beta.1
+
+## 12.23.0-beta.1 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+## 12.22.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+
+## 12.21.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1
+
+### Bugs Fixed
+- Fixed an issue where batch subrequests would not authenticate properly if using `TokenCredential` authentication when the `BlobBatchClient` was created from `BlobContianerClient.GetBlobBatchClient`.
+
+## 12.21.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.20.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1 and 12.20.0-beta.2.
+
+## 12.20.0-beta.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.19.1 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.20.0-beta.1 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+
+## 12.19.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.19.0-beta.1.
+
+## 12.19.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+
+## 12.18.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.18.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.18.0-beta.1.
+
+## 12.18.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+
+## 12.17.0 (2024-05-15)
+- Includes all features from 12.17.0-beta.1 and 12.17.0-beta.2.
+
+## 12.17.0-beta.2 (2024-04-15)
 - Added support for service version 2023-05-04.
 - Added support for deleting individual blob versions.
 

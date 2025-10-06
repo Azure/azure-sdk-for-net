@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Type of enclave requested on the elastic pool. </summary>
+    /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
     public readonly partial struct SqlAlwaysEncryptedEnclaveType : IEquatable<SqlAlwaysEncryptedEnclaveType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlAlwaysEncryptedEnclaveType left, SqlAlwaysEncryptedEnclaveType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedEnclaveType"/> values are not the same. </summary>
         public static bool operator !=(SqlAlwaysEncryptedEnclaveType left, SqlAlwaysEncryptedEnclaveType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAlwaysEncryptedEnclaveType"/>. </summary>
         public static implicit operator SqlAlwaysEncryptedEnclaveType(string value) => new SqlAlwaysEncryptedEnclaveType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

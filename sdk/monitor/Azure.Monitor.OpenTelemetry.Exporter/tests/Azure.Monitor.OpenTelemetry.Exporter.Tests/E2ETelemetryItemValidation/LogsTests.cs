@@ -57,6 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
+                        options.IncludeScopes = true;
                         options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
                     });
@@ -64,12 +65,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
-            logger.Log(
-                logLevel: logLevel,
-                eventId: 0,
-                exception: null,
-                message: "Hello {name}.",
-                args: new object[] { "World" });
+
+            List<KeyValuePair<string, object>> scope1 = new()
+            {
+                new("scopeKey1", "scopeValue1"),
+                new("scopeKey1", "scopeValue2")
+            };
+
+            List<KeyValuePair<string, object>> scope2 = new()
+            {
+                new("scopeKey1", "scopeValue3")
+            };
+
+            using (logger.BeginScope(scope1))
+            using (logger.BeginScope(scope2))
+            {
+                logger.Log(
+                    logLevel: logLevel,
+                    eventId: 1,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+            }
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -83,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "EventId", "1" }, { "name", "World" }, { "CategoryName", logCategoryName }, { "scopeKey1", "scopeValue1" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -126,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             {
                 logger.Log(
                     logLevel: logLevel,
-                    eventId: 0,
+                    eventId: 1,
                     exception: ex,
                     message: "Hello {name}.",
                     args: new object[] { "World" });
@@ -144,7 +161,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Test Exception",
-                expectedTypeName: "System.Exception");
+                expectedTypeName: "System.Exception",
+                expectedProperties: new Dictionary<string, string> { { "EventId", "1" } });
+        }
+
+        [Fact]
+        public void VerifyLogWithClientIPMapsToAiLocationIp()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation("Client IP: {microsoft.client.ip}", "1.2.3.4");
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Message").Single();
+
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
+                telemetryItem: telemetryItem!,
+                expectedSeverityLevel: "Information",
+                expectedMessage: "Client IP: {microsoft.client.ip}",
+                expectedMessageProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
+                expectedSpanId: null,
+                expectedTraceId: null,
+                expectedClientIp: "1.2.3.4");
         }
     }
 }

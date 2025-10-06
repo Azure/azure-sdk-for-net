@@ -9,31 +9,39 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FhirR4Observation : IUtf8JsonSerializable, IJsonModel<FhirR4Observation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Observation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Observation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4Observation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Observation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Observation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4Observation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStartArray();
                 foreach (var item in Identifier)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -45,21 +53,21 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Category)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("code"u8);
-            writer.WriteObjectValue(Code);
+            writer.WriteObjectValue(Code, options);
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
-                writer.WriteObjectValue(Subject);
+                writer.WriteObjectValue(Subject, options);
             }
             if (Optional.IsDefined(Encounter))
             {
                 writer.WritePropertyName("encounter"u8);
-                writer.WriteObjectValue(Encounter);
+                writer.WriteObjectValue(Encounter, options);
             }
             if (Optional.IsDefined(EffectiveDateTime))
             {
@@ -69,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(EffectivePeriod))
             {
                 writer.WritePropertyName("effectivePeriod"u8);
-                writer.WriteObjectValue(EffectivePeriod);
+                writer.WriteObjectValue(EffectivePeriod, options);
             }
             if (Optional.IsDefined(EffectiveInstant))
             {
@@ -84,12 +92,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueQuantity))
             {
                 writer.WritePropertyName("valueQuantity"u8);
-                writer.WriteObjectValue(ValueQuantity);
+                writer.WriteObjectValue(ValueQuantity, options);
             }
             if (Optional.IsDefined(ValueCodeableConcept))
             {
                 writer.WritePropertyName("valueCodeableConcept"u8);
-                writer.WriteObjectValue(ValueCodeableConcept);
+                writer.WriteObjectValue(ValueCodeableConcept, options);
             }
             if (Optional.IsDefined(ValueString))
             {
@@ -109,17 +117,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueRange))
             {
                 writer.WritePropertyName("valueRange"u8);
-                writer.WriteObjectValue(ValueRange);
+                writer.WriteObjectValue(ValueRange, options);
             }
             if (Optional.IsDefined(ValueRatio))
             {
                 writer.WritePropertyName("valueRatio"u8);
-                writer.WriteObjectValue(ValueRatio);
+                writer.WriteObjectValue(ValueRatio, options);
             }
             if (Optional.IsDefined(ValueSampledData))
             {
                 writer.WritePropertyName("valueSampledData"u8);
-                writer.WriteObjectValue(ValueSampledData);
+                writer.WriteObjectValue(ValueSampledData, options);
             }
             if (Optional.IsDefined(ValueTime))
             {
@@ -134,12 +142,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValuePeriod))
             {
                 writer.WritePropertyName("valuePeriod"u8);
-                writer.WriteObjectValue(ValuePeriod);
+                writer.WriteObjectValue(ValuePeriod, options);
             }
             if (Optional.IsDefined(DataAbsentReason))
             {
                 writer.WritePropertyName("dataAbsentReason"u8);
-                writer.WriteObjectValue(DataAbsentReason);
+                writer.WriteObjectValue(DataAbsentReason, options);
             }
             if (Optional.IsCollectionDefined(Interpretation))
             {
@@ -147,7 +155,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Interpretation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,19 +165,19 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Note)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BodySite))
             {
                 writer.WritePropertyName("bodySite"u8);
-                writer.WriteObjectValue(BodySite);
+                writer.WriteObjectValue(BodySite, options);
             }
             if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteObjectValue(Method);
+                writer.WriteObjectValue(Method, options);
             }
             if (Optional.IsCollectionDefined(ReferenceRange))
             {
@@ -177,7 +185,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ReferenceRange)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +195,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in HasMember)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +205,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in DerivedFrom)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,66 +215,9 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Component)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Text))
-            {
-                writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
-            }
-            if (Optional.IsCollectionDefined(Contained))
-            {
-                writer.WritePropertyName("contained"u8);
-                writer.WriteStartArray();
-                foreach (var item in Contained)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extension)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ModifierExtension))
-            {
-                writer.WritePropertyName("modifierExtension"u8);
-                writer.WriteStartArray();
-                foreach (var item in ModifierExtension)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Meta))
-            {
-                writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
-            }
-            if (Optional.IsDefined(ImplicitRules))
-            {
-                writer.WritePropertyName("implicitRules"u8);
-                writer.WriteStringValue(ImplicitRules);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -274,13 +225,12 @@ namespace Azure.Health.Insights.RadiologyInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         FhirR4Observation IJsonModel<FhirR4Observation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -288,7 +238,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Observation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Observation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4Observation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -297,15 +247,15 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4Observation DeserializeFhirR4Observation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<FhirR4Identifier> identifier = default;
+            IReadOnlyList<FhirR4Identifier> identifier = default;
             ObservationStatusCodeType status = default;
-            IList<FhirR4CodeableConcept> category = default;
+            IReadOnlyList<FhirR4CodeableConcept> category = default;
             FhirR4CodeableConcept code = default;
             FhirR4Reference subject = default;
             FhirR4Reference encounter = default;
@@ -325,18 +275,18 @@ namespace Azure.Health.Insights.RadiologyInsights
             string valueDateTime = default;
             FhirR4Period valuePeriod = default;
             FhirR4CodeableConcept dataAbsentReason = default;
-            IList<FhirR4CodeableConcept> interpretation = default;
-            IList<FhirR4Annotation> note = default;
+            IReadOnlyList<FhirR4CodeableConcept> interpretation = default;
+            IReadOnlyList<FhirR4Annotation> note = default;
             FhirR4CodeableConcept bodySite = default;
             FhirR4CodeableConcept method = default;
-            IList<FhirR4ObservationReferenceRange> referenceRange = default;
-            IList<FhirR4Reference> hasMember = default;
-            IList<FhirR4Reference> derivedFrom = default;
-            IList<FhirR4ObservationComponent> component = default;
+            IReadOnlyList<FhirR4ObservationReferenceRange> referenceRange = default;
+            IReadOnlyList<FhirR4Reference> hasMember = default;
+            IReadOnlyList<FhirR4Reference> derivedFrom = default;
+            IReadOnlyList<FhirR4ObservationComponent> component = default;
             FhirR4Narrative text = default;
-            IList<FhirR4Resource> contained = default;
-            IList<FhirR4Extension> extension = default;
-            IList<FhirR4Extension> modifierExtension = default;
+            IReadOnlyList<FhirR4Resource> contained = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> modifierExtension = default;
             string resourceType = default;
             string id = default;
             FhirR4Meta meta = default;
@@ -761,9 +711,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Observation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4Observation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -775,11 +725,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFhirR4Observation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Observation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4Observation)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -789,15 +739,15 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new FhirR4Observation FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFhirR4Observation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

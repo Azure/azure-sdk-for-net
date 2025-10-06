@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _gremlinDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _gremlinDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -56,12 +59,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await GremlinGraphContainer.ExistsAsync(_graphName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = GremlinGraphContainer.Id;
-                id = GremlinGraphResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _graphName);
-                GremlinGraphResource graph = this.ArmClient.GetGremlinGraphResource(id);
-                await graph.DeleteAsync(WaitUntil.Completed);
+                if (await GremlinGraphContainer.ExistsAsync(_graphName))
+                {
+                    var id = GremlinGraphContainer.Id;
+                    id = GremlinGraphResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _graphName);
+                    GremlinGraphResource graph = this.ArmClient.GetGremlinGraphResource(id);
+                    await graph.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -173,7 +179,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
             GremlinGraphThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null, null)))).Value;
+                new ThroughputSettingsResourceInfo()
+                {
+                    Throughput = TestThroughput2
+                }))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }

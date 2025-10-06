@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -31,10 +30,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
-        internal InMageRcmUnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string performShutdown, ResourceIdentifier recoveryPointId) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal InMageRcmUnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string performShutdown, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
         {
             PerformShutdown = performShutdown;
             RecoveryPointId = recoveryPointId;
+            OSUpgradeVersion = osUpgradeVersion;
             InstanceType = instanceType ?? "InMageRcm";
         }
 
@@ -47,5 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string PerformShutdown { get; }
         /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

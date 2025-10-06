@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Gets the mesh revisions. </summary>
+        [WirePath("meshRevisions")]
         public IList<MeshRevision> MeshRevisions { get; }
     }
 }

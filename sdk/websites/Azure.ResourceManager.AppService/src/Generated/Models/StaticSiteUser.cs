@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("properties.provider")]
         public string Provider { get; }
         /// <summary> The user id for the static site user. </summary>
+        [WirePath("properties.userId")]
         public string UserId { get; }
         /// <summary> The display name for the static site user. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("properties.roles")]
         public string Roles { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

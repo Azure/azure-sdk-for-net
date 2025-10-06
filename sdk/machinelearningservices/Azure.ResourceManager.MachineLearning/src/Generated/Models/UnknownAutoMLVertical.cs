@@ -10,19 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownAutoMLVertical. </summary>
+    /// <summary> Unknown version of AutoMLVertical. </summary>
     internal partial class UnknownAutoMLVertical : AutoMLVertical
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAutoMLVertical"/>. </summary>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
+        internal UnknownAutoMLVertical(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData)
         {
             TaskType = taskType;
         }

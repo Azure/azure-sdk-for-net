@@ -2,12 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
+using System.Threading.Tasks;
 using Azure.Communication.Identity;
-using static Azure.Communication.Rooms.RoomsClientOptions;
-using Azure.Core.TestFramework.Models;
 using Azure.Communication.Tests;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
+using Microsoft.Extensions.Options;
+using static Azure.Communication.Rooms.RoomsClientOptions;
 
 namespace Azure.Communication.Rooms.Tests
 {
@@ -16,7 +20,7 @@ namespace Azure.Communication.Rooms.Tests
         private const string DateTimeStampRegEx = @"[0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z";
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
-        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d*";
+        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d+";
 
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
@@ -26,10 +30,10 @@ namespace Azure.Communication.Rooms.Tests
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..appId");
             JsonPathSanitizers.Add("$..userId");
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx, SanitizeValue));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "/rooms/Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx) { Value = "/rooms/Sanitized" });
         }
 
         /// <summary>
@@ -37,7 +41,7 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             return authMethod switch
             {
@@ -53,9 +57,9 @@ namespace Azure.Communication.Rooms.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
-            var client = new RoomsClient(
+            var client =new RoomsClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
                     CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
 
@@ -69,12 +73,13 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             var client = new RoomsClient(
-                    TestEnvironment.CommunicationRoomsEndpoint,
-                     new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
+                TestEnvironment.CommunicationRoomsTrafficManagerUrl,
+                new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
+                CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion,
+                    TestEnvironment.CommunicationRoomsEndpoint));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -84,7 +89,7 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
+        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationRoomsEndpoint,
@@ -118,11 +123,32 @@ namespace Azure.Communication.Rooms.Tests
                     TestEnvironment.CommunicationConnectionStringRooms,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
-        private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version)
+        private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version, Uri? resourceUrl = null)
         {
             RoomsClientOptions roomsClientOptions = new RoomsClientOptions(version);
             roomsClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            if (resourceUrl is not null)
+            {
+                roomsClientOptions.AddPolicy(new OverrideHostEndpointPolicy(resourceUrl), HttpPipelinePosition.PerCall);
+            }
+
             return InstrumentClientOptions(roomsClientOptions);
+        }
+
+        private class OverrideHostEndpointPolicy(Uri overrideEndpoint) : HttpPipelinePolicy
+        {
+            public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+                => await ProcessNextAsync(WithOverrideHost(message), pipeline);
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+                => ProcessNext(WithOverrideHost(message), pipeline);
+
+            private HttpMessage WithOverrideHost(HttpMessage message)
+            {
+                message.Request.Headers.Add("x-ms-host", overrideEndpoint.Host);
+                message.SetProperty("uriToSignRequestWith", new Uri(overrideEndpoint, message.Request.Uri.PathAndQuery));
+                return message;
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace Azure.ResourceManager.TestFramework
 {
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
@@ -71,44 +73,40 @@ namespace Azure.ResourceManager.TestFramework
         protected void IgnoreNetworkDependencyVersions()
         {
             // Ignore the api-version of Network operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
 
         protected void IgnoreAuthorizationDependencyVersions()
         {
             // Ignore the api-version of Authorization operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers\/Microsoft.Authorization\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.Authorization\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
 
         protected void IgnoreKeyVaultDependencyVersions()
         {
             // Ignore the api-version of KeyVault operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
 
         protected void IgnoreManagedIdentityDependencyVersions()
         {
             // Ignore the api-version of ManagedIdentity operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
 
@@ -169,7 +167,7 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
 
-            return new ArmEnvironment(new Uri(endpoint), SessionEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
+            return new ArmEnvironment(new Uri(endpoint), environment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]

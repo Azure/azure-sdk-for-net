@@ -8,17 +8,18 @@ azure-arm: true
 csharp: true
 library-name: Redis
 namespace: Azure.ResourceManager.Redis
-require: https://github.com/Azure/azure-rest-api-specs/blob/dac9f85a47b0e4e759593f3a19968a732b911b47/specification/redis/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9069559e0fe5ed52b884ddc658fa539ec67c7ef8/specification/redis/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 rename-mapping:
   CheckNameAvailabilityParameters: RedisNameAvailabilityContent
@@ -46,6 +47,9 @@ rename-mapping:
   RedisForceRebootResponse: RedisForceRebootResult
   RedisCacheAccessPolicyAssignment.properties.objectId: -|uuid
   RedisCommonPropertiesRedisConfiguration.aad-enabled: IsAadEnabled
+  Redis.properties.disableAccessKeyAuthentication: IsAccessKeyAuthenticationDisabled
+  RedisCreateParameters.properties.disableAccessKeyAuthentication: IsAccessKeyAuthenticationDisabled
+  RedisUpdateParameters.properties.disableAccessKeyAuthentication: IsAccessKeyAuthenticationDisabled
 
 prepend-rp-prefix:
   - OperationStatus

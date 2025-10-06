@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
@@ -38,5 +37,11 @@ namespace Azure.Storage.Files.Shares
         public string FileId => _response.Headers.TryGetValue("x-ms-file-id", out string value) ? value : null;
         /// <summary> The parent fileId of the directory. </summary>
         public string FileParentId => _response.Headers.TryGetValue("x-ms-file-parent-id", out string value) ? value : null;
+        /// <summary> NFS only. The mode of the file or directory. </summary>
+        public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
+        /// <summary> NFS only. The owner of the file or directory. </summary>
+        public string Owner => _response.Headers.TryGetValue("x-ms-owner", out string value) ? value : null;
+        /// <summary> NFS only. The owning group of the file or directory. </summary>
+        public string Group => _response.Headers.TryGetValue("x-ms-group", out string value) ? value : null;
     }
 }

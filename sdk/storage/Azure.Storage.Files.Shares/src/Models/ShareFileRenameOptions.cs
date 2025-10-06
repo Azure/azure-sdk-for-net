@@ -49,6 +49,11 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
+        /// Optional format of the <see cref="FilePermission"/>.
+        /// </summary>
+        public FilePermissionFormat? FilePermissionFormat { get; set; }
+
+        /// <summary>
         /// Optional custom metadata to set on the destination.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be read only

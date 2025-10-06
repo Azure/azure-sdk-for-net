@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,49 +52,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
-        /// <param name="endpoint"> Url for endpoint. </param>
-        /// <param name="errorMessage"> Any error in the service. </param>
         /// <param name="jobServiceType"> Endpoint type. </param>
+        /// <param name="port"> Port for endpoint. </param>
+        /// <param name="endpoint"> Url for endpoint. </param>
+        /// <param name="status"> Status of endpoint. </param>
+        /// <param name="errorMessage"> Any error in the service. </param>
+        /// <param name="properties"> Additional properties to set on the endpoint. </param>
         /// <param name="nodes">
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
         /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
-        /// <param name="port"> Port for endpoint set by user. </param>
-        /// <param name="properties"> Additional properties to set on the endpoint. </param>
-        /// <param name="status"> Status of endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, JobNodes nodes, int? port, IDictionary<string, string> properties, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningJobService(string jobServiceType, int? port, string endpoint, string status, string errorMessage, IDictionary<string, string> properties, JobNodes nodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Endpoint = endpoint;
-            ErrorMessage = errorMessage;
             JobServiceType = jobServiceType;
-            Nodes = nodes;
             Port = port;
-            Properties = properties;
+            Endpoint = endpoint;
             Status = status;
+            ErrorMessage = errorMessage;
+            Properties = properties;
+            Nodes = nodes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Url for endpoint. </summary>
-        public string Endpoint { get; set; }
-        /// <summary> Any error in the service. </summary>
-        public string ErrorMessage { get; }
         /// <summary> Endpoint type. </summary>
+        [WirePath("jobServiceType")]
         public string JobServiceType { get; set; }
+        /// <summary> Port for endpoint. </summary>
+        [WirePath("port")]
+        public int? Port { get; set; }
+        /// <summary> Url for endpoint. </summary>
+        [WirePath("endpoint")]
+        public string Endpoint { get; set; }
+        /// <summary> Status of endpoint. </summary>
+        [WirePath("status")]
+        public string Status { get; }
+        /// <summary> Any error in the service. </summary>
+        [WirePath("errorMessage")]
+        public string ErrorMessage { get; }
+        /// <summary> Additional properties to set on the endpoint. </summary>
+        [WirePath("properties")]
+        public IDictionary<string, string> Properties { get; set; }
         /// <summary>
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
         /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </summary>
+        [WirePath("nodes")]
         public JobNodes Nodes { get; set; }
-        /// <summary> Port for endpoint set by user. </summary>
-        public int? Port { get; set; }
-        /// <summary> Additional properties to set on the endpoint. </summary>
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Status of endpoint. </summary>
-        public string Status { get; }
     }
 }

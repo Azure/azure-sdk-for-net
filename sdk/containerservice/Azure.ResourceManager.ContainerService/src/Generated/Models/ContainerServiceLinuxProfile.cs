@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -76,10 +75,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The administrator username to use for Linux VMs. </summary>
+        [WirePath("adminUsername")]
         public string AdminUsername { get; set; }
         /// <summary> The SSH configuration for Linux-based VMs running on Azure. </summary>
         internal ContainerServiceSshConfiguration Ssh { get; set; }
         /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
+        [WirePath("ssh.publicKeys")]
         public IList<ContainerServiceSshPublicKey> SshPublicKeys
         {
             get => Ssh is null ? default : Ssh.PublicKeys;

@@ -5,10 +5,11 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using System.IO;
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client.Models;
 using System.Reflection;
 using System.Text.Json;
 using System.ClientModel.Internal;
+using System.ClientModel.Tests.ModelReaderWriterTests;
+using System.ClientModel.Tests.Client.Models;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {
@@ -22,6 +23,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         protected ModelReaderWriterOptions _options;
         private BinaryData _data;
         private BinaryData _jsonSerializerResult;
+        private ModelReaderWriterContext _context = new TestClientModelReaderWriterContext();
 
         protected abstract T Read(JsonElement jsonElement);
 
@@ -49,7 +51,9 @@ namespace System.ClientModel.Tests.Internal.Perf
         public string Write_JsonSerializer_SourceGenerated()
         {
 #if NET6_0_OR_GREATER
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return JsonSerializer.Serialize(_model, _model.GetType(), SourceGenerationContext.Default);
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #else
             return Write_JsonSerializer();
 #endif
@@ -73,6 +77,13 @@ namespace System.ClientModel.Tests.Internal.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelReaderWriter")]
+        public BinaryData Write_ModelReaderWriter_WithContext()
+        {
+            return ModelReaderWriter.Write(_model, _options, _context);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelReaderWriter")]
         public void Write_ModelWriter()
         {
             using var reader = new ModelWriter(_model, _options).ExtractReader();
@@ -83,6 +94,13 @@ namespace System.ClientModel.Tests.Internal.Perf
         public BinaryData Write_ModelReaderWriterNonGeneric()
         {
             return ModelReaderWriter.Write((object)_model, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelReaderWriter")]
+        public BinaryData Write_ModelReaderWriterNonGeneric_WithContext()
+        {
+            return ModelReaderWriter.Write((object)_model, _options, _context);
         }
 
         [Benchmark]
@@ -109,7 +127,9 @@ namespace System.ClientModel.Tests.Internal.Perf
         {
 #if NET6_0_OR_GREATER
             using var stream = new MemoryStream();
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return JsonSerializer.Deserialize(_jsonSerializerResult, _model.GetType(), SourceGenerationContext.Default);
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #else
             return Read_JsonSerializer();
 #endif
@@ -133,9 +153,23 @@ namespace System.ClientModel.Tests.Internal.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelReaderWriter")]
+        public T Read_ModelReaderWriterFromBinaryData_WithContext()
+        {
+            return ModelReaderWriter.Read<T>(_data, _options, _context);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelReaderWriter")]
         public object Read_ModelReaderWriterFromBinaryDataNonGeneric()
         {
             return ModelReaderWriter.Read(_data, typeof(T), _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelReaderWriter")]
+        public object Read_ModelReaderWriterFromBinaryDataNonGeneric_WithContext()
+        {
+            return ModelReaderWriter.Read(_data, typeof(T), _options, _context);
         }
 
         [Benchmark]

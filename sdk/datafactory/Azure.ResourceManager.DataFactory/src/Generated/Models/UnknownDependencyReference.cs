@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownDependencyReference. </summary>
+    /// <summary> Unknown version of DependencyReference. </summary>
     internal partial class UnknownDependencyReference : DependencyReference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/>. </summary>

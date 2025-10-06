@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The UnknownUserSourceInfo. </summary>
+    /// <summary> Unknown version of UserSourceInfo. </summary>
     internal partial class UnknownUserSourceInfo : AppPlatformUserSourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownUserSourceInfo"/>. </summary>

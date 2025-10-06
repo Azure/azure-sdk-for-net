@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -77,12 +76,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Network Manager Id. </summary>
+        [WirePath("properties.networkManagerId")]
         public ResourceIdentifier NetworkManagerId { get; set; }
         /// <summary> Connection state. </summary>
+        [WirePath("properties.connectionState")]
         public ScopeConnectionState? ConnectionState { get; }
         /// <summary> A description of the network manager connection. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

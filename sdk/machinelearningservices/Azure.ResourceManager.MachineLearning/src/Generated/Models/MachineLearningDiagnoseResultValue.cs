@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -86,22 +85,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the user defined route results. </summary>
+        [WirePath("userDefinedRouteResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> UserDefinedRouteResults { get; }
         /// <summary> Gets the network security rule results. </summary>
+        [WirePath("networkSecurityRuleResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> NetworkSecurityRuleResults { get; }
         /// <summary> Gets the resource lock results. </summary>
+        [WirePath("resourceLockResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> ResourceLockResults { get; }
         /// <summary> Gets the dns resolution results. </summary>
+        [WirePath("dnsResolutionResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> DnsResolutionResults { get; }
         /// <summary> Gets the storage account results. </summary>
+        [WirePath("storageAccountResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> StorageAccountResults { get; }
         /// <summary> Gets the key vault results. </summary>
+        [WirePath("keyVaultResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> KeyVaultResults { get; }
         /// <summary> Gets the container registry results. </summary>
+        [WirePath("containerRegistryResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> ContainerRegistryResults { get; }
         /// <summary> Gets the application insights results. </summary>
+        [WirePath("applicationInsightsResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> ApplicationInsightsResults { get; }
         /// <summary> Gets the other results. </summary>
+        [WirePath("otherResults")]
         public IReadOnlyList<MachineLearningDiagnoseResult> OtherResults { get; }
     }
 }

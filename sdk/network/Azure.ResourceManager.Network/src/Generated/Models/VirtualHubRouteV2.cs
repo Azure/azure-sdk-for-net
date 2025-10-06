@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of destinations. </summary>
+        [WirePath("destinationType")]
         public string DestinationType { get; set; }
         /// <summary> List of all destinations. </summary>
+        [WirePath("destinations")]
         public IList<string> Destinations { get; }
         /// <summary> The type of next hops. </summary>
+        [WirePath("nextHopType")]
         public string NextHopType { get; set; }
         /// <summary> NextHops ip address. </summary>
+        [WirePath("nextHops")]
         public IList<string> NextHops { get; }
     }
 }

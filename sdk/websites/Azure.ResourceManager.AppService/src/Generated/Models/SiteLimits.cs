@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Maximum allowed CPU usage percentage. </summary>
+        [WirePath("maxPercentageCpu")]
         public double? MaxPercentageCpu { get; set; }
         /// <summary> Maximum allowed memory usage in MB. </summary>
+        [WirePath("maxMemoryInMb")]
         public long? MaxMemoryInMb { get; set; }
         /// <summary> Maximum allowed disk size usage in MB. </summary>
+        [WirePath("maxDiskSizeInMb")]
         public long? MaxDiskSizeInMb { get; set; }
     }
 }

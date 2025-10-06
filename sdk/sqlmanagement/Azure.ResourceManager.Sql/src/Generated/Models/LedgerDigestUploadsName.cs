@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(LedgerDigestUploadsName left, LedgerDigestUploadsName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LedgerDigestUploadsName"/> values are not the same. </summary>
         public static bool operator !=(LedgerDigestUploadsName left, LedgerDigestUploadsName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LedgerDigestUploadsName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LedgerDigestUploadsName"/>. </summary>
         public static implicit operator LedgerDigestUploadsName(string value) => new LedgerDigestUploadsName(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

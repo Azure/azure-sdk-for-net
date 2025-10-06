@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A pageable list of resources. </summary>
+    /// <summary> The response of a AzureMonitorWorkspace list operation. </summary>
     internal partial class MonitorWorkspaceResourceListResult
     {
         /// <summary>
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/>. </summary>
-        /// <param name="value"> A list of resources. </param>
+        /// <param name="value"> The AzureMonitorWorkspace items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MonitorWorkspaceResourceListResult(IEnumerable<MonitorWorkspaceResourceData> value)
         {
@@ -58,10 +57,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/>. </summary>
-        /// <param name="value"> A list of resources. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value"> The AzureMonitorWorkspace items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,9 +72,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        /// <summary> A list of resources. </summary>
+        /// <summary> The AzureMonitorWorkspace items on this page. </summary>
         public IReadOnlyList<MonitorWorkspaceResourceData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

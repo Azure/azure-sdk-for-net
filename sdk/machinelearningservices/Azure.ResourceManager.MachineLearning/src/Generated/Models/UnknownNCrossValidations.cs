@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownNCrossValidations. </summary>
+    /// <summary> Unknown version of NCrossValidations. </summary>
     internal partial class UnknownNCrossValidations : NCrossValidations
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNCrossValidations"/>. </summary>

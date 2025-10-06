@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public NetworkSecurityPerimeterProfileAccessRule()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<string>();
+            Subscriptions = new ChangeTrackingList<WritableSubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeterInfo>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="emailAddresses"> List of email addresses. </param>
         /// <param name="phoneNumbers"> List of phone numbers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> subscriptions, IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FullyQualifiedArmId = fullyQualifiedArmId;
             Name = name;
@@ -85,24 +85,34 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Fully Qualified Arm id for network security perimeter profile access rule. </summary>
+        [WirePath("fullyQualifiedArmId")]
         public string FullyQualifiedArmId { get; set; }
         /// <summary> Name for nsp access rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> nsp access rule type. </summary>
+        [WirePath("type")]
         public string NetworkSecurityPerimeterProfileAccessRuleType { get; set; }
         /// <summary> NSP access rule direction. </summary>
+        [WirePath("properties.direction")]
         public NetworkSecurityPerimeterProfileAccessRuleDirection? Direction { get; set; }
         /// <summary> Address prefixes. </summary>
+        [WirePath("properties.addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> List of subscriptions. </summary>
-        public IList<string> Subscriptions { get; }
+        [WirePath("properties.subscriptions")]
+        public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Network security perimeters. </summary>
+        [WirePath("properties.networkSecurityPerimeters")]
         public IList<NetworkSecurityPerimeterInfo> NetworkSecurityPerimeters { get; }
         /// <summary> Fully qualified domain names. </summary>
+        [WirePath("properties.fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
         /// <summary> List of email addresses. </summary>
+        [WirePath("properties.emailAddresses")]
         public IList<string> EmailAddresses { get; }
         /// <summary> List of phone numbers. </summary>
+        [WirePath("properties.phoneNumbers")]
         public IList<string> PhoneNumbers { get; }
     }
 }

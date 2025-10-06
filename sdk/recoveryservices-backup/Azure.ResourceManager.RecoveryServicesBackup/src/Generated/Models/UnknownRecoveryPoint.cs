@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownRecoveryPoint. </summary>
+    /// <summary> Unknown version of RecoveryPoint. </summary>
     internal partial class UnknownRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRecoveryPoint"/>. </summary>

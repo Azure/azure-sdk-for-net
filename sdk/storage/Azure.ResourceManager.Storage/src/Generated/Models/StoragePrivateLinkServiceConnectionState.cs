@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+        [WirePath("status")]
         public StoragePrivateEndpointServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval/rejection of the connection. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        [WirePath("actionRequired")]
         public string ActionRequired { get; set; }
     }
 }

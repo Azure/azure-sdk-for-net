@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -38,8 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> GraphAPICompute endpoint for the service. </summary>
+        [WirePath("graphApiComputeEndpoint")]
         public string GraphApiComputeEndpoint { get; set; }
         /// <summary> An array that contains all of the locations for the service. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<GraphApiComputeRegionalService> Locations { get; }
     }
 }

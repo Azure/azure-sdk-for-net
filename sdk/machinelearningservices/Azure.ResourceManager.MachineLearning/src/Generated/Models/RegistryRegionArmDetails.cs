@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> List of ACR accounts. </summary>
+        [WirePath("acrDetails")]
         public IList<RegistryAcrDetails> AcrDetails { get; set; }
         /// <summary> The location where the registry exists. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> List of storage accounts. </summary>
+        [WirePath("storageAccountDetails")]
         public IList<StorageAccountDetails> StorageAccountDetails { get; set; }
     }
 }

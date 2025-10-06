@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -435,7 +433,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_GetTimeseries</description>
+        /// <description>Reports_GetTimeSeries</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -473,7 +471,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_GetTimeseries</description>
+        /// <description>Reports_GetTimeSeries</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

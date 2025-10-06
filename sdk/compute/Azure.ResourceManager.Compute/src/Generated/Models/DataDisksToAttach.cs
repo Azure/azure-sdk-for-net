@@ -7,7 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -59,11 +60,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DataDisksToAttach"/>. </summary>
         /// <param name="diskId"> ID of the managed data disk. </param>
         /// <param name="lun"> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior is: **None for Standard storage. ReadOnly for Premium storage.**. </param>
+        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the data disk is deleted when VM is deleted. **Detach.** If this value is used, the data disk is retained after VM is deleted. The default value is set to **Detach**. </param>
+        /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
+        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisksToAttach(string diskId, int? lun, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataDisksToAttach(string diskId, int? lun, CachingType? caching, DiskDeleteOptionType? deleteOption, WritableSubResource diskEncryptionSet, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             Lun = lun;
+            Caching = caching;
+            DeleteOption = deleteOption;
+            DiskEncryptionSet = diskEncryptionSet;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,5 +85,25 @@ namespace Azure.ResourceManager.Compute.Models
         public string DiskId { get; }
         /// <summary> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </summary>
         public int? Lun { get; set; }
+        /// <summary> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior is: **None for Standard storage. ReadOnly for Premium storage.**. </summary>
+        public CachingType? Caching { get; set; }
+        /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the data disk is deleted when VM is deleted. **Detach.** If this value is used, the data disk is retained after VM is deleted. The default value is set to **Detach**. </summary>
+        public DiskDeleteOptionType? DeleteOption { get; set; }
+        /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. </summary>
+        internal WritableSubResource DiskEncryptionSet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DiskEncryptionSetId
+        {
+            get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            set
+            {
+                if (DiskEncryptionSet is null)
+                    DiskEncryptionSet = new WritableSubResource();
+                DiskEncryptionSet.Id = value;
+            }
+        }
+
+        /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
+        public bool? WriteAcceleratorEnabled { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace Azure.Data.Tables
     {
         internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
         internal const string CosmosTableDomain = ".table.cosmos.";
-        internal const string StorageScope = "https://storage.azure.com/.default";
         internal const string ReturnNoContent = "return-no-content";
+        internal const string DefaultScope = ".default";
 
         internal static class CompatSwitches
         {
@@ -16,6 +16,8 @@ namespace Azure.Data.Tables
             public const string DisableEscapeSingleQuotesOnGetEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY";
             public const string DisableEscapeSingleQuotesOnDeleteEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity";
             public const string DisableEscapeSingleQuotesOnDeleteEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY";
+            public const string DisableThrowOnStringComparisonFilterSwitchName = "Azure.Data.Tables.DisableThrowOnStringComparisonFilter";
+            public const string DisableThrowOnStringComparisonFilterEnvVar = "AZURE_DATA_TABLES_DISABLE_THROWONSTRINGCOMPARISONFILTER";
         }
 
         internal static class HeaderNames
@@ -24,21 +26,6 @@ namespace Azure.Data.Tables
             public const string SharedKey = "SharedKeyLite";
             public const string Authorization = "Authorization";
             public const string IfMatch = "If-Match";
-            public const string Accept = "Accept";
-            public const string Content = "Content-Type";
-        }
-
-        internal static class MimeType
-        {
-            internal const string ApplicationJson = "application/json";
-            internal const string ApplicationXml = "application/xml";
-        }
-
-        internal static class QueryParameterNames
-        {
-            public const string NextTableName = "NextTableName";
-            public const string NextPartitionKey = "NextPartitionKey";
-            public const string NextRowKey = "NextRowKey";
         }
 
         internal static class PropertyNames
@@ -55,21 +42,15 @@ namespace Azure.Data.Tables
         {
             internal const string OdataTypeString = "@odata.type";
             internal const string EdmBinary = "Edm.Binary";
-            internal const string EdmBoolean = "Emd.Boolean";
             internal const string EdmDateTime = "Edm.DateTime";
             internal const string EdmDouble = "Edm.Double";
             internal const string EdmGuid = "Edm.Guid";
-            internal const string EdmInt32 = "Edm.Int32";
             internal const string EdmInt64 = "Edm.Int64";
-            internal const string EdmString = "Edm.String";
             internal const string MinimalMetadata = "application/json;odata=minimalmetadata";
         }
 
         internal static class ExceptionMessages
         {
-            internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
-            internal const string MissingRowKey = "The entity must contain a RowKey value";
-            internal const string BatchCanOnlyBeSubmittedOnce = "A batch can only be submitted once.";
             internal const string BatchIsEmpty = "The batch contains no entity operations.";
         }
 
@@ -104,7 +85,6 @@ namespace Azure.Data.Tables
                 public const char List = 'l';
                 public const char Add = 'a';
                 public const char Update = 'u';
-                public const char Create = 'c';
             }
 
             internal static class Parameters
@@ -118,7 +98,6 @@ namespace Azure.Data.Tables
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
                 public const string Services = "ss";
-                public const string ServicesUpper = "SS";
                 public const string ResourceTypes = "srt";
                 public const string ResourceTypesUpper = "SRT";
                 public const string Protocol = "spr";
@@ -161,7 +140,6 @@ namespace Azure.Data.Tables
             internal const string DevelopmentProxyUriSetting = "DevelopmentStorageProxyUri";
             internal const string DefaultEndpointsProtocolSetting = "DefaultEndpointsProtocol";
             internal const string AccountNameSetting = "AccountName";
-            internal const string AccountKeyNameSetting = "AccountKeyName";
             internal const string AccountKeySetting = "AccountKey";
             internal const string TableEndpointSetting = "TableEndpoint";
             internal const string TableSecondaryEndpointSetting = "TableSecondaryEndpoint";

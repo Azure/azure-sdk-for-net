@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -76,22 +75,30 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the custom IP prefix. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The ASN for CIDR advertising. Should be an integer as string. </summary>
+        [WirePath("properties.asn")]
         public string Asn { get; set; }
         /// <summary> The prefix range in CIDR notation. Should include the start address and the prefix length. </summary>
+        [WirePath("properties.cidr")]
         public string Cidr { get; set; }
         /// <summary> Signed message for WAN validation. </summary>
+        [WirePath("properties.signedMessage")]
         public string SignedMessage { get; set; }
         /// <summary> Authorization message for WAN validation. </summary>
+        [WirePath("properties.authorizationMessage")]
         public string AuthorizationMessage { get; set; }
         /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>
         internal WritableSubResource ParentCustomIPPrefix { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.customIpPrefixParent.id")]
         public ResourceIdentifier ParentCustomIPPrefixId
         {
             get => ParentCustomIPPrefix is null ? default : ParentCustomIPPrefix.Id;
@@ -104,24 +111,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
+        [WirePath("properties.childCustomIpPrefixes")]
         public IReadOnlyList<WritableSubResource> ChildCustomIPPrefixList { get; }
         /// <summary> The commissioned state of the Custom IP Prefix. </summary>
+        [WirePath("properties.commissionedState")]
         public CommissionedState? CommissionedState { get; set; }
         /// <summary> Whether to do express route advertise. </summary>
+        [WirePath("properties.expressRouteAdvertise")]
         public bool? ExpressRouteAdvertise { get; set; }
         /// <summary> The Geo for CIDR advertising. Should be an Geo code. </summary>
+        [WirePath("properties.geo")]
         public CidrAdvertisingGeoCode? Geo { get; set; }
         /// <summary> Whether to Advertise the range to Internet. </summary>
+        [WirePath("properties.noInternetAdvertise")]
         public bool? NoInternetAdvertise { get; set; }
         /// <summary> Type of custom IP prefix. Should be Singular, Parent, or Child. </summary>
+        [WirePath("properties.prefixType")]
         public CustomIPPrefixType? PrefixType { get; set; }
         /// <summary> The list of all referenced PublicIpPrefixes. </summary>
+        [WirePath("properties.publicIpPrefixes")]
         public IReadOnlyList<WritableSubResource> PublicIPPrefixes { get; }
         /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The reason why resource is in failed state. </summary>
+        [WirePath("properties.failedReason")]
         public string FailedReason { get; }
         /// <summary> The provisioning state of the custom IP prefix resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

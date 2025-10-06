@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Caching type of Data Disk. </summary>
+        [WirePath("caching")]
         public MachineLearningCachingType? Caching { get; }
         /// <summary> The initial disk size in gigabytes. </summary>
+        [WirePath("diskSizeGB")]
         public int? DiskSizeGB { get; }
         /// <summary> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </summary>
+        [WirePath("lun")]
         public int? Lun { get; }
         /// <summary> type of this storage account. </summary>
+        [WirePath("storageAccountType")]
         public MachineLearningStorageAccountType? StorageAccountType { get; }
     }
 }

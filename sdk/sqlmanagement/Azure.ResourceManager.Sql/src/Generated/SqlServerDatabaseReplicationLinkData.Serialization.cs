@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,37 +18,26 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerDatabaseReplicationLinkData : IUtf8JsonSerializable, IJsonModel<SqlServerDatabaseReplicationLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerDatabaseReplicationLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PartnerServer))
@@ -59,6 +49,11 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("partnerDatabase"u8);
                 writer.WriteStringValue(PartnerDatabase);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartnerDatabaseId))
+            {
+                writer.WritePropertyName("partnerDatabaseId"u8);
+                writer.WriteStringValue(PartnerDatabaseId);
             }
             if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
             {
@@ -100,26 +95,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isTerminationAllowed"u8);
                 writer.WriteBooleanValue(IsTerminationAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkType))
+            if (Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -129,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +117,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerDatabaseReplicationLinkData DeserializeSqlServerDatabaseReplicationLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,6 +129,7 @@ namespace Azure.ResourceManager.Sql
             SystemData systemData = default;
             string partnerServer = default;
             string partnerDatabase = default;
+            string partnerDatabaseId = default;
             AzureLocation? partnerLocation = default;
             SqlServerDatabaseReplicationRole? role = default;
             SqlServerDatabaseReplicationRole? partnerRole = default;
@@ -160,7 +140,7 @@ namespace Azure.ResourceManager.Sql
             bool? isTerminationAllowed = default;
             ReplicationLinkType? linkType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -184,7 +164,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,6 +184,11 @@ namespace Azure.ResourceManager.Sql
                         if (property0.NameEquals("partnerDatabase"u8))
                         {
                             partnerDatabase = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerDatabaseId"u8))
+                        {
+                            partnerDatabaseId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("partnerLocation"u8))
@@ -288,10 +273,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlServerDatabaseReplicationLinkData(
                 id,
                 name,
@@ -299,6 +284,7 @@ namespace Azure.ResourceManager.Sql
                 systemData,
                 partnerServer,
                 partnerDatabase,
+                partnerDatabaseId,
                 partnerLocation,
                 role,
                 partnerRole,
@@ -311,6 +297,291 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerServer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerServer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerServer))
+                {
+                    builder.Append("    partnerServer: ");
+                    if (PartnerServer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartnerServer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartnerServer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDatabase), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerDatabase: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerDatabase))
+                {
+                    builder.Append("    partnerDatabase: ");
+                    if (PartnerDatabase.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartnerDatabase}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartnerDatabase}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerDatabaseId))
+                {
+                    builder.Append("    partnerDatabaseId: ");
+                    if (PartnerDatabaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartnerDatabaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartnerDatabaseId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerLocation))
+                {
+                    builder.Append("    partnerLocation: ");
+                    builder.AppendLine($"'{PartnerLocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Role), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    role: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Role))
+                {
+                    builder.Append("    role: ");
+                    builder.AppendLine($"'{Role.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerRole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerRole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerRole))
+                {
+                    builder.Append("    partnerRole: ");
+                    builder.AppendLine($"'{PartnerRole.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replicationMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicationMode))
+                {
+                    builder.Append("    replicationMode: ");
+                    if (ReplicationMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReplicationMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReplicationMode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("    startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PercentComplete), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    percentComplete: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PercentComplete))
+                {
+                    builder.Append("    percentComplete: ");
+                    builder.AppendLine($"{PercentComplete.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replicationState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicationState))
+                {
+                    builder.Append("    replicationState: ");
+                    builder.AppendLine($"'{ReplicationState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTerminationAllowed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isTerminationAllowed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsTerminationAllowed))
+                {
+                    builder.Append("    isTerminationAllowed: ");
+                    var boolValue = IsTerminationAllowed.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkType))
+                {
+                    builder.Append("    linkType: ");
+                    builder.AppendLine($"'{LinkType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -318,9 +589,11 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,11 +605,11 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support reading '{options.Format}' format.");
             }
         }
 

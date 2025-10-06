@@ -85,6 +85,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private long? MaxMessageSize { get; set; }
 
         /// <summary>
+        ///   The maximum size of an AMQP message batch allowed by the associated
+        ///   sender link.
+        /// </summary>
+        ///
+        /// <value>The maximum message batch size, in bytes.</value>
+        ///
+        private long? MaxBatchSize { get; set; }
+
+        /// <summary>
+        ///   The maximum number of messages to allow in a single batch.
+        /// </summary>
+        ///
+        private int MaxMessageCount { get; set; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
         /// </summary>
         ///
@@ -114,6 +129,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
+            // NOTE:
+            //   This is a temporary work-around until Service Bus exposes a link property for
+            //   the maximum batch size.  The limit for batches differs from the limit for individual
+            //   messages.  Tracked by: https://github.com/Azure/azure-sdk-for-net/issues/44914
+            MaxBatchSize = 1048576;
+
+            // NOTE:
+            //   This is a temporary work-around until Service Bus exposes a link property for
+            //   the maximum batch size.  The limit for batches differs from the limit for individual
+            //   messages.  Tracked by: https://github.com/Azure/azure-sdk-for-net/issues/44916
+            MaxMessageCount = 4500;
+
             _entityPath = entityPath;
             Identifier = identifier;
             _retryPolicy = retryPolicy;
@@ -121,11 +148,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _sendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
                 timeout => CreateLinkAndEnsureSenderStateAsync(timeout, CancellationToken.None),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, Identifier));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, Identifier));
             _messageConverter = messageConverter;
         }
 
@@ -180,7 +207,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Ensure that maximum message size has been determined; this depends on the underlying
             // AMQP link, so if not set, requesting the link will ensure that it is populated.
 
-            if (!MaxMessageSize.HasValue)
+            if ((!MaxMessageSize.HasValue) || (!MaxBatchSize.HasValue))
             {
                 await _sendLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
             }
@@ -188,9 +215,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Ensure that there was a maximum size populated; if none was provided,
             // default to the maximum size allowed by the link.
 
-            options.MaxSizeInBytes ??= MaxMessageSize;
+            options.MaxSizeInBytes ??= MaxBatchSize;
+            options.MaxMessageCount ??= MaxMessageCount;
 
-            Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxMessageSize.Value, nameof(options.MaxSizeInBytes));
+            Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxBatchSize.Value, nameof(options.MaxSizeInBytes));
             return new AmqpMessageBatch(_messageConverter, options);
         }
 
@@ -602,19 +630,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout: timeout,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                if (!MaxMessageSize.HasValue)
-                {
-                    // This delay is necessary to prevent the link from causing issues for subsequent
-                    // operations after creating a batch.  Without it, operations using the link consistently
-                    // timeout.  The length of the delay does not appear significant, just the act of introducing
-                    // an asynchronous delay.
-                    //
-                    // For consistency the value used by the legacy Service Bus client has been brought forward and
-                    // used here.
+                // Update the known maximum message size each time a link is opened, as the
+                // configuration can be changed on-the-fly and may not match the previously cached value.
+                //
+                // This delay is necessary to prevent the link from causing issues for subsequent
+                // operations after creating a batch.  Without it, operations using the link consistently
+                // timeout.  The length of the delay does not appear significant, just the act of introducing
+                // an asynchronous delay.
+                //
+                // For consistency the value used by the legacy Service Bus client has been brought forward and
+                // used here.
 
-                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                    MaxMessageSize = (long)link.Settings.MaxMessageSize;
-                }
+                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                MaxMessageSize = (long)link.Settings.MaxMessageSize;
+
+                // Update with service metadata when available:
+                //  https://github.com/Azure/azure-sdk-for-net/issues/44914
+                //  https://github.com/Azure/azure-sdk-for-net/issues/44916
+
+                MaxBatchSize = Math.Min(MaxMessageSize.Value, MaxBatchSize.Value);
+                MaxMessageSize = MaxMessageSize;
+
                 ServiceBusEventSource.Log.CreateSendLinkComplete(Identifier);
                 link.Closed += OnSenderLinkClosed;
                 return link;

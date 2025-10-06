@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The UnknownRecurrence. </summary>
+    /// <summary> Unknown version of Recurrence. </summary>
     internal partial class UnknownRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRecurrence"/>. </summary>

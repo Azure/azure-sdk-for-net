@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -110,48 +109,70 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Certificate password. </summary>
+        [WirePath("properties.password")]
         public string Password { get; set; }
         /// <summary> Friendly name of the certificate. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> Subject name of the certificate. </summary>
+        [WirePath("properties.subjectName")]
         public string SubjectName { get; }
         /// <summary> Host names the certificate applies to. </summary>
+        [WirePath("properties.hostNames")]
         public IList<string> HostNames { get; }
         /// <summary> Pfx blob. </summary>
+        [WirePath("properties.pfxBlob")]
         public byte[] PfxBlob { get; set; }
         /// <summary> App name. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName { get; }
         /// <summary> Self link. </summary>
+        [WirePath("properties.selfLink")]
         public string SelfLink { get; }
         /// <summary> Certificate issuer. </summary>
+        [WirePath("properties.issuer")]
         public string Issuer { get; }
         /// <summary> Certificate issue Date. </summary>
+        [WirePath("properties.issueDate")]
         public DateTimeOffset? IssueOn { get; }
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string ThumbprintString { get; }
         /// <summary> Is the certificate valid?. </summary>
+        [WirePath("properties.valid")]
         public bool? IsValid { get; }
         /// <summary> Raw bytes of .cer file. </summary>
+        [WirePath("properties.cerBlob")]
         public byte[] CerBlob { get; }
         /// <summary> Public key hash. </summary>
+        [WirePath("properties.publicKeyHash")]
         public string PublicKeyHash { get; }
         /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
+        [WirePath("properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; }
         /// <summary> Key Vault Csm resource Id. </summary>
+        [WirePath("properties.keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> Key Vault secret name. </summary>
+        [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>
+        [WirePath("properties.keyVaultSecretStatus")]
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; }
         /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
+        [WirePath("properties.serverFarmId")]
         public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
+        [WirePath("properties.canonicalName")]
         public string CanonicalName { get; set; }
         /// <summary> Method of domain validation for free cert. </summary>
+        [WirePath("properties.domainValidationMethod")]
         public string DomainValidationMethod { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

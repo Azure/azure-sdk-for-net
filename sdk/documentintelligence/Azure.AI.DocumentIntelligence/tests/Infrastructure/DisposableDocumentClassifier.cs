@@ -22,9 +22,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ClassifierId => Value.ClassifierId;
 
-        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentIntelligenceAdministrationClient client, BuildDocumentClassifierContent buildContent)
+        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentIntelligenceAdministrationClient client, BuildClassifierOptions buildOptions)
         {
-            Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildContent);
+            Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildOptions);
 
             return new DisposableDocumentClassifier(client, operation);
         }

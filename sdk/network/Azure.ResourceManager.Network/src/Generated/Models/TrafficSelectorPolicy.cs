@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -77,8 +76,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A collection of local address spaces in CIDR format. </summary>
+        [WirePath("localAddressRanges")]
         public IList<string> LocalAddressRanges { get; }
         /// <summary> A collection of remote address spaces in CIDR format. </summary>
+        [WirePath("remoteAddressRanges")]
         public IList<string> RemoteAddressRanges { get; }
     }
 }

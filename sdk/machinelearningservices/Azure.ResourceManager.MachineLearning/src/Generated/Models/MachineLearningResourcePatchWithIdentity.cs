@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public MachineLearningPartialManagedServiceIdentity Identity { get; set; }
     }
 }

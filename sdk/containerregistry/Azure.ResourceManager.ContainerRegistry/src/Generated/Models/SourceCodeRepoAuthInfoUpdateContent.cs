@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The type of Auth token. </summary>
+        [WirePath("tokenType")]
         public SourceCodeRepoAuthTokenType? TokenType { get; set; }
         /// <summary> The access token used to access the source control provider. </summary>
+        [WirePath("token")]
         public string Token { get; set; }
         /// <summary> The refresh token used to refresh the access token. </summary>
+        [WirePath("refreshToken")]
         public string RefreshToken { get; set; }
         /// <summary> The scope of the access token. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
         /// <summary> Time in seconds that the token remains valid. </summary>
+        [WirePath("expiresIn")]
         public int? ExpiresIn { get; set; }
     }
 }

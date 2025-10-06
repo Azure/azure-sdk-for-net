@@ -12,5 +12,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. &lt;br&gt;&lt;br&gt; For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? EnableAutomaticUpdates { get => IsAutomaticUpdatesEnabled; set => IsAutomaticUpdatesEnabled = value; }
+
+        /// <summary> Indicates whether VMAgent Platform Updates is enabled for the Windows virtual machine. Default value is false. </summary>
+        public bool? IsVmAgentPlatformUpdatesEnabled { get; [EditorBrowsable(EditorBrowsableState.Never)] set; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Automation
 
         AutomationPrivateEndpointConnectionResource IOperationSource<AutomationPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<AutomationPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAutomationContext.Default);
             return new AutomationPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<AutomationPrivateEndpointConnectionResource> IOperationSource<AutomationPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(document.RootElement);
-            return new AutomationPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<AutomationPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAutomationContext.Default);
+            return await Task.FromResult(new AutomationPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

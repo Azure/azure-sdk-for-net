@@ -87,24 +87,34 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Deployment status. </summary>
+        [WirePath("properties.status")]
         public int? Status { get; set; }
         /// <summary> Details about deployment status. </summary>
+        [WirePath("properties.message")]
         public string Message { get; set; }
         /// <summary> Who authored the deployment. </summary>
+        [WirePath("properties.author")]
         public string Author { get; set; }
         /// <summary> Who performed the deployment. </summary>
+        [WirePath("properties.deployer")]
         public string Deployer { get; set; }
         /// <summary> Author email. </summary>
+        [WirePath("properties.author_email")]
         public string AuthorEmail { get; set; }
         /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time. </summary>
+        [WirePath("properties.end_time")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
+        [WirePath("properties.active")]
         public bool? IsActive { get; set; }
         /// <summary> Details on deployment. </summary>
+        [WirePath("properties.details")]
         public string Details { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

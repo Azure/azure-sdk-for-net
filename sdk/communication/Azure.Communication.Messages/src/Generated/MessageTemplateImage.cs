@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(uri, nameof(uri));
 
-            Kind = "image";
+            Kind = MessageTemplateValueKind.Image;
             Uri = uri;
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Communication.Messages
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateImage(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateImage(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(name, kind, serializedAdditionalRawData)
         {
             Uri = uri;
             Caption = caption;
@@ -46,7 +46,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The (public) URL of the media. </summary>
-        public Uri Uri { get; }
+        public Uri Uri { get; set; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>

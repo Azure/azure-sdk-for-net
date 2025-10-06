@@ -1,0 +1,35 @@
+parameters:
+  ArtifactPath: $(Build.ArtifactStagingDirectory)
+  Artifacts: []
+  ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+
+steps:
+ - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))) }}:
+    - pwsh: |
+        echo "##vso[task.setvariable variable=SetAsReleaseBuild]false"
+      displayName: "Set as release build"
+      condition: and(succeeded(), eq(variables['SetAsReleaseBuild'], ''))
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: opensource-api-connection
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: |
+          $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1 `
+            -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name) `
+            -ArtifactPath ${{ parameters.ArtifactPath }} `
+            -RepoRoot $(Build.SourcesDirectory) `
+            -APIKey $(azuresdk-apiview-apikey) `
+            -ConfigFileDir '${{ parameters.ConfigFileDir }}' `
+            -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
+            -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
+            -IsReleaseBuild $$(SetAsReleaseBuild)
+        workingDirectory: $(Pipeline.Workspace)
+      displayName: Validate packages and update work items
+      continueOnError: true
+      condition: >-
+        and(
+          succeededOrFailed(),
+          not(endsWith(variables['Build.Repository.Name'], '-pr'))
+        )

@@ -5,33 +5,33 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NETCore3.1": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+      "Ubuntu-24.04_NETCore3.1": {
+        "OSVmImage": "ubuntu-24.04",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "netcoreapp3.1"
       },
-      "Ubuntu-20.04_NET6.0": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+      "Ubuntu-24.04_NET6.0": {
+        "OSVmImage": "ubuntu-24.04",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "net6.0"
       },
       "windows2022_NET6.0": {
         "OSVmImage": "windows-2022",
-        "Pool": "azsdk-pool-mms-win-2022-general",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "net6.0"
       },
       "windows2022_NET462": {
         "OSVmImage": "windows-2022",
-        "Pool": "azsdk-pool-mms-win-2022-general",
+        "Pool": "azsdk-pool",
         "TestTargetFramework": "net462"
       },
-      "macos-11_NETCore3.1": {
-        "OSVmImage": "macos-11",
+      "macos_NETCore3.1": {
+        "OSVmImage": "macos-latest",
         "Pool": "Azure Pipelines",
         "TestTargetFramework": "netcoreapp3.1"
       },
-      "macos-11_NET6.0": {
-        "OSVmImage": "macos-11",
+      "macos_NET6.0": {
+        "OSVmImage": "macos-latest",
         "Pool": "Azure Pipelines",
         "TestTargetFramework": "net6.0"
       }
@@ -76,7 +76,7 @@
       "Agent": {
         "windows2022": {
           "OSVmImage": "windows-2022",
-          "Pool": "azsdk-pool-mms-win-2022-general",
+          "Pool": "azsdk-pool",
           "TestTargetFramework": "netcoreapp3.1"
         }
       },

@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resources Response. </summary>
+    /// <summary>
+    /// Resources Response
+    /// Serialized Name: ResourcesResponse
+    /// </summary>
     public partial class ResourcesResponse
     {
         /// <summary>
@@ -54,8 +56,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponse"/>. </summary>
-        /// <param name="endpoints"></param>
-        /// <param name="customDomains"></param>
+        /// <param name="endpoints"> Serialized Name: ResourcesResponse.endpoints. </param>
+        /// <param name="customDomains"> Serialized Name: ResourcesResponse.customDomains. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourcesResponse(IReadOnlyList<ResourcesResponseEndpointsItem> endpoints, IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +66,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the endpoints. </summary>
+        /// <summary> Serialized Name: ResourcesResponse.endpoints. </summary>
         public IReadOnlyList<ResourcesResponseEndpointsItem> Endpoints { get; }
-        /// <summary> Gets the custom domains. </summary>
+        /// <summary> Serialized Name: ResourcesResponse.customDomains. </summary>
         public IReadOnlyList<ResourcesResponseCustomDomainsItem> CustomDomains { get; }
     }
 }

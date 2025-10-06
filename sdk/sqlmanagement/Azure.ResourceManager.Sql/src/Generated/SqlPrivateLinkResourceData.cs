@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties")]
         public SqlPrivateLinkResourceProperties Properties { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -60,12 +59,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="state"> The state of the managed rule. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
+        /// <param name="sensitivity"> Describes the override sensitivity to be applied when rule matches. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state, RuleMatchActionType? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state, RuleMatchActionType? action, ManagedRuleSensitivityType? sensitivity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             State = state;
             Action = action;
+            Sensitivity = sensitivity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,10 +76,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Identifier for the managed rule. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
         /// <summary> The state of the managed rule. Defaults to Disabled if not specified. </summary>
+        [WirePath("state")]
         public ManagedRuleEnabledState? State { get; set; }
         /// <summary> Describes the override action to be applied when rule matches. </summary>
+        [WirePath("action")]
         public RuleMatchActionType? Action { get; set; }
+        /// <summary> Describes the override sensitivity to be applied when rule matches. </summary>
+        [WirePath("sensitivity")]
+        public ManagedRuleSensitivityType? Sensitivity { get; set; }
     }
 }

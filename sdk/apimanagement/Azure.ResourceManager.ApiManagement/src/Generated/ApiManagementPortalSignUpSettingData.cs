@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsSignUpDeveloperPortalEnabled { get; set; }
         /// <summary> Terms of service contract properties. </summary>
+        [WirePath("properties.termsOfService")]
         public TermsOfServiceProperties TermsOfService { get; set; }
     }
 }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The detailed info regarding the reason associated with the Namespace. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Value indicating Namespace is availability, true if the Namespace is available; otherwise, false. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
         /// <summary> The reason for unavailability of a Namespace. </summary>
+        [WirePath("reason")]
         public EventHubsNameUnavailableReason? Reason { get; }
     }
 }

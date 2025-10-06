@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -56,20 +55,38 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
+        /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
         /// <param name="includedMaxSize"> Included size. </param>
         /// <param name="supportedStorageSizes"> Storage size ranges. </param>
+        /// <param name="includedStorageIOps"> Included storage IOps. </param>
+        /// <param name="supportedStorageIOps"> Storage IOps ranges. </param>
+        /// <param name="iopsMinValueOverrideFactorPerSelectedStorageGB"> Min IOps override factor per selected storage GB. </param>
+        /// <param name="iopsIncludedValueOverrideFactorPerSelectedStorageGB"> Included IOps override factor per selected storage GB. </param>
+        /// <param name="includedStorageThroughputMBps"> Included storage throughput MBps. </param>
+        /// <param name="supportedStorageThroughputMBps"> Storage throughput MBps ranges. </param>
+        /// <param name="throughputMBpsMinValueOverrideFactorPerSelectedStorageGB"> Min throughput MBps override factor per selected storage GB. </param>
+        /// <param name="throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB"> Included throughput MBps override factor per selected storage GB. </param>
         /// <param name="isInstancePoolSupported"> True if this service objective is supported for managed instances in an instance pool. </param>
         /// <param name="isStandaloneSupported"> True if this service objective is supported for standalone managed instances. </param>
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceVcoresCapability(string name, int? value, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, long? includedStorageIOps, MaxLimitRangeCapability supportedStorageIOps, double? iopsMinValueOverrideFactorPerSelectedStorageGB, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB, long? includedStorageThroughputMBps, MaxLimitRangeCapability supportedStorageThroughputMBps, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            SupportedMemorySizesInGB = supportedMemorySizesInGB;
             IncludedMaxSize = includedMaxSize;
             SupportedStorageSizes = supportedStorageSizes;
+            IncludedStorageIOps = includedStorageIOps;
+            SupportedStorageIOps = supportedStorageIOps;
+            IopsMinValueOverrideFactorPerSelectedStorageGB = iopsMinValueOverrideFactorPerSelectedStorageGB;
+            IopsIncludedValueOverrideFactorPerSelectedStorageGB = iopsIncludedValueOverrideFactorPerSelectedStorageGB;
+            IncludedStorageThroughputMBps = includedStorageThroughputMBps;
+            SupportedStorageThroughputMBps = supportedStorageThroughputMBps;
+            ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB = throughputMBpsMinValueOverrideFactorPerSelectedStorageGB;
+            ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB;
             IsInstancePoolSupported = isInstancePoolSupported;
             IsStandaloneSupported = isStandaloneSupported;
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
@@ -79,22 +96,58 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The virtual cores identifier. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The virtual cores value. </summary>
+        [WirePath("value")]
         public int? Value { get; }
+        /// <summary> Supported memory sizes in GB. </summary>
+        [WirePath("supportedMemorySizesInGB")]
+        public MaxLimitRangeCapability SupportedMemorySizesInGB { get; }
         /// <summary> Included size. </summary>
+        [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }
         /// <summary> Storage size ranges. </summary>
+        [WirePath("supportedStorageSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedStorageSizes { get; }
+        /// <summary> Included storage IOps. </summary>
+        [WirePath("includedStorageIOps")]
+        public long? IncludedStorageIOps { get; }
+        /// <summary> Storage IOps ranges. </summary>
+        [WirePath("supportedStorageIOps")]
+        public MaxLimitRangeCapability SupportedStorageIOps { get; }
+        /// <summary> Min IOps override factor per selected storage GB. </summary>
+        [WirePath("iopsMinValueOverrideFactorPerSelectedStorageGB")]
+        public double? IopsMinValueOverrideFactorPerSelectedStorageGB { get; }
+        /// <summary> Included IOps override factor per selected storage GB. </summary>
+        [WirePath("iopsIncludedValueOverrideFactorPerSelectedStorageGB")]
+        public double? IopsIncludedValueOverrideFactorPerSelectedStorageGB { get; }
+        /// <summary> Included storage throughput MBps. </summary>
+        [WirePath("includedStorageThroughputMBps")]
+        public long? IncludedStorageThroughputMBps { get; }
+        /// <summary> Storage throughput MBps ranges. </summary>
+        [WirePath("supportedStorageThroughputMBps")]
+        public MaxLimitRangeCapability SupportedStorageThroughputMBps { get; }
+        /// <summary> Min throughput MBps override factor per selected storage GB. </summary>
+        [WirePath("throughputMBpsMinValueOverrideFactorPerSelectedStorageGB")]
+        public double? ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB { get; }
+        /// <summary> Included throughput MBps override factor per selected storage GB. </summary>
+        [WirePath("throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB")]
+        public double? ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB { get; }
         /// <summary> True if this service objective is supported for managed instances in an instance pool. </summary>
+        [WirePath("instancePoolSupported")]
         public bool? IsInstancePoolSupported { get; }
         /// <summary> True if this service objective is supported for standalone managed instances. </summary>
+        [WirePath("standaloneSupported")]
         public bool? IsStandaloneSupported { get; }
         /// <summary> List of supported maintenance configurations. </summary>
+        [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

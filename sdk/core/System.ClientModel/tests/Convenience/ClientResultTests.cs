@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using Azure.Core.TestFramework;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
 
-public class PipelineResponseTests
+public class ClientResultTests
 {
     #region ClientResult
 
     [Test]
     public void CannotCreateClientResultFromNullResponse()
     {
-        Assert.Throws<ArgumentNullException>(() => new MockClientResult(null!));
         Assert.Throws<ArgumentNullException>(() =>
         {
             ClientResult result = ClientResult.FromResponse(null!);
@@ -97,7 +97,6 @@ public class PipelineResponseTests
     {
         object value = new();
 
-        Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(value, null!));
         Assert.Throws<ArgumentNullException>(() =>
         {
             ClientResult<object> result = ClientResult.FromValue(value, null!);

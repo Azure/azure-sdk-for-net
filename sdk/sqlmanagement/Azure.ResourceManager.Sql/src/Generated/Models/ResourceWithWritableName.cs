@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }
 }

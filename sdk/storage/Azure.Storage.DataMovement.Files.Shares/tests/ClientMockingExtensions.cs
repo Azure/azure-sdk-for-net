@@ -1,15 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseShares;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Moq;
 using Azure.Storage.Tests;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -52,7 +56,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         /// </param>
         public static Mock<ShareDirectoryClient> WithDirectoryStructure(
             this Mock<ShareDirectoryClient> mock,
-            Tree<(string Name, bool IsDirectory)> directoryStructure = default)
+            Tree<(string Name, bool IsDirectory)> directoryStructure = default,
+            string permissionKey = default)
         {
             mock.Setup(m => m.GetFileClient(It.IsAny<string>()))
                 .Returns<string>(name =>
@@ -72,7 +77,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     UriBuilder uriBuilder = new UriBuilder(mock.Object.Uri);
                     uriBuilder.Path = Path.Combine(uriBuilder.Path, name);
                     Mock<ShareDirectoryClient> directory = new();
-                    return directory.WithUri(uriBuilder.Uri).WithDirectoryStructure(subDirStructure).Object;
+                    return directory.WithUri(uriBuilder.Uri).WithDirectoryStructure(subDirStructure, permissionKey).Object;
                 });
             mock.Setup(m => m.GetFilesAndDirectoriesAsync(
                     It.IsAny<ShareDirectoryGetFilesAndDirectoriesOptions>(),
@@ -80,10 +85,29 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ).Returns<ShareDirectoryGetFilesAndDirectoriesOptions, CancellationToken>(
                     (options, cancellationToken) => directoryStructure
                         .Select(elem => FilesModelFactory.ShareFileItem(
-                            isDirectory: elem.Value.IsDirectory, name: elem.Value.Name))
+                            isDirectory: elem.Value.IsDirectory,
+                            name: elem.Value.Name,
+                            permissionKey: permissionKey))
                         .AsAsyncPageable()
                 );
 
+            return mock;
+        }
+
+        public static Mock<ShareClient> WithUriAndPermissionKey(
+            this Mock<ShareClient> mock,
+            string sourcePermission,
+            string destinationPermissionKey)
+        {
+            mock.Setup(m => m.Uri).Returns(new Uri("https://account.file.core.windows.net/share"));
+            mock.Setup(m => m.CreatePermissionAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    ShareModelFactory.PermissionInfo(destinationPermissionKey),
+                    new MockResponse(200))));
+            mock.Setup(m => m.GetPermissionAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    sourcePermission,
+                    new MockResponse(200))));
             return mock;
         }
 

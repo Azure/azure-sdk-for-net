@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> HTTP method. </summary>
+        [WirePath("method")]
         public NetworkWatcherHttpMethod? Method { get; set; }
         /// <summary> List of HTTP headers. </summary>
+        [WirePath("headers")]
         public IList<NetworkWatcherHttpHeader> Headers { get; }
         /// <summary> Valid status codes. </summary>
+        [WirePath("validStatusCodes")]
         public IList<int> ValidStatusCodes { get; }
     }
 }

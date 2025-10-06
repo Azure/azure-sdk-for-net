@@ -82,12 +82,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The resource group properties. </summary>
         internal ResourceGroupProperties Properties { get; set; }
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ResourceGroupProvisioningState
         {
             get => Properties is null ? default : Properties.ProvisioningState;
         }
 
         /// <summary> The ID of the resource that manages this resource group. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; set; }
     }
 }

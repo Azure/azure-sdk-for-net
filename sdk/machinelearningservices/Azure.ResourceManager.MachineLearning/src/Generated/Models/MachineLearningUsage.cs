@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the resource ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Region of the AML workspace in the id. </summary>
+        [WirePath("amlWorkspaceLocation")]
         public string AmlWorkspaceLocation { get; }
         /// <summary> Specifies the resource type. </summary>
+        [WirePath("type")]
         public string UsageType { get; }
         /// <summary> An enum describing the unit of usage measurement. </summary>
+        [WirePath("unit")]
         public MachineLearningUsageUnit? Unit { get; }
         /// <summary> The current usage of the resource. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
         /// <summary> The maximum permitted usage of the resource. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
         /// <summary> The name of the type of usage. </summary>
+        [WirePath("name")]
         public MachineLearningUsageName Name { get; }
     }
 }

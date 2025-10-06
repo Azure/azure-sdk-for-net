@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(TriggersOn left, TriggersOn right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggersOn"/> values are not the same. </summary>
         public static bool operator !=(TriggersOn left, TriggersOn right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TriggersOn"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TriggersOn"/>. </summary>
         public static implicit operator TriggersOn(string value) => new TriggersOn(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

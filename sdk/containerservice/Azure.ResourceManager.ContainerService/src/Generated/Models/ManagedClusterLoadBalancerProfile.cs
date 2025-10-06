@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -77,10 +76,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Desired managed outbound IPs for the cluster load balancer. </summary>
+        [WirePath("managedOutboundIPs")]
         public ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedOutboundIPs { get; set; }
         /// <summary> Desired outbound IP Prefix resources for the cluster load balancer. </summary>
         internal ManagedClusterLoadBalancerProfileOutboundIPPrefixes OutboundIPPrefixes { get; set; }
         /// <summary> A list of public IP prefix resources. </summary>
+        [WirePath("outboundIPPrefixes.publicIPPrefixes")]
         public IList<WritableSubResource> OutboundPublicIPPrefixes
         {
             get
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Desired outbound IP resources for the cluster load balancer. </summary>
         internal ManagedClusterLoadBalancerProfileOutboundIPs OutboundIPs { get; set; }
         /// <summary> A list of public IP resources. </summary>
+        [WirePath("outboundIPs.publicIPs")]
         public IList<WritableSubResource> OutboundPublicIPs
         {
             get
@@ -105,14 +107,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
+        [WirePath("effectiveOutboundIPs")]
         public IList<WritableSubResource> EffectiveOutboundIPs { get; }
         /// <summary> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </summary>
+        [WirePath("allocatedOutboundPorts")]
         public int? AllocatedOutboundPorts { get; set; }
         /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </summary>
+        [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Enable multiple standard load balancers per AKS cluster or not. </summary>
+        [WirePath("enableMultipleStandardLoadBalancers")]
         public bool? EnableMultipleStandardLoadBalancers { get; set; }
         /// <summary> The type of the managed inbound Load Balancer BackendPool. </summary>
+        [WirePath("backendPoolType")]
         public ManagedClusterLoadBalancerBackendPoolType? BackendPoolType { get; set; }
     }
 }

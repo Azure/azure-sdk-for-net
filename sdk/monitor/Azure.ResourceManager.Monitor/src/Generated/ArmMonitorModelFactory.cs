@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Monitor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -321,8 +321,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Monitor.ActionGroupData"/> instance for mocking. </returns>
-        public static ActionGroupData ActionGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupShortName = null, bool? isEnabled = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null)
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupShortName = null, bool? isEnabled = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null, IEnumerable<IncidentReceiver> incidentReceivers = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             emailReceivers ??= new List<MonitorEmailReceiver>();
@@ -336,6 +338,7 @@ namespace Azure.ResourceManager.Monitor.Models
             azureFunctionReceivers ??= new List<MonitorAzureFunctionReceiver>();
             armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new List<MonitorEventHubReceiver>();
+            incidentReceivers ??= new List<IncidentReceiver>();
 
             return new ActionGroupData(
                 id,
@@ -357,6 +360,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers?.ToList(),
                 armRoleReceivers?.ToList(),
                 eventHubReceivers?.ToList(),
+                incidentReceivers?.ToList(),
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -395,8 +400,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
         /// <returns> A new <see cref="Models.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(string alertType = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null)
+        public static NotificationContent NotificationContent(string alertType = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null, IEnumerable<IncidentReceiver> incidentReceivers = null)
         {
             emailReceivers ??= new List<MonitorEmailReceiver>();
             smsReceivers ??= new List<MonitorSmsReceiver>();
@@ -409,6 +415,7 @@ namespace Azure.ResourceManager.Monitor.Models
             azureFunctionReceivers ??= new List<MonitorAzureFunctionReceiver>();
             armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new List<MonitorEventHubReceiver>();
+            incidentReceivers ??= new List<IncidentReceiver>();
 
             return new NotificationContent(
                 alertType,
@@ -423,6 +430,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers?.ToList(),
                 armRoleReceivers?.ToList(),
                 eventHubReceivers?.ToList(),
+                incidentReceivers?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -1481,14 +1489,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="accountId"> The immutable ID of the Azure Monitor workspace. This property is read-only. </param>
-        /// <param name="metrics"> Information about metrics for the Azure Monitor workspace. </param>
-        /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
+        /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
+        /// <param name="accountId"> The immutable ID of the Azure Monitor workspace. This property is read-only. </param>
+        /// <param name="metricsPropertiesMetrics"> Information about metrics for the Azure Monitor workspace. </param>
+        /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
+        /// <param name="defaultIngestionSettingsPropertiesDefaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to workspace. </param>
         /// <returns> A new <see cref="Monitor.MonitorWorkspaceResourceData"/> instance for mocking. </returns>
-        public static MonitorWorkspaceResourceData MonitorWorkspaceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string accountId = null, MonitorWorkspaceMetrics metrics = null, MonitorProvisioningState? provisioningState = null, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = null, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = null, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = null)
+        public static MonitorWorkspaceResourceData MonitorWorkspaceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = null, MonitorWorkspaceMetrics metrics = null, string accountId = null, MonitorWorkspaceMetricProperties metricsPropertiesMetrics = null, MonitorProvisioningState? provisioningState = null, MonitorWorkspaceIngestionSettings defaultIngestionSettingsPropertiesDefaultIngestionSettings = null, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = null, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MonitorWorkspacePrivateEndpointConnection>();
@@ -1501,22 +1511,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 tags,
                 location,
                 etag,
-                accountId,
-                metrics,
-                provisioningState,
                 defaultIngestionSettings,
+                metrics,
+                accountId,
+                metricsPropertiesMetrics,
+                provisioningState,
+                defaultIngestionSettingsPropertiesDefaultIngestionSettings,
                 privateEndpointConnections?.ToList(),
                 publicNetworkAccess,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceMetrics"/>. </summary>
-        /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
-        /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
-        /// <returns> A new <see cref="Models.MonitorWorkspaceMetrics"/> instance for mocking. </returns>
-        public static MonitorWorkspaceMetrics MonitorWorkspaceMetrics(string prometheusQueryEndpoint = null, string internalId = null)
-        {
-            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceMetricProperties"/>. </summary>
@@ -1526,15 +1529,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorWorkspaceMetricProperties MonitorWorkspaceMetricProperties(string prometheusQueryEndpoint = null, string internalId = null)
         {
             return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint, internalId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/>. </summary>
-        /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
-        /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
-        /// <returns> A new <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
-        public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId = null, ResourceIdentifier dataCollectionEndpointResourceId = null)
-        {
-            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceIngestionSettings"/>. </summary>
@@ -1570,6 +1564,167 @@ namespace Azure.ResourceManager.Monitor.Models
                 connectionState,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/>. </summary>
+        /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
+        /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
+        public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId = null, ResourceIdentifier dataCollectionEndpointResourceId = null)
+        {
+            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceMetrics"/>. </summary>
+        /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
+        /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceMetrics"/> instance for mocking. </returns>
+        public static MonitorWorkspaceMetrics MonitorWorkspaceMetrics(string prometheusQueryEndpoint = null, string internalId = null)
+        {
+            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Monitor.PipelineGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
+        /// <returns> A new <see cref="Monitor.PipelineGroupData"/> instance for mocking. </returns>
+        public static PipelineGroupData PipelineGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PipelineGroupProperties properties = null, ExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new PipelineGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PipelineGroupProperties"/>. </summary>
+        /// <param name="replicas"> Defines the amount of replicas of the pipeline group instance. </param>
+        /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
+        /// <param name="processors"> The processors specified for a pipeline group instance. </param>
+        /// <param name="exporters"> The exporters specified for a pipeline group instance. </param>
+        /// <param name="service"> The service section for a given pipeline group instance. </param>
+        /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
+        /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
+        /// <returns> A new <see cref="Models.PipelineGroupProperties"/> instance for mocking. </returns>
+        public static PipelineGroupProperties PipelineGroupProperties(int? replicas = null, IEnumerable<PipelineGroupReceiver> receivers = null, IEnumerable<PipelineGroupProcessor> processors = null, IEnumerable<PipelineGroupExporter> exporters = null, PipelineGroupService service = null, IEnumerable<PipelineGroupNetworkingConfiguration> networkingConfigurations = null, MonitorProvisioningState? provisioningState = null)
+        {
+            receivers ??= new List<PipelineGroupReceiver>();
+            processors ??= new List<PipelineGroupProcessor>();
+            exporters ??= new List<PipelineGroupExporter>();
+            networkingConfigurations ??= new List<PipelineGroupNetworkingConfiguration>();
+
+            return new PipelineGroupProperties(
+                replicas,
+                receivers?.ToList(),
+                processors?.ToList(),
+                exporters?.ToList(),
+                service,
+                networkingConfigurations?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PipelineGroupPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.PipelineGroupPatch"/> instance for mocking. </returns>
+        public static PipelineGroupPatch PipelineGroupPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PipelineGroupPropertiesUpdate properties = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new PipelineGroupPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.ActionGroupData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.ActionGroupData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
+        {
+            return ActionGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, groupShortName: groupShortName, isEnabled: isEnabled, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.Models.NotificationContent" />. </summary>
+        /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.Models.NotificationContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NotificationContent NotificationContent(string alertType, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
+        {
+            return NotificationContent(alertType: alertType, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="accountId"> The immutable ID of the Azure Monitor workspace. This property is read-only. </param>
+        /// <param name="metrics"> Information about metrics for the Azure Monitor workspace. </param>
+        /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
+        /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to workspace. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorWorkspaceResourceData MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string accountId, MonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess)
+        {
+            return MonitorWorkspaceResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, defaultIngestionSettings: defaultIngestionSettings, metrics: metrics, accountId: accountId, metricsPropertiesMetrics: default, provisioningState: provisioningState, defaultIngestionSettingsPropertiesDefaultIngestionSettings: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess);
         }
     }
 }

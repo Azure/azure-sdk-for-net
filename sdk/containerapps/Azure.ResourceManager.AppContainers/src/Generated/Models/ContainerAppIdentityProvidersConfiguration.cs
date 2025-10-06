@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -79,23 +78,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The configuration settings of the Azure Active directory provider. </summary>
+        [WirePath("azureActiveDirectory")]
         public ContainerAppAzureActiveDirectoryConfiguration AzureActiveDirectory { get; set; }
         /// <summary> The configuration settings of the Facebook provider. </summary>
+        [WirePath("facebook")]
         public ContainerAppFacebookConfiguration Facebook { get; set; }
         /// <summary> The configuration settings of the GitHub provider. </summary>
+        [WirePath("gitHub")]
         public ContainerAppGitHubConfiguration GitHub { get; set; }
         /// <summary> The configuration settings of the Google provider. </summary>
+        [WirePath("google")]
         public ContainerAppGoogleConfiguration Google { get; set; }
         /// <summary> The configuration settings of the Twitter provider. </summary>
+        [WirePath("twitter")]
         public ContainerAppTwitterConfiguration Twitter { get; set; }
         /// <summary> The configuration settings of the Apple provider. </summary>
+        [WirePath("apple")]
         public ContainerAppAppleConfiguration Apple { get; set; }
         /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
+        [WirePath("azureStaticWebApps")]
         public ContainerAppAzureStaticWebAppsConfiguration AzureStaticWebApps { get; set; }
         /// <summary>
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
         /// </summary>
+        [WirePath("customOpenIdConnectProviders")]
         public IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> CustomOpenIdConnectProviders { get; }
     }
 }

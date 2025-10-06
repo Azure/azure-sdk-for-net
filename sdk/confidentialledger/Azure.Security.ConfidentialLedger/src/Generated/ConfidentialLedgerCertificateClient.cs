@@ -7,10 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Certificate
 {
@@ -21,7 +19,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _certificateEndpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -111,7 +109,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_certificateEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/ledgerIdentity/", false);
             uri.AppendPath(ledgerId, true);
             uri.AppendQuery("api-version", _apiVersion, true);

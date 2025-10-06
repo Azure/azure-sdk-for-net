@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> The UnknownLimitJsonObject. </summary>
+    /// <summary> Unknown version of QuotaLimitJsonObject. </summary>
     internal partial class UnknownLimitJsonObject : QuotaLimitJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLimitJsonObject"/>. </summary>

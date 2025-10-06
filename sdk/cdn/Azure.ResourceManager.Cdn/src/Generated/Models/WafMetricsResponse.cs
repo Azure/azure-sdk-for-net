@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Waf Metrics Response. </summary>
+    /// <summary>
+    /// Waf Metrics Response
+    /// Serialized Name: WafMetricsResponse
+    /// </summary>
     public partial class WafMetricsResponse
     {
         /// <summary>
@@ -53,10 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafMetricsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="series"></param>
+        /// <param name="dateTimeBegin"> Serialized Name: WafMetricsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: WafMetricsResponse.dateTimeEnd. </param>
+        /// <param name="granularity"> Serialized Name: WafMetricsResponse.granularity. </param>
+        /// <param name="series"> Serialized Name: WafMetricsResponse.series. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WafMetricsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, WafMetricsResponseGranularity? granularity, IReadOnlyList<WafMetricsResponseSeriesItem> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +69,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the date time begin. </summary>
+        /// <summary> Serialized Name: WafMetricsResponse.dateTimeBegin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
-        /// <summary> Gets the date time end. </summary>
+        /// <summary> Serialized Name: WafMetricsResponse.dateTimeEnd. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
-        /// <summary> Gets the granularity. </summary>
+        /// <summary> Serialized Name: WafMetricsResponse.granularity. </summary>
         public WafMetricsResponseGranularity? Granularity { get; }
-        /// <summary> Gets the series. </summary>
+        /// <summary> Serialized Name: WafMetricsResponse.series. </summary>
         public IReadOnlyList<WafMetricsResponseSeriesItem> Series { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="allocationState"> Whether the pool is resizing. </param>
         /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
         /// <param name="vmSize"> For information about available sizes of virtual machines for Cloud Services pools (pools created with cloudServiceConfiguration), see Sizes for Cloud Services (https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/). Batch supports all Cloud Services VM sizes except ExtraSmall. For information about available VM sizes for pools using images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration) see Sizes for Virtual Machines (Linux) (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/) or Sizes for Virtual Machines (Windows) (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
-        /// <param name="deploymentConfiguration"> Using CloudServiceConfiguration specifies that the nodes should be creating using Azure Cloud Services (PaaS), while VirtualMachineConfiguration uses Azure Virtual Machines (IaaS). </param>
+        /// <param name="deploymentConfiguration"> Deployment configuration properties. </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
         /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
@@ -56,7 +56,42 @@ namespace Azure.ResourceManager.Batch.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchNodeFillType? taskSchedulingNodeFillType, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchCertificateReference> certificates, IEnumerable<BatchApplicationPackageReference> applicationPackages, IEnumerable<string> applicationLicenses, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, NodeCommunicationMode? targetNodeCommunicationMode, NodeCommunicationMode? currentNodeCommunicationMode, ETag? etag)
         {
-            return BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, taskSchedulingNodeFillType, userAccounts, metadata, startTask, certificates, applicationPackages, applicationLicenses, resizeOperationStatus, mountConfiguration, targetNodeCommunicationMode, currentNodeCommunicationMode, null, etag);
+            BatchVmConfiguration deploymentVmConfiguration = deploymentConfiguration == null ? null : deploymentConfiguration.VmConfiguration;
+            return BatchAccountPoolData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                identity: identity,
+                displayName: displayName,
+                lastModifiedOn: lastModifiedOn,
+                createdOn: createdOn,
+                provisioningState: provisioningState,
+                provisioningStateTransitOn: provisioningStateTransitOn,
+                allocationState: allocationState,
+                allocationStateTransitionOn: allocationStateTransitionOn,
+                vmSize: vmSize,
+                deploymentVmConfiguration: deploymentVmConfiguration,
+                currentDedicatedNodes: currentDedicatedNodes,
+                currentLowPriorityNodes: currentLowPriorityNodes,
+                scaleSettings: scaleSettings,
+                autoScaleRun: autoScaleRun,
+                interNodeCommunication: interNodeCommunication,
+                networkConfiguration: networkConfiguration,
+                taskSlotsPerNode: taskSlotsPerNode,
+                taskSchedulingNodeFillType: taskSchedulingNodeFillType,
+                userAccounts: userAccounts,
+                metadata: metadata,
+                startTask: startTask,
+                certificates: certificates,
+                applicationPackages: applicationPackages,
+                applicationLicenses: applicationLicenses,
+                resizeOperationStatus: resizeOperationStatus,
+                mountConfiguration: mountConfiguration,
+                targetNodeCommunicationMode: targetNodeCommunicationMode,
+                currentNodeCommunicationMode: currentNodeCommunicationMode,
+                etag: etag
+            );
         }
     }
 }

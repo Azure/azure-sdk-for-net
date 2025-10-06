@@ -51,43 +51,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
-        /// <param name="accessToken"></param>
-        /// <param name="expiresIn"></param>
-        /// <param name="hostName"></param>
         /// <param name="notebookResourceId"></param>
+        /// <param name="hostName"></param>
         /// <param name="publicDns"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="tokenType"></param>
+        /// <param name="expiresIn"></param>
         /// <param name="refreshToken"></param>
         /// <param name="scope"></param>
-        /// <param name="tokenType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceNotebookAccessTokenResult(string accessToken, int? expiresIn, string hostName, string notebookResourceId, string publicDns, string refreshToken, string scope, string tokenType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId, string hostName, string publicDns, string accessToken, string tokenType, int? expiresIn, string refreshToken, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AccessToken = accessToken;
-            ExpiresIn = expiresIn;
-            HostName = hostName;
             NotebookResourceId = notebookResourceId;
+            HostName = hostName;
             PublicDns = publicDns;
+            AccessToken = accessToken;
+            TokenType = tokenType;
+            ExpiresIn = expiresIn;
             RefreshToken = refreshToken;
             Scope = scope;
-            TokenType = tokenType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the access token. </summary>
-        public string AccessToken { get; }
-        /// <summary> Gets the expires in. </summary>
-        public int? ExpiresIn { get; }
-        /// <summary> Gets the host name. </summary>
-        public string HostName { get; }
         /// <summary> Gets the notebook resource id. </summary>
+        [WirePath("notebookResourceId")]
         public string NotebookResourceId { get; }
+        /// <summary> Gets the host name. </summary>
+        [WirePath("hostName")]
+        public string HostName { get; }
         /// <summary> Gets the public dns. </summary>
+        [WirePath("publicDns")]
         public string PublicDns { get; }
+        /// <summary> Gets the access token. </summary>
+        [WirePath("accessToken")]
+        public string AccessToken { get; }
+        /// <summary> Gets the token type. </summary>
+        [WirePath("tokenType")]
+        public string TokenType { get; }
+        /// <summary> Gets the expires in. </summary>
+        [WirePath("expiresIn")]
+        public int? ExpiresIn { get; }
         /// <summary> Gets the refresh token. </summary>
+        [WirePath("refreshToken")]
         public string RefreshToken { get; }
         /// <summary> Gets the scope. </summary>
+        [WirePath("scope")]
         public string Scope { get; }
-        /// <summary> Gets the token type. </summary>
-        public string TokenType { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Destination address. Can either be an IP address or a FQDN. </summary>
+        [WirePath("address")]
         public string Address { get; }
         /// <summary> Destination port. </summary>
+        [WirePath("port")]
         public long Port { get; }
     }
 }

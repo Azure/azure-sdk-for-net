@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Name of upgrade notification. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Timestamp when upgrade notification occurred. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Details about this upgrade notification. </summary>
+        [WirePath("upsellNotification")]
         public IReadOnlyDictionary<string, string> UpsellNotification { get; }
     }
 }

@@ -1,16 +1,70 @@
 # Release History
 
-## 1.4.0-beta.6 (Unreleased)
+## 1.4.0-beta.14 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.13 (2025-08-04)
+
+### Features Added
+
+- Make `Azure.ResourceManager.CosmosDB` AOT-compatible
+
+## 1.4.0-beta.12 (2024-12-20)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-09' to 'package-preview-2024-12-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2afa5b356adf6cf51209d2cf28d38644c69d9832/specification/cosmos-db/resource-manager/readme.md.
+
+## 1.4.0-beta.11 (2024-11-01)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4d065866a422257746306b352cb34fd5c98d5754/specification/cosmos-db/resource-manager/readme.md
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.4.0-beta.10 (2024-06-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-02' to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/86b70ce378f0005c26b58ba0bcf96907bfa3a966/specification/cosmos-db/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.40.0
+
+## 1.4.0-beta.9 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.4.0-beta.8 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.4.0-beta.7 (2024-03-26)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
+## 1.4.0-beta.6 (2024-03-25)
+
+### Features Added
+
+- Updated Microsoft.DocumentDB RP API version to `2024-02-15-preview`
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add support for 'restoreWithTtlDisabled' in RestoreParameter to disable ttl on restored account
+- Adds support for PerRegionPerPartitionAutoscale feature.
 
 ## 1.4.0-beta.5 (2023-11-21)
 
@@ -125,8 +179,8 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
@@ -207,4 +261,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
 {
@@ -37,18 +35,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataReplicationDraResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataReplicationDraResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationDraResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataReplicationDraResource"/> object. </returns>
-        public virtual DataReplicationDraResource GetDataReplicationDraResource(ResourceIdentifier id)
-        {
-            DataReplicationDraResource.ValidateResourceId(id);
-            return new DataReplicationDraResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="DataReplicationEmailConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataReplicationEmailConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationEmailConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -58,6 +44,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         {
             DataReplicationEmailConfigurationResource.ValidateResourceId(id);
             return new DataReplicationEmailConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataReplicationVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataReplicationVaultResource"/> object. </returns>
+        public virtual DataReplicationVaultResource GetDataReplicationVaultResource(ResourceIdentifier id)
+        {
+            DataReplicationVaultResource.ValidateResourceId(id);
+            return new DataReplicationVaultResource(Client, id);
         }
 
         /// <summary>
@@ -85,6 +83,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DataReplicationFabricAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationFabricAgentResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationFabricAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataReplicationFabricAgentResource"/> object. </returns>
+        public virtual DataReplicationFabricAgentResource GetDataReplicationFabricAgentResource(ResourceIdentifier id)
+        {
+            DataReplicationFabricAgentResource.ValidateResourceId(id);
+            return new DataReplicationFabricAgentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataReplicationJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationJobResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataReplicationJobResource"/> object. </returns>
+        public virtual DataReplicationJobResource GetDataReplicationJobResource(ResourceIdentifier id)
+        {
+            DataReplicationJobResource.ValidateResourceId(id);
+            return new DataReplicationJobResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DataReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataReplicationPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -94,6 +116,42 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         {
             DataReplicationPolicyResource.ValidateResourceId(id);
             return new DataReplicationPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataReplicationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataReplicationPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual DataReplicationPrivateEndpointConnectionResource GetDataReplicationPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            DataReplicationPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new DataReplicationPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPrivateEndpointConnectionProxyResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> object. </returns>
+        public virtual DataReplicationPrivateEndpointConnectionProxyResource GetDataReplicationPrivateEndpointConnectionProxyResource(ResourceIdentifier id)
+        {
+            DataReplicationPrivateEndpointConnectionProxyResource.ValidateResourceId(id);
+            return new DataReplicationPrivateEndpointConnectionProxyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataReplicationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataReplicationPrivateLinkResource"/> object. </returns>
+        public virtual DataReplicationPrivateLinkResource GetDataReplicationPrivateLinkResource(ResourceIdentifier id)
+        {
+            DataReplicationPrivateLinkResource.ValidateResourceId(id);
+            return new DataReplicationPrivateLinkResource(Client, id);
         }
 
         /// <summary>
@@ -121,39 +179,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataReplicationReplicationExtensionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataReplicationReplicationExtensionResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationReplicationExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationExtensionResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataReplicationReplicationExtensionResource"/> object. </returns>
-        public virtual DataReplicationReplicationExtensionResource GetDataReplicationReplicationExtensionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationExtensionResource"/> object. </returns>
+        public virtual DataReplicationExtensionResource GetDataReplicationExtensionResource(ResourceIdentifier id)
         {
-            DataReplicationReplicationExtensionResource.ValidateResourceId(id);
-            return new DataReplicationReplicationExtensionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DataReplicationVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataReplicationVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataReplicationVaultResource"/> object. </returns>
-        public virtual DataReplicationVaultResource GetDataReplicationVaultResource(ResourceIdentifier id)
-        {
-            DataReplicationVaultResource.ValidateResourceId(id);
-            return new DataReplicationVaultResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DataReplicationWorkflowResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataReplicationWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationWorkflowResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataReplicationWorkflowResource"/> object. </returns>
-        public virtual DataReplicationWorkflowResource GetDataReplicationWorkflowResource(ResourceIdentifier id)
-        {
-            DataReplicationWorkflowResource.ValidateResourceId(id);
-            return new DataReplicationWorkflowResource(Client, id);
+            DataReplicationExtensionResource.ValidateResourceId(id);
+            return new DataReplicationExtensionResource(Client, id);
         }
     }
 }

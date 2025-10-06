@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string UdpValue = "Udp";
         private const string TcpValue = "Tcp";
         private const string AllValue = "All";
+        private const string QuicValue = "Quic";
 
         /// <summary> Udp. </summary>
         public static LoadBalancingTransportProtocol Udp { get; } = new LoadBalancingTransportProtocol(UdpValue);
@@ -32,11 +33,13 @@ namespace Azure.ResourceManager.Network.Models
         public static LoadBalancingTransportProtocol Tcp { get; } = new LoadBalancingTransportProtocol(TcpValue);
         /// <summary> All. </summary>
         public static LoadBalancingTransportProtocol All { get; } = new LoadBalancingTransportProtocol(AllValue);
+        /// <summary> Quic. </summary>
+        public static LoadBalancingTransportProtocol Quic { get; } = new LoadBalancingTransportProtocol(QuicValue);
         /// <summary> Determines if two <see cref="LoadBalancingTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(LoadBalancingTransportProtocol left, LoadBalancingTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancingTransportProtocol"/> values are not the same. </summary>
         public static bool operator !=(LoadBalancingTransportProtocol left, LoadBalancingTransportProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LoadBalancingTransportProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancingTransportProtocol"/>. </summary>
         public static implicit operator LoadBalancingTransportProtocol(string value) => new LoadBalancingTransportProtocol(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

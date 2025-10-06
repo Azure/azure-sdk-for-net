@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Mocking
 {
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,7 +84,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,7 +122,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -156,7 +153,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2024-09-19-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

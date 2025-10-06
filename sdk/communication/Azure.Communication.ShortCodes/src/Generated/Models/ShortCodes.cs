@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -16,20 +15,20 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
         internal ShortCodes()
         {
-            ShortCodesValue = new ChangeTrackingList<ShortCode>();
+            ShortCodesProperty = new ChangeTrackingList<ShortCode>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
-        /// <param name="shortCodesValue"> List of short codes. </param>
+        /// <param name="shortCodesProperty"> List of short codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        internal ShortCodes(IReadOnlyList<ShortCode> shortCodesValue, string nextLink)
+        internal ShortCodes(IReadOnlyList<ShortCode> shortCodesProperty, string nextLink)
         {
-            ShortCodesValue = shortCodesValue;
+            ShortCodesProperty = shortCodesProperty;
             NextLink = nextLink;
         }
 
         /// <summary> List of short codes. </summary>
-        public IReadOnlyList<ShortCode> ShortCodesValue { get; }
+        public IReadOnlyList<ShortCode> ShortCodesProperty { get; }
         /// <summary> Represents the URL link to the next page. </summary>
         public string NextLink { get; }
     }

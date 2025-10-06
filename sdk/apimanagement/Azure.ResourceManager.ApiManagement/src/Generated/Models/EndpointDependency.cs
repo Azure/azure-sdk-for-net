@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> The Ports used when connecting to DomainName. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<EndpointDetail> EndpointDetails { get; }
     }
 }

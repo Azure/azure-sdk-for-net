@@ -62,10 +62,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The operation type for the patch API. </summary>
+        [WirePath("operation")]
         public TagPatchMode? PatchMode { get; set; }
         /// <summary> The set of tags. </summary>
         internal Tag Properties { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("properties.tags")]
         public IDictionary<string, string> TagValues
         {
             get

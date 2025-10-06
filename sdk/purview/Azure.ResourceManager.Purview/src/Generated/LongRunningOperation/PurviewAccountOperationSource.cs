@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Purview
 
         PurviewAccountResource IOperationSource<PurviewAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
             return new PurviewAccountResource(_client, data);
         }
 
         async ValueTask<PurviewAccountResource> IOperationSource<PurviewAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement);
-            return new PurviewAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
+            return await Task.FromResult(new PurviewAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -69,12 +69,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Gets the internal name. </summary>
+        [WirePath("internalName")]
         public string InternalName { get; }
         /// <summary> Gets the is to be exported for shoebox. </summary>
+        [WirePath("toBeExportedForShoebox")]
         public bool? IsToBeExportedForShoebox { get; }
     }
 }

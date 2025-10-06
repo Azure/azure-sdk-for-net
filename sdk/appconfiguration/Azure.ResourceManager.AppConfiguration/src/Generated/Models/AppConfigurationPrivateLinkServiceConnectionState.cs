@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public AppConfigurationPrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </summary>
+        [WirePath("actionsRequired")]
         public AppConfigurationActionsRequired? ActionsRequired { get; }
     }
 }

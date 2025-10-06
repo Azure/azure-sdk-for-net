@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -25,12 +23,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="productionData">
         /// [Required] The data which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
         /// <param name="referenceData">
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
         public DataDriftMonitoringSignal(IEnumerable<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData)
@@ -39,25 +37,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(productionData, nameof(productionData));
             Argument.AssertNotNull(referenceData, nameof(referenceData));
 
-            FeatureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
             MetricThresholds = metricThresholds.ToList();
             ProductionData = productionData;
             ReferenceData = referenceData;
+            FeatureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
             SignalType = MonitoringSignalType.DataDrift;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataDriftMonitoringSignal"/>. </summary>
-        /// <param name="mode"> The current notification mode for this signal. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataSegment"> The data segment used for scoping on a subset of the data population. </param>
-        /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
         /// <param name="features">
         /// The feature filter which identifies which feature to calculate drift over.
         /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/> and <see cref="TopNFeaturesByAttribution"/>.
         /// </param>
+        /// <param name="featureImportanceSettings"> The settings for computing feature importance. </param>
         /// <param name="metricThresholds">
         /// [Required] A list of metrics to calculate and their associated thresholds.
         /// Please note <see cref="DataDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -66,21 +63,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="productionData">
         /// [Required] The data which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
         /// <param name="referenceData">
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </param>
-        internal DataDriftMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitoringDataSegment dataSegment, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, MonitoringFeatureFilterBase features, IList<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType, serializedAdditionalRawData)
+        /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
+        internal DataDriftMonitoringSignal(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitoringFeatureFilterBase features, FeatureImportanceSettings featureImportanceSettings, IList<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride) : base(signalType, notificationTypes, properties, serializedAdditionalRawData)
         {
-            DataSegment = dataSegment;
-            FeatureDataTypeOverride = featureDataTypeOverride;
             Features = features;
+            FeatureImportanceSettings = featureImportanceSettings;
             MetricThresholds = metricThresholds;
             ProductionData = productionData;
             ReferenceData = referenceData;
+            FeatureDataTypeOverride = featureDataTypeOverride;
             SignalType = signalType;
         }
 
@@ -89,33 +87,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> The data segment used for scoping on a subset of the data population. </summary>
-        public MonitoringDataSegment DataSegment { get; set; }
-        /// <summary> A dictionary that maps feature names to their respective data types. </summary>
-        public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
         /// <summary>
         /// The feature filter which identifies which feature to calculate drift over.
         /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/> and <see cref="TopNFeaturesByAttribution"/>.
         /// </summary>
+        [WirePath("features")]
         public MonitoringFeatureFilterBase Features { get; set; }
+        /// <summary> The settings for computing feature importance. </summary>
+        [WirePath("featureImportanceSettings")]
+        public FeatureImportanceSettings FeatureImportanceSettings { get; set; }
         /// <summary>
         /// [Required] A list of metrics to calculate and their associated thresholds.
         /// Please note <see cref="DataDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CategoricalDataDriftMetricThreshold"/> and <see cref="NumericalDataDriftMetricThreshold"/>.
         /// </summary>
+        [WirePath("metricThresholds")]
         public IList<DataDriftMetricThresholdBase> MetricThresholds { get; }
         /// <summary>
         /// [Required] The data which drift will be calculated for.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
+        [WirePath("productionData")]
         public MonitoringInputDataBase ProductionData { get; set; }
         /// <summary>
         /// [Required] The data to calculate drift against.
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
+        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
         /// </summary>
+        [WirePath("referenceData")]
         public MonitoringInputDataBase ReferenceData { get; set; }
+        /// <summary> A dictionary that maps feature names to their respective data types. </summary>
+        [WirePath("featureDataTypeOverride")]
+        public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
     }
 }

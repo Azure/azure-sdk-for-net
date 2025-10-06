@@ -7,16 +7,22 @@ azure-arm: true
 csharp: true
 library-name: MobileNetwork
 namespace: Azure.ResourceManager.MobileNetwork
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ebb588db81c5b2c46f6a0bbb0c8ee6da3bc410dc/specification/mobilenetwork/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/45ed7d13be79760a39301ff85cc0937f017329de/specification/mobilenetwork/resource-manager/readme.md
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+sample-gen:
+  output-folder: $(this-folder)/../tests/Generated
+  clear-output-folder: true
 use-model-reader-writer: true
+client-side-validation: false
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: TenantPacketCoreControlPlaneVersion
@@ -54,6 +60,10 @@ acronym-mapping:
   AAD: Aad
   EPC: Epc
   EPC5GC: Epc5GC
+  Ue: UE|ue
+
+list-exception:
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/ues/{ueId}/extendedInformation/default
 
 rename-mapping:
   ManagedServiceIdentity: MobileNetworkManagedServiceIdentity
@@ -94,7 +104,6 @@ rename-mapping:
   Installation: MobileNetworkInstallation
   HttpsServerCertificate: MobileNetworkHttpsServerCertificate
   DiagnosticsPackageStatus: MobileNetworkDiagnosticsPackageStatus
-  CertificateProvisioningStatus: MobileNetworkCertificateProvisioningStatus
   CertificateProvisioning: MobileNetworkCertificateProvisioning
   BillingSku: MobileNetworkBillingSku
   AuthenticationType: MobileNetworkAuthenticationType
@@ -110,7 +119,18 @@ rename-mapping:
   AttachedDataNetwork: MobileAttachedDataNetwork
   EventHubConfiguration: MobileNetworkEventHubConfiguration
   EventHubConfiguration.id: -|arm-id
+  RrcEstablishmentCause.SMS: Sms
+  UeQOSFlow: UEQosFlow
+  RoutingInfoModel: MobileNetworkRoutingInfo
+  SimMove: SimMoveContent
+  SimClone: SimCloneContent
+  SignalingConfiguration: PacketCoreSignalingConfiguration
+  PlatformType.AKS-HCI: AksHci
 
+prepend-rp-prefix:
+  - Ipv4Route
+  - Ipv4RouteNextHop
+  - NasEncryptionType
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

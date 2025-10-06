@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -54,6 +53,8 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedPerDatabaseMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
             SupportedPerDatabaseMaxPerformanceLevels = new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>();
             SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
+            SupportedMinCapacities = new ChangeTrackingList<MinCapacityCapability>();
+            SupportedZones = new ChangeTrackingList<ZonePinningCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolPerformanceLevelCapability"/>. </summary>
@@ -67,10 +68,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedPerDatabaseMaxPerformanceLevels"> The list of supported per database max performance levels. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the performance level. </param>
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
+        /// <param name="supportedMinCapacities"> List of supported min capacities. </param>
+        /// <param name="supportedAutoPauseDelay"> Supported time range for auto pause delay. </param>
+        /// <param name="supportedPerDatabaseAutoPauseDelay"> Supported time range for per database auto pause delay. </param>
+        /// <param name="supportedZones"> List of supported availability zones. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? isZoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? isZoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, AutoPauseDelayTimeRange supportedAutoPauseDelay, PerDatabaseAutoPauseDelayTimeRange supportedPerDatabaseAutoPauseDelay, IReadOnlyList<ZonePinningCapability> supportedZones, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PerformanceLevel = performanceLevel;
             Sku = sku;
@@ -82,34 +87,62 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedPerDatabaseMaxPerformanceLevels = supportedPerDatabaseMaxPerformanceLevels;
             IsZoneRedundant = isZoneRedundant;
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
+            SupportedMinCapacities = supportedMinCapacities;
+            SupportedAutoPauseDelay = supportedAutoPauseDelay;
+            SupportedPerDatabaseAutoPauseDelay = supportedPerDatabaseAutoPauseDelay;
+            SupportedZones = supportedZones;
             Status = status;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The performance level for the pool. </summary>
+        [WirePath("performanceLevel")]
         public PerformanceLevelCapability PerformanceLevel { get; }
         /// <summary> The sku. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; }
         /// <summary> List of supported license types. </summary>
+        [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
         /// <summary> The maximum number of databases supported. </summary>
+        [WirePath("maxDatabaseCount")]
         public int? MaxDatabaseCount { get; }
         /// <summary> The included (free) max size for this performance level. </summary>
+        [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }
         /// <summary> The list of supported max sizes. </summary>
+        [WirePath("supportedMaxSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedMaxSizes { get; }
         /// <summary> The list of supported per database max sizes. </summary>
+        [WirePath("supportedPerDatabaseMaxSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedPerDatabaseMaxSizes { get; }
         /// <summary> The list of supported per database max performance levels. </summary>
+        [WirePath("supportedPerDatabaseMaxPerformanceLevels")]
         public IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> SupportedPerDatabaseMaxPerformanceLevels { get; }
         /// <summary> Whether or not zone redundancy is supported for the performance level. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> List of supported maintenance configurations. </summary>
+        [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
+        /// <summary> List of supported min capacities. </summary>
+        [WirePath("supportedMinCapacities")]
+        public IReadOnlyList<MinCapacityCapability> SupportedMinCapacities { get; }
+        /// <summary> Supported time range for auto pause delay. </summary>
+        [WirePath("supportedAutoPauseDelay")]
+        public AutoPauseDelayTimeRange SupportedAutoPauseDelay { get; }
+        /// <summary> Supported time range for per database auto pause delay. </summary>
+        [WirePath("supportedPerDatabaseAutoPauseDelay")]
+        public PerDatabaseAutoPauseDelayTimeRange SupportedPerDatabaseAutoPauseDelay { get; }
+        /// <summary> List of supported availability zones. </summary>
+        [WirePath("supportedZones")]
+        public IReadOnlyList<ZonePinningCapability> SupportedZones { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

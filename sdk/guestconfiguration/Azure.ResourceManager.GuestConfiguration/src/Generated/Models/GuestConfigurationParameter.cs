@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Name of the configuration parameter. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Value of the configuration parameter. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

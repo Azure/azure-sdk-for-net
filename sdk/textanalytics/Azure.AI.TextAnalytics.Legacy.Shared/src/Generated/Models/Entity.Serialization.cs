@@ -64,5 +64,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                 length,
                 confidenceScore);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Entity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEntity(document.RootElement);
+        }
     }
 }

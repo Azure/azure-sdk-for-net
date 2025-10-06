@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,37 +18,26 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppBackupData : IUtf8JsonSerializable, IJsonModel<NetAppBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(BackupId))
@@ -59,6 +49,30 @@ namespace Azure.ResourceManager.NetApp
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotCreationOn))
+            {
+                if (SnapshotCreationOn != null)
+                {
+                    writer.WritePropertyName("snapshotCreationDate"u8);
+                    writer.WriteStringValue(SnapshotCreationOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("snapshotCreationDate");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CompletionOn))
+            {
+                if (CompletionOn != null)
+                {
+                    writer.WritePropertyName("completionDate"u8);
+                    writer.WriteStringValue(CompletionOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("completionDate");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -97,26 +111,15 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupPolicyResourceId))
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyArmResourceId))
             {
                 writer.WritePropertyName("backupPolicyResourceId"u8);
-                writer.WriteStringValue(BackupPolicyResourceId);
+                writer.WriteStringValue(BackupPolicyArmResourceId);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(IsLargeVolume))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("isLargeVolume"u8);
+                writer.WriteBooleanValue(IsLargeVolume.Value);
             }
             writer.WriteEndObject();
         }
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +138,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppBackupData DeserializeNetAppBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,6 +150,8 @@ namespace Azure.ResourceManager.NetApp
             SystemData systemData = default;
             string backupId = default;
             DateTimeOffset? creationDate = default;
+            DateTimeOffset? snapshotCreationDate = default;
+            DateTimeOffset? completionDate = default;
             string provisioningState = default;
             long? size = default;
             string label = default;
@@ -155,9 +160,10 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier volumeResourceId = default;
             bool? useExistingSnapshot = default;
             string snapshotName = default;
-            string backupPolicyResourceId = default;
+            ResourceIdentifier backupPolicyResourceId = default;
+            bool? isLargeVolume = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,6 +211,26 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("snapshotCreationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                snapshotCreationDate = null;
+                                continue;
+                            }
+                            snapshotCreationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("completionDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                completionDate = null;
+                                continue;
+                            }
+                            completionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -261,7 +287,20 @@ namespace Azure.ResourceManager.NetApp
                         }
                         if (property0.NameEquals("backupPolicyResourceId"u8))
                         {
-                            backupPolicyResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupPolicyResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isLargeVolume"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isLargeVolume = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -269,10 +308,10 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppBackupData(
                 id,
                 name,
@@ -280,6 +319,8 @@ namespace Azure.ResourceManager.NetApp
                 systemData,
                 backupId,
                 creationDate,
+                snapshotCreationDate,
+                completionDate,
                 provisioningState,
                 size,
                 label,
@@ -289,6 +330,7 @@ namespace Azure.ResourceManager.NetApp
                 useExistingSnapshot,
                 snapshotName,
                 backupPolicyResourceId,
+                isLargeVolume,
                 serializedAdditionalRawData);
         }
 
@@ -299,9 +341,9 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -313,11 +355,11 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 

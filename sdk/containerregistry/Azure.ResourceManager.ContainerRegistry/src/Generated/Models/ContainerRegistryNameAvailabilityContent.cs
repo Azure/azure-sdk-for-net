@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The name of the container registry. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </summary>
+        [WirePath("type")]
         public ContainerRegistryResourceType ResourceType { get; }
     }
 }

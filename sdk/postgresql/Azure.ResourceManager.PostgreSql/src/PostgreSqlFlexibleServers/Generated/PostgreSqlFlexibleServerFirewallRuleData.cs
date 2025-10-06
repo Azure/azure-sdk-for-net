@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
@@ -86,8 +85,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.startIpAddress")]
         public IPAddress StartIPAddress { get; set; }
         /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.endIpAddress")]
         public IPAddress EndIPAddress { get; set; }
     }
 }

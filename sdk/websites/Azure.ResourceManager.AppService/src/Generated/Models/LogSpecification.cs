@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Gets the blob duration. </summary>
+        [WirePath("blobDuration")]
         public TimeSpan? BlobDuration { get; }
         /// <summary> Gets the log filter pattern. </summary>
+        [WirePath("logFilterPattern")]
         public string LogFilterPattern { get; }
     }
 }

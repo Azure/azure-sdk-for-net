@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </summary>
+        [WirePath("properties.operationId")]
         public string OperationId { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

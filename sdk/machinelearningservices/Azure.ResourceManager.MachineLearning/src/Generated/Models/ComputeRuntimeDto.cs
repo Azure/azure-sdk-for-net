@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ComputeRuntimeDto. </summary>
+    /// <summary> Compute runtime config for feature store type workspace. </summary>
     internal partial class ComputeRuntimeDto
     {
         /// <summary>
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the spark runtime version. </summary>
+        [WirePath("sparkRuntimeVersion")]
         public string SparkRuntimeVersion { get; set; }
     }
 }

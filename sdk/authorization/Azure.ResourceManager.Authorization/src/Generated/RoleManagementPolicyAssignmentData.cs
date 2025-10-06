@@ -83,18 +83,23 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> The role management policy scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; set; }
         /// <summary> The role definition of management policy assignment. </summary>
+        [WirePath("properties.roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The policy id role management policy assignment. </summary>
+        [WirePath("properties.policyId")]
         public ResourceIdentifier PolicyId { get; set; }
         /// <summary>
         /// The readonly computed rule applied to the policy.
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </summary>
+        [WirePath("properties.effectiveRules")]
         public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; }
         /// <summary> Additional properties of scope, role definition and policy. </summary>
+        [WirePath("properties.policyAssignmentProperties")]
         public PolicyAssignmentProperties PolicyAssignmentProperties { get; }
     }
 }

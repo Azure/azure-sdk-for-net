@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -37,7 +38,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useSystemTrustStore"> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MySqlLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, DataFactoryKeyVaultSecretReference password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="allowZeroDateTime"> This allows the special “zero” date value 0000-00-00 to be retrieved from the database. Type: boolean. </param>
+        /// <param name="connectionTimeout"> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. Type: integer. </param>
+        /// <param name="convertZeroDateTime"> True to return DateTime.MinValue for date or datetime columns that have disallowed values. Type: boolean. </param>
+        /// <param name="guidFormat"> Determines which column type (if any) should be read as a GUID. Type: string. None: No column types are automatically read as a Guid; Char36: All CHAR(36) columns are read/written as a Guid using lowercase hex with hyphens, which matches UUID. </param>
+        /// <param name="sslCert"> The path to the client’s SSL certificate file in PEM format. SslKey must also be specified. Type: string. </param>
+        /// <param name="sslKey"> The path to the client’s SSL private key in PEM format. SslCert must also be specified. Type: string. </param>
+        /// <param name="treatTinyAsBoolean"> When set to true, TINYINT(1) values are returned as booleans. Type: bool. </param>
+        internal MySqlLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, DataFactoryKeyVaultSecret password, string encryptedCredential, DataFactoryElement<bool> allowZeroDateTime, DataFactoryElement<int> connectionTimeout, DataFactoryElement<bool> convertZeroDateTime, DataFactoryElement<string> guidFormat, DataFactoryElement<string> sslCert, DataFactoryElement<string> sslKey, DataFactoryElement<bool> treatTinyAsBoolean) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             DriverVersion = driverVersion;
             ConnectionString = connectionString;
@@ -49,6 +57,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             UseSystemTrustStore = useSystemTrustStore;
             Password = password;
             EncryptedCredential = encryptedCredential;
+            AllowZeroDateTime = allowZeroDateTime;
+            ConnectionTimeout = connectionTimeout;
+            ConvertZeroDateTime = convertZeroDateTime;
+            GuidFormat = guidFormat;
+            SslCert = sslCert;
+            SslKey = sslKey;
+            TreatTinyAsBoolean = treatTinyAsBoolean;
             LinkedServiceType = linkedServiceType ?? "MySql";
         }
 
@@ -69,8 +84,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </summary>
         public DataFactoryElement<int> UseSystemTrustStore { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactoryKeyVaultSecretReference Password { get; set; }
+        public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
+        /// <summary> This allows the special “zero” date value 0000-00-00 to be retrieved from the database. Type: boolean. </summary>
+        public DataFactoryElement<bool> AllowZeroDateTime { get; set; }
+        /// <summary> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. Type: integer. </summary>
+        public DataFactoryElement<int> ConnectionTimeout { get; set; }
+        /// <summary> True to return DateTime.MinValue for date or datetime columns that have disallowed values. Type: boolean. </summary>
+        public DataFactoryElement<bool> ConvertZeroDateTime { get; set; }
+        /// <summary> Determines which column type (if any) should be read as a GUID. Type: string. None: No column types are automatically read as a Guid; Char36: All CHAR(36) columns are read/written as a Guid using lowercase hex with hyphens, which matches UUID. </summary>
+        public DataFactoryElement<string> GuidFormat { get; set; }
+        /// <summary> The path to the client’s SSL certificate file in PEM format. SslKey must also be specified. Type: string. </summary>
+        public DataFactoryElement<string> SslCert { get; set; }
+        /// <summary> The path to the client’s SSL private key in PEM format. SslCert must also be specified. Type: string. </summary>
+        public DataFactoryElement<string> SslKey { get; set; }
+        /// <summary> When set to true, TINYINT(1) values are returned as booleans. Type: bool. </summary>
+        public DataFactoryElement<bool> TreatTinyAsBoolean { get; set; }
     }
 }

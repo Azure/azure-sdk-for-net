@@ -354,16 +354,16 @@ namespace Azure.Messaging.EventHubs
         internal EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
 
         /// <summary>
-        ///   Responsible for creation of checkpoints and for ownership claim.
-        /// </summary>
-        ///
-        private CheckpointStore CheckpointStore { get; }
-
-        /// <summary>
         ///   The client diagnostics for this processor.
         /// </summary>
         ///
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        ///   Responsible for creation of checkpoints and for ownership claim.
+        /// </summary>
+        ///
+        private CheckpointStore CheckpointStore { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
@@ -485,6 +485,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -521,6 +523,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -557,6 +561,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -573,7 +579,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-        /// <param name="credential">The Azure identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure identity credential to use for authorization.  Requires RBAC assignment of the "Event Hubs Access Data Owner" role for the Event Hubs namespace or the requested Event Hub. A role assignment for the requested consumer group is not adequate.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
@@ -593,6 +599,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -629,6 +637,8 @@ namespace Azure.Messaging.EventHubs
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
             CheckpointStore = checkpointStore;
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -665,6 +675,8 @@ namespace Azure.Messaging.EventHubs
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
             CheckpointStore = checkpointStore;
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -701,6 +713,8 @@ namespace Azure.Messaging.EventHubs
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
             CheckpointStore = checkpointStore;
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -715,6 +729,7 @@ namespace Azure.Messaging.EventHubs
         ///
         protected EventProcessorClient() : base()
         {
+            EnableBatchTracing = false;
         }
 
         /// <summary>
@@ -887,15 +902,23 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used for positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used from positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        /// <remarks>
+        ///   This method is obsolete and should no longer be used.  Please use <see cref="UpdateCheckpointAsync(string, CheckpointPosition, CancellationToken)"/> instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetUpdateCheckpointObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
@@ -904,14 +927,16 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Argument.AssertNotNull(partitionId, nameof(partitionId));
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+            var offsetString = offset.ToString(CultureInfo.InvariantCulture);
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, sequenceNumber?.ToString(CultureInfo.InvariantCulture), offsetString);
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
 
             try
             {
-                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+                var checkpointPosition = new CheckpointPosition(offsetString, sequenceNumber ?? long.MinValue);
+                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, checkpointPosition, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -919,13 +944,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, sequenceNumber?.ToString(CultureInfo.InvariantCulture), offsetString);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, sequenceNumber?.ToString(CultureInfo.InvariantCulture), offset.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -938,23 +963,33 @@ namespace Azure.Messaging.EventHubs
         /// <param name="startingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        protected override Task UpdateCheckpointAsync(string partitionId,
+        protected override async Task UpdateCheckpointAsync(string partitionId,
                                                       CheckpointPosition startingPosition,
                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
-            Argument.AssertAtLeast(startingPosition.SequenceNumber, 0, nameof(startingPosition.SequenceNumber));
+            if (string.IsNullOrEmpty(startingPosition.OffsetString))
+            {
+                if (EventHubProperties?.IsGeoReplicationEnabled ?? false)
+                {
+                    var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorAttemptingToWriteCheckpointWithoutOffset);
+                    var updateCheckpointException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                    _ = InvokeOnProcessingErrorAsync(updateCheckpointException, Resources.OperationEventProcessingLoop, CancellationToken.None);
+                }
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Argument.AssertAtLeast(startingPosition.SequenceNumber, 0, nameof(startingPosition.SequenceNumber));
+            }
+
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.SequenceNumber.ToString(CultureInfo.InvariantCulture), startingPosition.OffsetString);
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
 
             try
             {
-                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, startingPosition, cancellationToken);
+                await CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, startingPosition, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -962,15 +997,28 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, startingPosition.SequenceNumber.ToString(CultureInfo.InvariantCulture), startingPosition.OffsetString);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.SequenceNumber.ToString(), startingPosition.OffsetString);
             }
         }
+
+        /// <summary>
+        ///   Performs the tasks needed invoke the <see cref="OnProcessingErrorAsync" /> method in the background,
+        ///   as it is intended to be a fire-and-forget operation.
+        /// </summary>
+        ///
+        /// <param name="exception">The exception that occurred during operation of the event processor.</param>
+        /// <param name="operationDescription">A short textual description of the operation during which the exception occurred; intended to be informational only.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.</param>
+        ///
+        private Task InvokeOnProcessingErrorAsync(Exception exception,
+                                                  string operationDescription,
+                                                  CancellationToken cancellationToken) => Task.Run(() => OnProcessingErrorAsync(exception, null, operationDescription, cancellationToken), CancellationToken.None);
 
         /// <summary>
         ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
@@ -1114,6 +1162,8 @@ namespace Azure.Messaging.EventHubs
 
                     emptyBatch = false;
 
+                    using var scope = StartProcessorScope(eventData);
+
                     try
                     {
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
@@ -1128,10 +1178,16 @@ namespace Azure.Messaging.EventHubs
                         // This exception is not surfaced to the error handler or bubbled, as the entire batch must be
                         // processed or events will be lost.  Preserve the exceptions, should any occur.
 
-                        Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
+                        Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, operation);
 
                         caughtExceptions ??= new List<Exception>();
                         caughtExceptions.Add(ex);
+                        scope.Failed(ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
                     }
                 }
 
@@ -1151,7 +1207,7 @@ namespace Azure.Messaging.EventHubs
                 // This exception was either not related to processing events or was the result of sending an empty batch to be
                 // processed.  Since there would be no other caught exceptions, tread this like a single case.
 
-                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
+                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message,operation);
                 throw;
             }
             finally
@@ -1390,6 +1446,44 @@ namespace Azure.Messaging.EventHubs
             }
 
             throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+        }
+
+        /// <summary>
+        ///    Creates, starts, and enriches a processing diagnostics scope.
+        /// </summary>
+        ///
+        /// <param name="eventData">The instance of <see cref="EventData"/> which is being processed.</param>
+        ///
+        /// <returns>The instance of <see cref="DiagnosticScope"/>.</returns>
+        ///
+        private DiagnosticScope StartProcessorScope(EventData eventData)
+        {
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            if (!diagnosticScope.IsEnabled)
+            {
+                return diagnosticScope;
+            }
+
+            if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+            {
+                // Set link in all cases.
+
+                diagnosticScope.AddLink(traceparent, tracestate);
+
+                // Parent is not required, but allowed and helps to correlate producer and consumers.
+
+                diagnosticScope.SetTraceContext(traceparent, tracestate);
+            }
+
+            if (eventData.EnqueuedTime != default)
+            {
+                diagnosticScope.AddLongAttribute(
+                    DiagnosticProperty.EnqueuedTimeAttribute,
+                    eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
         }
 
         /// <summary>

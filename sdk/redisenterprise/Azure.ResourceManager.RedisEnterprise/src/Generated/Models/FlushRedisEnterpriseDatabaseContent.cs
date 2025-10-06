@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -63,6 +62,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The identifiers of all the other database resources in the georeplication group to be flushed. </summary>
+        [WirePath("ids")]
         public IList<ResourceIdentifier> Ids { get; }
     }
 }

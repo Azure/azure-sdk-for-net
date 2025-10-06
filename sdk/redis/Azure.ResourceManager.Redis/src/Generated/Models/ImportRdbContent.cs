@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -78,12 +77,16 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> File format. </summary>
+        [WirePath("format")]
         public string Format { get; set; }
         /// <summary> files to import. </summary>
+        [WirePath("files")]
         public IList<string> Files { get; }
         /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        [WirePath("preferred-data-archive-auth-method")]
         public string PreferredDataArchiveAuthMethod { get; set; }
         /// <summary> Subscription id of the storage container containing files to import using Managed Identity. </summary>
+        [WirePath("storage-subscription-id")]
         public string StorageSubscriptionId { get; set; }
     }
 }

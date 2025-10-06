@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 
@@ -36,7 +35,7 @@ namespace Azure.Storage.Files.Shares
         public int? ProvisionedEgressMBps => _response.Headers.TryGetValue("x-ms-share-provisioned-egress-mbps", out int? value) ? value : null;
         /// <summary> Returns the current share next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> Returns the current share provisioned bandwidth in megabits per second. </summary>
+        /// <summary> Returns the current share provisioned bandwidth in mebibytes per second. </summary>
         public int? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out int? value) ? value : null;
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : null;
@@ -54,5 +53,23 @@ namespace Azure.Storage.Files.Shares
         public string EnabledProtocols => _response.Headers.TryGetValue("x-ms-enabled-protocols", out string value) ? value : null;
         /// <summary> Valid for NFS shares only. </summary>
         public ShareRootSquash? RootSquash => _response.Headers.TryGetValue("x-ms-root-squash", out string value) ? value.ToShareRootSquash() : null;
+        /// <summary> Version 2023-08-03 and newer. Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled. This header is only returned for shares, not for snapshots. </summary>
+        public bool? EnableSnapshotVirtualDirectoryAccess => _response.Headers.TryGetValue("x-ms-enable-snapshot-virtual-directory-access", out bool? value) ? value : null;
+        /// <summary> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </summary>
+        public bool? PaidBurstingEnabled => _response.Headers.TryGetValue("x-ms-share-paid-bursting-enabled", out bool? value) ? value : null;
+        /// <summary> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </summary>
+        public long? PaidBurstingMaxIops => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-iops", out long? value) ? value : null;
+        /// <summary> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </summary>
+        public long? PaidBurstingMaxBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-bandwidth-mibps", out long? value) ? value : null;
+        /// <summary> Return the calculated burst IOPS of the share. </summary>
+        public long? IncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
+        /// <summary> Returned the calculated maximum burst credits. This is not the current burst credit level, but the maximum burst credits the share can have. </summary>
+        public long? MaxBurstCreditsForIops => _response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? value) ? value : null;
+        /// <summary> Returns the current share next allowed provisioned iops downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the current share next allowed provisioned bandwidth downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Specifies whether granting of new directory leases for directories present in a share is enabled(allowed) or disabled(blocked).  Header is only returned for a SMB Share. </summary>
+        public bool? EnableSmbDirectoryLease => _response.Headers.TryGetValue("x-ms-enable-smb-directory-lease", out bool? value) ? value : null;
     }
 }

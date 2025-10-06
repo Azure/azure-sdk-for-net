@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The Internet service provider. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
         /// <summary> The Azure region. </summary>
+        [WirePath("azureLocation")]
         public AzureLocation? AzureLocation { get; }
         /// <summary> List of latency details for each of the time series. </summary>
+        [WirePath("latencies")]
         public IReadOnlyList<AzureReachabilityReportLatencyInfo> Latencies { get; }
     }
 }

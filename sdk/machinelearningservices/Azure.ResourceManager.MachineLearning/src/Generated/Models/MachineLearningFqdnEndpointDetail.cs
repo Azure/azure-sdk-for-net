@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the port. </summary>
+        [WirePath("port")]
         public int? Port { get; }
     }
 }

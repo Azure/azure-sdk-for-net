@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareClusterResource IOperationSource<VMwareClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VMwareClusterData.DeserializeVMwareClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<VMwareClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
             return new VMwareClusterResource(_client, data);
         }
 
         async ValueTask<VMwareClusterResource> IOperationSource<VMwareClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VMwareClusterData.DeserializeVMwareClusterData(document.RootElement);
-            return new VMwareClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<VMwareClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+            return await Task.FromResult(new VMwareClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

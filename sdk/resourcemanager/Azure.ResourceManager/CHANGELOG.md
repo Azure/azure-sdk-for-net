@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.14.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,60 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.2 (2025-07-18)
+
+### Features Added
+
+- Make `Azure.ResourceManager` AOT-compatible.
+
+## 1.14.0-beta.1 (2025-06-23)
+
+### Features Added
+
+- Use ModelReaderWriter instead of System.Text.Json.JsonSerializer for serialization of ManagedServiceIdentity.
+
+## 1.13.1 (2025-04-24)
+
+### Bugs Fixed
+
+- Fixed the `Longitude` and `Latitude` in `LocationMetadata` class to use invariant culture during serialization and deserialization. (https://github.com/Azure/azure-sdk-for-net/issues/43116)
+
+## 1.13.0 (2024-09-03)
+
+### Features Added
+- Added `JsonModelWriteCore` to serialization file so that derived models could call it without doing the serialization of base properties themselves.
+
+### Other Changes
+- Added to the sample code to authenticate with the azure in China in the README.md file.
+
+## 1.12.0 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.11.1 (2024-04-23)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.12.0-beta.1 (2024-03-22)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
+## 1.11.0 (2024-03-22)
+
+### Features Added
+
+- Added `BicepModelReaderWriterOptions`.
+
+### Other Changes
+
+- Removed long-running operation rehydration support for the GA. These will be added back in a subsequent release.
 
 ## 1.10.2 (2024-03-01)
 
@@ -25,6 +79,12 @@
 ### Bugs Fixed
 
 - Changed the private ctor `OperationStatusResult` to protected.
+
+## 1.11.0-beta.1 (2024-01-12)
+
+### Features Added
+
+- Enable long-running operation rehydration.
 
 ## 1.10.0 (2024-01-12)
 
@@ -290,4 +350,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

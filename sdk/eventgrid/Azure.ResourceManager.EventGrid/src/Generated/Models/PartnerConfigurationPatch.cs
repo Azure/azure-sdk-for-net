@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Tags of the partner configuration resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The default time used to validate the maximum expiration time for each authorized partners in days. Allowed values ar between 1 and 365 days. </summary>
+        [WirePath("properties.defaultMaximumExpirationTimeInDays")]
         public int? DefaultMaximumExpirationTimeInDays { get; set; }
     }
 }

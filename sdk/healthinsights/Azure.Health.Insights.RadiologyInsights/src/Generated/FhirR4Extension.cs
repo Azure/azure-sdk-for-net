@@ -12,7 +12,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary>
     /// Base for all elements
-    /// Based on [FHIR Element](https://www.hl7.org/fhir/datatypes.html#Element)
+    /// Based on [FHIR Element](https://www.hl7.org/fhir/R4/element.html)
     /// </summary>
     public partial class FhirR4Extension : FhirR4Element
     {
@@ -43,7 +43,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="valueDateTime"> Value as dateTime. </param>
         /// <param name="valuePeriod"> Value as Period. </param>
         /// <param name="valueReference"> Value as reference. </param>
-        internal FhirR4Extension(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string url, FhirR4Quantity valueQuantity, FhirR4CodeableConcept valueCodeableConcept, string valueString, bool? valueBoolean, int? valueInteger, FhirR4Range valueRange, FhirR4Ratio valueRatio, FhirR4SampledData valueSampledData, TimeSpan? valueTime, string valueDateTime, FhirR4Period valuePeriod, FhirR4Reference valueReference) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Extension(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string url, FhirR4Quantity valueQuantity, FhirR4CodeableConcept valueCodeableConcept, string valueString, bool? valueBoolean, int? valueInteger, FhirR4Range valueRange, FhirR4Ratio valueRatio, FhirR4SampledData valueSampledData, TimeSpan? valueTime, string valueDateTime, FhirR4Period valuePeriod, FhirR4Reference valueReference) : base(id, extension, serializedAdditionalRawData)
         {
             Url = url;
             ValueQuantity = valueQuantity;

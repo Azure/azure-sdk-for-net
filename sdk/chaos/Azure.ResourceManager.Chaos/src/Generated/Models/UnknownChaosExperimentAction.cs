@@ -10,16 +10,16 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosExperimentAction. </summary>
+    /// <summary> Unknown version of ChaosExperimentAction. </summary>
     internal partial class UnknownChaosExperimentAction : ChaosExperimentAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/>. </summary>
-        /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="type"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownChaosExperimentAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(actionType, name, serializedAdditionalRawData)
+        internal UnknownChaosExperimentAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, type, serializedAdditionalRawData)
         {
-            ActionType = actionType ?? "Unknown";
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/> for deserialization. </summary>

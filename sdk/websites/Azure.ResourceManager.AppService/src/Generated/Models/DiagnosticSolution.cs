@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -75,18 +74,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Solution Id. </summary>
+        [WirePath("id")]
         public double? Id { get; set; }
         /// <summary> Display Name of the solution. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Order of the solution. </summary>
+        [WirePath("order")]
         public double? Order { get; set; }
         /// <summary> Description of the solution. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Type of Solution. </summary>
+        [WirePath("type")]
         public DiagnosticSolutionType? SolutionType { get; set; }
         /// <summary> Solution Data. </summary>
+        [WirePath("data")]
         public IList<IList<AppServiceNameValuePair>> Data { get; }
         /// <summary> Solution Metadata. </summary>
+        [WirePath("metadata")]
         public IList<IList<AppServiceNameValuePair>> Metadata { get; }
     }
 }

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Display name of the detector. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Description of the detector. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Detector Rank. </summary>
+        [WirePath("rank")]
         public double? Rank { get; }
         /// <summary> Flag representing whether detector is enabled or not. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; }
     }
 }

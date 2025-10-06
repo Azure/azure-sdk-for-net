@@ -4,7 +4,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src) |
 [Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
-[API reference documentation](https://docs.microsoft.com/dotnet/api/microsoft.azure.webjobs.extensions.webpubsub) |
+[API reference documentation](https://learn.microsoft.com/dotnet/api/microsoft.azure.webjobs.extensions.webpubsub) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/samples)
 
@@ -20,15 +20,15 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance) to create an Azure Web PubSub instance.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance) to create an Azure Web PubSub instance.
 
 ### Authenticate the client
 
-In order to let the extension work with Azure Web PubSub service, you will need to provide a valid `ConnectionString`. 
+In order to let the extension work with Azure Web PubSub service, you will need to provide a valid `ConnectionString`.
 
 You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal](https://portal.azure.com/).
 
-The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
+The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://learn.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
 For the local development use the `local.settings.json` file to store the connection string, `<connection-string>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection-string>` in function binding attributes:
 
@@ -40,7 +40,7 @@ For the local development use the `local.settings.json` file to store the connec
   }
 }
 ```
-When deployed use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
+When deployed use the [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
 
 ## Key concepts
 
@@ -94,18 +94,15 @@ public static class WebPubSubOutputBindingFunction
 ### Functions that uses Web PubSub trigger
 
 ```C# Snippet:WebPubSubTriggerFunction
-public static class WebPubSubTriggerFunction
+[FunctionName("WebPubSubTriggerFunction")]
+public static void Run(
+    ILogger logger,
+    [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
+    string data,
+    WebPubSubDataType dataType)
 {
-    [FunctionName("WebPubSubTriggerFunction")]
-    public static void Run(
-        ILogger logger,
-        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
-        string data,
-        WebPubSubDataType dataType)
-    {
-        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
-            request.ConnectionContext.UserId, data, dataType);
-    }
+    logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+        request.ConnectionContext.UserId, data, dataType);
 }
 ```
 
@@ -123,13 +120,38 @@ public static class WebPubSubTriggerReturnValueFunction
 }
 ```
 
+### Functions that handles MQTT Client "connect" event
+```C# Snippet:MqttConnectEventTriggerFunction
+[FunctionName("mqttConnect")]
+public static WebPubSubEventResponse Run(
+        [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect", ClientProtocols = WebPubSubTriggerAcceptedClientProtocols.Mqtt)] MqttConnectEventRequest request,
+        ILogger log)
+{
+    if (request.ConnectionContext.ConnectionId != "attacker")
+    {
+        return request.CreateMqttResponse(request.ConnectionContext.UserId, Array.Empty<string>(), new string[] { "webpubsub.joinLeaveGroup.group1", "webpubsub.sendToGroup.group2" });
+    }
+    else
+    {
+        if (request.Mqtt.ProtocolVersion == MqttProtocolVersion.V311)
+        {
+            return request.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized);
+        }
+        else
+        {
+            return request.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.NotAuthorized);
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+Please refer to [Monitor Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
 
 ## Next steps
 
-Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+Read the [introduction to Azure Function](https://learn.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://learn.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
 
 ## Contributing
 
@@ -146,12 +168,10 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.WebPubSub%2FREADME.png)
-
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src
 [package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub/
-[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSub
+[docs]: https://learn.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSub
 [nuget]: https://www.nuget.org/
 
 [contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md

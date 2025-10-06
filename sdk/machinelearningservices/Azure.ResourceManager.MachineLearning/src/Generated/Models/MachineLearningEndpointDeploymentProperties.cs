@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -49,36 +48,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
         public MachineLearningEndpointDeploymentProperties()
         {
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
-        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
-        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEndpointDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningEndpointDeploymentProperties(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CodeConfiguration = codeConfiguration;
             Description = description;
+            Properties = properties;
+            CodeConfiguration = codeConfiguration;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Code configuration for the endpoint deployment. </summary>
-        public MachineLearningCodeConfiguration CodeConfiguration { get; set; }
         /// <summary> Description of the endpoint deployment. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> ARM resource ID of the environment specification for the endpoint deployment. </summary>
+        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        [WirePath("properties")]
+        public IDictionary<string, string> Properties { get; set; }
+        /// <summary> Code configuration for the endpoint deployment. </summary>
+        [WirePath("codeConfiguration")]
+        public MachineLearningCodeConfiguration CodeConfiguration { get; set; }
+        /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
+        [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables configuration for the deployment. </summary>
+        [WirePath("environmentVariables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        public IDictionary<string, string> Properties { get; set; }
     }
 }

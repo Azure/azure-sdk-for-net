@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Status of the the private link service connection. Can be Pending, Approved, Rejected, or Disconnected. </summary>
+    /// <summary> Status of the the private link service connection. Valid values are Pending, Approved, Rejected, or Disconnected. </summary>
     public enum SearchServicePrivateLinkServiceConnectionStatus
     {
         /// <summary> The private endpoint connection has been created and is pending approval. </summary>

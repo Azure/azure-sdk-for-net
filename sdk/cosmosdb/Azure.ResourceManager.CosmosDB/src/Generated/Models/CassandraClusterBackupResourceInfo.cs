@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier of backup. </summary>
+        [WirePath("backupId")]
         public string BackupId { get; }
         /// <summary> The current state of the backup. </summary>
+        [WirePath("backupState")]
         public CassandraClusterBackupState? BackupState { get; }
         /// <summary> The time at which the backup process begins. </summary>
+        [WirePath("backupStartTimestamp")]
         public DateTimeOffset? BackupStartTimestamp { get; }
         /// <summary> The time at which the backup process ends. </summary>
+        [WirePath("backupStopTimestamp")]
         public DateTimeOffset? BackupStopTimestamp { get; }
         /// <summary> The time at which the backup will expire. </summary>
+        [WirePath("backupExpiryTimestamp")]
         public DateTimeOffset? BackupExpiryTimestamp { get; }
     }
 }

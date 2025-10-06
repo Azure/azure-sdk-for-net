@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes. </summary>
+        [WirePath("tcp")]
         public int? Tcp { get; set; }
         /// <summary> Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds. </summary>
+        [WirePath("udp")]
         public int? Udp { get; set; }
         /// <summary> Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds. </summary>
+        [WirePath("icmp")]
         public int? Icmp { get; set; }
     }
 }

@@ -8,25 +8,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningCertificateDatastoreCredentials : IUtf8JsonSerializable, IJsonModel<MachineLearningCertificateDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCertificateDatastoreCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCertificateDatastoreCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningCertificateDatastoreCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AuthorityUri))
             {
                 if (AuthorityUri != null)
@@ -39,8 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("authorityUrl");
                 }
             }
-            writer.WritePropertyName("clientId"u8);
-            writer.WriteStringValue(ClientId);
             if (Optional.IsDefined(ResourceUri))
             {
                 if (ResourceUri != null)
@@ -53,30 +60,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceUrl");
                 }
             }
-            writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
+            writer.WritePropertyName("clientId"u8);
+            writer.WriteStringValue(ClientId);
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
-            writer.WritePropertyName("credentialsType"u8);
-            writer.WriteStringValue(CredentialsType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            writer.WritePropertyName("secrets"u8);
+            writer.WriteObjectValue(Secrets, options);
         }
 
         MachineLearningCertificateDatastoreCredentials IJsonModel<MachineLearningCertificateDatastoreCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +84,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCertificateDatastoreCredentials DeserializeMachineLearningCertificateDatastoreCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri authorityUrl = default;
-            Guid clientId = default;
             Uri resourceUrl = default;
-            MachineLearningCertificateDatastoreSecrets secrets = default;
             Guid tenantId = default;
+            Guid clientId = default;
             string thumbprint = default;
+            MachineLearningCertificateDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorityUrl"u8))
@@ -120,11 +111,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     authorityUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientId"u8))
-                {
-                    clientId = property.Value.GetGuid();
-                    continue;
-                }
                 if (property.NameEquals("resourceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,19 +121,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resourceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secrets"u8))
-                {
-                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetGuid();
+                    continue;
+                }
                 if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secrets"u8))
+                {
+                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))
@@ -157,19 +148,138 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningCertificateDatastoreCredentials(
                 credentialsType,
                 serializedAdditionalRawData,
                 authorityUrl,
-                clientId,
                 resourceUrl,
-                secrets,
                 tenantId,
-                thumbprint);
+                clientId,
+                thumbprint,
+                secrets);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorityUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorityUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorityUri))
+                {
+                    builder.Append("  authorityUrl: ");
+                    builder.AppendLine($"'{AuthorityUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceUri))
+                {
+                    builder.Append("  resourceUrl: ");
+                    builder.AppendLine($"'{ResourceUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  tenantId: ");
+                builder.AppendLine($"'{TenantId.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  clientId: ");
+                builder.AppendLine($"'{ClientId.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Thumbprint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  thumbprint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Thumbprint))
+                {
+                    builder.Append("  thumbprint: ");
+                    if (Thumbprint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Thumbprint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Thumbprint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secrets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Secrets))
+                {
+                    builder.Append("  secrets: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Secrets, options, 2, false, "  secrets: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CredentialsType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credentialsType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  credentialsType: ");
+                builder.AppendLine($"'{CredentialsType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningCertificateDatastoreCredentials>.Write(ModelReaderWriterOptions options)
@@ -179,9 +289,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,11 +305,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningCertificateDatastoreCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

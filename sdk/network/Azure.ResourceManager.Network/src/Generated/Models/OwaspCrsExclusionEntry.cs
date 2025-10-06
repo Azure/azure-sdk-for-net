@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -82,12 +81,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The variable to be excluded. </summary>
+        [WirePath("matchVariable")]
         public OwaspCrsExclusionEntryMatchVariable MatchVariable { get; set; }
         /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </summary>
+        [WirePath("selectorMatchOperator")]
         public OwaspCrsExclusionEntrySelectorMatchOperator SelectorMatchOperator { get; set; }
         /// <summary> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
         /// <summary> The managed rule sets that are associated with the exclusion. </summary>
+        [WirePath("exclusionManagedRuleSets")]
         public IList<ExclusionManagedRuleSet> ExclusionManagedRuleSets { get; }
     }
 }

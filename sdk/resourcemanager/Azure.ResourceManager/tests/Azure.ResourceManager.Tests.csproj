@@ -2,12 +2,19 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
-    <NoWarn>SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
+    <NoWarn>$(NoWarn);SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
+
+    <!-- TEMP: Override until central version is bumped to mitigate project reference CI error -->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.9.0" />
+
+    <!-- TEMP: Overrides until central packages bumped, needed for new extensions -->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" VersionOverride="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>

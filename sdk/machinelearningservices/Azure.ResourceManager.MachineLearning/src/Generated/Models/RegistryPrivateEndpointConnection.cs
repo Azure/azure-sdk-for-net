@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -56,39 +55,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnection"/>. </summary>
         /// <param name="id">
         /// This is the private endpoint connection name created on SRP
-        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/privateEndpointConnections/{peConnectionName}
+        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
         /// </param>
         /// <param name="location"> Same as workspace location. </param>
         /// <param name="groupIds"> The group ids. </param>
         /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> The connection state. </param>
+        /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
         /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPrivateEndpointConnection(ResourceIdentifier id, AzureLocation? location, IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegistryPrivateEndpointConnection(ResourceIdentifier id, AzureLocation? location, IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            RegistryPrivateLinkServiceConnectionState = registryPrivateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
         /// This is the private endpoint connection name created on SRP
-        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/privateEndpointConnections/{peConnectionName}
+        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
         /// </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Same as workspace location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The group ids. </summary>
+        [WirePath("properties.groupIds")]
         public IList<string> GroupIds { get; set; }
         /// <summary> The PE network resource that is linked to this PE connection. </summary>
+        [WirePath("properties.privateEndpoint")]
         public RegistryPrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> The connection state. </summary>
-        public RegistryPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        [WirePath("properties.registryPrivateLinkServiceConnectionState")]
+        public RegistryPrivateLinkServiceConnectionState RegistryPrivateLinkServiceConnectionState { get; set; }
         /// <summary> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; set; }
     }
 }

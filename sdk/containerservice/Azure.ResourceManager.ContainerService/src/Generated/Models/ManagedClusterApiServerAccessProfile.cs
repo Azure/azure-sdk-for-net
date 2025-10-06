@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </summary>
+        [WirePath("authorizedIPRanges")]
         public IList<string> AuthorizedIPRanges { get; }
         /// <summary> For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters). </summary>
+        [WirePath("enablePrivateCluster")]
         public bool? EnablePrivateCluster { get; set; }
         /// <summary> The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </summary>
+        [WirePath("privateDNSZone")]
         public string PrivateDnsZone { get; set; }
         /// <summary> Whether to create additional public FQDN for private cluster or not. </summary>
+        [WirePath("enablePrivateClusterPublicFQDN")]
         public bool? EnablePrivateClusterPublicFqdn { get; set; }
         /// <summary> Whether to disable run command for the cluster or not. </summary>
+        [WirePath("disableRunCommand")]
         public bool? DisableRunCommand { get; set; }
     }
 }

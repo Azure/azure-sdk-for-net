@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(TranscriptContentType left, TranscriptContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranscriptContentType"/> values are not the same. </summary>
         public static bool operator !=(TranscriptContentType left, TranscriptContentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TranscriptContentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TranscriptContentType"/>. </summary>
         public static implicit operator TranscriptContentType(string value) => new TranscriptContentType(value);
 
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

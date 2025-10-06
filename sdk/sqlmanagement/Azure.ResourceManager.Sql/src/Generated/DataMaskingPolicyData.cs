@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing the DataMaskingPolicy data model.
-    /// Represents a database data masking policy.
+    /// A database data masking policy.
     /// </summary>
     public partial class DataMaskingPolicyData : ResourceData
     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the data masking policy. </param>
-        /// <param name="kind"> The kind of data masking policy. Metadata, used for Azure portal. </param>
+        /// <param name="kind"> The kind of Data Masking Policy. Metadata, used for Azure portal. </param>
         /// <param name="dataMaskingState"> The state of the data masking policy. </param>
         /// <param name="exemptPrincipals"> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </param>
         /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The location of the data masking policy. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> The kind of data masking policy. Metadata, used for Azure portal. </summary>
+        /// <summary> The kind of Data Masking Policy. Metadata, used for Azure portal. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The state of the data masking policy. </summary>
+        [WirePath("properties.dataMaskingState")]
         public DataMaskingState? DataMaskingState { get; set; }
         /// <summary> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </summary>
+        [WirePath("properties.exemptPrincipals")]
         public string ExemptPrincipals { get; set; }
         /// <summary> The list of the application principals. This is a legacy parameter and is no longer used. </summary>
+        [WirePath("properties.applicationPrincipals")]
         public string ApplicationPrincipals { get; }
         /// <summary> The masking level. This is a legacy parameter and is no longer used. </summary>
+        [WirePath("properties.maskingLevel")]
         public string MaskingLevel { get; }
     }
 }

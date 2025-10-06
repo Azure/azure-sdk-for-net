@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
+        [WirePath("jwtClaimChecks")]
         public ContainerAppJwtClaimChecks JwtClaimChecks { get; set; }
         /// <summary> The list of audiences that can make successful authentication/authorization requests. </summary>
+        [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
         /// <summary> The configuration settings of the default authorization policy. </summary>
+        [WirePath("defaultAuthorizationPolicy")]
         public ContainerAppDefaultAuthorizationPolicy DefaultAuthorizationPolicy { get; set; }
     }
 }

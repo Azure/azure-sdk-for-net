@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
@@ -32,7 +31,7 @@ namespace Azure.Maps.Routing
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public RouteRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
@@ -44,7 +43,7 @@ namespace Azure.Maps.Routing
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateRequestRouteMatrixRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
+        internal HttpMessage CreateRequestRouteMatrixRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, IEnumerable<SectionType> filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,9 +61,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (arriveAt != null)
             {
@@ -110,7 +112,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -136,17 +138,67 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
         }
 
-        /// <summary>
+        /// <summary> Use to get a route matrix showing the travel time and distance for all possible pairs in a list of origins and destinations, using an asynchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
+        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
+        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
         ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
         ///
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
+        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
+        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
+        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
+        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
+        /// <param name="vehicleMaxSpeed">
+        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
+        ///
+        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
+        ///
+        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
+        /// </param>
+        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
+        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="useTrafficData">
+        /// Possible values:
+        ///   * true - Do consider all available traffic information during routing
+        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
+        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
+        /// </param>
+        /// <param name="routeType"> The type of route requested. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Post Route Matrix` API is an HTTP `POST` request that allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) request. To make a synchronous (sync) request, see [Post Route Matrix Sync](/rest/api/maps/route/post-route-matrix-sync). For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         ///
         ///
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
@@ -212,41 +264,8 @@ namespace Azure.Maps.Routing
         ///   &gt; HTTP `202 Accepted` - Matrix request was accepted but is still being processed. Please try again in some time.
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
-        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
-        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
-        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
-        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
-        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
-        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
-        /// <param name="vehicleMaxSpeed">
-        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        ///
-        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
-        ///
-        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
-        /// </param>
-        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
-        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="useTrafficData">
-        /// Possible values:
-        ///   * true - Do consider all available traffic information during routing
-        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
-        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
-        /// </param>
-        /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
-        public async Task<ResponseWithHeaders<RouteRequestRouteMatrixHeaders>> RequestRouteMatrixAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        /// </remarks>
+        public async Task<ResponseWithHeaders<RouteRequestRouteMatrixHeaders>> RequestRouteMatrixAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -266,11 +285,61 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
+        /// <summary> Use to get a route matrix showing the travel time and distance for all possible pairs in a list of origins and destinations, using an asynchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
+        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
+        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
         ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
         ///
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
+        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
+        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
+        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
+        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
+        /// <param name="vehicleMaxSpeed">
+        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
+        ///
+        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
+        ///
+        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
+        /// </param>
+        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
+        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="useTrafficData">
+        /// Possible values:
+        ///   * true - Do consider all available traffic information during routing
+        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
+        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
+        /// </param>
+        /// <param name="routeType"> The type of route requested. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Post Route Matrix` API is an HTTP `POST` request that allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) request. To make a synchronous (sync) request, see [Post Route Matrix Sync](/rest/api/maps/route/post-route-matrix-sync). For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         ///
         ///
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
@@ -336,41 +405,8 @@ namespace Azure.Maps.Routing
         ///   &gt; HTTP `202 Accepted` - Matrix request was accepted but is still being processed. Please try again in some time.
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
-        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
-        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
-        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
-        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
-        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
-        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
-        /// <param name="vehicleMaxSpeed">
-        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        ///
-        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
-        ///
-        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
-        /// </param>
-        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
-        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="useTrafficData">
-        /// Possible values:
-        ///   * true - Do consider all available traffic information during routing
-        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
-        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
-        /// </param>
-        /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
-        public ResponseWithHeaders<RouteRequestRouteMatrixHeaders> RequestRouteMatrix(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        /// </remarks>
+        public ResponseWithHeaders<RouteRequestRouteMatrixHeaders> RequestRouteMatrix(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -409,10 +445,58 @@ namespace Azure.Maps.Routing
             return message;
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// <summary> Use to get a route matrix showing the travel time and distance for all possible pairs in a list of origins and destinations. </summary>
+        /// <param name="matrixId"> Matrix id received after the Matrix Route request was accepted successfully. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matrixId"/> is null. </exception>
+        /// <remarks>
         ///
-        /// If the Matrix Route request was accepted successfully, the Location header in the response contains the URL to download the results of the request. This status URI looks like the following:
+        /// The `Get Route Matrix` API is an HTTP `GET` request that computes the travel time and distance for all possible pairs in a list of origins and destinations. Unlike the [Get Route Directions](/rest/api/maps/route/get-route-directions) API, which provide detailed route instructions, this API focuses on efficiency by giving you the cost (travel time and distance) of routing from each origin to every destination.  For more information, see [Best practices for Azure Maps Route service](/azure/azure-maps/how-to-use-best-practices-for-routing).
+        ///
+        /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        ///
+        ///
+        /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
+        ///
+        ///
+        /// The maximum size of a matrix for async request is **700** and for sync request it's **100** (the number of origins multiplied by the number of destinations).
+        ///
+        ///
+        ///
+        /// ### Submit Synchronous Route Matrix Request
+        /// If your scenario requires synchronous requests and the maximum size of the matrix is less than or equal to 100, you might want to make synchronous request. The maximum size of a matrix for this API is **100** (the number of origins multiplied by the number of destinations). With that constraint in mind, examples of possible matrix dimensions are: 10x10, 6x8, 9x8 (it does not need to be square).
+        ///
+        /// ```
+        /// GET https://atlas.microsoft.com/route/matrix/sync/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
+        ///
+        /// ### Submit Asynchronous Route Matrix Request
+        /// The Asynchronous API is appropriate for processing big volumes of relatively complex routing requests. When you make a request by using async request, by default the service returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available. If `waitForResults` parameter in the request is set to true, user will get a 200 response if the request is finished under 120 seconds.
+        ///
+        ///
+        /// The maximum size of a matrix for this API is **700** (the number of origins multiplied by the number of destinations). With that constraint in mind, examples of possible matrix dimensions are: 50x10, 10x10, 28x25. 10x70 (it does not need to be square).
+        ///
+        ///
+        /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
+        ///
+        ///
+        ///
+        ///
+        /// ```
+        /// GET https://atlas.microsoft.com/route/matrix/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
+        ///
+        /// Here's a typical sequence of asynchronous operations:
+        /// 1. Client sends a Route Matrix GET request to Azure Maps
+        ///
+        /// 2. The server will respond with one of the following:
+        ///
+        ///     &gt; HTTP `202 Accepted` -  Route Matrix request has been accepted.
+        ///
+        ///     &gt; HTTP `Error` - There was an error processing your Route Matrix request. This could either be a 400 Bad Request or any other Error status code.
+        ///
+        ///
+        /// 3. If the Matrix Route request was accepted successfully, the Location header in the response contains the URL to download the results of the request. This status URI looks like the following:
         ///
         ///   ```
         ///     GET https://atlas.microsoft.com/route/matrix/{matrixId}?api-version=1.0?subscription-key={subscription-key}
@@ -422,7 +506,7 @@ namespace Azure.Maps.Routing
         /// 4. Client issues a GET request on the download URL obtained in Step 3 to download the results
         ///
         /// ### Download Sync Results
-        /// When you make a POST request for Route Matrix Sync API, the service returns 200 response code for successful request and a response array. The response body will contain the data and there will be no possibility to retrieve the results later.
+        /// When you make a GET request for Route Matrix Sync API, the service returns 200 response code for successful request and a response array. The response body will contain the data and there will be no possibility to retrieve the results later.
         ///
         /// ### Download Async Results
         /// When a request issues a `202 Accepted` response, the request is being processed using our async pipeline. You will be given a URL to check the progress of your  async request in the location header of the response. This status URI looks like the following:
@@ -435,10 +519,7 @@ namespace Azure.Maps.Routing
         ///   &gt; HTTP `202 Accepted` - Matrix request was accepted but is still being processed. Please try again in some time.
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
-        /// </summary>
-        /// <param name="matrixId"> Matrix id received after the Matrix Route request was accepted successfully. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="matrixId"/> is null. </exception>
+        /// </remarks>
         public async Task<ResponseWithHeaders<RouteGetRouteMatrixHeaders>> GetRouteMatrixAsync(string matrixId, CancellationToken cancellationToken = default)
         {
             if (matrixId == null)
@@ -459,10 +540,58 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// <summary> Use to get a route matrix showing the travel time and distance for all possible pairs in a list of origins and destinations. </summary>
+        /// <param name="matrixId"> Matrix id received after the Matrix Route request was accepted successfully. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matrixId"/> is null. </exception>
+        /// <remarks>
         ///
-        /// If the Matrix Route request was accepted successfully, the Location header in the response contains the URL to download the results of the request. This status URI looks like the following:
+        /// The `Get Route Matrix` API is an HTTP `GET` request that computes the travel time and distance for all possible pairs in a list of origins and destinations. Unlike the [Get Route Directions](/rest/api/maps/route/get-route-directions) API, which provide detailed route instructions, this API focuses on efficiency by giving you the cost (travel time and distance) of routing from each origin to every destination.  For more information, see [Best practices for Azure Maps Route service](/azure/azure-maps/how-to-use-best-practices-for-routing).
+        ///
+        /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        ///
+        ///
+        /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
+        ///
+        ///
+        /// The maximum size of a matrix for async request is **700** and for sync request it's **100** (the number of origins multiplied by the number of destinations).
+        ///
+        ///
+        ///
+        /// ### Submit Synchronous Route Matrix Request
+        /// If your scenario requires synchronous requests and the maximum size of the matrix is less than or equal to 100, you might want to make synchronous request. The maximum size of a matrix for this API is **100** (the number of origins multiplied by the number of destinations). With that constraint in mind, examples of possible matrix dimensions are: 10x10, 6x8, 9x8 (it does not need to be square).
+        ///
+        /// ```
+        /// GET https://atlas.microsoft.com/route/matrix/sync/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
+        ///
+        /// ### Submit Asynchronous Route Matrix Request
+        /// The Asynchronous API is appropriate for processing big volumes of relatively complex routing requests. When you make a request by using async request, by default the service returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available. If `waitForResults` parameter in the request is set to true, user will get a 200 response if the request is finished under 120 seconds.
+        ///
+        ///
+        /// The maximum size of a matrix for this API is **700** (the number of origins multiplied by the number of destinations). With that constraint in mind, examples of possible matrix dimensions are: 50x10, 10x10, 28x25. 10x70 (it does not need to be square).
+        ///
+        ///
+        /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
+        ///
+        ///
+        ///
+        ///
+        /// ```
+        /// GET https://atlas.microsoft.com/route/matrix/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
+        ///
+        /// Here's a typical sequence of asynchronous operations:
+        /// 1. Client sends a Route Matrix GET request to Azure Maps
+        ///
+        /// 2. The server will respond with one of the following:
+        ///
+        ///     &gt; HTTP `202 Accepted` -  Route Matrix request has been accepted.
+        ///
+        ///     &gt; HTTP `Error` - There was an error processing your Route Matrix request. This could either be a 400 Bad Request or any other Error status code.
+        ///
+        ///
+        /// 3. If the Matrix Route request was accepted successfully, the Location header in the response contains the URL to download the results of the request. This status URI looks like the following:
         ///
         ///   ```
         ///     GET https://atlas.microsoft.com/route/matrix/{matrixId}?api-version=1.0?subscription-key={subscription-key}
@@ -472,7 +601,7 @@ namespace Azure.Maps.Routing
         /// 4. Client issues a GET request on the download URL obtained in Step 3 to download the results
         ///
         /// ### Download Sync Results
-        /// When you make a POST request for Route Matrix Sync API, the service returns 200 response code for successful request and a response array. The response body will contain the data and there will be no possibility to retrieve the results later.
+        /// When you make a GET request for Route Matrix Sync API, the service returns 200 response code for successful request and a response array. The response body will contain the data and there will be no possibility to retrieve the results later.
         ///
         /// ### Download Async Results
         /// When a request issues a `202 Accepted` response, the request is being processed using our async pipeline. You will be given a URL to check the progress of your  async request in the location header of the response. This status URI looks like the following:
@@ -485,10 +614,7 @@ namespace Azure.Maps.Routing
         ///   &gt; HTTP `202 Accepted` - Matrix request was accepted but is still being processed. Please try again in some time.
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
-        /// </summary>
-        /// <param name="matrixId"> Matrix id received after the Matrix Route request was accepted successfully. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="matrixId"/> is null. </exception>
+        /// </remarks>
         public ResponseWithHeaders<RouteGetRouteMatrixHeaders> GetRouteMatrix(string matrixId, CancellationToken cancellationToken = default)
         {
             if (matrixId == null)
@@ -509,7 +635,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        internal HttpMessage CreateRequestRouteMatrixSyncRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
+        internal HttpMessage CreateRequestRouteMatrixSyncRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, IEnumerable<SectionType> filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -527,9 +653,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (arriveAt != null)
             {
@@ -575,7 +704,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -601,17 +730,67 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
         }
 
-        /// <summary>
+        /// <summary> Use to get a route matrix showing the travel time and distance for all possible pairs in a list of origins and destinations, using a synchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
+        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
+        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
         ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
         ///
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
+        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
+        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
+        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
+        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
+        /// <param name="vehicleMaxSpeed">
+        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
+        ///
+        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
+        ///
+        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
+        /// </param>
+        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
+        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="useTrafficData">
+        /// Possible values:
+        ///   * true - Do consider all available traffic information during routing
+        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
+        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
+        /// </param>
+        /// <param name="routeType"> The type of route requested. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Post Route Matrix Sync` API is an HTTP `POST` request that allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using a single synchronous (sync) request. To make an asynchronous (async) request, see [Post Route Matrix](/rest/api/maps/route/post-route-matrix). For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         ///
         ///
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
@@ -677,41 +856,8 @@ namespace Azure.Maps.Routing
         ///   &gt; HTTP `202 Accepted` - Matrix request was accepted but is still being processed. Please try again in some time.
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
-        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
-        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
-        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
-        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
-        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
-        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
-        /// <param name="vehicleMaxSpeed">
-        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        ///
-        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
-        ///
-        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
-        /// </param>
-        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
-        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="useTrafficData">
-        /// Possible values:
-        ///   * true - Do consider all available traffic information during routing
-        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
-        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
-        /// </param>
-        /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
-        public async Task<Response<RouteMatrixResult>> RequestRouteMatrixSyncAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        /// </remarks>
+        public async Task<Response<RouteMatrixResult>> RequestRouteMatrixSyncAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -725,7 +871,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteMatrixResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteMatrixResult.DeserializeRouteMatrixResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -734,11 +880,61 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
+        /// <summary> Use to get a route matrix showing the travel time and distance for all possible pairs in a list of origins and destinations, using a synchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
+        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
+        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
         ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
         ///
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
+        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
+        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
+        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
+        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
+        /// <param name="vehicleMaxSpeed">
+        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
+        ///
+        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
+        ///
+        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
+        /// </param>
+        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
+        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="useTrafficData">
+        /// Possible values:
+        ///   * true - Do consider all available traffic information during routing
+        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
+        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
+        /// </param>
+        /// <param name="routeType"> The type of route requested. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Post Route Matrix Sync` API is an HTTP `POST` request that allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using a single synchronous (sync) request. To make an asynchronous (async) request, see [Post Route Matrix](/rest/api/maps/route/post-route-matrix). For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         ///
         ///
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
@@ -804,41 +1000,8 @@ namespace Azure.Maps.Routing
         ///   &gt; HTTP `202 Accepted` - Matrix request was accepted but is still being processed. Please try again in some time.
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeMatrixQuery"> The matrix of origin and destination coordinates to compute the route distance, travel time and other summary for each cell of the matrix based on the input parameters. The minimum and the maximum cell count supported are 1 and **700** for async and **100** for sync respectively. For example, it can be 35 origins and 20 destinations or 25 origins and 25 destinations for async API. </param>
-        /// <param name="waitForResults"> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </param>
-        /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
-        /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
-        /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
-        /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
-        /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
-        /// <param name="vehicleMaxSpeed">
-        /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        ///
-        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
-        ///
-        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
-        /// </param>
-        /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
-        /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="useTrafficData">
-        /// Possible values:
-        ///   * true - Do consider all available traffic information during routing
-        ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
-        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
-        /// </param>
-        /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
-        public Response<RouteMatrixResult> RequestRouteMatrixSync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        /// </remarks>
+        public Response<RouteMatrixResult> RequestRouteMatrixSync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -852,7 +1015,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteMatrixResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteMatrixResult.DeserializeRouteMatrixResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -861,7 +1024,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        internal HttpMessage CreateGetRouteDirectionsRequest(ResponseFormat format, string routePoints, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        internal HttpMessage CreateGetRouteDirectionsRequest(ResponseFormat format, string routePoints, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, IEnumerable<SectionType> filterSectionType, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -924,9 +1087,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("report", report.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (vehicleAxleWeight != null)
             {
@@ -968,7 +1134,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -1048,23 +1214,32 @@ namespace Azure.Maps.Routing
             return message;
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        /// Returns  a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
-        ///
-        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
-        ///
-        /// Routing service provides a set of parameters for a detailed description of vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
-        /// </summary>
+        /// <summary> Use to calculate a route between a specified origin and destination, passing through any specified waypoints. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="routePoints"> The Coordinates through which the route is calculated, delimited by a colon.  A minimum of two coordinates is required.  The first one is the origin and the last is the destination of the route. Optional coordinates in-between act as WayPoints in the route.  You can pass up to 150 WayPoints. </param>
         /// <param name="maxAlternatives"> Number of desired alternative routes to be calculated. Default: 0, minimum: 0 and maximum: 5. </param>
         /// <param name="alternativeType"> Controls the optimality, with respect to the given planning criteria, of the calculated alternatives compared to the reference route. </param>
         /// <param name="minDeviationDistance"> All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of meters. Can only be used when reconstructing a route. The minDeviationDistance parameter cannot be used in conjunction with arriveAt. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="minDeviationTime">
         /// All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of seconds. Can only be used when reconstructing a route. The minDeviationTime parameter cannot be used in conjunction with arriveAt. Default value is 0. Setting )minDeviationTime_ to a value greater than zero has the following consequences:
         ///   - The origin point of the _calculateRoute_ Request must be on
@@ -1094,7 +1269,7 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -1122,8 +1297,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -1131,7 +1306,7 @@ namespace Azure.Maps.Routing
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
         /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="vehicleEngineType"> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </param>
         /// <param name="constantSpeedConsumptionInLitersPerHundredKm">
         ///
@@ -1258,7 +1433,15 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routePoints"/> is null. </exception>
-        public async Task<Response<RouteDirections>> GetRouteDirectionsAsync(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///
+        /// The `Get Route Directions` API is an HTTP `GET` request that returns a route between an origin and a destination, passing through waypoints if specified. The route takes into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
+        ///
+        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
+        ///
+        /// Routing service provides a set of parameters for a detailed description of a vehicle-specific consumption model. For more information, see [Consumption Model](/azure/azure-maps/consumption-model).
+        /// </remarks>
+        public async Task<Response<RouteDirections>> GetRouteDirectionsAsync(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -1272,7 +1455,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1281,23 +1464,32 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        /// Returns  a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
-        ///
-        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
-        ///
-        /// Routing service provides a set of parameters for a detailed description of vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
-        /// </summary>
+        /// <summary> Use to calculate a route between a specified origin and destination, passing through any specified waypoints. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="routePoints"> The Coordinates through which the route is calculated, delimited by a colon.  A minimum of two coordinates is required.  The first one is the origin and the last is the destination of the route. Optional coordinates in-between act as WayPoints in the route.  You can pass up to 150 WayPoints. </param>
         /// <param name="maxAlternatives"> Number of desired alternative routes to be calculated. Default: 0, minimum: 0 and maximum: 5. </param>
         /// <param name="alternativeType"> Controls the optimality, with respect to the given planning criteria, of the calculated alternatives compared to the reference route. </param>
         /// <param name="minDeviationDistance"> All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of meters. Can only be used when reconstructing a route. The minDeviationDistance parameter cannot be used in conjunction with arriveAt. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="minDeviationTime">
         /// All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of seconds. Can only be used when reconstructing a route. The minDeviationTime parameter cannot be used in conjunction with arriveAt. Default value is 0. Setting )minDeviationTime_ to a value greater than zero has the following consequences:
         ///   - The origin point of the _calculateRoute_ Request must be on
@@ -1327,7 +1519,7 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleWidth"> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -1355,8 +1547,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -1364,7 +1556,7 @@ namespace Azure.Maps.Routing
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
         /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="vehicleEngineType"> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </param>
         /// <param name="constantSpeedConsumptionInLitersPerHundredKm">
         ///
@@ -1491,7 +1683,15 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routePoints"/> is null. </exception>
-        public Response<RouteDirections> GetRouteDirections(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///
+        /// The `Get Route Directions` API is an HTTP `GET` request that returns a route between an origin and a destination, passing through waypoints if specified. The route takes into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
+        ///
+        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
+        ///
+        /// Routing service provides a set of parameters for a detailed description of a vehicle-specific consumption model. For more information, see [Consumption Model](/azure/azure-maps/consumption-model).
+        /// </remarks>
+        public Response<RouteDirections> GetRouteDirections(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -1505,7 +1705,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1514,7 +1714,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        internal HttpMessage CreateGetRouteDirectionsWithAdditionalParametersRequest(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        internal HttpMessage CreateGetRouteDirectionsWithAdditionalParametersRequest(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, IEnumerable<SectionType> filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1569,9 +1769,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("report", report.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (arriveAt != null)
             {
@@ -1621,7 +1824,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -1699,22 +1902,13 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionParameters);
             request.Content = content;
             return message;
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        /// Returns  a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
-        ///
-        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
-        ///
-        /// Routing service provides a set of parameters for a detailed description of a vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
-        /// </summary>
+        /// <summary> Use to calculate a route between a given origin and destination, passing through any specified waypoints. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="routePoints"> The Coordinates through which the route is calculated, delimited by a colon.  A minimum of two coordinates is required.  The first one is the origin and the last is the destination of the route. Optional coordinates in-between act as WayPoints in the route.  You can pass up to 150 WayPoints. </param>
         /// <param name="routeDirectionParameters">
@@ -1756,9 +1950,27 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -1786,8 +1998,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -1795,7 +2007,7 @@ namespace Azure.Maps.Routing
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
         /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="vehicleEngineType"> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </param>
         /// <param name="constantSpeedConsumptionInLitersPerHundredKm">
         ///
@@ -1922,7 +2134,15 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routePoints"/> or <paramref name="routeDirectionParameters"/> is null. </exception>
-        public async Task<Response<RouteDirections>> GetRouteDirectionsWithAdditionalParametersAsync(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///
+        /// The `Post Route Directions` API is an HTTP `POST` request that returns a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
+        ///
+        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
+        ///
+        /// Routing service provides a set of parameters for a detailed description of a vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
+        /// </remarks>
+        public async Task<Response<RouteDirections>> GetRouteDirectionsWithAdditionalParametersAsync(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -1940,7 +2160,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1949,16 +2169,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        /// Returns  a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
-        ///
-        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
-        ///
-        /// Routing service provides a set of parameters for a detailed description of a vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
-        /// </summary>
+        /// <summary> Use to calculate a route between a given origin and destination, passing through any specified waypoints. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="routePoints"> The Coordinates through which the route is calculated, delimited by a colon.  A minimum of two coordinates is required.  The first one is the origin and the last is the destination of the route. Optional coordinates in-between act as WayPoints in the route.  You can pass up to 150 WayPoints. </param>
         /// <param name="routeDirectionParameters">
@@ -2000,9 +2211,27 @@ namespace Azure.Maps.Routing
         /// <param name="computeTravelTime"> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </param>
         /// <param name="vehicleHeading"> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </param>
         /// <param name="report"> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </param>
-        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
-        /// <param name="arriveAt"> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with departAt, minDeviationDistance or minDeviationTime. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="filterSectionType"> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Can be specified multiple times in one request, for example, '&amp;sectionType=carTrain&amp;sectionType=pedestrian&amp;sectionType=motorway'. The default sectionType refers to the travelMode input. By default travelMode is set to car. </param>
+        /// <param name="arriveAt">
+        /// The date and time of arrival at the destination point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified it will be assumed to be that of the destination point.
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `arriveAt` parameter cannot be used in conjunction with `departAt`, `minDeviationDistance` or `minDeviationTime`.
+        /// </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
         /// <param name="vehicleLength"> Length of the vehicle in meters. A value of 0 means that length restrictions are not considered. </param>
         /// <param name="vehicleHeight"> Height of the vehicle in meters. A value of 0 means that height restrictions are not considered. </param>
@@ -2030,8 +2259,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values:
         ///   * true - Do consider all available traffic information during routing
@@ -2039,7 +2268,7 @@ namespace Azure.Maps.Routing
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
         /// <param name="routeType"> The type of route requested. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="vehicleEngineType"> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </param>
         /// <param name="constantSpeedConsumptionInLitersPerHundredKm">
         ///
@@ -2166,7 +2395,15 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routePoints"/> or <paramref name="routeDirectionParameters"/> is null. </exception>
-        public Response<RouteDirections> GetRouteDirectionsWithAdditionalParameters(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///
+        /// The `Post Route Directions` API is an HTTP `POST` request that returns a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
+        ///
+        /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
+        ///
+        /// Routing service provides a set of parameters for a detailed description of a vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
+        /// </remarks>
+        public Response<RouteDirections> GetRouteDirectionsWithAdditionalParameters(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -2184,7 +2421,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirections value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteDirections.DeserializeRouteDirections(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2347,23 +2584,24 @@ namespace Azure.Maps.Routing
             return message;
         }
 
-        /// <summary>
-        /// __Route Range (Isochrone) API__
-        ///
-        ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// This service will calculate a set of locations that can be reached from the origin point based on fuel, energy,  time or distance budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise  orientation as well as the precise polygon center which was the result of the origin point.
-        ///
-        /// The returned polygon can be used for further processing such as  [Search Inside Geometry](https://docs.microsoft.com/rest/api/maps/search/postsearchinsidegeometry) to  search for POIs within the provided Isochrone.
-        /// </summary>
+        /// <summary> Use to create a map that depicts the area accessible from a given point within a certain threshold based on time, distance or fuel capacity. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="query"> The Coordinate from which the range calculation should start. </param>
         /// <param name="fuelBudgetInLiters"> Fuel budget in liters that determines maximal range which can be travelled using the specified Combustion Consumption Model.&lt;br&gt; When fuelBudgetInLiters is used, it is mandatory to specify a detailed  Combustion Consumption Model.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="energyBudgetInKwH"> Electric energy budget in kilowatt hours (kWh) that determines maximal range which can be travelled using the specified Electric Consumption Model.&lt;br&gt; When energyBudgetInkWh is used, it is mandatory to specify a detailed Electric Consumption Model.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="timeBudgetInSec"> Time budget in seconds that determines maximal range which can be travelled using driving time. The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="distanceBudgetInMeters"> Distance budget in meters that determines maximal range which can be travelled using driving distance.  The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="routeType"> The type of route requested. </param>
         /// <param name="useTrafficData">
         /// Possible values:
@@ -2371,8 +2609,8 @@ namespace Azure.Maps.Routing
         ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
@@ -2400,7 +2638,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : for **Combustion Model** : 1600, for **Electric Model** : 1900
         /// </param>
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="vehicleEngineType"> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </param>
         /// <param name="constantSpeedConsumptionInLitersPerHundredKm">
         ///
@@ -2527,6 +2765,12 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Route Range` (Isochrone) API is an HTTP `GET` request that will calculate a set of locations that can be reached from the origin point based on fuel, energy, time or distance budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise  orientation as well as the precise polygon center which was the result of the origin point.
+        ///
+        /// The returned polygon can be used for further processing such as  [Search Inside Geometry](/rest/api/maps/search/post-search-inside-geometry) to  search for POIs within the provided isochrone.
+        /// </remarks>
         public async Task<Response<RouteRangeResult>> GetRouteRangeAsync(ResponseFormat format, IEnumerable<double> query, double? fuelBudgetInLiters = null, double? energyBudgetInKwH = null, double? timeBudgetInSec = null, double? distanceBudgetInMeters = null, DateTimeOffset? departAt = null, RouteType? routeType = null, bool? useTrafficData = null, IEnumerable<RouteAvoidType> avoid = null, TravelMode? travelMode = null, InclineLevel? inclineLevel = null, WindingnessLevel? windingness = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
@@ -2541,7 +2785,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteRangeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteRangeResult.DeserializeRouteRangeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2550,23 +2794,24 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// __Route Range (Isochrone) API__
-        ///
-        ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// This service will calculate a set of locations that can be reached from the origin point based on fuel, energy,  time or distance budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise  orientation as well as the precise polygon center which was the result of the origin point.
-        ///
-        /// The returned polygon can be used for further processing such as  [Search Inside Geometry](https://docs.microsoft.com/rest/api/maps/search/postsearchinsidegeometry) to  search for POIs within the provided Isochrone.
-        /// </summary>
+        /// <summary> Use to create a map that depicts the area accessible from a given point within a certain threshold based on time, distance or fuel capacity. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="query"> The Coordinate from which the range calculation should start. </param>
         /// <param name="fuelBudgetInLiters"> Fuel budget in liters that determines maximal range which can be travelled using the specified Combustion Consumption Model.&lt;br&gt; When fuelBudgetInLiters is used, it is mandatory to specify a detailed  Combustion Consumption Model.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="energyBudgetInKwH"> Electric energy budget in kilowatt hours (kWh) that determines maximal range which can be travelled using the specified Electric Consumption Model.&lt;br&gt; When energyBudgetInkWh is used, it is mandatory to specify a detailed Electric Consumption Model.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="timeBudgetInSec"> Time budget in seconds that determines maximal range which can be travelled using driving time. The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
         /// <param name="distanceBudgetInMeters"> Distance budget in meters that determines maximal range which can be travelled using driving distance.  The Consumption Model will only affect the range when routeType is eco.&lt;br&gt; Exactly one budget (fuelBudgetInLiters, energyBudgetInkWh, timeBudgetInSec, or distanceBudgetInMeters) must be used. </param>
-        /// <param name="departAt"> The date and time of departure from the origin point. Departure times apart from now must be specified as a dateTime. When a time zone offset is not specified, it will be assumed to be that of the origin point. The departAt value must be in the future in the date-time format (1996-12-19T16:39:57-08:00). </param>
+        /// <param name="departAt">
+        /// The date and time of departure from the origin point formatted as a `dateTime` value as defined in [RFC 3339, section 5.6](https://www.rfc-editor.org/rfc/rfc3339#section-5.6), with an optional time zone offset. When a time zone offset is not specified, it will be assumed to be that of the origin point.
+        ///   * Default value: now
+        ///   * Other value: `dateTime`
+        ///
+        /// Examples:
+        ///   * 2023-12-19T16:39:57
+        ///   * 2023-12-19T16:39:57-08:00
+        ///
+        /// The `departAt` parameter cannot be used in conjunction with `arriveAt`.
+        /// </param>
         /// <param name="routeType"> The type of route requested. </param>
         /// <param name="useTrafficData">
         /// Possible values:
@@ -2574,8 +2819,8 @@ namespace Azure.Maps.Routing
         ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In Route Range requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
@@ -2603,7 +2848,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : for **Combustion Model** : 1600, for **Electric Model** : 1900
         /// </param>
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
-        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
+        /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="vehicleEngineType"> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </param>
         /// <param name="constantSpeedConsumptionInLitersPerHundredKm">
         ///
@@ -2730,6 +2975,12 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Route Range` (Isochrone) API is an HTTP `GET` request that will calculate a set of locations that can be reached from the origin point based on fuel, energy, time or distance budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise  orientation as well as the precise polygon center which was the result of the origin point.
+        ///
+        /// The returned polygon can be used for further processing such as  [Search Inside Geometry](/rest/api/maps/search/post-search-inside-geometry) to  search for POIs within the provided isochrone.
+        /// </remarks>
         public Response<RouteRangeResult> GetRouteRange(ResponseFormat format, IEnumerable<double> query, double? fuelBudgetInLiters = null, double? energyBudgetInKwH = null, double? timeBudgetInSec = null, double? distanceBudgetInMeters = null, DateTimeOffset? departAt = null, RouteType? routeType = null, bool? useTrafficData = null, IEnumerable<RouteAvoidType> avoid = null, TravelMode? travelMode = null, InclineLevel? inclineLevel = null, WindingnessLevel? windingness = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
@@ -2744,7 +2995,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteRangeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteRangeResult.DeserializeRouteRangeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2770,21 +3021,21 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
         }
 
-        /// <summary>
-        /// **Route Directions Batch API**
+        /// <summary> Use to send a batch of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API in a single asynchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// <remarks>
         ///
+        /// The `Post Route Directions Batch` API is an HTTP `POST` request that sends batches of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API using a single asynchronous request. You can call `Route Directions Batch` API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries. To call the `Post Route Directions Batch` API in a synchronous request, see [Post Route Directions Batch Sync](/rest/api/maps/route/post-route-directions-batch-sync).
         ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Route Directions Batch API sends batches of queries to [Route Directions API](https://docs.microsoft.com/rest/api/maps/route/getroutedirections) using just a single API call. You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries.
         /// ### Submit Asynchronous Batch Request
         /// The Asynchronous API is appropriate for processing big volumes of relatively complex route requests
         /// - It allows the retrieval of results in a separate call (multiple downloads are possible).
@@ -2794,8 +3045,11 @@ namespace Azure.Maps.Routing
         /// When you make a request by using async request, by default the service returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available.
         /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
         ///
-        /// Please note that asynchronous batch request is a long-running request. Here's a typical sequence of operations:
-        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps
+        /// Please note that asynchronous batch request is a long-running operation. Here's a typical sequence of operations:
+        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps.
+        /// ```
+        /// POST https://atlas.microsoft.com/route/directions/batch/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 2. The server will respond with one of the following:
         ///
         ///     &gt; HTTP `202 Accepted` - Batch request has been accepted.
@@ -2804,9 +3058,9 @@ namespace Azure.Maps.Routing
         ///
         /// 3. If the batch request was accepted successfully, the `Location` header in the response contains the URL to download the results of the batch request.
         ///     This status URI looks like following:
-        ///
-        /// ``` GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0 ```
-        /// Note:- Please remember to add AUTH information (subscription-key/azure_auth - See [Security](#security)) to the _status URI_ before running it. &lt;br&gt;
+        /// ```
+        /// GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 4. Client issues a `GET` request on the _download URL_ obtained in Step 3 to download the batch results.
         ///
         /// ### POST Body for Batch Request
@@ -2926,11 +3180,7 @@ namespace Azure.Maps.Routing
         ///     ]
         /// }
         /// ```
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// </remarks>
         public async Task<ResponseWithHeaders<RouteRequestRouteDirectionsBatchHeaders>> RequestRouteDirectionsBatchAsync(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
         {
             if (routeDirectionsBatchQueries == null)
@@ -2951,15 +3201,15 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// **Route Directions Batch API**
+        /// <summary> Use to send a batch of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API in a single asynchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// <remarks>
         ///
+        /// The `Post Route Directions Batch` API is an HTTP `POST` request that sends batches of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API using a single asynchronous request. You can call `Route Directions Batch` API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries. To call the `Post Route Directions Batch` API in a synchronous request, see [Post Route Directions Batch Sync](/rest/api/maps/route/post-route-directions-batch-sync).
         ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Route Directions Batch API sends batches of queries to [Route Directions API](https://docs.microsoft.com/rest/api/maps/route/getroutedirections) using just a single API call. You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries.
         /// ### Submit Asynchronous Batch Request
         /// The Asynchronous API is appropriate for processing big volumes of relatively complex route requests
         /// - It allows the retrieval of results in a separate call (multiple downloads are possible).
@@ -2969,8 +3219,11 @@ namespace Azure.Maps.Routing
         /// When you make a request by using async request, by default the service returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available.
         /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
         ///
-        /// Please note that asynchronous batch request is a long-running request. Here's a typical sequence of operations:
-        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps
+        /// Please note that asynchronous batch request is a long-running operation. Here's a typical sequence of operations:
+        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps.
+        /// ```
+        /// POST https://atlas.microsoft.com/route/directions/batch/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 2. The server will respond with one of the following:
         ///
         ///     &gt; HTTP `202 Accepted` - Batch request has been accepted.
@@ -2979,9 +3232,9 @@ namespace Azure.Maps.Routing
         ///
         /// 3. If the batch request was accepted successfully, the `Location` header in the response contains the URL to download the results of the batch request.
         ///     This status URI looks like following:
-        ///
-        /// ``` GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0 ```
-        /// Note:- Please remember to add AUTH information (subscription-key/azure_auth - See [Security](#security)) to the _status URI_ before running it. &lt;br&gt;
+        /// ```
+        /// GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 4. Client issues a `GET` request on the _download URL_ obtained in Step 3 to download the batch results.
         ///
         /// ### POST Body for Batch Request
@@ -3101,11 +3354,7 @@ namespace Azure.Maps.Routing
         ///     ]
         /// }
         /// ```
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// </remarks>
         public ResponseWithHeaders<RouteRequestRouteDirectionsBatchHeaders> RequestRouteDirectionsBatch(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
         {
             if (routeDirectionsBatchQueries == null)
@@ -3145,8 +3394,13 @@ namespace Azure.Maps.Routing
             return message;
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// <summary> Use to send a batch of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API in a single asynchronous request. </summary>
+        /// <param name="batchId"> Batch id for querying the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Route Directions Batch` API is an HTTP `GET` request that sends batches of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API using a single request. You can call `Get Route Directions Batch` API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries.
         ///
         /// ### Download Asynchronous Batch Results
         /// To download the async batch results you will issue a `GET` request to the batch download endpoint. This _download URL_ can be obtained from the `Location` header of a successful `POST` batch request and looks like the following:
@@ -3245,10 +3499,7 @@ namespace Azure.Maps.Routing
         ///     ]
         /// }
         /// ```
-        /// </summary>
-        /// <param name="batchId"> Batch id for querying the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
+        /// </remarks>
         public async Task<ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders>> GetRouteDirectionsBatchAsync(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
@@ -3269,8 +3520,13 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// <summary> Use to send a batch of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API in a single asynchronous request. </summary>
+        /// <param name="batchId"> Batch id for querying the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Route Directions Batch` API is an HTTP `GET` request that sends batches of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API using a single request. You can call `Get Route Directions Batch` API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries.
         ///
         /// ### Download Asynchronous Batch Results
         /// To download the async batch results you will issue a `GET` request to the batch download endpoint. This _download URL_ can be obtained from the `Location` header of a successful `POST` batch request and looks like the following:
@@ -3369,10 +3625,7 @@ namespace Azure.Maps.Routing
         ///     ]
         /// }
         /// ```
-        /// </summary>
-        /// <param name="batchId"> Batch id for querying the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
+        /// </remarks>
         public ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders> GetRouteDirectionsBatch(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
@@ -3410,21 +3663,20 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
         }
 
-        /// <summary>
-        /// **Route Directions Batch API**
+        /// <summary> Use to send a batch of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API in a single synchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain  a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// <remarks>
         ///
-        ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Route Directions Batch API sends batches of queries to [Route Directions API](https://docs.microsoft.com/rest/api/maps/route/getroutedirections) using just a single API call. You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries.
+        /// The `Post Route Directions Batch Sync` API is an HTTP `POST` request that sends batches of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API using a single synchronous request. You can call `Route Directions Batch` API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries. To call the `Post Route Directions Batch` API in a asynchronous request, see [Post Route Directions Batch](/rest/api/maps/route/post-route-directions-batch).
         /// ### Submit Synchronous Batch Request
         /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
         /// ```
@@ -3511,11 +3763,7 @@ namespace Azure.Maps.Routing
         ///     ]
         /// }
         /// ```
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain  a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// </remarks>
         public async Task<Response<RouteDirectionsBatchResult>> RequestRouteDirectionsBatchSyncAsync(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
         {
             if (routeDirectionsBatchQueries == null)
@@ -3530,7 +3778,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirectionsBatchResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RouteDirectionsBatchResult.DeserializeRouteDirectionsBatchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3539,15 +3787,14 @@ namespace Azure.Maps.Routing
             }
         }
 
-        /// <summary>
-        /// **Route Directions Batch API**
+        /// <summary> Use to send a batch of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API in a single synchronous request. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
+        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain  a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// <remarks>
         ///
-        ///
-        /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Route Directions Batch API sends batches of queries to [Route Directions API](https://docs.microsoft.com/rest/api/maps/route/getroutedirections) using just a single API call. You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries.
+        /// The `Post Route Directions Batch Sync` API is an HTTP `POST` request that sends batches of queries to the [Get Route Directions](/rest/api/maps/route/get-route-directions) API using a single synchronous request. You can call `Route Directions Batch` API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **700** queries and sync API up to **100** queries. To call the `Post Route Directions Batch` API in a asynchronous request, see [Post Route Directions Batch](/rest/api/maps/route/post-route-directions-batch).
         /// ### Submit Synchronous Batch Request
         /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
         /// ```
@@ -3634,11 +3881,7 @@ namespace Azure.Maps.Routing
         ///     ]
         /// }
         /// ```
-        /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain  a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
+        /// </remarks>
         public Response<RouteDirectionsBatchResult> RequestRouteDirectionsBatchSync(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
         {
             if (routeDirectionsBatchQueries == null)
@@ -3653,7 +3896,7 @@ namespace Azure.Maps.Routing
                 case 200:
                     {
                         RouteDirectionsBatchResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RouteDirectionsBatchResult.DeserializeRouteDirectionsBatchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

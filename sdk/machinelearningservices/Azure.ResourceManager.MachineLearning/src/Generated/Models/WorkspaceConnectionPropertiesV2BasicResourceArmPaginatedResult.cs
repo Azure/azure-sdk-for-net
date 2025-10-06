@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,19 +52,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
-        /// <param name="nextLink"></param>
         /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<MachineLearningWorkspaceConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the next link. </summary>
-        public string NextLink { get; }
         /// <summary> Gets the value. </summary>
         public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

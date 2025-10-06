@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> GUID of the report. </summary>
+        [WirePath("jobId")]
         public Guid? JobId { get; }
         /// <summary> Type of report, Consistency or Initial. </summary>
+        [WirePath("operationType")]
         public GuestConfigurationAssignmentReportType? OperationType { get; }
         /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
+        [WirePath("resources")]
         public IReadOnlyList<AssignmentReportResourceInfo> Resources { get; }
     }
 }

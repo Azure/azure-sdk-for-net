@@ -40,5 +40,13 @@ namespace Azure.DigitalTwins.Core
             }
             return new DigitalTwinsEventRouteCollection(value, nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DigitalTwinsEventRouteCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDigitalTwinsEventRouteCollection(document.RootElement);
+        }
     }
 }

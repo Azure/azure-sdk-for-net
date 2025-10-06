@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The result of the GetSupportedOptimizationTypes API. </summary>
+    /// <summary>
+    /// The result of the GetSupportedOptimizationTypes API
+    /// Serialized Name: SupportedOptimizationTypesListResult
+    /// </summary>
     public partial class SupportedOptimizationTypesListResult
     {
         /// <summary>
@@ -53,7 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedOptimizationTypesListResult"/>. </summary>
-        /// <param name="supportedOptimizationTypes"> Supported optimization types for a profile. </param>
+        /// <param name="supportedOptimizationTypes">
+        /// Supported optimization types for a profile.
+        /// Serialized Name: SupportedOptimizationTypesListResult.supportedOptimizationTypes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SupportedOptimizationTypesListResult(IReadOnlyList<OptimizationType> supportedOptimizationTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +66,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Supported optimization types for a profile. </summary>
+        /// <summary>
+        /// Supported optimization types for a profile.
+        /// Serialized Name: SupportedOptimizationTypesListResult.supportedOptimizationTypes
+        /// </summary>
         public IReadOnlyList<OptimizationType> SupportedOptimizationTypes { get; }
     }
 }

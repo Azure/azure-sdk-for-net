@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static bool operator ==(InterpolationKind left, InterpolationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InterpolationKind"/> values are not the same. </summary>
         public static bool operator !=(InterpolationKind left, InterpolationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InterpolationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InterpolationKind"/>. </summary>
         public static implicit operator InterpolationKind(string value) => new InterpolationKind(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

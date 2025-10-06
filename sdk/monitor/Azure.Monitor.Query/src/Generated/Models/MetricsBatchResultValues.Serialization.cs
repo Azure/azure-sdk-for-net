@@ -6,46 +6,126 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricsBatchResultValues
+    internal partial class MetricsBatchResultValues : IUtf8JsonSerializable, IJsonModel<MetricsBatchResultValues>
     {
-        internal static MetricsBatchResultValues DeserializeMetricsBatchResultValues(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBatchResultValues>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MetricsBatchResultValues>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBatchResultValues>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricsBatchResultValues)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("starttime"u8);
+            writer.WriteStringValue(Starttime);
+            writer.WritePropertyName("endtime"u8);
+            writer.WriteStringValue(Endtime);
+            if (Optional.IsDefined(Interval))
+            {
+                writer.WritePropertyName("interval"u8);
+                writer.WriteStringValue(Interval);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(Resourceregion))
+            {
+                writer.WritePropertyName("resourceregion"u8);
+                writer.WriteStringValue(Resourceregion);
+            }
+            if (Optional.IsDefined(Resourceid))
+            {
+                writer.WritePropertyName("resourceid"u8);
+                writer.WriteStringValue(Resourceid);
+            }
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MetricsBatchResultValues IJsonModel<MetricsBatchResultValues>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBatchResultValues>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricsBatchResultValues)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricsBatchResultValues(document.RootElement, options);
+        }
+
+        internal static MetricsBatchResultValues DeserializeMetricsBatchResultValues(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset starttime = default;
-            DateTimeOffset endtime = default;
-            TimeSpan? interval = default;
+            string starttime = default;
+            string endtime = default;
+            string interval = default;
             string @namespace = default;
-            AzureLocation resourceregion = default;
-            ResourceIdentifier resourceid = default;
+            string resourceregion = default;
+            string resourceid = default;
             IReadOnlyList<MetricResult> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("starttime"u8))
                 {
-                    starttime = property.Value.GetDateTimeOffset(null);
+                    starttime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("endtime"u8))
                 {
-                    endtime = property.Value.GetDateTimeOffset(null);
+                    endtime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("interval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interval = property.Value.GetTimeSpan("P");
+                    interval = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))
@@ -55,20 +135,12 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("resourceregion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceregion = new AzureLocation(property.Value.GetString());
+                    resourceregion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceid = new ResourceIdentifier(property.Value.GetString());
+                    resourceid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -76,12 +148,17 @@ namespace Azure.Monitor.Query.Models
                     List<MetricResult> array = new List<MetricResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricResult.DeserializeMetricResult(item));
+                        array.Add(MetricResult.DeserializeMetricResult(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MetricsBatchResultValues(
                 starttime,
                 endtime,
@@ -89,7 +166,55 @@ namespace Azure.Monitor.Query.Models
                 @namespace,
                 resourceregion,
                 resourceid,
-                value);
+                value,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MetricsBatchResultValues>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBatchResultValues>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricsBatchResultValues)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MetricsBatchResultValues IPersistableModel<MetricsBatchResultValues>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBatchResultValues>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMetricsBatchResultValues(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricsBatchResultValues)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricsBatchResultValues>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricsBatchResultValues FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetricsBatchResultValues(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

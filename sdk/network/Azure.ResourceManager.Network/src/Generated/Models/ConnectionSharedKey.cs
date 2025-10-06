@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -40,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The virtual network connection shared key value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

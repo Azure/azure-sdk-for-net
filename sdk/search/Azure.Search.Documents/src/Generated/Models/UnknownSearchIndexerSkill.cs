@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownSearchIndexerSkill. </summary>
+    /// <summary> Unknown version of SearchIndexerSkill. </summary>
     internal partial class UnknownSearchIndexerSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerSkill"/>. </summary>
@@ -20,9 +21,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        internal UnknownSearchIndexerSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs) : base(oDataType, name, description, context, inputs, outputs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSearchIndexerSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
         {
             ODataType = oDataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerSkill"/> for deserialization. </summary>
+        internal UnknownSearchIndexerSkill()
+        {
         }
     }
 }

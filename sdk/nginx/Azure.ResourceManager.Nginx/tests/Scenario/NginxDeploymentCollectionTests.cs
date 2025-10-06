@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
         {
             NginxDeploymentCollection collection = ResGroup.GetNginxDeployments();
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+            _ = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             Assert.IsTrue(await collection.ExistsAsync(nginxDeploymentName));
             Assert.IsFalse(await collection.ExistsAsync(nginxDeploymentName + "1"));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.AreEqual(count, 0);
+            Assert.AreEqual(0, count);
 
             string nginxDeploymentName1 = Recording.GenerateAssetName("testDeployment-");
             string nginxDeploymentName2 = Recording.GenerateAssetName("testDeployment-");

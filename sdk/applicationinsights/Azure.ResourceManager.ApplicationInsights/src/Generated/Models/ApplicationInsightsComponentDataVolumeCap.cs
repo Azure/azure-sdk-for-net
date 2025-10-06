@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Daily data volume cap in GB. </summary>
+        [WirePath("Cap")]
         public float? Cap { get; set; }
         /// <summary> Daily data volume cap UTC reset hour. </summary>
+        [WirePath("ResetTime")]
         public int? ResetTime { get; }
         /// <summary> Reserved, not used for now. </summary>
+        [WirePath("WarningThreshold")]
         public int? WarningThreshold { get; set; }
         /// <summary> Reserved, not used for now. </summary>
+        [WirePath("StopSendNotificationWhenHitThreshold")]
         public bool? IsStopSendNotificationWhenHitThreshold { get; set; }
         /// <summary> Do not send a notification email when the daily data volume cap is met. </summary>
+        [WirePath("StopSendNotificationWhenHitCap")]
         public bool? IsStopSendNotificationWhenHitCap { get; set; }
         /// <summary> Maximum daily data volume cap that the user can set for this component. </summary>
+        [WirePath("MaxHistoryCap")]
         public float? MaxHistoryCap { get; }
     }
 }

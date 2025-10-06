@@ -8,163 +8,76 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class BinaryHardeningResult : IUtf8JsonSerializable, IJsonModel<BinaryHardeningResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardeningResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardeningResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BinaryHardeningResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BinaryHardeningId))
             {
-                if (BinaryHardeningId != null)
-                {
-                    writer.WritePropertyName("binaryHardeningId"u8);
-                    writer.WriteStringValue(BinaryHardeningId);
-                }
-                else
-                {
-                    writer.WriteNull("binaryHardeningId");
-                }
+                writer.WritePropertyName("binaryHardeningId"u8);
+                writer.WriteStringValue(BinaryHardeningId);
             }
-            if (Optional.IsDefined(Architecture))
+            if (Optional.IsDefined(SecurityHardeningFeatures))
             {
-                if (Architecture != null)
-                {
-                    writer.WritePropertyName("architecture"u8);
-                    writer.WriteStringValue(Architecture);
-                }
-                else
-                {
-                    writer.WriteNull("architecture");
-                }
+                writer.WritePropertyName("securityHardeningFeatures"u8);
+                writer.WriteObjectValue(SecurityHardeningFeatures, options);
+            }
+            if (Optional.IsDefined(ExecutableArchitecture))
+            {
+                writer.WritePropertyName("executableArchitecture"u8);
+                writer.WriteStringValue(ExecutableArchitecture);
             }
             if (Optional.IsDefined(FilePath))
             {
-                if (FilePath != null)
-                {
-                    writer.WritePropertyName("filePath"u8);
-                    writer.WriteStringValue(FilePath);
-                }
-                else
-                {
-                    writer.WriteNull("filePath");
-                }
+                writer.WritePropertyName("filePath"u8);
+                writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(Class))
+            if (Optional.IsDefined(ExecutableClass))
             {
-                if (Class != null)
-                {
-                    writer.WritePropertyName("class"u8);
-                    writer.WriteStringValue(Class);
-                }
-                else
-                {
-                    writer.WriteNull("class");
-                }
+                writer.WritePropertyName("executableClass"u8);
+                writer.WriteStringValue(ExecutableClass.Value.ToString());
             }
             if (Optional.IsDefined(Runpath))
             {
-                if (Runpath != null)
-                {
-                    writer.WritePropertyName("runpath"u8);
-                    writer.WriteStringValue(Runpath);
-                }
-                else
-                {
-                    writer.WriteNull("runpath");
-                }
+                writer.WritePropertyName("runpath"u8);
+                writer.WriteStringValue(Runpath);
             }
             if (Optional.IsDefined(Rpath))
             {
-                if (Rpath != null)
-                {
-                    writer.WritePropertyName("rpath"u8);
-                    writer.WriteStringValue(Rpath);
-                }
-                else
-                {
-                    writer.WriteNull("rpath");
-                }
+                writer.WritePropertyName("rpath"u8);
+                writer.WriteStringValue(Rpath);
             }
-            writer.WritePropertyName("features"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NXFlag))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("nx"u8);
-                writer.WriteBooleanValue(NXFlag.Value);
-            }
-            if (Optional.IsDefined(PieFlag))
-            {
-                writer.WritePropertyName("pie"u8);
-                writer.WriteBooleanValue(PieFlag.Value);
-            }
-            if (Optional.IsDefined(RelroFlag))
-            {
-                writer.WritePropertyName("relro"u8);
-                writer.WriteBooleanValue(RelroFlag.Value);
-            }
-            if (Optional.IsDefined(CanaryFlag))
-            {
-                writer.WritePropertyName("canary"u8);
-                writer.WriteBooleanValue(CanaryFlag.Value);
-            }
-            if (Optional.IsDefined(StrippedFlag))
-            {
-                writer.WritePropertyName("stripped"u8);
-                writer.WriteBooleanValue(StrippedFlag.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -174,7 +87,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +96,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static BinaryHardeningResult DeserializeBinaryHardeningResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,18 +107,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceType type = default;
             SystemData systemData = default;
             string binaryHardeningId = default;
-            string architecture = default;
+            BinaryHardeningFeatures securityHardeningFeatures = default;
+            string executableArchitecture = default;
             string filePath = default;
-            string @class = default;
+            ExecutableClass? executableClass = default;
             string runpath = default;
             string rpath = default;
-            bool? nx = default;
-            bool? pie = default;
-            bool? relro = default;
-            bool? canary = default;
-            bool? stripped = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -229,7 +139,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotFirmwareDefenseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -243,119 +153,54 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         if (property0.NameEquals("binaryHardeningId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                binaryHardeningId = null;
-                                continue;
-                            }
                             binaryHardeningId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("architecture"u8))
+                        if (property0.NameEquals("securityHardeningFeatures"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                architecture = null;
                                 continue;
                             }
-                            architecture = property0.Value.GetString();
+                            securityHardeningFeatures = BinaryHardeningFeatures.DeserializeBinaryHardeningFeatures(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("executableArchitecture"u8))
+                        {
+                            executableArchitecture = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("filePath"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                filePath = null;
-                                continue;
-                            }
                             filePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("class"u8))
+                        if (property0.NameEquals("executableClass"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                @class = null;
                                 continue;
                             }
-                            @class = property0.Value.GetString();
+                            executableClass = new ExecutableClass(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("runpath"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                runpath = null;
-                                continue;
-                            }
                             runpath = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("rpath"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                rpath = null;
-                                continue;
-                            }
                             rpath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("features"u8))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("nx"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    nx = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                                if (property1.NameEquals("pie"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    pie = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                                if (property1.NameEquals("relro"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    relro = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                                if (property1.NameEquals("canary"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    canary = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                                if (property1.NameEquals("stripped"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    stripped = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                            }
+                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -363,26 +208,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BinaryHardeningResult(
                 id,
                 name,
                 type,
                 systemData,
                 binaryHardeningId,
-                architecture,
+                securityHardeningFeatures,
+                executableArchitecture,
                 filePath,
-                @class,
+                executableClass,
                 runpath,
                 rpath,
-                nx,
-                pie,
-                relro,
-                canary,
-                stripped,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -393,9 +235,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -407,11 +249,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBinaryHardeningResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support reading '{options.Format}' format.");
             }
         }
 

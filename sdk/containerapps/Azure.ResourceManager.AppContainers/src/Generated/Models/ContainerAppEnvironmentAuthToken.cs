@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Auth token value. </summary>
+        [WirePath("properties.token")]
         public string Token { get; }
         /// <summary> Token expiration date. </summary>
+        [WirePath("properties.expires")]
         public DateTimeOffset? ExpireOn { get; }
     }
 }

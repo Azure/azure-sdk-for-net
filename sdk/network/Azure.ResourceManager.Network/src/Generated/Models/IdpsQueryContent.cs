@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Contain all filters names and values. </summary>
+        [WirePath("filters")]
         public IList<IdpsQueryFilterItems> Filters { get; }
         /// <summary> Search term in all columns. </summary>
+        [WirePath("search")]
         public string Search { get; set; }
         /// <summary> Column to sort response by. </summary>
+        [WirePath("orderBy")]
         public IdpsQueryOrderBy OrderBy { get; set; }
         /// <summary> The number of the results to return in each page. </summary>
+        [WirePath("resultsPerPage")]
         public int? ResultsPerPage { get; set; }
         /// <summary> The number of records matching the filter to skip. </summary>
+        [WirePath("skip")]
         public int? Skip { get; set; }
     }
 }

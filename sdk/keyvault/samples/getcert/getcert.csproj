@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <NoWarn>
       $(NoWarn);
       CA1810;
@@ -19,9 +19,9 @@
 
   <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
   <ItemGroup Condition="'$(IsSample)' != 'true'">
-    <PackageReference Update="Azure.Identity" Version="1.10.4" />
-    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.1.1" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
+    <PackageReference Update="Azure.Identity" Version="1.12.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
   </ItemGroup>
 

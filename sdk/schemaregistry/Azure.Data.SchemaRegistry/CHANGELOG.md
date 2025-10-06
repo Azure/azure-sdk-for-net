@@ -1,14 +1,17 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Added `SchemaRegistryClientBuilderExtensions` to support dependency injection.
 
-### Bugs Fixed
+## 1.4.0 (2024-09-17)
 
-### Other Changes
+### Features Added
+
+- General availability of JSON and Custom schema formats.
+- General availability of `SchemRegistrySerializer`
 
 ## 1.4.0-beta.2 (2023-08-08)
 

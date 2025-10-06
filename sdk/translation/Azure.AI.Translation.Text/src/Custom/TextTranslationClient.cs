@@ -15,8 +15,8 @@ namespace Azure.AI.Translation.Text
 {
     /// <summary> The Translator service client. </summary>
     // Methods are replaced by the version where clientTraceId parameter is of type System.Guid
-    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(TextType?), typeof(string), typeof(ProfanityAction?), typeof(ProfanityMarker?), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(TextType?), typeof(string), typeof(ProfanityAction?), typeof(ProfanityMarker?), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Text
     public partial class TextTranslationClient
     {
         private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
-        private const string TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default";
+        private const string DEFAULT_TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default";
         private const string PLATFORM_PATH = "/translator/text/v3.0";
         private const string DEFAULT_REGION = "global";
 
@@ -50,7 +50,7 @@ namespace Azure.AI.Translation.Text
         ///     https://api.cognitive.microsofttranslator.com).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        protected TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
+        public TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        protected TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
+        public TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new TextTranslationClientOptions();
@@ -116,7 +116,7 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="credential">Cognitive Services Token</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = default) : this(credential, DEFAULT_ENDPOINT, options)
+        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = default) : this(credential, DEFAULT_ENDPOINT, DEFAULT_TOKEN_SCOPE, options)
         {
         }
 
@@ -125,10 +125,11 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="credential">Cognitive Services Token</param>
         /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="tokenScope">Token Scopes</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(TokenCredential credential, Uri endpoint, TextTranslationClientOptions options = default) : this(endpoint, options)
+        public TextTranslationClient(TokenCredential credential, Uri endpoint, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(endpoint, options)
         {
-            var policy = new BearerTokenAuthenticationPolicy(credential, TOKEN_SCOPE);
+            var policy = new BearerTokenAuthenticationPolicy(credential, tokenScope);
             options = options ?? new TextTranslationClientOptions();
 
             this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
@@ -137,6 +138,39 @@ namespace Azure.AI.Translation.Text
             {
                 this._endpoint = new Uri(endpoint, PLATFORM_PATH);
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="tokenScope">Token Scopes</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, string resourceId, string region = DEFAULT_REGION, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(DEFAULT_ENDPOINT, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="tokenScope">Token Scopes</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, Uri endpoint, string resourceId, string region = DEFAULT_REGION, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(endpoint, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary> Translate Text. </summary>

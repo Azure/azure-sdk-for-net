@@ -32,12 +32,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new CreateRunResponse(runId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CreateRunResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCreateRunResponse(document.RootElement);
+        }
+
         internal partial class CreateRunResponseConverter : JsonConverter<CreateRunResponse>
         {
             public override void Write(Utf8JsonWriter writer, CreateRunResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override CreateRunResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

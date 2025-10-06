@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A class representing the DataMigrationService data model.
-    /// A Database Migration Service resource
+    /// An Azure Database Migration Service (classic) resource
     /// </summary>
     public partial class DataMigrationServiceData : TrackedResourceData
     {
@@ -73,9 +72,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
-        /// <param name="deleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
+        /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, ServiceSku sku, ServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, DataMigrationServiceSku sku, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Kind = kind;
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration
             VirtualSubnetId = virtualSubnetId;
             VirtualNicId = virtualNicId;
             AutoStopDelay = autoStopDelay;
-            DeleteResourcesOnStop = deleteResourcesOnStop;
+            ShouldDeleteResourcesOnStop = shouldDeleteResourcesOnStop;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -99,9 +98,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> The resource kind. Only 'vm' (the default) is supported. </summary>
         public string Kind { get; set; }
         /// <summary> Service SKU. </summary>
-        public ServiceSku Sku { get; set; }
+        public DataMigrationServiceSku Sku { get; set; }
         /// <summary> The resource's provisioning state. </summary>
-        public ServiceProvisioningState? ProvisioningState { get; }
+        public DataMigrationServiceProvisioningState? ProvisioningState { get; }
         /// <summary> The public key of the service, used to encrypt secrets sent to the service. </summary>
         public string PublicKey { get; set; }
         /// <summary> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </summary>
@@ -111,6 +110,6 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> The time delay before the service is auto-stopped when idle. </summary>
         public string AutoStopDelay { get; set; }
         /// <summary> Whether service resources should be deleted when stopped. (Turned on by default). </summary>
-        public bool? DeleteResourcesOnStop { get; set; }
+        public bool? ShouldDeleteResourcesOnStop { get; set; }
     }
 }

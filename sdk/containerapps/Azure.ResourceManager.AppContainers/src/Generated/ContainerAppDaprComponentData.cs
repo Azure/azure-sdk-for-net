@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
+        /// <param name="provisioningState"> Provisioning state of the Dapr Component. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, DaprComponentProvisioningState? provisioningState, string deploymentErrors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
@@ -83,24 +85,40 @@ namespace Azure.ResourceManager.AppContainers
             SecretStoreComponent = secretStoreComponent;
             Metadata = metadata;
             Scopes = scopes;
+            ProvisioningState = provisioningState;
+            DeploymentErrors = deploymentErrors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Component type. </summary>
+        [WirePath("properties.componentType")]
         public string ComponentType { get; set; }
         /// <summary> Component version. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Boolean describing if the component errors are ignores. </summary>
+        [WirePath("properties.ignoreErrors")]
         public bool? IgnoreErrors { get; set; }
         /// <summary> Initialization timeout. </summary>
+        [WirePath("properties.initTimeout")]
         public string InitTimeout { get; set; }
         /// <summary> Collection of secrets used by a Dapr component. </summary>
+        [WirePath("properties.secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary> Name of a Dapr component to retrieve component secrets from. </summary>
+        [WirePath("properties.secretStoreComponent")]
         public string SecretStoreComponent { get; set; }
         /// <summary> Component metadata. </summary>
+        [WirePath("properties.metadata")]
         public IList<ContainerAppDaprMetadata> Metadata { get; }
         /// <summary> Names of container apps that can use this Dapr component. </summary>
+        [WirePath("properties.scopes")]
         public IList<string> Scopes { get; }
+        /// <summary> Provisioning state of the Dapr Component. </summary>
+        [WirePath("properties.provisioningState")]
+        public DaprComponentProvisioningState? ProvisioningState { get; }
+        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("properties.deploymentErrors")]
+        public string DeploymentErrors { get; }
     }
 }

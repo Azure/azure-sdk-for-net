@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
+        [WirePath("ipRules")]
         public IList<BastionHostIPRule> IPRules { get; }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -13,10 +14,12 @@ using Azure.Core.Pipeline;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary> The IngestionUsingDataCollectionRules service client. </summary>
-    [CodeGenClient("IngestionUsingDataCollectionRulesClient")]
     [CodeGenSuppress("LogsIngestionClient", typeof(Uri), typeof(TokenCredential), typeof(LogsIngestionClientOptions))]
     public partial class LogsIngestionClient
     {
+        /// <summary> The message to show when AOT compilation is used for non-compliant overloads. </summary>
+        private const string AotWarningMessage = "Serialization is performed at runtime without a serialization context available.";
+
         /// <summary> Initializes a new instance of LogsIngestionClient for mocking. </summary>
         protected LogsIngestionClient()
         {
@@ -37,7 +40,7 @@ namespace Azure.Monitor.Ingestion
             _tokenCredential = credential;
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? LogsIngestionAudience.AzurePublicCloud : options.Audience)}";
             var scopes = new List<string> { authorizationScope };
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, scopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, scopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -65,7 +68,7 @@ namespace Azure.Monitor.Ingestion
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -94,39 +97,18 @@ namespace Azure.Monitor.Ingestion
             return message;
         }
 
-        /// <summary>
-        /// Hidden method for batching data - serializing into arrays of JSON no more than SingleUploadThreshold each
-        /// </summary>
-        /// <param name="logEntries"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, LogsUploadOptions options = null)
+        internal static IEnumerable<BatchedLogs> Batch(IEnumerable<BinaryData> logEntries, LogsUploadOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
             Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
             writer.WriteStartArray();
-            int entryCount = 0;
             List<object> currentLogList = new List<object>();
-            var logEntriesList = logEntries.ToList();
-            int logEntriesCount = logEntriesList.Count;
-            foreach (var log in logEntriesList)
+            foreach (var log in logEntries)
             {
-                BinaryData entry;
-                bool isLastEntry = (entryCount + 1 == logEntriesCount);
-                // If log is already BinaryData, no need to serialize it
-                if (log is BinaryData d)
-                    entry = d;
-                // If log is not BinaryData, serialize it. Default Serializer is System.Text.Json
-                else if (options == null || options.Serializer == null)
-                    entry = BinaryData.FromObjectAsJson(log);
-                // Otherwise use Serializer specified in options
-                else
-                    entry = options.Serializer.Serialize(log);
-
-                var memory = entry.ToMemory();
-                // if single log is > 1 Mb send to be gzipped by itself
-                if (memory.Length > SingleUploadThreshold)
+                var memory = log.ToMemory();
+                // if single log (as an array) is >= 1 Mb send to be gzipped by itself
+                if ((memory.Length + 2) >= SingleUploadThreshold)
                 {
                     // Create tempArrayBufferWriter (unsized to store log) and tempWriter for individual log
                     ArrayBufferWriter<byte> tempArrayBuffer = new ArrayBufferWriter<byte>();
@@ -136,9 +118,11 @@ namespace Azure.Monitor.Ingestion
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
                     yield return new BatchedLogs(new List<object> { log }, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
+                    continue;
                 }
-                // if adding this entry makes stream > 1 Mb send current stream now
-                else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
+
+                // if adding this entry (and array end) would make stream > 1 Mb send current stream now
+                if ((writer.BytesCommitted + writer.BytesPending + memory.Length + 2) > SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
@@ -151,33 +135,19 @@ namespace Azure.Monitor.Ingestion
                     writer.WriteStartArray();
                     // reset log list
                     currentLogList = new List<object>();
-                    // add current log to memory and currentLogList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
-
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
                 }
-                else
-                {
-                    // Add entry to existing stream and update logList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
 
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
-                }
-                entryCount++;
+                // Add entry to stream and update logList
+                WriteMemory(writer, memory);
+                currentLogList.Add(log);
+            }
+
+            // no more logs, send existing stream and LogList if anything
+            if (currentLogList.Count > 0)
+            {
+                writer.WriteEndArray();
+                writer.Flush();
+                yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
             }
         }
 
@@ -215,8 +185,48 @@ namespace Azure.Monitor.Ingestion
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///   See error response code and error response message for more detail.
+        ///   This overload is not AOT-compliant; for uploading logs in AOT scenarios, use the <see cref="Upload(string, string, IEnumerable{BinaryData}, LogsUploadOptions, CancellationToken)"/> overload with logs that you have serialized to <see cref="BinaryData"/>.
+        /// </remarks>
+        [RequiresUnreferencedCode(AotWarningMessage)]
+        [RequiresDynamicCode(AotWarningMessage)]
+        public virtual Response Upload<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
+        {
+            var serializedLogs = SerializeLogs(logs, options);
+            return Upload(ruleId, streamName, serializedLogs, options, cancellationToken);
+        }
+
+        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
+        /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
+        /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
+        /// <param name="logs"> The content to send as the body of the request, serialized to <see cref="BinaryData"/> form.</param>
+        /// <param name="options"> The options model to configure the request to upload logs to Azure Monitor. </param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logs"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-Success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Upload with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new LogsIngestionClient(endpoint, credential);
+        ///
+        /// var data = new[] {
+        ///     BinaryData.FromObjectAsJson(new {})
+        /// };
+        ///
+        /// Response response = client.Upload("<ruleId>", "<streamName>", data);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        ///   See error response code and error response message for more detail.
+        ///   This overload is AOT-compliant and should be used in AOT scenarios, as it does not require serialization at runtime.
+        /// </remarks>
+        public virtual Response Upload(string ruleId, string streamName, IEnumerable<BinaryData> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -343,8 +353,48 @@ namespace Azure.Monitor.Ingestion
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///   See error response code and error response message for more detail.
+        ///   This overload is not AOT-compliant; for uploading logs in AOT scenarios, use the <see cref="UploadAsync(string, string, IEnumerable{BinaryData}, LogsUploadOptions, CancellationToken)"/> overload with logs that you have serialized to <see cref="BinaryData"/>.
+        /// </remarks>
+        [RequiresUnreferencedCode(AotWarningMessage)]
+        [RequiresDynamicCode(AotWarningMessage)]
+        public virtual async Task<Response> UploadAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
+        {
+            var serializedLogs = SerializeLogs(logs, options);
+            return await UploadAsync(ruleId, streamName, serializedLogs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
+        /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
+        /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
+        /// <param name="logs"> The content to send as the body of the request, serialized to <see cref="BinaryData"/> form.</param>
+        /// <param name="options">  The options model to configure the request to upload logs to Azure Monitor. </param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logs"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-Success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Upload with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new LogsIngestionClient(endpoint, credential);
+        ///
+        /// var data = new[] {
+        ///     BinaryData.FromObjectAsJson(new {})
+        /// };
+        ///
+        /// Response response = client.Upload("<ruleId>", "<streamName>", data);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        ///   See error response code and error response message for more detail.
+        ///   This overload is AOT-compliant and should be used in AOT scenarios, as it does not require serialization at runtime.
+        /// </remarks>
+        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, IEnumerable<BinaryData> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -539,11 +589,11 @@ namespace Azure.Monitor.Ingestion
 
             if (async)
             {
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                _pipeline.Send(message, cancellationToken);
+                Pipeline.Send(message, cancellationToken);
             }
 
             return message.Response;
@@ -553,6 +603,23 @@ namespace Azure.Monitor.Ingestion
         {
             exceptions ??= new List<Exception>();
             exceptions.Add(ex);
+        }
+
+        [RequiresUnreferencedCode(AotWarningMessage)]
+        [RequiresDynamicCode(AotWarningMessage)]
+        private static IEnumerable<BinaryData> SerializeLogs<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(IEnumerable<T> logs, LogsUploadOptions options)
+        {
+            static BinaryData serialize(T log, LogsUploadOptions options) => log switch
+            {
+                BinaryData binaryData => binaryData,
+                _ when options?.Serializer != null => options.Serializer.Serialize(log),
+                _ => BinaryData.FromObjectAsJson(log)
+            };
+
+            foreach (var log in logs)
+            {
+               yield return serialize(log, options);
+            }
         }
     }
 }

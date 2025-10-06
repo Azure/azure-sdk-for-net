@@ -21,16 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeIdentity"/>. </summary>
-        /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
+        /// <param name="computeIdentityType"> [Required] Specifies the type of identity to use within the monitoring jobs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="identity"> The identity which will be leveraged by the monitoring jobs. </param>
         internal ManagedComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(computeIdentityType, serializedAdditionalRawData)
         {
             Identity = identity;
             ComputeIdentityType = computeIdentityType;
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary> The identity which will be leveraged by the monitoring jobs. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

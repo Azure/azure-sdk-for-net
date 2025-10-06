@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name of the event type. </param>
         /// <param name="description"> Description of the event type. </param>
-        /// <param name="schemaUri"> Url of the schema for this event type. </param>
+        /// <param name="schemaUri"> URL of the schema for this event type. </param>
         /// <param name="isInDefaultSet"> IsInDefaultSet flag of the event type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EventTypeUnderTopic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, Uri schemaUri, bool? isInDefaultSet, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Display name of the event type. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Description of the event type. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Url of the schema for this event type. </summary>
+        /// <summary> URL of the schema for this event type. </summary>
+        [WirePath("properties.schemaUrl")]
         public Uri SchemaUri { get; set; }
         /// <summary> IsInDefaultSet flag of the event type. </summary>
+        [WirePath("properties.isInDefaultSet")]
         public bool? IsInDefaultSet { get; set; }
     }
 }

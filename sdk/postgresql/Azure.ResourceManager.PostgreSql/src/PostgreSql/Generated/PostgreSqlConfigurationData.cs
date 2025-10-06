@@ -79,16 +79,22 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> Value of the configuration. </summary>
+        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> Description of the configuration. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Default value of the configuration. </summary>
+        [WirePath("properties.defaultValue")]
         public string DefaultValue { get; }
         /// <summary> Data type of the configuration. </summary>
+        [WirePath("properties.dataType")]
         public string DataType { get; }
         /// <summary> Allowed values of the configuration. </summary>
+        [WirePath("properties.allowedValues")]
         public string AllowedValues { get; }
         /// <summary> Source of the configuration. </summary>
+        [WirePath("properties.source")]
         public string Source { get; set; }
     }
 }

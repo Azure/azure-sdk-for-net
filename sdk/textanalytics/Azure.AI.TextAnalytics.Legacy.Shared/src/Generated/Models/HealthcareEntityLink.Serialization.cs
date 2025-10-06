@@ -34,5 +34,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new HealthcareEntityLink(dataSource, id);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityLink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHealthcareEntityLink(document.RootElement);
+        }
     }
 }

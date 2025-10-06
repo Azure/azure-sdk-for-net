@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkResourceName</description>
+        /// <description>CheckResourceName</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -158,7 +156,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkResourceName</description>
+        /// <description>CheckResourceName</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

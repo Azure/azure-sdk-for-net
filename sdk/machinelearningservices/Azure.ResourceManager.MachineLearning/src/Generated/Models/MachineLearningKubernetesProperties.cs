@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -76,20 +75,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Relay connection string. </summary>
+        [WirePath("relayConnectionString")]
         public string RelayConnectionString { get; set; }
         /// <summary> ServiceBus connection string. </summary>
+        [WirePath("serviceBusConnectionString")]
         public string ServiceBusConnectionString { get; set; }
         /// <summary> Extension principal-id. </summary>
+        [WirePath("extensionPrincipalId")]
         public string ExtensionPrincipalId { get; set; }
         /// <summary> Extension instance release train. </summary>
+        [WirePath("extensionInstanceReleaseTrain")]
         public string ExtensionInstanceReleaseTrain { get; set; }
         /// <summary> VC name. </summary>
+        [WirePath("vcName")]
         public string VcName { get; set; }
         /// <summary> Compute namespace. </summary>
+        [WirePath("namespace")]
         public string Namespace { get; set; }
         /// <summary> Default instance type. </summary>
+        [WirePath("defaultInstanceType")]
         public string DefaultInstanceType { get; set; }
         /// <summary> Instance Type Schema. </summary>
+        [WirePath("instanceTypes")]
         public IDictionary<string, MachineLearningInstanceTypeSchema> InstanceTypes { get; }
     }
 }

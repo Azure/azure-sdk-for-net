@@ -1,6 +1,8 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+// Ignore Spelling: Poco evt
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -240,13 +242,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"TestConnection:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace},
-                        {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
-                        {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
-                        {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
-                        {"AzureWebJobsStorage:serviceUri", GetServiceUri()},
-                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
-                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
-                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:serviceUri", GetServiceUri()}
                     })));
         }
 
@@ -925,7 +921,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         EventHubConsumerClient.DefaultConsumerGroupName,
                         partition,
                         producer.Identifier,
-                        new CheckpointPosition(-1),
+                        new CheckpointPosition("-1", -1),
                         CancellationToken.None);
                 }
             }

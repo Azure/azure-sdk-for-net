@@ -9,5 +9,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: SuppressMessage("Usage", "AZC0004:DO provide both asynchronous and synchronous variants for all service methods.", Justification = "As an AMQP-based offering, Event Hubs has been exempted from providing a synchronous surface.")]
 [assembly: SuppressMessage("Usage", "AZC0008:ClientOptions should have a nested enum called ServiceVersion", Justification = "The Event Hubs interface does not support the concept of versions.")]
-[assembly: SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Analysis is flagging incorrectly. The Event Hubs constructor patterns adhere to guidance and have obtained board approval.")]
 [assembly: SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "As an AMQP-based offering, Event Hubs has been exempted from HTTP-based return types.")]

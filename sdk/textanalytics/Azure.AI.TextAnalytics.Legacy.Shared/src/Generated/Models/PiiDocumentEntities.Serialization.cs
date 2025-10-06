@@ -67,5 +67,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new PiiDocumentEntities(id, redactedText, entities, warnings, statistics);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PiiDocumentEntities FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePiiDocumentEntities(document.RootElement);
+        }
     }
 }

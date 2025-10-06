@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Cdn
 
         FrontDoorRuleResource IOperationSource<FrontDoorRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FrontDoorRuleData.DeserializeFrontDoorRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<FrontDoorRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new FrontDoorRuleResource(_client, data);
         }
 
         async ValueTask<FrontDoorRuleResource> IOperationSource<FrontDoorRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FrontDoorRuleData.DeserializeFrontDoorRuleData(document.RootElement);
-            return new FrontDoorRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            return await Task.FromResult(new FrontDoorRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

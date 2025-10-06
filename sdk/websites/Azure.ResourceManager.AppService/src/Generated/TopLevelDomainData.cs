@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the top level domain supports domain privacy; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.privacy")]
         public bool? IsDomainPrivacySupported { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

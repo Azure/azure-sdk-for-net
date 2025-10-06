@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The type of maintenance for session host components. </summary>
+        [WirePath("type")]
         public SessionHostComponentUpdateType? UpdateType { get; set; }
         /// <summary> Whether to use localTime of the virtual machine. </summary>
+        [WirePath("useSessionHostLocalTime")]
         public bool? DoesUseSessionHostLocalTime { get; set; }
         /// <summary> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </summary>
+        [WirePath("maintenanceWindowTimeZone")]
         public string MaintenanceWindowTimeZone { get; set; }
         /// <summary> List of maintenance windows. Maintenance windows are 2 hours long. </summary>
-        public IList<MaintenanceWindowPatchProperties> MaintenanceWindows { get; }
+        [WirePath("maintenanceWindows")]
+        public IList<MaintenanceWindowPatchProperties> MaintenanceWindows { get; set; }
     }
 }

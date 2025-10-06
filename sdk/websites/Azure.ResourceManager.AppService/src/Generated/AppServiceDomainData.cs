@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -124,49 +124,70 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Administrative contact. </summary>
+        [WirePath("properties.contactAdmin")]
         public RegistrationContactInfo ContactAdmin { get; set; }
         /// <summary> Billing contact. </summary>
+        [WirePath("properties.contactBilling")]
         public RegistrationContactInfo ContactBilling { get; set; }
         /// <summary> Registrant contact. </summary>
+        [WirePath("properties.contactRegistrant")]
         public RegistrationContactInfo ContactRegistrant { get; set; }
         /// <summary> Technical contact. </summary>
+        [WirePath("properties.contactTech")]
         public RegistrationContactInfo ContactTech { get; set; }
         /// <summary> Domain registration status. </summary>
+        [WirePath("properties.registrationStatus")]
         public AppServiceDomainStatus? RegistrationStatus { get; }
         /// <summary> Domain provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Name servers. </summary>
+        [WirePath("properties.nameServers")]
         public IReadOnlyList<string> NameServers { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.privacy")]
         public bool? IsDomainPrivacyEnabled { get; set; }
         /// <summary> Domain creation timestamp. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Domain expiration timestamp. </summary>
+        [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Timestamp when the domain was renewed last time. </summary>
+        [WirePath("properties.lastRenewedTime")]
         public DateTimeOffset? LastRenewedOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.autoRenew")]
         public bool? IsAutoRenew { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </summary>
+        [WirePath("properties.readyForDnsRecordManagement")]
         public bool? IsDnsRecordManagementReady { get; }
         /// <summary> All hostnames derived from the domain and assigned to Azure resources. </summary>
+        [WirePath("properties.managedHostNames")]
         public IReadOnlyList<AppServiceHostName> ManagedHostNames { get; }
         /// <summary> Legal agreement consent. </summary>
+        [WirePath("properties.consent")]
         public DomainPurchaseConsent Consent { get; set; }
         /// <summary> Reasons why domain is not renewable. </summary>
+        [WirePath("properties.domainNotRenewableReasons")]
         public IReadOnlyList<DomainNotRenewableReason> DomainNotRenewableReasons { get; }
         /// <summary> Current DNS type. </summary>
+        [WirePath("properties.dnsType")]
         public AppServiceDnsType? DnsType { get; set; }
         /// <summary> Azure DNS Zone to use. </summary>
+        [WirePath("properties.dnsZoneId")]
         public string DnsZoneId { get; set; }
         /// <summary> Target DNS type (would be used for migration). </summary>
+        [WirePath("properties.targetDnsType")]
         public AppServiceDnsType? TargetDnsType { get; set; }
         /// <summary> Gets or sets the auth code. </summary>
+        [WirePath("properties.authCode")]
         public string AuthCode { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

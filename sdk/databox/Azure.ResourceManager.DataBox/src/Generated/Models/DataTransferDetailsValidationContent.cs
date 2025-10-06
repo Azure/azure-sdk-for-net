@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -33,12 +32,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
-        internal DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType) : base(validationType, serializedAdditionalRawData)
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        internal DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType, DeviceModelName? model) : base(validationType, serializedAdditionalRawData)
         {
             DataExportDetails = dataExportDetails;
             DataImportDetails = dataImportDetails;
             DeviceType = deviceType;
             TransferType = transferType;
+            Model = model;
             ValidationType = validationType;
         }
 
@@ -55,5 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxSkuName DeviceType { get; }
         /// <summary> Type of the transfer. </summary>
         public DataBoxJobTransferType TransferType { get; }
+        /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
+        public DeviceModelName? Model { get; set; }
     }
 }

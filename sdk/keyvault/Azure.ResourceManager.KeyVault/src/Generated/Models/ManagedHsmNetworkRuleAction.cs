@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmNetworkRuleAction left, ManagedHsmNetworkRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleAction"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmNetworkRuleAction left, ManagedHsmNetworkRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
         public static implicit operator ManagedHsmNetworkRuleAction(string value) => new ManagedHsmNetworkRuleAction(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

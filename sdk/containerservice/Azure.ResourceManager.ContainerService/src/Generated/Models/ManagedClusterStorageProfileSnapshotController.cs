@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

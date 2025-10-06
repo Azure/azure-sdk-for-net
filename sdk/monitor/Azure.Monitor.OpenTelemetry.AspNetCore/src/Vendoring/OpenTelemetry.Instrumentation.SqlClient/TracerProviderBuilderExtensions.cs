@@ -1,4 +1,3 @@
-// <copyright file="TracerProviderBuilderExtensions.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -16,7 +15,7 @@ namespace OpenTelemetry.Trace;
 /// <summary>
 /// Extension methods to simplify registering of dependency instrumentation.
 /// </summary>
-internal static class SqlClient_TracerProviderBuilderExtensions
+internal static class TracerProviderBuilderExtensions
 {
     /// <summary>
     /// Enables SqlClient instrumentation.
@@ -56,8 +55,8 @@ internal static class SqlClient_TracerProviderBuilderExtensions
 
     public static TracerProviderBuilder AddSqlClientInstrumentation(
         this TracerProviderBuilder builder,
-        string name,
-        Action<SqlClientTraceInstrumentationOptions> configureSqlClientTraceInstrumentationOptions)
+        string? name,
+        Action<SqlClientTraceInstrumentationOptions>? configureSqlClientTraceInstrumentationOptions)
     {
         Guard.ThrowIfNull(builder);
 

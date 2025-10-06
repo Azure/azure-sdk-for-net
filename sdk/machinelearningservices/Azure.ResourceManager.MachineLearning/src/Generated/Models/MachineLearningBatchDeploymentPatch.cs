@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -66,6 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Additional attributes of the entity. </summary>
         internal PartialBatchDeployment Properties { get; set; }
         /// <summary> Description of the endpoint deployment. </summary>
+        [WirePath("properties.description")]
         public string PartialBatchDeploymentDescription
         {
             get => Properties is null ? default : Properties.Description;
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

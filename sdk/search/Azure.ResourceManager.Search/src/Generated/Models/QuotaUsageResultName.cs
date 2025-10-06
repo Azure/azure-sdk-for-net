@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The name of the sku supported by Azure Cognitive Search. </summary>
+    /// <summary> The name of the SKU supported by Azure AI Search. </summary>
     public partial class QuotaUsageResultName
     {
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaUsageResultName"/>. </summary>
-        /// <param name="value"> The sku name supported by Azure Cognitive Search. </param>
-        /// <param name="localizedValue"> The localized string value for the sku supported by Azure Cognitive Search. </param>
+        /// <param name="value"> The SKU name supported by Azure AI Search. </param>
+        /// <param name="localizedValue"> The localized string value for the SKU name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaUsageResultName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The sku name supported by Azure Cognitive Search. </summary>
+        /// <summary> The SKU name supported by Azure AI Search. </summary>
+        [WirePath("value")]
         public string Value { get; }
-        /// <summary> The localized string value for the sku supported by Azure Cognitive Search. </summary>
+        /// <summary> The localized string value for the SKU name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

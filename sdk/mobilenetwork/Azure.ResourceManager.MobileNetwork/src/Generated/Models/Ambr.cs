@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Uplink bit rate. </summary>
+        [WirePath("uplink")]
         public string Uplink { get; set; }
         /// <summary> Downlink bit rate. </summary>
+        [WirePath("downlink")]
         public string Downlink { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -43,12 +42,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkTableListResponse(value ?? new ChangeTrackingList<LinkTableResource>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLinkTableListResponse(document.RootElement);
+        }
+
         internal partial class LinkTableListResponseConverter : JsonConverter<LinkTableListResponse>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableListResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override LinkTableListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

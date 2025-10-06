@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The destination managed database ID. </summary>
+        [WirePath("destinationManagedDatabaseId")]
         public ResourceIdentifier DestinationManagedDatabaseId { get; }
     }
 }

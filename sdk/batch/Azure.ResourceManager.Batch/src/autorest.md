@@ -8,9 +8,13 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/d6fcc46341f274b8af42a4cdcfa14e1f8d472619/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d85634405ec3b905f1b0bfc350e47cb704aedb61/specification/batch/resource-manager/readme.md
+#tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../tests/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -59,11 +63,19 @@ acronym-mapping:
 prepend-rp-prefix:
 - StorageAccountType
 - ProvisioningState
+- Severity
+- AccessRule
+- AccessRuleDirection
+- AccessRuleProperties
+- IssueType
+- ProvisioningIssue
+- ProvisioningIssueProperties
+- ResourceAssociation
+- SecurityEncryptionTypes
 
 override-operation-name:
   Location_CheckNameAvailability: CheckBatchNameAvailability
   Location_GetQuotas: GetBatchQuotas
-  Location_ListSupportedCloudServiceSkus: GetBatchSupportedCloudServiceSkus
   Location_ListSupportedVirtualMachineSkus: GetBatchSupportedVirtualMachineSkus
 
 rename-mapping:
@@ -95,7 +107,6 @@ rename-mapping:
   PoolProvisioningState: BatchAccountPoolProvisioningState
   DeploymentConfiguration: BatchDeploymentConfiguration
   DeploymentConfiguration.virtualMachineConfiguration: vmConfiguration
-  CloudServiceConfiguration: BatchCloudServiceConfiguration
   VirtualMachineConfiguration: BatchVmConfiguration
   DataDisk: BatchVmDataDisk
   DataDisk.diskSizeGB: DiskSizeInGB
@@ -203,18 +214,15 @@ rename-mapping:
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.items
     transform: $["x-ms-format"] = "arm-id"
 # resume the setter on tags of BatchAccountData
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions.BatchAccount
     transform: $["x-csharp-usage"] = "model,input,output"
-  - from: swagger-document
-    where: $.definitions.Resource.properties.tags
-    transform: $["readOnly"] = undefined
 # change the type to extensible so that the BatchPoolIdentity could be replaced
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions.BatchPoolIdentity.properties
     transform: >
       $.type["x-ms-enum"].modelAsString = true;
@@ -227,7 +235,7 @@ directive:
         "readOnly": true
       };
 # make provisioning state enumerations all extensible because they are meant to be extensible
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions
     transform: >
       $.BatchAccountProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
@@ -235,7 +243,7 @@ directive:
       $.PrivateEndpointConnectionProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
       $.PoolProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
 # add some missing properties to ResizeError so that it could be replaced by Azure.ResponseError
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions.ResizeError.properties
     transform: >
       $.code["readOnly"] = true;
@@ -247,7 +255,7 @@ directive:
           "description": "The error target."
         };
 # add some missing properties to AutoScaleRunError so that it could be replaced by Azure.ResponseError
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions.AutoScaleRunError.properties
     transform: >
       $.code["readOnly"] = true;
@@ -258,7 +266,7 @@ directive:
           "type": "string",
           "description": "The error target."
         };
-  - from: swagger-document
+  - from: BatchManagement.json
     where: $.definitions.CheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
 ```

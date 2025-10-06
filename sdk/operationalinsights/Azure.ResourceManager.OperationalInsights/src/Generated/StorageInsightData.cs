@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -84,16 +83,22 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The ETag of the storage insight. </summary>
+        [WirePath("eTag")]
         public ETag? ETag { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The names of the blob containers that the workspace should read. </summary>
+        [WirePath("properties.containers")]
         public IList<string> Containers { get; }
         /// <summary> The names of the Azure tables that the workspace should read. </summary>
+        [WirePath("properties.tables")]
         public IList<string> Tables { get; }
         /// <summary> The storage account connection details. </summary>
+        [WirePath("properties.storageAccount")]
         public OperationalInsightsStorageAccount StorageAccount { get; set; }
         /// <summary> The status of the storage insight. </summary>
+        [WirePath("properties.status")]
         public StorageInsightStatus Status { get; }
     }
 }

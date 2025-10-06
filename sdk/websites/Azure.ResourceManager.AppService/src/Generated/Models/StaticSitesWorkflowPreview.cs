@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The path for the workflow file to be generated. </summary>
+        [WirePath("properties.path")]
         public string Path { get; }
         /// <summary> The contents for the workflow file to be generated. </summary>
+        [WirePath("properties.contents")]
         public string Contents { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

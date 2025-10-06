@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 
@@ -97,6 +96,10 @@ namespace Azure.Storage.Blobs
         public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode => _response.Headers.TryGetValue("x-ms-immutability-policy-mode", out string value) ? value.ToBlobImmutabilityPolicyMode() : null;
         /// <summary> Indicates if a legal hold is present on the blob. </summary>
         public bool? LegalHold => _response.Headers.TryGetValue("x-ms-legal-hold", out bool? value) ? value : null;
+        /// <summary> Indicates the response body contains a structured message and specifies the message schema version and properties. </summary>
+        public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
+        /// <summary> The length of the blob/file content inside the message body when the response body is returned as a structured message. Will always be smaller than Content-Length. </summary>
+        public long? StructuredContentLength => _response.Headers.TryGetValue("x-ms-structured-content-length", out long? value) ? value : null;
         /// <summary> If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to true, then the request returns a crc64 for the range, as long as the range size is less than or equal to 4 MB. If both x-ms-range-get-content-crc64 &amp; x-ms-range-get-content-md5 is specified in the same request, it will fail with 400(Bad Request). </summary>
         public byte[] ContentCrc64 => _response.Headers.TryGetValue("x-ms-content-crc64", out byte[] value) ? value : null;
         public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;

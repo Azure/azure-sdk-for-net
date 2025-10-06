@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The link to logs for a run on a azure container registry. </summary>
+        [WirePath("logLink")]
         public string LogLink { get; }
         /// <summary> The link to logs in registry for a run on a azure container registry. </summary>
+        [WirePath("logArtifactLink")]
         public string LogArtifactLink { get; }
     }
 }

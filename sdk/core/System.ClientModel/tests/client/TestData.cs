@@ -15,7 +15,10 @@ namespace System.ClientModel.Tests.Client
             StringBuilder builder = new StringBuilder();
             int indexAfter = testsLocation.IndexOf(".Tests") + 6;
             builder.Append(testsLocation.Substring(0, indexAfter));
-            builder.Append(".Client");
+            if (!testsLocation.Contains(".SourceGeneration."))
+            {
+                builder.Append(".Client");
+            }
             if (testsLocation[indexAfter] == Path.DirectorySeparatorChar)
             {
                 builder.Append(testsLocation.Substring(indexAfter));

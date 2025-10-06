@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source Oracle. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="targetConnectionInfo"/> or <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public MigrateOracleAzureDBPostgreSqlSyncTaskInput(IEnumerable<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo)
+        public MigrateOracleAzureDBPostgreSqlSyncTaskInput(IEnumerable<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationOracleConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source Oracle. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput(IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput(IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationOracleConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             TargetConnectionInfo = targetConnectionInfo;
@@ -84,8 +83,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> SelectedDatabases { get; }
         /// <summary> Connection information for target Azure Database for PostgreSQL. </summary>
-        public PostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Connection information for source Oracle. </summary>
-        public OracleConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationOracleConnectionInfo SourceConnectionInfo { get; set; }
     }
 }

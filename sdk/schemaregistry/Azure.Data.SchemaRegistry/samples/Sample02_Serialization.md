@@ -42,7 +42,7 @@ In order to serialize an `EventData` instance with JSON information, you can do 
 
 ```C# Snippet:SchemaRegistryJsonSerializeEventData
 // The serializer serializes into JSON by default
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
@@ -87,7 +87,7 @@ You can also use generic methods to serialize and deserialize the data. This may
 
 ```C# Snippet:SchemaRegistryJsonSerializeEventDataGenerics
 // The serializer serializes into JSON by default
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
@@ -113,7 +113,7 @@ It is also possible to serialize and deserialize using `MessageContent`. Use thi
 
 ```C# Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
 // The serializer serializes into JSON by default
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -129,7 +129,7 @@ var newtonsoftSerializerOptions = new SchemaRegistrySerializerOptions
 {
     Serializer = new NewtonsoftJsonObjectSerializer()
 };
-var newtonsoftSerializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), newtonsoftSerializerOptions);
+var newtonsoftSerializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName, newtonsoftSerializerOptions);
 ```
 
 If you'd like to configure the `JsonObjectSerializer`, you can pass `JsonSerializerOptions` into the 'JsonObjectSerializer`'s constructor:
@@ -143,12 +143,12 @@ var serializerOptions = new SchemaRegistrySerializerOptions
 {
     Serializer = new JsonObjectSerializer(jsonSerializerOptions)
 };
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), serializerOptions);
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName, serializerOptions);
 ```
 
 ## Troubleshooting
 
-If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema Id (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. 
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema Id (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`.
 
 Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from your implemented methods in the `SchemaRegistryJsonSchemaGenerator`. This type of error would typically be caught during testing and should not be handled in code.
 
@@ -164,17 +164,15 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fschemaregistry%2FMicrosoft.Azure.Data.SchemaRegistry.JsonSchema%2FREADME.png)
-
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
-[object_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
-[json_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
-[newtonsoft_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
+[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
+[object_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
+[json_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
+[newtonsoft_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [azure_schema_registry]: https://aka.ms/schemaregistry
-[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
+[request_failed_exception]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

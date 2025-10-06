@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -64,22 +63,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningTrialComponent"/>. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
+        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
-        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
-        /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningTrialComponent(ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningTrialComponent(ResourceIdentifier codeId, string command, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, MachineLearningDistributionConfiguration distribution, MachineLearningJobResourceConfiguration resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CodeId = codeId;
             Command = command;
-            Distribution = distribution;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
+            Distribution = distribution;
             Resources = resources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -90,20 +89,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>
+        [WirePath("codeId")]
         public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The command to execute on startup of the job. eg. "python train.py". </summary>
+        [WirePath("command")]
         public string Command { get; set; }
+        /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
+        [WirePath("environmentId")]
+        public ResourceIdentifier EnvironmentId { get; set; }
+        /// <summary> Environment variables included in the job. </summary>
+        [WirePath("environmentVariables")]
+        public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </summary>
+        [WirePath("distribution")]
         public MachineLearningDistributionConfiguration Distribution { get; set; }
-        /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
-        public ResourceIdentifier EnvironmentId { get; set; }
-        /// <summary> Environment variables included in the job. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>
+        [WirePath("resources")]
         public MachineLearningJobResourceConfiguration Resources { get; set; }
     }
 }

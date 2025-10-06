@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Authorization;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
-using System.Globalization;
+using Azure.Messaging.ServiceBus.Authorization;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private readonly int _port;
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _versionQuery;
+        private readonly string _scheme;
 
         /// <summary>
         /// Initializes a new <see cref="HttpRequestAndResponse"/> which can be used to send http request and response.
@@ -31,19 +32,22 @@ namespace Azure.Messaging.ServiceBus.Administration
             ClientDiagnostics diagnostics,
             TokenCredential tokenCredential,
             string fullyQualifiedNamespace,
-            ServiceBusAdministrationClientOptions.ServiceVersion version)
+            ServiceBusAdministrationClientOptions.ServiceVersion version,
+            int port,
+            bool useTls)
         {
             _pipeline = pipeline;
             _diagnostics = diagnostics;
             _versionQuery = $"api-version={version.ToVersionString()}";
             _tokenCredential = tokenCredential;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
-            _port = GetPort(_fullyQualifiedNamespace);
+            _port = GetPort(_fullyQualifiedNamespace, port);
+            _scheme = useTls ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
         }
 
         internal void ThrowIfRequestFailed(Request request, Response response)
         {
-            if ((response.Status >= 200) && (response.Status < 400))
+            if (response.Status is >= 200 and < 400)
             {
                 return;
             }
@@ -128,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 scope = Constants.DefaultScope;
             }
-            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
+            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext([scope]), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 
@@ -171,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
                 Path = entityPath,
-                Scheme = Uri.UriSchemeHttps,
+                Scheme = _scheme,
                 Port = _port,
                 Query = queryString
             }.Uri;
@@ -199,7 +203,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 Path = entityPath,
                 Port = _port,
-                Scheme = Uri.UriSchemeHttps,
+                Scheme = _scheme,
                 Query = _versionQuery
             }.Uri;
             var requestUriBuilder = new RequestUriBuilder();
@@ -245,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
                 Path = entityPath,
-                Scheme = Uri.UriSchemeHttps,
+                Scheme = _scheme,
                 Port = _port,
                 Query = _versionQuery
             }.Uri;
@@ -260,6 +264,15 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             return response;
         }
+
+        internal Uri BuildDefaultUri(string entityPath) =>
+            new UriBuilder(_fullyQualifiedNamespace)
+            {
+                Path = entityPath,
+                Port = _port,
+                Scheme = _scheme,
+                Query = _versionQuery
+            }.Uri;
 
         private async Task<Response> SendHttpRequestAsync(
             Request request,
@@ -278,7 +291,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return response;
         }
 
-        private static int GetPort(string endpoint)
+        private static int GetPort(string endpoint, int port)
         {
             // used for internal testing
             if (endpoint.EndsWith("onebox.windows-int.net", StringComparison.InvariantCultureIgnoreCase))
@@ -286,7 +299,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 return 4446;
             }
 
-            return -1;
+            return (port > 0) ? port : -1;
         }
     }
 }

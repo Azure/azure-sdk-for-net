@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ResourceHealth.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.ResourceHealth
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionIdRequestUri(string subscriptionId, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (queryStartTime != null)
+            {
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionIdRequest(string subscriptionId, string filter, string queryStartTime)
@@ -80,7 +98,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +125,30 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantIdRequestUri(string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (queryStartTime != null)
+            {
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantIdRequest(string filter, string queryStartTime)
@@ -152,7 +187,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,13 +209,28 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySingleResourceRequestUri(string resourceUri, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySingleResourceRequest(string resourceUri, string filter)
@@ -220,7 +270,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,13 +295,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionIdNextPageRequestUri(string nextLink, string subscriptionId, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionIdNextPageRequest(string nextLink, string subscriptionId, string filter, string queryStartTime)
@@ -288,7 +346,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,13 +375,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantIdNextPageRequestUri(string nextLink, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantIdNextPageRequest(string nextLink, string filter, string queryStartTime)
@@ -357,7 +423,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,13 +449,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySingleResourceNextPageRequestUri(string nextLink, string resourceUri, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySingleResourceNextPageRequest(string nextLink, string resourceUri, string filter)
@@ -424,7 +498,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +525,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthEventListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthEventListResult.DeserializeResourceHealthEventListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

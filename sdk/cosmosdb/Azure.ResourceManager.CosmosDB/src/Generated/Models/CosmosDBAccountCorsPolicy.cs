@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -79,14 +78,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The origin domains that are permitted to make a request against the service via CORS. </summary>
+        [WirePath("allowedOrigins")]
         public string AllowedOrigins { get; set; }
         /// <summary> The methods (HTTP request verbs) that the origin domain may use for a CORS request. </summary>
+        [WirePath("allowedMethods")]
         public string AllowedMethods { get; set; }
         /// <summary> The request headers that the origin domain may specify on the CORS request. </summary>
+        [WirePath("allowedHeaders")]
         public string AllowedHeaders { get; set; }
         /// <summary> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </summary>
+        [WirePath("exposedHeaders")]
         public string ExposedHeaders { get; set; }
         /// <summary> The maximum amount time that a browser should cache the preflight OPTIONS request. </summary>
+        [WirePath("maxAgeInSeconds")]
         public long? MaxAgeInSeconds { get; set; }
     }
 }

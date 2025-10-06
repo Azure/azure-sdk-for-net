@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 2.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,45 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.4 (2025-09-18)
+
+### Breaking Changes
+
+- removed `AIConversation` and `ConversationalAIItem`, and reuse `TextConversation` and `TextConversationItem` for AI Conversation Analyze feature.
+
+## 2.0.0-beta.3 (2025-06-23)
+
+### Features Added
+
+- Added AI Conversation Analyze feature
+- Added support for analyze-conversation API Versions
+  - 2025-05-15-preview
+
+## 2.0.0-beta.2 (2025-02-03)
+
+### Features Added
+
+- Added three differenct type of Redaction Policy `CharacterMaskPolicyType`, `EntityMaskTypePolicyType` and `NoMaskPolicyType` for the function `AnalyzeConversations`  
+- Added support for analyze-conversation API Versions
+  - 2024-11-01
+  - 2024-11-15-preview
+
+### Other Changes
+
+- Changed property `CreditCardNumberValue` to `CreditCardValue` and `PhoneNumberValue` to `PhoneValue` for class `ConversationPiiCategoryExclusions`
+- Added a new `Instruction` property to class `ConversationSummarizationActionContent`
+
+## 2.0.0-beta.1 (2024-08-01)
+
+- Added support for service version 2024-05-01.
+- Added support for service version 2024-05-15-preview.
+
+### Features Added
+- Added classes to represent all the models in the service definition.
+
+### Breaking Changes
+- Deprecated `ConversationAuthoringClient`.
 
 ## 1.1.0 (2023-06-13)
 

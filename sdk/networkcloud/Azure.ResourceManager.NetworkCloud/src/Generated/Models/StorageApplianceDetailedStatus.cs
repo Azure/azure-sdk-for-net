@@ -22,21 +22,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ErrorValue = "Error";
         private const string AvailableValue = "Available";
+        private const string DegradedValue = "Degraded";
+        private const string ErrorValue = "Error";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> Error. </summary>
-        public static StorageApplianceDetailedStatus Error { get; } = new StorageApplianceDetailedStatus(ErrorValue);
         /// <summary> Available. </summary>
         public static StorageApplianceDetailedStatus Available { get; } = new StorageApplianceDetailedStatus(AvailableValue);
+        /// <summary> Degraded. </summary>
+        public static StorageApplianceDetailedStatus Degraded { get; } = new StorageApplianceDetailedStatus(DegradedValue);
+        /// <summary> Error. </summary>
+        public static StorageApplianceDetailedStatus Error { get; } = new StorageApplianceDetailedStatus(ErrorValue);
         /// <summary> Provisioning. </summary>
         public static StorageApplianceDetailedStatus Provisioning { get; } = new StorageApplianceDetailedStatus(ProvisioningValue);
         /// <summary> Determines if two <see cref="StorageApplianceDetailedStatus"/> values are the same. </summary>
         public static bool operator ==(StorageApplianceDetailedStatus left, StorageApplianceDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageApplianceDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(StorageApplianceDetailedStatus left, StorageApplianceDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
         public static implicit operator StorageApplianceDetailedStatus(string value) => new StorageApplianceDetailedStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

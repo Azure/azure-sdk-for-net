@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Specifies the security type of the nodeType. Only TrustedLaunch is currently supported. </summary>
+    /// <summary> Specifies the security type of the nodeType. Only Standard and TrustedLaunch are currently supported. </summary>
     public readonly partial struct ServiceFabricManagedClusterSecurityType : IEquatable<ServiceFabricManagedClusterSecurityType>
     {
         private readonly string _value;
@@ -23,14 +23,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         private const string TrustedLaunchValue = "TrustedLaunch";
+        private const string StandardValue = "Standard";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Trusted Launch is a security type that secures generation 2 virtual machines. </summary>
         public static ServiceFabricManagedClusterSecurityType TrustedLaunch { get; } = new ServiceFabricManagedClusterSecurityType(TrustedLaunchValue);
+        /// <summary> Standard is the default security type for all machines. </summary>
+        public static ServiceFabricManagedClusterSecurityType Standard { get; } = new ServiceFabricManagedClusterSecurityType(StandardValue);
+        /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
+        public static ServiceFabricManagedClusterSecurityType ConfidentialVm { get; } = new ServiceFabricManagedClusterSecurityType(ConfidentialVmValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
         public static implicit operator ServiceFabricManagedClusterSecurityType(string value) => new ServiceFabricManagedClusterSecurityType(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

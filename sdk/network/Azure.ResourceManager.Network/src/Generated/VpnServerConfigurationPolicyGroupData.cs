@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -49,16 +48,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Shows if this is a Default VpnServerConfigurationPolicyGroup or not. </summary>
+        [WirePath("properties.isDefault")]
         public bool? IsDefault { get; set; }
         /// <summary> Priority for VpnServerConfigurationPolicyGroup. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> Multiple PolicyMembers for VpnServerConfigurationPolicyGroup. </summary>
+        [WirePath("properties.policyMembers")]
         public IList<VpnServerConfigurationPolicyGroupMember> PolicyMembers { get; }
         /// <summary> List of references to P2SConnectionConfigurations. </summary>
+        [WirePath("properties.p2SConnectionConfigurations")]
         public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations { get; }
         /// <summary> The provisioning state of the VpnServerConfigurationPolicyGroup resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

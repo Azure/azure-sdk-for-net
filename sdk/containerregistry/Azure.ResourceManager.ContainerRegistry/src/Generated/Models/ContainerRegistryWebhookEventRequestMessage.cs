@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The content of the event request message. </summary>
+        [WirePath("content")]
         public ContainerRegistryWebhookEventContent Content { get; }
         /// <summary> The headers of the event request message. </summary>
+        [WirePath("headers")]
         public IReadOnlyDictionary<string, string> Headers { get; }
         /// <summary> The HTTP method used to send the event request message. </summary>
+        [WirePath("method")]
         public string Method { get; }
         /// <summary> The URI used to send the event request message. </summary>
+        [WirePath("requestUri")]
         public Uri RequestUri { get; }
         /// <summary> The HTTP message version. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

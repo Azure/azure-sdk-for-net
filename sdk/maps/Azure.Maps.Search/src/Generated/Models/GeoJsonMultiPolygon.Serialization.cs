@@ -7,65 +7,21 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonMultiPolygon : IUtf8JsonSerializable
+    internal partial class GeoJsonMultiPolygon
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates"u8);
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    if (item0 == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (var item1 in item0)
-                    {
-                        if (item1 == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteStartArray();
-                        foreach (var item2 in item1)
-                        {
-                            writer.WriteNumberValue(item2);
-                        }
-                        writer.WriteEndArray();
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonMultiPolygon DeserializeGeoJsonMultiPolygon(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IList<IList<IList<double>>>> coordinates = default;
+            IReadOnlyList<IList<IList<IList<double>>>> coordinates = default;
             GeoJsonObjectType type = default;
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -116,11 +72,33 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bbox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonMultiPolygon(type, coordinates);
+            return new GeoJsonMultiPolygon(type, bbox ?? new ChangeTrackingList<double>(), coordinates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonMultiPolygon FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGeoJsonMultiPolygon(document.RootElement);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
         internal ValidateSyncMigrationInputSqlServerTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateSyncMigrationInputSqlServerTaskOutput(string id, string name, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateSyncMigrationInputSqlServerTaskOutput(string id, string name, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -70,6 +69,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of database. </summary>
         public string Name { get; }
         /// <summary> Errors associated with a selected database object. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

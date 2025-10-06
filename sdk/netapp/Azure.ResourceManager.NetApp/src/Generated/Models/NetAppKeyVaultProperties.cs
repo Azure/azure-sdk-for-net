@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -49,32 +49,29 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
-        public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> or <paramref name="keyName"/> is null. </exception>
+        public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName)
         {
             Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
             Argument.AssertNotNull(keyName, nameof(keyName));
-            Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
 
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
-            KeyVaultResourceId = keyVaultResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
+        /// <param name="keyVaultArmResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultArmResourceId, NetAppKeyVaultStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
-            KeyVaultResourceId = keyVaultResourceId;
+            KeyVaultArmResourceId = keyVaultArmResourceId;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -91,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The name of KeyVault key. </summary>
         public string KeyName { get; set; }
         /// <summary> The resource ID of KeyVault. </summary>
-        public string KeyVaultResourceId { get; set; }
+        public ResourceIdentifier KeyVaultArmResourceId { get; set; }
         /// <summary> Status of the KeyVault connection. </summary>
         public NetAppKeyVaultStatus? Status { get; }
     }

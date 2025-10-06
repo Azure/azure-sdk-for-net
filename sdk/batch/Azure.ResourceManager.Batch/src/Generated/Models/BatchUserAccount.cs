@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchLinuxUserConfiguration LinuxUserConfiguration { get; set; }
         /// <summary> This property can only be specified if the user is on a Windows pool. If not specified and on a Windows pool, the user is created with the default options. </summary>
         internal BatchWindowsUserConfiguration WindowsUserConfiguration { get; set; }
-        /// <summary> Specifies login mode for the user. The default value for VirtualMachineConfiguration pools is interactive mode and for CloudServiceConfiguration pools is batch mode. </summary>
+        /// <summary> Specifies login mode for the user. The default value is Interactive. </summary>
         public BatchWindowsLoginMode? WindowsUserLoginMode
         {
             get => WindowsUserConfiguration is null ? default : WindowsUserConfiguration.LoginMode;

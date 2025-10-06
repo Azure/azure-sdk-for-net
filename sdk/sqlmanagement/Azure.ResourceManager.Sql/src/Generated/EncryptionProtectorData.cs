@@ -69,8 +69,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        /// <param name="keyVersion"> The version of the server key being used as encryption protector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -80,24 +81,36 @@ namespace Azure.ResourceManager.Sql
             Uri = uri;
             Thumbprint = thumbprint;
             IsAutoRotationEnabled = isAutoRotationEnabled;
+            KeyVersion = keyVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Subregion of the encryption protector. </summary>
+        [WirePath("properties.subregion")]
         public string Subregion { get; }
         /// <summary> The name of the server key. </summary>
+        [WirePath("properties.serverKeyName")]
         public string ServerKeyName { get; set; }
         /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
+        [WirePath("properties.serverKeyType")]
         public SqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. </summary>
+        [WirePath("properties.uri")]
         public Uri Uri { get; }
         /// <summary> Thumbprint of the server key. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
+        [WirePath("properties.autoRotationEnabled")]
         public bool? IsAutoRotationEnabled { get; set; }
+        /// <summary> The version of the server key being used as encryption protector. </summary>
+        [WirePath("properties.keyVersion")]
+        public string KeyVersion { get; }
     }
 }

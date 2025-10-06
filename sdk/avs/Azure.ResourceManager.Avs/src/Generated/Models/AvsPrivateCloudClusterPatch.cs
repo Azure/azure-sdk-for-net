@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -53,16 +52,20 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterPatch"/>. </summary>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="clusterSize"> The cluster size. </param>
         /// <param name="hosts"> The hosts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudClusterPatch(int? clusterSize, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsPrivateCloudClusterPatch(AvsSku sku, int? clusterSize, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Sku = sku;
             ClusterSize = clusterSize;
             Hosts = hosts;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public AvsSku Sku { get; set; }
         /// <summary> The cluster size. </summary>
         public int? ClusterSize { get; set; }
         /// <summary> The hosts. </summary>

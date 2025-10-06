@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -39,12 +38,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The ARM id of the component to be run. </summary>
+        [WirePath("componentId")]
         public MachineLearningIdAssetReference ComponentId { get; set; }
         /// <summary> The description which will be applied to the job. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Run-time settings for the pipeline job. </summary>
+        [WirePath("settings")]
         public IDictionary<string, string> Settings { get; set; }
         /// <summary> The tags which will be applied to the job. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; set; }
     }
 }

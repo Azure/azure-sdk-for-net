@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -47,14 +46,12 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
-        /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fieldSchema"/> is null. </exception>
-        internal DocumentTypeDetails(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema)
+        public DocumentTypeDetails()
         {
-            Argument.AssertNotNull(fieldSchema, nameof(fieldSchema));
-
-            FieldSchema = fieldSchema;
+            FieldSchema = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
             FieldConfidence = new ChangeTrackingDictionary<string, float>();
+            Features = new ChangeTrackingList<DocumentAnalysisFeature>();
+            QueryFields = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
@@ -62,28 +59,43 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
+        /// <param name="modelId"> Document model to use for analyzing documents with specified type. </param>
+        /// <param name="confidenceThreshold"> Only perform analysis if docType confidence is above threshold. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="maxDocumentsToAnalyze"> Maximum number of documents of specified type to analyze.  Default=all. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema, IReadOnlyDictionary<string, float> fieldConfidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IDictionary<string, DocumentFieldSchema> fieldSchema, IDictionary<string, float> fieldConfidence, string modelId, float? confidenceThreshold, IList<DocumentAnalysisFeature> features, IList<string> queryFields, int? maxDocumentsToAnalyze, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             BuildMode = buildMode;
             FieldSchema = fieldSchema;
             FieldConfidence = fieldConfidence;
+            ModelId = modelId;
+            ConfidenceThreshold = confidenceThreshold;
+            Features = features;
+            QueryFields = queryFields;
+            MaxDocumentsToAnalyze = maxDocumentsToAnalyze;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/> for deserialization. </summary>
-        internal DocumentTypeDetails()
-        {
-        }
-
         /// <summary> Document model description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> Custom document model build mode. </summary>
-        public DocumentBuildMode? BuildMode { get; }
+        public DocumentBuildMode? BuildMode { get; set; }
         /// <summary> Description of the document semantic schema using a JSON Schema style syntax. </summary>
-        public IReadOnlyDictionary<string, DocumentFieldSchema> FieldSchema { get; }
+        public IDictionary<string, DocumentFieldSchema> FieldSchema { get; }
         /// <summary> Estimated confidence for each field. </summary>
-        public IReadOnlyDictionary<string, float> FieldConfidence { get; }
+        public IDictionary<string, float> FieldConfidence { get; }
+        /// <summary> Document model to use for analyzing documents with specified type. </summary>
+        public string ModelId { get; set; }
+        /// <summary> Only perform analysis if docType confidence is above threshold. </summary>
+        public float? ConfidenceThreshold { get; set; }
+        /// <summary> List of optional analysis features. </summary>
+        public IList<DocumentAnalysisFeature> Features { get; }
+        /// <summary> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </summary>
+        public IList<string> QueryFields { get; }
+        /// <summary> Maximum number of documents of specified type to analyze.  Default=all. </summary>
+        public int? MaxDocumentsToAnalyze { get; set; }
     }
 }

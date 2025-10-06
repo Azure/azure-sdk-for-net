@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -78,20 +77,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the next hop. </summary>
+        [WirePath("nextHopId")]
         public string NextHopId { get; }
         /// <summary> Link type. </summary>
+        [WirePath("linkType")]
         public string LinkType { get; }
         /// <summary> List of issues. </summary>
+        [WirePath("issues")]
         public IReadOnlyList<ConnectivityIssueInfo> Issues { get; }
         /// <summary> Provides additional context on links. </summary>
+        [WirePath("context")]
         public IReadOnlyDictionary<string, string> Context { get; }
         /// <summary> Resource ID. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> Minimum roundtrip time in milliseconds. </summary>
+        [WirePath("properties.roundTripTimeMin")]
         public long? RoundTripTimeMin { get; }
         /// <summary> Average roundtrip time in milliseconds. </summary>
+        [WirePath("properties.roundTripTimeAvg")]
         public long? RoundTripTimeAvg { get; }
         /// <summary> Maximum roundtrip time in milliseconds. </summary>
+        [WirePath("properties.roundTripTimeMax")]
         public long? RoundTripTimeMax { get; }
     }
 }

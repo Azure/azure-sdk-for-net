@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Initializes a new instance of a RestoreOperation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore"/>, <see cref="KeyVaultBackupClient.StartRestoreAsync"/>, <see cref="KeyVaultBackupClient.StartPreRestoreAsync"/>, or <see cref="KeyVaultBackupClient.StartPreRestore"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal RestoreOperationInternal(KeyVaultBackupClient client, ResponseWithHeaders<THeaders> response)
         {

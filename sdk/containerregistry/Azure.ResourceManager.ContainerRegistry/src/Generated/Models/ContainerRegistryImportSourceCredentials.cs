@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The username to authenticate with the source registry. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
         /// <summary> The password used to authenticate with the source registry. </summary>
+        [WirePath("password")]
         public string Password { get; }
     }
 }

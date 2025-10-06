@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/databases. </summary>
+        [WirePath("type")]
         public KustoDatabaseResourceType ResourceType { get; }
     }
 }

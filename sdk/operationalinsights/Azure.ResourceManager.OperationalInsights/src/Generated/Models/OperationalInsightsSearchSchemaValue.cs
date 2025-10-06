@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -85,18 +84,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the schema. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The display name of the schema. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> The type. </summary>
+        [WirePath("type")]
         public string SearchSchemaValueType { get; }
         /// <summary> The boolean that indicates the field is searchable as free text. </summary>
+        [WirePath("indexed")]
         public bool Indexed { get; }
         /// <summary> The boolean that indicates whether or not the field is stored. </summary>
+        [WirePath("stored")]
         public bool Stored { get; }
         /// <summary> The boolean that indicates whether or not the field is a facet. </summary>
+        [WirePath("facet")]
         public bool Facet { get; }
         /// <summary> The array of workflows containing the field. </summary>
+        [WirePath("ownerType")]
         public IReadOnlyList<string> OwnerType { get; }
     }
 }

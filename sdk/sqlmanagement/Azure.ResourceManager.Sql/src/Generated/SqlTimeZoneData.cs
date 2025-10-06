@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing the SqlTimeZone data model.
-    /// Time Zone.
+    /// Time Zone property.
     /// </summary>
     public partial class SqlTimeZoneData : ResourceData
     {
@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The time zone id. </summary>
+        [WirePath("properties.timeZoneId")]
         public string TimeZoneId { get; }
         /// <summary> The time zone display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
     }
 }

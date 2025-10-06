@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Search job query. </summary>
+        [WirePath("query")]
         public string Query { get; set; }
         /// <summary> Search job Description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Limit the search job to return up to specified number of rows. </summary>
+        [WirePath("limit")]
         public int? Limit { get; set; }
         /// <summary> The timestamp to start the search from (UTC). </summary>
+        [WirePath("startSearchTime")]
         public DateTimeOffset? StartSearchOn { get; set; }
         /// <summary> The timestamp to end the search by (UTC). </summary>
+        [WirePath("endSearchTime")]
         public DateTimeOffset? EndSearchOn { get; set; }
         /// <summary> The table used in the search job. </summary>
+        [WirePath("sourceTable")]
         public string SourceTable { get; }
         /// <summary> Search results table async operation id. </summary>
+        [WirePath("azureAsyncOperationId")]
         public Guid? AzureAsyncOperationId { get; }
     }
 }

@@ -44,5 +44,13 @@ namespace Azure.Security.KeyVault.Storage.Models
             }
             return new Error(code, message, innererror);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Error FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeError(document.RootElement);
+        }
     }
 }

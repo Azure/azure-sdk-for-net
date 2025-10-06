@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityCenterApiCollectionResource IOperationSource<SecurityCenterApiCollectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<SecurityCenterApiCollectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
             return new SecurityCenterApiCollectionResource(_client, data);
         }
 
         async ValueTask<SecurityCenterApiCollectionResource> IOperationSource<SecurityCenterApiCollectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(document.RootElement);
-            return new SecurityCenterApiCollectionResource(_client, data);
+            var data = ModelReaderWriter.Read<SecurityCenterApiCollectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
+            return await Task.FromResult(new SecurityCenterApiCollectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -44,12 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SparkConfigurationListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkConfigurationListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkConfigurationListResponse(document.RootElement);
+        }
+
         internal partial class SparkConfigurationListResponseConverter : JsonConverter<SparkConfigurationListResponse>
         {
             public override void Write(Utf8JsonWriter writer, SparkConfigurationListResponse model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override SparkConfigurationListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -26,8 +24,8 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedPrivateEndpointModelCollection : ArmCollection, IEnumerable<ManagedPrivateEndpointModelResource>, IAsyncEnumerable<ManagedPrivateEndpointModelResource>
     {
-        private readonly ClientDiagnostics _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics;
-        private readonly ManagedPrivateEndpointsRestOperations _managedPrivateEndpointModelManagedPrivateEndpointsRestClient;
+        private readonly ClientDiagnostics _managedPrivateEndpointModelClientDiagnostics;
+        private readonly ManagedPrivateEndpointModelsRestOperations _managedPrivateEndpointModelRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointModelCollection"/> class for mocking. </summary>
         protected ManagedPrivateEndpointModelCollection()
@@ -39,9 +37,9 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedPrivateEndpointModelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedPrivateEndpointModelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedPrivateEndpointModelResource.ResourceType, out string managedPrivateEndpointModelManagedPrivateEndpointsApiVersion);
-            _managedPrivateEndpointModelManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelManagedPrivateEndpointsApiVersion);
+            _managedPrivateEndpointModelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedPrivateEndpointModelResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedPrivateEndpointModelResource.ResourceType, out string managedPrivateEndpointModelApiVersion);
+            _managedPrivateEndpointModelRestClient = new ManagedPrivateEndpointModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,11 +60,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Create</description>
+        /// <description>ManagedPrivateEndpointModel_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,12 +83,12 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _managedPrivateEndpointModelRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,11 +109,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Create</description>
+        /// <description>ManagedPrivateEndpointModel_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,12 +132,12 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken);
-                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _managedPrivateEndpointModelRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,11 +158,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,11 +178,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
@@ -205,11 +203,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,11 +223,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken);
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
@@ -250,11 +248,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_List</description>
+        /// <description>ManagedPrivateEndpointModel_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,9 +264,9 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedPrivateEndpointModelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -280,11 +278,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_List</description>
+        /// <description>ManagedPrivateEndpointModel_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,9 +294,9 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedPrivateEndpointModelResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -310,11 +308,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -330,11 +328,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,11 +351,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -373,11 +371,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken);
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,11 +394,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,11 +414,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ManagedPrivateEndpointModelResource>(response.GetRawResponse());
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
@@ -441,11 +439,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -461,11 +459,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken);
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ManagedPrivateEndpointModelResource>(response.GetRawResponse());
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());

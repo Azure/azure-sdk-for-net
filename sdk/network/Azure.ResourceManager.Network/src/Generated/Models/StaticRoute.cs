@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the StaticRoute that is unique within a VnetRoute. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> List of all address prefixes. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> The ip address of the next hop. </summary>
+        [WirePath("nextHopIpAddress")]
         public string NextHopIPAddress { get; set; }
     }
 }

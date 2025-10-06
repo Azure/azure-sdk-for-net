@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The response to a list data masking rules request. </summary>
+    /// <summary> The list of database data masking rules. </summary>
     internal partial class DataMaskingRuleListResult
     {
         /// <summary>
@@ -53,15 +52,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingRuleListResult"/>. </summary>
-        /// <param name="value"> The list of database data masking rules. </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingRuleListResult(IReadOnlyList<DataMaskingRule> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataMaskingRuleListResult(IReadOnlyList<DataMaskingRule> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of database data masking rules. </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<DataMaskingRule> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -68,10 +67,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> List of specialized containers that run before app containers. </summary>
+        [WirePath("initContainers")]
         public IList<ContainerAppInitContainer> InitContainers { get; }
         /// <summary> List of container definitions for the Container App. </summary>
+        [WirePath("containers")]
         public IList<ContainerAppContainer> Containers { get; }
         /// <summary> List of volume definitions for the Container App. </summary>
+        [WirePath("volumes")]
         public IList<ContainerAppVolume> Volumes { get; }
     }
 }

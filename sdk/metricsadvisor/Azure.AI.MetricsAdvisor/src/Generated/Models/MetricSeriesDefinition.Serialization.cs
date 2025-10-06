@@ -40,5 +40,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new MetricSeriesDefinition(metricId, dimension);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricSeriesDefinition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetricSeriesDefinition(document.RootElement);
+        }
     }
 }

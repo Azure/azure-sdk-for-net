@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -48,6 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The source server id to restore from. </summary>
+        [WirePath("sourceServerId")]
         public ResourceIdentifier SourceServerId { get; }
     }
 }

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -75,16 +73,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The tags for the webhook. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The service URI for the webhook to post notifications. </summary>
+        [WirePath("properties.serviceUri")]
         public Uri ServiceUri { get; set; }
         /// <summary> Custom headers that will be added to the webhook notifications. </summary>
+        [WirePath("properties.customHeaders")]
         public IDictionary<string, string> CustomHeaders { get; }
         /// <summary> The status of the webhook at the time the operation was called. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryWebhookStatus? Status { get; set; }
         /// <summary> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; set; }
         /// <summary> The list of actions that trigger the webhook to post notifications. </summary>
+        [WirePath("properties.actions")]
         public IList<ContainerRegistryWebhookAction> Actions { get; }
     }
 }

@@ -16,7 +16,11 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of <see cref="RuleEngineQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="rule"> A RouterRule that resolves a collection of queue selectors to attach. </param>
+        /// <param name="rule">
+        /// A RouterRule that resolves a collection of queue selectors to attach.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
+        /// </param>
         internal RuleEngineQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterRule rule) : base(kind, serializedAdditionalRawData)
         {
             Rule = rule;

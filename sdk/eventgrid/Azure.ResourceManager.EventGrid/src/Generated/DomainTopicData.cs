@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Provisioning state of the domain topic. </summary>
+        [WirePath("properties.provisioningState")]
         public DomainTopicProvisioningState? ProvisioningState { get; }
     }
 }

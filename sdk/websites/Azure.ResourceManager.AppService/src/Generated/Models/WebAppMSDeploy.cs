@@ -89,14 +89,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Package URI. </summary>
+        [WirePath("properties.packageUri")]
         public Uri PackageUri { get; set; }
         /// <summary> SQL Connection String. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
         /// <summary> Database Type. </summary>
+        [WirePath("properties.dbType")]
         public string DBType { get; set; }
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
+        [WirePath("properties.setParametersXmlFileUri")]
         public Uri SetParametersXmlFileUri { get; set; }
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
+        [WirePath("properties.setParameters")]
         public IDictionary<string, string> SetParameters { get; }
         /// <summary>
         /// Controls whether the MSDeploy operation skips the App_Data directory.
@@ -104,13 +109,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
+        [WirePath("properties.skipAppData")]
         public bool? SkipAppData { get; set; }
         /// <summary>
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
+        [WirePath("properties.appOffline")]
         public bool? IsAppOffline { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

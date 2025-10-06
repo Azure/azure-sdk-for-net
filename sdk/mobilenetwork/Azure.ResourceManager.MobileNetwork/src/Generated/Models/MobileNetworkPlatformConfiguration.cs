@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -81,10 +80,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The platform type where packet core is deployed. </summary>
+        [WirePath("type")]
         public MobileNetworkPlatformType PlatformType { get; set; }
         /// <summary> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </summary>
         internal WritableSubResource AzureStackEdgeDevice { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("azureStackEdgeDevice.id")]
         public ResourceIdentifier AzureStackEdgeDeviceId
         {
             get => AzureStackEdgeDevice is null ? default : AzureStackEdgeDevice.Id;
@@ -97,10 +98,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </summary>
+        [WirePath("azureStackEdgeDevices")]
         public IReadOnlyList<WritableSubResource> AzureStackEdgeDevices { get; }
         /// <summary> The Azure Stack HCI cluster where the packet core is deployed. </summary>
         internal WritableSubResource AzureStackHciCluster { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("azureStackHciCluster.id")]
         public ResourceIdentifier AzureStackHciClusterId
         {
             get => AzureStackHciCluster is null ? default : AzureStackHciCluster.Id;
@@ -115,6 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Azure Arc connected cluster where the packet core is deployed. </summary>
         internal WritableSubResource ConnectedCluster { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("connectedCluster.id")]
         public ResourceIdentifier ConnectedClusterId
         {
             get => ConnectedCluster is null ? default : ConnectedCluster.Id;
@@ -129,6 +133,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Azure Arc custom location where the packet core is deployed. </summary>
         internal WritableSubResource CustomLocation { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("customLocation.id")]
         public ResourceIdentifier CustomLocationId
         {
             get => CustomLocation is null ? default : CustomLocation.Id;

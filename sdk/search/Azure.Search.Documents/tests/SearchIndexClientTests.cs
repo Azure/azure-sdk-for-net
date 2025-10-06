@@ -15,12 +15,13 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            SanitizersToRemove.Add("AZSDK3431"); // $..token
         }
 
         [Test]
@@ -108,7 +109,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
         public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -131,6 +132,21 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+        public async Task GetIndexStatsSummary()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+            Response<ListIndexStatsSummary> response = await client.GetIndexStatsSummaryAsync();
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.IsNotNull(response.Value);
+            Assert.IsNotNull(response.Value.IndexesStatistics);
+            Assert.GreaterOrEqual(response.Value.IndexesStatistics.Count, 1);
+            Assert.True(response.Value.IndexesStatistics.Any(summary => summary.Name == resources.IndexName));
+        }
+
+        [Test]
         [SyncOnly]
         public void CreateIndexParameterValidation()
         {
@@ -145,7 +161,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -180,7 +196,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
         public async Task UpdateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -452,7 +468,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
         public async Task AnalyzeTextWithNormalizer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -514,6 +530,144 @@ namespace Azure.Search.Documents.Tests
 
             Assert.AreEqual(1, createdIndex.ScoringProfiles.Count);
             Assert.AreEqual(scoringProfileName, createdIndex.ScoringProfiles[0].Name);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        public async Task CreateKnowledgeAgent()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+
+            string deploymentName = "gpt-4.1";
+            SearchIndexClient client = resources.GetIndexClient();
+            var knowledgeAgentName = Recording.Random.GetName(8);
+            var knowledgeSourceName = Recording.Random.GetName(8);
+
+            SearchIndexKnowledgeSource indexKnowledgeSource = new(knowledgeSourceName, new(resources.IndexName));
+            KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
+
+            var knowledgeAgent = new KnowledgeAgent(
+                knowledgeAgentName,
+                new List<KnowledgeAgentModel>{
+                    new KnowledgeAgentAzureOpenAIModel(
+                        new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                            DeploymentName = deploymentName,
+                            ModelName = AzureOpenAIModelName.Gpt41
+                        })
+                },
+                new List<KnowledgeSourceReference>
+                {
+                    new KnowledgeSourceReference(knowledgeSource.Name),
+                });
+
+            KnowledgeAgent actualAgent = await client.CreateKnowledgeAgentAsync(knowledgeAgent);
+            KnowledgeAgent expectedAgent = knowledgeAgent;
+
+            Assert.AreEqual(expectedAgent.Name, actualAgent.Name);
+            Assert.That(actualAgent.Models, Is.EqualTo(expectedAgent.Models).Using(KnowledgeAgentModelComparer.Instance));
+            Assert.That(actualAgent.KnowledgeSources, Is.EqualTo(expectedAgent.KnowledgeSources).Using(KnowledgeSourceReferenceComparer.Instance));
+
+            await client.DeleteKnowledgeAgentAsync(knowledgeAgentName);
+            await client.DeleteKnowledgeSourceAsync(knowledgeSource.Name);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        public async Task DeleteKnowledgeAgent()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithknowledgeAgentAsync(this);
+            SearchIndexClient client = resources.GetIndexClient();
+
+            await client.DeleteKnowledgeAgentAsync(resources.KnowledgeAgentName);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await client.GetKnowledgeAgentAsync(resources.KnowledgeAgentName);
+            });
+
+            Assert.AreEqual(404, ex.Status);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        public async Task UpdateKnowledgeAgent()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+
+            string deploymentName = "gpt-4.1";
+            SearchIndexClient client = resources.GetIndexClient();
+            var knowledgeAgentName = Recording.Random.GetName(8);
+            var knowledgeSourceName = Recording.Random.GetName(8);
+
+            SearchIndexKnowledgeSource indexKnowledgeSource = new(knowledgeSourceName, new(resources.IndexName));
+            KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
+
+            var knowledgeAgent = new KnowledgeAgent(
+                knowledgeAgentName,
+                new List<KnowledgeAgentModel>{
+                    new KnowledgeAgentAzureOpenAIModel(
+                        new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                            DeploymentName = deploymentName,
+                            ModelName = AzureOpenAIModelName.Gpt41
+                        })
+                },
+                new List<KnowledgeSourceReference>
+                {
+                    new KnowledgeSourceReference(knowledgeSource.Name),
+                }
+                );
+
+            KnowledgeAgent createdAgent = await client.CreateKnowledgeAgentAsync(knowledgeAgent);
+            createdAgent.Description = "Updated description";
+            KnowledgeAgent updatedAgent = await client.CreateOrUpdateKnowledgeAgentAsync(createdAgent);
+
+            Assert.AreEqual(createdAgent.Name, updatedAgent.Name);
+            Assert.AreEqual(createdAgent.Description, updatedAgent.Description);
+            Assert.That(createdAgent.Models, Is.EqualTo(updatedAgent.Models).Using(KnowledgeAgentModelComparer.Instance));
+            Assert.That(createdAgent.KnowledgeSources, Is.EqualTo(updatedAgent.KnowledgeSources).Using(KnowledgeSourceReferenceComparer.Instance));
+
+            await client.DeleteKnowledgeAgentAsync(knowledgeAgentName);
+            await client.DeleteKnowledgeSourceAsync(knowledgeSource.Name);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        public async Task GetKnowledgeAgent()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithknowledgeAgentAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+            KnowledgeAgent agent = await client.GetKnowledgeAgentAsync(resources.KnowledgeAgentName);
+
+            Assert.AreEqual(resources.KnowledgeAgentName, agent.Name);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        public async Task GetKnowledgeAgents()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithknowledgeAgentAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            bool found = false;
+            await foreach (KnowledgeAgent agent in client.GetKnowledgeAgentsAsync())
+            {
+                found |= string.Equals(resources.KnowledgeAgentName, agent.Name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            Assert.IsTrue(found, "Knowledge agent not found");
         }
     }
 }

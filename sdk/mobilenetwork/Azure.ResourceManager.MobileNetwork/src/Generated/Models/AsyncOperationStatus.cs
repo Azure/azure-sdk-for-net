@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -88,18 +86,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Fully qualified ID for the async operation. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Name of the async operation. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The operation status. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Fully qualified ID for the resource that this async operation status relates to. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; }
         /// <summary> The start time of the operation. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the operation. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Percentage of the operation that is complete. </summary>
+        [WirePath("percentComplete")]
         public double? PercentComplete { get; }
         /// <summary>
         /// Properties returned by the resource provider on a successful operation
@@ -131,8 +136,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; }
         /// <summary> If present, details of the operation error. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

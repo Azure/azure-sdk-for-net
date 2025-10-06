@@ -61,6 +61,9 @@ namespace Azure.ResourceManager.NetApp.Models
             Snapshot = snapshot;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Backup Properties. </summary>
+        public NetAppVolumeBackupConfiguration Backup { get; set; }
         /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
         /// <summary> Snapshot Policy ResourceId. </summary>

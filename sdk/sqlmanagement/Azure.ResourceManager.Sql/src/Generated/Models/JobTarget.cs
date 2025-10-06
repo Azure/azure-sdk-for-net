@@ -79,18 +79,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Whether the target is included or excluded from the group. </summary>
+        [WirePath("membershipType")]
         public JobTargetGroupMembershipType? MembershipType { get; set; }
         /// <summary> The target type. </summary>
+        [WirePath("type")]
         public JobTargetType TargetType { get; set; }
         /// <summary> The target server name. </summary>
+        [WirePath("serverName")]
         public string ServerName { get; set; }
         /// <summary> The target database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> The target elastic pool name. </summary>
+        [WirePath("elasticPoolName")]
         public string ElasticPoolName { get; set; }
         /// <summary> The target shard map. </summary>
+        [WirePath("shardMapName")]
         public string ShardMapName { get; set; }
         /// <summary> The resource ID of the credential that is used during job execution to connect to the target and determine the list of databases inside the target. </summary>
+        [WirePath("refreshCredential")]
         public string RefreshCredential { get; set; }
     }
 }

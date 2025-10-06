@@ -13,13 +13,15 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// <summary> Client options for RadiologyInsightsClient. </summary>
     public partial class RadiologyInsightsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_09_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_10_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2023-09-01-preview". </summary>
-            V2023_09_01_Preview = 1,
+            /// <summary> Service version "2024-04-01". </summary>
+            V2024_04_01 = 1,
+            /// <summary> Service version "2024-10-01". </summary>
+            V2024_10_01 = 2,
         }
 
         internal string Version { get; }
@@ -29,7 +31,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Version = version switch
             {
-                ServiceVersion.V2023_09_01_Preview => "2023-09-01-preview",
+                ServiceVersion.V2024_04_01 => "2024-04-01",
+                ServiceVersion.V2024_10_01 => "2024-10-01",
                 _ => throw new NotSupportedException()
             };
         }

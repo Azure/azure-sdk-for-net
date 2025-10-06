@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
     public partial class MetricDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
@@ -23,19 +55,20 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
-        /// <param name="resourceId"> the resource identifier of the resource that emitted the metric. </param>
-        /// <param name="namespace"> the namespace the metric belongs to. </param>
-        /// <param name="localizedName"> the name and the display name of the metric, i.e. it is a localizable string. </param>
+        /// <param name="resourceId"> The resource identifier of the resource that emitted the metric. </param>
+        /// <param name="namespace"> The namespace the metric belongs to. </param>
+        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is a localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
         /// <param name="category"> Custom category name for this metric. </param>
         /// <param name="metricClass"> The class of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="primaryAggregationType"> the primary aggregation type value defining how to use the values for display. </param>
-        /// <param name="supportedAggregationTypes"> the collection of what aggregation types are supported. </param>
-        /// <param name="metricAvailabilities"> the collection of what aggregation intervals are available to be queried. </param>
-        /// <param name="id"> the resource identifier of the metric definition. </param>
-        /// <param name="localizedDimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions)
+        /// <param name="primaryAggregationType"> The primary aggregation type value defining how to use the values for display. </param>
+        /// <param name="supportedAggregationTypes"> The collection of what aggregation types are supported. </param>
+        /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
+        /// <param name="id"> The resource identifier of the metric definition. </param>
+        /// <param name="localizedDimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -50,13 +83,14 @@ namespace Azure.Monitor.Query.Models
             MetricAvailabilities = metricAvailabilities;
             Id = id;
             LocalizedDimensions = localizedDimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag to indicate whether the dimension is required. </summary>
         public bool? IsDimensionRequired { get; }
-        /// <summary> the resource identifier of the resource that emitted the metric. </summary>
+        /// <summary> The resource identifier of the resource that emitted the metric. </summary>
         public string ResourceId { get; }
-        /// <summary> the namespace the metric belongs to. </summary>
+        /// <summary> The namespace the metric belongs to. </summary>
         public string Namespace { get; }
         /// <summary> Detailed description of this metric. </summary>
         public string DisplayDescription { get; }
@@ -66,13 +100,13 @@ namespace Azure.Monitor.Query.Models
         public MetricClass? MetricClass { get; }
         /// <summary> The unit of the metric. </summary>
         public MetricUnit? Unit { get; }
-        /// <summary> the primary aggregation type value defining how to use the values for display. </summary>
+        /// <summary> The primary aggregation type value defining how to use the values for display. </summary>
         public MetricAggregationType? PrimaryAggregationType { get; }
-        /// <summary> the collection of what aggregation types are supported. </summary>
+        /// <summary> The collection of what aggregation types are supported. </summary>
         public IReadOnlyList<MetricAggregationType> SupportedAggregationTypes { get; }
-        /// <summary> the collection of what aggregation intervals are available to be queried. </summary>
+        /// <summary> The collection of what aggregation intervals are available to be queried. </summary>
         public IReadOnlyList<MetricAvailability> MetricAvailabilities { get; }
-        /// <summary> the resource identifier of the metric definition. </summary>
+        /// <summary> The resource identifier of the metric definition. </summary>
         public string Id { get; }
     }
 }

@@ -5,11 +5,110 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
     public abstract class ArmOperation : Operation
     {
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="client">The Arm client.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The Arm client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static ArmOperation Rehydrate(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
+            var operationState = nextLinkOperation.UpdateStateAsync(async: false, default).EnsureCompleted();
+            return new RehydrationOperation(nextLinkOperation, operationState);
+        }
+
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="client">The Arm client.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The Arm client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static ArmOperation<T> Rehydrate<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
+        {
+
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            bool isResource = IsResource<T>();
+            IOperationSource<T> source = new GenericOperationSource<T>(client, isResource);
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
+            var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
+            var operationState = operation.UpdateStateAsync(async: false, default).EnsureCompleted();
+            return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
+        }
+
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="client">The Arm client.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The Arm client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static async Task<ArmOperation> RehydrateAsync(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
+            var operationState = await nextLinkOperation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
+            return new RehydrationOperation(nextLinkOperation, operationState);
+        }
+
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="client">The Arm client.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The Arm client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static async Task<ArmOperation<T>> RehydrateAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
+        {
+
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            bool isResource = IsResource<T>();
+            IOperationSource<T> source = new GenericOperationSource<T>(client, isResource);
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
+            var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
+            var operationState = await operation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
+            return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
+        }
+
+        private static bool IsResource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : notnull
+        {
+            var isResource = typeof(T).GetConstructor(
+                            BindingFlags.NonPublic | BindingFlags.Instance,
+                            null,
+                            CallingConventions.Any,
+                            new Type[] { typeof(ArmClient), typeof(ResourceIdentifier) },
+                            null) is not null;
+            var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
+            if (!isResource && obj is not IJsonModel<object>)
+            {
+                throw new InvalidOperationException($"Type {typeof(T)} should be Resource or Model");
+            }
+
+            return isResource;
+        }
     }
 }

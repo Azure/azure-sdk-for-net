@@ -28,7 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // required - HTTP V2
             SemanticConventions.AttributeHttpRequestMethod,
             SemanticConventions.AttributeHttpResponseStatusCode,
-            SemanticConventions.AttributeNetworkProtocolVersion,
             SemanticConventions.AttributeServerAddress,
             SemanticConventions.AttributeServerPort,
             SemanticConventions.AttributeUrlFull,
@@ -45,29 +44,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetPeerName,
             SemanticConventions.AttributeNetPeerIp,
             SemanticConventions.AttributeNetPeerPort,
-            SemanticConventions.AttributeNetTransport,
-            SemanticConventions.AttributeNetHostIp,
             SemanticConventions.AttributeNetHostPort,
             SemanticConventions.AttributeNetHostName,
-            SemanticConventions.AttributeComponent,
             "otel.status_code",
 
-            SemanticConventions.AttributeRpcService,
-            // required - RPC
-            SemanticConventions.AttributeRpcSystem,
-            SemanticConventions.AttributeRpcStatus,
-
-            SemanticConventions.AttributeEndpointAddress,
             // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
             SemanticConventions.AttributeMessagingDestinationName,
             SemanticConventions.AttributeNetworkProtocolName,
 
             // Others
-            SemanticConventions.AttributeEnduserId
+            SemanticConventions.AttributeEnduserId,
+            SemanticConventions.AttributeEnduserPseudoId,
+            "microsoft.client.ip"
         };
 
-        private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
+        internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
@@ -77,6 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? AzureNamespace { get; private set; } = null;
 
         public string? EndUserId { get; private set; } = null;
+
+        public string? EndUserPseudoId { get; private set; } = null;
 
         public ActivityTagsProcessor()
         {
@@ -114,6 +108,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             break;
                         case SemanticConventions.AttributeEnduserId:
                             EndUserId = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeEnduserPseudoId:
+                            EndUserPseudoId = tag.Value.ToString();
                             continue;
                     }
 

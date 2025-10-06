@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Batch.Common
 {
     using System;
     using System.Linq;
-    
+
     /// <summary>
     /// The state of a compute node.
     /// </summary>
@@ -105,6 +105,16 @@ namespace Microsoft.Azure.Batch.Common
         /// <summary>
         /// The Compute Node is undergoing an OS upgrade operation.
         /// </summary>
-        UpgradingOS
+        UpgradingOS,
+
+        /// <summary>
+        /// The Compute Node is deallocated.
+        /// </summary>
+        Deallocated,
+
+        /// <summary>
+        /// The Compute Node is deallocating.
+        /// </summary>
+        Deallocating
     }
 }

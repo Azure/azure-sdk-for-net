@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -14,6 +10,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+
+using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -42,17 +43,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         [Obsolete("Is not obsolete marked by webjobs team, but chatted and this is correct. It is not being deprecated")]
         public void Initialize(ExtensionConfigContext context)
         {
-            context.AddBindingRule<AuthenticationEventsTriggerAttribute>()
+            context.AddBindingRule<WebJobsAuthenticationEventsTriggerAttribute>()
                     .BindToTrigger(new AuthenticationEventBindingProvider(this));
 
             _base_uri = context.GetWebhookHandler();
-            //LogInformation(string.Format(AuthenticationEventResource.Log_EventHandler_Url, Uri));
         }
 
-        internal void LogInformation(string message)
+        internal void Log(string message, LogLevel logLevel = LogLevel.Information, params object[] args)
         {
             Console.WriteLine(message);
-            _logger.LogInformation(message);
+            _logger.Log(logLevel, message, args);
         }
 
         internal void DisplayAzureFunctionInfoToConsole(string functionName)
@@ -108,8 +108,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                 //We create an event response handler and attach it to the income HTTP message, then on the trigger we set the function response
                 //in the event response handler and after the executor calls the functions we have reference to the function response.
-                AuthenticationEventResponseHandler eventsResponseHandler = new AuthenticationEventResponseHandler();
-                input.Properties.Add(AuthenticationEventResponseHandler.EventResponseProperty, eventsResponseHandler);
+                WebJobsAuthenticationEventResponseHandler eventsResponseHandler = new WebJobsAuthenticationEventResponseHandler();
+#if NET8_0_OR_GREATER
+                HttpRequestOptionsKey<WebJobsAuthenticationEventResponseHandler> httpRequestOptionsKey = new(WebJobsAuthenticationEventResponseHandler.EventResponseProperty);
+                input.Options.Set(httpRequestOptionsKey, eventsResponseHandler);
+#else
+                input.Properties.Add(WebJobsAuthenticationEventResponseHandler.EventResponseProperty, eventsResponseHandler);
+#endif
 
                 TriggeredFunctionData triggerData = new TriggeredFunctionData()
                 {

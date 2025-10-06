@@ -10,23 +10,30 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable, IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
@@ -57,6 +64,34 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
             }
+            if (Optional.IsDefined(JavascriptChallengeExpirationInMinutes))
+            {
+                writer.WritePropertyName("javascriptChallengeExpirationInMinutes"u8);
+                writer.WriteNumberValue(JavascriptChallengeExpirationInMinutes.Value);
+            }
+            if (Optional.IsDefined(CaptchaExpirationInMinutes))
+            {
+                writer.WritePropertyName("captchaExpirationInMinutes"u8);
+                writer.WriteNumberValue(CaptchaExpirationInMinutes.Value);
+            }
+            writer.WritePropertyName("logScrubbing"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ScrubbingRules))
+            {
+                writer.WritePropertyName("scrubbingRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScrubbingRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -65,14 +100,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FrontDoorWebApplicationFirewallPolicySettings IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +114,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +123,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,8 +135,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             int? customBlockResponseStatusCode = default;
             string customBlockResponseBody = default;
             PolicyRequestBodyCheck? requestBodyCheck = default;
+            int? javascriptChallengeExpirationInMinutes = default;
+            int? captchaExpirationInMinutes = default;
+            WebApplicationFirewallScrubbingState? state = default;
+            IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -155,12 +193,65 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     requestBodyCheck = new PolicyRequestBodyCheck(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("javascriptChallengeExpirationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    javascriptChallengeExpirationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("captchaExpirationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    captchaExpirationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logScrubbing"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("state"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            state = new WebApplicationFirewallScrubbingState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("scrubbingRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WebApplicationFirewallScrubbingRules> array = new List<WebApplicationFirewallScrubbingRules>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item, options));
+                            }
+                            scrubbingRules = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorWebApplicationFirewallPolicySettings(
                 enabledState,
                 mode,
@@ -168,6 +259,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 customBlockResponseStatusCode,
                 customBlockResponseBody,
                 requestBodyCheck,
+                javascriptChallengeExpirationInMinutes,
+                captchaExpirationInMinutes,
+                state,
+                scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(),
                 serializedAdditionalRawData);
         }
 
@@ -178,9 +273,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,11 +287,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

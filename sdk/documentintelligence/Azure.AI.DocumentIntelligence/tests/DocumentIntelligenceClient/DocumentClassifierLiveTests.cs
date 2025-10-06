@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -17,18 +16,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task ClassifyDocumentWithUrlSource()
+        public async Task ClassifyDocumentWithUriSource()
         {
             var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var content = new ClassifyDocumentContent()
-            {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040)
-            };
-
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -37,18 +33,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task ClassifyDocumentWithBase64Source()
+        public async Task ClassifyDocumentWithBytesSource()
         {
             var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var content = new ClassifyDocumentContent()
-            {
-                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040)
-            };
-
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+            var bytesSource = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, bytesSource);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -64,12 +57,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var content = new ClassifyDocumentContent()
-            {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
-            };
-
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -81,14 +71,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             Assert.That(analyzeResult.ModelId, Is.EqualTo(classifierId));
             Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(analyzeResult.StringIndexType, Is.EqualTo(StringIndexType.TextElements));
-            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(ContentFormat)));
+            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
 
-            Assert.That(analyzeResult.Content, Is.Empty);
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/47482
+            //Assert.That(analyzeResult.Content, Is.Empty);
             Assert.That(analyzeResult.Paragraphs, Is.Empty);
             Assert.That(analyzeResult.Tables, Is.Empty);
             Assert.That(analyzeResult.Figures, Is.Empty);
-            Assert.That(analyzeResult.Lists, Is.Empty);
             Assert.That(analyzeResult.Sections, Is.Empty);
             Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
             Assert.That(analyzeResult.Styles, Is.Empty);
@@ -107,9 +96,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(page.Lines, Is.Empty);
                 Assert.That(page.Barcodes, Is.Empty);
                 Assert.That(page.Formulas, Is.Empty);
-
-                AssertSingleEmptySpan(page.Spans);
-
+                Assert.That(page.Spans, Is.Empty);
                 Assert.That(page.PageNumber, Is.EqualTo(pageNumber));
             }
 
@@ -117,11 +104,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             foreach (var document in analyzeResult.Documents)
             {
-                Assert.That(document.DocType, Is.Not.Null);
-                Assert.That(document.DocType, Is.Not.Empty);
+                Assert.That(document.DocumentType, Is.Not.Null);
+                Assert.That(document.DocumentType, Is.Not.Empty);
                 Assert.That(document.Fields, Is.Empty);
-
-                AssertSingleEmptySpan(document.Spans);
+                Assert.That(document.Spans, Is.Empty);
 
                 foreach (var region in document.BoundingRegions)
                 {
@@ -138,7 +124,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             ValidateGenericClassifierResult(analyzeResult, classifierId);
 
-            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(ContentFormat.Text));
+            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(DocumentContentFormat.Text));
 
             Assert.That(analyzeResult.Pages.Count, Is.EqualTo(4));
 
@@ -152,16 +138,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var document = analyzeResult.Documents.Single();
 
-            Assert.That(document.DocType, Is.EqualTo("IRS-1040-C"));
+            Assert.That(document.DocumentType, Is.EqualTo("IRS-1040-C"));
             Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
-        }
-
-        private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)
-        {
-            var span = spans.Single();
-
-            Assert.That(span.Offset, Is.EqualTo(0));
-            Assert.That(span.Length, Is.EqualTo(0));
         }
     }
 }

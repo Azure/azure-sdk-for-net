@@ -16,6 +16,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: mgmt
     ServiceDirectory: storage
     BuildSnippets: false
     LimitForPullRequest: true
@@ -24,3 +25,7 @@ extends:
       safeName: AzureResourceManagerStorage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Storage
+      ExpectedWarningsFilepath: None

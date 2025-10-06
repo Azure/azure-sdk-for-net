@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = AzureLocation.WestEurope;
+        private static AzureLocation Location = AzureLocation.EastUS;
 
         public AdvancedThreatProtectionSettingsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

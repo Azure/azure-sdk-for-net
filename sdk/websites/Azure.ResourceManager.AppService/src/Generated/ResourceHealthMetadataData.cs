@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The category that the resource matches in the RHC Policy File. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> Is there a health signal for the resource. </summary>
+        [WirePath("properties.signalAvailability")]
         public bool? IsSignalAvailable { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

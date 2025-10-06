@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Virtual Machine image path. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
     }
 }

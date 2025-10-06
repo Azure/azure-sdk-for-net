@@ -52,18 +52,25 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHeaderConfiguration"/>. </summary>
         /// <param name="headerName"> Header name of the header configuration. </param>
+        /// <param name="headerValueMatcher"> An optional field under "Rewrite Action". It lets you capture and modify the value(s) of a specific header when multiple headers with the same name exist. Currently supported for Set-Cookie Response header only. For more details, visit https://aka.ms/appgwheadercrud. </param>
         /// <param name="headerValue"> Header value of the header configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayHeaderConfiguration(string headerName, string headerValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayHeaderConfiguration(string headerName, HeaderValueMatcher headerValueMatcher, string headerValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HeaderName = headerName;
+            HeaderValueMatcher = headerValueMatcher;
             HeaderValue = headerValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Header name of the header configuration. </summary>
+        [WirePath("headerName")]
         public string HeaderName { get; set; }
+        /// <summary> An optional field under "Rewrite Action". It lets you capture and modify the value(s) of a specific header when multiple headers with the same name exist. Currently supported for Set-Cookie Response header only. For more details, visit https://aka.ms/appgwheadercrud. </summary>
+        [WirePath("headerValueMatcher")]
+        public HeaderValueMatcher HeaderValueMatcher { get; set; }
         /// <summary> Header value of the header configuration. </summary>
+        [WirePath("headerValue")]
         public string HeaderValue { get; set; }
     }
 }

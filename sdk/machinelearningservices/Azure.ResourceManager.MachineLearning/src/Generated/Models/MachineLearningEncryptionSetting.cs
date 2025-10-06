@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -48,42 +47,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
-        /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
-        public MachineLearningEncryptionSetting(MachineLearningEncryptionKeyVaultProperties keyVaultProperties, MachineLearningEncryptionStatus status)
-        {
-            Argument.AssertNotNull(keyVaultProperties, nameof(keyVaultProperties));
-
-            KeyVaultProperties = keyVaultProperties;
-            Status = status;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
-        /// <param name="cosmosDBResourceId">
-        /// The byok cosmosdb account that customer brings to store customer's data
-        /// with encryption
-        /// </param>
-        /// <param name="identity"> Identity to be used with the keyVault. </param>
-        /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
-        /// <param name="searchAccountResourceId">
-        /// The byok search account that customer brings to store customer's data
-        /// with encryption
-        /// </param>
-        /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
-        /// <param name="storageAccountResourceId">
-        /// The byok storage account that customer brings to store customer's data
-        /// with encryption
-        /// </param>
+        /// <param name="identity"> The identity that will be used to access the key vault for encryption at rest. </param>
+        /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEncryptionSetting(ResourceIdentifier cosmosDBResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningEncryptionSetting(MachineLearningEncryptionStatus status, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CosmosDBResourceId = cosmosDBResourceId;
+            Status = status;
             Identity = identity;
             KeyVaultProperties = keyVaultProperties;
-            SearchAccountResourceId = searchAccountResourceId;
-            Status = status;
-            StorageAccountResourceId = storageAccountResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,14 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// The byok cosmosdb account that customer brings to store customer's data
-        /// with encryption
-        /// </summary>
-        public ResourceIdentifier CosmosDBResourceId { get; set; }
-        /// <summary> Identity to be used with the keyVault. </summary>
+        /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
+        [WirePath("status")]
+        public MachineLearningEncryptionStatus Status { get; set; }
+        /// <summary> The identity that will be used to access the key vault for encryption at rest. </summary>
         internal MachineLearningCmkIdentity Identity { get; set; }
-        /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
+        /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        [WirePath("identity.userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -111,19 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> KeyVault details to do the encryption. </summary>
+        /// <summary> Customer Key vault properties. </summary>
+        [WirePath("keyVaultProperties")]
         public MachineLearningEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary>
-        /// The byok search account that customer brings to store customer's data
-        /// with encryption
-        /// </summary>
-        public ResourceIdentifier SearchAccountResourceId { get; set; }
-        /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
-        public MachineLearningEncryptionStatus Status { get; set; }
-        /// <summary>
-        /// The byok storage account that customer brings to store customer's data
-        /// with encryption
-        /// </summary>
-        public ResourceIdentifier StorageAccountResourceId { get; set; }
     }
 }

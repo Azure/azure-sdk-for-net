@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -24,17 +23,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(SmartDetectionCondition))
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
-                writer.WriteObjectValue(SmartDetectionCondition);
+                writer.WriteObjectValue<SmartDetectionCondition>(SmartDetectionCondition);
             }
             if (Optional.IsDefined(HardThresholdCondition))
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
-                writer.WriteObjectValue(HardThresholdCondition);
+                writer.WriteObjectValue<HardThresholdCondition>(HardThresholdCondition);
             }
             if (Optional.IsDefined(ChangeThresholdCondition))
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
-                writer.WriteObjectValue(ChangeThresholdCondition);
+                writer.WriteObjectValue<ChangeThresholdCondition>(ChangeThresholdCondition);
             }
             writer.WriteEndObject();
         }
@@ -89,6 +88,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new MetricWholeSeriesDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricWholeSeriesDetectionCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetricWholeSeriesDetectionCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

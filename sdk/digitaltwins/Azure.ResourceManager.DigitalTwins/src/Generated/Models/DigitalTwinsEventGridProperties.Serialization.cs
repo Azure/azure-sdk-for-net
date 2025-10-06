@@ -10,23 +10,31 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEventGridProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEventGridProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEventGridProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DigitalTwinsEventGridProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("TopicEndpoint"u8);
             writer.WriteStringValue(TopicEndpoint);
             if (AccessKey1 != null)
@@ -50,89 +58,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("accessKey2");
                 }
             }
-            writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                if (ProvisioningState != null)
-                {
-                    writer.WritePropertyName("provisioningState"u8);
-                    writer.WriteStringValue(ProvisioningState.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("provisioningState");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                if (CreatedOn != null)
-                {
-                    writer.WritePropertyName("createdTime"u8);
-                    writer.WriteStringValue(CreatedOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("createdTime");
-                }
-            }
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
-            }
-            if (Optional.IsDefined(DeadLetterSecret))
-            {
-                if (DeadLetterSecret != null)
-                {
-                    writer.WritePropertyName("deadLetterSecret"u8);
-                    writer.WriteStringValue(DeadLetterSecret);
-                }
-                else
-                {
-                    writer.WriteNull("deadLetterSecret");
-                }
-            }
-            if (Optional.IsDefined(DeadLetterUri))
-            {
-                if (DeadLetterUri != null)
-                {
-                    writer.WritePropertyName("deadLetterUri"u8);
-                    writer.WriteStringValue(DeadLetterUri.AbsoluteUri);
-                }
-                else
-                {
-                    writer.WriteNull("deadLetterUri");
-                }
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DigitalTwinsEventGridProperties IJsonModel<DigitalTwinsEventGridProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -140,7 +65,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +74,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsEventGridProperties DeserializeDigitalTwinsEventGridProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +91,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Uri deadLetterUri = default;
             DigitalTwinsManagedIdentityReference identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TopicEndpoint"u8))
@@ -260,10 +185,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DigitalTwinsEventGridProperties(
                 endpointType,
                 provisioningState,
@@ -285,9 +210,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDigitalTwinsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -299,11 +224,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDigitalTwinsEventGridProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

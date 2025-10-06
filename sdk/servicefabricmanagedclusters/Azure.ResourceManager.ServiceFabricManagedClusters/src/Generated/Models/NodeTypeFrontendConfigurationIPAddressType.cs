@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// The IP address type.
-    ///
-    /// </summary>
+    /// <summary> The IP address type. </summary>
     public readonly partial struct NodeTypeFrontendConfigurationIPAddressType : IEquatable<NodeTypeFrontendConfigurationIPAddressType>
     {
         private readonly string _value;
@@ -36,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(NodeTypeFrontendConfigurationIPAddressType left, NodeTypeFrontendConfigurationIPAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeTypeFrontendConfigurationIPAddressType"/> values are not the same. </summary>
         public static bool operator !=(NodeTypeFrontendConfigurationIPAddressType left, NodeTypeFrontendConfigurationIPAddressType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeTypeFrontendConfigurationIPAddressType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeTypeFrontendConfigurationIPAddressType"/>. </summary>
         public static implicit operator NodeTypeFrontendConfigurationIPAddressType(string value) => new NodeTypeFrontendConfigurationIPAddressType(value);
 
         /// <inheritdoc />
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

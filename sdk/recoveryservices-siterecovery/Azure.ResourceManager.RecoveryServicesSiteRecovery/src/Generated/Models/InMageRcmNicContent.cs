@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -68,8 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetStaticIPAddress"> The target static IP address. </param>
         /// <param name="testSubnetName"> The test subnet name. </param>
         /// <param name="testStaticIPAddress"> The test static IP address. </param>
+        /// <param name="targetNicName"> The target NIC name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmNicContent(string nicId, string isPrimaryNic, string isSelectedForFailover, string targetSubnetName, IPAddress targetStaticIPAddress, string testSubnetName, IPAddress testStaticIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InMageRcmNicContent(string nicId, string isPrimaryNic, string isSelectedForFailover, string targetSubnetName, IPAddress targetStaticIPAddress, string testSubnetName, IPAddress testStaticIPAddress, string targetNicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetStaticIPAddress = targetStaticIPAddress;
             TestSubnetName = testSubnetName;
             TestStaticIPAddress = testStaticIPAddress;
+            TargetNicName = targetNicName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,5 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string TestSubnetName { get; set; }
         /// <summary> The test static IP address. </summary>
         public IPAddress TestStaticIPAddress { get; set; }
+        /// <summary> The target NIC name. </summary>
+        public string TargetNicName { get; set; }
     }
 }

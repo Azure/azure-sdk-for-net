@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> List of probes for the container. </summary>
+        [WirePath("probes")]
         public IList<ContainerAppProbe> Probes { get; }
     }
 }

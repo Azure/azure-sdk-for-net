@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The start time of the troubleshooting. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the troubleshooting. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The result code of the troubleshooting. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Information from troubleshooting. </summary>
+        [WirePath("results")]
         public IReadOnlyList<TroubleshootingDetails> Results { get; }
     }
 }

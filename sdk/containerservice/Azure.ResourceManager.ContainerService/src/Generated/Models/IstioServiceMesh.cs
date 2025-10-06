@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -66,10 +65,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Istio components configuration. </summary>
+        [WirePath("components")]
         public IstioComponents Components { get; set; }
         /// <summary> Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca. </summary>
         internal IstioCertificateAuthority CertificateAuthority { get; set; }
         /// <summary> Plugin certificates information for Service Mesh. </summary>
+        [WirePath("certificateAuthority.plugin")]
         public IstioPluginCertificateAuthority CertificateAuthorityPlugin
         {
             get => CertificateAuthority is null ? default : CertificateAuthority.Plugin;
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade. </summary>
+        [WirePath("revisions")]
         public IList<string> Revisions { get; }
     }
 }

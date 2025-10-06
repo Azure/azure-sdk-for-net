@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,12 +39,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// container Image.</param>
         /// <param name="workingDirectory">The location of the container Task
         /// working directory.</param>
-        public TaskContainerSettings(string imageName, string containerRunOptions = default(string), ContainerRegistry registry = default(ContainerRegistry), ContainerWorkingDirectory? workingDirectory = default(ContainerWorkingDirectory?))
+        /// <param name="containerHostBatchBindMounts">The paths you want to
+        /// mounted to container task.</param>
+        public TaskContainerSettings(string imageName, string containerRunOptions = default(string), ContainerRegistry registry = default(ContainerRegistry), ContainerWorkingDirectory? workingDirectory = default(ContainerWorkingDirectory?), IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts = default(IList<ContainerHostBatchBindMountEntry>))
         {
             ContainerRunOptions = containerRunOptions;
             ImageName = imageName;
             Registry = registry;
             WorkingDirectory = workingDirectory;
+            ContainerHostBatchBindMounts = containerHostBatchBindMounts;
             CustomInit();
         }
 
@@ -94,6 +99,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "workingDirectory")]
         public ContainerWorkingDirectory? WorkingDirectory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the paths you want to mounted to container task.
+        /// </summary>
+        /// <remarks>
+        /// If this array is null or be not present, container task will mount
+        /// entire temporary disk drive in windows (or AZ_BATCH_NODE_ROOT_DIR
+        /// in Linux). It won't' mount any data paths into container if this
+        /// array is set as empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerHostBatchBindMounts")]
+        public IList<ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts { get; set; }
 
     }
 }

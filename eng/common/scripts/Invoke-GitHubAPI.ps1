@@ -228,7 +228,6 @@ function Get-GitHubIssues {
     -Headers (Get-GitHubApiHeaders -token $AuthToken) `
     -MaximumRetryCount 3
 }
-
 function Add-GitHubIssueComment {
   param (
     [Parameter(Mandatory = $true)]
@@ -253,6 +252,89 @@ function Add-GitHubIssueComment {
   return Invoke-RestMethod `
           -Method POST `
           -Body ($parameters | ConvertTo-Json) `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
+function Get-GitHubIssueComments {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $IssueNumber,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+
+  )
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/comments"
+  return Invoke-RestMethod `
+          -Method GET `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
+function Update-GitHubIssueComment {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    [String]$CommentId,
+    [Parameter(Mandatory = $true)]
+    $Comment,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+
+  )
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/comments/$CommentId"
+
+  $parameters = @{
+    body = $Comment
+  }
+
+  return Invoke-RestMethod `
+          -Method PATCH `
+          -Body ($parameters | ConvertTo-Json) `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
+# Will delete label from the issue if it exists
+function Remove-GitHubIssueLabel {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $IssueNumber,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $LabelName,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  if ($LabelName.Trim().Length -eq 0)
+  {
+    throw " The 'LabelName' parameter should not be empty or whitespace."
+  }
+  # Encode the label name
+  $encodedLabelName = [System.Web.HttpUtility]::UrlEncode($LabelName)
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/labels/$encodedLabelName"
+
+  return Invoke-RestMethod `
+          -Method DELETE `
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
           -MaximumRetryCount 3
@@ -471,4 +553,24 @@ function Search-GitHubCommit {
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
           -MaximumRetryCount 3
+}
+
+function Search-GitHubIssues {
+  param (
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $CommitHash,
+    $State="open",
+    $AuthToken
+  )
+  $uri = "https://api.github.com/search/issues?q=sha:$CommitHash+state:$State"
+  $params = @{
+    Method = 'GET'
+    Uri = $uri
+    MaximumRetryCount = 3
+  }
+  if ($AuthToken) {
+    $params.Headers = Get-GitHubApiHeaders -token $AuthToken
+  }
+  return Invoke-RestMethod @params
 }

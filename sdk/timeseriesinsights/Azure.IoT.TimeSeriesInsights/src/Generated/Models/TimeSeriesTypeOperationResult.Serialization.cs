@@ -42,5 +42,13 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             return new TimeSeriesTypeOperationResult(timeSeriesType, error);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesTypeOperationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTimeSeriesTypeOperationResult(document.RootElement);
+        }
     }
 }

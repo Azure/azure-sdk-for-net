@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Interval to check each event source in seconds. Defaults to 30s. </summary>
+        [WirePath("pollingInterval")]
         public int? PollingIntervalInSeconds { get; set; }
         /// <summary> Minimum number of job executions that are created for a trigger, default 0. </summary>
+        [WirePath("minExecutions")]
         public int? MinExecutions { get; set; }
         /// <summary> Maximum number of job executions that are created for a trigger, default 100. </summary>
+        [WirePath("maxExecutions")]
         public int? MaxExecutions { get; set; }
         /// <summary> Scaling rules. </summary>
+        [WirePath("rules")]
         public IList<ContainerAppJobScaleRule> Rules { get; }
     }
 }

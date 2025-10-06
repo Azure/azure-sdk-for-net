@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> An array of provider permissions. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ProviderPermission> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

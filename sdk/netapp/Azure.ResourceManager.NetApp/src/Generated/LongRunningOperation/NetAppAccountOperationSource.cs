@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppAccountResource IOperationSource<NetAppAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetAppAccountData.DeserializeNetAppAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetAppAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppAccountResource(_client, data);
         }
 
         async ValueTask<NetAppAccountResource> IOperationSource<NetAppAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetAppAccountData.DeserializeNetAppAccountData(document.RootElement);
-            return new NetAppAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<NetAppAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            return await Task.FromResult(new NetAppAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

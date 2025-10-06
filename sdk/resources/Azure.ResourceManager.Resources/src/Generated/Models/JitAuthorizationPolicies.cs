@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The the principal id that will be granted JIT access. </summary>
+        [WirePath("principalId")]
         public Guid PrincipalId { get; set; }
         /// <summary> The role definition id that will be granted to the Principal. </summary>
+        [WirePath("roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
     }
 }

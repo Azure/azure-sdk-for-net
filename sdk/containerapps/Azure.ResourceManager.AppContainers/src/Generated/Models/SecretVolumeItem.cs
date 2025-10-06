@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Name of the Container App secret from which to pull the secret value. </summary>
+        [WirePath("secretRef")]
         public string SecretRef { get; set; }
         /// <summary> Path to project secret to. If no path is provided, path defaults to name of secret listed in secretRef. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

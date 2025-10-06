@@ -1,14 +1,48 @@
 # Release History
 
-## 0.1.0-preview.33 (Unreleased)
+## 0.1.0-preview.38 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Migrated the following types to System.ClientModel for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AccessToken`, and `OAuth2BearerTokenAuthenticationPolicy`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.37 (2025-03-20)
+
+### Features Added
+
+- Added the following types for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AccessToken`, and `OAuth2BearerTokenAuthenticationPolicy`.
+
+## 0.1.0-preview.36 (2024-10-03)
+
+### Breaking Changes
+
+- Removed the `PopTokenRequestContext` type and added the proof of possession-related properties to `TokenRequestContext` in Azure.Core ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+
+### Other Changes
+
+- Upgraded `System.Memory.Data` package dependency to 6.0.0 ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46134)).
+
+## 0.1.0-preview.35 (2024-09-12)
+
+### Breaking Changes
+
+- Remove Protobuf support ([#44472](https://github.com/Azure/azure-sdk-for-net/pull/44472))
+
+## 0.1.0-preview.34 (2024-06-06)
+
+### Bugs Fixed
+
+- Fixed a bug in the `PopTokenRequestContext` constructor that caused the `IsProofOfPossessionEnabled` property to be ignored.
+
+## 0.1.0-preview.33 (2024-04-04)
+
+- Added `IsProofOfPossessionEnabled` property to `PopTokenRequestContext` to support Proof of Possession tokens.
 
 ## 0.1.0-preview.32 (2024-01-11)
 

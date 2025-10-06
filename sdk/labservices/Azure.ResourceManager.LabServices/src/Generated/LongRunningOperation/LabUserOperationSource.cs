@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LabServices
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.LabServices
 
         LabUserResource IOperationSource<LabUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = LabUserData.DeserializeLabUserData(document.RootElement);
+            var data = ModelReaderWriter.Read<LabUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLabServicesContext.Default);
             return new LabUserResource(_client, data);
         }
 
         async ValueTask<LabUserResource> IOperationSource<LabUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = LabUserData.DeserializeLabUserData(document.RootElement);
-            return new LabUserResource(_client, data);
+            var data = ModelReaderWriter.Read<LabUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLabServicesContext.Default);
+            return await Task.FromResult(new LabUserResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

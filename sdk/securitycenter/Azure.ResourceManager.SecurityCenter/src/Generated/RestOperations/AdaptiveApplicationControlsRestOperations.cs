@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.SecurityCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, bool? includePathRecommendations, bool? summary)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/applicationWhitelistings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (includePathRecommendations != null)
+            {
+                uri.AppendQuery("includePathRecommendations", includePathRecommendations.Value, true);
+            }
+            if (summary != null)
+            {
+                uri.AppendQuery("summary", summary.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, bool? includePathRecommendations, bool? summary)
@@ -80,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroups value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveApplicationControlGroups.DeserializeAdaptiveApplicationControlGroups(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +125,27 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroups value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveApplicationControlGroups.DeserializeAdaptiveApplicationControlGroups(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation ascLocation, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/applicationWhitelistings/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation ascLocation, string groupName)
@@ -155,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,6 +226,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, AzureLocation ascLocation, string groupName, AdaptiveApplicationControlGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/applicationWhitelistings/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutRequest(string subscriptionId, AzureLocation ascLocation, string groupName, AdaptiveApplicationControlGroupData data)
@@ -214,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -241,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,13 +317,27 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveApplicationControlGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, AzureLocation ascLocation, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/applicationWhitelistings/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, AzureLocation ascLocation, string groupName)

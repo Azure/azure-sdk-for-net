@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -51,6 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
+            IdentitySettings = new ChangeTrackingList<ContainerAppIdentitySettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
@@ -62,43 +62,73 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
+        /// <param name="runtime"> App runtime configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
         /// <param name="service"> Container App to be a dev Container App Service. </param>
+        /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, int? maxInactiveRevisions, Service service, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
             Ingress = ingress;
             Registries = registries;
             Dapr = dapr;
+            Runtime = runtime;
             MaxInactiveRevisions = maxInactiveRevisions;
             Service = service;
+            IdentitySettings = identitySettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of secrets used by a Container app. </summary>
+        [WirePath("secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary>
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
         /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
         /// </summary>
+        [WirePath("activeRevisionsMode")]
         public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
         /// <summary> Ingress configurations. </summary>
+        [WirePath("ingress")]
         public ContainerAppIngressConfiguration Ingress { get; set; }
         /// <summary> Collection of private container registry credentials for containers used by the Container app. </summary>
+        [WirePath("registries")]
         public IList<ContainerAppRegistryCredentials> Registries { get; }
         /// <summary> Dapr configuration for the Container App. </summary>
+        [WirePath("dapr")]
         public ContainerAppDaprConfiguration Dapr { get; set; }
+        /// <summary> App runtime configuration for the Container App. </summary>
+        internal Runtime Runtime { get; set; }
+        /// <summary> Enable jmx core metrics for the java app. </summary>
+        [WirePath("runtime.java.enableMetrics")]
+        public bool? EnableMetrics
+        {
+            get => Runtime is null ? default : Runtime.EnableMetrics;
+            set
+            {
+                if (Runtime is null)
+                    Runtime = new Runtime();
+                Runtime.EnableMetrics = value;
+            }
+        }
+
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
+        [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }
         /// <summary> Container App to be a dev Container App Service. </summary>
         internal Service Service { get; set; }
         /// <summary> Dev ContainerApp service type. </summary>
+        [WirePath("service.type")]
         public string ServiceType
         {
             get => Service is null ? default : Service.ServiceType;
             set => Service = new Service(value);
         }
+
+        /// <summary> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </summary>
+        [WirePath("identitySettings")]
+        public IList<ContainerAppIdentitySettings> IdentitySettings { get; }
     }
 }

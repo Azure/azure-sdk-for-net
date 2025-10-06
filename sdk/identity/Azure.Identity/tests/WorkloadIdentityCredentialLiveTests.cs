@@ -28,6 +28,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task AuthnenticateWithWorkflowIdentity()
         {
             WorkloadIdentityCredentialOptions options = new WorkloadIdentityCredentialOptions
@@ -38,7 +39,12 @@ namespace Azure.Identity.Tests
             };
 
             var certificatePath = TestEnvironment.ServicePrincipalCertificatePfxPath;
+
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var cert = new X509Certificate2(certificatePath);
+#endif
 
             string assertion = CredentialTestHelpers.CreateClientAssertionJWT(options.AuthorityHost, options.ClientId, options.TenantId, cert);
 

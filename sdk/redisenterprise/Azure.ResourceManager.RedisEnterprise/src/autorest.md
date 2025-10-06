@@ -8,72 +8,78 @@ azure-arm: true
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/ecc0170a2005f5f38231ae4dbba40594d3c00a04/specification/redisenterprise/resource-manager/readme.md
-#tag: package-2024-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/e22d3642ca152418d8658c2547ce2179d15317b6/specification/redisenterprise/resource-manager/readme.md
+tag: package-2025-04-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-mapping:
-  Cluster: RedisEnterpriseCluster
-  ClusterList: RedisEnterpriseClusterList
-  ClusterUpdate: RedisEnterpriseClusterUpdate
-  ResourceState: RedisEnterpriseClusterResourceState
-  Database: RedisEnterpriseDatabase
-  DatabaseList: RedisEnterpriseDatabaseList
   AccessKeys: RedisEnterpriseDataAccessKeys
   AccessKeyType: RedisEnterpriseAccessKeyType
-  Capability: RedisEnterpriseCapability
-  ClusterPropertiesEncryptionCustomerManagedKeyEncryption: RedisEnterpriseCustomerManagedKeyEncryption
-  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity: RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity
-  CmkIdentityType: RedisEnterpriseCustomerManagedKeyIdentityType
-  LocationInfo: RedisEnterpriseLocationInfo
-  RegionSkuDetail: RedisEnterpriseRegionSkuDetail
-  FlushParameters: FlushRedisEnterpriseDatabaseParameters
-  ClusteringPolicy: RedisEnterpriseClusteringPolicy
-  TlsVersion: RedisEnterpriseTlsVersion
-  RegenerateKeyParameters: RedisEnterpriseRegenerateKeyParameters
-  SkuName: RedisEnterpriseSkuName
-  Sku: RedisEnterpriseSku
-  PrivateLinkServiceConnectionState: RedisEnterprisePrivateLinkServiceConnectionState
-  PrivateLinkResourceListResult: RedisEnterprisePrivateLinkResourceListResult
-  PrivateLinkResource: RedisEnterprisePrivateLinkResource
-  PrivateEndpointServiceConnectionStatus: RedisEnterprisePrivateEndpointServiceConnectionStatus
-  PrivateEndpointConnectionProvisioningState: RedisEnterprisePrivateEndpointConnectionProvisioningState
-  PrivateEndpointConnectionListResult: RedisEnterprisePrivateEndpointConnectionListResult
-  PrivateEndpointConnection: RedisEnterprisePrivateEndpointConnection
-  Persistence: RedisPersistenceSettings
+  AccessPolicyAssignmentPropertiesUser.objectId: -|uuid
   AofFrequency.1s: OneSecond
   AofFrequency: PersistenceSettingAofFrequency
-  RdbFrequency.1h: OneHour
-  RdbFrequency.6h: SixHours
-  RdbFrequency.12h: TwelveHours
-  RdbFrequency: PersistenceSettingRdbFrequency
+  Cluster: RedisEnterpriseCluster
+  ClusteringPolicy: RedisEnterpriseClusteringPolicy
+  ClusterList: RedisEnterpriseClusterList
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryption: RedisEnterpriseCustomerManagedKeyEncryption
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity.userAssignedIdentityResourceId: -|arm-id
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity: RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity
+  ClusterUpdate: RedisEnterpriseClusterUpdate
+  CmkIdentityType: RedisEnterpriseCustomerManagedKeyIdentityType
+  Database: RedisEnterpriseDatabase
+  DatabaseList: RedisEnterpriseDatabaseList
   DatabasePropertiesGeoReplication: RedisEnterpriseDatabaseGeoReplication
+  EvictionPolicy: RedisEnterpriseEvictionPolicy
+  ExportClusterParameters: ExportRedisEnterpriseDatabaseParameters
+  FlushParameters: FlushRedisEnterpriseDatabaseParameters
+  ForceUnlinkParameters.ids: -|arm-id
+  ForceUnlinkParameters: ForceUnlinkRedisEnterpriseDatabaseParameters
+  HighAvailability: RedisEnterpriseHighAvailability
+  ImportClusterParameters: ImportRedisEnterpriseDatabaseParameters
+  LinkedDatabase.id: -|arm-id
   LinkedDatabase: RedisEnterpriseLinkedDatabase
   LinkState: RedisEnterpriseDatabaseLinkState
-  ProvisioningState: RedisEnterpriseProvisioningStatus
-  EvictionPolicy: RedisEnterpriseEvictionPolicy
-  OperationStatus: RedisEnterpriseOperationStatus
-  ExportClusterParameters: ExportRedisEnterpriseDatabaseParameters
-  ImportClusterParameters: ImportRedisEnterpriseDatabaseParameters
-  ForceUnlinkParameters: ForceUnlinkRedisEnterpriseDatabaseParameters
   Module: RedisEnterpriseModule
-  Protocol: RedisEnterpriseClientProtocol
+  OperationStatus.id: -|arm-id
+  OperationStatus: RedisEnterpriseOperationStatus
   Persistence.aofEnabled: IsAofEnabled
   Persistence.rdbEnabled: IsRdbEnabled
+  Persistence: RedisPersistenceSettings
+  PrivateEndpointConnection: RedisEnterprisePrivateEndpointConnection
+  PrivateEndpointConnectionListResult: RedisEnterprisePrivateEndpointConnectionListResult
+  PrivateEndpointConnectionProvisioningState: RedisEnterprisePrivateEndpointConnectionProvisioningState
+  PrivateEndpointServiceConnectionStatus: RedisEnterprisePrivateEndpointServiceConnectionStatus
+  PrivateLinkResource: RedisEnterprisePrivateLinkResource
+  PrivateLinkResourceListResult: RedisEnterprisePrivateLinkResourceListResult
+  PrivateLinkServiceConnectionState: RedisEnterprisePrivateLinkServiceConnectionState
   Protocol.Plaintext: PlainText
-  ForceUnlinkParameters.ids: -|arm-id
-  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity.userAssignedIdentityResourceId: -|arm-id
-  LinkedDatabase.id: -|arm-id
-  OperationStatus.id: -|arm-id
-  RegionSkuDetail.resourceType: -|resource-type
+  Protocol: RedisEnterpriseClientProtocol
+  ProvisioningState: RedisEnterpriseProvisioningStatus
+  RdbFrequency.12h: TwelveHours
+  RdbFrequency.1h: OneHour
+  RdbFrequency.6h: SixHours
+  RdbFrequency: PersistenceSettingRdbFrequency
+  RedundancyMode: RedisEnterpriseRedundancyMode
+  RegenerateKeyParameters: RedisEnterpriseRegenerateKeyParameters
+  ResourceState: RedisEnterpriseClusterResourceState
+  Sku: RedisEnterpriseSku
+  SkuName: RedisEnterpriseSkuName
+  SkuDetails: RedisEnterpriseSkuDetails
+  SkuDetailsList: RedisEnterpriseSkuDetailsList
+  TlsVersion: RedisEnterpriseTlsVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -81,9 +87,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-
-# mgmt-debug:
-#   show-serialized-names: true
 
 acronym-mapping:
   CPU: Cpu
@@ -114,7 +117,6 @@ acronym-mapping:
 
 override-operation-name:
   OperationsStatus_Get: GetRedisEnterpriseOperationsStatus
-  Skus_List: GetRedisEnterpriseSkus
 
 directive:
   - from: redisenterprise.json

@@ -1,6 +1,6 @@
 {
-  "AssetsRepo": "Azure/azure-sdk-assets",
-  "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/<service name>/Azure.ResourceManager.RecoveryServicesDataReplication",
-  "Tag": ""
+    "AssetsRepo": "Azure/azure-sdk-assets",
+    "AssetsRepoPrefixPath": "net",
+    "TagPrefix": "net/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication",
+    "Tag": "net/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication_2e96f2fd00"
 }

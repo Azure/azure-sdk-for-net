@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,8 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
         /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="forceUpdateOSDiskForEphemeral"> Parameter to force update ephemeral OS disk for a virtual machine scale set VM. </param>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetReimageContent(bool? tempDisk, string exactVersion, OSProfileProvisioningData osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> instanceIds) : base(tempDisk, exactVersion, osProfile, serializedAdditionalRawData)
+        internal VirtualMachineScaleSetReimageContent(bool? tempDisk, string exactVersion, OSProfileProvisioningData osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? forceUpdateOSDiskForEphemeral, IList<string> instanceIds) : base(tempDisk, exactVersion, osProfile, serializedAdditionalRawData, forceUpdateOSDiskForEphemeral)
         {
             InstanceIds = instanceIds;
         }

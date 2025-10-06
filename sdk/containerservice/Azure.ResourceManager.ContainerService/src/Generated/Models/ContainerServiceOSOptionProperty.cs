@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The OS type. </summary>
+        [WirePath("os-type")]
         public string OSType { get; }
         /// <summary> Whether the image is FIPS-enabled. </summary>
+        [WirePath("enable-fips-image")]
         public bool EnableFipsImage { get; }
     }
 }

@@ -55,5 +55,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new AnomalyProperty(anomalySeverity, anomalyStatus, value, expectedValue);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyProperty FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAnomalyProperty(document.RootElement);
+        }
     }
 }

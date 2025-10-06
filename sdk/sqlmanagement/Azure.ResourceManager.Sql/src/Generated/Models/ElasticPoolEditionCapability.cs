@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -56,28 +55,38 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The elastic pool edition name. </param>
         /// <param name="supportedElasticPoolPerformanceLevels"> The list of supported elastic pool DTU levels for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
+        /// <param name="zonePinning"> Whether or not zone pinning is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? isZoneRedundant, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedElasticPoolPerformanceLevels = supportedElasticPoolPerformanceLevels;
             IsZoneRedundant = isZoneRedundant;
+            ZonePinning = zonePinning;
             Status = status;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The elastic pool edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported elastic pool DTU levels for the edition. </summary>
+        [WirePath("supportedElasticPoolPerformanceLevels")]
         public IReadOnlyList<ElasticPoolPerformanceLevelCapability> SupportedElasticPoolPerformanceLevels { get; }
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
+        /// <summary> Whether or not zone pinning is supported for the edition. </summary>
+        [WirePath("zonePinning")]
+        public bool? ZonePinning { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

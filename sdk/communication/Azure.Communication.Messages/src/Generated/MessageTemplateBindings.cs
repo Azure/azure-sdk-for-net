@@ -58,13 +58,13 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="MessageTemplateBindings"/>. </summary>
         /// <param name="kind"> The type discriminator describing a template bindings type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTemplateBindings(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageTemplateBindings(MessageTemplateBindingsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type discriminator describing a template bindings type. </summary>
-        internal string Kind { get; set; }
+        internal MessageTemplateBindingsKind Kind { get; set; }
     }
 }

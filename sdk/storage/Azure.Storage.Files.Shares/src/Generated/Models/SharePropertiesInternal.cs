@@ -46,7 +46,16 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
         /// <param name="enabledProtocols"></param>
         /// <param name="rootSquash"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
+        /// <param name="enableSnapshotVirtualDirectoryAccess"></param>
+        /// <param name="paidBurstingEnabled"></param>
+        /// <param name="paidBurstingMaxIops"></param>
+        /// <param name="paidBurstingMaxBandwidthMibps"></param>
+        /// <param name="includedBurstIops"></param>
+        /// <param name="maxBurstCreditsForIops"></param>
+        /// <param name="nextAllowedProvisionedIopsDowngradeTime"></param>
+        /// <param name="nextAllowedProvisionedBandwidthDowngradeTime"></param>
+        /// <param name="enableSmbDirectoryLease"></param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime, bool? enableSmbDirectoryLease)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -66,6 +75,15 @@ namespace Azure.Storage.Files.Shares.Models
             LeaseDuration = leaseDuration;
             EnabledProtocols = enabledProtocols;
             RootSquash = rootSquash;
+            EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess;
+            PaidBurstingEnabled = paidBurstingEnabled;
+            PaidBurstingMaxIops = paidBurstingMaxIops;
+            PaidBurstingMaxBandwidthMibps = paidBurstingMaxBandwidthMibps;
+            IncludedBurstIops = includedBurstIops;
+            MaxBurstCreditsForIops = maxBurstCreditsForIops;
+            NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime;
+            NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime;
+            EnableSmbDirectoryLease = enableSmbDirectoryLease;
         }
 
         /// <summary> Gets the last modified. </summary>
@@ -104,5 +122,23 @@ namespace Azure.Storage.Files.Shares.Models
         public string EnabledProtocols { get; }
         /// <summary> Gets the root squash. </summary>
         public ShareRootSquash? RootSquash { get; }
+        /// <summary> Gets the enable snapshot virtual directory access. </summary>
+        public bool? EnableSnapshotVirtualDirectoryAccess { get; }
+        /// <summary> Gets the paid bursting enabled. </summary>
+        public bool? PaidBurstingEnabled { get; }
+        /// <summary> Gets the paid bursting max iops. </summary>
+        public long? PaidBurstingMaxIops { get; }
+        /// <summary> Gets the paid bursting max bandwidth mibps. </summary>
+        public long? PaidBurstingMaxBandwidthMibps { get; }
+        /// <summary> Gets the included burst iops. </summary>
+        public long? IncludedBurstIops { get; }
+        /// <summary> Gets the max burst credits for iops. </summary>
+        public long? MaxBurstCreditsForIops { get; }
+        /// <summary> Gets the next allowed provisioned iops downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime { get; }
+        /// <summary> Gets the next allowed provisioned bandwidth downgrade time. </summary>
+        public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; }
+        /// <summary> Gets the enable smb directory lease. </summary>
+        public bool? EnableSmbDirectoryLease { get; }
     }
 }

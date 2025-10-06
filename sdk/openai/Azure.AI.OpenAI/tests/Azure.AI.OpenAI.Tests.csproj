@@ -1,29 +1,84 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- We don't care about XML doc comments on test types and members -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;CS8002;SA1402;SA1507;SA1508;SA1633;SA1028;SA1505;NU1604;OPENAI001;AOAI001</NoWarn>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!-- Reference the Client Library -->
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.AI.OpenAI.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    
+    <!--
+      Microsoft.NET.Test.Sdk has a transitive dependency to Newtonsoft.Json. In order to pick up the
+      right version from Packages.data.props, we need to add an explicit reference to it here.
+      We can remove it once we update Microsoft.NET.Test.Sdk or support central package version
+      management for transitive dependencies.
+      -->
+    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
-    <None Include="SessionRecords\**\*" />
+    <ProjectReference Include="..\src\Azure.AI.OpenAI.csproj" />
+    <ProjectReference Include="..\..\tools\TestFramework\src\OpenAI.TestFramework.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+      <ExternalSourceFramework>netstandard2.0</ExternalSourceFramework>
+      <ExternalSourceFramework Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">net8.0</ExternalSourceFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Condition="'$(UseExternalOpenAILibrary)' != ''" Include="$([System.IO.Path]::GetFileName('../../external/$(ExternalSourceFramework)/OpenAI.dll'))" HintPath="../../external/$(ExternalSourceFramework)/OpenAI.dll" />
+    <Reference Condition="'$(ExternalAzureCoreLibrary)' != ''" Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))" HintPath="$(ExternalAzureCoreLibrary)" />
+  </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(GAServiceVersionLabel)' != ''">
+      <PropertyGroup>
+        <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
+        <VersionSuffix />
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <VersionSuffix>beta.6</VersionSuffix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Assets\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\**\*">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\src\Utility\Polyfill\**\*.cs">
+      <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- This is used to automatically update the playback configuration file when recording -->
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestProjectSourceBasePath</_Parameter1>
+      <_Parameter2>$(MSBuildThisFileDirectory)</_Parameter2>
+    </AssemblyAttribute>
   </ItemGroup>
 
 </Project>

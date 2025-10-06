@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             HostPoolType = hostPoolType;
             LoadBalancerType = loadBalancerType;
             ApplicationGroupReferences = new ChangeTrackingList<string>();
+            AppAttachPackageReferences = new ChangeTrackingList<string>();
             PreferredAppGroupType = preferredAppGroupType;
             PrivateEndpointConnections = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
         }
@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="registrationInfo"> The registration info of HostPool. </param>
         /// <param name="vmTemplate"> VM template for sessionhosts configuration within hostpool. </param>
         /// <param name="applicationGroupReferences"> List of applicationGroup links. </param>
+        /// <param name="appAttachPackageReferences"> List of App Attach Package links. </param>
         /// <param name="ssoAdfsAuthority"> URL to customer ADFS server for signing WVD SSO certificates. </param>
         /// <param name="ssoClientId"> ClientId for the registered Relying Party used to issue WVD SSO certificates. </param>
         /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
@@ -97,13 +98,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             RegistrationInfo = registrationInfo;
             VmTemplate = vmTemplate;
             ApplicationGroupReferences = applicationGroupReferences;
+            AppAttachPackageReferences = appAttachPackageReferences;
             SsoAdfsAuthority = ssoAdfsAuthority;
             SsoClientId = ssoClientId;
             SsoClientSecretKeyVaultPath = ssoClientSecretKeyVaultPath;
@@ -143,62 +145,94 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> ObjectId of HostPool. (internal use). </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; }
         /// <summary> Friendly name of HostPool. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Description of HostPool. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> HostPool type for desktop. </summary>
+        [WirePath("properties.hostPoolType")]
         public HostPoolType HostPoolType { get; set; }
         /// <summary> PersonalDesktopAssignment type for HostPool. </summary>
+        [WirePath("properties.personalDesktopAssignmentType")]
         public PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get; set; }
         /// <summary> Custom rdp property of HostPool. </summary>
+        [WirePath("properties.customRdpProperty")]
         public string CustomRdpProperty { get; set; }
         /// <summary> The max session limit of HostPool. </summary>
+        [WirePath("properties.maxSessionLimit")]
         public int? MaxSessionLimit { get; set; }
         /// <summary> The type of the load balancer. </summary>
+        [WirePath("properties.loadBalancerType")]
         public HostPoolLoadBalancerType LoadBalancerType { get; set; }
         /// <summary> The ring number of HostPool. </summary>
+        [WirePath("properties.ring")]
         public int? Ring { get; set; }
         /// <summary> Is validation environment. </summary>
+        [WirePath("properties.validationEnvironment")]
         public bool? IsValidationEnvironment { get; set; }
         /// <summary> The registration info of HostPool. </summary>
+        [WirePath("properties.registrationInfo")]
         public HostPoolRegistrationInfo RegistrationInfo { get; set; }
         /// <summary> VM template for sessionhosts configuration within hostpool. </summary>
+        [WirePath("properties.vmTemplate")]
         public string VmTemplate { get; set; }
         /// <summary> List of applicationGroup links. </summary>
+        [WirePath("properties.applicationGroupReferences")]
         public IReadOnlyList<string> ApplicationGroupReferences { get; }
+        /// <summary> List of App Attach Package links. </summary>
+        [WirePath("properties.appAttachPackageReferences")]
+        public IReadOnlyList<string> AppAttachPackageReferences { get; }
         /// <summary> URL to customer ADFS server for signing WVD SSO certificates. </summary>
+        [WirePath("properties.ssoadfsAuthority")]
         public string SsoAdfsAuthority { get; set; }
         /// <summary> ClientId for the registered Relying Party used to issue WVD SSO certificates. </summary>
+        [WirePath("properties.ssoClientId")]
         public string SsoClientId { get; set; }
         /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
+        [WirePath("properties.ssoClientSecretKeyVaultPath")]
         public string SsoClientSecretKeyVaultPath { get; set; }
         /// <summary> The type of single sign on Secret Type. </summary>
+        [WirePath("properties.ssoSecretType")]
         public HostPoolSsoSecretType? SsoSecretType { get; set; }
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
+        [WirePath("properties.preferredAppGroupType")]
         public PreferredAppGroupType PreferredAppGroupType { get; set; }
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
+        [WirePath("properties.startVMOnConnect")]
         public bool? StartVmOnConnect { get; set; }
         /// <summary> Is cloud pc resource. </summary>
+        [WirePath("properties.cloudPcResource")]
         public bool? IsCloudPCResource { get; }
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public HostPoolPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
+        [WirePath("properties.agentUpdate")]
         public SessionHostAgentUpdateProperties AgentUpdate { get; set; }
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
+        [WirePath("managedBy")]
         public ResourceIdentifier ManagedBy { get; set; }
-        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Gets or sets the identity. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public DesktopVirtualizationSku Sku { get; set; }
         /// <summary> Gets or sets the plan. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
     }
 }

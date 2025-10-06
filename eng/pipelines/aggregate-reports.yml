@@ -10,11 +10,12 @@ pr:
       - eng/CredScanSuppression.json
 
 pool:
-  name: azsdk-pool-mms-win-2022-general
-  vmImage: windows-2022
+  name: $(WINDOWSPOOL)
+  demands: ImageOverride -equals $(WINDOWSVMIMAGE)
 
 variables:
   - template: templates/variables/globals.yml
+  - template: templates/variables/image.yml
 
 stages:
   - stage: AggregateReports
@@ -108,7 +109,7 @@ stages:
               artifactName: reports
               path: '$(Build.ArtifactStagingDirectory)/reports'
 
-          - task: AzureFileCopy@4
+          - task: AzureFileCopy@6
             displayName: 'Upload Dependency Report'
             inputs:
               sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
@@ -119,7 +120,7 @@ stages:
               blobPrefix: dependencies
               AdditionalArgumentsForBlobCopy: '--exclude-pattern=*data.js*'
 
-          - task: AzureFileCopy@4
+          - task: AzureFileCopy@6
             displayName: 'Upload Dependency Graph'
             inputs:
               sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
@@ -144,19 +145,12 @@ stages:
     jobs:
       - job: ComplianceTools
         timeoutInMinutes: 120
+
         steps:
           - template: /eng/common/pipelines/templates/steps/policheck.yml
             parameters:
               ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
               PublishAnalysisLogs: false
-
-          - template: /eng/common/pipelines/templates/steps/credscan.yml
-            parameters:
-              BaselineFilePath: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-            displayName: 'Publish Security Analysis Logs'
-            condition: succeededOrFailed()
 
       - job: APIScan
         timeoutInMinutes: 180
@@ -172,6 +166,26 @@ stages:
                 -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
                 -NupkgFilesDestination 'nupkgFiles'
 
+          - task: AzureCLI@2
+            displayName: Azure CLI Login
+            inputs:
+              azureSubscription: azure-sdk-apiscan
+              scriptType: pscore
+              scriptLocation: inlineScript
+              addSpnToEnvironment: true
+              inlineScript: |
+                az --version
+                az account show -o json
+                Write-Host "##vso[task.setvariable variable=ARM_CLIENT_ID;issecret=true]$($env:servicePrincipalId)"
+                Write-Host "##vso[task.setvariable variable=ARM_TENANT_ID;issecret=true]$($env:tenantId)"
+                Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
+
+          - pwsh: |
+                # Need to re-login with the az login so that it presists and can be used in the APISca task
+                az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_OIDC_TOKEN)
+                az account show -o json
+            displayName: Persist CLI Login for ApiScan usage
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
             displayName: 'Run APIScan'
             inputs:
@@ -183,8 +197,14 @@ stages:
               preserveLogsFolder: true
               verbosityLevel: standard
             env:
-              # azure-sdk-apiscan (81109e5f-0620-423c-a37a-c22fbf8973a7)
-              AzureServicesAuthConnectionString: runAs=App;AppId=81109e5f-0620-423c-a37a-c22fbf8973a7;TenantId=72f988bf-86f1-41af-91ab-2d7cd011db47;AppKey=$(azure-sdk-apiscan-client-secret)
+              AzureServicesAuthConnectionString: RunAs=Developer;DeveloperTool=AzureCli
+
+          - pwsh: |
+                az account show -o json
+                az logout
+                az account clear
+            displayName: Logout of Azure CLI
+            condition: succeededOrFailed()
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Post Analysis (ApiScan)'

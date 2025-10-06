@@ -45,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public static bool operator ==(InnerErrorCode left, InnerErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are not the same. </summary>
         public static bool operator !=(InnerErrorCode left, InnerErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InnerErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InnerErrorCode"/>. </summary>
         public static implicit operator InnerErrorCode(string value) => new InnerErrorCode(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -25,37 +24,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
-            SearchSpace = new ChangeTrackingList<NlpParameterSubspace>();
             TaskType = TaskType.TextNER;
         }
 
         /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryMetric">
         /// Primary metric for Text-NER task.
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
-        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
-        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpFixedParameters fixedParameters, NlpVerticalLimitSettings limitSettings, IList<NlpParameterSubspace> searchSpace, NlpSweepSettings sweepSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
+        internal TextNer(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalLimitSettings limitSettings, NlpVerticalFeaturizationSettings featurizationSettings, MachineLearningTableJobInput validationData) : base(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
-            FeaturizationSettings = featurizationSettings;
-            FixedParameters = fixedParameters;
             LimitSettings = limitSettings;
-            SearchSpace = searchSpace;
-            SweepSettings = sweepSettings;
+            FeaturizationSettings = featurizationSettings;
             ValidationData = validationData;
             TaskType = taskType;
         }
@@ -69,10 +61,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-NER task.
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </summary>
+        [WirePath("primaryMetric")]
         public ClassificationPrimaryMetric? PrimaryMetric { get; }
+        /// <summary> Execution constraints for AutoMLJob. </summary>
+        [WirePath("limitSettings")]
+        public NlpVerticalLimitSettings LimitSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
         /// <summary> Dataset language, useful for the text data. </summary>
+        [WirePath("featurizationSettings.datasetLanguage")]
         public string FeaturizationDatasetLanguage
         {
             get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
@@ -84,15 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Model/training parameters that will remain constant throughout training. </summary>
-        public NlpFixedParameters FixedParameters { get; set; }
-        /// <summary> Execution constraints for AutoMLJob. </summary>
-        public NlpVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
-        public IList<NlpParameterSubspace> SearchSpace { get; set; }
-        /// <summary> Settings for model sweeping and hyperparameter tuning. </summary>
-        public NlpSweepSettings SweepSettings { get; set; }
         /// <summary> Validation data inputs. </summary>
+        [WirePath("validationData")]
         public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }

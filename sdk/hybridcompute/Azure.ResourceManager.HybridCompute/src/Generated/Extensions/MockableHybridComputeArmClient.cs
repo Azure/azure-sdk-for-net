@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
@@ -37,6 +35,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="HybridComputeLicenseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeLicenseResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeLicenseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridComputeLicenseResource"/> object. </returns>
+        public virtual HybridComputeLicenseResource GetHybridComputeLicenseResource(ResourceIdentifier id)
+        {
+            HybridComputeLicenseResource.ValidateResourceId(id);
+            return new HybridComputeLicenseResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HybridComputeMachineResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridComputeMachineResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -46,6 +56,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
             HybridComputeMachineResource.ValidateResourceId(id);
             return new HybridComputeMachineResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridComputeLicenseProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeLicenseProfileResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeLicenseProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
+        public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfileResource(ResourceIdentifier id)
+        {
+            HybridComputeLicenseProfileResource.ValidateResourceId(id);
+            return new HybridComputeLicenseProfileResource(Client, id);
         }
 
         /// <summary>
@@ -85,6 +107,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ArcGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ArcGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArcGatewayResource"/> object. </returns>
+        public virtual ArcGatewayResource GetArcGatewayResource(ResourceIdentifier id)
+        {
+            ArcGatewayResource.ValidateResourceId(id);
+            return new ArcGatewayResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HybridComputePrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridComputePrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -118,6 +152,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
             HybridComputePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new HybridComputePrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

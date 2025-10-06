@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -66,10 +65,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Array of HTTP Headers to log. </summary>
+        [WirePath("headers")]
         public IList<string> Headers { get; }
         /// <summary> Body logging settings. </summary>
         internal BodyDiagnosticSettings Body { get; set; }
         /// <summary> Number of request body bytes to log. </summary>
+        [WirePath("body.bytes")]
         public int? BodyBytes
         {
             get => Body is null ? default : Body.Bytes;
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Data masking settings. </summary>
+        [WirePath("dataMasking")]
         public DataMasking DataMasking { get; set; }
     }
 }

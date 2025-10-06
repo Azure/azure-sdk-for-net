@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownPreset. </summary>
+    /// <summary> Unknown version of Preset. </summary>
     internal partial class UnknownPreset : MediaTransformPreset
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPreset"/>. </summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetList"/>. </summary>
-        /// <param name="value"> A list of disk encryption sets. </param>
+        /// <param name="value"> The DiskEncryptionSet items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskEncryptionSetList(IEnumerable<DiskEncryptionSetData> value)
         {
@@ -58,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetList"/>. </summary>
-        /// <param name="value"> A list of disk encryption sets. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </param>
+        /// <param name="value"> The DiskEncryptionSet items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,9 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> A list of disk encryption sets. </summary>
+        /// <summary> The DiskEncryptionSet items on this page. </summary>
         public IReadOnlyList<DiskEncryptionSetData> Value { get; }
-        /// <summary> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

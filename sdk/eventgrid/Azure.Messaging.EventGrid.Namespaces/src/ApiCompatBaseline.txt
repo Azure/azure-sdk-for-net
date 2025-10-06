@@ -1,0 +1,2 @@
+# This attribute is now generated in each library. There should be no impact to end users.
+CannotRemoveAttribute : Attribute 'Azure.Core.CodeGenSerializationAttribute' exists on 'Azure.Messaging.EventGrid.Namespaces.ReceiveDetails' in the contract but not the implementation.

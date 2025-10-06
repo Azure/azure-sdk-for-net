@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -42,6 +41,14 @@ namespace Azure.Communication.CallingServer
                 }
             }
             return new AcsCallParticipantInternal(identifier, isMuted);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsCallParticipantInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAcsCallParticipantInternal(document.RootElement);
         }
     }
 }

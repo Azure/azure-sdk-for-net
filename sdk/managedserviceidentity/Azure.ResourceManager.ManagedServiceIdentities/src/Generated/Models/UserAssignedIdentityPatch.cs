@@ -63,12 +63,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
         /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
+        /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
+            IsolationScope = isolationScope;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,10 +80,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         }
 
         /// <summary> The id of the tenant which the identity belongs to. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The id of the service principal object associated with the created identity. </summary>
+        [WirePath("properties.principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The id of the app associated with the identity. This is a random generated UUID by MSI. </summary>
+        [WirePath("properties.clientId")]
         public Guid? ClientId { get; }
+        /// <summary> Enum to configure regional restrictions on identity assignment, as necessary. </summary>
+        [WirePath("properties.isolationScope")]
+        public IsolationScope? IsolationScope { get; set; }
     }
 }

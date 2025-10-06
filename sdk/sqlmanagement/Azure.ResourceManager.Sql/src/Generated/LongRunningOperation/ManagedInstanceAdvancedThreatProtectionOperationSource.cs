@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAdvancedThreatProtectionResource IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceAdvancedThreatProtectionResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceAdvancedThreatProtectionResource> IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(document.RootElement);
-            return new ManagedInstanceAdvancedThreatProtectionResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new ManagedInstanceAdvancedThreatProtectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

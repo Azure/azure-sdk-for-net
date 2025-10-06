@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownTieringCostInfo. </summary>
+    /// <summary> Unknown version of TieringCostInfo. </summary>
     internal partial class UnknownTieringCostInfo : TieringCostInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTieringCostInfo"/>. </summary>

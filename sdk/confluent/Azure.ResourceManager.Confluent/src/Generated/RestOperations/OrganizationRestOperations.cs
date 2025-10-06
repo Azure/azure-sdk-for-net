@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Confluent.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.Confluent
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-02-13";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,26 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -141,7 +164,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,13 +191,27 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string organizationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string organizationName)
@@ -217,7 +254,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +285,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,6 +294,20 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
@@ -277,7 +328,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -337,6 +388,20 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -355,7 +420,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -383,7 +448,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -414,13 +479,27 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string organizationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string organizationName)
@@ -495,6 +574,29 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListEnvironmentsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListEnvironmentsRequest(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
         {
             var message = _pipeline.CreateMessage();
@@ -546,7 +648,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -577,13 +679,29 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentByIdRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId)
@@ -630,7 +748,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCEnvironmentRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SCEnvironmentRecord.DeserializeSCEnvironmentRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -661,13 +779,38 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCEnvironmentRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SCEnvironmentRecord.DeserializeSCEnvironmentRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListClustersRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
@@ -725,7 +868,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -758,13 +901,38 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSchemaRegistryClustersRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/schemaRegistryClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListSchemaRegistryClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
@@ -822,7 +990,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -855,13 +1023,28 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRegionsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/listRegions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRegionsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
@@ -883,7 +1066,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -911,7 +1094,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentRegionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -942,13 +1125,32 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentRegionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateApiKeyRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendPath("/createAPIKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content)
@@ -974,7 +1176,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1006,7 +1208,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1041,13 +1243,29 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteClusterApiKeyRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/apiKeys/", false);
+            uri.AppendPath(apiKeyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
@@ -1126,6 +1344,22 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateGetClusterApiKeyRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/apiKeys/", false);
+            uri.AppendPath(apiKeyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
         {
             var message = _pipeline.CreateMessage();
@@ -1170,7 +1404,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1201,13 +1435,31 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSchemaRegistryClusterByIdRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/schemaRegistryClusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSchemaRegistryClusterByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
@@ -1258,7 +1510,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SchemaRegistryClusterRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1291,13 +1543,31 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SchemaRegistryClusterRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetClusterByIdRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetClusterByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
@@ -1348,7 +1618,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCClusterRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SCClusterRecord.DeserializeSCClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1381,13 +1651,21 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCClusterRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SCClusterRecord.DeserializeSCClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -1422,7 +1700,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1449,13 +1727,21 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1492,7 +1778,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1521,13 +1807,21 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListEnvironmentsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListEnvironmentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
@@ -1568,7 +1862,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1601,13 +1895,21 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListClustersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListClustersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
@@ -1650,7 +1952,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1685,13 +1987,21 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSchemaRegistryClustersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSchemaRegistryClustersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
@@ -1734,7 +2044,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1769,7 +2079,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

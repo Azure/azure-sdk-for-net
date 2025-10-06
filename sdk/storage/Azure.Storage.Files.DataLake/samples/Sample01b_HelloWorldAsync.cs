@@ -328,6 +328,111 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
+        /// Download a DataLake File's streaming data to a file.
+        /// </summary>
+        [Test]
+        public async Task ReadStreamingAsync()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-readasync" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-read"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+
+                // First upload something the DataLake file so we have something to download
+                await file.UploadAsync(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents and save it to a file
+                // The ReadStreamingAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadToAsync()
+                Response<DataLakeFileReadStreamingResult> fileContents = await file.ReadStreamingAsync();
+                Stream readStream = fileContents.Value.Content;
+                using (FileStream stream = File.OpenWrite(downloadPath))
+                {
+                    readStream.CopyTo(stream);
+                }
+
+                // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                await filesystem.DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Download a DataLake File's content data to a file.
+        /// </summary>
+        [Test]
+        public async Task ReadContentAsync()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-readasync" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-read"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+
+                // First upload something the DataLake file so we have something to download
+                await file.UploadAsync(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents and save it to a file
+                // The ReadContentAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadToAsync()
+                Response<DataLakeFileReadResult> fileContents = await file.ReadContentAsync();
+                BinaryData readData = fileContents.Value.Content;
+                byte[] data = readData.ToArray();
+                using (FileStream stream = File.OpenWrite(downloadPath))
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+                // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                await filesystem.DeleteAsync();
+            }
+        }
+
+        /// <summary>
         /// Download a DataLake File directly to file.
         /// </summary>
         [Test]
@@ -462,7 +567,13 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Keep track of all the names we encounter
                 List<string> names = new List<string>();
-                await foreach (PathItem pathItem in filesystem.GetPathsAsync(recursive: true))
+
+                DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+                {
+                    Recursive = true,
+                };
+
+                await foreach (PathItem pathItem in filesystem.GetPathsAsync(options))
                 {
                     names.Add(pathItem.Name);
                 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -72,8 +71,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="StaticRoutingEnrichment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StaticStringRoutingEnrichment"/>.
         /// </summary>
+        [WirePath("static")]
         public IList<StaticRoutingEnrichment> Static { get; }
         /// <summary> Gets the dynamic. </summary>
+        [WirePath("dynamic")]
         public IList<DynamicRoutingEnrichment> Dynamic { get; }
     }
 }

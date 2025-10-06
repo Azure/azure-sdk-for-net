@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,27 +22,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
-                writer.WriteObjectValue(Project);
+                writer.WriteObjectValue<object>(Project);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort);
+                writer.WriteObjectValue<object>(Sort);
             }
             if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
-                writer.WriteObjectValue(Skip);
+                writer.WriteObjectValue<object>(Skip);
             }
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                writer.WriteObjectValue(Limit);
+                writer.WriteObjectValue<object>(Limit);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -104,12 +103,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new MongoDbCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MongoDbCursorMethodsProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMongoDbCursorMethodsProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class MongoDbCursorMethodsPropertiesConverter : JsonConverter<MongoDbCursorMethodsProperties>
         {
             public override void Write(Utf8JsonWriter writer, MongoDbCursorMethodsProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override MongoDbCursorMethodsProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

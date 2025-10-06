@@ -113,6 +113,63 @@ namespace Azure.Storage.Files.Shares.Models
         public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
+        /// Optional. Supported in version 2023-08-03 and above.  Only applicable for premium file storage accounts.
+        /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
+        /// If not specified, the default is true.
+        /// </summary>
+        public bool? EnableSnapshotVirtualDirectoryAccess { get; internal set; }
+
+        /// <summary>
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
+        ///  This property enables paid bursting on premium file storage accounts.
+        /// </summary>
+        public bool? EnablePaidBursting { get; internal set; }
+
+        /// <summary>
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
+        ///  Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS.
+        /// </summary>
+        public long? PaidBurstingMaxIops { get; internal set; }
+
+        /// <summary>
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
+        ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
+        /// </summary>
+        public long? PaidBurstingMaxBandwidthMibps { get; internal set; }
+
+        /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
+        /// The calculated burst IOPS of the share.
+        /// </summary>
+        public long? IncludedBurstIops { get; internal set; }
+
+        /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
+        /// The calculated maximum burst credits. This is not the current burst credit level, but the maximum burst credits the share can have.
+        /// </summary>
+        public long? MaxBurstCreditsForIops { get; internal set; }
+
+        /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
+        /// The time the share can be downgraded to lower provisioned IOPs.
+        /// </summary>
+        public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime { get; internal set; }
+
+        /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
+        /// The time the shaare can be downgraded to lower provisioned bandwidth.
+        /// </summary>
+        public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; internal set; }
+
+        /// <summary>
+        /// Optional, default value is true.  Ony applicable to SMB shares.
+        /// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
+        /// An input of true specifies that granting of new directory leases is to be allowed.
+        /// An input of false specifies that granting of new directory leases is to be blocked.
+        /// </summary>
+        public bool? EnableDirectoryLease { get; internal set; }
+
+        /// <summary>
         /// Internal constructor.
         /// </summary>
         internal ShareProperties() { }

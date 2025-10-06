@@ -71,7 +71,9 @@ param(
 
   [boolean]$CloseAfterOpenForTesting=$false,
 
-  [boolean]$OpenAsDraft=$false
+  [boolean]$OpenAsDraft=$false,
+
+  [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -88,9 +90,20 @@ catch {
 $resp | Write-Verbose
 
 if ($resp.Count -gt 0) {
-  LogDebug "Pull request already exists $($resp[0].html_url)"
+  $existingPr = $resp[0]
+  $existingUrl = $existingPr.html_url
+  $existingNumber = $existingPr.number
+  $existingTitle = $existingPr.title
+  LogDebug "Pull request already exists $existingUrl"
   # setting variable to reference the pull request by number
-  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp[0].number)"
+  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$existingNumber"
+  if ($AddBuildSummary) {
+    $summaryPath = New-TemporaryFile
+    $summaryMarkdown = "**PR:** [Azure/$RepoName#$existingNumber]($existingUrl)"
+    $summaryMarkdown += "`n**Title:** $existingTitle"
+    $summaryMarkdown | Out-File $summaryPath
+    Write-Host "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Existing Pull Request;]$summaryPath"
+  }
 }
 else {
   try {
@@ -106,33 +119,49 @@ else {
       -AuthToken $AuthToken
 
     $resp | Write-Verbose
-    LogDebug "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
+    $prNumber = $resp.number
+    $prUrl = $resp.html_url
+    LogDebug "Pull request created $prUrl"
   
     $prOwnerUser = $resp.user.login
 
     # setting variable to reference the pull request by number
-    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
+    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$prNumber"
 
     # ensure that the user that was used to create the PR is not attempted to add as a reviewer
     # we cast to an array to ensure that length-1 arrays actually stay as array values
-    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
+    # we also filter out dependabot user who doesn't have write permission to avoid errors
+    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ -and $_ -inotlike "dependabot*" }
     $cleanedTeamReviewers = @(SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
 
     if ($cleanedUsers -or $cleanedTeamReviewers) {
-      Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
+      Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $prNumber `
       -Users $cleanedUsers -Teams $cleanedTeamReviewers -AuthToken $AuthToken
     }
 
     if ($CloseAfterOpenForTesting) {
       $prState = "closed"
-      LogDebug "Updating https://github.com/$RepoOwner/$RepoName/pull/$($resp.number) state to closed because this was only testing."
+      LogDebug "Updating $prUrl state to closed because this was only testing."
     }
     else {
       $prState = "open"
     }
 
-    Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $resp.number `
-    -State $prState -Labels $PRLabels -Assignees $Assignees -AuthToken $AuthToken
+    # Clean assignees - remove null entries and bot accounts
+    $cleanedAssignees = @(SplitParameterArray -members $Assignees) | ? { 
+      $null -ne $_ -and $_ -inotlike "dependabot*" -and $_ -inotlike "copilot*" 
+    }
+
+    Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $prNumber `
+    -State $prState -Labels $PRLabels -Assignees $cleanedAssignees -AuthToken $AuthToken
+
+    if ($AddBuildSummary) {
+      $summaryPath = New-TemporaryFile
+      $summaryMarkdown = "**PR:** [Azure/$RepoName#$prNumber]($prUrl)"
+      $summaryMarkdown += "`n**Title:** $PRTitle"
+      $summaryMarkdown | Out-File $summaryPath
+      Write-Host "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Pull Request Created;]$summaryPath"
+    }
   }
   catch {
     LogError "Call to GitHub API failed with exception:`n$_"

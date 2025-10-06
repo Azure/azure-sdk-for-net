@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Metadata of the diagnostics response. </summary>
+        [WirePath("metadata")]
         public ContainerAppDiagnosticsMetadata Metadata { get; set; }
         /// <summary> Set of data collections associated with the response. </summary>
+        [WirePath("dataset")]
         public IList<ContainerAppDiagnosticsDataApiResult> Dataset { get; }
         /// <summary> Status of the diagnostics response. </summary>
+        [WirePath("status")]
         public ContainerAppDiagnosticsStatus Status { get; set; }
         /// <summary> List of data providers' metadata. </summary>
+        [WirePath("dataProviderMetadata")]
         public ContainerAppDiagnosticDataProviderMetadata DataProviderMetadata { get; set; }
     }
 }

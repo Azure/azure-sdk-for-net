@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -98,24 +96,34 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the resource that is unique within a policy. This name can be used to access the resource. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </summary>
+        [WirePath("priority")]
         public int Priority { get; set; }
         /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+        [WirePath("state")]
         public WebApplicationFirewallState? State { get; set; }
         /// <summary> Duration over which Rate Limit policy will be applied. Applies only when ruleType is RateLimitRule. </summary>
+        [WirePath("rateLimitDuration")]
         public ApplicationGatewayFirewallRateLimitDuration? RateLimitDuration { get; set; }
         /// <summary> Rate Limit threshold to apply in case ruleType is RateLimitRule. Must be greater than or equal to 1. </summary>
+        [WirePath("rateLimitThreshold")]
         public int? RateLimitThreshold { get; set; }
         /// <summary> The rule type. </summary>
+        [WirePath("ruleType")]
         public WebApplicationFirewallRuleType RuleType { get; set; }
         /// <summary> List of match conditions. </summary>
+        [WirePath("matchConditions")]
         public IList<MatchCondition> MatchConditions { get; }
         /// <summary> List of user session identifier group by clauses. </summary>
+        [WirePath("groupByUserSession")]
         public IList<GroupByUserSession> GroupByUserSession { get; }
         /// <summary> Type of Actions. </summary>
+        [WirePath("action")]
         public WebApplicationFirewallAction Action { get; set; }
     }
 }

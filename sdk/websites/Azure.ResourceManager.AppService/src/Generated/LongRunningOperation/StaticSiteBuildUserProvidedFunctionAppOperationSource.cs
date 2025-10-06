@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteBuildUserProvidedFunctionAppResource IOperationSource<StaticSiteBuildUserProvidedFunctionAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement);
+            var data = ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new StaticSiteBuildUserProvidedFunctionAppResource(_client, data);
         }
 
         async ValueTask<StaticSiteBuildUserProvidedFunctionAppResource> IOperationSource<StaticSiteBuildUserProvidedFunctionAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement);
-            return new StaticSiteBuildUserProvidedFunctionAppResource(_client, data);
+            var data = ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            return await Task.FromResult(new StaticSiteBuildUserProvidedFunctionAppResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

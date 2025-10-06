@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -49,10 +48,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Reference to the remote virtual network. </summary>
         internal WritableSubResource RemoteVirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.remoteVirtualNetwork.id")]
         public ResourceIdentifier RemoteVirtualNetworkId
         {
             get => RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
@@ -65,14 +66,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </summary>
+        [WirePath("properties.allowHubToRemoteVnetTransit")]
         public bool? AllowHubToRemoteVnetTransit { get; set; }
         /// <summary> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </summary>
+        [WirePath("properties.allowRemoteVnetToUseHubVnetGateways")]
         public bool? AllowRemoteVnetToUseHubVnetGateways { get; set; }
         /// <summary> Enable internet security. </summary>
+        [WirePath("properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
         public RoutingConfiguration RoutingConfiguration { get; set; }
         /// <summary> The provisioning state of the hub virtual network connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

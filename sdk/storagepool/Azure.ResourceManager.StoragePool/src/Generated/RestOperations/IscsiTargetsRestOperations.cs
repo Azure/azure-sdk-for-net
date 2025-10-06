@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StoragePool.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.StoragePool
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByDiskPoolRequestUri(string subscriptionId, string resourceGroupName, string diskPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StoragePool/diskPools/", false);
+            uri.AppendPath(diskPoolName, true);
+            uri.AppendPath("/iscsiTargets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByDiskPoolRequest(string subscriptionId, string resourceGroupName, string diskPoolName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolIscsiTargetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolIscsiTargetList.DeserializeDiskPoolIscsiTargetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolIscsiTargetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolIscsiTargetList.DeserializeDiskPoolIscsiTargetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StoragePool/diskPools/", false);
+            uri.AppendPath(diskPoolName, true);
+            uri.AppendPath("/iscsiTargets/", false);
+            uri.AppendPath(iscsiTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetCreateOrUpdateContent content)
@@ -136,7 +166,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -200,6 +230,22 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StoragePool/diskPools/", false);
+            uri.AppendPath(diskPoolName, true);
+            uri.AppendPath("/iscsiTargets/", false);
+            uri.AppendPath(iscsiTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -220,7 +266,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -282,6 +328,22 @@ namespace Azure.ResourceManager.StoragePool
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StoragePool/diskPools/", false);
+            uri.AppendPath(diskPoolName, true);
+            uri.AppendPath("/iscsiTargets/", false);
+            uri.AppendPath(iscsiTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName)
@@ -362,6 +424,22 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StoragePool/diskPools/", false);
+            uri.AppendPath(diskPoolName, true);
+            uri.AppendPath("/iscsiTargets/", false);
+            uri.AppendPath(iscsiTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName)
         {
             var message = _pipeline.CreateMessage();
@@ -406,7 +484,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolIscsiTargetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +517,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolIscsiTargetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,6 +526,14 @@ namespace Azure.ResourceManager.StoragePool
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDiskPoolNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByDiskPoolNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName)
@@ -486,7 +572,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolIscsiTargetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolIscsiTargetList.DeserializeDiskPoolIscsiTargetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -517,7 +603,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolIscsiTargetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolIscsiTargetList.DeserializeDiskPoolIscsiTargetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

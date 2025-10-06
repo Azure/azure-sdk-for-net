@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SpringAppDiscovery
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 
         SpringBootAppResource IOperationSource<SpringBootAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SpringBootAppData.DeserializeSpringBootAppData(document.RootElement);
+            var data = ModelReaderWriter.Read<SpringBootAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSpringAppDiscoveryContext.Default);
             return new SpringBootAppResource(_client, data);
         }
 
         async ValueTask<SpringBootAppResource> IOperationSource<SpringBootAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SpringBootAppData.DeserializeSpringBootAppData(document.RootElement);
-            return new SpringBootAppResource(_client, data);
+            var data = ModelReaderWriter.Read<SpringBootAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSpringAppDiscoveryContext.Default);
+            return await Task.FromResult(new SpringBootAppResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

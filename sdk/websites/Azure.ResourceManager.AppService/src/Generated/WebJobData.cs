@@ -85,16 +85,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Run command. </summary>
+        [WirePath("properties.run_command")]
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
+        [WirePath("properties.extra_info_url")]
         public Uri ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
+        [WirePath("properties.web_job_type")]
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>
+        [WirePath("properties.error")]
         public string Error { get; set; }
         /// <summary> Using SDK?. </summary>
+        [WirePath("properties.using_sdk")]
         public bool? IsUsingSdk { get; set; }
         /// <summary>
         /// Job settings.
@@ -126,8 +132,10 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

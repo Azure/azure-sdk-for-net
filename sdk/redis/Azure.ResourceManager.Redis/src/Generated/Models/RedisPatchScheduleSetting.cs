@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Day of the week when a cache can be patched. </summary>
+        [WirePath("dayOfWeek")]
         public RedisDayOfWeek DayOfWeek { get; set; }
         /// <summary> Start hour after which cache patching can start. </summary>
+        [WirePath("startHourUtc")]
         public int StartHourUtc { get; set; }
         /// <summary> ISO8601 timespan specifying how much time cache patching can take. </summary>
+        [WirePath("maintenanceWindow")]
         public TimeSpan? MaintenanceWindow { get; set; }
     }
 }

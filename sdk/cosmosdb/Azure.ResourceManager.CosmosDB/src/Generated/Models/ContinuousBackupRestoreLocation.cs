@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of the continuous backup restore location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
     }
 }

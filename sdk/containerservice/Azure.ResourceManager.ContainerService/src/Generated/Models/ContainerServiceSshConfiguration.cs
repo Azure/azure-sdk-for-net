@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
+        [WirePath("publicKeys")]
         public IList<ContainerServiceSshPublicKey> PublicKeys { get; }
     }
 }

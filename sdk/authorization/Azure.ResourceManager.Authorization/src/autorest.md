@@ -13,10 +13,11 @@ tag: package-2022-04-01
 output-folder: Generated/
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 use-model-reader-writer: true
 skip-csproj: true
+enable-bicep-serialization: true
 
 rename-mapping:
   RoleAssignment.properties.delegatedManagedIdentityResourceId: -|arm-id
@@ -121,6 +122,9 @@ directive:
   - remove-operation: 'RoleAssignments_ListForSubscription'
   - remove-operation: 'RoleAssignments_ListForResourceGroup'
   - remove-operation: 'RoleAssignments_ListForResource'
+  - remove-operation: 'DenyAssignments_ListForResource'
+  - remove-operation: 'DenyAssignments_ListForResourceGroup'
+  - remove-operation: 'DenyAssignments_List'
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
     where: $.paths['/{roleAssignmentId}']

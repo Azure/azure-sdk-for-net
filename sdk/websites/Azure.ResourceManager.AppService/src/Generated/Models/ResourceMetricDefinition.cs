@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -79,16 +78,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Unit of the metric. </summary>
+        [WirePath("properties.unit")]
         public string Unit { get; }
         /// <summary> Primary aggregation type. </summary>
+        [WirePath("properties.primaryAggregationType")]
         public string PrimaryAggregationType { get; }
         /// <summary> List of time grains supported for the metric together with retention period. </summary>
+        [WirePath("properties.metricAvailabilities")]
         public IReadOnlyList<ResourceMetricAvailability> MetricAvailabilities { get; }
         /// <summary> Resource URI. </summary>
+        [WirePath("properties.resourceUri")]
         public Uri ResourceUri { get; }
         /// <summary> Resource metric definition properties. </summary>
+        [WirePath("properties.properties")]
         public IReadOnlyDictionary<string, string> Properties { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

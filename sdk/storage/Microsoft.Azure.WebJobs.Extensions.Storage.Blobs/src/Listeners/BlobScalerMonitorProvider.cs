@@ -72,36 +72,44 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             public async Task<ScaleMetrics> GetMetricsAsync()
             {
-                // if new blob were detected we want to GetScaleStatus return scale out vote at least once
-                if (Interlocked.Equals(_threadSafeWritesDetectedValue, 1))
+                try
                 {
-                    _logger.LogInformation($"New writes were detectd but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
-                    return new ScaleMetrics();
+                    // if new blob were detected we want to GetScaleStatus return scale out vote at least once
+                    if (Interlocked.Equals(_threadSafeWritesDetectedValue, 1))
+                    {
+                        _logger.LogInformation($"New writes were detectd but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
+                        return new ScaleMetrics();
+                    }
+
+                    var blobLogListener = await _blobLogListener.Value.ConfigureAwait(false);
+                    BlobWithContainer<BlobBaseClient>[] recentWrites = _recentWrite == null ? (await blobLogListener.GetRecentBlobWritesAsync(CancellationToken.None).ConfigureAwait(false)).ToArray()
+                        : new BlobWithContainer<BlobBaseClient>[] { _recentWrite };
+                    if (recentWrites.Length > 0)
+                    {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        foreach (var write in recentWrites)
+                        {
+                            stringBuilder.Append($"'{write.BlobClient.Name}', ");
+                            if (stringBuilder.Length > 1000)
+                            {
+                                stringBuilder.Append("[truncated]");
+                                break;
+                            }
+                        }
+                        _logger.LogInformation($"'{recentWrites.Length}' recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}': {stringBuilder}");
+                        Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 1, 0);
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"No recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}'");
+                        Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 0, 1);
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.LogWarning($"Encountered exception while detecting recent writes for '{_scaleMonitorDescriptor.FunctionId}'. Exception: {e.ToString()}");
                 }
 
-                var blobLogListener = await _blobLogListener.Value.ConfigureAwait(false);
-                BlobWithContainer<BlobBaseClient>[] recentWrites = _recentWrite == null ? (await blobLogListener.GetRecentBlobWritesAsync(CancellationToken.None).ConfigureAwait(false)).ToArray()
-                    : new BlobWithContainer<BlobBaseClient>[] { _recentWrite };
-                if (recentWrites.Length > 0)
-                {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    foreach (var write in recentWrites)
-                    {
-                        stringBuilder.Append($"'{write.BlobClient.Name}', ");
-                        if (stringBuilder.Length > 1000)
-                        {
-                            stringBuilder.Append("[truncated]");
-                            break;
-                        }
-                    }
-                    _logger.LogInformation($"'{recentWrites.Length}' recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}': {stringBuilder}");
-                    Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 1, 0);
-                }
-                else
-                {
-                    _logger.LogInformation($"No recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}'");
-                    Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 0, 1);
-                }
                 return new ScaleMetrics();
             }
 

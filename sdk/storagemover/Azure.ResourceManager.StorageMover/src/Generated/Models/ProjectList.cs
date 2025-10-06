@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.StorageMover;
+using System.Linq;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -47,25 +47,31 @@ namespace Azure.ResourceManager.StorageMover.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
-        internal ProjectList()
+        /// <param name="value"> The Project items on this page. </param>
+        internal ProjectList(IEnumerable<StorageMoverProjectData> value)
         {
-            Value = new ChangeTrackingList<StorageMoverProjectData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
+        /// <param name="value"> The Project items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectList(IReadOnlyList<StorageMoverProjectData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectList(IReadOnlyList<StorageMoverProjectData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/> for deserialization. </summary>
+        internal ProjectList()
+        {
+        }
+
+        /// <summary> The Project items on this page. </summary>
         public IReadOnlyList<StorageMoverProjectData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

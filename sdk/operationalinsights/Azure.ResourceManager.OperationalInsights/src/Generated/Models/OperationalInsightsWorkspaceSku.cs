@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
         public OperationalInsightsWorkspaceSkuName Name { get; set; }
         /// <summary> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </summary>
+        [WirePath("capacityReservationLevel")]
         public OperationalInsightsWorkspaceCapacityReservationLevel? CapacityReservationLevel { get; set; }
         /// <summary> The last time when the sku was updated. </summary>
+        [WirePath("lastSkuUpdate")]
         public DateTimeOffset? LastSkuUpdatedOn { get; }
     }
 }

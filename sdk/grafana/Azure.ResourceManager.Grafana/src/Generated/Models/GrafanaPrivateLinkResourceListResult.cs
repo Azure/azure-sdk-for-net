@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Grafana;
+using System.Linq;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class GrafanaPrivateLinkResourceListResult
     {
         /// <summary>
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Grafana.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceListResult"/>. </summary>
-        internal GrafanaPrivateLinkResourceListResult()
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GrafanaPrivateLinkResourceListResult(IEnumerable<GrafanaPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<GrafanaPrivateLinkResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> Array of private link resources. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaPrivateLinkResourceListResult(IReadOnlyList<GrafanaPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaPrivateLinkResourceListResult(IReadOnlyList<GrafanaPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private link resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal GrafanaPrivateLinkResourceListResult()
+        {
+        }
+
+        /// <summary> The PrivateLinkResource items on this page. </summary>
         public IReadOnlyList<GrafanaPrivateLinkResourceData> Value { get; }
-        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

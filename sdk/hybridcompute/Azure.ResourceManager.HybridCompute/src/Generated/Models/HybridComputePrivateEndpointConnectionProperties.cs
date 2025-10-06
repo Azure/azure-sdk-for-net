@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Private endpoint which the connection belongs to. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -84,10 +84,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Connection state of the private endpoint connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public HybridComputePrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> List of group IDs. </summary>
+        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
     }
 }

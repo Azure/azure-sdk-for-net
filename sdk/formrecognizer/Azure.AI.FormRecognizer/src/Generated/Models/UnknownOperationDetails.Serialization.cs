@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -108,6 +107,14 @@ namespace Azure.AI.FormRecognizer.Models
                 apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 error);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownOperationDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeUnknownOperationDetails(document.RootElement);
         }
     }
 }

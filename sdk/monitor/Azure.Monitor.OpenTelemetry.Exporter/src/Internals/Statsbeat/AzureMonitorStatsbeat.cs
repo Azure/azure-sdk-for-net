@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        private static VmMetadataResponse? GetVmMetadataResponse()
+        internal static VmMetadataResponse? GetVmMetadataResponse()
         {
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         httpClient.DefaultRequestHeaders.Add("Metadata", "True");
                         var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
                         VmMetadataResponse? vmMetadata;
-#if NET6_0_OR_GREATER
+#if NET
                         vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result, SourceGenerationContext.Default.VmMetadataResponse);
 #else
                         vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
@@ -153,6 +153,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private void SetResourceProviderDetails(IPlatform platform)
         {
+            var functionsWorkerRuntime = platform.GetEnvironmentVariable(EnvironmentVariableConstants.FUNCTIONS_WORKER_RUNTIME);
+            if (functionsWorkerRuntime != null)
+            {
+                _resourceProvider = "functions";
+                _resourceProviderId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_HOSTNAME);
+
+                return;
+            }
+
             var appSvcWebsiteName = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME);
             if (appSvcWebsiteName != null)
             {
@@ -167,11 +176,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 return;
             }
 
-            var functionsWorkerRuntime = platform.GetEnvironmentVariable(EnvironmentVariableConstants.FUNCTIONS_WORKER_RUNTIME);
-            if (functionsWorkerRuntime != null)
+            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
+            if (aksArmNamespaceId != null)
             {
-                _resourceProvider = "functions";
-                _resourceProviderId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_HOSTNAME);
+                _resourceProvider = "aks";
+                _resourceProviderId = aksArmNamespaceId;
 
                 return;
             }
@@ -185,15 +194,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
                 // osType takes precedence.
                 s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
-
-                return;
-            }
-
-            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
-            if (aksArmNamespaceId != null)
-            {
-                _resourceProvider = "aks";
-                _resourceProviderId = aksArmNamespaceId;
 
                 return;
             }

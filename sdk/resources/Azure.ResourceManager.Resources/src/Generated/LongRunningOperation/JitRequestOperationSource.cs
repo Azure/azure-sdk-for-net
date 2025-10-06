@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Resources
 
         JitRequestResource IOperationSource<JitRequestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = JitRequestData.DeserializeJitRequestData(document.RootElement);
+            var data = ModelReaderWriter.Read<JitRequestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new JitRequestResource(_client, data);
         }
 
         async ValueTask<JitRequestResource> IOperationSource<JitRequestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = JitRequestData.DeserializeJitRequestData(document.RootElement);
-            return new JitRequestResource(_client, data);
+            var data = ModelReaderWriter.Read<JitRequestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
+            return await Task.FromResult(new JitRequestResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

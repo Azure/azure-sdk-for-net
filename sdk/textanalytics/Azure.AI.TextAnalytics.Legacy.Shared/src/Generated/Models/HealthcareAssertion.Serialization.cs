@@ -53,5 +53,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new HealthcareAssertion(conditionality, certainty, association);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareAssertion FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHealthcareAssertion(document.RootElement);
+        }
     }
 }

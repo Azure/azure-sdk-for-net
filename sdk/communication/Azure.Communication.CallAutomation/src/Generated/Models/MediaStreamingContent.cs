@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Content type to stream, eg. audio, audio/video. </summary>
+    /// <summary> The MediaStreamingContentType. </summary>
     public readonly partial struct MediaStreamingContent : IEquatable<MediaStreamingContent>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(MediaStreamingContent left, MediaStreamingContent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingContent"/> values are not the same. </summary>
         public static bool operator !=(MediaStreamingContent left, MediaStreamingContent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaStreamingContent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaStreamingContent"/>. </summary>
         public static implicit operator MediaStreamingContent(string value) => new MediaStreamingContent(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

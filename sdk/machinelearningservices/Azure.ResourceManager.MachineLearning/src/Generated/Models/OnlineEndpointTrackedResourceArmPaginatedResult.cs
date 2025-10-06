@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,19 +52,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OnlineEndpointTrackedResourceArmPaginatedResult"/>. </summary>
-        /// <param name="nextLink"> The link to the next page of OnlineEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type OnlineEndpoint. </param>
+        /// <param name="nextLink"> The link to the next page of OnlineEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningOnlineEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OnlineEndpointTrackedResourceArmPaginatedResult(IReadOnlyList<MachineLearningOnlineEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link to the next page of OnlineEndpoint objects. If null, there are no additional pages. </summary>
-        public string NextLink { get; }
         /// <summary> An array of objects of type OnlineEndpoint. </summary>
         public IReadOnlyList<MachineLearningOnlineEndpointData> Value { get; }
+        /// <summary> The link to the next page of OnlineEndpoint objects. If null, there are no additional pages. </summary>
+        public string NextLink { get; }
     }
 }

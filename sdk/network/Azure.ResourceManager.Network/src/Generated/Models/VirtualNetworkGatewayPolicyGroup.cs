@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -46,16 +44,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Shows if this is a Default VirtualNetworkGatewayPolicyGroup or not. </summary>
+        [WirePath("properties.isDefault")]
         public bool? IsDefault { get; set; }
         /// <summary> Priority for VirtualNetworkGatewayPolicyGroup. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> Multiple PolicyMembers for VirtualNetworkGatewayPolicyGroup. </summary>
+        [WirePath("properties.policyMembers")]
         public IList<VirtualNetworkGatewayPolicyGroupMember> PolicyMembers { get; }
         /// <summary> List of references to vngClientConnectionConfigurations. </summary>
+        [WirePath("properties.vngClientConnectionConfigurations")]
         public IReadOnlyList<WritableSubResource> VngClientConnectionConfigurations { get; }
         /// <summary> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

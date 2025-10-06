@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -72,18 +71,24 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The operation's unique id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The operation's name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The start time of the operation. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the operation. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The current status of the operation. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Error response describing why the operation failed. </summary>
         internal ErrorResponse ErrorResponse { get; }
         /// <summary> The error object. </summary>
+        [WirePath("error.error")]
         public ResponseError Error
         {
             get => ErrorResponse?.Error;

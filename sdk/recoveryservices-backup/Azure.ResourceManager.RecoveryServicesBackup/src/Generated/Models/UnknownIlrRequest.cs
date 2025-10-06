@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownIlrRequest. </summary>
+    /// <summary> Unknown version of ILRRequest. </summary>
     internal partial class UnknownIlrRequest : IlrContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownIlrRequest"/>. </summary>

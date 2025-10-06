@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskOutput"/>. </summary>
         internal GetUserTablesMySqlTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskOutput"/>. </summary>
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databasesToTables"> Mapping from database name to list of tables. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesMySqlTaskOutput(string id, string databasesToTables, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesMySqlTaskOutput(string id, string databasesToTables, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DatabasesToTables = databasesToTables;
@@ -70,6 +69,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Mapping from database name to list of tables. </summary>
         public string DatabasesToTables { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

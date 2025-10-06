@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Status of the operation represented by the requested Id. </summary>
+        [WirePath("status")]
         public OperationalInsightsWorkspacePurgeState Status { get; }
     }
 }

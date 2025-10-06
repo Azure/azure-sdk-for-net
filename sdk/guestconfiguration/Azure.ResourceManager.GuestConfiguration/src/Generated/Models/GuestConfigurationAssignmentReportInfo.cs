@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -79,22 +78,31 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
+        [WirePath("reportId")]
         public Guid? ReportId { get; }
         /// <summary> Configuration details of the guest configuration assignment. </summary>
+        [WirePath("assignment")]
         public GuestConfigurationAssignmentInfo Assignment { get; set; }
         /// <summary> Information about the VM. </summary>
+        [WirePath("vm")]
         public GuestConfigurationVmInfo Vm { get; set; }
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Type of report, Consistency or Initial. </summary>
+        [WirePath("operationType")]
         public GuestConfigurationAssignmentReportType? OperationType { get; }
         /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
+        [WirePath("resources")]
         public IList<AssignmentReportResourceInfo> Resources { get; }
     }
 }

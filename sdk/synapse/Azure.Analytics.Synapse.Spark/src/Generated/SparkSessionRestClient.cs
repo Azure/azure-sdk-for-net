@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -88,7 +87,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkSessionCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkSessionCollection.DeserializeSparkSessionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -114,7 +113,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkSessionCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkSessionCollection.DeserializeSparkSessionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -167,7 +166,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkSession value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -195,7 +194,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkSession value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +238,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkSession value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +260,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkSession value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +399,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatementCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkStatementCollection.DeserializeSparkStatementCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,7 +420,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatementCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkStatementCollection.DeserializeSparkStatementCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +471,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatement value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +499,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatement value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +541,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatement value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -564,7 +563,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatement value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -607,7 +606,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatementCancellationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkStatementCancellationResult.DeserializeSparkStatementCancellationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -629,7 +628,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkStatementCancellationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkStatementCancellationResult.DeserializeSparkStatementCancellationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

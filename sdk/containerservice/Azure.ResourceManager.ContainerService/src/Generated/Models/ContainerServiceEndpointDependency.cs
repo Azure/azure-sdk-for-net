@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> The Ports and Protocols used when connecting to domainName. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<ContainerServiceEndpointDetail> EndpointDetails { get; }
     }
 }

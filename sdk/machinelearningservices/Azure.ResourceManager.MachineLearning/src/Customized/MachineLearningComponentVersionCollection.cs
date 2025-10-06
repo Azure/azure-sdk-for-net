@@ -31,14 +31,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<MachineLearningComponentVersionResource> GetAllAsync(string orderBy, int? top, string skip, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAllAsync(orderBy, top, skip, listViewType, null, cancellationToken);
+        public virtual AsyncPageable<MachineLearningComponentVersionResource> GetAllAsync(string orderBy, string skip, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
+            => GetAllAsync(orderBy, null, skip, listViewType, cancellationToken);
 
         /// <summary>
         /// List component versions.
@@ -54,13 +53,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<MachineLearningComponentVersionResource> GetAll(string orderBy, int? top, string skip, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAll(orderBy, top, skip, listViewType, null, cancellationToken);
+        public virtual Pageable<MachineLearningComponentVersionResource> GetAll(string orderBy, string skip, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
+            => GetAll(orderBy, null, skip, listViewType, cancellationToken);
     }
 }

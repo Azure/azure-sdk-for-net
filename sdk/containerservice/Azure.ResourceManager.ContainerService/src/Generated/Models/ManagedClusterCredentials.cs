@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        [WirePath("kubeconfigs")]
         public IReadOnlyList<ManagedClusterCredential> Kubeconfigs { get; }
     }
 }

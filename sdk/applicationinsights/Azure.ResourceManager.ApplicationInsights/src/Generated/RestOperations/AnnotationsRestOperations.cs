@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -36,6 +35,23 @@ namespace Azure.ResourceManager.ApplicationInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string start, string end)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("start", start, true);
+            uri.AppendQuery("end", end, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, string start, string end)
@@ -85,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         AnnotationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnnotationsListResult.DeserializeAnnotationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,7 +134,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         AnnotationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnnotationsListResult.DeserializeAnnotationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +143,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,7 +177,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(annotationProperties);
+            content.JsonWriter.WriteObjectValue(annotationProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -160,7 +191,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Annotation>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsAnnotation>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -173,12 +204,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Annotation> array = new List<Annotation>();
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -196,7 +227,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Annotation>> Create(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsAnnotation>> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,12 +240,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Annotation> array = new List<Annotation>();
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -222,6 +253,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations/", false);
+            uri.AppendPath(annotationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
@@ -297,6 +344,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations/", false);
+            uri.AppendPath(annotationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
         {
             var message = _pipeline.CreateMessage();
@@ -327,7 +390,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Annotation>>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsAnnotation>>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -340,12 +403,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Annotation> array = new List<Annotation>();
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -363,7 +426,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Annotation>> Get(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsAnnotation>> Get(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -376,12 +439,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Annotation> array = new List<Annotation>();
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

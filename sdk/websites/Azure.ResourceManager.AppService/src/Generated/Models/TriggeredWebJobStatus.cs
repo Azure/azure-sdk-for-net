@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Failed. </summary>
         Failed,
         /// <summary> Error. </summary>
-        Error
+        Error,
+        /// <summary> Aborted. </summary>
+        Aborted,
+        /// <summary> Running. </summary>
+        Running
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -82,26 +81,37 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </summary>
+        [WirePath("cpuManagerPolicy")]
         public string CpuManagerPolicy { get; set; }
         /// <summary> The default is true. </summary>
+        [WirePath("cpuCfsQuota")]
         public bool? IsCpuCfsQuotaEnabled { get; set; }
         /// <summary> The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. </summary>
+        [WirePath("cpuCfsQuotaPeriod")]
         public string CpuCfsQuotaPeriod { get; set; }
         /// <summary> To disable image garbage collection, set to 100. The default is 85%. </summary>
+        [WirePath("imageGcHighThreshold")]
         public int? ImageGcHighThreshold { get; set; }
         /// <summary> This cannot be set higher than imageGcHighThreshold. The default is 80%. </summary>
+        [WirePath("imageGcLowThreshold")]
         public int? ImageGcLowThreshold { get; set; }
         /// <summary> For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'. </summary>
+        [WirePath("topologyManagerPolicy")]
         public string TopologyManagerPolicy { get; set; }
         /// <summary> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </summary>
+        [WirePath("allowedUnsafeSysctls")]
         public IList<string> AllowedUnsafeSysctls { get; }
         /// <summary> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </summary>
+        [WirePath("failSwapOn")]
         public bool? FailStartWithSwapOn { get; set; }
         /// <summary> The maximum size (e.g. 10Mi) of container log file before it is rotated. </summary>
+        [WirePath("containerLogMaxSizeMB")]
         public int? ContainerLogMaxSizeInMB { get; set; }
         /// <summary> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </summary>
+        [WirePath("containerLogMaxFiles")]
         public int? ContainerLogMaxFiles { get; set; }
         /// <summary> The maximum number of processes per pod. </summary>
+        [WirePath("podMaxPids")]
         public int? PodMaxPids { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownConfigurationGroupValuePropertiesFormat. </summary>
+    /// <summary> Unknown version of ConfigurationGroupValuePropertiesFormat. </summary>
     internal partial class UnknownConfigurationGroupValuePropertiesFormat : ConfigurationGroupValuePropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConfigurationGroupValuePropertiesFormat"/>. </summary>

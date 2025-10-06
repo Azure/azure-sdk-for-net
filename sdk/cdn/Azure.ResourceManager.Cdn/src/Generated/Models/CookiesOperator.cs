@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: CookiesOperator
+    /// </summary>
     public readonly partial struct CookiesOperator : IEquatable<CookiesOperator>
     {
         private readonly string _value;
@@ -33,31 +36,61 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: CookiesOperator.Any
+        /// </summary>
         public static CookiesOperator Any { get; } = new CookiesOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: CookiesOperator.Equal
+        /// </summary>
         public static CookiesOperator Equal { get; } = new CookiesOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: CookiesOperator.Contains
+        /// </summary>
         public static CookiesOperator Contains { get; } = new CookiesOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: CookiesOperator.BeginsWith
+        /// </summary>
         public static CookiesOperator BeginsWith { get; } = new CookiesOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: CookiesOperator.EndsWith
+        /// </summary>
         public static CookiesOperator EndsWith { get; } = new CookiesOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: CookiesOperator.LessThan
+        /// </summary>
         public static CookiesOperator LessThan { get; } = new CookiesOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: CookiesOperator.LessThanOrEqual
+        /// </summary>
         public static CookiesOperator LessThanOrEqual { get; } = new CookiesOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: CookiesOperator.GreaterThan
+        /// </summary>
         public static CookiesOperator GreaterThan { get; } = new CookiesOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: CookiesOperator.GreaterThanOrEqual
+        /// </summary>
         public static CookiesOperator GreaterThanOrEqual { get; } = new CookiesOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: CookiesOperator.RegEx
+        /// </summary>
         public static CookiesOperator RegEx { get; } = new CookiesOperator(RegExValue);
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are the same. </summary>
         public static bool operator ==(CookiesOperator left, CookiesOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are not the same. </summary>
         public static bool operator !=(CookiesOperator left, CookiesOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CookiesOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CookiesOperator"/>. </summary>
         public static implicit operator CookiesOperator(string value) => new CookiesOperator(value);
 
         /// <inheritdoc />
@@ -68,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         public static CharFilter CharFilter(
             string oDataType,
             string name) =>
-            new CharFilter(oDataType, name);
+            new CharFilter(oDataType, name, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
@@ -44,19 +44,19 @@ namespace Azure.Search.Documents.Models
         public static CognitiveServicesAccount CognitiveServicesAccount(
             string oDataType,
             string description) =>
-            new CognitiveServicesAccount(oDataType, description);
+            new CognitiveServicesAccount(oDataType, description, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         public static DataChangeDetectionPolicy DataChangeDetectionPolicy(
             string oDataType) =>
-            new DataChangeDetectionPolicy(oDataType);
+            new DataChangeDetectionPolicy(oDataType, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
         public static DataDeletionDetectionPolicy DataDeletionDetectionPolicy(
             string oDataType) =>
-            new DataDeletionDetectionPolicy(oDataType);
+            new DataDeletionDetectionPolicy(oDataType, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Models
             int failedItemCount,
             string initialTrackingState,
             string finalTrackingState) =>
-            new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            return new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Models
         public static LexicalAnalyzer LexicalAnalyzer(
             string oDataType,
             string name) =>
-            new LexicalAnalyzer(oDataType, name);
+            new LexicalAnalyzer(oDataType, name, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Models
         public static LexicalTokenizer LexicalTokenizer(
             string oDataType,
             string name) =>
-            new LexicalTokenizer(oDataType, name);
+            new LexicalTokenizer(oDataType, name, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of ScoringFunction. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
@@ -141,7 +141,7 @@ namespace Azure.Search.Documents.Models
             string fieldName,
             double boost,
             ScoringFunctionInterpolation? interpolation) =>
-            new ScoringFunction(type, fieldName, boost, interpolation);
+            new ScoringFunction(type, fieldName, boost, interpolation, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchIndexerError. </summary>
         /// <param name="key"> The key of the item for which indexing failed. </param>
@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Models
             string name,
             string details,
             string documentationLink) =>
-            new SearchIndexerError(key, errorMessage, statusCode, name, details, documentationLink);
+            new SearchIndexerError(key, errorMessage, statusCode, name, details, documentationLink, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchIndexerLimits. </summary>
         /// <param name="maxRunTime"> The maximum duration that the indexer is permitted to run for one execution. </param>
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.Models
             TimeSpan? maxRunTime,
             long? maxDocumentExtractionSize,
             long? maxDocumentContentCharactersToExtract) =>
-            new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
+            new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
@@ -185,7 +185,7 @@ namespace Azure.Search.Documents.Models
             string context,
             IList<InputFieldMappingEntry> inputs,
             IList<OutputFieldMappingEntry> outputs) =>
-            new SearchIndexerSkill(oDataType, name, description, context, inputs, outputs);
+            new SearchIndexerSkill(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -199,7 +199,21 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(status, lastResult, executionHistory, limits);
+            new SearchIndexerStatus(default, status, lastResult, executionHistory, limits, default, serializedAdditionalRawData: null);
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
+        /// <param name="status"> Overall indexer status. </param>
+        /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
+        /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
+        /// <param name="limits"> The execution limits for the indexer. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexerStatus SearchIndexerStatus(IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null)
+        {
+            executionHistory ??= new List<IndexerExecutionResult>();
+
+            return new SearchIndexerStatus(default, status, lastResult, executionHistory?.ToList(), limits, default, serializedAdditionalRawData: null);
+        }
 
         /// <summary> Initializes a new instance of SearchIndexerWarning. </summary>
         /// <param name="key"> The key of the item which generated a warning. </param>
@@ -214,7 +228,7 @@ namespace Azure.Search.Documents.Models
             string name,
             string details,
             string documentationLink) =>
-            new SearchIndexerWarning(key, message, name, details, documentationLink);
+            new SearchIndexerWarning(key, message, name, details, documentationLink, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
@@ -233,7 +247,7 @@ namespace Azure.Search.Documents.Models
         public static SearchResourceCounter SearchResourceCounter(
             long usage,
             long? quota) =>
-            new SearchResourceCounter(usage, quota);
+            new SearchResourceCounter(usage, quota, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -301,12 +315,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceLimits SearchServiceLimits(
         int? maxFieldsPerIndex,
         int? maxFieldNestingDepthPerIndex,
         int? maxComplexCollectionFieldsPerIndex,
         int? maxComplexObjectsInCollectionsPerDocument) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, null, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -321,7 +336,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="oDataType"> . </param>
         public static SimilarityAlgorithm SimilarityAlgorithm(
             string oDataType) =>
-            new SimilarityAlgorithm(oDataType);
+            new SimilarityAlgorithm(oDataType, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of TokenFilter. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
@@ -329,7 +344,7 @@ namespace Azure.Search.Documents.Models
         public static TokenFilter TokenFilter(
             string oDataType,
             string name) =>
-            new TokenFilter(oDataType, name);
+            new TokenFilter(oDataType, name, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
@@ -339,7 +354,7 @@ namespace Azure.Search.Documents.Models
         public static AutocompleteResults AutocompleteResults(
             double? coverage,
             IReadOnlyList<AutocompleteItem> results) =>
-            new AutocompleteResults(coverage, results);
+            new AutocompleteResults(coverage, results, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of AutocompleteItem. </summary>
         /// <param name="text"> The completed term. </param>
@@ -370,11 +385,12 @@ namespace Azure.Search.Documents.Models
         /// ]]></code>
         /// </example>
         /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, additionalProperties);
+            return new FacetResult(count, null, null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
@@ -395,7 +411,7 @@ namespace Azure.Search.Documents.Models
             string errorMessage,
             bool succeeded,
             int status) =>
-            new IndexingResult(key, errorMessage, succeeded, status);
+            new IndexingResult(key, errorMessage, succeeded, status, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of IndexerState. </summary>
         /// <param name="mode"> The mode the indexer is running in. </param>

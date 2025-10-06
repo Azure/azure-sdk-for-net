@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -64,13 +63,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
+        /// <param name="storageAccountKeyReference"> The reference to the storage account access key used to access the Azure File share. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerInstanceAzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerInstanceAzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey, string storageAccountKeyReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShareName = shareName;
             IsReadOnly = isReadOnly;
             StorageAccountName = storageAccountName;
             StorageAccountKey = storageAccountKey;
+            StorageAccountKeyReference = storageAccountKeyReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,5 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string StorageAccountName { get; set; }
         /// <summary> The storage account access key used to access the Azure File share. </summary>
         public string StorageAccountKey { get; set; }
+        /// <summary> The reference to the storage account access key used to access the Azure File share. </summary>
+        public string StorageAccountKeyReference { get; set; }
     }
 }

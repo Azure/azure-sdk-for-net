@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Synapse link workspace id. </summary>
+        [WirePath("workspaceId")]
         public ResourceIdentifier WorkspaceId { get; set; }
         /// <summary> Link connection name. </summary>
+        [WirePath("linkConnectionName")]
         public string LinkConnectionName { get; set; }
     }
 }

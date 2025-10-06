@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -18,7 +19,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="name"> The name of the new assistant. </param>
         /// <param name="description"> The description of the new assistant. </param>
         /// <param name="instructions"> The system instructions for the new assistant to use. </param>
-        /// <param name="tools"> The collection of tools to enable for the new assistant. </param>
+        /// <param name="tools">
+        /// The collection of tools to enable for the new assistant.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> A list of previously uploaded file IDs to attach to the assistant. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Assistants.AssistantCreationOptions"/> instance for mocking. </returns>
@@ -56,6 +61,17 @@ namespace Azure.AI.OpenAI.Assistants
             return new ThreadInitializationMessage(role, content, fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.MessageTextAnnotation"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Assistants.MessageTextAnnotation"/> instance for mocking. </returns>
+        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = default, int endIndex = default)
+        {
+            return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.CreateRunOptions"/>. </summary>
         /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
         /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
@@ -64,7 +80,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
         /// on a per-run basis without overriding other instructions.
         /// </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
+        /// <param name="overrideTools">
+        /// The overridden list of enabled tools that the assistant should use to run the thread.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Assistants.CreateRunOptions"/> instance for mocking. </returns>
         public static CreateRunOptions CreateRunOptions(string assistantId = null, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null)
@@ -82,6 +102,15 @@ namespace Azure.AI.OpenAI.Assistants
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
+        /// <param name="type"> The object type for the required tool call. </param>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
+        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        {
+            return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.RunError"/>. </summary>
         /// <param name="code"> The status for the error. </param>
         /// <param name="message"> The human-readable text associated with the error. </param>
@@ -96,7 +125,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="thread"> The details used to create the new thread. </param>
         /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools the assistant should use to run the thread. </param>
+        /// <param name="overrideTools">
+        /// The overridden list of enabled tools the assistant should use to run the thread.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Assistants.CreateAndRunThreadOptions"/> instance for mocking. </returns>
         public static CreateAndRunThreadOptions CreateAndRunThreadOptions(string assistantId = null, AssistantThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null)
@@ -114,22 +147,34 @@ namespace Azure.AI.OpenAI.Assistants
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
-        /// <param name="code"> The error code for this error. </param>
-        /// <param name="message"> The human-readable text associated with this error. </param>
-        /// <returns> A new <see cref="Assistants.RunStepError"/> instance for mocking. </returns>
-        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationDetails"/>. </summary>
+        /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
+        /// <returns> A new <see cref="Assistants.RunStepMessageCreationDetails"/> instance for mocking. </returns>
+        public static RunStepMessageCreationDetails RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation = null)
         {
-            return new RunStepError(code, message, serializedAdditionalRawData: null);
+            return new RunStepMessageCreationDetails(RunStepType.MessageCreation, serializedAdditionalRawData: null, messageCreation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
-        /// <param name="type"> The object type for the required tool call. </param>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
-        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationReference"/>. </summary>
+        /// <param name="messageId"> The ID of the message created by this run step. </param>
+        /// <returns> A new <see cref="Assistants.RunStepMessageCreationReference"/> instance for mocking. </returns>
+        public static RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = null)
         {
-            return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
+            return new RunStepMessageCreationReference(messageId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCallDetails"/>. </summary>
+        /// <param name="toolCalls">
+        /// A list of tool call details for this run step.
+        /// Please note <see cref="Assistants.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Assistants.RunStepCodeInterpreterToolCall"/>, <see cref="Assistants.RunStepFunctionToolCall"/> and <see cref="Assistants.RunStepRetrievalToolCall"/>.
+        /// </param>
+        /// <returns> A new <see cref="Assistants.RunStepToolCallDetails"/> instance for mocking. </returns>
+        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
+        {
+            toolCalls ??= new List<RunStepToolCall>();
+
+            return new RunStepToolCallDetails(RunStepType.ToolCalls, serializedAdditionalRawData: null, toolCalls?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCall"/>. </summary>
@@ -139,17 +184,6 @@ namespace Azure.AI.OpenAI.Assistants
         public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
         {
             return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepRetrievalToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
-        /// <returns> A new <see cref="Assistants.RunStepRetrievalToolCall"/> instance for mocking. </returns>
-        public static RunStepRetrievalToolCall RunStepRetrievalToolCall(string id = null, IReadOnlyDictionary<string, string> retrieval = null)
-        {
-            retrieval ??= new Dictionary<string, string>();
-
-            return new RunStepRetrievalToolCall("retrieval", id, serializedAdditionalRawData: null, retrieval);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterLogOutput"/>. </summary>
@@ -176,41 +210,34 @@ namespace Azure.AI.OpenAI.Assistants
             return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.MessageTextAnnotation"/>. </summary>
-        /// <param name="type"> The object type. </param>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Assistants.MessageTextAnnotation"/> instance for mocking. </returns>
-        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = default, int endIndex = default)
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepRetrievalToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
+        /// <returns> A new <see cref="Assistants.RunStepRetrievalToolCall"/> instance for mocking. </returns>
+        public static RunStepRetrievalToolCall RunStepRetrievalToolCall(string id = null, IReadOnlyDictionary<string, string> retrieval = null)
         {
-            return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData: null);
+            retrieval ??= new Dictionary<string, string>();
+
+            return new RunStepRetrievalToolCall("retrieval", id, serializedAdditionalRawData: null, retrieval);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationDetails"/>. </summary>
-        /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
-        /// <returns> A new <see cref="Assistants.RunStepMessageCreationDetails"/> instance for mocking. </returns>
-        public static RunStepMessageCreationDetails RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation = null)
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
+        /// <param name="code"> The error code for this error. </param>
+        /// <param name="message"> The human-readable text associated with this error. </param>
+        /// <returns> A new <see cref="Assistants.RunStepError"/> instance for mocking. </returns>
+        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
         {
-            return new RunStepMessageCreationDetails(RunStepType.MessageCreation, serializedAdditionalRawData: null, messageCreation);
+            return new RunStepError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationReference"/>. </summary>
-        /// <param name="messageId"> The ID of the message created by this run step. </param>
-        /// <returns> A new <see cref="Assistants.RunStepMessageCreationReference"/> instance for mocking. </returns>
-        public static RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = null)
+        /// <summary> Initializes a new instance of <see cref="Assistants.UploadFileRequest"/>. </summary>
+        /// <param name="data"> The file data (not filename) to upload. </param>
+        /// <param name="purpose"> The intended purpose of the file. </param>
+        /// <param name="filename"> A filename to associate with the uploaded data. </param>
+        /// <returns> A new <see cref="Assistants.UploadFileRequest"/> instance for mocking. </returns>
+        public static UploadFileRequest UploadFileRequest(Stream data = null, OpenAIFilePurpose purpose = default, string filename = null)
         {
-            return new RunStepMessageCreationReference(messageId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCallDetails"/>. </summary>
-        /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        /// <returns> A new <see cref="Assistants.RunStepToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
-        {
-            toolCalls ??= new List<RunStepToolCall>();
-
-            return new RunStepToolCallDetails(RunStepType.ToolCalls, serializedAdditionalRawData: null, toolCalls?.ToList());
+            return new UploadFileRequest(data, purpose, filename, serializedAdditionalRawData: null);
         }
     }
 }

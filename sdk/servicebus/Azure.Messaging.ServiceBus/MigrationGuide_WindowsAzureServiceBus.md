@@ -106,7 +106,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -114,7 +114,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(connectionString);
 ```
 
 #### Administration client
@@ -126,7 +126,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAdministrationClientAAD
 // Create a ServiceBusAdministrationClient that will authenticate using default credentials
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+ServiceBusAdministrationClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -134,7 +134,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAdministrationClientConnectionString
 // Create a ServiceBusAdministrationClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
+ServiceBusAdministrationClient client = new(connectionString);
 ```
 
 ### Sending messages
@@ -163,11 +163,11 @@ In `Azure.Messaging.ServiceBus`, all of the send-related features are combined i
 
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 
-While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.  The batch allows you to measure your message with the `TryAdd` method, returning `false` when a message is too large to fit in the batch.  
+While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.  The batch allows you to measure your message with the `TryAdd` method, returning `false` when a message is too large to fit in the batch. It is important to note that it is no longer supported to batch messages together which are bound for multiple partitions.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
-Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+Queue<ServiceBusMessage> messages = new();
 messages.Enqueue(new ServiceBusMessage("First message"));
 messages.Enqueue(new ServiceBusMessage("Second message"));
 messages.Enqueue(new ServiceBusMessage("Third message"));
@@ -238,10 +238,10 @@ Another notable difference from `WindowsAzure.ServiceBus` when it comes to recei
 
 ```C# Snippet:ServiceBusConfigureProcessor
 // create the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+ServiceBusProcessorOptions options = new()
 {
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     AutoCompleteMessages = false,
 
@@ -343,7 +343,7 @@ var options = new ServiceBusSessionProcessorOptions
     MaxConcurrentSessions = 5,
 
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     MaxConcurrentCallsPerSession = 2,
 
@@ -451,9 +451,9 @@ In `Azure.Messaging.ServiceBus`, the `EnableCrossEntityTransactions` property on
 The below code snippet shows you how to perform cross-entity transactions.
 
 ```C# Snippet:ServiceBusCrossEntityTransaction
-string connectionString = "<connection_string>";
-var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
-await using var client = new ServiceBusClient(connectionString, options);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClientOptions options = new(){ EnableCrossEntityTransactions = true };
+await using ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 
 ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
 ServiceBusSender senderB = client.CreateSender("queueB");

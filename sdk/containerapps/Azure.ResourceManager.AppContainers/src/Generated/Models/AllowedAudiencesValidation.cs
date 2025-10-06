@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
     }
 }

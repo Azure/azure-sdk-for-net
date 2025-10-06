@@ -74,12 +74,14 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Indicates whether or the resource log category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </summary>
+        [WirePath("enabled")]
         public string Enabled { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -68,13 +67,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="managedIdentity"> The principal id of the managed identity. The value can be "None", "SystemAssigned". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri, bool? useCommonAlertSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri, bool? useCommonAlertSchema, string managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceId = resourceId;
             CallbackUri = callbackUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            ManagedIdentity = managedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public Uri CallbackUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
+        /// <summary> The principal id of the managed identity. The value can be "None", "SystemAssigned". </summary>
+        public string ManagedIdentity { get; set; }
     }
 }

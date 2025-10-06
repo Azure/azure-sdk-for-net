@@ -12,6 +12,8 @@ parameters:
 
 steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+    parameters:
+      Condition: ${{ parameters.Condition }}
   - task: PowerShell@2
     displayName: Link verification check
     condition: ${{ parameters.Condition }}
@@ -26,6 +28,7 @@ steps:
         -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
         -branchReplaceRegex "${{ parameters.BranchReplaceRegex }}"
         -branchReplacementName ${{ parameters.BranchReplacementName }}
-        -devOpsLogging: $true
         -checkLinkGuidance: ${{ parameters.CheckLinkGuidance }}
+        -localBuildRepoName "$env:BUILD_REPOSITORY_NAME"
+        -localBuildRepoPath $(Build.SourcesDirectory)
         -inputCacheFile "https://azuresdkartifacts.blob.core.windows.net/verify-links-cache/verify-links-cache.txt"

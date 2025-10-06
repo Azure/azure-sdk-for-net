@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -86,26 +85,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Table name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Table display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Table description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A list of table custom columns. </summary>
+        [WirePath("columns")]
         public IList<OperationalInsightsColumn> Columns { get; }
         /// <summary> A list of table standard columns. </summary>
+        [WirePath("standardColumns")]
         public IReadOnlyList<OperationalInsightsColumn> StandardColumns { get; }
         /// <summary> Table category. </summary>
+        [WirePath("categories")]
         public IReadOnlyList<string> Categories { get; }
         /// <summary> Table labels. </summary>
+        [WirePath("labels")]
         public IReadOnlyList<string> Labels { get; }
         /// <summary> Table's creator. </summary>
+        [WirePath("source")]
         public OperationalInsightsTableCreator? Source { get; }
         /// <summary> Table's creator. </summary>
+        [WirePath("tableType")]
         public OperationalInsightsTableType? TableType { get; }
         /// <summary> The subtype describes what APIs can be used to interact with the table, and what features are available against it. </summary>
+        [WirePath("tableSubType")]
         public OperationalInsightsTableSubType? TableSubType { get; }
         /// <summary> List of solutions the table is affiliated with. </summary>
+        [WirePath("solutions")]
         public IReadOnlyList<string> Solutions { get; }
     }
 }

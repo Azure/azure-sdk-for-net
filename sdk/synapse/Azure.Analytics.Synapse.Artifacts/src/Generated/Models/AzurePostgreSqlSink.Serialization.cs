@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,39 +22,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                writer.WriteObjectValue(PreCopyScript);
+                writer.WriteObjectValue<object>(PreCopyScript);
+            }
+            if (Optional.IsDefined(WriteMethod))
+            {
+                writer.WritePropertyName("writeMethod"u8);
+                writer.WriteStringValue(WriteMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(UpsertSettings))
+            {
+                writer.WritePropertyName("upsertSettings"u8);
+                writer.WriteObjectValue(UpsertSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -67,6 +76,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object preCopyScript = default;
+            AzurePostgreSqlWriteMethodEnum? writeMethod = default;
+            AzurePostgreSqlSinkUpsertSettings upsertSettings = default;
             string type = default;
             object writeBatchSize = default;
             object writeBatchTimeout = default;
@@ -84,6 +95,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     preCopyScript = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("writeMethod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeMethod = new AzurePostgreSqlWriteMethodEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("upsertSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upsertSettings = AzurePostgreSqlSinkUpsertSettings.DeserializeAzurePostgreSqlSinkUpsertSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -147,7 +176,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sinkRetryWait,
                 maxConcurrentConnections,
                 additionalProperties,
-                preCopyScript);
+                preCopyScript,
+                writeMethod,
+                upsertSettings);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzurePostgreSqlSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzurePostgreSqlSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AzurePostgreSqlSinkConverter : JsonConverter<AzurePostgreSqlSink>
@@ -156,6 +203,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzurePostgreSqlSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

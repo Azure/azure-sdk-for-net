@@ -8,10 +8,8 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Messaging.WebPubSub;
 using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Samples

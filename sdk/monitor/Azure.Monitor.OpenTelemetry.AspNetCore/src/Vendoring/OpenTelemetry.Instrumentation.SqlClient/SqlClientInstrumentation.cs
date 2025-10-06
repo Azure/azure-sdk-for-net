@@ -1,4 +1,3 @@
-// <copyright file="SqlClientInstrumentation.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -31,7 +30,7 @@ internal sealed class SqlClientInstrumentation : IDisposable
         "Microsoft.Data.SqlClient.WriteCommandError",
     };
 
-    private readonly Func<string, object, object, bool> isEnabled = (eventName, _, _)
+    private readonly Func<string, object?, object?, bool> isEnabled = (eventName, _, _)
         => DiagnosticSourceEvents.Contains(eventName);
 
     private readonly DiagnosticSourceSubscriber diagnosticSourceSubscriber;
@@ -45,7 +44,7 @@ internal sealed class SqlClientInstrumentation : IDisposable
     [RequiresUnreferencedCode(SqlClientTrimmingUnsupportedMessage)]
 #endif
     public SqlClientInstrumentation(
-        SqlClientTraceInstrumentationOptions options = null)
+        SqlClientTraceInstrumentationOptions? options = null)
     {
 #if NETFRAMEWORK
         this.sqlEventSourceListener = new SqlEventSourceListener(options);

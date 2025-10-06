@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Tags of the partner registration resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

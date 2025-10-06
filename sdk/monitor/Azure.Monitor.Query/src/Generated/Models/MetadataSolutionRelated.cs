@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The related metadata items for the Log Analytics solution. </summary>
     internal partial class MetadataSolutionRelated
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/>. </summary>
         /// <param name="tables"> The tables related to the Log Analytics solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
@@ -35,13 +66,20 @@ namespace Azure.Monitor.Query.Models
         /// <param name="categories"> The categories related to the Log Analytics solution. </param>
         /// <param name="queries"> The saved queries related to the Log Analytics solution. </param>
         /// <param name="workspaces"> The Workspaces referenced in the metadata request that are related to the Log Analytics solution. </param>
-        internal MetadataSolutionRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IReadOnlyList<string> categories, IReadOnlyList<string> queries, IReadOnlyList<string> workspaces)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataSolutionRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IReadOnlyList<string> categories, IReadOnlyList<string> queries, IReadOnlyList<string> workspaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tables = tables;
             Functions = functions;
             Categories = categories;
             Queries = queries;
             Workspaces = workspaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/> for deserialization. </summary>
+        internal MetadataSolutionRelated()
+        {
         }
 
         /// <summary> The tables related to the Log Analytics solution. </summary>

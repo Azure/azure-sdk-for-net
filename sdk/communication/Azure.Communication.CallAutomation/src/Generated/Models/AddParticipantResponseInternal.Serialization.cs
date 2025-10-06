@@ -44,5 +44,13 @@ namespace Azure.Communication.CallAutomation
             }
             return new AddParticipantResponseInternal(participant, operationContext, invitationId);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddParticipantResponseInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAddParticipantResponseInternal(document.RootElement);
+        }
     }
 }

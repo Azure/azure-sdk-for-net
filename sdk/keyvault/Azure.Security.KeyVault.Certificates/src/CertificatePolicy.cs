@@ -178,7 +178,7 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateKeyCurveName? KeyCurveName { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the RSA key. The value must be a valid RSA key length such as 2048 or 4092.
+        /// Gets or sets the size of the RSA key. The value must be a valid RSA key length such as 2048 or 4096.
         /// </summary>
         public int? KeySize { get; set; }
 

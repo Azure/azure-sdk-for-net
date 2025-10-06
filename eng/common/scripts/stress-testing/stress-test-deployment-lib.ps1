@@ -43,12 +43,20 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushImages)
+function Login([string]$subscription, [string]$tenant, [string]$clusterGroup, [switch]$skipPushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
-        RunOrExitOnFailure az login --allow-no-subscriptions
+        Run az login --allow-no-subscriptions --tenant $tenant
+        if ($LASTEXITCODE) {
+            throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
+        }
+    }
+
+    $subscriptions = (Run az account list -o json) | ConvertFrom-Json
+    if ($subscriptions.Length -eq 0) {
+        throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
     }
 
     # Discover cluster name, only one cluster per group is expected
@@ -103,7 +111,7 @@ function DeployStressTests(
     [Parameter(Mandatory=$False)][switch]$Template,
     [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
-    [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
+    [Parameter(Mandatory=$False)][string]$MatrixSelection,
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
@@ -115,19 +123,28 @@ function DeployStressTests(
             Write-Warning "Overriding cluster group and subscription with defaults for 'pg' environment."
         }
         $clusterGroup = 'rg-stress-cluster-pg'
-        $subscription = 'Azure SDK Developer Playground'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
         $clusterGroup = 'rg-stress-cluster-prod'
-        $subscription = 'Azure SDK Test Resources'
-    } elseif (!$clusterGroup -or !$subscription) {
-        throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
+    } elseif ($environment -eq 'storage') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-storage'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+    } elseif (!$clusterGroup -or !$subscription -or $tenant) {
+        throw "-ClusterGroup, -Subscription and -Tenant parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
     if (!$skipLogin) {
-        Login -subscription $subscription -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
+        Login -subscription $subscription -tenant $tenant -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
     }
 
     $chartRepoName = 'stress-test-charts'
@@ -138,7 +155,7 @@ function DeployStressTests(
         }
         RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
     } else {
-        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://azuresdkartifacts.z5.web.core.windows.net/stress/
     }
 
     Run helm repo update
@@ -149,8 +166,9 @@ function DeployStressTests(
                 -filters $filters `
                 -CI:$CI `
                 -namespaceOverride $Namespace `
-                -MatrixSelection $MatrixSelection `
                 -MatrixFileName $MatrixFileName `
+                -MatrixSelection $MatrixSelection `
+                -MatrixDisplayNameFilter $MatrixDisplayNameFilter `
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
@@ -213,9 +231,17 @@ function DeployStressPackage(
     $imageTagBase += "/$($pkg.Namespace)/$($pkg.ReleaseName)"
 
     if (!$Template) {
-        Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
-        kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
-        if ($LASTEXITCODE) {exit $LASTEXITCODE}
+        Write-Host "Checking for namespace $($pkg.Namespace)"
+        kubectl get namespace $pkg.Namespace
+        if ($LASTEXITCODE) {
+            Write-Host "Creating namespace $($pkg.Namespace) ..."
+            kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+            if ($LASTEXITCODE) {exit $LASTEXITCODE}
+            # Give a few seconds for stress watcher to initialize the federated identity credential
+            # and create the service account before we reference it
+            Write-Host "Waiting 15 seconds for namespace federated credentials to be created and synced"
+            Start-Sleep 15
+        }
         Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
         $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
         if ($LASTEXITCODE) {exit $LASTEXITCODE}
@@ -277,7 +303,10 @@ function DeployStressPackage(
             Write-Host "Setting DOCKER_BUILDKIT=1"
             $env:DOCKER_BUILDKIT = 1
 
-            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            # Force amd64 since that's what our AKS cluster is running. Without this you
+            # end up inheriting the default for our platform, which is bad when using ARM
+            # platforms.
+            $dockerBuildCmd = "docker", "build", "--platform", "linux/amd64", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"
                 $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"
@@ -396,7 +425,7 @@ function CheckDependencies()
         }
     )
 
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
     $shouldError = $false
     foreach ($dep in $deps) {

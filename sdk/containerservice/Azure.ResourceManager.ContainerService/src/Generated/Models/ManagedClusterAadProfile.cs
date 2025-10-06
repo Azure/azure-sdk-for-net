@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -74,18 +73,25 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable managed AAD. </summary>
+        [WirePath("managed")]
         public bool? IsManagedAadEnabled { get; set; }
         /// <summary> Whether to enable Azure RBAC for Kubernetes authorization. </summary>
+        [WirePath("enableAzureRBAC")]
         public bool? IsAzureRbacEnabled { get; set; }
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>
+        [WirePath("adminGroupObjectIDs")]
         public IList<Guid> AdminGroupObjectIds { get; }
         /// <summary> (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </summary>
+        [WirePath("clientAppID")]
         public Guid? ClientAppId { get; set; }
         /// <summary> (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </summary>
+        [WirePath("serverAppID")]
         public Guid? ServerAppId { get; set; }
         /// <summary> (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy. </summary>
+        [WirePath("serverAppSecret")]
         public string ServerAppSecret { get; set; }
         /// <summary> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </summary>
+        [WirePath("tenantID")]
         public Guid? TenantId { get; set; }
     }
 }

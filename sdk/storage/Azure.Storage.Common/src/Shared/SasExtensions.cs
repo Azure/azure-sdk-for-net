@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Azure.Storage.Sas
@@ -75,6 +76,7 @@ namespace Azure.Storage.Sas
         private const string NoneName = null;
         private const string HttpsName = "https";
         private const string HttpsAndHttpName = "https,http";
+        private const string HttpAndHttpsName = "http,https";
 
         /// <summary>
         /// Gets a string representation of the protocol.
@@ -109,6 +111,7 @@ namespace Azure.Storage.Sas
                 case HttpsName:
                     return SasProtocol.Https;
                 case HttpsAndHttpName:
+                case HttpAndHttpsName:
                     return SasProtocol.HttpsAndHttp;
                 default:
                     throw Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));
@@ -236,5 +239,21 @@ namespace Azure.Storage.Sas
 
             return stringBuilder.ToString();
         }
+
+        /// <summary>
+        /// ComputeHMACSHA256 generates a base-64 hash signature string for an
+        /// HTTP request or for a SAS.
+        /// </summary>
+        /// <param name="userDelegationKeyValue">
+        /// A UserDelegationKey.Value used to sign with a key
+        /// representing AD credentials.
+        /// </param>
+        /// <param name="message">The message to sign.</param>
+        /// <returns>The signed message.</returns>
+        internal static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+            Convert.ToBase64String(
+                new HMACSHA256(
+                    Convert.FromBase64String(userDelegationKeyValue))
+                .ComputeHash(Encoding.UTF8.GetBytes(message)));
     }
 }

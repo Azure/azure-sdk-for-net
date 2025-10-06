@@ -9,30 +9,42 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [PersistableModelProxy(typeof(UnknownLinkedService))]
     public partial class DataFactoryLinkedServiceProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryLinkedServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryLinkedServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
+            if (Optional.IsDefined(LinkedServiceVersion))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(LinkedServiceVersion);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -64,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,13 +90,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         DataFactoryLinkedServiceProperties IJsonModel<DataFactoryLinkedServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryLinkedServiceProperties DeserializeDataFactoryLinkedServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,22 +133,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureBatch": return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element, options);
                     case "AzureBlobFS": return AzureBlobFSLinkedService.DeserializeAzureBlobFSLinkedService(element, options);
                     case "AzureBlobStorage": return AzureBlobStorageLinkedService.DeserializeAzureBlobStorageLinkedService(element, options);
+                    case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element, options);
+                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element, options);
                     case "AzureDataExplorer": return AzureDataExplorerLinkedService.DeserializeAzureDataExplorerLinkedService(element, options);
                     case "AzureDataLakeAnalytics": return AzureDataLakeAnalyticsLinkedService.DeserializeAzureDataLakeAnalyticsLinkedService(element, options);
                     case "AzureDataLakeStore": return AzureDataLakeStoreLinkedService.DeserializeAzureDataLakeStoreLinkedService(element, options);
-                    case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element, options);
-                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element, options);
                     case "AzureFileStorage": return AzureFileStorageLinkedService.DeserializeAzureFileStorageLinkedService(element, options);
                     case "AzureFunction": return AzureFunctionLinkedService.DeserializeAzureFunctionLinkedService(element, options);
                     case "AzureKeyVault": return AzureKeyVaultLinkedService.DeserializeAzureKeyVaultLinkedService(element, options);
+                    case "AzureMariaDB": return AzureMariaDBLinkedService.DeserializeAzureMariaDBLinkedService(element, options);
                     case "AzureML": return AzureMLLinkedService.DeserializeAzureMLLinkedService(element, options);
                     case "AzureMLService": return AzureMLServiceLinkedService.DeserializeAzureMLServiceLinkedService(element, options);
-                    case "AzureMariaDB": return AzureMariaDBLinkedService.DeserializeAzureMariaDBLinkedService(element, options);
                     case "AzureMySql": return AzureMySqlLinkedService.DeserializeAzureMySqlLinkedService(element, options);
                     case "AzurePostgreSql": return AzurePostgreSqlLinkedService.DeserializeAzurePostgreSqlLinkedService(element, options);
                     case "AzureSearch": return AzureSearchLinkedService.DeserializeAzureSearchLinkedService(element, options);
-                    case "AzureSqlDW": return AzureSqlDWLinkedService.DeserializeAzureSqlDWLinkedService(element, options);
                     case "AzureSqlDatabase": return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element, options);
+                    case "AzureSqlDW": return AzureSqlDWLinkedService.DeserializeAzureSqlDWLinkedService(element, options);
                     case "AzureSqlMI": return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element, options);
                     case "AzureStorage": return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element, options);
                     case "AzureSynapseArtifacts": return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element, options);
@@ -160,20 +171,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FtpServer": return FtpServerLinkedService.DeserializeFtpServerLinkedService(element, options);
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element, options);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element, options);
+                    case "GoogleBigQueryV2": return GoogleBigQueryV2LinkedService.DeserializeGoogleBigQueryV2LinkedService(element, options);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element, options);
                     case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element, options);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element, options);
                     case "HBase": return HBaseLinkedService.DeserializeHBaseLinkedService(element, options);
+                    case "Hdfs": return HdfsLinkedService.DeserializeHdfsLinkedService(element, options);
                     case "HDInsight": return HDInsightLinkedService.DeserializeHDInsightLinkedService(element, options);
                     case "HDInsightOnDemand": return HDInsightOnDemandLinkedService.DeserializeHDInsightOnDemandLinkedService(element, options);
-                    case "Hdfs": return HdfsLinkedService.DeserializeHdfsLinkedService(element, options);
                     case "Hive": return HiveLinkedService.DeserializeHiveLinkedService(element, options);
                     case "HttpServer": return HttpLinkedService.DeserializeHttpLinkedService(element, options);
                     case "Hubspot": return HubspotLinkedService.DeserializeHubspotLinkedService(element, options);
                     case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element, options);
                     case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element, options);
                     case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element, options);
-                    case "LakeHouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
+                    case "Lakehouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
                     case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element, options);
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element, options);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element, options);
@@ -192,9 +204,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element, options);
                     case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element, options);
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element, options);
+                    case "PostgreSqlV2": return PostgreSqlV2LinkedService.DeserializePostgreSqlV2LinkedService(element, options);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element, options);
-                    case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element, options);
                     case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element, options);
+                    case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element, options);
                     case "Responsys": return ResponsysLinkedService.DeserializeResponsysLinkedService(element, options);
                     case "RestService": return RestServiceLinkedService.DeserializeRestServiceLinkedService(element, options);
                     case "Salesforce": return SalesforceLinkedService.DeserializeSalesforceLinkedService(element, options);
@@ -210,6 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element, options);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element, options);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element, options);
+                    case "ServiceNowV2": return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element, options);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element, options);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element, options);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element, options);
@@ -241,9 +255,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,11 +269,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

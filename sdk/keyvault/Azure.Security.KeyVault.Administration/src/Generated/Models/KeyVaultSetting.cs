@@ -6,12 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> The Setting. </summary>
+    /// <summary> A Key Vault account setting. </summary>
     public partial class KeyVaultSetting
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
     }

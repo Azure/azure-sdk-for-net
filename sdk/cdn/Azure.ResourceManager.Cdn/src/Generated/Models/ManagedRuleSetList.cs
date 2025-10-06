@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the list of managed rule sets for the policy. </summary>
+    /// <summary>
+    /// Defines the list of managed rule sets for the policy.
+    /// Serialized Name: ManagedRuleSetList
+    /// </summary>
     internal partial class ManagedRuleSetList
     {
         /// <summary>
@@ -53,7 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
-        /// <param name="managedRuleSets"> List of rule sets. </param>
+        /// <param name="managedRuleSets">
+        /// List of rule sets.
+        /// Serialized Name: ManagedRuleSetList.managedRuleSets
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleSetList(IList<WafPolicyManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +66,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of rule sets. </summary>
+        /// <summary>
+        /// List of rule sets.
+        /// Serialized Name: ManagedRuleSetList.managedRuleSets
+        /// </summary>
         public IList<WafPolicyManagedRuleSet> ManagedRuleSets { get; }
     }
 }

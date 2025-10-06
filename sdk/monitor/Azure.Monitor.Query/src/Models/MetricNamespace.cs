@@ -9,6 +9,6 @@ namespace Azure.Monitor.Query.Models
         private MetricNamespaceName Properties { get; }
 
         /// <summary> The fully qualified namespace name. </summary>
-        public string FullyQualifiedName => Properties.MetricNamespaceNameValue;
+        public string FullyQualifiedName => Properties.MetricNamespaceNameProperty;
     }
 }

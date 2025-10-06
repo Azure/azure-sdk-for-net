@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The UnknownFirewallPolicyRule. </summary>
+    /// <summary> Unknown version of FirewallPolicyRule. </summary>
     internal partial class UnknownFirewallPolicyRule : FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRule"/>. </summary>

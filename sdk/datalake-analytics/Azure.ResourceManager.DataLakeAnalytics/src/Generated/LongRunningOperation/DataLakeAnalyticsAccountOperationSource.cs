@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         DataLakeAnalyticsAccountResource IOperationSource<DataLakeAnalyticsAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataLakeAnalyticsAccountData.DeserializeDataLakeAnalyticsAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataLakeAnalyticsContext.Default);
             return new DataLakeAnalyticsAccountResource(_client, data);
         }
 
         async ValueTask<DataLakeAnalyticsAccountResource> IOperationSource<DataLakeAnalyticsAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataLakeAnalyticsAccountData.DeserializeDataLakeAnalyticsAccountData(document.RootElement);
-            return new DataLakeAnalyticsAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataLakeAnalyticsContext.Default);
+            return await Task.FromResult(new DataLakeAnalyticsAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

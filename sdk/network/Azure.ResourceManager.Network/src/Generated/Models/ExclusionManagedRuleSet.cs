@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,10 +78,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Defines the rule set type to use. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
         /// <summary> Defines the version of the rule set to use. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
         /// <summary> Defines the rule groups to apply to the rule set. </summary>
+        [WirePath("ruleGroups")]
         public IList<ExclusionManagedRuleGroup> RuleGroups { get; }
     }
 }

@@ -26,7 +26,6 @@ namespace Azure.Identity
         private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
-
         private readonly CredentialPipeline _pipeline;
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
@@ -65,11 +64,23 @@ namespace Azure.Identity
             _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains a access token from account signed in to Visual Studio.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => await GetTokenImplAsync(requestContext, true, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains a access token from account signed in to Visual Studio.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => GetTokenImplAsync(requestContext, false, cancellationToken).EnsureCompleted();
 
@@ -107,7 +118,9 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
+                // Treat all exceptions as credential unavailable, except for OperationCanceledException which is treated as a cancellation.
+                bool IsCancellationRequested = e is OperationCanceledException && cancellationToken.IsCancellationRequested;
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: !IsCancellationRequested);
             }
         }
 

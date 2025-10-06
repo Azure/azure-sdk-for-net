@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownCopyOption. </summary>
+    /// <summary> Unknown version of CopyOption. </summary>
     internal partial class UnknownCopyOption : DataProtectionBackupCopySetting
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopyOption"/>. </summary>

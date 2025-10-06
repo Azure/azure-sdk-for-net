@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -21,20 +20,20 @@ namespace Azure.ResourceManager.Avs.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ParameterType = ScriptExecutionParameterType.Credential;
+            Type = ScriptExecutionParameterType.Credential;
         }
 
         /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/>. </summary>
+        /// <param name="type"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
-        /// <param name="parameterType"> The type of execution parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> username for login. </param>
         /// <param name="password"> password for login. </param>
-        internal PSCredentialExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string password) : base(name, parameterType, serializedAdditionalRawData)
+        internal PSCredentialExecutionParameterDetails(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string password) : base(type, name, serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
-            ParameterType = parameterType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/> for deserialization. </summary>

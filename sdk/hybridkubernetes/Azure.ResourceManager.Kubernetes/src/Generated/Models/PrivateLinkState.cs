@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Kubernetes.Models
     public readonly partial struct PrivateLinkState : IEquatable<PrivateLinkState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PrivateLinkState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PrivateLinkState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static PrivateLinkState Enabled { get; } = new PrivateLinkState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static PrivateLinkState Disabled { get; } = new PrivateLinkState(DisabledValue);
+
         /// <summary> Determines if two <see cref="PrivateLinkState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateLinkState left, PrivateLinkState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateLinkState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateLinkState left, PrivateLinkState right) => !left.Equals(right);
+
         /// <summary> Converts a string to a <see cref="PrivateLinkState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateLinkState(string value) => new PrivateLinkState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateLinkState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateLinkState?(string value) => value == null ? null : new PrivateLinkState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateLinkState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateLinkState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

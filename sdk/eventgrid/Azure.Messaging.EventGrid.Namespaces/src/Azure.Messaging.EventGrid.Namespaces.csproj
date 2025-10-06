@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Event Grid is a publish-subscribe service that allows cloud events to be passed from producers to consumers.  This client library allows for both publishing and consuming events using Azure Event Grid. For more information about Event Grid, see https://azure.microsoft.com/services/event-grid.</Description>
+    <AssemblyTitle>Azure EventGrid Namespaces client library</AssemblyTitle>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <PackageTags>Azure;Event Grid;CloudEvent;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
+  </PropertyGroup>
+
+    <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureEventGridSharedSources)CloudEventRequestContent.cs" LinkBase="Shared/EventGrid" />
+    <Compile Include="$(AzureEventGridSharedSources)CloudEventsRequestContent.cs" LinkBase="Shared/EventGrid" />
+  </ItemGroup>
+
+    <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+</Project>

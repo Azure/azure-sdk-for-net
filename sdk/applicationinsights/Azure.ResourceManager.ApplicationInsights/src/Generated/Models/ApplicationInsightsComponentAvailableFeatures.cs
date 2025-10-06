@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> A list of Application Insights component feature. </summary>
+        [WirePath("Result")]
         public IReadOnlyList<ApplicationInsightsComponentFeature> Result { get; }
     }
 }

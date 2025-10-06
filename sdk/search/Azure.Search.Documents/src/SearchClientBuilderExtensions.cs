@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core.Extensions;
 using Azure.Search.Documents;
@@ -57,6 +58,8 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder">The client factory builder.</param>
         /// <param name="configuration">The client configuration.</param>
         /// <returns>An Azure client builder.</returns>
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder, TConfiguration>(
             this TBuilder builder,
             TConfiguration configuration)
@@ -100,10 +103,57 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder">The client factory builder.</param>
         /// <param name="configuration">The client configuration.</param>
         /// <returns>An Azure client builder.</returns>
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder, TConfiguration>(
             this TBuilder builder,
             TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
             builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>(configuration);
+
+        /// <summary>
+        /// Registers a <see cref="SearchIndexerClient"/> instance with the
+        /// provided <paramref name="endpoint"/> and <paramref name="credential"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Type of the client factory builder.</typeparam>
+        /// <param name="builder">The client factory builder.</param>
+        /// <param name="endpoint">
+        /// Required.  The URI endpoint of the Search Service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="credential">
+        /// Required.  The API key credential used to authenticate requests
+        /// against the search service.  You need to use an admin key to
+        /// modify the documents in a Search Index.  See
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
+        /// for more information about API keys in Azure Cognitive Search.
+        /// </param>
+        /// <returns>An Azure client builder.</returns>
+        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(
+            this TBuilder builder,
+            Uri endpoint,
+            AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder =>
+            builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(
+                options => new SearchIndexerClient(endpoint, credential, options));
+
+        /// <summary>
+        /// Registers a <see cref="SearchIndexerClient"/> instance with connection
+        /// options loaded from the provided <paramref name="configuration"/>
+        /// instance.
+        /// </summary>
+        /// <typeparam name="TBuilder">Type of the client factory builder.</typeparam>
+        /// <typeparam name="TConfiguration">Type of the configuration.</typeparam>
+        /// <param name="builder">The client factory builder.</param>
+        /// <param name="configuration">The client configuration.</param>
+        /// <returns>An Azure client builder.</returns>
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder, TConfiguration>(
+            this TBuilder builder,
+            TConfiguration configuration)
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
+            builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(configuration);
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The product/service name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Product/service versions compatible with a service mesh add-on revision. </summary>
+        [WirePath("versions")]
         public IList<string> Versions { get; }
     }
 }

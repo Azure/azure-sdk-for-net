@@ -5,9 +5,18 @@
 
 #nullable disable
 
+using System.Text.Json;
+
 namespace Azure.DigitalTwins.Core
 {
     public partial class DigitalTwinsModelData
     {
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DigitalTwinsModelData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDigitalTwinsModelData(document.RootElement);
+        }
     }
 }

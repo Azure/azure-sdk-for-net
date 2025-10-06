@@ -80,5 +80,13 @@ namespace Azure.AI.Language.QuestionAnswering
                 offset,
                 length);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextAnswer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTextAnswer(document.RootElement);
+        }
     }
 }

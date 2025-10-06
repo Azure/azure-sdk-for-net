@@ -11,59 +11,45 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzurePostgreSqlSink : IUtf8JsonSerializable, IJsonModel<AzurePostgreSqlSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzurePostgreSqlSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzurePostgreSqlSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzurePostgreSqlSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzurePostgreSqlSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Optional.IsDefined(WriteMethod))
             {
-                writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
+                writer.WritePropertyName("writeMethod"u8);
+                writer.WriteStringValue(WriteMethod.Value.ToString());
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Optional.IsDefined(UpsertSettings))
             {
-                writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                writer.WritePropertyName("upsertSettings"u8);
+                writer.WriteObjectValue(UpsertSettings, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -71,13 +57,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         AzurePostgreSqlSink IJsonModel<AzurePostgreSqlSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -85,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzurePostgreSqlSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,13 +79,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzurePostgreSqlSink DeserializeAzurePostgreSqlSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryElement<string> preCopyScript = default;
+            AzurePostgreSqlWriteMethodEnum? writeMethod = default;
+            AzurePostgreSqlSinkUpsertSettings upsertSettings = default;
             string type = default;
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
@@ -119,6 +106,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("writeMethod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeMethod = new AzurePostgreSqlWriteMethodEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("upsertSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upsertSettings = AzurePostgreSqlSinkUpsertSettings.DeserializeAzurePostgreSqlSinkUpsertSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -192,7 +197,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 maxConcurrentConnections,
                 disableMetricsCollection,
                 additionalProperties,
-                preCopyScript);
+                preCopyScript,
+                writeMethod,
+                upsertSettings);
         }
 
         BinaryData IPersistableModel<AzurePostgreSqlSink>.Write(ModelReaderWriterOptions options)
@@ -202,9 +209,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,11 +223,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzurePostgreSqlSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzurePostgreSqlSink)} does not support reading '{options.Format}' format.");
             }
         }
 

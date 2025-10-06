@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -97,10 +95,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// - EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.
         /// - EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.
         /// </summary>
+        [WirePath("flag")]
         public SignalRFeatureFlag Flag { get; set; }
         /// <summary> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Optional properties related to this feature. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; }
     }
 }

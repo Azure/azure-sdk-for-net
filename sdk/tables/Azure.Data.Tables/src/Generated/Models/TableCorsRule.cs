@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {

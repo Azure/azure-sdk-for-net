@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.ResourceDetectors.Azure;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -27,8 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
-
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -42,10 +39,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentation is added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core.</item>
-        /// <item>HTTP Client.</item>
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
@@ -69,10 +64,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentation is added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core.</item>
-        /// <item>HTTP Client.</item>
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
@@ -114,56 +107,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 }
                                 return true;
                             })
-                            .AddProcessor<ProfilingSessionTraceProcessor>()
-                            .AddLiveMetrics()
-                            .AddAzureMonitorTraceExporter());
+                            .AddProcessor<ProfilingSessionTraceProcessor>());
 
-            builder.WithMetrics(b => b
-                            .AddAzureMonitorMetricExporter());
-
-            builder.Services.AddLogging(logging =>
-            {
-                logging.AddOpenTelemetry(builderOptions =>
-                {
-                    var resourceBuilder = ResourceBuilder.CreateDefault();
-                    configureResource(resourceBuilder);
-                    builderOptions.SetResourceBuilder(resourceBuilder);
-
-                    builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.IncludeScopes = false;
-                });
-            });
-
-            // Add AzureMonitorLogExporter to AzureMonitorOptions
-            // once the service provider is available containing the final
-            // AzureMonitorOptions.
-            builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
-                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
-                    {
-                        var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
-
-                        bool enableLogSampling = false;
-                        try
-                        {
-                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
-                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
-                        }
-
-                        if (enableLogSampling)
-                        {
-                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
-                        }
-                        else
-                        {
-                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
-                        }
-                    });
+            builder.WithMetrics(b => b.AddHttpClientAndServerMetrics());
 
             // Register a configuration action so that when
             // AzureMonitorExporterOptions is requested it is populated from
@@ -173,16 +119,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((exporterOptions, azureMonitorOptions) =>
                     {
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToExporterOptions(exporterOptions);
-                    });
-
-            // Register a configuration action so that when
-            // LiveMetricsExporterOptions is requested it is populated from
-            // AzureMonitorOptions.
-            builder.Services
-                    .AddOptions<LiveMetricsExporterOptions>()
-                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((exporterOptions, azureMonitorOptions) =>
-                    {
-                        azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
             // Register Azure SDK log forwarder in the case it was not registered by the user application.
@@ -197,41 +133,62 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 }
 
                 var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-                return new AzureEventSourceLogForwarder(loggerFactory);
+                var loggerFilterOptions = sp.GetRequiredService<IOptionsMonitor<LoggerFilterOptions>>().CurrentValue;
+                return new AzureEventSourceLogForwarder(loggerFactory, loggerFilterOptions);
             });
+
+            builder.Services.AddOptions<AzureMonitorOptions>()
+                .Configure<IConfiguration>((options, config) =>
+                {
+                    // This is a temporary workaround for hotfix GHSA-vh2m-22xx-q94f.
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f
+                    // We are disabling the workaround set by OpenTelemetry.Instrumentation.AspNetCore v1.8.1 and OpenTelemetry.Instrumentation.Http v1.8.1.
+                    // The OpenTelemetry Community is deciding on an official stance on this issue and we will align with that final decision.
+                    // TODO: FOLLOW UP ON: https://github.com/open-telemetry/semantic-conventions/pull/961 (2024-04-26)
+                    if (config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+
+                    if (config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+
+                    // If connection string is not set in the options, try to get it from configuration.
+                    if (string.IsNullOrWhiteSpace(options.ConnectionString) && config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING] != null)
+                    {
+                        options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
+                    }
+                });
+
+            builder.UseAzureMonitorExporter();
 
             return builder;
         }
 
         private static TracerProviderBuilder AddVendorInstrumentationIfPackageNotReferenced(this TracerProviderBuilder tracerProviderBuilder)
         {
-            var vendorInstrumentationActions = new Dictionary<string, Action>
+            try
             {
-                { SqlClientInstrumentationPackageName, () => tracerProviderBuilder.AddSqlClientInstrumentation() },
-            };
-
-            foreach (var packageActionPair in vendorInstrumentationActions)
+                var instrumentationAssembly = Assembly.Load(SqlClientInstrumentationPackageName);
+                AzureMonitorAspNetCoreEventSource.Log.FoundInstrumentationPackageReference(SqlClientInstrumentationPackageName);
+            }
+            catch
             {
-                Assembly? instrumentationAssembly = null;
-
-                try
-                {
-                    instrumentationAssembly = Assembly.Load(packageActionPair.Key);
-                    AzureMonitorAspNetCoreEventSource.Log.FoundInstrumentationPackageReference(packageActionPair.Key);
-                }
-                catch
-                {
-                    AzureMonitorAspNetCoreEventSource.Log.NoInstrumentationPackageReference(packageActionPair.Key);
-                }
-
-                if (instrumentationAssembly == null)
-                {
-                    packageActionPair.Value.Invoke();
-                    AzureMonitorAspNetCoreEventSource.Log.VendorInstrumentationAdded(packageActionPair.Key);
-                }
+                AzureMonitorAspNetCoreEventSource.Log.NoInstrumentationPackageReference(SqlClientInstrumentationPackageName);
+                tracerProviderBuilder.AddSqlClientInstrumentation();
+                AzureMonitorAspNetCoreEventSource.Log.VendorInstrumentationAdded(SqlClientInstrumentationPackageName);
             }
 
             return tracerProviderBuilder;
+        }
+
+        private static MeterProviderBuilder AddHttpClientAndServerMetrics(this MeterProviderBuilder meterProviderBuilder)
+        {
+            return Environment.Version.Major >= 8 ?
+                meterProviderBuilder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http")
+                : meterProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation();
         }
     }
 }

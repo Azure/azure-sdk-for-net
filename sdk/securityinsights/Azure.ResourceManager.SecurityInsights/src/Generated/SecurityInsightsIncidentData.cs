@@ -7,17 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsIncident data model.
-    /// Represents an incident in Azure Security Insights.
-    /// </summary>
+    /// <summary> A class representing the SecurityInsightsIncident data model. </summary>
     public partial class SecurityInsightsIncidentData : ResourceData
     {
         /// <summary>
@@ -64,83 +60,116 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="additionalInfo"> Additional data on the incident. </param>
-        /// <param name="classification"> The reason the incident was closed. </param>
-        /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
-        /// <param name="classificationReason"> The classification reason the incident was closed with. </param>
-        /// <param name="createdOn"> The time the incident was created. </param>
+        /// <param name="title"> The title of the incident. </param>
         /// <param name="description"> The description of the incident. </param>
-        /// <param name="firstActivityOn"> The time of the first activity in the incident. </param>
-        /// <param name="incidentUri"> The deep-link url to the incident in Azure portal. </param>
-        /// <param name="incidentNumber"> A sequential number. </param>
-        /// <param name="labels"> List of labels relevant to this incident. </param>
-        /// <param name="lastActivityOn"> The time of the last activity in the incident. </param>
-        /// <param name="lastModifiedOn"> The last time the incident was updated. </param>
-        /// <param name="owner"> Describes a user that the incident is assigned to. </param>
-        /// <param name="relatedAnalyticRuleIds"> List of resource ids of Analytic rules related to the incident. </param>
         /// <param name="severity"> The severity of the incident. </param>
         /// <param name="status"> The status of the incident. </param>
-        /// <param name="title"> The title of the incident. </param>
+        /// <param name="classification"> The reason the incident was closed. </param>
+        /// <param name="classificationReason"> The classification reason the incident was closed with. </param>
+        /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
+        /// <param name="owner"> Describes a user that the incident is assigned to. </param>
+        /// <param name="labels"> List of labels relevant to this incident. </param>
+        /// <param name="firstActivityOn"> The time of the first activity in the incident. </param>
+        /// <param name="lastActivityOn"> The time of the last activity in the incident. </param>
+        /// <param name="lastModifiedOn"> The last time the incident was updated. </param>
+        /// <param name="createdOn"> The time the incident was created. </param>
+        /// <param name="incidentNumber"> A sequential number. </param>
+        /// <param name="additionalInfo"> Additional data on the incident. </param>
+        /// <param name="relatedAnalyticRuleIds"> List of resource ids of Analytic rules related to the incident. </param>
+        /// <param name="incidentUri"> The deep-link url to the incident in Azure portal. </param>
+        /// <param name="providerName"> The name of the source provider that generated the incident. </param>
+        /// <param name="providerIncidentId"> The incident ID assigned by the incident provider. </param>
+        /// <param name="teamInformation"> Describes a team for the incident. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsIncidentAdditionalInfo additionalInfo, SecurityInsightsIncidentClassification? classification, string classificationComment, SecurityInsightsIncidentClassificationReason? classificationReason, DateTimeOffset? createdOn, string description, DateTimeOffset? firstActivityOn, Uri incidentUri, int? incidentNumber, IList<SecurityInsightsIncidentLabel> labels, DateTimeOffset? lastActivityOn, DateTimeOffset? lastModifiedOn, SecurityInsightsIncidentOwnerInfo owner, IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds, SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, string title, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, SecurityInsightsIncidentClassification? classification, SecurityInsightsIncidentClassificationReason? classificationReason, string classificationComment, SecurityInsightsIncidentOwnerInfo owner, IList<SecurityInsightsIncidentLabel> labels, DateTimeOffset? firstActivityOn, DateTimeOffset? lastActivityOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, int? incidentNumber, SecurityInsightsIncidentAdditionalInfo additionalInfo, IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds, Uri incidentUri, string providerName, string providerIncidentId, TeamInformation teamInformation, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            AdditionalInfo = additionalInfo;
-            Classification = classification;
-            ClassificationComment = classificationComment;
-            ClassificationReason = classificationReason;
-            CreatedOn = createdOn;
+            Title = title;
             Description = description;
-            FirstActivityOn = firstActivityOn;
-            IncidentUri = incidentUri;
-            IncidentNumber = incidentNumber;
-            Labels = labels;
-            LastActivityOn = lastActivityOn;
-            LastModifiedOn = lastModifiedOn;
-            Owner = owner;
-            RelatedAnalyticRuleIds = relatedAnalyticRuleIds;
             Severity = severity;
             Status = status;
-            Title = title;
+            Classification = classification;
+            ClassificationReason = classificationReason;
+            ClassificationComment = classificationComment;
+            Owner = owner;
+            Labels = labels;
+            FirstActivityOn = firstActivityOn;
+            LastActivityOn = lastActivityOn;
+            LastModifiedOn = lastModifiedOn;
+            CreatedOn = createdOn;
+            IncidentNumber = incidentNumber;
+            AdditionalInfo = additionalInfo;
+            RelatedAnalyticRuleIds = relatedAnalyticRuleIds;
+            IncidentUri = incidentUri;
+            ProviderName = providerName;
+            ProviderIncidentId = providerIncidentId;
+            TeamInformation = teamInformation;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Additional data on the incident. </summary>
-        public SecurityInsightsIncidentAdditionalInfo AdditionalInfo { get; }
-        /// <summary> The reason the incident was closed. </summary>
-        public SecurityInsightsIncidentClassification? Classification { get; set; }
-        /// <summary> Describes the reason the incident was closed. </summary>
-        public string ClassificationComment { get; set; }
-        /// <summary> The classification reason the incident was closed with. </summary>
-        public SecurityInsightsIncidentClassificationReason? ClassificationReason { get; set; }
-        /// <summary> The time the incident was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The title of the incident. </summary>
+        [WirePath("properties.title")]
+        public string Title { get; set; }
         /// <summary> The description of the incident. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> The time of the first activity in the incident. </summary>
-        public DateTimeOffset? FirstActivityOn { get; set; }
-        /// <summary> The deep-link url to the incident in Azure portal. </summary>
-        public Uri IncidentUri { get; }
-        /// <summary> A sequential number. </summary>
-        public int? IncidentNumber { get; }
-        /// <summary> List of labels relevant to this incident. </summary>
-        public IList<SecurityInsightsIncidentLabel> Labels { get; }
-        /// <summary> The time of the last activity in the incident. </summary>
-        public DateTimeOffset? LastActivityOn { get; set; }
-        /// <summary> The last time the incident was updated. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Describes a user that the incident is assigned to. </summary>
-        public SecurityInsightsIncidentOwnerInfo Owner { get; set; }
-        /// <summary> List of resource ids of Analytic rules related to the incident. </summary>
-        public IReadOnlyList<ResourceIdentifier> RelatedAnalyticRuleIds { get; }
         /// <summary> The severity of the incident. </summary>
+        [WirePath("properties.severity")]
         public SecurityInsightsIncidentSeverity? Severity { get; set; }
         /// <summary> The status of the incident. </summary>
+        [WirePath("properties.status")]
         public SecurityInsightsIncidentStatus? Status { get; set; }
-        /// <summary> The title of the incident. </summary>
-        public string Title { get; set; }
+        /// <summary> The reason the incident was closed. </summary>
+        [WirePath("properties.classification")]
+        public SecurityInsightsIncidentClassification? Classification { get; set; }
+        /// <summary> The classification reason the incident was closed with. </summary>
+        [WirePath("properties.classificationReason")]
+        public SecurityInsightsIncidentClassificationReason? ClassificationReason { get; set; }
+        /// <summary> Describes the reason the incident was closed. </summary>
+        [WirePath("properties.classificationComment")]
+        public string ClassificationComment { get; set; }
+        /// <summary> Describes a user that the incident is assigned to. </summary>
+        [WirePath("properties.owner")]
+        public SecurityInsightsIncidentOwnerInfo Owner { get; set; }
+        /// <summary> List of labels relevant to this incident. </summary>
+        [WirePath("properties.labels")]
+        public IList<SecurityInsightsIncidentLabel> Labels { get; }
+        /// <summary> The time of the first activity in the incident. </summary>
+        [WirePath("properties.firstActivityTimeUtc")]
+        public DateTimeOffset? FirstActivityOn { get; set; }
+        /// <summary> The time of the last activity in the incident. </summary>
+        [WirePath("properties.lastActivityTimeUtc")]
+        public DateTimeOffset? LastActivityOn { get; set; }
+        /// <summary> The last time the incident was updated. </summary>
+        [WirePath("properties.lastModifiedTimeUtc")]
+        public DateTimeOffset? LastModifiedOn { get; }
+        /// <summary> The time the incident was created. </summary>
+        [WirePath("properties.createdTimeUtc")]
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> A sequential number. </summary>
+        [WirePath("properties.incidentNumber")]
+        public int? IncidentNumber { get; }
+        /// <summary> Additional data on the incident. </summary>
+        [WirePath("properties.additionalData")]
+        public SecurityInsightsIncidentAdditionalInfo AdditionalInfo { get; }
+        /// <summary> List of resource ids of Analytic rules related to the incident. </summary>
+        [WirePath("properties.relatedAnalyticRuleIds")]
+        public IReadOnlyList<ResourceIdentifier> RelatedAnalyticRuleIds { get; }
+        /// <summary> The deep-link url to the incident in Azure portal. </summary>
+        [WirePath("properties.incidentUrl")]
+        public Uri IncidentUri { get; }
+        /// <summary> The name of the source provider that generated the incident. </summary>
+        [WirePath("properties.providerName")]
+        public string ProviderName { get; }
+        /// <summary> The incident ID assigned by the incident provider. </summary>
+        [WirePath("properties.providerIncidentId")]
+        public string ProviderIncidentId { get; }
+        /// <summary> Describes a team for the incident. </summary>
+        [WirePath("properties.teamInformation")]
+        public TeamInformation TeamInformation { get; set; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

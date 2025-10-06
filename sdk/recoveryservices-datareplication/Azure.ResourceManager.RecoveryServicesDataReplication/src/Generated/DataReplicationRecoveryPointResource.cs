@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -36,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics;
-        private readonly RecoveryPointsRestOperations _dataReplicationRecoveryPointRecoveryPointsRestClient;
+        private readonly ClientDiagnostics _dataReplicationRecoveryPointRecoveryPointClientDiagnostics;
+        private readonly RecoveryPointRestOperations _dataReplicationRecoveryPointRecoveryPointRestClient;
         private readonly DataReplicationRecoveryPointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,9 +60,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationRecoveryPointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataReplicationRecoveryPointRecoveryPointsApiVersion);
-            _dataReplicationRecoveryPointRecoveryPointsRestClient = new RecoveryPointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationRecoveryPointRecoveryPointsApiVersion);
+            _dataReplicationRecoveryPointRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataReplicationRecoveryPointRecoveryPointApiVersion);
+            _dataReplicationRecoveryPointRecoveryPointRestClient = new RecoveryPointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationRecoveryPointRecoveryPointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,11 +98,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <description>RecoveryPointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,11 +113,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataReplicationRecoveryPointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("DataReplicationRecoveryPointResource.Get");
+            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataReplicationRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataReplicationRecoveryPointRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataReplicationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
@@ -140,11 +138,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <description>RecoveryPointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-16-preview</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,11 +153,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataReplicationRecoveryPointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("DataReplicationRecoveryPointResource.Get");
+            using var scope = _dataReplicationRecoveryPointRecoveryPointClientDiagnostics.CreateScope("DataReplicationRecoveryPointResource.Get");
             scope.Start();
             try
             {
-                var response = _dataReplicationRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataReplicationRecoveryPointRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataReplicationRecoveryPointResource(Client, response.Value), response.GetRawResponse());

@@ -8,17 +8,25 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/86d7e7d7c7ea9428a3a8e983d746a270f0581bc7/specification/apimanagement/resource-manager/readme.md
+tag: package-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
+  skipped-operations:
+    - ApiProduct_ListByApis
+    - UserGroup_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 skip-serialization-format-xml: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
@@ -45,6 +53,22 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}: ApiManagementProductPolicy
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}: ApiManagementProductTag
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}: ApiManagementUserSubscription
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}: ApiManagementProduct
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments/{id}: PolicyFragmentContract
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}: ApiVersionSet
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}: ApiSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}: Api
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}: ApiRelease
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}: ApiOperation
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}: ApiManagementNotification
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}: ApiManagementNamedValue
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}: ApiManagementGroup
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}: ApiManagementGlobalSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}: ApiManagementBackend
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates/{certificateId}: ApiManagementCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}: ApiManagementLogger
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}: ApiGateway
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}: ApiGatewayConfigConnection
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -112,12 +136,14 @@ override-operation-name:
 prepend-rp-prefix:
 - ResourceSkuCapacity
 - ResourceSkuCapacityScaleType
+- AuthorizationType
+- AuthorizationError
+- NatGatewayState
 
 rename-mapping:
   GatewayHostnameConfigurationContract.properties.negotiateClientCertificate: IsClientCertificateRequired
   SubscriptionsDelegationSettingsProperties.enabled: IsSubscriptionDelegationEnabled
   RegistrationDelegationSettingsProperties.enabled: IsUserRegistrationDelegationEnabled
-  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
   BackendTlsProperties.validateCertificateChain: ShouldValidateCertificateChain
   BackendTlsProperties.validateCertificateName: ShouldValidateCertificateName
   HostnameConfiguration.defaultSslBinding: IsDefaultSslBindingEnabled
@@ -149,10 +175,12 @@ rename-mapping:
   AccessIdName.access: TenantAccess
   AccessIdName.gitAccess: TenantGitAccess
   ApiContract: Api
-  ApiCollection: ApiListResult
   NetworkStatusContractByLocation: NetworkStatusContractWithLocation
   ApiManagementServiceResource: ApiManagementService
   ApiReleaseContract: ApiRelease
+  BackendUpdateParameters: ApiManagementBackendPatch
+  CertificateCreateOrUpdateParameters: ApiManagementCertificateCreateOrUpdateContent
+  LoggerUpdateContract: ApiManagementLoggerPatch
   OperationContract: ApiOperation
   SchemaContract: ApiSchema
   TagDescriptionContract: ApiTagDescription
@@ -271,9 +299,43 @@ rename-mapping:
   ParameterContract.required: IsRequired
   SchemaType: ApiSchemaType
   ApiRevisionContract.privateUrl: privateUrlString
+  ApiContract.properties.termsOfServiceUrl: termsOfServiceLink
+  ApiContract.properties.serviceUrl: serviceLink
+  ApiUpdateContract: ApiPatch
+  ApiUpdateContract.properties.termsOfServiceUrl: termsOfServiceLink
+  ApiUpdateContract.properties.serviceUrl: serviceLink
+  ApiCreateOrUpdateParameter: ApiCreateOrUpdateContent
+  ApiCreateOrUpdateParameter.properties.termsOfServiceUrl: termsOfServiceLink
+  ApiCreateOrUpdateParameter.properties.serviceUrl: serviceLink
+  ApiEntityBaseContract.termsOfServiceUrl: termsOfServiceLink
+  AuthorizationConfirmConsentCodeRequestContract: AuthorizationConfirmConsentCodeContent
+  AuthorizationLoginRequestContract: AuthorizationLoginContent
+  AuthorizationLoginResponseContract: AuthorizationLoginResult
+  SubscriptionCreateParameters: ApiManagementSubscriptionCreateOrUpdateContent
+  SubscriptionUpdateParameters: ApiManagementSubscriptionPatch
+  ProductUpdateParameters: ApiManagementProductPatch
+  NamedValueUpdateParameters: ApiManagementNamedValuePatch
+  GroupCreateParameters: ApiManagementGroupCreateOrUpdateContent
+  GroupCreateParameters.properties.type: ApiManagementGroupType
+  GroupUpdateParameters: ApiManagementGroupPatch
+  GroupUpdateParameters.properties.type: ApiManagementGroupType
+  ApiVersionSetUpdateParameters: ApiVersionSetPatch
+  OperationUpdateContract: ApiOperationPatch
+  NamedValueCreateContract: ApiManagementNamedValueCreateOrUpdateContent
+  ApiManagementGatewayConfigConnectionResource: ApiGatewayConfigConnection
+  ApiManagementGatewayResource: ApiGateway
+  ApiManagementWorkspaceLinksResource: ApiManagementWorkspaceLinks
+  SoapApiType.grpc: Grpc
+  AllPoliciesContract.properties.referencePolicyId: -|arm-id
+  DiagnosticUpdateContract.properties.logClientIp: IsLogClientIPEnabled
+  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
+
+keep-plural-resource-data:
+  - ApiManagementWorkspaceLinks
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
+  - remove-operation: 'OperationStatus_Get'
   - from: definitions.json
     where: $.definitions
     transform: >
@@ -546,9 +608,57 @@ directive:
               }
           ]
         }
-    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
+    # reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy'
-
+  - from: apimcontenttypes.json
+    where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}'].put
+    transform: >
+                $['parameters']=[
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+                      }
+                ]
+  - from: apimcontenttypes.json
+    where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'].put
+    transform: >
+                $['parameters']=[      
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentItemIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+                      }
+                ]
 ```

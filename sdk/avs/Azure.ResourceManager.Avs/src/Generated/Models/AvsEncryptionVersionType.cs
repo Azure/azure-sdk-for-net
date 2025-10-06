@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Property of the key if user provided or auto detected. </summary>
+    /// <summary> Whether the encryption version is fixed or auto-detected. </summary>
     public readonly partial struct AvsEncryptionVersionType : IEquatable<AvsEncryptionVersionType>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string FixedValue = "Fixed";
         private const string AutoDetectedValue = "AutoDetected";
 
-        /// <summary> Fixed. </summary>
+        /// <summary> is fixed. </summary>
         public static AvsEncryptionVersionType Fixed { get; } = new AvsEncryptionVersionType(FixedValue);
-        /// <summary> AutoDetected. </summary>
+        /// <summary> is auto-detected. </summary>
         public static AvsEncryptionVersionType AutoDetected { get; } = new AvsEncryptionVersionType(AutoDetectedValue);
         /// <summary> Determines if two <see cref="AvsEncryptionVersionType"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionVersionType left, AvsEncryptionVersionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionVersionType"/> values are not the same. </summary>
         public static bool operator !=(AvsEncryptionVersionType left, AvsEncryptionVersionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsEncryptionVersionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsEncryptionVersionType"/>. </summary>
         public static implicit operator AvsEncryptionVersionType(string value) => new AvsEncryptionVersionType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

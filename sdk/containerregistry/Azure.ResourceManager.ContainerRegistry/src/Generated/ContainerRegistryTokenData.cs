@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The creation date of scope map. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
+        [WirePath("properties.scopeMapId")]
         public ResourceIdentifier ScopeMapId { get; set; }
         /// <summary> The credentials that can be used for authenticating the token. </summary>
+        [WirePath("properties.credentials")]
         public ContainerRegistryTokenCredentials Credentials { get; set; }
         /// <summary> The status of the token example enabled or disabled. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryTokenStatus? Status { get; set; }
     }
 }

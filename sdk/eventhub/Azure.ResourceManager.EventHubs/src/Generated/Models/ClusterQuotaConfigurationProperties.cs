@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </summary>
+        [WirePath("settings")]
         public IDictionary<string, string> Settings { get; }
     }
 }

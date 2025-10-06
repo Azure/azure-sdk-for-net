@@ -10,23 +10,30 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class UserArtifactSettings : IUtf8JsonSerializable, IJsonModel<UserArtifactSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserArtifactSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserArtifactSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserArtifactSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UserArtifactSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PackageFileName))
             {
                 writer.WritePropertyName("packageFileName"u8);
@@ -37,6 +44,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("configFileName"u8);
                 writer.WriteStringValue(ConfigFileName);
             }
+            if (Optional.IsDefined(ScriptBehaviorAfterReboot))
+            {
+                writer.WritePropertyName("scriptBehaviorAfterReboot"u8);
+                writer.WriteStringValue(ScriptBehaviorAfterReboot.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -45,14 +57,13 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UserArtifactSettings IJsonModel<UserArtifactSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserArtifactSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UserArtifactSettings DeserializeUserArtifactSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,8 +88,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string packageFileName = default;
             string configFileName = default;
+            GalleryApplicationScriptRebootBehavior? scriptBehaviorAfterReboot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageFileName"u8))
@@ -91,13 +103,22 @@ namespace Azure.ResourceManager.Compute.Models
                     configFileName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scriptBehaviorAfterReboot"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptBehaviorAfterReboot = new GalleryApplicationScriptRebootBehavior(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserArtifactSettings(packageFileName, configFileName, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UserArtifactSettings(packageFileName, configFileName, scriptBehaviorAfterReboot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserArtifactSettings>.Write(ModelReaderWriterOptions options)
@@ -107,9 +128,9 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,11 +142,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUserArtifactSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserArtifactSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

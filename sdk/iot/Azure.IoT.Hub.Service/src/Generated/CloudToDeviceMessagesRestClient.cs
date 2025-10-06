@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.IoT.Hub.Service.Models;
@@ -73,7 +72,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         PurgeMessageQueueResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -100,7 +99,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         PurgeMessageQueueResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

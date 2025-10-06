@@ -67,26 +67,47 @@ namespace Azure.ResourceManager.Storage
         /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="rules"> The storage account object replication rules. </param>
+        /// <param name="metrics"> Optional. The object replication policy metrics feature options. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             EnabledOn = enabledOn;
             SourceAccount = sourceAccount;
             DestinationAccount = destinationAccount;
             Rules = rules;
+            Metrics = metrics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique id for object replication policy. </summary>
+        [WirePath("properties.policyId")]
         public string PolicyId { get; }
         /// <summary> Indicates when the policy is enabled on the source account. </summary>
+        [WirePath("properties.enabledTime")]
         public DateTimeOffset? EnabledOn { get; }
         /// <summary> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
+        [WirePath("properties.sourceAccount")]
         public string SourceAccount { get; set; }
         /// <summary> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
+        [WirePath("properties.destinationAccount")]
         public string DestinationAccount { get; set; }
         /// <summary> The storage account object replication rules. </summary>
+        [WirePath("properties.rules")]
         public IList<ObjectReplicationPolicyRule> Rules { get; }
+        /// <summary> Optional. The object replication policy metrics feature options. </summary>
+        internal ObjectReplicationPolicyPropertiesMetrics Metrics { get; set; }
+        /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
+        [WirePath("properties.metrics.enabled")]
+        public bool? IsMetricsEnabled
+        {
+            get => Metrics is null ? default : Metrics.IsMetricsEnabled;
+            set
+            {
+                if (Metrics is null)
+                    Metrics = new ObjectReplicationPolicyPropertiesMetrics();
+                Metrics.IsMetricsEnabled = value;
+            }
+        }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(TranscriptionStatus left, TranscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranscriptionStatus"/> values are not the same. </summary>
         public static bool operator !=(TranscriptionStatus left, TranscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TranscriptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TranscriptionStatus"/>. </summary>
         public static implicit operator TranscriptionStatus(string value) => new TranscriptionStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

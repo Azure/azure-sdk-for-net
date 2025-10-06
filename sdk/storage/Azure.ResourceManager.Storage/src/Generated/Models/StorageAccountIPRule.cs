@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/>. </summary>
-        /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
+        /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
         public StorageAccountIPRule(string ipAddressOrRange)
         {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/>. </summary>
-        /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
+        /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. </param>
         /// <param name="action"> The action of IP ACL rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StorageAccountIPRule(string ipAddressOrRange, StorageAccountNetworkRuleAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -72,9 +71,11 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        /// <summary> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </summary>
+        /// <summary> Specifies the IP or IP range in CIDR format. </summary>
+        [WirePath("value")]
         public string IPAddressOrRange { get; set; }
         /// <summary> The action of IP ACL rule. </summary>
+        [WirePath("action")]
         public StorageAccountNetworkRuleAction? Action { get; set; }
     }
 }

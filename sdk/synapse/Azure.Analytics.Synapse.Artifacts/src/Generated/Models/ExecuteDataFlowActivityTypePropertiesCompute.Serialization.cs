@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
-                writer.WriteStringValue(ComputeType.Value.ToString());
+                writer.WriteObjectValue<object>(ComputeType);
             }
             if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
-                writer.WriteNumberValue(CoreCount.Value);
+                writer.WriteObjectValue<object>(CoreCount);
             }
             writer.WriteEndObject();
         }
@@ -35,8 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            DataFlowComputeType? computeType = default;
-            int? coreCount = default;
+            object computeType = default;
+            object coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -45,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    computeType = new DataFlowComputeType(property.Value.GetString());
+                    computeType = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("coreCount"u8))
@@ -54,11 +53,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    coreCount = property.Value.GetInt32();
+                    coreCount = property.Value.GetObject();
                     continue;
                 }
             }
             return new ExecuteDataFlowActivityTypePropertiesCompute(computeType, coreCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ExecuteDataFlowActivityTypePropertiesCompute FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExecuteDataFlowActivityTypePropertiesCompute(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

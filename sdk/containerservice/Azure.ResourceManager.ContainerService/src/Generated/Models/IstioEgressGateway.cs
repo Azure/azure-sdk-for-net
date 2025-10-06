@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -71,8 +70,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable the egress gateway. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> NodeSelector for scheduling the egress gateway. </summary>
+        [WirePath("nodeSelector")]
         public IDictionary<string, string> NodeSelector { get; }
     }
 }

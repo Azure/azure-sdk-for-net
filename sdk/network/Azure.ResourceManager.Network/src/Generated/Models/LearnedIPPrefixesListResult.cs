@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP Prefix value. </summary>
+        [WirePath("ipPrefixes")]
         public IReadOnlyList<string> IPPrefixes { get; }
     }
 }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models

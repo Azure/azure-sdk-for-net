@@ -9,6 +9,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? FirstSeen { get { throw null; } }
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public bool? Recent { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AlexaInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AlexaInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AlexaInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AlexaInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AlexaInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -47,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.HostAsset HostAsset(string host = null, string domain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> ipAddresses = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.WebComponent> webComponents = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedHeader> headers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AttributeDetails> attributes = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.CookieDetails> cookies = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> parentHosts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> childHosts = null, Azure.Analytics.Defender.Easm.HostCore hostCore = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AssetService> services = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> cnames = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SourceDetails> sources = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ResourceUri> resourceUrls = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> asns = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> responseBodies = null, Azure.Analytics.Defender.Easm.DomainAsset domainAsset = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> webserver = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLocation> location = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> isWildcard = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.BannerDetails> banners = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> ipv4 = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> ipv6 = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.HostAssetResource HostAssetResource(string id = null, string name = null, string displayName = null, System.Guid? uuid = default(System.Guid?), System.DateTimeOffset? createdDate = default(System.DateTimeOffset?), System.DateTimeOffset? updatedDate = default(System.DateTimeOffset?), Azure.Analytics.Defender.Easm.AssetState? state = default(Azure.Analytics.Defender.Easm.AssetState?), string externalId = null, System.Collections.Generic.IEnumerable<string> labels = null, bool? wildcard = default(bool?), string discoGroupName = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = null, string reason = null, Azure.Analytics.Defender.Easm.HostAsset asset = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.HostCore HostCore(string host = null, string domain = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.DateTimeOffset? blacklistCauseFirstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? blacklistCauseLastSeen = default(System.DateTimeOffset?), long? blacklistCauseCount = default(long?), System.DateTimeOffset? blacklistResourceFirstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? blacklistResourceLastSeen = default(System.DateTimeOffset?), long? blacklistResourceCount = default(long?), System.DateTimeOffset? blacklistSequenceFirstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? blacklistSequenceLastSeen = default(System.DateTimeOffset?), long? blacklistSequenceCount = default(long?), long? phishCauseCount = default(long?), long? malwareCauseCount = default(long?), long? spamCauseCount = default(long?), long? scamCauseCount = default(long?), long? phishResourceCount = default(long?), long? malwareResourceCount = default(long?), long? spamResourceCount = default(long?), long? scamResourceCount = default(long?), long? phishSequenceCount = default(long?), long? malwareSequenceCount = default(long?), long? spamSequenceCount = default(long?), long? scamSequenceCount = default(long?), int? alexaRank = default(int?), int? hostReputationScore = default(int?), int? hostPhishReputationScore = default(int?), int? hostMalwareReputationScore = default(int?), int? hostSpamReputationScore = default(int?), int? hostScamReputationScore = default(int?), int? domainReputationScore = default(int?), int? domainPhishReputationScore = default(int?), int? domainMalwareReputationScore = default(int?), int? domainSpamReputationScore = default(int?), int? domainScamReputationScore = default(int?), string uuid = null) { throw null; }
-        public static Azure.Analytics.Defender.Easm.InnerError InnerError(string code = null, System.BinaryData value = null) { throw null; }
+        public static Azure.Analytics.Defender.Easm.InnerError InnerError(string code = null, Azure.Analytics.Defender.Easm.InnerError innererror = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.IpAddressAsset IpAddressAsset(string ipAddress = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLong> asns = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ReputationDetails> reputations = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.WebComponent> webComponents = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> netRanges = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedHeader> headers = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AttributeDetails> attributes = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.CookieDetails> cookies = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AssetService> services = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SourceDetails> sources = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.BannerDetails> banners = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedLocation> location = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedString> hosts = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = null, bool? ipv4 = default(bool?), bool? ipv6 = default(bool?)) { throw null; }
         public static Azure.Analytics.Defender.Easm.IpAddressAssetResource IpAddressAssetResource(string id = null, string name = null, string displayName = null, System.Guid? uuid = default(System.Guid?), System.DateTimeOffset? createdDate = default(System.DateTimeOffset?), System.DateTimeOffset? updatedDate = default(System.DateTimeOffset?), Azure.Analytics.Defender.Easm.AssetState? state = default(Azure.Analytics.Defender.Easm.AssetState?), string externalId = null, System.Collections.Generic.IEnumerable<string> labels = null, bool? wildcard = default(bool?), string discoGroupName = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.AuditTrailItem> auditTrail = null, string reason = null, Azure.Analytics.Defender.Easm.IpAddressAsset asset = null) { throw null; }
         public static Azure.Analytics.Defender.Easm.IpBlock IpBlock(string ipBlockName = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Defender.Easm.SourceDetails> sources = null, System.DateTimeOffset? firstSeen = default(System.DateTimeOffset?), System.DateTimeOffset? lastSeen = default(System.DateTimeOffset?), long? count = default(long?), bool? recent = default(bool?)) { throw null; }
@@ -116,6 +117,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalOrgs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalPhones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AsAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AsAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AsAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AsAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AsAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -126,6 +128,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal AsAssetResource() { }
         public Azure.Analytics.Defender.Easm.AsAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AsAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AsAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AsAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AsAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AsAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -139,6 +142,7 @@ namespace Azure.Analytics.Defender.Easm
         public string NextLink { get { throw null; } }
         public long? TotalElements { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.AssetResource> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetPageResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetPageResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetPageResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetPageResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AssetPageResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -161,6 +165,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? UpdatedDate { get { throw null; } }
         public System.Guid? Uuid { get { throw null; } }
         public bool? Wildcard { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -178,6 +183,7 @@ namespace Azure.Analytics.Defender.Easm
         public string PolicyName { get { throw null; } }
         public bool? Recent { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetSecurityPolicy System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetSecurityPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetSecurityPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetSecurityPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AssetSecurityPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -198,6 +204,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SslCertAsset> SslCerts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetService System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetService System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AssetService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -240,6 +247,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Metric { get { throw null; } }
         public string MetricCategory { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetSummaryResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetSummaryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetSummaryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetSummaryResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AssetSummaryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,6 +261,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IDictionary<string, bool> Labels { get { throw null; } }
         public Azure.Analytics.Defender.Easm.AssetUpdateState? State { get { throw null; } set { } }
         public Azure.Analytics.Defender.Easm.AssetUpdateTransfers? Transfers { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetUpdatePayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetUpdatePayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AssetUpdatePayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AssetUpdatePayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AssetUpdatePayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -315,6 +324,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public bool? Recent { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AttributeDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AttributeDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AttributeDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AttributeDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AttributeDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -329,6 +339,7 @@ namespace Azure.Analytics.Defender.Easm
         public Azure.Analytics.Defender.Easm.AuditTrailItemKind? Kind { get { throw null; } }
         public string Name { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AuditTrailItem System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AuditTrailItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AuditTrailItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AuditTrailItem System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AuditTrailItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -359,10 +370,17 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator !=(Azure.Analytics.Defender.Easm.AuditTrailItemKind left, Azure.Analytics.Defender.Easm.AuditTrailItemKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureAnalyticsDefenderEasmContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsDefenderEasmContext() { }
+        public static Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureDataExplorerDataConnection : Azure.Analytics.Defender.Easm.DataConnection, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>
     {
         internal AzureDataExplorerDataConnection() { }
         public Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -373,6 +391,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         public AzureDataExplorerDataConnectionPayload(Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties properties) { }
         public Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -385,6 +404,7 @@ namespace Azure.Analytics.Defender.Easm
         public string ClusterName { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -404,6 +424,7 @@ namespace Azure.Analytics.Defender.Easm
         public string ScanType { get { throw null; } }
         public string Sha256 { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.BannerDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.BannerDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.BannerDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.BannerDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.BannerDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -420,6 +441,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> Names { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> Organizations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ContactAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ContactAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ContactAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ContactAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ContactAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -430,6 +452,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal ContactAssetResource() { }
         public Azure.Analytics.Defender.Easm.ContactAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ContactAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ContactAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ContactAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ContactAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ContactAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -446,6 +469,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? FirstSeen { get { throw null; } }
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public bool? Recent { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.CookieDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.CookieDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.CookieDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.CookieDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.CookieDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -459,6 +483,7 @@ namespace Azure.Analytics.Defender.Easm
         public float? CvssScore { get { throw null; } }
         public string CweId { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.CveDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.CveDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.CveDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.CveDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.CveDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -485,6 +510,7 @@ namespace Azure.Analytics.Defender.Easm
         public string UserInteraction { get { throw null; } }
         public string VectorString { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.Cvss3Summary System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.Cvss3Summary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.Cvss3Summary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.Cvss3Summary System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.Cvss3Summary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -505,6 +531,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Name { get { throw null; } }
         public System.DateTimeOffset? UpdatedDate { get { throw null; } }
         public System.DateTimeOffset? UserUpdatedAt { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnection System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnection System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -555,6 +582,7 @@ namespace Azure.Analytics.Defender.Easm
         public Azure.Analytics.Defender.Easm.DataConnectionFrequency? Frequency { get { throw null; } set { } }
         public int? FrequencyOffset { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnectionPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnectionPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DataConnectionPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -563,7 +591,8 @@ namespace Azure.Analytics.Defender.Easm
     }
     public partial class DataConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>
     {
-        internal DataConnectionProperties() { }
+        public DataConnectionProperties() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DataConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DataConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -597,6 +626,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Sha512 { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck> SriChecks { get { throw null; } }
         public System.Uri Url { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DependentResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DependentResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DependentResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DependentResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DependentResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -638,6 +668,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get { throw null; } }
         public string TemplateId { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryGroup System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryGroup System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DiscoveryGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -655,6 +686,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IList<Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get { throw null; } }
         public string TemplateId { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryGroupPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryGroupPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryGroupPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryGroupPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DiscoveryGroupPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -673,6 +705,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? SubmittedDate { get { throw null; } }
         public string Tier { get { throw null; } }
         public long? TotalAssetsFoundCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryRunResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryRunResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DiscoveryRunResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -684,6 +717,7 @@ namespace Azure.Analytics.Defender.Easm
         public DiscoverySource() { }
         public Azure.Analytics.Defender.Easm.DiscoverySourceKind? Kind { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoverySource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoverySource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoverySource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoverySource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DiscoverySource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -725,6 +759,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Region { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get { throw null; } }
         public string StateCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryTemplate System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryTemplate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DiscoveryTemplate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DiscoveryTemplate System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DiscoveryTemplate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -765,6 +800,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalPhones { get { throw null; } }
         public long? WhoisId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> WhoisServers { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DomainAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DomainAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DomainAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DomainAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DomainAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -775,6 +811,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal DomainAssetResource() { }
         public Azure.Analytics.Defender.Easm.DomainAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DomainAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DomainAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.DomainAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.DomainAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.DomainAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -791,17 +828,17 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.TaskResource> CancelTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelTaskAsync(string taskId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.TaskResource>> CancelTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionPayload dataConnectionPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrReplaceDataConnection(string dataConnectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionPayload dataConnectionPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, Azure.Analytics.Defender.Easm.DiscoveryGroupPayload discoveryGroupPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, Azure.Analytics.Defender.Easm.DiscoveryGroupPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrReplaceDiscoveryGroup(string groupName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, Azure.Analytics.Defender.Easm.DiscoveryGroupPayload discoveryGroupPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, Azure.Analytics.Defender.Easm.DiscoveryGroupPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceDiscoveryGroupAsync(string groupName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> CreateOrReplaceSavedFilter(string filterName, Azure.Analytics.Defender.Easm.SavedFilterPayload savedFilterPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> CreateOrReplaceSavedFilter(string filterName, Azure.Analytics.Defender.Easm.SavedFilterPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrReplaceSavedFilter(string filterName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Analytics.Defender.Easm.SavedFilterPayload savedFilterPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Analytics.Defender.Easm.SavedFilterPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteDataConnection(string dataConnectionName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataConnectionAsync(string dataConnectionName, Azure.RequestContext context = null) { throw null; }
@@ -855,13 +892,13 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilters(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult> GetSnapshot(Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload reportAssetSnapshotPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult> GetSnapshot(Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSnapshot(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>> GetSnapshotAsync(Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload reportAssetSnapshotPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>> GetSnapshotAsync(Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSnapshotAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult> GetSummary(Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload reportAssetSummaryPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult> GetSummary(Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSummary(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>> GetSummaryAsync(Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload reportAssetSummaryPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>> GetSummaryAsync(Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSummaryAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTask(string taskId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Defender.Easm.TaskResource> GetTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -873,17 +910,17 @@ namespace Azure.Analytics.Defender.Easm
         public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.TaskResource> GetTasksAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RunDiscoveryGroup(string groupName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunDiscoveryGroupAsync(string groupName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.TaskResource> UpdateAssets(string filter, Azure.Analytics.Defender.Easm.AssetUpdatePayload assetUpdatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.TaskResource> UpdateAssets(string filter, Azure.Analytics.Defender.Easm.AssetUpdatePayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateAssets(string filter, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.TaskResource>> UpdateAssetsAsync(string filter, Azure.Analytics.Defender.Easm.AssetUpdatePayload assetUpdatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.TaskResource>> UpdateAssetsAsync(string filter, Azure.Analytics.Defender.Easm.AssetUpdatePayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAssetsAsync(string filter, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDataConnection(Azure.Analytics.Defender.Easm.DataConnectionPayload dataConnectionPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDataConnection(Azure.Analytics.Defender.Easm.DataConnectionPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ValidateDataConnection(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDataConnectionAsync(Azure.Analytics.Defender.Easm.DataConnectionPayload dataConnectionPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDataConnectionAsync(Azure.Analytics.Defender.Easm.DataConnectionPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDataConnectionAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDiscoveryGroup(Azure.Analytics.Defender.Easm.DiscoveryGroupPayload discoveryGroupPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDiscoveryGroup(Azure.Analytics.Defender.Easm.DiscoveryGroupPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ValidateDiscoveryGroup(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoveryGroupAsync(Azure.Analytics.Defender.Easm.DiscoveryGroupPayload discoveryGroupPayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoveryGroupAsync(Azure.Analytics.Defender.Easm.DiscoveryGroupPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDiscoveryGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class EasmClientOptions : Azure.Core.ClientOptions
@@ -902,6 +939,7 @@ namespace Azure.Analytics.Defender.Easm
         public Azure.Analytics.Defender.Easm.InnerError Innererror { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -915,6 +953,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? LoadDate { get { throw null; } }
         public string PageGuid { get { throw null; } }
         public bool? Recent { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.GuidPair System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.GuidPair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.GuidPair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.GuidPair System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.GuidPair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -957,6 +996,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SslServerConfig> SslServerConfig { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedBoolean> Webserver { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.HostAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.HostAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.HostAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.HostAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.HostAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -967,6 +1007,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal HostAssetResource() { }
         public Azure.Analytics.Defender.Easm.HostAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.HostAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.HostAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.HostAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.HostAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.HostAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1014,6 +1055,7 @@ namespace Azure.Analytics.Defender.Easm
         public long? SpamResourceCount { get { throw null; } }
         public long? SpamSequenceCount { get { throw null; } }
         public string Uuid { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.HostCore System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.HostCore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.HostCore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.HostCore System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.HostCore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1024,7 +1066,8 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal InnerError() { }
         public string Code { get { throw null; } }
-        public System.BinaryData Value { get { throw null; } }
+        public Azure.Analytics.Defender.Easm.InnerError Innererror { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.InnerError System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InnerError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.InnerError System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InnerError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1034,6 +1077,7 @@ namespace Azure.Analytics.Defender.Easm
     public partial class InventoryAsset : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InventoryAsset>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InventoryAsset>
     {
         internal InventoryAsset() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.InventoryAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InventoryAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.InventoryAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.InventoryAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.InventoryAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1068,6 +1112,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SslCertAsset> SslCerts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SslServerConfig> SslServerConfig { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpAddressAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpAddressAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpAddressAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpAddressAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.IpAddressAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1078,6 +1123,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal IpAddressAssetResource() { }
         public Azure.Analytics.Defender.Easm.IpAddressAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpAddressAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpAddressAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpAddressAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpAddressAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.IpAddressAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1093,6 +1139,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public bool? Recent { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpBlock System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpBlock>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpBlock>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpBlock System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.IpBlock>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1133,6 +1180,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalOrgs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> TechnicalPhones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpBlockAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpBlockAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpBlockAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpBlockAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.IpBlockAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1143,6 +1191,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal IpBlockAssetResource() { }
         public Azure.Analytics.Defender.Easm.IpBlockAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpBlockAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpBlockAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.IpBlockAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.IpBlockAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.IpBlockAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1153,6 +1202,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal LogAnalyticsDataConnection() { }
         public Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1163,6 +1213,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         public LogAnalyticsDataConnectionPayload(Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties properties) { }
         public Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1174,6 +1225,7 @@ namespace Azure.Analytics.Defender.Easm
         public LogAnalyticsDataConnectionProperties() { }
         public string ApiKey { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1185,6 +1237,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedBoolean() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public bool? Value { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedBoolean System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedBoolean>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedBoolean>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedBoolean System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedBoolean>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1196,6 +1249,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedHeader() { }
         public string HeaderName { get { throw null; } }
         public string HeaderValue { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1207,6 +1261,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedInteger() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public int? Value { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedInteger System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedInteger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedInteger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedInteger System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedInteger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1218,6 +1273,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedIntegers() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<int> Values { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedIntegers System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedIntegers>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedIntegers>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedIntegers System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedIntegers>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1229,6 +1285,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedLocation() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public Azure.Analytics.Defender.Easm.ObservedLocationDetails Value { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedLocation System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedLocation System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1249,6 +1306,7 @@ namespace Azure.Analytics.Defender.Easm
         public string PostalCode { get { throw null; } }
         public string Region { get { throw null; } }
         public string RegionName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedLocationDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedLocationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedLocationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedLocationDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedLocationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1260,6 +1318,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedLong() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public long? Value { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedLong System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedLong>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedLong>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedLong System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedLong>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1271,6 +1330,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedPortState() { }
         public int? Port { get { throw null; } }
         public Azure.Analytics.Defender.Easm.ObservedPortStateValue? Value { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedPortState System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedPortState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedPortState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedPortState System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedPortState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1301,6 +1361,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedString() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public string Value { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedString System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedString>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedString>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedString System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedString>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1314,6 +1375,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? FirstSeen { get { throw null; } }
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public bool? Recent { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ObservedValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ObservedValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ObservedValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1384,6 +1446,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.WebComponent> WebComponents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedString> WindowNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ObservedBoolean> Windows { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PageAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PageAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PageAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PageAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.PageAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1414,6 +1477,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal PageAssetResource() { }
         public Azure.Analytics.Defender.Easm.PageAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PageAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PageAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PageAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PageAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.PageAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1430,6 +1494,7 @@ namespace Azure.Analytics.Defender.Easm
         public bool? LoopDetected { get { throw null; } }
         public int? PossibleMatches { get { throw null; } }
         public int? Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PageCause System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PageCause>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PageCause>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PageCause System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.PageCause>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1443,6 +1508,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? FirstSeen { get { throw null; } }
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public int? PortName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PortDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PortDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.PortDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.PortDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.PortDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1456,6 +1522,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Metric { get { throw null; } set { } }
         public int? Page { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportAssetSnapshotPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1471,6 +1538,7 @@ namespace Azure.Analytics.Defender.Easm
         public string LabelName { get { throw null; } }
         public string Metric { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1486,6 +1554,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IList<string> MetricCategories { get { throw null; } }
         public System.Collections.Generic.IList<string> Metrics { get { throw null; } }
         public string SegmentBy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportAssetSummaryPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1496,6 +1565,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal ReportAssetSummaryResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.AssetSummaryResult> AssetSummaries { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSummaryResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportAssetSummaryResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1507,6 +1577,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ReportBillableAssetBreakdown() { }
         public long? Count { get { throw null; } }
         public Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind? Kind { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1538,6 +1609,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdown> AssetBreakdown { get { throw null; } }
         public System.DateTimeOffset? Date { get { throw null; } }
         public long? Total { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1548,6 +1620,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal ReportBillableAssetSummaryResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult> AssetSummaries { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1565,6 +1638,7 @@ namespace Azure.Analytics.Defender.Easm
         public bool? Recent { get { throw null; } }
         public string ThreatType { get { throw null; } }
         public bool? Trusted { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReputationDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReputationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ReputationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ReputationDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ReputationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1580,6 +1654,7 @@ namespace Azure.Analytics.Defender.Easm
         public bool? Recent { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.DependentResource> Resources { get { throw null; } }
         public System.Uri Url { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ResourceUri System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ResourceUri>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ResourceUri>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ResourceUri System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ResourceUri>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1594,6 +1669,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Filter { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SavedFilter System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SavedFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SavedFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SavedFilter System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SavedFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1605,6 +1681,7 @@ namespace Azure.Analytics.Defender.Easm
         public SavedFilterPayload(string filter, string description) { }
         public string Description { get { throw null; } }
         public string Filter { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SavedFilterPayload System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SavedFilterPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SavedFilterPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SavedFilterPayload System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SavedFilterPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1618,6 +1695,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? EndScan { get { throw null; } }
         public int? Port { get { throw null; } }
         public System.DateTimeOffset? StartScan { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ScanMetadata System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ScanMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ScanMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ScanMetadata System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ScanMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1634,6 +1712,7 @@ namespace Azure.Analytics.Defender.Easm
         public string NameServer { get { throw null; } }
         public bool? Recent { get { throw null; } }
         public long? SerialNumber { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SoaRecord System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SoaRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SoaRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SoaRecord System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SoaRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1648,6 +1727,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public string Reason { get { throw null; } }
         public string SourceName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SourceDetails System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SourceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SourceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SourceDetails System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SourceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1690,6 +1770,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<string> SubjectState { get { throw null; } }
         public Azure.Analytics.Defender.Easm.SslCertAssetValidationType? ValidationType { get { throw null; } }
         public int? Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SslCertAsset System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SslCertAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SslCertAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SslCertAsset System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SslCertAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1700,6 +1781,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal SslCertAssetResource() { }
         public Azure.Analytics.Defender.Easm.SslCertAsset Asset { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SslCertAssetResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SslCertAssetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SslCertAssetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SslCertAssetResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SslCertAssetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1734,6 +1816,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.DateTimeOffset? LastSeen { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> TlsVersions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SslServerConfig System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SslServerConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SslServerConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SslServerConfig System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SslServerConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1752,6 +1835,7 @@ namespace Azure.Analytics.Defender.Easm
         public string PageGuid { get { throw null; } }
         public string ResourceGuid { get { throw null; } }
         public bool? Violation { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.SubResourceIntegrityCheck>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1769,6 +1853,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Reason { get { throw null; } }
         public System.DateTimeOffset? StartedAt { get { throw null; } }
         public Azure.Analytics.Defender.Easm.TaskResourceState? State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.TaskResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.TaskResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.TaskResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.TaskResource System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.TaskResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1821,6 +1906,7 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal ValidateResult() { }
         public Azure.Analytics.Defender.Easm.ErrorDetail Error { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ValidateResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ValidateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.ValidateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.ValidateResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.ValidateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1843,6 +1929,7 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.SourceDetails> Sources { get { throw null; } }
         public string Type { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.WebComponent System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.WebComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.WebComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Defender.Easm.WebComponent System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.WebComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareVirtualNetworkResource IOperationSource<VMwareVirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VMwareVirtualNetworkData.DeserializeVMwareVirtualNetworkData(document.RootElement);
+            var data = ModelReaderWriter.Read<VMwareVirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
             return new VMwareVirtualNetworkResource(_client, data);
         }
 
         async ValueTask<VMwareVirtualNetworkResource> IOperationSource<VMwareVirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VMwareVirtualNetworkData.DeserializeVMwareVirtualNetworkData(document.RootElement);
-            return new VMwareVirtualNetworkResource(_client, data);
+            var data = ModelReaderWriter.Read<VMwareVirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+            return await Task.FromResult(new VMwareVirtualNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

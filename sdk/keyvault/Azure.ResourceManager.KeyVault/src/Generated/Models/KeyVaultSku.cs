@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> SKU family name. </summary>
+        [WirePath("family")]
         public KeyVaultSkuFamily Family { get; set; }
         /// <summary> SKU name to specify whether the key vault is a standard vault or a premium vault. </summary>
+        [WirePath("name")]
         public KeyVaultSkuName Name { get; set; }
     }
 }

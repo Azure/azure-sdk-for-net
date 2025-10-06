@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -68,18 +67,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> major.minor version of Kubernetes release. </summary>
+        [WirePath("version")]
         public string Version { get; }
         /// <summary> Capabilities on this Kubernetes version. </summary>
         internal KubernetesVersionCapabilities Capabilities { get; }
         /// <summary> Gets the capabilities support plan. </summary>
+        [WirePath("capabilities.supportPlan")]
         public IReadOnlyList<KubernetesSupportPlan> CapabilitiesSupportPlan
         {
             get => Capabilities?.SupportPlan;
         }
 
         /// <summary> Whether this version is in preview mode. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
         /// <summary> Patch versions of Kubernetes release. </summary>
+        [WirePath("patchVersions")]
         public IReadOnlyDictionary<string, KubernetesPatchVersion> PatchVersions { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Auto generated password by the server for SSH authentication if hasSshPassword is set to true on the creation of local user. </summary>
+        [WirePath("sshPassword")]
         public string SshPassword { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/>. </summary>
         internal UpdateSummariesList()
         {
-            Value = new ChangeTrackingList<UpdateSummaryData>();
+            Value = new ChangeTrackingList<HciClusterUpdateSummaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/>. </summary>
         /// <param name="value"> List of Update Summaries. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSummariesList(IReadOnlyList<UpdateSummaryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateSummariesList(IReadOnlyList<HciClusterUpdateSummaryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> List of Update Summaries. </summary>
-        public IReadOnlyList<UpdateSummaryData> Value { get; }
+        public IReadOnlyList<HciClusterUpdateSummaryData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

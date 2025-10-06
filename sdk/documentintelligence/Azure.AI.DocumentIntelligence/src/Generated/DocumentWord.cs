@@ -53,11 +53,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="content"> Text content of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="span"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         internal DocumentWord(string content, DocumentSpan span, float confidence)
         {
             Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(span, nameof(span));
 
             Content = content;
             Polygon = new ChangeTrackingList<float>();

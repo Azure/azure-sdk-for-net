@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -53,6 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ExcludedPaths = new ChangeTrackingList<CosmosDBExcludedPath>();
             CompositeIndexes = new ChangeTrackingList<IList<CosmosDBCompositePath>>();
             SpatialIndexes = new ChangeTrackingList<SpatialSpec>();
+            VectorIndexes = new ChangeTrackingList<CosmosDBVectorIndex>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingPolicy"/>. </summary>
@@ -62,8 +62,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="excludedPaths"> List of paths to exclude from indexing. </param>
         /// <param name="compositeIndexes"> List of composite path list. </param>
         /// <param name="spatialIndexes"> List of spatial specifics. </param>
+        /// <param name="vectorIndexes"> List of paths to include in the vector indexing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAutomatic = isAutomatic;
             IndexingMode = indexingMode;
@@ -71,20 +72,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ExcludedPaths = excludedPaths;
             CompositeIndexes = compositeIndexes;
             SpatialIndexes = spatialIndexes;
+            VectorIndexes = vectorIndexes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates if the indexing policy is automatic. </summary>
+        [WirePath("automatic")]
         public bool? IsAutomatic { get; set; }
         /// <summary> Indicates the indexing mode. </summary>
+        [WirePath("indexingMode")]
         public CosmosDBIndexingMode? IndexingMode { get; set; }
         /// <summary> List of paths to include in the indexing. </summary>
+        [WirePath("includedPaths")]
         public IList<CosmosDBIncludedPath> IncludedPaths { get; }
         /// <summary> List of paths to exclude from indexing. </summary>
+        [WirePath("excludedPaths")]
         public IList<CosmosDBExcludedPath> ExcludedPaths { get; }
         /// <summary> List of composite path list. </summary>
+        [WirePath("compositeIndexes")]
         public IList<IList<CosmosDBCompositePath>> CompositeIndexes { get; }
         /// <summary> List of spatial specifics. </summary>
+        [WirePath("spatialIndexes")]
         public IList<SpatialSpec> SpatialIndexes { get; }
+        /// <summary> List of paths to include in the vector indexing. </summary>
+        [WirePath("vectorIndexes")]
+        public IList<CosmosDBVectorIndex> VectorIndexes { get; }
     }
 }

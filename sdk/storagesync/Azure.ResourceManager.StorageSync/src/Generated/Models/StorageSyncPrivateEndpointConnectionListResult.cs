@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class StorageSyncPrivateEndpointConnectionListResult
     {
         /// <summary>

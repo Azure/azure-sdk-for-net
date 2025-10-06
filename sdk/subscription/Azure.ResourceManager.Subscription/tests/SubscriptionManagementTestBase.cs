@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Subscription.Tests
         {
             // Ignore the api-version of tagNames operations including list
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/subscriptions/[^/]+/tagNames[/]?[^/]*api-version=(?<group>[a-z0-9-]+)", "**"
-            )
+                @"/subscriptions/[^/]+/tagNames[/]?[^/]*api-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
             // Ignore the api-version of tagValues operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/subscriptions/[^/]+/tagNames/[^/]+/tagValues/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
-            )
+                @"/subscriptions/[^/]+/tagNames/[^/]+/tagValues/[^/]+api-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
     }

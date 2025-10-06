@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabDiskResource IOperationSource<DevTestLabDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement);
+            var data = ModelReaderWriter.Read<DevTestLabDiskData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabDiskResource(_client, data);
         }
 
         async ValueTask<DevTestLabDiskResource> IOperationSource<DevTestLabDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement);
-            return new DevTestLabDiskResource(_client, data);
+            var data = ModelReaderWriter.Read<DevTestLabDiskData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            return await Task.FromResult(new DevTestLabDiskResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

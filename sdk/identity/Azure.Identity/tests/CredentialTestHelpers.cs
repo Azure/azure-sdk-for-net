@@ -75,7 +75,16 @@ namespace Azure.Identity.Tests
         {
             var expiresOn = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.Add(expiresOffset).ToUnixTimeSeconds());
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
-            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.ToUnixTimeSeconds()}</Property></Object>";
+            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.UtcDateTime.Ticks}</Property></Object>";
+            return (token, expiresOn, xml);
+        }
+
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShellSecureString(TimeSpan expiresOffset)
+        {
+            var expiresOn = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.Add(expiresOffset).ToUnixTimeSeconds());
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
+            // Simulate Az 14.0+ output with secure string token as returned by our PowerShell script after conversion
+            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.UtcDateTime.Ticks}</Property></Object>";
             return (token, expiresOn, xml);
         }
 
@@ -404,15 +413,15 @@ namespace Azure.Identity.Tests
             return new MockResponse(200);
         });
 
-        public static byte[] GetMockCacheBytes(string objectId, string userName, string clientId, string tenantId, string token, string refreshToken)
+        public static byte[] GetMockCacheBytes(string objectId, string userName, string clientId, string tenantId, string token, string refreshToken, string authority = "login.microsoftonline.com")
         {
             var cacheString = @$"{{
   ""AccessToken"": {{
-      ""{objectId}.{tenantId}-login.microsoftonline.com-accesstoken-{clientId}-organizations-{MockScopes.Default}"": {{
+      ""{objectId}.{tenantId}-{authority}-accesstoken-{clientId}-organizations-{MockScopes.Default}"": {{
           ""credential_type"": ""AccessToken"",
           ""secret"": ""{token}"",
           ""home_account_id"": ""{objectId}.{tenantId}"",
-          ""environment"": ""login.microsoftonline.com"",
+          ""environment"": ""{authority}"",
           ""client_id"": ""{clientId}"",
           ""target"": ""{MockScopes.Default}"",
           ""realm"": ""organizations"",
@@ -423,9 +432,9 @@ namespace Azure.Identity.Tests
       }}
   }},
   ""Account"": {{
-      ""{objectId}.{tenantId}-login.microsoftonline.com-organizations"": {{
+      ""{objectId}.{tenantId}-{authority}-organizations"": {{
           ""home_account_id"": ""{objectId}.{tenantId}"",
-          ""environment"": ""login.microsoftonline.com"",
+          ""environment"": ""{authority}"",
           ""realm"": ""organizations"",
           ""local_account_id"": ""{objectId}"",
           ""username"": ""{userName}"",
@@ -433,21 +442,21 @@ namespace Azure.Identity.Tests
       }}
   }},
   ""IdToken"": {{
-      ""{objectId}.{tenantId}-login.microsoftonline.com-idtoken-{clientId}-organizations-"": {{
+      ""{objectId}.{tenantId}-{authority}-idtoken-{clientId}-organizations-"": {{
           ""credential_type"": ""IdToken"",
           ""secret"": ""{token}"",
           ""home_account_id"": ""{objectId}.{tenantId}"",
-          ""environment"": ""login.microsoftonline.com"",
+          ""environment"": ""{authority}"",
           ""realm"": ""organizations"",
           ""client_id"": ""{clientId}""
       }},
   }},
   ""RefreshToken"": {{
-      ""{objectId}.{tenantId}-login.microsoftonline.com-refreshtoken-{clientId}--{MockScopes.Default}"": {{
+      ""{objectId}.{tenantId}-{authority}-refreshtoken-{clientId}--{MockScopes.Default}"": {{
           ""credential_type"": ""RefreshToken"",
           ""secret"": ""{refreshToken}"",
           ""home_account_id"": ""{objectId}.{tenantId}"",
-          ""environment"": ""login.microsoftonline.com"",
+          ""environment"": ""{authority}"",
           ""client_id"": ""{clientId}"",
           ""target"": ""{MockScopes.Default}"",
           ""last_modification_time"": ""1674853645"",
@@ -455,9 +464,9 @@ namespace Azure.Identity.Tests
       }}
   }},
   ""AppMetadata"": {{
-      ""appmetadata-login.microsoftonline.com-{clientId}"": {{
+      ""appmetadata-{authority}-{clientId}"": {{
           ""client_id"": ""{clientId}"",
-          ""environment"": ""login.microsoftonline.com"",
+          ""environment"": ""{authority}"",
           ""family_id"": ""1""
       }}
   }}
@@ -489,10 +498,10 @@ namespace Azure.Identity.Tests
             return MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
         }
 
-        public static string CreateMsalIdToken(string uniqueId, string displayableId, string tenantId)
+        public static string CreateMsalIdToken(string uniqueId, string displayableId, string tenantId, string authority = "login.microsoftonline.com")
         {
             string id = "{\"aud\": \"e854a4a7-6c34-449c-b237-fc7a28093d84\"," +
-                        "\"iss\": \"https://login.microsoftonline.com/6c3d51dd-f0e5-4959-b4ea-a80c4e36fe5e/v2.0/\"," +
+                        $"\"iss\": \"https://{authority}/6c3d51dd-f0e5-4959-b4ea-a80c4e36fe5e/v2.0/\"," +
                         "\"iat\": 1455833828," +
                         "\"nbf\": 1455833828," +
                         "\"exp\": 1455837728," +
@@ -618,6 +627,58 @@ namespace Azure.Identity.Tests
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
 
             return Base64Url.Encode(bytes);
+        }
+
+        internal static string CreateMockInstanceDiscoveryResponse()
+        {
+            return """
+{
+    "tenant_discovery_endpoint": "https://login.microsoftonline.com/a0287521-e002-0026-7112-207c0c000000/v2.0/.well-known/openid-configuration",
+    "api-version": "1.1",
+    "metadata": [
+        {
+            "preferred_network": "login.microsoftonline.com",
+            "preferred_cache": "login.windows.net",
+            "aliases": [
+                "login.microsoftonline.com",
+                "login.windows.net",
+                "login.microsoft.com",
+                "sts.windows.net"
+            ]
+        },
+        {
+            "preferred_network": "login.partner.microsoftonline.cn",
+            "preferred_cache": "login.partner.microsoftonline.cn",
+            "aliases": [
+                "login.partner.microsoftonline.cn",
+                "login.chinacloudapi.cn"
+            ]
+        },
+        {
+            "preferred_network": "login.microsoftonline.de",
+            "preferred_cache": "login.microsoftonline.de",
+            "aliases": [
+                "login.microsoftonline.de"
+            ]
+        },
+        {
+            "preferred_network": "login.microsoftonline.us",
+            "preferred_cache": "login.microsoftonline.us",
+            "aliases": [
+                "login.microsoftonline.us",
+                "login.usgovcloudapi.net"
+            ]
+        },
+        {
+            "preferred_network": "login-us.microsoftonline.com",
+            "preferred_cache": "login-us.microsoftonline.com",
+            "aliases": [
+                "login-us.microsoftonline.com"
+            ]
+        }
+    ]
+}
+""";
         }
 
         private sealed class RefreshTokenRetriever

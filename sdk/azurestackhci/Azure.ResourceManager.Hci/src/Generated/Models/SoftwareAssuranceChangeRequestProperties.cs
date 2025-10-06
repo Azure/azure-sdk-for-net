@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>
+        [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
     }
 }

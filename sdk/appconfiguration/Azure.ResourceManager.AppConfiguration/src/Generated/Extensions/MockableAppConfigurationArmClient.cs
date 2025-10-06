@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Mocking
 {
@@ -106,6 +104,18 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         {
             AppConfigurationReplicaResource.ValidateResourceId(id);
             return new AppConfigurationReplicaResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppConfigurationSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppConfigurationSnapshotResource"/> object. </returns>
+        public virtual AppConfigurationSnapshotResource GetAppConfigurationSnapshotResource(ResourceIdentifier id)
+        {
+            AppConfigurationSnapshotResource.ValidateResourceId(id);
+            return new AppConfigurationSnapshotResource(Client, id);
         }
     }
 }

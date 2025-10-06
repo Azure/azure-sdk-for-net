@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -86,14 +85,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of match variables. </summary>
+        [WirePath("matchVariables")]
         public IList<MatchVariable> MatchVariables { get; }
         /// <summary> The operator to be matched. </summary>
+        [WirePath("operator")]
         public WebApplicationFirewallOperator Operator { get; set; }
         /// <summary> Whether this is negate condition or not. </summary>
+        [WirePath("negationConditon")]
         public bool? NegationConditon { get; set; }
         /// <summary> Match value. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<WebApplicationFirewallTransform> Transforms { get; }
     }
 }

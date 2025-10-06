@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -74,18 +73,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Name of the applied object. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Namespace of the applied object. </summary>
+        [WirePath("namespace")]
         public string Namespace { get; }
         /// <summary> Kind of the applied object. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Compliance state of the applied object showing whether the applied object has come into a ready state on the cluster. </summary>
+        [WirePath("complianceState")]
         public KubernetesFluxComplianceState? ComplianceState { get; }
         /// <summary> Object reference to the Kustomization that applied this object. </summary>
+        [WirePath("appliedBy")]
         public KubernetesObjectReference AppliedBy { get; }
         /// <summary> List of Kubernetes object status conditions present on the cluster. </summary>
+        [WirePath("statusConditions")]
         public IReadOnlyList<KubernetesObjectStatusCondition> StatusConditions { get; }
         /// <summary> Additional properties that are provided from objects of the HelmRelease kind. </summary>
+        [WirePath("helmReleaseProperties")]
         public HelmReleaseProperties HelmReleaseProperties { get; }
     }
 }

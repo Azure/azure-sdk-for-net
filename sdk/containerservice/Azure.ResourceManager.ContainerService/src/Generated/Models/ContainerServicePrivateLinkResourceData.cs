@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -73,16 +72,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The ID of the private link resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> The name of the private link resource. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
         /// <summary> The group ID of the resource. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
         /// <summary> The RequiredMembers of the resource. </summary>
+        [WirePath("requiredMembers")]
         public IList<string> RequiredMembers { get; }
         /// <summary> The private link service ID of the resource, this field is exposed only to NRP internally. </summary>
+        [WirePath("privateLinkServiceID")]
         public ResourceIdentifier PrivateLinkServiceId { get; }
     }
 }

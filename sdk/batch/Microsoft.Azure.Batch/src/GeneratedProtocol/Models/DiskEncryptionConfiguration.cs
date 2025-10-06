@@ -53,9 +53,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the compute node.
         /// </summary>
         /// <remarks>
-        /// If omitted, no disks on the compute nodes in the pool will be
-        /// encrypted. On Linux pool, only "TemporaryDisk" is supported; on
-        /// Windows pool, "OsDisk" and "TemporaryDisk" must be specified.
+        /// The list of disk targets Batch Service will encrypt on the compute
+        /// node.
         /// </remarks>
         [JsonProperty(PropertyName = "targets")]
         public IList<DiskEncryptionTarget> Targets { get; set; }

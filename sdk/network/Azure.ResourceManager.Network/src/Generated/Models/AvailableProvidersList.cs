@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of available countries. </summary>
+        [WirePath("countries")]
         public IReadOnlyList<AvailableProvidersListCountry> Countries { get; }
     }
 }

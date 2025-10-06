@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -76,20 +75,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Hostname of the LDAP server. </summary>
+        [WirePath("serverHostname")]
         public string ServerHostname { get; set; }
         /// <summary> Port of the LDAP server. </summary>
+        [WirePath("serverPort")]
         public int? ServerPort { get; set; }
         /// <summary> Distinguished name of the look up user account, who can look up user details on authentication. </summary>
+        [WirePath("serviceUserDistinguishedName")]
         public string ServiceUserDistinguishedName { get; set; }
         /// <summary> Password of the look up user. </summary>
+        [WirePath("serviceUserPassword")]
         public string ServiceUserPassword { get; set; }
         /// <summary> Distinguished name of the object to start the recursive search of users from. </summary>
+        [WirePath("searchBaseDistinguishedName")]
         public string SearchBaseDistinguishedName { get; set; }
         /// <summary> Template to use for searching. Defaults to (cn=%s) where %s will be replaced by the username used to login. </summary>
+        [WirePath("searchFilterTemplate")]
         public string SearchFilterTemplate { get; set; }
         /// <summary> Gets the server certificates. </summary>
+        [WirePath("serverCertificates")]
         public IList<CassandraCertificate> ServerCertificates { get; }
         /// <summary> Timeout for connecting to the LDAP server in miliseconds. The default is 5000 ms. </summary>
+        [WirePath("connectionTimeoutInMs")]
         public int? ConnectionTimeoutInMs { get; set; }
     }
 }

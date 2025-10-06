@@ -108,44 +108,64 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Number of messages. </summary>
+        [WirePath("properties.messageCount")]
         public long? MessageCount { get; }
         /// <summary> Exact time the message was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last time there was a receive request to this subscription. </summary>
+        [WirePath("properties.accessedAt")]
         public DateTimeOffset? AccessedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Message count details. </summary>
+        [WirePath("properties.countDetails")]
         public MessageCountDetails CountDetails { get; }
         /// <summary> ISO 8061 lock duration timespan for the subscription. The default value is 1 minute. </summary>
+        [WirePath("properties.lockDuration")]
         public TimeSpan? LockDuration { get; set; }
         /// <summary> Value indicating if a subscription supports the concept of sessions. </summary>
+        [WirePath("properties.requiresSession")]
         public bool? RequiresSession { get; set; }
         /// <summary> ISO 8061 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </summary>
+        [WirePath("properties.defaultMessageTimeToLive")]
         public TimeSpan? DefaultMessageTimeToLive { get; set; }
         /// <summary> Value that indicates whether a subscription has dead letter support on filter evaluation exceptions. </summary>
+        [WirePath("properties.deadLetteringOnFilterEvaluationExceptions")]
         public bool? DeadLetteringOnFilterEvaluationExceptions { get; set; }
         /// <summary> Value that indicates whether a subscription has dead letter support when a message expires. </summary>
+        [WirePath("properties.deadLetteringOnMessageExpiration")]
         public bool? DeadLetteringOnMessageExpiration { get; set; }
         /// <summary> ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </summary>
+        [WirePath("properties.duplicateDetectionHistoryTimeWindow")]
         public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
         /// <summary> Number of maximum deliveries. </summary>
+        [WirePath("properties.maxDeliveryCount")]
         public int? MaxDeliveryCount { get; set; }
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
+        [WirePath("properties.status")]
         public ServiceBusMessagingEntityStatus? Status { get; set; }
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
+        [WirePath("properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
         /// <summary> ISO 8061 timeSpan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </summary>
+        [WirePath("properties.autoDeleteOnIdle")]
         public TimeSpan? AutoDeleteOnIdle { get; set; }
         /// <summary> Queue/Topic name to forward the messages. </summary>
+        [WirePath("properties.forwardTo")]
         public string ForwardTo { get; set; }
         /// <summary> Queue/Topic name to forward the Dead Letter message. </summary>
+        [WirePath("properties.forwardDeadLetteredMessagesTo")]
         public string ForwardDeadLetteredMessagesTo { get; set; }
         /// <summary> Value that indicates whether the subscription has an affinity to the client id. </summary>
+        [WirePath("properties.isClientAffine")]
         public bool? IsClientAffine { get; set; }
         /// <summary> Properties specific to client affine subscriptions. </summary>
+        [WirePath("properties.clientAffineProperties")]
         public ServiceBusClientAffineProperties ClientAffineProperties { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The type of container to retrieve logs from. </summary>
+        [WirePath("containerType")]
         public MachineLearningContainerType? ContainerType { get; set; }
         /// <summary> The maximum number of lines to tail. </summary>
+        [WirePath("tail")]
         public int? Tail { get; set; }
     }
 }

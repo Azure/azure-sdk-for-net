@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -57,18 +56,21 @@ namespace Azure.ResourceManager.StorageCache.Models
 
             Container = container;
             LoggingContainer = loggingContainer;
+            ImportPrefixesInitial = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemHsmSettings"/>. </summary>
         /// <param name="container"> Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider must have permission to create SAS tokens on the storage account. </param>
         /// <param name="loggingContainer"> Resource ID of storage container used for logging events and errors.  Must be a separate container in the same storage account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the storage account. </param>
-        /// <param name="importPrefix"> Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace. </param>
+        /// <param name="importPrefix"> Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This is only used during initial creation of the AML file system. It automatically creates an import job resource that can be deleted. </param>
+        /// <param name="importPrefixesInitial"> Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value. It automatically creates an import job resource that can be deleted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemHsmSettings(string container, string loggingContainer, string importPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AmlFileSystemHsmSettings(string container, string loggingContainer, string importPrefix, IList<string> importPrefixesInitial, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Container = container;
             LoggingContainer = loggingContainer;
             ImportPrefix = importPrefix;
+            ImportPrefixesInitial = importPrefixesInitial;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,7 +83,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public string Container { get; set; }
         /// <summary> Resource ID of storage container used for logging events and errors.  Must be a separate container in the same storage account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the storage account. </summary>
         public string LoggingContainer { get; set; }
-        /// <summary> Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace. </summary>
+        /// <summary> Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This is only used during initial creation of the AML file system. It automatically creates an import job resource that can be deleted. </summary>
         public string ImportPrefix { get; set; }
+        /// <summary> Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value. It automatically creates an import job resource that can be deleted. </summary>
+        public IList<string> ImportPrefixesInitial { get; }
     }
 }

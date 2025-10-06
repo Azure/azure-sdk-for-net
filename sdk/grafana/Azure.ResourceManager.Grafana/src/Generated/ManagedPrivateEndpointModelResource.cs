@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Grafana.Models;
 
 namespace Azure.ResourceManager.Grafana
@@ -37,8 +35,8 @@ namespace Azure.ResourceManager.Grafana
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics;
-        private readonly ManagedPrivateEndpointsRestOperations _managedPrivateEndpointModelManagedPrivateEndpointsRestClient;
+        private readonly ClientDiagnostics _managedPrivateEndpointModelClientDiagnostics;
+        private readonly ManagedPrivateEndpointModelsRestOperations _managedPrivateEndpointModelRestClient;
         private readonly ManagedPrivateEndpointModelData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -63,9 +61,9 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedPrivateEndpointModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managedPrivateEndpointModelManagedPrivateEndpointsApiVersion);
-            _managedPrivateEndpointModelManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelManagedPrivateEndpointsApiVersion);
+            _managedPrivateEndpointModelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedPrivateEndpointModelApiVersion);
+            _managedPrivateEndpointModelRestClient = new ManagedPrivateEndpointModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,11 +99,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,11 +114,11 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedPrivateEndpointModelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Get");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
@@ -141,11 +139,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -156,11 +154,11 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedPrivateEndpointModelResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Get");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Get");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
@@ -181,11 +179,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Delete</description>
+        /// <description>ManagedPrivateEndpointModel_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,12 +195,12 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Delete");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Delete");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation(_managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _managedPrivateEndpointModelRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation(_managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,11 +221,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Delete</description>
+        /// <description>ManagedPrivateEndpointModel_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -239,12 +237,12 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Delete");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Delete");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new GrafanaArmOperation(_managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _managedPrivateEndpointModelRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new GrafanaArmOperation(_managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -265,11 +263,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Update</description>
+        /// <description>ManagedPrivateEndpointModel_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,12 +283,12 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Update");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _managedPrivateEndpointModelRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,11 +309,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Update</description>
+        /// <description>ManagedPrivateEndpointModel_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,12 +329,12 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Update");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.Update");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _managedPrivateEndpointModelRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -357,11 +355,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -378,7 +376,7 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.AddTag");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.AddTag");
             scope.Start();
             try
             {
@@ -387,7 +385,7 @@ namespace Azure.ResourceManager.Grafana
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -419,11 +417,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -440,7 +438,7 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.AddTag");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.AddTag");
             scope.Start();
             try
             {
@@ -449,7 +447,7 @@ namespace Azure.ResourceManager.Grafana
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -481,11 +479,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -500,7 +498,7 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.SetTags");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.SetTags");
             scope.Start();
             try
             {
@@ -510,7 +508,7 @@ namespace Azure.ResourceManager.Grafana
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -538,11 +536,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -557,7 +555,7 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.SetTags");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.SetTags");
             scope.Start();
             try
             {
@@ -567,7 +565,7 @@ namespace Azure.ResourceManager.Grafana
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -595,11 +593,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +612,7 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.RemoveTag");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.RemoveTag");
             scope.Start();
             try
             {
@@ -623,7 +621,7 @@ namespace Azure.ResourceManager.Grafana
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -655,11 +653,11 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +672,7 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.RemoveTag");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelResource.RemoveTag");
             scope.Start();
             try
             {
@@ -683,7 +681,7 @@ namespace Azure.ResourceManager.Grafana
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

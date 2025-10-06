@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownEntity. </summary>
+    /// <summary> Unknown version of Entity. </summary>
     internal partial class UnknownEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEntity"/>. </summary>

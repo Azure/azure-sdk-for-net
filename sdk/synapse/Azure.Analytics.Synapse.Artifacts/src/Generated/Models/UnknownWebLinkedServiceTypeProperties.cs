@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownWebLinkedServiceTypeProperties. </summary>
+    /// <summary> Unknown version of WebLinkedServiceTypeProperties. </summary>
     internal partial class UnknownWebLinkedServiceTypeProperties : WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWebLinkedServiceTypeProperties"/>. </summary>

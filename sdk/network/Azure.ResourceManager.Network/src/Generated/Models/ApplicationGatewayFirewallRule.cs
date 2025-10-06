@@ -57,14 +57,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleIdString"> The string representation of the web application firewall rule identifier. </param>
         /// <param name="state"> The string representation of the web application firewall rule state. </param>
         /// <param name="action"> The string representation of the web application firewall rule action. </param>
+        /// <param name="sensitivity"> The string representation of the web application firewall rule sensitivity. </param>
         /// <param name="description"> The description of the web application firewall rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, ApplicationGatewayWafRuleSensitivityType? sensitivity, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             RuleIdString = ruleIdString;
             State = state;
             Action = action;
+            Sensitivity = sensitivity;
             Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,14 +77,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The identifier of the web application firewall rule. </summary>
+        [WirePath("ruleId")]
         public int RuleId { get; set; }
         /// <summary> The string representation of the web application firewall rule identifier. </summary>
+        [WirePath("ruleIdString")]
         public string RuleIdString { get; set; }
         /// <summary> The string representation of the web application firewall rule state. </summary>
+        [WirePath("state")]
         public ApplicationGatewayWafRuleStateType? State { get; set; }
         /// <summary> The string representation of the web application firewall rule action. </summary>
+        [WirePath("action")]
         public ApplicationGatewayWafRuleActionType? Action { get; set; }
+        /// <summary> The string representation of the web application firewall rule sensitivity. </summary>
+        [WirePath("sensitivity")]
+        public ApplicationGatewayWafRuleSensitivityType? Sensitivity { get; set; }
         /// <summary> The description of the web application firewall rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

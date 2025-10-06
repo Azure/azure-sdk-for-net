@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Principal (User) Identifier. </summary>
+        [WirePath("properties.principalId")]
         public string PrincipalId { get; set; }
         /// <summary> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("properties.primaryKey")]
         public string PrimaryKey { get; set; }
         /// <summary> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("properties.secondaryKey")]
         public string SecondaryKey { get; set; }
         /// <summary> Determines whether direct access is enabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsDirectAccessEnabled { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute;
+using System.Linq;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -47,25 +47,34 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
-        internal RestorePointGroupListResult()
+        /// <param name="value"> Gets the list of restore point collections. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RestorePointGroupListResult(IEnumerable<RestorePointGroupData> value)
         {
-            Value = new ChangeTrackingList<RestorePointGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         /// <param name="value"> Gets the list of restore point collections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/> for deserialization. </summary>
+        internal RestorePointGroupListResult()
+        {
+        }
+
         /// <summary> Gets the list of restore point collections. </summary>
         public IReadOnlyList<RestorePointGroupData> Value { get; }
         /// <summary> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

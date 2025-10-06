@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -88,28 +87,40 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Host name that was analyzed. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHostnameAlreadyVerified")]
         public bool? IsHostnameAlreadyVerified { get; }
         /// <summary> DNS verification test result. </summary>
+        [WirePath("customDomainVerificationTest")]
         public ContainerAppDnsVerificationTestResult? CustomDomainVerificationTest { get; }
         /// <summary> Raw failure information if DNS verification fails. </summary>
+        [WirePath("customDomainVerificationFailureInfo")]
         public ContainerAppCustomDomainVerificationFailureInfo CustomDomainVerificationFailureInfo { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App's managed environment; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("hasConflictOnManagedEnvironment")]
         public bool? HasConflictOnManagedEnvironment { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App's managed environment level custom domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("conflictWithEnvironmentCustomDomain")]
         public bool? ConflictWithEnvironmentCustomDomain { get; }
         /// <summary> Name of the conflicting Container App on the Managed Environment if it's within the same subscription. </summary>
+        [WirePath("conflictingContainerAppResourceId")]
         public string ConflictingContainerAppResourceId { get; }
         /// <summary> CName records visible for this hostname. </summary>
+        [WirePath("cNameRecords")]
         public IReadOnlyList<string> CNameRecords { get; }
         /// <summary> TXT records visible for this hostname. </summary>
+        [WirePath("txtRecords")]
         public IReadOnlyList<string> TxtRecords { get; }
         /// <summary> A records visible for this hostname. </summary>
+        [WirePath("aRecords")]
         public IReadOnlyList<string> ARecords { get; }
         /// <summary> Alternate CName records visible for this hostname. </summary>
+        [WirePath("alternateCNameRecords")]
         public IReadOnlyList<string> AlternateCNameRecords { get; }
         /// <summary> Alternate TXT records visible for this hostname. </summary>
+        [WirePath("alternateTxtRecords")]
         public IReadOnlyList<string> AlternateTxtRecords { get; }
     }
 }

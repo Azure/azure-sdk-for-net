@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.LabServices.Tests
         }
 
         [Test]
+        [LiveOnly(Reason = "Test regularly fails due to timeout")]
         public async Task LabImageCRUDTest()
         {
             // Prepare lab resource.

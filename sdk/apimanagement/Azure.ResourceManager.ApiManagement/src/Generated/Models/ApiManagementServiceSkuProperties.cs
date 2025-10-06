@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of the Sku. </summary>
+        [WirePath("name")]
         public ApiManagementServiceSkuType Name { get; set; }
         /// <summary> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </summary>
+        [WirePath("capacity")]
         public int Capacity { get; set; }
     }
 }

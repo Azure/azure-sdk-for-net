@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -93,16 +92,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> First line of an Address. </summary>
+        [WirePath("address1")]
         public string Address1 { get; set; }
         /// <summary> The second line of the Address. Optional. </summary>
+        [WirePath("address2")]
         public string Address2 { get; set; }
         /// <summary> The city for the address. </summary>
+        [WirePath("city")]
         public string City { get; set; }
         /// <summary> The country for the address. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
         /// <summary> The postal code for the address. </summary>
+        [WirePath("postalCode")]
         public string PostalCode { get; set; }
         /// <summary> The state or province for the address. </summary>
+        [WirePath("state")]
         public string State { get; set; }
     }
 }

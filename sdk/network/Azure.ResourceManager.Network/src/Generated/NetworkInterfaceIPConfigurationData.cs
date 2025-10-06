@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -41,7 +40,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayBackendAddressPools"> The reference to ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="loadBalancerBackendAddressPools"> The reference to LoadBalancerBackendAddressPool resource. </param>
         /// <param name="loadBalancerInboundNatRules"> A list of references of LoadBalancerInboundNatRules. </param>
-        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
+        /// <param name="privateIPAddress"> Private IP address of the IP configuration. It can be a single IP address or a CIDR block in the format &lt;address&gt;/&lt;prefix-length&gt;. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="subnet"> Subnet bound to the IP configuration. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, int? privateIPAddressPrefixLength, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             GatewayLoadBalancer = gatewayLoadBalancer;
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Network
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatRules = loadBalancerInboundNatRules;
             PrivateIPAddress = privateIPAddress;
+            PrivateIPAddressPrefixLength = privateIPAddressPrefixLength;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             PrivateIPAddressVersion = privateIPAddressVersion;
             Subnet = subnet;
@@ -70,10 +71,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The reference to gateway load balancer frontend IP. </summary>
         internal WritableSubResource GatewayLoadBalancer { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.gatewayLoadBalancer.id")]
         public ResourceIdentifier GatewayLoadBalancerId
         {
             get => GatewayLoadBalancer is null ? default : GatewayLoadBalancer.Id;
@@ -86,30 +89,46 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The reference to Virtual Network Taps. </summary>
+        [WirePath("properties.virtualNetworkTaps")]
         public IList<VirtualNetworkTapData> VirtualNetworkTaps { get; }
         /// <summary> The reference to ApplicationGatewayBackendAddressPool resource. </summary>
+        [WirePath("properties.applicationGatewayBackendAddressPools")]
         public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; }
         /// <summary> The reference to LoadBalancerBackendAddressPool resource. </summary>
+        [WirePath("properties.loadBalancerBackendAddressPools")]
         public IList<BackendAddressPoolData> LoadBalancerBackendAddressPools { get; }
         /// <summary> A list of references of LoadBalancerInboundNatRules. </summary>
+        [WirePath("properties.loadBalancerInboundNatRules")]
         public IList<InboundNatRuleData> LoadBalancerInboundNatRules { get; }
-        /// <summary> Private IP address of the IP configuration. </summary>
+        /// <summary> Private IP address of the IP configuration. It can be a single IP address or a CIDR block in the format &lt;address&gt;/&lt;prefix-length&gt;. </summary>
+        [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
+        /// <summary> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </summary>
+        [WirePath("properties.privateIPAddressPrefixLength")]
+        public int? PrivateIPAddressPrefixLength { get; set; }
         /// <summary> The private IP address allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
         public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
+        [WirePath("properties.privateIPAddressVersion")]
         public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> Subnet bound to the IP configuration. </summary>
+        [WirePath("properties.subnet")]
         public SubnetData Subnet { get; set; }
         /// <summary> Whether this is a primary customer address on the network interface. </summary>
+        [WirePath("properties.primary")]
         public bool? Primary { get; set; }
         /// <summary> Public IP address bound to the IP configuration. </summary>
+        [WirePath("properties.publicIPAddress")]
         public PublicIPAddressData PublicIPAddress { get; set; }
         /// <summary> Application security groups in which the IP configuration is included. </summary>
+        [WirePath("properties.applicationSecurityGroups")]
         public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; }
         /// <summary> The provisioning state of the network interface IP configuration. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> PrivateLinkConnection properties for the network interface. </summary>
+        [WirePath("properties.privateLinkConnectionProperties")]
         public NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties PrivateLinkConnectionProperties { get; }
     }
 }

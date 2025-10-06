@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Artifacts;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -31,6 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -59,7 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="policyId"> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDatabricksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object authentication, object workspaceResourceId, object existingClusterId, object instancePoolId, object newClusterVersion, object newClusterNumOfWorker, object newClusterNodeType, IDictionary<string, object> newClusterSparkConf, IDictionary<string, object> newClusterSparkEnvVars, IDictionary<string, object> newClusterCustomTags, object newClusterLogDestination, object newClusterDriverNodeType, object newClusterInitScripts, object newClusterEnableElasticDisk, object encryptedCredential, object policyId, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="dataSecurityMode"> The data security mode for the Databricks Cluster. Type: string (or Expression with resultType string). </param>
+        internal AzureDatabricksLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object authentication, object workspaceResourceId, object existingClusterId, object instancePoolId, object newClusterVersion, object newClusterNumOfWorker, object newClusterNodeType, IDictionary<string, object> newClusterSparkConf, IDictionary<string, object> newClusterSparkEnvVars, IDictionary<string, object> newClusterCustomTags, object newClusterLogDestination, object newClusterDriverNodeType, object newClusterInitScripts, object newClusterEnableElasticDisk, object encryptedCredential, object policyId, CredentialReference credential, object dataSecurityMode) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -80,6 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             EncryptedCredential = encryptedCredential;
             PolicyId = policyId;
             Credential = credential;
+            DataSecurityMode = dataSecurityMode;
             Type = type ?? "AzureDatabricks";
         }
 
@@ -125,5 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object PolicyId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
+        /// <summary> The data security mode for the Databricks Cluster. Type: string (or Expression with resultType string). </summary>
+        public object DataSecurityMode { get; set; }
     }
 }

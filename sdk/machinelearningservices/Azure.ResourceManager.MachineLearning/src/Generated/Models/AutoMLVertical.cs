@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -62,20 +61,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoMLVertical(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LogVerbosity = logVerbosity;
-            TargetColumnName = targetColumnName;
             TaskType = taskType;
+            LogVerbosity = logVerbosity;
             TrainingData = trainingData;
+            TargetColumnName = targetColumnName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,16 +83,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> [Required] Task type for AutoMLJob. </summary>
+        internal TaskType TaskType { get; set; }
         /// <summary> Log verbosity for the job. </summary>
+        [WirePath("logVerbosity")]
         public MachineLearningLogVerbosity? LogVerbosity { get; set; }
+        /// <summary> [Required] Training data input. </summary>
+        [WirePath("trainingData")]
+        public MachineLearningTableJobInput TrainingData { get; set; }
         /// <summary>
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </summary>
+        [WirePath("targetColumnName")]
         public string TargetColumnName { get; set; }
-        /// <summary> [Required] Task type for AutoMLJob. </summary>
-        internal TaskType TaskType { get; set; }
-        /// <summary> [Required] Training data input. </summary>
-        public MachineLearningTableJobInput TrainingData { get; set; }
     }
 }

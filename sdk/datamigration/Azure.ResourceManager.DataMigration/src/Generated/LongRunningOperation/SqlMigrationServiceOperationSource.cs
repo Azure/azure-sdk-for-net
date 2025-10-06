@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DataMigration
 
         SqlMigrationServiceResource IOperationSource<SqlMigrationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
             return new SqlMigrationServiceResource(_client, data);
         }
 
         async ValueTask<SqlMigrationServiceResource> IOperationSource<SqlMigrationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement);
-            return new SqlMigrationServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
+            return await Task.FromResult(new SqlMigrationServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

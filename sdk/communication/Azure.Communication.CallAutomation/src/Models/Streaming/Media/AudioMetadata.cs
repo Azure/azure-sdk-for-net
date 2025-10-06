@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json.Serialization;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -10,31 +8,31 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class AudioMetadata : StreamingData
     {
-        /// <summary>
-        /// Subscription Id.
-        /// </summary>
-        [JsonPropertyName("subscriptionId")]
-        public string MediaSubscriptionId { get; set; }
+        internal AudioMetadata(AudioMetadataInternal audioMetadataInternal)
+        {
+            MediaSubscriptionId = audioMetadataInternal.MediaSubscriptionId;
+            Encoding = audioMetadataInternal.Encoding;
+            SampleRate = audioMetadataInternal.SampleRate;
+            Channels = (AudioChannel)audioMetadataInternal.Channels;
+        }
 
         /// <summary>
-        /// The Encoding.
+        /// A unique identifier for the media subscription.
         /// </summary>
-        [JsonPropertyName("encoding")]
-        public string Encoding { get; set; }
+        public string MediaSubscriptionId { get; }
+
         /// <summary>
-        /// Sample Rate.
+        /// The format used to encode the audio. Currently, only "pcm" (Pulse Code Modulation) is supported.
         /// </summary>
-        [JsonPropertyName("sampleRate")]
-        public int SampleRate { get; set; }
+        public string Encoding { get; }
         /// <summary>
-        /// Channels.
+        /// The number of samples per second in the audio. Supported values are 16kHz or 24kHz.
         /// </summary>
-        [JsonPropertyName("channels")]
-        public int Channels { get; set; }
+        public int SampleRate { get; }
         /// <summary>
-        /// Length.
+        /// Specifies the number of audio channels in the audio configuration.
+        /// Currently, only "mono" (single channel) is supported.
         /// </summary>
-        [JsonPropertyName("length")]
-        public int Length { get; set; }
+        public AudioChannel Channels { get; }
     }
 }

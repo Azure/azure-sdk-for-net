@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Unique key name of the counter. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Presented time grain. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> Collection of workers that are active during this time. </summary>
+        [WirePath("values")]
         public IReadOnlyList<PerfMonSample> Values { get; }
     }
 }

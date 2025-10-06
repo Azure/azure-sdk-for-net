@@ -4,19 +4,21 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/e7e476ba9cd5dcaacb4b344a0ca9677ba731686b/specification/sql/resource-manager/readme.md
+tag: package-preview-2024-11-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/0d68729fe5000a0e7dcdccd2c5f5e6e712f901a9/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - ManagedDatabaseSensitivityLabels_CreateOrUpdate
   - ManagedDatabaseSensitivityLabels_Delete
   - SensitivityLabels_CreateOrUpdate
   - SensitivityLabels_Delete
+  - ManagedDatabaseSecurityEvents_ListByDatabase
+  - OutboundFirewallRules_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -25,6 +27,10 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+# mgmt-debug:
+#  show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
 operation-groups-to-omit:
@@ -107,21 +113,15 @@ prepend-rp-prefix:
   - DatabaseBlobAuditingPolicy
   - DatabaseSecurityAlertPolicy
   - TimeZone
-  - Metric
-  - MetricListResult
-  - MetricAvalability
-  - MetricName
-  - MetricType
-  - MetricValue
-  - MetricDefinition
   - Server
+  - ServerCreateMode
   - Database
   - DayOfWeek
+  - MetricType
   - ServerAutomaticTuning
   - ServerAzureADAdministrator
   - ServerAzureADOnlyAuthentication
   - ServerBlobAuditingPolicy
-  - ServerCommunicationLink
   - ServerConnectionPolicy
   - ServerDnsAlias
   - ServerKey
@@ -143,6 +143,7 @@ prepend-rp-prefix:
   - ServerUsage
   - AdvisorStatus
   - Advisor
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -158,10 +159,6 @@ override-operation-name:
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance: GetOutboundNetworkDependencies
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
-  Metrics_ListDatabase: GetMetrics
-  MetricDefinitions_ListDatabase: GetMetricDefinitions
-  Metrics_ListElasticPool: GetMetrics
-  MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
   Servers_CheckNameAvailability: CheckSqlServerNameAvailability
   LongTermRetentionBackups_ListByResourceGroupLocation: GetLongTermRetentionBackupsWithLocation
@@ -220,6 +217,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults/{scanResultId}: SqlDatabaseSqlVulnerabilityAssessmentScanResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}: SqlDatabaseSqlVulnerabilityAssessmentBaseline
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}/rules/{ruleId}: SqlDatabaseSqlVulnerabilityAssessmentBaselineRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}: SqlDistributedAvailabilityGroup
 
 rename-mapping:
   CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
@@ -258,8 +256,6 @@ rename-mapping:
   CreateMode: SqlDatabaseCreateMode
   OperationMode: DatabaseExtensionOperationMode
   ProvisioningState: JobExecutionProvisioningState
-  UnitType: SqlMetricUnitType
-  UnitDefinitionType: SqlMetricDefinitionUnitType
   ManagedDatabaseUpdate.properties.autoCompleteRestore: AllowAutoCompleteRestore
   ManagedDatabase.properties.autoCompleteRestore: AllowAutoCompleteRestore
   ManagedInstanceAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
@@ -273,7 +269,6 @@ rename-mapping:
   ExportDatabaseDefinition: DatabaseExportDefinition
   ImportNewDatabaseDefinition: DatabaseImportDefinition
   PartnerInfo: PartnerServerInfo
-  ReplicationMode: DistributedAvailabilityGroupReplicationMode
   ReplicationState: ReplicationLinkState
   ServerInfo: ServerTrustGroupServerInfo
   DatabaseExtensions: SqlDatabaseExtension
@@ -283,7 +278,6 @@ rename-mapping:
   UpdateVirtualClusterDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
   VirtualNetworkRule: SqlServerVirtualNetworkRule
   VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
-  MetricAvailability: SqlMetricAvailability
   PrivateEndpointConnectionProperties: ServerPrivateEndpointConnectionProperties
   PrivateEndpointProvisioningState: SqlPrivateEndpointProvisioningState
   PrivateLinkServiceConnectionStateActionsRequire: SqlPrivateLinkServiceConnectionActionsRequired
@@ -296,7 +290,6 @@ rename-mapping:
   ServerVersionCapability: SqlServerVersionCapability
   RestorePoint: SqlServerDatabaseRestorePoint
   BackupStorageRedundancy: SqlBackupStorageRedundancy
-  PrimaryAggregationType: SqlMetricPrimaryAggregationType
   DNSRefreshOperationStatus: DnsRefreshConfigurationPropertiesStatus
   DatabaseSqlVulnerabilityAssessmentBaselineSet: SqlVulnerabilityAssessmentBaseline
   BaselineName: SqlVulnerabilityAssessmentBaselineName
@@ -341,7 +334,6 @@ rename-mapping:
   ServerConfigurationOption: ManagedInstanceServerConfigurationOption
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
-  MetricDefinition.resourceUri: ResourceUriString
   FailoverGroup.properties.databases: FailoverDatabases
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
@@ -350,12 +342,52 @@ rename-mapping:
   ServerUpdate.properties.minimalTlsVersion: minTlsVersion
   MinimalTlsVersion: SqlMinimalTlsVersion
   BackupStorageAccessTier: SqlBackupStorageAccessTier
-
-# mgmt-debug:
-#  show-serialized-names: true
+  Phase: DatabaseOperationPhase
+  PhaseDetails: DatabaseOperationPhaseDetails
+  ManagementOperationStepState: UpsertManagedServerOperationStepStatus
+  UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  GeoBackupPolicy.properties.state: GeoBackupPolicyState
+  DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
+  RecommendedAction.properties.details: ActionDetails
+  ManagedDatabase.properties.crossSubscriptionSourceDatabaseId: -|arm-id
+  ManagedDatabase.properties.crossSubscriptionRestorableDroppedDatabaseId: -|arm-id
+  ManagedDatabaseUpdate.properties.crossSubscriptionSourceDatabaseId: -|arm-id
+  ManagedDatabaseUpdate.properties.crossSubscriptionRestorableDroppedDatabaseId: -|arm-id
+  ManagedInstanceUpdate.properties.virtualClusterId: -|arm-id
+  NetworkSecurityPerimeterConfiguration: SqlNetworkSecurityPerimeterConfiguration
+  NetworkSecurityPerimeterConfigurationListResult: SqlNetworkSecurityPerimeterConfigurationListResult
+  AuthMetadataLookupModes.AzureAD: Aad
+  CertificateInfo: SqlServerCertificateInfo
+  ClientClassificationSource.MIP: Mip
+  DataMaskingRule.properties.id: RuleId
+  FailoverModeType: SqlServerFailoverModeType
+  FailoverType: SqlServerFailoverType
+  InstanceRole: DistributedAvailabilityGroupManagedInstanceRole
+  LinkRole: SqlServerSideLinkRole
+  NSPConfigAccessRule: SqlNetworkSecurityPerimeterConfigAccessRule
+  NSPConfigAccessRuleProperties: SqlNetworkSecurityPerimeterConfigAccessRuleProperties
+  NSPConfigAssociation: SqlNetworkSecurityPerimeterConfigAssociation
+  NSPConfigNetworkSecurityPerimeterRule: SqlNetworkSecurityPerimeterConfigRule
+  NSPConfigPerimeter: SqlNetworkSecurityPerimeterConfigPerimeter
+  NSPConfigProfile: SqlNetworkSecurityPerimeterConfigProfile
+  NSPProvisioningIssue: SqlNetworkSecurityPerimeterProvisioningIssue
+  NSPProvisioningIssueProperties: SqlNetworkSecurityPerimeterProvisioningIssueProperties
+  PricingModel: SqlManagedInstancePricingModel
+  RefreshExternalGovernanceStatusOperationResultMI: SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult
+  ReplicaConnectedState: SqlReplicaConnectedState
+  ReplicaSynchronizationHealth.NOT_HEALTHY: NotHealthy
+  ReplicaSynchronizationHealth: SqlReplicaSynchronizationHealth
+  ReplicationModeType: SqlReplicationModeType
+  RoleChangeType: DistributedAvailabilityGroupRoleChangeType
+  InstancePoolOperation: SqlInstancePoolOperation
+  ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
+  ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
+  ErrorType: SqlInstancePoolOperationErrorType
+  InaccessibilityReason: ManagedDatabaseInaccessibilityReason 
 
 prompted-enum-values:
   - Default
+
 directive:
     - remove-operation: ManagedDatabaseMoveOperations_ListByLocation
     - remove-operation: ManagedDatabaseMoveOperations_Get
@@ -566,3 +598,124 @@ directive:
       transform: >
           $.push('SecuredByPerimeter');
       reason: Align the enum choices to avoid breaking changes of one enum split into two.
+    - from: DataMaskingRules.json
+      where: $.definitions.DataMaskingRuleProperties.properties.ruleState
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: DataMaskingPolicies.json
+      where: $.definitions.DataMaskingPolicyProperties.properties.dataMaskingState
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: GeoBackupPolicies.json
+      where: $.definitions.GeoBackupPolicyProperties.properties.state
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: DatabaseAdvisors.json
+      where: $.definitions.RecommendedAction
+      transform: >
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
+    - from: DatabaseRecommendedActions.json
+      where: $.definitions.RecommendedAction
+      transform: >
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstanceProperties.properties.provisioningState
+      transform: >
+          $['enum'] = [
+              'Created',
+              'InProgress',
+              'Succeeded',
+              'Failed',
+              'Canceled',
+              'Creating',
+              'Deleting',
+              'Updating',
+              'Unknown',
+              'Accepted',
+              'Deleted',
+              'Unrecognized',
+              'Running',
+              'NotSpecified',
+              'Registering',
+              'TimedOut'
+          ];
+          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState';
+    - from: ManagedInstanceOperations.json
+      where: $.definitions.UpsertManagedServerOperationStepWithEstimatesAndDuration.properties.status
+      transform: >
+          $['enum'] = [
+              'NotStarted',
+              'InProgress',
+              'SlowedDown',
+              'Completed',
+              'Failed',
+              'Canceled'
+          ];
+          $['readOnly'] = true;
+          $['x-ms-enum'] = {
+            "name": "ManagementOperationStepState",
+            "modelAsString": true
+          };
+    - from: DatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedDatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ServerUsages.json
+      where: $.definitions.ServerUsageProperties.properties
+      transform: >
+          $['resourceName'] = {
+              "readOnly": true,
+              "type": "string",
+              "description": "The name of the resource."
+            };
+          $['nextResetTime'] = {
+              "readOnly": true,
+              "type": "string",
+              "format": "date-time",
+              "description": "The next reset time for the metric (ISO8601 format)."
+            };

@@ -153,10 +153,30 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// </summary>
         /// <value>The application specific properties of the message.</value>
         /// <remarks>
-        /// Only following value types are supported:
-        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
-        /// and IList / IDictionary of supported types
+        ///   <list type="bullet">
+        ///     <listheader><description>The following types are supported:</description></listheader>
+        ///     <item><description>byte</description></item>
+        ///     <item><description>sbyte</description></item>
+        ///     <item><description>char</description></item>
+        ///     <item><description>short</description></item>
+        ///     <item><description>ushort</description></item>
+        ///     <item><description>int</description></item>
+        ///     <item><description>uint</description></item>
+        ///     <item><description>long</description></item>
+        ///     <item><description>ulong</description></item>
+        ///     <item><description>float</description></item>
+        ///     <item><description>double</description></item>
+        ///     <item><description>decimal</description></item>
+        ///     <item><description>bool</description></item>
+        ///     <item><description>Guid</description></item>
+        ///     <item><description>string</description></item>
+        ///     <item><description>Uri</description></item>
+        ///     <item><description>DateTime</description></item>
+        ///     <item><description>DateTimeOffset</description></item>
+        ///     <item><description>TimeSpan</description></item>
+        ///     <item><description>Stream</description></item>
+        ///     <item><description>byte[]</description></item>
+        ///   </list>
         /// </remarks>
         public IDictionary<string, object> ApplicationProperties { get; internal set; } = new PropertyDictionary();
 
@@ -233,34 +253,36 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <inheritdoc/>
         public override bool Equals(RuleFilter other)
         {
-            if (other is CorrelationRuleFilter correlationRuleFilter)
+            if (other is not CorrelationRuleFilter correlationRuleFilter)
             {
-                if (string.Equals(CorrelationId, correlationRuleFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(MessageId, correlationRuleFilter.MessageId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(To, correlationRuleFilter.To, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ReplyTo, correlationRuleFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(Subject, correlationRuleFilter.Subject, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(SessionId, correlationRuleFilter.SessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase))
+                return false;
+            }
+
+            if (string.Equals(CorrelationId, correlationRuleFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(MessageId, correlationRuleFilter.MessageId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(To, correlationRuleFilter.To, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ReplyTo, correlationRuleFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(Subject, correlationRuleFilter.Subject, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(SessionId, correlationRuleFilter.SessionId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase))
+            {
+                if (ApplicationProperties.Count != correlationRuleFilter.ApplicationProperties.Count)
                 {
-                    if (ApplicationProperties.Count != correlationRuleFilter.ApplicationProperties.Count)
+                    return false;
+                }
+
+                foreach (var param in ApplicationProperties)
+                {
+                    if (!correlationRuleFilter.ApplicationProperties.TryGetValue(param.Key, out var otherParamValue) ||
+                        (param.Value == null ^ otherParamValue == null) ||
+                        (param.Value != null && !param.Value.Equals(otherParamValue)))
                     {
                         return false;
                     }
-
-                    foreach (var param in ApplicationProperties)
-                    {
-                        if (!correlationRuleFilter.ApplicationProperties.TryGetValue(param.Key, out var otherParamValue) ||
-                            (param.Value == null ^ otherParamValue == null) ||
-                            (param.Value != null && !param.Value.Equals(otherParamValue)))
-                        {
-                            return false;
-                        }
-                    }
-
-                    return true;
                 }
+
+                return true;
             }
 
             return false;

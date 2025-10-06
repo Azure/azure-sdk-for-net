@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -41,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Defines the monitor. </summary>
+        [WirePath("monitorDefinition")]
         public MonitorDefinition MonitorDefinition { get; set; }
     }
 }

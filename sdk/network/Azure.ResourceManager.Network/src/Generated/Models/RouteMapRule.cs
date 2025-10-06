@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The unique name for the rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> List of matching criterion which will be applied to traffic. </summary>
+        [WirePath("matchCriteria")]
         public IList<RouteCriterion> MatchCriteria { get; }
         /// <summary> List of actions which will be applied on a match. </summary>
+        [WirePath("actions")]
         public IList<RouteMapAction> Actions { get; }
         /// <summary> Next step after rule is evaluated. Current supported behaviors are 'Continue'(to next rule) and 'Terminate'. </summary>
+        [WirePath("nextStepIfMatched")]
         public RouteMapNextStepBehavior? NextStepIfMatched { get; set; }
     }
 }

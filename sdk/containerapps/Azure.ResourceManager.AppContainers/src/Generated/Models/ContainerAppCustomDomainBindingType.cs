@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         private const string DisabledValue = "Disabled";
         private const string SniEnabledValue = "SniEnabled";
+        private const string AutoValue = "Auto";
 
         /// <summary> Disabled. </summary>
         public static ContainerAppCustomDomainBindingType Disabled { get; } = new ContainerAppCustomDomainBindingType(DisabledValue);
         /// <summary> SniEnabled. </summary>
         public static ContainerAppCustomDomainBindingType SniEnabled { get; } = new ContainerAppCustomDomainBindingType(SniEnabledValue);
+        /// <summary> Auto. </summary>
+        public static ContainerAppCustomDomainBindingType Auto { get; } = new ContainerAppCustomDomainBindingType(AutoValue);
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
         public static implicit operator ContainerAppCustomDomainBindingType(string value) => new ContainerAppCustomDomainBindingType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

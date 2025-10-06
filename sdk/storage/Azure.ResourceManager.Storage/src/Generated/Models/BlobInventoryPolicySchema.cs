@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -82,12 +81,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Policy is enabled if set to true. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </summary>
+        [WirePath("destination")]
         public string Destination { get; }
         /// <summary> The valid value is Inventory. </summary>
+        [WirePath("type")]
         public BlobInventoryRuleType RuleType { get; set; }
         /// <summary> The storage account blob inventory policy rules. The rule is applied when it is enabled. </summary>
+        [WirePath("rules")]
         public IList<BlobInventoryPolicyRule> Rules { get; }
     }
 }

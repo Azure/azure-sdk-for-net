@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -74,6 +73,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// will be generated using the given scope. These credentials will be used to login to
         /// the source registry during the run.
         /// </summary>
+        [WirePath("sourceRegistry.loginMode")]
         public SourceRegistryLoginMode? SourceRegistryLoginMode
         {
             get => SourceRegistry is null ? default : SourceRegistry.LoginMode;
@@ -90,6 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
         /// the value of the item will be the registry credentials for accessing the registry.
         /// </summary>
+        [WirePath("customRegistries")]
         public IDictionary<string, CustomRegistryCredentials> CustomRegistries { get; }
     }
 }

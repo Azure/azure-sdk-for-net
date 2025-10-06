@@ -58,6 +58,30 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task BearerTokenAuthenticationPolicy_RequestsTokenEveryRequest_InvalidExpiresOn()
+        {
+            var accessTokens = new Queue<AccessToken>();
+            accessTokens.Enqueue(new AccessToken("token1", default));
+            accessTokens.Enqueue(new AccessToken("token2", default));
+
+            var credential = new TokenCredentialStub(
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? accessTokens.Dequeue() : default,
+                IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
+
+            Assert.AreEqual("Bearer token1", auth1Value);
+            Assert.AreEqual("Bearer token2", auth2Value);
+        }
+
+        [Test]
         public async Task BearerTokenAuthenticationPolicy_CachesHeaderValue()
         {
             var credential = new TokenCredentialStub(
@@ -253,7 +277,51 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
 
-            Assert.AreEqual(2, callCount);
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth3Value));
+            Assert.True(transport.Requests[3].Headers.TryGetValue("Authorization", out string auth4Value));
+
+            Assert.AreEqual(auth1Value, auth2Value);
+            Assert.AreEqual(auth2Value, auth3Value);
+            Assert.AreNotEqual(auth3Value, auth4Value);
+            Assert.GreaterOrEqual(callCount, 2);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_TokenNotAlmostExpiredWithRefreshOnNow()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(10), currentTime.AddMinutes(30) });
+            var callCount = 0;
+            var credential = new TokenCredentialStub((r, c) =>
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
+
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue(), refreshOn: currentTime);
+                },
+                IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
+            requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
+            await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
 
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
             Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
@@ -263,6 +331,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth1Value, auth2Value);
             Assert.AreEqual(auth2Value, auth3Value);
             Assert.AreNotEqual(auth3Value, auth4Value);
+            Assert.GreaterOrEqual(callCount, 2);
         }
 
         [Test]
@@ -841,6 +910,120 @@ namespace Azure.Core.Tests
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
             // An additional call to TokenCredential.GetTokenAsync is expected now that the tenant has changed.
             Assert.AreEqual(3, callCount);
+        }
+
+        [Test]
+        public async Task TokenCacheCurrentTcsTOkenIsExpiredAndBackgroundTcsInitialized()
+        {
+            var currentTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+            var backgroundTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+
+            currentTcs.SetResult(new BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo("token", DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddMinutes(-5)));
+
+            TokenRequestContext ctx = new TokenRequestContext(new[] { "scope" });
+            var cache = new BearerTokenAuthenticationPolicy.AccessTokenCache(
+                new TokenCredentialStub((r, c) => new AccessToken(string.Empty, DateTimeOffset.MaxValue), IsAsync),
+                TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+            {
+                _state = new BearerTokenAuthenticationPolicy.AccessTokenCache.TokenRequestState(
+                    ctx,
+                    currentTcs,
+                    backgroundTcs
+                    )
+            };
+            var msg = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(5000);
+            msg.CancellationToken = cts.Token;
+            await cache.GetAuthHeaderValueAsync(msg, ctx, IsAsync);
+        }
+
+        [Test]
+        public async Task TokenCacheCurrentTcsIsCancelledAndBackgroundTcsInitialized()
+        {
+            var currentTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+            var backgroundTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+
+            currentTcs.SetCanceled();
+
+            TokenRequestContext ctx = new TokenRequestContext(new[] { "scope" });
+            var cache = new BearerTokenAuthenticationPolicy.AccessTokenCache(
+                new TokenCredentialStub((r, c) => new AccessToken(string.Empty, DateTimeOffset.MaxValue), IsAsync),
+                TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+            {
+                _state = new BearerTokenAuthenticationPolicy.AccessTokenCache.TokenRequestState(
+                    ctx,
+                    currentTcs,
+                    backgroundTcs
+                    )
+            };
+            var msg = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(5000);
+            msg.CancellationToken = cts.Token;
+            await cache.GetAuthHeaderValueAsync(msg, ctx, IsAsync);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(CaeTestDetails))]
+        public async Task BearerTokenAuthenticationPolicy_CAE_TokenRevocation(string description, string challenge, int expectedResponseCode, string expectedClaims, string encodedClaims)
+        {
+            string claims = null;
+            int callCount = 0;
+
+            var transport = CreateMockTransport(req =>
+            {
+                if (callCount <= 1)
+                {
+                    return challenge == null ? new(200) : new MockResponse(401).WithHeader("WWW-Authenticate", challenge);
+                }
+                else
+                {
+                    return new(200);
+                }
+            });
+
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                claims = r.Claims;
+                Interlocked.Increment(ref callCount);
+                Assert.AreEqual(true, r.IsCaeEnabled);
+
+                return new(callCount.ToString(), DateTimeOffset.Now.AddHours(2));
+            }, IsAsync);
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+
+            using AzureEventSourceListener listener = new((args, text) =>
+            {
+                TestContext.WriteLine(text);
+                if (args.EventName == "FailedToDecodeCaeChallengeClaims")
+                {
+                    Assert.That(text, Does.Contain($"'{encodedClaims}'"));
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Error);
+
+            var response = await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
+            Assert.AreEqual(expectedClaims, claims);
+            Assert.AreEqual(expectedResponseCode, response.Status);
+
+            var response2 = await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
+            if (expectedClaims != null)
+            {
+                Assert.IsNull(claims);
+            }
+        }
+
+        private static IEnumerable<object[]> CaeTestDetails()
+        {
+            yield return new object[] { "no challenge", null, 200, null, null };
+            yield return new object[] { "unexpected error value", """Bearer authorization_uri="https://login.windows.net/", error="invalid_token", claims="ey==" """, 401, null, "ey==" };
+            yield return new object[] { "unexpected error value", """Bearer authorization_uri="https://login.windows.net/", error="invalid_token", claims="ey==" """, 401, null, "ey==" };
+            yield return new object[] { "parsing error", """Bearer claims="not base64", error="insufficient_claims" """, 401, null, "not base64" };
+            yield return new object[] { "no padding", """Bearer error="insufficient_claims", authorization_uri="http://localhost", claims="ey" """, 401, null, "ey" };
+            yield return new object[] { "more parameters, different order", """Bearer realm="", authorization_uri="http://localhost", client_id="00000003-0000-0000-c000-000000000000", error="insufficient_claims", claims="ey==" """, 200, "{", "ey==" };
+            yield return new object[] { "more parameters, different order", """Bearer realm="", authorization_uri="http://localhost", client_id="00000003-0000-0000-c000-000000000000", error="insufficient_claims", claims="ey==" """, 200, "{", "ey==" };
+            yield return new object[] { "standard", """Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==" """, 200, """{"access_token":{"nbf":{"essential":true,"value":"1726077595"},"xms_caeerror":{"value":"10012"}}}""", "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==" };
+            yield return new object[] { "multiple challenges", """PoP realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", client_id="00000003-0000-0000-c000-000000000000", nonce="ey==", Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", client_id="00000003-0000-0000-c000-000000000000", error_description="Continuous access evaluation resulted in challenge with result: InteractionRequired and code: TokenIssuedBeforeRevocationTimestamp", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTcyNjI1ODEyMiJ9fX0=" """, 200, """{"access_token":{"nbf":{"essential":true, "value":"1726258122"}}}""", "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTcyNjI1ODEyMiJ9fX0=" };
         }
 
         private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy

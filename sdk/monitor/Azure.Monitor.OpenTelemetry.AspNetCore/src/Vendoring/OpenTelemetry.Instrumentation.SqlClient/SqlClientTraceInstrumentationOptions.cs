@@ -1,4 +1,3 @@
-// <copyright file="SqlClientTraceInstrumentationOptions.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -133,7 +132,7 @@ internal class SqlClientTraceInstrumentationOptions
     /// cref="Activity"/>.</item>
     /// </list>
     /// </remarks>
-    public Action<Activity, string, object> Enrich { get; set; }
+    public Action<Activity, string, object>? Enrich { get; set; }
 
     /// <summary>
     /// Gets or sets a filter function that determines whether or not to
@@ -155,7 +154,7 @@ internal class SqlClientTraceInstrumentationOptions
     /// </list></item>
     /// </list>
     /// </remarks>
-    public Func<object, bool> Filter { get; set; }
+    public Func<object, bool>? Filter { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the exception will be
@@ -174,10 +173,10 @@ internal class SqlClientTraceInstrumentationOptions
     {
         Match match = DataSourceRegex.Match(dataSource);
 
-        string serverHostName = match.Groups[2].Value;
-        string serverIpAddress = null;
+        string? serverHostName = match.Groups[2].Value;
+        string? serverIpAddress = null;
 
-        string instanceName;
+        string? instanceName;
 
         var uriHostNameType = Uri.CheckHostName(serverHostName);
         if (uriHostNameType == UriHostNameType.IPv4 || uriHostNameType == UriHostNameType.IPv6)
@@ -218,7 +217,7 @@ internal class SqlClientTraceInstrumentationOptions
             };
         }
 
-        string port;
+        string? port;
         if (match.Groups[4].Length > 0)
         {
             instanceName = match.Groups[3].Value;
@@ -262,7 +261,7 @@ internal class SqlClientTraceInstrumentationOptions
         }
         else
         {
-            if (!ConnectionDetailCache.TryGetValue(dataSource, out SqlConnectionDetails connectionDetails))
+            if (!ConnectionDetailCache.TryGetValue(dataSource, out SqlConnectionDetails? connectionDetails))
             {
                 connectionDetails = ParseDataSource(dataSource);
                 ConnectionDetailCache.TryAdd(dataSource, connectionDetails);
@@ -292,12 +291,12 @@ internal class SqlClientTraceInstrumentationOptions
 
     internal sealed class SqlConnectionDetails
     {
-        public string ServerHostName { get; set; }
+        public string? ServerHostName { get; set; }
 
-        public string ServerIpAddress { get; set; }
+        public string? ServerIpAddress { get; set; }
 
-        public string InstanceName { get; set; }
+        public string? InstanceName { get; set; }
 
-        public string Port { get; set; }
+        public string? Port { get; set; }
     }
 }

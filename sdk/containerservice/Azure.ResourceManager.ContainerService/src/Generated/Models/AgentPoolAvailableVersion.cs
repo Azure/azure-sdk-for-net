@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether this version is the default agent pool version. </summary>
+        [WirePath("default")]
         public bool? IsDefault { get; }
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
+        [WirePath("kubernetesVersion")]
         public string KubernetesVersion { get; }
         /// <summary> Whether Kubernetes version is currently in preview. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
     }
 }

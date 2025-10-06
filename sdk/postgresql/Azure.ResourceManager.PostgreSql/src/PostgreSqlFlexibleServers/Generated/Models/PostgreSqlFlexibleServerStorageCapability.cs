@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -25,21 +24,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>
+        /// <param name="supportedMaximumIops"> Maximum IOPS supported by this #Vcores or PremiumV2_LRS Storage Size. </param>
         /// <param name="storageSizeInMB"> Storage size in MB. </param>
+        /// <param name="maximumStorageSizeMb"> Maximum value of Storage size in MB. </param>
+        /// <param name="supportedThroughput"> Values of throughput in MB/s. </param>
+        /// <param name="supportedMaximumThroughput"> Maximum values of throughput in MB/s. </param>
         /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
         /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, long? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, long? supportedIops, int? supportedMaximumIops, long? storageSizeInMB, long? maximumStorageSizeMb, int? supportedThroughput, int? supportedMaximumThroughput, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             SupportedIops = supportedIops;
+            SupportedMaximumIops = supportedMaximumIops;
             StorageSizeInMB = storageSizeInMB;
+            MaximumStorageSizeMb = maximumStorageSizeMb;
+            SupportedThroughput = supportedThroughput;
+            SupportedMaximumThroughput = supportedMaximumThroughput;
             DefaultIopsTier = defaultIopsTier;
             SupportedIopsTiers = supportedIopsTiers;
         }
+        /// <summary> Maximum IOPS supported by this #Vcores or PremiumV2_LRS Storage Size. </summary>
+        [WirePath("supportedMaximumIops")]
+        public int? SupportedMaximumIops { get; }
         /// <summary> Storage size in MB. </summary>
+        [WirePath("storageSizeMb")]
         public long? StorageSizeInMB { get; }
+        /// <summary> Maximum value of Storage size in MB. </summary>
+        [WirePath("maximumStorageSizeMb")]
+        public long? MaximumStorageSizeMb { get; }
+        /// <summary> Values of throughput in MB/s. </summary>
+        [WirePath("supportedThroughput")]
+        public int? SupportedThroughput { get; }
+        /// <summary> Maximum values of throughput in MB/s. </summary>
+        [WirePath("supportedMaximumThroughput")]
+        public int? SupportedMaximumThroughput { get; }
         /// <summary> Default tier for IOPS. </summary>
+        [WirePath("defaultIopsTier")]
         public string DefaultIopsTier { get; }
         /// <summary> List of available options to upgrade the storage performance. </summary>
+        [WirePath("supportedIopsTiers")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get; }
     }
 }

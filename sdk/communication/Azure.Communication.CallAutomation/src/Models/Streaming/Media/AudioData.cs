@@ -10,33 +10,45 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class AudioData : StreamingData
     {
-        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
+        /// <summary>
+        /// The audio data, encoded as a ReadOnlyMemory of bytes
+        /// </summary>
+        /// <param name="data"></param>
+        public AudioData(ReadOnlyMemory<byte> data)
         {
             Data = data;
+        }
+
+        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
+        {
+            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data).AsMemory() : default;
             Timestamp = timestamp;
             if (participantId != null)
             {
-                Participant = CommunicationIdentifier.FromRawId(participantId);;
+                Participant = CommunicationIdentifier.FromRawId(participantId);
             }
             IsSilent = silent;
         }
 
         /// <summary>
-        /// The audio data in base64 string.
+        /// The audio data in ReadOnlyMemory byte.
         /// </summary>
-        public string Data { get; }
+        public ReadOnlyMemory<byte> Data { get; }
 
         /// <summary>
-        /// The timestamp of thwn the media was sourced.
+        /// The timestamp indicating when the media content was received by the bot,
+        /// or if the bot is sending media, the timestamp of when the media was sourced.
+        /// The format is ISO 8601 (yyyy-mm-ddThh:mm).
         /// </summary>
-        public DateTime Timestamp { get; }
+        public DateTimeOffset Timestamp { get; }
+
         /// <summary>
-        /// Participant ID
+        /// The raw ID of the participant.
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
         /// <summary>
-        /// Indicates if the received audio buffer contains only silence.
+        /// Indicates whether the received audio buffer contains only silence.
         /// </summary>
         public bool IsSilent { get; }
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -84,24 +83,34 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the NAT rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Description of the rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> List of source IP addresses for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses for this rule. Supports IP ranges, prefixes, and service tags. </summary>
+        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
         /// <summary> Array of AzureFirewallNetworkRuleProtocols applicable to this NAT rule. </summary>
+        [WirePath("protocols")]
         public IList<AzureFirewallNetworkRuleProtocol> Protocols { get; }
         /// <summary> The translated address for this NAT rule. </summary>
+        [WirePath("translatedAddress")]
         public string TranslatedAddress { get; set; }
         /// <summary> The translated port for this NAT rule. </summary>
+        [WirePath("translatedPort")]
         public string TranslatedPort { get; set; }
         /// <summary> The translated FQDN for this NAT rule. </summary>
+        [WirePath("translatedFqdn")]
         public string TranslatedFqdn { get; set; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
     }
 }

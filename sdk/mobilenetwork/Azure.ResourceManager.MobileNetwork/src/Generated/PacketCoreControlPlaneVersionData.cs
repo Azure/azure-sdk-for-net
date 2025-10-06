@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the packet core control plane version resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Platform specific packet core control plane version properties. </summary>
+        [WirePath("properties.platforms")]
         public IList<MobileNetworkPlatform> Platforms { get; }
     }
 }

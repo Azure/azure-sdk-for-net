@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -75,16 +74,22 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Actions to which the deny assignment does not grant access. </summary>
+        [WirePath("actions")]
         public IReadOnlyList<string> Actions { get; }
         /// <summary> Actions to exclude from that the deny assignment does not grant access. </summary>
+        [WirePath("notActions")]
         public IReadOnlyList<string> NotActions { get; }
         /// <summary> Data actions to which the deny assignment does not grant access. </summary>
+        [WirePath("dataActions")]
         public IReadOnlyList<string> DataActions { get; }
         /// <summary> Data actions to exclude from that the deny assignment does not grant access. </summary>
+        [WirePath("notDataActions")]
         public IReadOnlyList<string> NotDataActions { get; }
         /// <summary> The conditions on the Deny assignment permission. This limits the resources it applies to. </summary>
+        [WirePath("condition")]
         public string Condition { get; }
         /// <summary> Version of the condition. </summary>
+        [WirePath("conditionVersion")]
         public string ConditionVersion { get; }
     }
 }

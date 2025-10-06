@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The id of the server alias that will be acquired to point to this server instead. </summary>
+        [WirePath("oldServerDnsAliasId")]
         public ResourceIdentifier OldServerDnsAliasId { get; }
     }
 }

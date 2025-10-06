@@ -5,32 +5,40 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Data.SchemaRegistry;
+using System.Linq;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> Object received from the registry containing the list of schema versions and link to next batch page. </summary>
+    /// <summary> The list of schema versions with server paging support. </summary>
     internal partial class SchemaVersions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SchemaVersions"/>. </summary>
-        internal SchemaVersions()
+        /// <param name="value"> The collection of schema version pageable items. </param>
+        internal SchemaVersions(IEnumerable<int> value)
         {
-            Versions = new ChangeTrackingList<int>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SchemaVersions"/>. </summary>
-        /// <param name="versions"> Array of schema version integers. </param>
-        /// <param name="nextLink"> URl to next batch of schema versions. </param>
-        internal SchemaVersions(IReadOnlyList<int> versions, string nextLink)
+        /// <param name="value"> The collection of schema version pageable items. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaVersions(IList<int> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Versions = versions;
+            Value = value;
             NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Array of schema version integers. </summary>
-        public IReadOnlyList<int> Versions { get; }
-        /// <summary> URl to next batch of schema versions. </summary>
-        public string NextLink { get; }
+        /// <summary> The collection of schema version pageable items. </summary>
+        public IList<int> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

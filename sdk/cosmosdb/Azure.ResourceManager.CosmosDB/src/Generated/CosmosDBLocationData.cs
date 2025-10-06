@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Cosmos DB location metadata. </summary>
+        [WirePath("properties")]
         public CosmosDBLocationProperties Properties { get; set; }
     }
 }

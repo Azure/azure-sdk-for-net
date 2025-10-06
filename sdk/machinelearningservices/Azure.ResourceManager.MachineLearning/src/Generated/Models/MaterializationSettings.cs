@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,27 +52,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
+        /// <param name="storeType"> Specifies the stores to which materialization should happen. </param>
+        /// <param name="schedule"> Specifies the schedule details. </param>
         /// <param name="notification"> Specifies the notification details. </param>
         /// <param name="resource"> Specifies the compute resource settings. </param>
-        /// <param name="schedule"> Specifies the schedule details. </param>
         /// <param name="sparkConfiguration"> Specifies the spark compute settings. </param>
-        /// <param name="storeType"> Specifies the stores to which materialization should happen. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaterializationSettings(NotificationSetting notification, MaterializationComputeResource resource, MachineLearningRecurrenceTrigger schedule, IDictionary<string, string> sparkConfiguration, MaterializationStoreType? storeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaterializationSettings(MaterializationStoreType? storeType, MachineLearningRecurrenceTrigger schedule, NotificationSetting notification, MaterializationComputeResource resource, IDictionary<string, string> sparkConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            StoreType = storeType;
+            Schedule = schedule;
             Notification = notification;
             Resource = resource;
-            Schedule = schedule;
             SparkConfiguration = sparkConfiguration;
-            StoreType = storeType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Specifies the stores to which materialization should happen. </summary>
+        [WirePath("storeType")]
+        public MaterializationStoreType? StoreType { get; set; }
+        /// <summary> Specifies the schedule details. </summary>
+        [WirePath("schedule")]
+        public MachineLearningRecurrenceTrigger Schedule { get; set; }
         /// <summary> Specifies the notification details. </summary>
+        [WirePath("notification")]
         public NotificationSetting Notification { get; set; }
         /// <summary> Specifies the compute resource settings. </summary>
         internal MaterializationComputeResource Resource { get; set; }
         /// <summary> Specifies the instance type. </summary>
+        [WirePath("resource.instanceType")]
         public string ResourceInstanceType
         {
             get => Resource is null ? default : Resource.InstanceType;
@@ -85,11 +92,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Specifies the schedule details. </summary>
-        public MachineLearningRecurrenceTrigger Schedule { get; set; }
         /// <summary> Specifies the spark compute settings. </summary>
+        [WirePath("sparkConfiguration")]
         public IDictionary<string, string> SparkConfiguration { get; set; }
-        /// <summary> Specifies the stores to which materialization should happen. </summary>
-        public MaterializationStoreType? StoreType { get; set; }
     }
 }

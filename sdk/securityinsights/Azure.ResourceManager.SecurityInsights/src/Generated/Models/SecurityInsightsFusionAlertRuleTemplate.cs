@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -22,6 +21,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             Techniques = new ChangeTrackingList<string>();
+            SubTechniques = new ChangeTrackingList<string>();
+            SourceSettings = new ChangeTrackingList<FusionTemplateSourceSetting>();
             Kind = AlertRuleKind.Fusion;
         }
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
@@ -41,8 +42,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="status"> The alert rule template status. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule template. </param>
-        /// <param name="techniques"> The techniques of the alert rule template. </param>
-        internal SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        /// <param name="sourceSettings"> All supported source signal configurations consumed in fusion detection. </param>
+        internal SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IList<string> subTechniques, IList<FusionTemplateSourceSetting> sourceSettings) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
             CreatedOn = createdOn;
@@ -54,28 +57,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Severity = severity;
             Tactics = tactics;
             Techniques = techniques;
+            SubTechniques = subTechniques;
+            SourceSettings = sourceSettings;
             Kind = kind;
         }
 
         /// <summary> the number of alert rules that were created by this template. </summary>
+        [WirePath("properties.alertRulesCreatedByTemplateCount")]
         public int? AlertRulesCreatedByTemplateCount { get; set; }
         /// <summary> The time that this alert rule template has been added. </summary>
+        [WirePath("properties.createdDateUTC")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time that this alert rule template was last updated. </summary>
+        [WirePath("properties.lastUpdatedDateUTC")]
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The description of the alert rule template. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The display name for alert rule template. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The required data connectors for this template. </summary>
+        [WirePath("properties.requiredDataConnectors")]
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
         /// <summary> The alert rule template status. </summary>
+        [WirePath("properties.status")]
         public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
         /// <summary> The severity for alerts created by this alert rule. </summary>
+        [WirePath("properties.severity")]
         public SecurityInsightsAlertSeverity? Severity { get; set; }
         /// <summary> The tactics of the alert rule template. </summary>
+        [WirePath("properties.tactics")]
         public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The techniques of the alert rule template. </summary>
+        /// <summary> The techniques of the alert rule. </summary>
+        [WirePath("properties.techniques")]
         public IList<string> Techniques { get; }
+        /// <summary> The sub-techniques of the alert rule. </summary>
+        [WirePath("properties.subTechniques")]
+        public IList<string> SubTechniques { get; }
+        /// <summary> All supported source signal configurations consumed in fusion detection. </summary>
+        [WirePath("properties.sourceSettings")]
+        public IList<FusionTemplateSourceSetting> SourceSettings { get; }
     }
 }

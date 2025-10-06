@@ -82,6 +82,16 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchAnswersKeyJson = JsonEncodedText.Encode("@search.answers");
 
         /// <summary>
+        /// The @search.debugInfo key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDebugKeyJson = JsonEncodedText.Encode("@search.debug");
+
+        /// <summary>
+        /// The @search.semanticQueryRewritesResultType key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchSemanticQueryRewritesResultTypeKeyJson = JsonEncodedText.Encode("@search.semanticQueryRewritesResultType");
+
+        /// <summary>
         /// The @search.highlights key.
         /// </summary>
         public static readonly JsonEncodedText SearchHighlightsKeyJson = JsonEncodedText.Encode("@search.highlights");
@@ -90,6 +100,11 @@ namespace Azure.Search.Documents
         /// The @search.rerankerScore key.
         /// </summary>
         public static readonly JsonEncodedText SearchRerankerScoreKeyJson = JsonEncodedText.Encode("@search.rerankerScore");
+
+        /// <summary>
+        /// The @search.rerankerBoostedScore key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchRerankerBoostedScoreKeyJson = JsonEncodedText.Encode("@search.rerankerBoostedScore");
 
         /// <summary>
         /// The @search.captions key.
@@ -140,6 +155,21 @@ namespace Azure.Search.Documents
         /// The count key.
         /// </summary>
         public static readonly JsonEncodedText CountKeyJson = JsonEncodedText.Encode(CountKey);
+
+        /// <summary>
+        /// The sum key.
+        /// </summary>
+        public const string SumKey = "sum";
+
+        /// <summary>
+        /// The sum key.
+        /// </summary>
+        public static readonly JsonEncodedText SumKeyJson = JsonEncodedText.Encode(SumKey);
+
+        /// <summary>
+        /// The facets key.
+        /// </summary>
+        public static readonly JsonEncodedText FacetsKeyJson = JsonEncodedText.Encode("@search.facets");
 
         /// <summary>
         /// The to key.

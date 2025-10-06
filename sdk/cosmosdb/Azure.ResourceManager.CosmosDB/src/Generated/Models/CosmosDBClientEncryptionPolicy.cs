@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Paths of the item that need encryption along with path-specific settings. </summary>
+        [WirePath("includedPaths")]
         public IList<CosmosDBClientEncryptionIncludedPath> IncludedPaths { get; }
         /// <summary> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </summary>
+        [WirePath("policyFormatVersion")]
         public int PolicyFormatVersion { get; set; }
     }
 }

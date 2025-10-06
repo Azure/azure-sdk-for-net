@@ -15,7 +15,8 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("PhoneNumberLocalities")]
     [CodeGenSuppress("PhoneNumberLocalities", typeof(IReadOnlyList<PhoneNumberLocality>), typeof(string))]
     [CodeGenSuppress("DeserializePhoneNumberLocalities", typeof(JsonElement))]
-    [CodeGenSuppress("PhoneNumberLocalitiesValue", typeof(PhoneNumberLocality))]
+    [CodeGenSuppress("FromResponse", typeof(Response))]
+    [CodeGenSuppress("PhoneNumberLocalitiesProperty", typeof(PhoneNumberLocality))]
     [CodeGenSuppress("NextLink", typeof(string))]
     internal partial class PhoneNumberLocalities
     {

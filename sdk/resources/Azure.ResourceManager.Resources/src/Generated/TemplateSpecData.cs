@@ -89,12 +89,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Template Spec description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Template Spec display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary>
         /// The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs.
@@ -126,8 +130,10 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </summary>
+        [WirePath("properties.versions")]
         public IReadOnlyDictionary<string, TemplateSpecVersionInfo> Versions { get; }
     }
 }

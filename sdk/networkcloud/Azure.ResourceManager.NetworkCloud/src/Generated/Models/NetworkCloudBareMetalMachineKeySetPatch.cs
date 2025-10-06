@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {

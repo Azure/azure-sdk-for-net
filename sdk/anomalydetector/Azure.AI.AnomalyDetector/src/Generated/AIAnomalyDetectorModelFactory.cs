@@ -161,6 +161,33 @@ namespace Azure.AI.AnomalyDetector
             return new MultivariateBatchDetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ErrorResponse"/>. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Message that explains the error that the service reported. </param>
+        /// <returns> A new <see cref="AnomalyDetector.ErrorResponse"/> instance for mocking. </returns>
+        public static ErrorResponse ErrorResponse(string code = null, string message = null)
+        {
+            return new ErrorResponse(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.VariableState"/>. </summary>
+        /// <param name="variable"> Variable name in variable states. </param>
+        /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
+        /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
+        /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
+        /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
+        /// <returns> A new <see cref="AnomalyDetector.VariableState"/> instance for mocking. </returns>
+        public static VariableState VariableState(string variable = null, float? filledNARatio = null, int? effectiveCount = null, DateTimeOffset? firstTimestamp = null, DateTimeOffset? lastTimestamp = null)
+        {
+            return new VariableState(
+                variable,
+                filledNARatio,
+                effectiveCount,
+                firstTimestamp,
+                lastTimestamp,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyState"/>. </summary>
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
@@ -259,6 +286,42 @@ namespace Azure.AI.AnomalyDetector
                 errors?.ToList(),
                 diagnosticsInfo,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.DiagnosticsInfo"/>. </summary>
+        /// <param name="modelState"> Model status. </param>
+        /// <param name="variableStates"> Variable status. </param>
+        /// <returns> A new <see cref="AnomalyDetector.DiagnosticsInfo"/> instance for mocking. </returns>
+        public static DiagnosticsInfo DiagnosticsInfo(ModelState modelState = null, IEnumerable<VariableState> variableStates = null)
+        {
+            variableStates ??= new List<VariableState>();
+
+            return new DiagnosticsInfo(modelState, variableStates?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ModelState"/>. </summary>
+        /// <param name="epochIds">
+        /// Number of passes of the entire training dataset that the
+        /// algorithm has completed.
+        /// </param>
+        /// <param name="trainLosses">
+        /// List of metrics used to assess how the model fits the training data for each
+        /// epoch.
+        /// </param>
+        /// <param name="validationLosses">
+        /// List of metrics used to assess how the model fits the validation set for each
+        /// epoch.
+        /// </param>
+        /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
+        /// <returns> A new <see cref="AnomalyDetector.ModelState"/> instance for mocking. </returns>
+        public static ModelState ModelState(IEnumerable<int> epochIds = null, IEnumerable<float> trainLosses = null, IEnumerable<float> validationLosses = null, IEnumerable<float> latenciesInSeconds = null)
+        {
+            epochIds ??= new List<int>();
+            trainLosses ??= new List<float>();
+            validationLosses ??= new List<float>();
+            latenciesInSeconds ??= new List<float>();
+
+            return new ModelState(epochIds?.ToList(), trainLosses?.ToList(), validationLosses?.ToList(), latenciesInSeconds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyDetectionModel"/>. </summary>

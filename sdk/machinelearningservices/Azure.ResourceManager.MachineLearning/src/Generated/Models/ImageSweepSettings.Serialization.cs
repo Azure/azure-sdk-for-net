@@ -8,39 +8,47 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ImageSweepSettings : IUtf8JsonSerializable, IJsonModel<ImageSweepSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageSweepSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageSweepSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageSweepSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageSweepSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            writer.WritePropertyName("samplingAlgorithm"u8);
+            writer.WriteStringValue(SamplingAlgorithm.ToString());
             if (Optional.IsDefined(EarlyTermination))
             {
                 if (EarlyTermination != null)
                 {
                     writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue(EarlyTermination);
+                    writer.WriteObjectValue(EarlyTermination, options);
                 }
                 else
                 {
                     writer.WriteNull("earlyTermination");
                 }
             }
-            writer.WritePropertyName("samplingAlgorithm"u8);
-            writer.WriteStringValue(SamplingAlgorithm.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,14 +57,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ImageSweepSettings IJsonModel<ImageSweepSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageSweepSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,18 +80,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageSweepSettings DeserializeImageSweepSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MachineLearningEarlyTerminationPolicy earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
+            MachineLearningEarlyTerminationPolicy earlyTermination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("samplingAlgorithm"u8))
+                {
+                    samplingAlgorithm = new SamplingAlgorithmType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("earlyTermination"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,18 +107,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("samplingAlgorithm"u8))
-                {
-                    samplingAlgorithm = new SamplingAlgorithmType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageSweepSettings(earlyTermination, samplingAlgorithm, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ImageSweepSettings(samplingAlgorithm, earlyTermination, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingAlgorithm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  samplingAlgorithm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  samplingAlgorithm: ");
+                builder.AppendLine($"'{SamplingAlgorithm.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyTermination), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  earlyTermination: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EarlyTermination))
+                {
+                    builder.Append("  earlyTermination: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EarlyTermination, options, 2, false, "  earlyTermination: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ImageSweepSettings>.Write(ModelReaderWriterOptions options)
@@ -116,9 +165,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,11 +181,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeImageSweepSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

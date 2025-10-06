@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -54,24 +53,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Name of Azure router associated with physical port. </summary>
+        [WirePath("properties.routerName")]
         public string RouterName { get; }
         /// <summary> Name of Azure router interface. </summary>
+        [WirePath("properties.interfaceName")]
         public string InterfaceName { get; }
         /// <summary> Mapping between physical port to patch panel port. </summary>
+        [WirePath("properties.patchPanelId")]
         public string PatchPanelId { get; }
         /// <summary> Mapping of physical patch panel to rack. </summary>
+        [WirePath("properties.rackId")]
         public string RackId { get; }
         /// <summary> Cololocation for ExpressRoute Hybrid Direct. </summary>
+        [WirePath("properties.coloLocation")]
         public string ColoLocation { get; }
         /// <summary> Physical fiber port type. </summary>
+        [WirePath("properties.connectorType")]
         public ExpressRouteLinkConnectorType? ConnectorType { get; }
         /// <summary> Administrative state of the physical port. </summary>
+        [WirePath("properties.adminState")]
         public ExpressRouteLinkAdminState? AdminState { get; set; }
         /// <summary> The provisioning state of the express route link resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> MacSec configuration. </summary>
+        [WirePath("properties.macSecConfig")]
         public ExpressRouteLinkMacSecConfig MacSecConfig { get; set; }
     }
 }

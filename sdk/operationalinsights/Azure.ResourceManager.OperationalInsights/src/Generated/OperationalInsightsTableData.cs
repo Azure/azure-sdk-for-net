@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </param>
         /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
         /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
@@ -92,28 +92,40 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </summary>
+        [WirePath("properties.retentionInDays")]
         public int? RetentionInDays { get; set; }
-        /// <summary> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </summary>
+        /// <summary> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </summary>
+        [WirePath("properties.totalRetentionInDays")]
         public int? TotalRetentionInDays { get; set; }
         /// <summary> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </summary>
+        [WirePath("properties.archiveRetentionInDays")]
         public int? ArchiveRetentionInDays { get; }
         /// <summary> Parameters of the search job that initiated this table. </summary>
+        [WirePath("properties.searchResults")]
         public OperationalInsightsTableSearchResults SearchResults { get; set; }
         /// <summary> Parameters of the restore operation that initiated this table. </summary>
+        [WirePath("properties.restoredLogs")]
         public OperationalInsightsTableRestoredLogs RestoredLogs { get; set; }
         /// <summary> Search job execution statistics. </summary>
+        [WirePath("properties.resultStatistics")]
         public OperationalInsightsTableResultStatistics ResultStatistics { get; }
         /// <summary> Instruct the system how to handle and charge the logs ingested to this table. </summary>
+        [WirePath("properties.plan")]
         public OperationalInsightsTablePlan? Plan { get; set; }
         /// <summary> The timestamp that table plan was last modified (UTC). </summary>
+        [WirePath("properties.lastPlanModifiedDate")]
         public string LastPlanModifiedDate { get; }
         /// <summary> Table schema. </summary>
+        [WirePath("properties.schema")]
         public OperationalInsightsSchema Schema { get; set; }
         /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
+        [WirePath("properties.provisioningState")]
         public OperationalInsightsTableProvisioningState? ProvisioningState { get; }
         /// <summary> True - Value originates from workspace retention in days, False - Customer specific. </summary>
+        [WirePath("properties.retentionInDaysAsDefault")]
         public bool? IsRetentionInDaysAsDefault { get; }
         /// <summary> True - Value originates from retention in days, False - Customer specific. </summary>
+        [WirePath("properties.totalRetentionInDaysAsDefault")]
         public bool? IsTotalRetentionInDaysAsDefault { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="backupDataSourceParametersList">
         /// Gets or sets the Backup Data Source Parameters
         /// Please note <see cref="BackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
+        /// The available derived classes include <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupInstancePolicySettings(IList<DataStoreSettings> dataStoreParametersList, IList<BackupDataSourceSettings> backupDataSourceParametersList, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary>
         /// Gets or sets the Backup Data Source Parameters
         /// Please note <see cref="BackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
+        /// The available derived classes include <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
         /// </summary>
         public IList<BackupDataSourceSettings> BackupDataSourceParametersList { get; }
     }

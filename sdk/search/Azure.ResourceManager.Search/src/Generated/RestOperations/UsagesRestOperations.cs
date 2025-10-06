@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Search.Models;
@@ -33,8 +32,21 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Search/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
@@ -56,7 +68,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
+        /// <summary> Get a list of all Azure AI Search quota usages across the subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -74,7 +86,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         QuotaUsagesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaUsagesListResult.DeserializeQuotaUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -83,7 +95,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
+        /// <summary> Get a list of all Azure AI Search quota usages across the subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -101,13 +113,21 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         QuotaUsagesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaUsagesListResult.DeserializeQuotaUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
@@ -124,7 +144,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
+        /// <summary> Get a list of all Azure AI Search quota usages across the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -144,7 +164,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         QuotaUsagesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaUsagesListResult.DeserializeQuotaUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -153,7 +173,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
+        /// <summary> Get a list of all Azure AI Search quota usages across the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -173,7 +193,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         QuotaUsagesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaUsagesListResult.DeserializeQuotaUsagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

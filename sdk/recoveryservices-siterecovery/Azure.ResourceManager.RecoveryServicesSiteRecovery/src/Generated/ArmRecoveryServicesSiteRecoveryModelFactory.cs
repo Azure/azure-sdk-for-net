@@ -12,7 +12,6 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -163,82 +162,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 providerSpecificDetails,
                 eventSpecificDetails,
                 healthErrors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryHealthError"/>. </summary>
-        /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
-        /// <param name="errorSource"> Source of error. </param>
-        /// <param name="errorType"> Type of error. </param>
-        /// <param name="errorLevel"> Level of error. </param>
-        /// <param name="errorCategory"> Category of error. </param>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="summaryMessage"> Summary message of the entity. </param>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <param name="possibleCauses"> Possible causes of error. </param>
-        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
-        /// <param name="creationTimeUtc"> Error creation time (UTC). </param>
-        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
-        /// <param name="entityId"> ID of the entity. </param>
-        /// <param name="errorId"> The health error unique id. </param>
-        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryHealthError"/> instance for mocking. </returns>
-        public static SiteRecoveryHealthError SiteRecoveryHealthError(IEnumerable<SiteRecoveryInnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? creationTimeUtc = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
-        {
-            innerHealthErrors ??= new List<SiteRecoveryInnerHealthError>();
-
-            return new SiteRecoveryHealthError(
-                innerHealthErrors?.ToList(),
-                errorSource,
-                errorType,
-                errorLevel,
-                errorCategory,
-                errorCode,
-                summaryMessage,
-                errorMessage,
-                possibleCauses,
-                recommendedAction,
-                creationTimeUtc,
-                recoveryProviderErrorMessage,
-                entityId,
-                errorId,
-                customerResolvability,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryInnerHealthError"/>. </summary>
-        /// <param name="errorSource"> Source of error. </param>
-        /// <param name="errorType"> Type of error. </param>
-        /// <param name="errorLevel"> Level of error. </param>
-        /// <param name="errorCategory"> Category of error. </param>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="summaryMessage"> Summary message of the entity. </param>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <param name="possibleCauses"> Possible causes of error. </param>
-        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
-        /// <param name="createdOn"> Error creation time (UTC). </param>
-        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
-        /// <param name="entityId"> ID of the entity. </param>
-        /// <param name="errorId"> The health error unique id. </param>
-        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryInnerHealthError"/> instance for mocking. </returns>
-        public static SiteRecoveryInnerHealthError SiteRecoveryInnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? createdOn = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
-        {
-            return new SiteRecoveryInnerHealthError(
-                errorSource,
-                errorType,
-                errorLevel,
-                errorCategory,
-                errorCode,
-                summaryMessage,
-                errorMessage,
-                possibleCauses,
-                recommendedAction,
-                createdOn,
-                recoveryProviderErrorMessage,
-                entityId,
-                errorId,
-                customerResolvability,
                 serializedAdditionalRawData: null);
         }
 
@@ -640,7 +563,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The Replication provider custom settings.
         /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="Models.VMwareVmDetails"/> and <see cref="Models.VmmVmDetails"/>.
+        /// The available derived classes include <see cref="Models.HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="Models.VmmVmDetails"/> and <see cref="Models.VMwareVmDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryProtectableItemProperties"/> instance for mocking. </returns>
         public static SiteRecoveryProtectableItemProperties SiteRecoveryProtectableItemProperties(string friendlyName = null, string protectionStatus = null, ResourceIdentifier replicationProtectedItemId = null, ResourceIdentifier recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)
@@ -754,16 +677,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CurrentScenarioDetails"/>. </summary>
-        /// <param name="scenarioName"> Scenario name. </param>
-        /// <param name="jobId"> ARM Id of the job being executed. </param>
-        /// <param name="startOn"> Start time of the workflow. </param>
-        /// <returns> A new <see cref="Models.CurrentScenarioDetails"/> instance for mocking. </returns>
-        public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null)
-        {
-            return new CurrentScenarioDetails(scenarioName, jobId, startOn, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryApplyRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="providerSpecificDetails">
@@ -867,6 +780,152 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SiteRecoveryComputeSizeErrorDetails SiteRecoveryComputeSizeErrorDetails(string message = null, string severity = null)
         {
             return new SiteRecoveryComputeSizeErrorDetails(message, severity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryReplicationProtectionClusterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryReplicationProtectionClusterData"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationProtectionClusterData SiteRecoveryReplicationProtectionClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryReplicationProtectionClusterProperties properties = null)
+        {
+            return new SiteRecoveryReplicationProtectionClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryReplicationProtectionClusterProperties"/>. </summary>
+        /// <param name="protectionClusterType"> The type of protection cluster type. </param>
+        /// <param name="primaryFabricFriendlyName"> The friendly name of the primary fabric. </param>
+        /// <param name="primaryFabricProvider"> The fabric provider of the primary fabric. </param>
+        /// <param name="recoveryFabricFriendlyName"> The friendly name of recovery fabric. </param>
+        /// <param name="recoveryFabricId"> The Arm Id of recovery fabric. </param>
+        /// <param name="primaryProtectionContainerFriendlyName"> The name of primary protection container friendly name. </param>
+        /// <param name="recoveryProtectionContainerFriendlyName"> The name of recovery container friendly name. </param>
+        /// <param name="protectionState"> The protection status. </param>
+        /// <param name="protectionStateDescription"> The protection state description. </param>
+        /// <param name="activeLocation"> The Current active location of the Protection cluster. </param>
+        /// <param name="testFailoverState"> The Test failover state. </param>
+        /// <param name="testFailoverStateDescription"> The Test failover state description. </param>
+        /// <param name="allowedOperations"> The allowed operations on the Replication protection cluster. </param>
+        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
+        /// <param name="healthErrors"> List of health errors. </param>
+        /// <param name="lastSuccessfulFailoverOn"> The last successful failover time. </param>
+        /// <param name="lastSuccessfulTestFailoverOn"> The last successful test failover time. </param>
+        /// <param name="policyFriendlyName"> The name of Policy governing this PE. </param>
+        /// <param name="currentScenario"> The current scenario. </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        /// <param name="agentClusterId"> The Agent cluster Id. </param>
+        /// <param name="clusterFqdn"> The cluster FQDN. </param>
+        /// <param name="clusterNodeFqdns"> The List of cluster Node FQDNs. </param>
+        /// <param name="clusterProtectedItemIds"> The List of Protected Item Id's. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="areAllClusterNodesRegistered"> A value indicating whether all nodes of the cluster are registered or not. </param>
+        /// <param name="clusterRegisteredNodes"> The registered node details. </param>
+        /// <param name="providerSpecificDetails">
+        /// The Replication cluster provider custom settings.
+        /// Please note <see cref="ReplicationClusterProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AReplicationProtectionClusterDetails"/>.
+        /// </param>
+        /// <param name="sharedDiskProperties"> The shared disk properties. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryReplicationProtectionClusterProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationProtectionClusterProperties SiteRecoveryReplicationProtectionClusterProperties(string protectionClusterType = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, string policyFriendlyName = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier recoveryContainerId = null, string agentClusterId = null, string clusterFqdn = null, IEnumerable<string> clusterNodeFqdns = null, IEnumerable<ResourceIdentifier> clusterProtectedItemIds = null, string provisioningState = null, bool? areAllClusterNodesRegistered = null, IEnumerable<RegisteredClusterNodes> clusterRegisteredNodes = null, ReplicationClusterProviderSpecificSettings providerSpecificDetails = null, SharedDiskReplicationItemProperties sharedDiskProperties = null, ResourceIdentifier policyId = null)
+        {
+            allowedOperations ??= new List<string>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
+            clusterNodeFqdns ??= new List<string>();
+            clusterProtectedItemIds ??= new List<ResourceIdentifier>();
+            clusterRegisteredNodes ??= new List<RegisteredClusterNodes>();
+
+            return new SiteRecoveryReplicationProtectionClusterProperties(
+                protectionClusterType,
+                primaryFabricFriendlyName,
+                primaryFabricProvider,
+                recoveryFabricFriendlyName,
+                recoveryFabricId,
+                primaryProtectionContainerFriendlyName,
+                recoveryProtectionContainerFriendlyName,
+                protectionState,
+                protectionStateDescription,
+                activeLocation,
+                testFailoverState,
+                testFailoverStateDescription,
+                allowedOperations?.ToList(),
+                replicationHealth,
+                healthErrors?.ToList(),
+                lastSuccessfulFailoverOn,
+                lastSuccessfulTestFailoverOn,
+                policyFriendlyName,
+                currentScenario,
+                recoveryContainerId,
+                agentClusterId,
+                clusterFqdn,
+                clusterNodeFqdns?.ToList(),
+                clusterProtectedItemIds?.ToList(),
+                provisioningState,
+                areAllClusterNodesRegistered,
+                clusterRegisteredNodes?.ToList(),
+                providerSpecificDetails,
+                sharedDiskProperties,
+                policyId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplyClusterRecoveryPointContentProperties"/>. </summary>
+        /// <param name="clusterRecoveryPointId"> The cluster recovery point id to be passed to failover to a particular recovery point. </param>
+        /// <param name="individualNodeRecoveryPoints"> The list of individual node recovery points. </param>
+        /// <param name="providerSpecificDetails">
+        /// The provider specific input for applying cluster recovery point.
+        /// Please note <see cref="ApplyClusterRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AApplyClusterRecoveryPointContent"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.ApplyClusterRecoveryPointContentProperties"/> instance for mocking. </returns>
+        public static ApplyClusterRecoveryPointContentProperties ApplyClusterRecoveryPointContentProperties(ResourceIdentifier clusterRecoveryPointId = null, IEnumerable<ResourceIdentifier> individualNodeRecoveryPoints = null, ApplyClusterRecoveryPointProviderSpecificContent providerSpecificDetails = null)
+        {
+            individualNodeRecoveryPoints ??= new List<ResourceIdentifier>();
+
+            return new ApplyClusterRecoveryPointContentProperties(clusterRecoveryPointId, individualNodeRecoveryPoints?.ToList(), providerSpecificDetails, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="clusterRecoveryPointType"> The resource type. </param>
+        /// <param name="properties"> The recovery point properties. </param>
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointData"/> instance for mocking. </returns>
+        public static SiteRecoveryClusterRecoveryPointData SiteRecoveryClusterRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterRecoveryPointType = null, SiteRecoveryClusterRecoveryPointProperties properties = null)
+        {
+            return new SiteRecoveryClusterRecoveryPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterRecoveryPointType,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryClusterRecoveryPointProperties"/>. </summary>
+        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        /// <param name="providerSpecificDetails">
+        /// The provider specific details for the recovery point.
+        /// Please note <see cref="ClusterProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.A2AClusterRecoveryPointDetails"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryClusterRecoveryPointProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryClusterRecoveryPointProperties SiteRecoveryClusterRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, ClusterRecoveryPointType? recoveryPointType = null, ClusterProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
+        {
+            return new SiteRecoveryClusterRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ProtectionContainerMappingData"/>. </summary>
@@ -1173,7 +1232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The custom job details like test failover job details.
         /// Please note <see cref="Models.SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AsrJobDetails"/>, <see cref="Models.ExportJobDetails"/>, <see cref="Models.FailoverJobDetails"/>, <see cref="Models.SwitchProtectionJobDetails"/> and <see cref="Models.TestFailoverJobDetails"/>.
+        /// The available derived classes include <see cref="Models.AsrJobDetails"/>, <see cref="Models.ClusterFailoverJobDetails"/>, <see cref="Models.ClusterSwitchProtectionJobDetails"/>, <see cref="Models.ClusterTestFailoverJobDetails"/>, <see cref="Models.ExportJobDetails"/>, <see cref="Models.FailoverJobDetails"/>, <see cref="Models.SwitchProtectionJobDetails"/> and <see cref="Models.TestFailoverJobDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobProperties"/> instance for mocking. </returns>
         public static SiteRecoveryJobProperties SiteRecoveryJobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, IEnumerable<AsrTask> tasks = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, SiteRecoveryJobDetails customDetails = null)
@@ -1713,6 +1772,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.A2AClusterRecoveryPointDetails"/>. </summary>
+        /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
+        /// <param name="nodes"> The list of nodes representing the cluster. </param>
+        /// <returns> A new <see cref="Models.A2AClusterRecoveryPointDetails"/> instance for mocking. </returns>
+        public static A2AClusterRecoveryPointDetails A2AClusterRecoveryPointDetails(RecoveryPointSyncType? recoveryPointSyncType = null, IEnumerable<ResourceIdentifier> nodes = null)
+        {
+            nodes ??= new List<ResourceIdentifier>();
+
+            return new A2AClusterRecoveryPointDetails("A2A", serializedAdditionalRawData: null, recoveryPointSyncType, nodes?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.A2ACreateProtectionIntentContent"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
@@ -1825,6 +1895,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
         /// <param name="multiVmGroupName"> The multi vm group name. </param>
         /// <param name="multiVmGroupId"> The multi vm group id. </param>
+        /// <param name="protectionClusterId"> The replication protection cluster Id. </param>
         /// <param name="recoveryBootDiagStorageAccountId"> The boot diagnostic storage account. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
         /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
@@ -1835,7 +1906,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
         /// <returns> A new <see cref="Models.A2AEnableProtectionContent"/> instance for mocking. </returns>
-        public static A2AEnableProtectionContent A2AEnableProtectionContent(ResourceIdentifier fabricObjectId = null, ResourceIdentifier recoveryContainerId = null, ResourceIdentifier recoveryResourceGroupId = null, string recoveryCloudServiceId = null, ResourceIdentifier recoveryAvailabilitySetId = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, IEnumerable<A2AVmDiskDetails> vmDisks = null, IEnumerable<A2AVmManagedDiskDetails> vmManagedDisks = null, string multiVmGroupName = null, string multiVmGroupId = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, ResourceIdentifier recoveryAzureNetworkId = null, string recoverySubnetName = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null)
+        public static A2AEnableProtectionContent A2AEnableProtectionContent(ResourceIdentifier fabricObjectId = null, ResourceIdentifier recoveryContainerId = null, ResourceIdentifier recoveryResourceGroupId = null, string recoveryCloudServiceId = null, ResourceIdentifier recoveryAvailabilitySetId = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, IEnumerable<A2AVmDiskDetails> vmDisks = null, IEnumerable<A2AVmManagedDiskDetails> vmManagedDisks = null, string multiVmGroupName = null, string multiVmGroupId = null, ResourceIdentifier protectionClusterId = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, ResourceIdentifier recoveryAzureNetworkId = null, string recoverySubnetName = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null)
         {
             vmDisks ??= new List<A2AVmDiskDetails>();
             vmManagedDisks ??= new List<A2AVmManagedDiskDetails>();
@@ -1853,6 +1924,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 vmManagedDisks?.ToList(),
                 multiVmGroupName,
                 multiVmGroupId,
+                protectionClusterId,
                 recoveryBootDiagStorageAccountId,
                 diskEncryptionInfo,
                 recoveryAvailabilityZone,
@@ -2018,72 +2090,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.A2AProtectedManagedDiskDetails"/>. </summary>
-        /// <param name="diskId"> The managed disk Arm id. </param>
-        /// <param name="recoveryResourceGroupId"> The recovery disk resource group Arm Id. </param>
-        /// <param name="recoveryTargetDiskId"> Recovery target disk Arm Id. </param>
-        /// <param name="recoveryReplicaDiskId"> Recovery replica disk Arm Id. </param>
-        /// <param name="recoveryOrignalTargetDiskId"> Recovery original target disk Arm Id. </param>
-        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
-        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
-        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
-        /// <param name="primaryDiskEncryptionSetId"> The primary disk encryption set Id. </param>
-        /// <param name="diskName"> The disk name. </param>
-        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
-        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
-        /// <param name="diskType"> The type of disk. </param>
-        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
-        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
-        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
-        /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
-        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
-        /// <param name="diskState"> The disk state. </param>
-        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
-        /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
-        /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
-        /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
-        /// <param name="isDiskKeyEncrypted"> A value indicating whether disk key got encrypted or not. </param>
-        /// <param name="keyIdentifier"> The key URL / identifier (KEK). </param>
-        /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
-        /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
-        /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
-        /// <returns> A new <see cref="Models.A2AProtectedManagedDiskDetails"/> instance for mocking. </returns>
-        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = null, ResourceIdentifier recoveryResourceGroupId = null, ResourceIdentifier recoveryTargetDiskId = null, ResourceIdentifier recoveryReplicaDiskId = null, ResourceIdentifier recoveryOrignalTargetDiskId = null, string recoveryReplicaDiskAccountType = null, string recoveryTargetDiskAccountType = null, ResourceIdentifier recoveryDiskEncryptionSetId = null, ResourceIdentifier primaryDiskEncryptionSetId = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? isResyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
-        {
-            allowedDiskLevelOperation ??= new List<string>();
-
-            return new A2AProtectedManagedDiskDetails(
-                diskId,
-                recoveryResourceGroupId,
-                recoveryTargetDiskId,
-                recoveryReplicaDiskId,
-                recoveryOrignalTargetDiskId,
-                recoveryReplicaDiskAccountType,
-                recoveryTargetDiskAccountType,
-                recoveryDiskEncryptionSetId,
-                primaryDiskEncryptionSetId,
-                diskName,
-                diskCapacityInBytes,
-                primaryStagingAzureStorageAccountId,
-                diskType,
-                isResyncRequired,
-                monitoringPercentageCompletion,
-                monitoringJobType,
-                dataPendingInStagingStorageAccountInMB,
-                dataPendingAtSourceAgentInMB,
-                diskState,
-                allowedDiskLevelOperation?.ToList(),
-                isDiskEncrypted,
-                secretIdentifier,
-                dekKeyVaultArmId,
-                isDiskKeyEncrypted,
-                keyIdentifier,
-                kekKeyVaultArmId,
-                failoverDiskName,
-                tfoDiskName,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.A2AProtectionContainerMappingDetails"/>. </summary>
         /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
         /// <param name="automationAccountArmId"> The automation account arm id. </param>
@@ -2126,6 +2132,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="multiVmGroupName"> The multi vm group name. </param>
         /// <param name="multiVmGroupCreateOption"> Whether Multi VM group is auto created or specified by user. </param>
         /// <param name="managementId"> The management Id. </param>
+        /// <param name="protectionClusterId"> The replication protection cluster Id. </param>
+        /// <param name="isClusterInfraReady"> A value indicating if the cluster infra is ready or not. </param>
         /// <param name="protectedDisks"> The list of protected disks. </param>
         /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
         /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
@@ -2170,7 +2178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="churnOptionSelected"> A value indicating the churn option selected by user. </param>
         /// <returns> A new <see cref="Models.A2AReplicationDetails"/> instance for mocking. </returns>
-        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId = null, string initialPrimaryZone = null, AzureLocation? initialPrimaryFabricLocation = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string multiVmGroupId = null, string multiVmGroupName = null, MultiVmGroupCreateOption? multiVmGroupCreateOption = null, string managementId = null, IEnumerable<A2AProtectedDiskDetails> protectedDisks = null, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = null, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null, string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, ResourceIdentifier recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, IEnumerable<VmNicDetails> vmNics = null, A2AVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, DateTimeOffset? lastHeartbeat = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, bool? isReplicationAgentUpdateRequired = null, DateTimeOffset? agentCertificateExpireOn = null, bool? isReplicationAgentCertificateUpdateRequired = null, ResourceIdentifier recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, ResourceIdentifier testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, SiteRecoveryVmEncryptionType? vmEncryptionType = null, string tfoAzureVmName = null, string recoveryAzureGeneration = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null, ChurnOptionSelected? churnOptionSelected = null)
+        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId = null, string initialPrimaryZone = null, AzureLocation? initialPrimaryFabricLocation = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string multiVmGroupId = null, string multiVmGroupName = null, MultiVmGroupCreateOption? multiVmGroupCreateOption = null, string managementId = null, ResourceIdentifier protectionClusterId = null, bool? isClusterInfraReady = null, IEnumerable<A2AProtectedDiskDetails> protectedDisks = null, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = null, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null, string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, ResourceIdentifier recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, IEnumerable<VmNicDetails> vmNics = null, A2AVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, DateTimeOffset? lastHeartbeat = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, bool? isReplicationAgentUpdateRequired = null, DateTimeOffset? agentCertificateExpireOn = null, bool? isReplicationAgentCertificateUpdateRequired = null, ResourceIdentifier recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, ResourceIdentifier testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, SiteRecoveryVmEncryptionType? vmEncryptionType = null, string tfoAzureVmName = null, string recoveryAzureGeneration = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null, ChurnOptionSelected? churnOptionSelected = null)
         {
             protectedDisks ??= new List<A2AProtectedDiskDetails>();
             unprotectedDisks ??= new List<A2AUnprotectedDiskDetails>();
@@ -2191,6 +2199,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 multiVmGroupName,
                 multiVmGroupCreateOption,
                 managementId,
+                protectionClusterId,
+                isClusterInfraReady,
                 protectedDisks?.ToList(),
                 unprotectedDisks?.ToList(),
                 protectedManagedDisks?.ToList(),
@@ -2234,15 +2244,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryVirtualMachineScaleSetId,
                 recoveryCapacityReservationGroupId,
                 churnOptionSelected);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.A2AUnprotectedDiskDetails"/>. </summary>
-        /// <param name="diskLunId"> The source lun Id for the data disk. </param>
-        /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
-        /// <returns> A new <see cref="Models.A2AUnprotectedDiskDetails"/> instance for mocking. </returns>
-        public static A2AUnprotectedDiskDetails A2AUnprotectedDiskDetails(int? diskLunId = null, AutoProtectionOfDataDisk? diskAutoProtectionStatus = null)
-        {
-            return new A2AUnprotectedDiskDetails(diskLunId, diskAutoProtectionStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmNicDetails"/>. </summary>
@@ -2435,6 +2436,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 agentAutoUpdateStatus,
                 automationAccountArmId,
                 automationAccountAuthenticationType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.A2ASharedDiskIRErrorDetails"/>. </summary>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorCodeEnum"> The error code enum. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <returns> A new <see cref="Models.A2ASharedDiskIRErrorDetails"/> instance for mocking. </returns>
+        public static A2ASharedDiskIRErrorDetails A2ASharedDiskIRErrorDetails(string errorCode = null, string errorCodeEnum = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null)
+        {
+            return new A2ASharedDiskIRErrorDetails(
+                errorCode,
+                errorCodeEnum,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AZoneDetails"/>. </summary>
@@ -2633,6 +2652,81 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterFailoverJobDetails"/>. </summary>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="protectedItemDetails"> The test VM details. </param>
+        /// <returns> A new <see cref="Models.ClusterFailoverJobDetails"/> instance for mocking. </returns>
+        public static ClusterFailoverJobDetails ClusterFailoverJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, IEnumerable<FailoverReplicationProtectedItemDetails> protectedItemDetails = null)
+        {
+            affectedObjectDetails ??= new Dictionary<string, string>();
+            protectedItemDetails ??= new List<FailoverReplicationProtectedItemDetails>();
+
+            return new ClusterFailoverJobDetails("ClusterFailoverJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, protectedItemDetails?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FailoverReplicationProtectedItemDetails"/>. </summary>
+        /// <param name="name"> The name. </param>
+        /// <param name="friendlyName"> The friendly name. </param>
+        /// <param name="testVmName"> The test Vm name. </param>
+        /// <param name="testVmFriendlyName"> The test Vm friendly name. </param>
+        /// <param name="networkConnectionStatus"> The network connection status. </param>
+        /// <param name="networkFriendlyName"> The network friendly name. </param>
+        /// <param name="subnet"> The network subnet. </param>
+        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <returns> A new <see cref="Models.FailoverReplicationProtectedItemDetails"/> instance for mocking. </returns>
+        public static FailoverReplicationProtectedItemDetails FailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, ResourceIdentifier recoveryPointId = null, DateTimeOffset? recoveryPointOn = null)
+        {
+            return new FailoverReplicationProtectedItemDetails(
+                name,
+                friendlyName,
+                testVmName,
+                testVmFriendlyName,
+                networkConnectionStatus,
+                networkFriendlyName,
+                subnet,
+                recoveryPointId,
+                recoveryPointOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterSwitchProtectionJobDetails"/>. </summary>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="newReplicationProtectionClusterId"> ARM Id of the new replication protection cluster. </param>
+        /// <returns> A new <see cref="Models.ClusterSwitchProtectionJobDetails"/> instance for mocking. </returns>
+        public static ClusterSwitchProtectionJobDetails ClusterSwitchProtectionJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, ResourceIdentifier newReplicationProtectionClusterId = null)
+        {
+            affectedObjectDetails ??= new Dictionary<string, string>();
+
+            return new ClusterSwitchProtectionJobDetails("ClusterSwitchProtectionJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, newReplicationProtectionClusterId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterTestFailoverJobDetails"/>. </summary>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="testFailoverStatus"> The test failover status. </param>
+        /// <param name="comments"> The test failover comments. </param>
+        /// <param name="networkName"> The test network name. </param>
+        /// <param name="networkFriendlyName"> The test network friendly name. </param>
+        /// <param name="networkType"> The test network type (see TestFailoverInput enum for possible values). </param>
+        /// <param name="protectedItemDetails"> The test VM details. </param>
+        /// <returns> A new <see cref="Models.ClusterTestFailoverJobDetails"/> instance for mocking. </returns>
+        public static ClusterTestFailoverJobDetails ClusterTestFailoverJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, string testFailoverStatus = null, string comments = null, string networkName = null, string networkFriendlyName = null, string networkType = null, IEnumerable<FailoverReplicationProtectedItemDetails> protectedItemDetails = null)
+        {
+            affectedObjectDetails ??= new Dictionary<string, string>();
+            protectedItemDetails ??= new List<FailoverReplicationProtectedItemDetails>();
+
+            return new ClusterTestFailoverJobDetails(
+                "ClusterTestFailoverJobDetails",
+                affectedObjectDetails,
+                serializedAdditionalRawData: null,
+                testFailoverStatus,
+                comments,
+                networkName,
+                networkFriendlyName,
+                networkType,
+                protectedItemDetails?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ConsistencyCheckTaskDetails"/>. </summary>
         /// <param name="vmDetails"> The list of inconsistent Vm details. </param>
         /// <returns> A new <see cref="Models.ConsistencyCheckTaskDetails"/> instance for mocking. </returns>
@@ -2785,32 +2879,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new FailoverJobDetails("FailoverJobDetails", affectedObjectDetails, serializedAdditionalRawData: null, protectedItemDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FailoverReplicationProtectedItemDetails"/>. </summary>
-        /// <param name="name"> The name. </param>
-        /// <param name="friendlyName"> The friendly name. </param>
-        /// <param name="testVmName"> The test Vm name. </param>
-        /// <param name="testVmFriendlyName"> The test Vm friendly name. </param>
-        /// <param name="networkConnectionStatus"> The network connection status. </param>
-        /// <param name="networkFriendlyName"> The network friendly name. </param>
-        /// <param name="subnet"> The network subnet. </param>
-        /// <param name="recoveryPointId"> The recovery point Id. </param>
-        /// <param name="recoveryPointOn"> The recovery point time. </param>
-        /// <returns> A new <see cref="Models.FailoverReplicationProtectedItemDetails"/> instance for mocking. </returns>
-        public static FailoverReplicationProtectedItemDetails FailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, ResourceIdentifier recoveryPointId = null, DateTimeOffset? recoveryPointOn = null)
-        {
-            return new FailoverReplicationProtectedItemDetails(
-                name,
-                friendlyName,
-                testVmName,
-                testVmFriendlyName,
-                networkConnectionStatus,
-                networkFriendlyName,
-                subnet,
-                recoveryPointId,
-                recoveryPointOn,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.GatewayOperationDetails"/>. </summary>
         /// <param name="state"> A value indicating the state of gateway operation. </param>
         /// <param name="progressPercentage"> A value indicating the progress percentage of gateway operation. </param>
@@ -2896,10 +2964,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
+        /// <param name="targetDiskAccountType"> The disk type. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, ResourceIdentifier diskEncryptionSetId = null)
+        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, ResourceIdentifier diskEncryptionSetId = null, SiteRecoveryDiskAccountType? targetDiskAccountType = null, int? sectorSizeInBytes = null)
         {
-            return new HyperVReplicaAzureManagedDiskDetails(diskId, seedManagedDiskId, replicaDiskType, diskEncryptionSetId, serializedAdditionalRawData: null);
+            return new HyperVReplicaAzureManagedDiskDetails(
+                diskId,
+                seedManagedDiskId,
+                replicaDiskType,
+                diskEncryptionSetId,
+                targetDiskAccountType,
+                sectorSizeInBytes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzurePolicyDetails"/>. </summary>
@@ -2951,6 +3028,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
         /// <param name="targetVmTags"> The target VM tags. </param>
         /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
@@ -2958,8 +3036,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
         /// <param name="allAvailableOSUpgradeConfigurations"> A value indicating all available inplace OS Upgrade configurations. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureReplicationDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, DateTimeOffset? lastReplicatedOn = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, string selectedSourceNicId = null, string encryption = null, SiteRecoveryOSDetails osDetails = null, int? sourceVmRamSizeInMB = null, int? sourceVmCpuCount = null, string enableRdpOnTargetOption = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, DateTimeOffset? lastRecoveryPointReceived = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = null, IEnumerable<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = null)
+        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, DateTimeOffset? lastReplicatedOn = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, string selectedSourceNicId = null, string encryption = null, SiteRecoveryOSDetails osDetails = null, int? sourceVmRamSizeInMB = null, int? sourceVmCpuCount = null, string enableRdpOnTargetOption = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = null, DateTimeOffset? lastRecoveryPointReceived = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = null, IEnumerable<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = null, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = null)
         {
             azureVmDiskDetails ??= new List<SiteRecoveryVmDiskDetails>();
             vmNics ??= new List<VmNicDetails>();
@@ -3000,13 +3079,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 useManagedDisks,
                 licenseType,
                 sqlServerLicenseType,
+                linuxLicenseType,
                 lastRecoveryPointReceived,
                 targetVmTags,
                 seedManagedDiskTags,
                 targetManagedDiskTags,
                 targetNicTags,
                 protectedManagedDisks?.ToList(),
-                allAvailableOSUpgradeConfigurations?.ToList());
+                allAvailableOSUpgradeConfigurations?.ToList(),
+                targetVmSecurityProfile);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InitialReplicationDetails"/>. </summary>
@@ -3025,8 +3106,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osVersion"> The OS Version. </param>
         /// <param name="osMajorVersion"> The OS Major Version. </param>
         /// <param name="osMinorVersion"> The OS Minor Version. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryOSDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryOSDetails SiteRecoveryOSDetails(string osType = null, string productType = null, string osEdition = null, string osVersion = null, string osMajorVersion = null, string osMinorVersion = null)
+        public static SiteRecoveryOSDetails SiteRecoveryOSDetails(string osType = null, string productType = null, string osEdition = null, string osVersion = null, string osMajorVersion = null, string osMinorVersion = null, string userSelectedOSName = null)
         {
             return new SiteRecoveryOSDetails(
                 osType,
@@ -3035,6 +3117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 osVersion,
                 osMajorVersion,
                 osMinorVersion,
+                userSelectedOSName,
                 serializedAdditionalRawData: null);
         }
 
@@ -3829,6 +3912,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
+        /// <returns> A new <see cref="Models.InMageRcmDiskContent"/> instance for mocking. </returns>
+        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId = null, ResourceIdentifier logStorageAccountId = null, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = null, int? sectorSizeInBytes = null)
+        {
+            return new InMageRcmDiskContent(
+                diskId,
+                logStorageAccountId,
+                diskType,
+                diskEncryptionSetId,
+                sectorSizeInBytes,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmAgentUpgradeBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
@@ -4180,25 +4281,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDiskContent"/>. </summary>
-        /// <param name="diskId"> The disk Id. </param>
-        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
-        /// <param name="diskType"> The disk type. </param>
-        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
-        /// <returns> A new <see cref="Models.InMageRcmDiskContent"/> instance for mocking. </returns>
-        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId = null, ResourceIdentifier logStorageAccountId = null, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = null)
-        {
-            return new InMageRcmDiskContent(diskId, logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDisksDefaultContent"/>. </summary>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.InMageRcmDisksDefaultContent"/> instance for mocking. </returns>
-        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId = null, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = null)
+        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId = null, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = null, int? sectorSizeInBytes = null)
         {
-            return new InMageRcmDisksDefaultContent(logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData: null);
+            return new InMageRcmDisksDefaultContent(logStorageAccountId, diskType, diskEncryptionSetId, sectorSizeInBytes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEnableProtectionContent"/>. </summary>
@@ -4220,10 +4311,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="runAsAccountId"> The run-as account Id. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <returns> A new <see cref="Models.InMageRcmEnableProtectionContent"/> instance for mocking. </returns>
-        public static InMageRcmEnableProtectionContent InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId = null, IEnumerable<InMageRcmDiskContent> disksToInclude = null, InMageRcmDisksDefaultContent disksDefault = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, string targetSubnetName = null, string testSubnetName = null, string targetVmName = null, string targetVmSize = null, SiteRecoveryLicenseType? licenseType = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, string runAsAccountId = null, Guid processServerId = default, string multiVmGroupName = null)
+        public static InMageRcmEnableProtectionContent InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId = null, IEnumerable<InMageRcmDiskContent> disksToInclude = null, InMageRcmDisksDefaultContent disksDefault = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, string targetSubnetName = null, string testSubnetName = null, string targetVmName = null, string targetVmSize = null, SiteRecoveryLicenseType? licenseType = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, string runAsAccountId = null, Guid processServerId = default, string multiVmGroupName = null, SiteRecoverySqlServerLicenseType? sqlServerLicenseType = null, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = null, IEnumerable<UserCreatedResourceTag> targetVmTags = null, IEnumerable<UserCreatedResourceTag> seedManagedDiskTags = null, IEnumerable<UserCreatedResourceTag> targetManagedDiskTags = null, IEnumerable<UserCreatedResourceTag> targetNicTags = null, string userSelectedOSName = null, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = null)
         {
             disksToInclude ??= new List<InMageRcmDiskContent>();
+            targetVmTags ??= new List<UserCreatedResourceTag>();
+            seedManagedDiskTags ??= new List<UserCreatedResourceTag>();
+            targetManagedDiskTags ??= new List<UserCreatedResourceTag>();
+            targetNicTags ??= new List<UserCreatedResourceTag>();
 
             return new InMageRcmEnableProtectionContent(
                 "InMageRcm",
@@ -4245,7 +4348,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetBootDiagnosticsStorageAccountId,
                 runAsAccountId,
                 processServerId,
-                multiVmGroupName);
+                multiVmGroupName,
+                sqlServerLicenseType,
+                linuxLicenseType,
+                targetVmTags?.ToList(),
+                seedManagedDiskTags?.ToList(),
+                targetManagedDiskTags?.ToList(),
+                targetNicTags?.ToList(),
+                userSelectedOSName,
+                targetVmSecurityProfile);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEventDetails"/>. </summary>
@@ -4644,8 +4755,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testSubnetName"> Test subnet name. </param>
         /// <param name="testIPAddress"> The test IP address. </param>
         /// <param name="testIPAddressType"> The test IP address type. </param>
+        /// <param name="targetNicName"> The target NIC name. </param>
         /// <returns> A new <see cref="Models.InMageRcmNicDetails"/> instance for mocking. </returns>
-        public static InMageRcmNicDetails InMageRcmNicDetails(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, IPAddress sourceIPAddress = null, SiteRecoveryEthernetAddressType? sourceIPAddressType = null, ResourceIdentifier sourceNetworkId = null, string sourceSubnetName = null, IPAddress targetIPAddress = null, SiteRecoveryEthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, string testSubnetName = null, IPAddress testIPAddress = null, SiteRecoveryEthernetAddressType? testIPAddressType = null)
+        public static InMageRcmNicDetails InMageRcmNicDetails(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, IPAddress sourceIPAddress = null, SiteRecoveryEthernetAddressType? sourceIPAddressType = null, ResourceIdentifier sourceNetworkId = null, string sourceSubnetName = null, IPAddress targetIPAddress = null, SiteRecoveryEthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, string testSubnetName = null, IPAddress testIPAddress = null, SiteRecoveryEthernetAddressType? testIPAddressType = null, string targetNicName = null)
         {
             return new InMageRcmNicDetails(
                 nicId,
@@ -4661,6 +4773,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 testSubnetName,
                 testIPAddress,
                 testIPAddressType,
+                targetNicName,
                 serializedAdditionalRawData: null);
         }
 
@@ -4672,8 +4785,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetStaticIPAddress"> The target static IP address. </param>
         /// <param name="testSubnetName"> The test subnet name. </param>
         /// <param name="testStaticIPAddress"> The test static IP address. </param>
+        /// <param name="targetNicName"> The target NIC name. </param>
         /// <returns> A new <see cref="Models.InMageRcmNicContent"/> instance for mocking. </returns>
-        public static InMageRcmNicContent InMageRcmNicContent(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, string targetSubnetName = null, IPAddress targetStaticIPAddress = null, string testSubnetName = null, IPAddress testStaticIPAddress = null)
+        public static InMageRcmNicContent InMageRcmNicContent(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, string targetSubnetName = null, IPAddress targetStaticIPAddress = null, string testSubnetName = null, IPAddress testStaticIPAddress = null, string targetNicName = null)
         {
             return new InMageRcmNicContent(
                 nicId,
@@ -4683,6 +4797,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetStaticIPAddress,
                 testSubnetName,
                 testStaticIPAddress,
+                targetNicName,
                 serializedAdditionalRawData: null);
         }
 
@@ -4708,6 +4823,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
         /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="diskState"> The disk state. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
         /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
@@ -4719,14 +4835,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
+        /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectedDiskDetails"/> instance for mocking. </returns>
-        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, SiteRecoveryDiskAccountType? diskType = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmSyncDetails irDetails = null, InMageRcmSyncDetails resyncDetails = null)
+        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, RecoveryServicesSiteRecoveryDiskState? diskState = null, ResourceIdentifier logStorageAccountId = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, SiteRecoveryDiskAccountType? diskType = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmSyncDetails irDetails = null, InMageRcmSyncDetails resyncDetails = null, string customTargetDiskName = null, int? sectorSizeInBytes = null)
         {
             return new InMageRcmProtectedDiskDetails(
                 diskId,
                 diskName,
                 isOSDisk,
                 capacityInBytes,
+                diskState,
                 logStorageAccountId,
                 diskEncryptionSetId,
                 seedManagedDiskId,
@@ -4738,6 +4857,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 isInitialReplicationComplete,
                 irDetails,
                 resyncDetails,
+                customTargetDiskName,
+                sectorSizeInBytes,
                 serializedAdditionalRawData: null);
         }
 
@@ -4763,6 +4884,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 lastRefreshedOn,
                 progressPercentage,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InMageRcmUnProtectedDiskDetails"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <returns> A new <see cref="Models.InMageRcmUnProtectedDiskDetails"/> instance for mocking. </returns>
+        public static InMageRcmUnProtectedDiskDetails InMageRcmUnProtectedDiskDetails(string diskId = null, string diskName = null, long? capacityInBytes = null)
+        {
+            return new InMageRcmUnProtectedDiskDetails(diskId, diskName, capacityInBytes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmProtectionContainerMappingDetails"/>. </summary>
@@ -4796,6 +4927,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="primaryNicIPAddress"> The IP address of the primary network interface. </param>
         /// <param name="targetGeneration"> The target generation. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
         /// <param name="targetVmName"> Target VM name. </param>
         /// <param name="targetVmSize"> The target VM size. </param>
@@ -4827,6 +4959,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentUpgradeJobId"> The agent upgrade job Id. </param>
         /// <param name="agentUpgradeAttemptToVersion"> The agent version to which last agent upgrade was attempted. </param>
         /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
         /// <param name="isLastUpgradeSuccessful"> A value indicating whether last agent upgrade was successful or not. </param>
         /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
         /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
@@ -4834,13 +4967,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentUpgradeBlockingErrorDetails"> The agent upgrade blocking error information. </param>
         /// <param name="vmNics"> The network details. </param>
         /// <param name="discoveredVmDetails"> The discovered VM details. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="supportedOSVersions"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="osName"> The OS name associated with VM. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <returns> A new <see cref="Models.InMageRcmReplicationDetails"/> instance for mocking. </returns>
-        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, Guid? processServerId = null, int? processorCoreCount = null, double? allocatedMemoryInMB = null, string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, IPAddress primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, ResourceIdentifier failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, long? lastRpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, ResourceIdentifier lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, MobilityAgentUpgradeState? agentUpgradeState = null, string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = null, InMageRcmMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, IEnumerable<InMageRcmNicDetails> vmNics = null, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null)
+        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, Guid? processServerId = null, int? processorCoreCount = null, double? allocatedMemoryInMB = null, string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, IPAddress primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, ResourceIdentifier failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, long? lastRpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, ResourceIdentifier lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, MobilityAgentUpgradeState? agentUpgradeState = null, string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = null, IEnumerable<InMageRcmUnProtectedDiskDetails> unprotectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = null, InMageRcmMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, IEnumerable<InMageRcmNicDetails> vmNics = null, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null, IEnumerable<UserCreatedResourceTag> targetVmTags = null, IEnumerable<UserCreatedResourceTag> seedManagedDiskTags = null, IEnumerable<UserCreatedResourceTag> targetManagedDiskTags = null, IEnumerable<UserCreatedResourceTag> targetNicTags = null, string sqlServerLicenseType = null, IEnumerable<string> supportedOSVersions = null, string osName = null, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = null)
         {
             protectedDisks ??= new List<InMageRcmProtectedDiskDetails>();
+            unprotectedDisks ??= new List<InMageRcmUnProtectedDiskDetails>();
             lastAgentUpgradeErrorDetails ??= new List<InMageRcmLastAgentUpgradeErrorDetails>();
             agentUpgradeBlockingErrorDetails ??= new List<InMageRcmAgentUpgradeBlockingErrorDetails>();
             vmNics ??= new List<InMageRcmNicDetails>();
+            targetVmTags ??= new List<UserCreatedResourceTag>();
+            seedManagedDiskTags ??= new List<UserCreatedResourceTag>();
+            targetManagedDiskTags ??= new List<UserCreatedResourceTag>();
+            targetNicTags ??= new List<UserCreatedResourceTag>();
+            supportedOSVersions ??= new List<string>();
 
             return new InMageRcmReplicationDetails(
                 "InMageRcm",
@@ -4859,6 +5006,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 primaryNicIPAddress,
                 targetGeneration,
                 licenseType,
+                linuxLicenseType,
                 storageAccountId,
                 targetVmName,
                 targetVmSize,
@@ -4890,13 +5038,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 agentUpgradeJobId,
                 agentUpgradeAttemptToVersion,
                 protectedDisks?.ToList(),
+                unprotectedDisks?.ToList(),
                 isLastUpgradeSuccessful,
                 isAgentRegistrationSuccessfulAfterFailover,
                 mobilityAgentDetails,
                 lastAgentUpgradeErrorDetails?.ToList(),
                 agentUpgradeBlockingErrorDetails?.ToList(),
                 vmNics?.ToList(),
-                discoveredVmDetails);
+                discoveredVmDetails,
+                targetVmTags?.ToList(),
+                seedManagedDiskTags?.ToList(),
+                targetManagedDiskTags?.ToList(),
+                targetNicTags?.ToList(),
+                sqlServerLicenseType,
+                supportedOSVersions?.ToList(),
+                osName,
+                targetVmSecurityProfile);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmReprotectContent"/>. </summary>
@@ -4919,10 +5076,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmUnplannedFailoverContent"/>. </summary>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
         /// <returns> A new <see cref="Models.InMageRcmUnplannedFailoverContent"/> instance for mocking. </returns>
-        public static InMageRcmUnplannedFailoverContent InMageRcmUnplannedFailoverContent(string performShutdown = null, ResourceIdentifier recoveryPointId = null)
+        public static InMageRcmUnplannedFailoverContent InMageRcmUnplannedFailoverContent(string performShutdown = null, ResourceIdentifier recoveryPointId = null, string osUpgradeVersion = null)
         {
-            return new InMageRcmUnplannedFailoverContent("InMageRcm", serializedAdditionalRawData: null, performShutdown, recoveryPointId);
+            return new InMageRcmUnplannedFailoverContent("InMageRcm", serializedAdditionalRawData: null, performShutdown, recoveryPointId, osUpgradeVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmUpdateContainerMappingContent"/>. </summary>
@@ -5492,8 +5650,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.VMwareCbtDiskContent"/> instance for mocking. </returns>
-        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId = null, SiteRecoveryDiskAccountType? diskType = null, string isOSDisk = null, ResourceIdentifier logStorageAccountId = null, string logStorageAccountSasSecretName = null, ResourceIdentifier diskEncryptionSetId = null)
+        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId = null, SiteRecoveryDiskAccountType? diskType = null, string isOSDisk = null, ResourceIdentifier logStorageAccountId = null, string logStorageAccountSasSecretName = null, ResourceIdentifier diskEncryptionSetId = null, int? sectorSizeInBytes = null)
         {
             return new VMwareCbtDiskContent(
                 diskId,
@@ -5502,6 +5661,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 logStorageAccountId,
                 logStorageAccountSasSecretName,
                 diskEncryptionSetId,
+                sectorSizeInBytes,
                 serializedAdditionalRawData: null);
         }
 
@@ -5510,6 +5670,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="disksToInclude"> The disks to include list. </param>
         /// <param name="licenseType"> License type. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="performSqlBulkRegistration"> A value indicating whether bulk SQL RP registration to be done. </param>
         /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
         /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
@@ -5531,8 +5692,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedDiskTags"> The tags for the seed disks. </param>
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <returns> A new <see cref="Models.VMwareCbtEnableMigrationContent"/> instance for mocking. </returns>
-        public static VMwareCbtEnableMigrationContent VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId = null, IEnumerable<VMwareCbtDiskContent> disksToInclude = null, SiteRecoveryLicenseType? licenseType = null, SiteRecoverySqlServerLicenseType? sqlServerLicenseType = null, string performSqlBulkRegistration = null, ResourceIdentifier dataMoverRunAsAccountId = null, ResourceIdentifier snapshotRunAsAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, string targetSubnetName = null, string testSubnetName = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, string performAutoResync = null, IDictionary<string, string> targetVmTags = null, IDictionary<string, string> seedDiskTags = null, IDictionary<string, string> targetDiskTags = null, IDictionary<string, string> targetNicTags = null)
+        public static VMwareCbtEnableMigrationContent VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId = null, IEnumerable<VMwareCbtDiskContent> disksToInclude = null, SiteRecoveryLicenseType? licenseType = null, SiteRecoverySqlServerLicenseType? sqlServerLicenseType = null, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = null, string performSqlBulkRegistration = null, ResourceIdentifier dataMoverRunAsAccountId = null, ResourceIdentifier snapshotRunAsAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, string targetSubnetName = null, string testSubnetName = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, string performAutoResync = null, IDictionary<string, string> targetVmTags = null, IDictionary<string, string> seedDiskTags = null, IDictionary<string, string> targetDiskTags = null, IDictionary<string, string> targetNicTags = null, string userSelectedOSName = null)
         {
             disksToInclude ??= new List<VMwareCbtDiskContent>();
             targetVmTags ??= new Dictionary<string, string>();
@@ -5547,6 +5709,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 disksToInclude?.ToList(),
                 licenseType,
                 sqlServerLicenseType,
+                linuxLicenseType,
                 performSqlBulkRegistration,
                 dataMoverRunAsAccountId,
                 snapshotRunAsAccountId,
@@ -5567,7 +5730,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetVmTags,
                 seedDiskTags,
                 targetDiskTags,
-                targetNicTags);
+                targetNicTags,
+                userSelectedOSName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtEventDetails"/>. </summary>
@@ -5581,10 +5745,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtMigrateContent"/>. </summary>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="postMigrationSteps"> The managed run command script input. </param>
         /// <returns> A new <see cref="Models.VMwareCbtMigrateContent"/> instance for mocking. </returns>
-        public static VMwareCbtMigrateContent VMwareCbtMigrateContent(string performShutdown = null, string osUpgradeVersion = null)
+        public static VMwareCbtMigrateContent VMwareCbtMigrateContent(string performShutdown = null, string osUpgradeVersion = null, IEnumerable<ManagedRunCommandScriptContent> postMigrationSteps = null)
         {
-            return new VMwareCbtMigrateContent("VMwareCbt", serializedAdditionalRawData: null, performShutdown, osUpgradeVersion);
+            postMigrationSteps ??= new List<ManagedRunCommandScriptContent>();
+
+            return new VMwareCbtMigrateContent("VMwareCbt", serializedAdditionalRawData: null, performShutdown, osUpgradeVersion, postMigrationSteps?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtMigrationDetails"/>. </summary>
@@ -5595,6 +5762,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetGeneration"> The target generation. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
         /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
         /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
@@ -5637,7 +5805,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
         /// <param name="operationName"> A value indicating the SRS operation name. </param>
         /// <returns> A new <see cref="Models.VMwareCbtMigrationDetails"/> instance for mocking. </returns>
-        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, ResourceIdentifier dataMoverRunAsAccountId = null, ResourceIdentifier snapshotRunAsAccountId = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, IReadOnlyDictionary<string, string> targetVmTags = null, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, IEnumerable<VMwareCbtNicDetails> vmNics = null, IReadOnlyDictionary<string, string> targetNicTags = null, ResourceIdentifier migrationRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, ResourceIdentifier lastRecoveryPointId = null, int? initialSeedingProgressPercentage = null, int? migrationProgressPercentage = null, int? resyncProgressPercentage = null, int? resumeProgressPercentage = null, int? deltaSyncProgressPercentage = null, string isCheckSumResyncCycle = null, long? initialSeedingRetryCount = null, long? resyncRetryCount = null, long? resumeRetryCount = null, long? deltaSyncRetryCount = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, string performAutoResync = null, IReadOnlyDictionary<string, string> seedDiskTags = null, IReadOnlyDictionary<string, string> targetDiskTags = null, IEnumerable<string> supportedOSVersions = null, ApplianceMonitoringDetails applianceMonitoringDetails = null, GatewayOperationDetails gatewayOperationDetails = null, string operationName = null)
+        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = null, ResourceIdentifier dataMoverRunAsAccountId = null, ResourceIdentifier snapshotRunAsAccountId = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, IReadOnlyDictionary<string, string> targetVmTags = null, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, IEnumerable<VMwareCbtNicDetails> vmNics = null, IReadOnlyDictionary<string, string> targetNicTags = null, ResourceIdentifier migrationRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, ResourceIdentifier lastRecoveryPointId = null, int? initialSeedingProgressPercentage = null, int? migrationProgressPercentage = null, int? resyncProgressPercentage = null, int? resumeProgressPercentage = null, int? deltaSyncProgressPercentage = null, string isCheckSumResyncCycle = null, long? initialSeedingRetryCount = null, long? resyncRetryCount = null, long? resumeRetryCount = null, long? deltaSyncRetryCount = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, string performAutoResync = null, IReadOnlyDictionary<string, string> seedDiskTags = null, IReadOnlyDictionary<string, string> targetDiskTags = null, IEnumerable<string> supportedOSVersions = null, ApplianceMonitoringDetails applianceMonitoringDetails = null, GatewayOperationDetails gatewayOperationDetails = null, string operationName = null)
         {
             targetVmTags ??= new Dictionary<string, string>();
             protectedDisks ??= new List<VMwareCbtProtectedDiskDetails>();
@@ -5657,6 +5825,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetGeneration,
                 licenseType,
                 sqlServerLicenseType,
+                linuxLicenseType,
                 dataMoverRunAsAccountId,
                 snapshotRunAsAccountId,
                 storageAccountId,
@@ -5716,8 +5885,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetBlobUri"> The uri of the target blob. </param>
         /// <param name="targetDiskName"> The name for the target managed disk. </param>
         /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectedDiskDetails"/> instance for mocking. </returns>
-        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = null, string diskName = null, SiteRecoveryDiskAccountType? diskType = null, string diskPath = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, string logStorageAccountSasSecretName = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, Uri targetBlobUri = null, string targetDiskName = null, GatewayOperationDetails gatewayOperationDetails = null)
+        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = null, string diskName = null, SiteRecoveryDiskAccountType? diskType = null, string diskPath = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, string logStorageAccountSasSecretName = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, Uri targetBlobUri = null, string targetDiskName = null, GatewayOperationDetails gatewayOperationDetails = null, int? sectorSizeInBytes = null)
         {
             return new VMwareCbtProtectedDiskDetails(
                 diskId,
@@ -5735,6 +5905,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetBlobUri,
                 targetDiskName,
                 gatewayOperationDetails,
+                sectorSizeInBytes,
                 serializedAdditionalRawData: null);
         }
 
@@ -5849,10 +6020,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="networkId"> The test network Id. </param>
         /// <param name="vmNics"> The list of NIC details. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="postMigrationSteps"> The managed run command script input. </param>
         /// <returns> A new <see cref="Models.VMwareCbtTestMigrateContent"/> instance for mocking. </returns>
-        public static VMwareCbtTestMigrateContent VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId = null, ResourceIdentifier networkId = null, IEnumerable<VMwareCbtNicContent> vmNics = null, string osUpgradeVersion = null)
+        public static VMwareCbtTestMigrateContent VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId = null, ResourceIdentifier networkId = null, IEnumerable<VMwareCbtNicContent> vmNics = null, string osUpgradeVersion = null, IEnumerable<ManagedRunCommandScriptContent> postMigrationSteps = null)
         {
             vmNics ??= new List<VMwareCbtNicContent>();
+            postMigrationSteps ??= new List<ManagedRunCommandScriptContent>();
 
             return new VMwareCbtTestMigrateContent(
                 "VMwareCbt",
@@ -5860,7 +6033,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryPointId,
                 networkId,
                 vmNics?.ToList(),
-                osUpgradeVersion);
+                osUpgradeVersion,
+                postMigrationSteps?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtUpdateDiskContent"/>. </summary>
@@ -6018,6 +6192,738 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 discoveryType,
                 diskDetails?.ToList(),
                 validationErrors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AEnableProtectionContent" />. </summary>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
+        /// <param name="recoveryCloudServiceId"> The recovery cloud service Id. Valid for V1 scenarios. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
+        /// <param name="vmDisks"> The list of vm disk details. </param>
+        /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupId"> The multi vm group id. </param>
+        /// <param name="recoveryBootDiagStorageAccountId"> The boot diagnostic storage account. </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
+        /// <param name="recoveryAzureNetworkId"> The recovery Azure virtual network ARM id. </param>
+        /// <param name="recoverySubnetName"> The recovery subnet name. </param>
+        /// <param name="recoveryVirtualMachineScaleSetId"> The virtual machine scale set Id. </param>
+        /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AEnableProtectionContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2AEnableProtectionContent A2AEnableProtectionContent(ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IEnumerable<A2AVmDiskDetails> vmDisks, IEnumerable<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk)
+        {
+            return A2AEnableProtectionContent(fabricObjectId: fabricObjectId, recoveryContainerId: recoveryContainerId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryCloudServiceId: recoveryCloudServiceId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, vmDisks: vmDisks, vmManagedDisks: vmManagedDisks, multiVmGroupName: multiVmGroupName, multiVmGroupId: multiVmGroupId, protectionClusterId: default, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, diskEncryptionInfo: diskEncryptionInfo, recoveryAvailabilityZone: recoveryAvailabilityZone, recoveryExtendedLocation: recoveryExtendedLocation, recoveryAzureNetworkId: recoveryAzureNetworkId, recoverySubnetName: recoverySubnetName, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, autoProtectionOfDataDisk: autoProtectionOfDataDisk);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AReplicationDetails" />. </summary>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
+        /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
+        /// <param name="initialRecoveryZone"> The initial recovery availability zone. </param>
+        /// <param name="initialPrimaryExtendedLocation"> The initial primary extended location. </param>
+        /// <param name="initialRecoveryExtendedLocation"> The initial recovery extended location. </param>
+        /// <param name="initialRecoveryFabricLocation"> The initial recovery fabric location. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupCreateOption"> Whether Multi VM group is auto created or specified by user. </param>
+        /// <param name="managementId"> The management Id. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="recoveryBootDiagStorageAccountId"> The recovery boot diagnostic storage account Arm Id. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
+        /// <param name="osType"> The type of operating system. </param>
+        /// <param name="recoveryAzureVmSize"> The size of recovery virtual machine. </param>
+        /// <param name="recoveryAzureVmName"> The name of recovery virtual machine. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The recovery resource group. </param>
+        /// <param name="recoveryCloudService"> The recovery cloud service. </param>
+        /// <param name="recoveryAvailabilitySet"> The recovery availability set. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The recovery virtual network. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The test failover virtual network. </param>
+        /// <param name="vmNics"> The virtual machine nic details. </param>
+        /// <param name="vmSyncedConfigDetails"> The synced configuration details. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="isReplicationAgentUpdateRequired"> A value indicating whether replication agent update is required. </param>
+        /// <param name="agentCertificateExpireOn"> Agent certificate expiry date. </param>
+        /// <param name="isReplicationAgentCertificateUpdateRequired"> A value indicating whether agent certificate update is required. </param>
+        /// <param name="recoveryFabricObjectId"> The recovery fabric object Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
+        /// <param name="testFailoverRecoveryFabricObjectId"> The test failover fabric object Id. </param>
+        /// <param name="rpoInSeconds"> The last RPO value in seconds. </param>
+        /// <param name="lastRpoCalculatedOn"> The time (in UTC) when the last RPO value was calculated by Protection Service. </param>
+        /// <param name="primaryAvailabilityZone"> The primary availability zone. </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary Extended Location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery Extended Location. </param>
+        /// <param name="vmEncryptionType"> The encryption type of the VM. </param>
+        /// <param name="tfoAzureVmName"> The test failover vm name. </param>
+        /// <param name="recoveryAzureGeneration"> The recovery azure generation. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
+        /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        /// <param name="churnOptionSelected"> A value indicating the churn option selected by user. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AReplicationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IEnumerable<A2AProtectedDiskDetails> protectedDisks, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IEnumerable<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, ChurnOptionSelected? churnOptionSelected)
+        {
+            return A2AReplicationDetails(fabricObjectId: fabricObjectId, initialPrimaryZone: initialPrimaryZone, initialPrimaryFabricLocation: initialPrimaryFabricLocation, initialRecoveryZone: initialRecoveryZone, initialPrimaryExtendedLocation: initialPrimaryExtendedLocation, initialRecoveryExtendedLocation: initialRecoveryExtendedLocation, initialRecoveryFabricLocation: initialRecoveryFabricLocation, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmGroupCreateOption: multiVmGroupCreateOption, managementId: managementId, protectionClusterId: default, isClusterInfraReady: default, protectedDisks: protectedDisks, unprotectedDisks: unprotectedDisks, protectedManagedDisks: protectedManagedDisks, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, primaryFabricLocation: primaryFabricLocation, recoveryFabricLocation: recoveryFabricLocation, osType: osType, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryCloudService: recoveryCloudService, recoveryAvailabilitySet: recoveryAvailabilitySet, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, vmNics: vmNics, vmSyncedConfigDetails: vmSyncedConfigDetails, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, lastHeartbeat: lastHeartbeat, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isReplicationAgentUpdateRequired: isReplicationAgentUpdateRequired, agentCertificateExpireOn: agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired: isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId: recoveryFabricObjectId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, lifecycleId: lifecycleId, testFailoverRecoveryFabricObjectId: testFailoverRecoveryFabricObjectId, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, primaryAvailabilityZone: primaryAvailabilityZone, recoveryAvailabilityZone: recoveryAvailabilityZone, primaryExtendedLocation: primaryExtendedLocation, recoveryExtendedLocation: recoveryExtendedLocation, vmEncryptionType: vmEncryptionType, tfoAzureVmName: tfoAzureVmName, recoveryAzureGeneration: recoveryAzureGeneration, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, autoProtectionOfDataDisk: autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, churnOptionSelected: churnOptionSelected);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureManagedDiskDetails" />. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
+        /// <param name="replicaDiskType"> The replica disk type. </param>
+        /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureManagedDiskDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId)
+        {
+            return HyperVReplicaAzureManagedDiskDetails(diskId: diskId, seedManagedDiskId: seedManagedDiskId, replicaDiskType: replicaDiskType, diskEncryptionSetId: diskEncryptionSetId, targetDiskAccountType: default, sectorSizeInBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureReplicationDetails" />. </summary>
+        /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
+        /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
+        /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
+        /// <param name="recoveryAzureStorageAccount"> The recovery Azure storage account. </param>
+        /// <param name="recoveryAzureLogStorageAccountId"> The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection. </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="rpoInSeconds"> Last RPO value. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The selected recovery azure network Id. </param>
+        /// <param name="selectedSourceNicId"> The selected source nic Id which will be used as the primary nic during failover. </param>
+        /// <param name="encryption"> The encryption info. </param>
+        /// <param name="osDetails"> The operating system info. </param>
+        /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
+        /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The target resource group Id. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="allAvailableOSUpgradeConfigurations"> A value indicating all available inplace OS Upgrade configurations. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureReplicationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks, IEnumerable<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations)
+        {
+            return HyperVReplicaAzureReplicationDetails(azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, lastReplicatedOn: lastReplicatedOn, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, initialReplicationDetails: initialReplicationDetails, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedSourceNicId: selectedSourceNicId, encryption: encryption, osDetails: osDetails, sourceVmRamSizeInMB: sourceVmRamSizeInMB, sourceVmCpuCount: sourceVmCpuCount, enableRdpOnTargetOption: enableRdpOnTargetOption, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, lastRecoveryPointReceived: lastRecoveryPointReceived, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, protectedManagedDisks: protectedManagedDisks, allAvailableOSUpgradeConfigurations: allAvailableOSUpgradeConfigurations, targetVmSecurityProfile: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryOSDetails" />. </summary>
+        /// <param name="osType"> VM Disk details. </param>
+        /// <param name="productType"> Product type. </param>
+        /// <param name="osEdition"> The OSEdition. </param>
+        /// <param name="osVersion"> The OS Version. </param>
+        /// <param name="osMajorVersion"> The OS Major Version. </param>
+        /// <param name="osMinorVersion"> The OS Minor Version. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryOSDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SiteRecoveryOSDetails SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion)
+        {
+            return SiteRecoveryOSDetails(osType: osType, productType: productType, osEdition: osEdition, osVersion: osVersion, osMajorVersion: osMajorVersion, osMinorVersion: osMinorVersion, userSelectedOSName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmDiskContent" />. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmDiskContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
+        {
+            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmDisksDefaultContent" />. </summary>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmDisksDefaultContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
+        {
+            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmEnableProtectionContent" />. </summary>
+        /// <param name="fabricDiscoveryMachineId"> The ARM Id of discovered machine. </param>
+        /// <param name="disksToInclude"> The disks to include list. </param>
+        /// <param name="disksDefault"> The default disk input. </param>
+        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
+        /// <param name="targetNetworkId"> The selected target network ARM Id. </param>
+        /// <param name="testNetworkId"> The selected test network ARM Id. </param>
+        /// <param name="targetSubnetName"> The selected target subnet name. </param>
+        /// <param name="testSubnetName"> The selected test subnet name. </param>
+        /// <param name="targetVmName"> The target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="licenseType"> The license type. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set ARM Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="runAsAccountId"> The run-as account Id. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmEnableProtectionContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmEnableProtectionContent InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, IEnumerable<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName)
+        {
+            return InMageRcmEnableProtectionContent(fabricDiscoveryMachineId: fabricDiscoveryMachineId, disksToInclude: disksToInclude, disksDefault: disksDefault, targetResourceGroupId: targetResourceGroupId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, targetSubnetName: targetSubnetName, testSubnetName: testSubnetName, targetVmName: targetVmName, targetVmSize: targetVmSize, licenseType: licenseType, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, runAsAccountId: runAsAccountId, processServerId: processServerId, multiVmGroupName: multiVmGroupName, sqlServerLicenseType: default, linuxLicenseType: default, targetVmTags: default, seedManagedDiskTags: default, targetManagedDiskTags: default, targetNicTags: default, userSelectedOSName: default, targetVmSecurityProfile: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmNicDetails" />. </summary>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
+        /// <param name="sourceIPAddress"> The source IP address. </param>
+        /// <param name="sourceIPAddressType"> The source IP address type. </param>
+        /// <param name="sourceNetworkId"> Source network Id. </param>
+        /// <param name="sourceSubnetName"> Source subnet name. </param>
+        /// <param name="targetIPAddress"> The target IP address. </param>
+        /// <param name="targetIPAddressType"> The target IP address type. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="testSubnetName"> Test subnet name. </param>
+        /// <param name="testIPAddress"> The test IP address. </param>
+        /// <param name="testIPAddressType"> The test IP address type. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmNicDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmNicDetails InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType)
+        {
+            return InMageRcmNicDetails(nicId: nicId, isPrimaryNic: isPrimaryNic, isSelectedForFailover: isSelectedForFailover, sourceIPAddress: sourceIPAddress, sourceIPAddressType: sourceIPAddressType, sourceNetworkId: sourceNetworkId, sourceSubnetName: sourceSubnetName, targetIPAddress: targetIPAddress, targetIPAddressType: targetIPAddressType, targetSubnetName: targetSubnetName, testSubnetName: testSubnetName, testIPAddress: testIPAddress, testIPAddressType: testIPAddressType, targetNicName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmNicContent" />. </summary>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="targetStaticIPAddress"> The target static IP address. </param>
+        /// <param name="testSubnetName"> The test subnet name. </param>
+        /// <param name="testStaticIPAddress"> The test static IP address. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmNicContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmNicContent InMageRcmNicContent(string nicId, string isPrimaryNic, string isSelectedForFailover, string targetSubnetName, IPAddress targetStaticIPAddress, string testSubnetName, IPAddress testStaticIPAddress)
+        {
+            return InMageRcmNicContent(nicId: nicId, isPrimaryNic: isPrimaryNic, isSelectedForFailover: isSelectedForFailover, targetSubnetName: targetSubnetName, targetStaticIPAddress: targetStaticIPAddress, testSubnetName: testSubnetName, testStaticIPAddress: testStaticIPAddress, targetNicName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmProtectedDiskDetails" />. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
+        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
+        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="dataPendingInLogDataStoreInMB"> The data pending in log data store in MB. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source agent in MB. </param>
+        /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
+        /// <param name="irDetails"> The initial replication details. </param>
+        /// <param name="resyncDetails"> The resync details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmProtectedDiskDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
+        {
+            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: default, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: default, sectorSizeInBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmReplicationDetails" />. </summary>
+        /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
+        /// <param name="fabricDiscoveryMachineId"> The ARM Id of the discovered VM. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="discoveryType"> The type of the discovered VM. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="processorCoreCount"> The processor core count. </param>
+        /// <param name="allocatedMemoryInMB"> The allocated memory in MB. </param>
+        /// <param name="processServerName"> The process server name. </param>
+        /// <param name="runAsAccountId"> The run-as account Id. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="firmwareType"> The firmware type. </param>
+        /// <param name="primaryNicIPAddress"> The IP address of the primary network interface. </param>
+        /// <param name="targetGeneration"> The target generation. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
+        /// <param name="targetVmName"> Target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetNetworkId"> The target network Id. </param>
+        /// <param name="testNetworkId"> The test network Id. </param>
+        /// <param name="failoverRecoveryPointId"> The recovery point Id to which the VM was failed over. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="lastRpoInSeconds"> The last recovery point objective value. </param>
+        /// <param name="lastRpoCalculatedOn"> The last recovery point objective calculated time. </param>
+        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
+        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
+        /// <param name="initialReplicationProcessedBytes"> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="initialReplicationTransferredBytes"> The initial replication transferred bytes from source VM to azure for all selected disks on source VM. </param>
+        /// <param name="initialReplicationProgressHealth"> The initial replication progress health. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
+        /// <param name="resyncProcessedBytes"> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="resyncTransferredBytes"> The resync transferred bytes from source VM to azure for all selected disks on source VM. </param>
+        /// <param name="resyncProgressHealth"> The resync progress health. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="agentUpgradeState"> The agent auto upgrade state. </param>
+        /// <param name="lastAgentUpgradeType"> The last agent upgrade type. </param>
+        /// <param name="agentUpgradeJobId"> The agent upgrade job Id. </param>
+        /// <param name="agentUpgradeAttemptToVersion"> The agent version to which last agent upgrade was attempted. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="isLastUpgradeSuccessful"> A value indicating whether last agent upgrade was successful or not. </param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
+        /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
+        /// <param name="lastAgentUpgradeErrorDetails"> The last agent upgrade error information. </param>
+        /// <param name="agentUpgradeBlockingErrorDetails"> The agent upgrade blocking error information. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="discoveredVmDetails"> The discovered VM details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmReplicationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, Guid? processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, IPAddress primaryNicIPAddress, string targetGeneration, string licenseType, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, string targetLocation, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, ResourceIdentifier failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, ResourceIdentifier lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IEnumerable<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails)
+        {
+            return InMageRcmReplicationDetails(internalIdentifier: internalIdentifier, fabricDiscoveryMachineId: fabricDiscoveryMachineId, multiVmGroupName: multiVmGroupName, discoveryType: discoveryType, processServerId: processServerId, processorCoreCount: processorCoreCount, allocatedMemoryInMB: allocatedMemoryInMB, processServerName: processServerName, runAsAccountId: runAsAccountId, osType: osType, firmwareType: firmwareType, primaryNicIPAddress: primaryNicIPAddress, targetGeneration: targetGeneration, licenseType: licenseType, linuxLicenseType: default, storageAccountId: storageAccountId, targetVmName: targetVmName, targetVmSize: targetVmSize, targetResourceGroupId: targetResourceGroupId, targetLocation: targetLocation, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, failoverRecoveryPointId: failoverRecoveryPointId, lastRecoveryPointReceived: lastRecoveryPointReceived, lastRpoInSeconds: lastRpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, lastRecoveryPointId: lastRecoveryPointId, initialReplicationProgressPercentage: initialReplicationProgressPercentage, initialReplicationProcessedBytes: initialReplicationProcessedBytes, initialReplicationTransferredBytes: initialReplicationTransferredBytes, initialReplicationProgressHealth: initialReplicationProgressHealth, resyncProgressPercentage: resyncProgressPercentage, resyncProcessedBytes: resyncProcessedBytes, resyncTransferredBytes: resyncTransferredBytes, resyncProgressHealth: resyncProgressHealth, resyncRequired: resyncRequired, resyncState: resyncState, agentUpgradeState: agentUpgradeState, lastAgentUpgradeType: lastAgentUpgradeType, agentUpgradeJobId: agentUpgradeJobId, agentUpgradeAttemptToVersion: agentUpgradeAttemptToVersion, protectedDisks: protectedDisks, unprotectedDisks: default, isLastUpgradeSuccessful: isLastUpgradeSuccessful, isAgentRegistrationSuccessfulAfterFailover: isAgentRegistrationSuccessfulAfterFailover, mobilityAgentDetails: mobilityAgentDetails, lastAgentUpgradeErrorDetails: lastAgentUpgradeErrorDetails, agentUpgradeBlockingErrorDetails: agentUpgradeBlockingErrorDetails, vmNics: vmNics, discoveredVmDetails: discoveredVmDetails, targetVmTags: default, seedManagedDiskTags: default, targetManagedDiskTags: default, targetNicTags: default, sqlServerLicenseType: default, supportedOSVersions: default, osName: default, targetVmSecurityProfile: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmUnplannedFailoverContent" />. </summary>
+        /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmUnplannedFailoverContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageRcmUnplannedFailoverContent InMageRcmUnplannedFailoverContent(string performShutdown, ResourceIdentifier recoveryPointId)
+        {
+            return InMageRcmUnplannedFailoverContent(performShutdown: performShutdown, recoveryPointId: recoveryPointId, osUpgradeVersion: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent" />. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId)
+        {
+            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEnableMigrationContent" />. </summary>
+        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
+        /// <param name="disksToInclude"> The disks to include list. </param>
+        /// <param name="licenseType"> License type. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="performSqlBulkRegistration"> A value indicating whether bulk SQL RP registration to be done. </param>
+        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
+        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
+        /// <param name="targetVmName"> The target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
+        /// <param name="targetNetworkId"> The target network ARM Id. </param>
+        /// <param name="testNetworkId"> The selected test network ARM Id. </param>
+        /// <param name="targetSubnetName"> The target subnet name. </param>
+        /// <param name="testSubnetName"> The selected test subnet name. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set ARM Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group ARM Id. </param>
+        /// <param name="confidentialVmKeyVaultId"> The confidential VM key vault Id for ADE installation. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedDiskTags"> The tags for the seed disks. </param>
+        /// <param name="targetDiskTags"> The tags for the target disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEnableMigrationContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtEnableMigrationContent VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags)
+        {
+            return VMwareCbtEnableMigrationContent(vmwareMachineId: vmwareMachineId, disksToInclude: disksToInclude, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, performSqlBulkRegistration: performSqlBulkRegistration, dataMoverRunAsAccountId: dataMoverRunAsAccountId, snapshotRunAsAccountId: snapshotRunAsAccountId, targetVmName: targetVmName, targetVmSize: targetVmSize, targetResourceGroupId: targetResourceGroupId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, targetSubnetName: targetSubnetName, testSubnetName: testSubnetName, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, confidentialVmKeyVaultId: confidentialVmKeyVaultId, targetVmSecurityProfile: targetVmSecurityProfile, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, performAutoResync: performAutoResync, targetVmTags: targetVmTags, seedDiskTags: seedDiskTags, targetDiskTags: targetDiskTags, targetNicTags: targetNicTags, userSelectedOSName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtMigrateContent" />. </summary>
+        /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtMigrateContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtMigrateContent VMwareCbtMigrateContent(string performShutdown, string osUpgradeVersion)
+        {
+            return VMwareCbtMigrateContent(performShutdown: performShutdown, osUpgradeVersion: osUpgradeVersion, postMigrationSteps: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtMigrationDetails" />. </summary>
+        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="osName"> The name of the OS on the VM. </param>
+        /// <param name="firmwareType"> The firmware type. </param>
+        /// <param name="targetGeneration"> The target generation. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
+        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
+        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
+        /// <param name="targetVmName"> Target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="confidentialVmKeyVaultId"> The confidential VM key vault Id for ADE installation. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="targetNetworkId"> The target network Id. </param>
+        /// <param name="testNetworkId"> The test network Id. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="migrationRecoveryPointId"> The recovery point Id to which the VM was migrated. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
+        /// <param name="initialSeedingProgressPercentage"> The initial seeding progress percentage. </param>
+        /// <param name="migrationProgressPercentage"> The migration progress percentage. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resumeProgressPercentage"> The resume progress percentage. </param>
+        /// <param name="deltaSyncProgressPercentage"> The delta sync progress percentage. </param>
+        /// <param name="isCheckSumResyncCycle"> A value indicating whether checksum resync cycle is in progress. </param>
+        /// <param name="initialSeedingRetryCount"> The initial seeding retry count. </param>
+        /// <param name="resyncRetryCount"> The resync retry count. </param>
+        /// <param name="resumeRetryCount"> The resume retry count. </param>
+        /// <param name="deltaSyncRetryCount"> The delta sync retry count. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
+        /// <param name="seedDiskTags"> The tags for the seed disks. </param>
+        /// <param name="targetDiskTags"> The tags for the target disks. </param>
+        /// <param name="supportedOSVersions"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="applianceMonitoringDetails"> A value indicating the appliance monitoring details. </param>
+        /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
+        /// <param name="operationName"> A value indicating the SRS operation name. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtMigrationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IEnumerable<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, int? deltaSyncProgressPercentage, string isCheckSumResyncCycle, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, long? deltaSyncRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IEnumerable<string> supportedOSVersions, ApplianceMonitoringDetails applianceMonitoringDetails, GatewayOperationDetails gatewayOperationDetails, string operationName)
+        {
+            return VMwareCbtMigrationDetails(vmwareMachineId: vmwareMachineId, osType: osType, osName: osName, firmwareType: firmwareType, targetGeneration: targetGeneration, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, dataMoverRunAsAccountId: dataMoverRunAsAccountId, snapshotRunAsAccountId: snapshotRunAsAccountId, storageAccountId: storageAccountId, targetVmName: targetVmName, targetVmSize: targetVmSize, targetLocation: targetLocation, targetResourceGroupId: targetResourceGroupId, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, confidentialVmKeyVaultId: confidentialVmKeyVaultId, targetVmSecurityProfile: targetVmSecurityProfile, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, targetVmTags: targetVmTags, protectedDisks: protectedDisks, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, vmNics: vmNics, targetNicTags: targetNicTags, migrationRecoveryPointId: migrationRecoveryPointId, lastRecoveryPointReceived: lastRecoveryPointReceived, lastRecoveryPointId: lastRecoveryPointId, initialSeedingProgressPercentage: initialSeedingProgressPercentage, migrationProgressPercentage: migrationProgressPercentage, resyncProgressPercentage: resyncProgressPercentage, resumeProgressPercentage: resumeProgressPercentage, deltaSyncProgressPercentage: deltaSyncProgressPercentage, isCheckSumResyncCycle: isCheckSumResyncCycle, initialSeedingRetryCount: initialSeedingRetryCount, resyncRetryCount: resyncRetryCount, resumeRetryCount: resumeRetryCount, deltaSyncRetryCount: deltaSyncRetryCount, resyncRequired: resyncRequired, resyncState: resyncState, performAutoResync: performAutoResync, seedDiskTags: seedDiskTags, targetDiskTags: targetDiskTags, supportedOSVersions: supportedOSVersions, applianceMonitoringDetails: applianceMonitoringDetails, gatewayOperationDetails: gatewayOperationDetails, operationName: operationName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtProtectedDiskDetails" />. </summary>
+        /// <param name="diskId"> The disk id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskPath"> The disk path. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
+        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
+        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
+        /// <param name="targetBlobUri"> The uri of the target blob. </param>
+        /// <param name="targetDiskName"> The name for the target managed disk. </param>
+        /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtProtectedDiskDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails)
+        {
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtTestMigrateContent" />. </summary>
+        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="networkId"> The test network Id. </param>
+        /// <param name="vmNics"> The list of NIC details. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtTestMigrateContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtTestMigrateContent VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IEnumerable<VMwareCbtNicContent> vmNics, string osUpgradeVersion)
+        {
+            return VMwareCbtTestMigrateContent(recoveryPointId: recoveryPointId, networkId: networkId, vmNics: vmNics, osUpgradeVersion: osUpgradeVersion, postMigrationSteps: default);
+        }
+
+        /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
+        /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
+        /// <param name="initialRecoveryZone"> The initial recovery availability zone. </param>
+        /// <param name="initialPrimaryExtendedLocation"> The initial primary extended location. </param>
+        /// <param name="initialRecoveryExtendedLocation"> The initial recovery extended location. </param>
+        /// <param name="initialRecoveryFabricLocation"> The initial recovery fabric location. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupCreateOption"> Whether Multi VM group is auto created or specified by user. </param>
+        /// <param name="managementId"> The management Id. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="recoveryBootDiagStorageAccountId"> The recovery boot diagnostic storage account Arm Id. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
+        /// <param name="osType"> The type of operating system. </param>
+        /// <param name="recoveryAzureVmSize"> The size of recovery virtual machine. </param>
+        /// <param name="recoveryAzureVmName"> The name of recovery virtual machine. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The recovery resource group. </param>
+        /// <param name="recoveryCloudService"> The recovery cloud service. </param>
+        /// <param name="recoveryAvailabilitySet"> The recovery availability set. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The recovery virtual network. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The test failover virtual network. </param>
+        /// <param name="vmNics"> The virtual machine nic details. </param>
+        /// <param name="vmSyncedConfigDetails"> The synced configuration details. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="isReplicationAgentUpdateRequired"> A value indicating whether replication agent update is required. </param>
+        /// <param name="agentCertificateExpireOn"> Agent certificate expiry date. </param>
+        /// <param name="isReplicationAgentCertificateUpdateRequired"> A value indicating whether agent certificate update is required. </param>
+        /// <param name="recoveryFabricObjectId"> The recovery fabric object Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
+        /// <param name="testFailoverRecoveryFabricObjectId"> The test failover fabric object Id. </param>
+        /// <param name="rpoInSeconds"> The last RPO value in seconds. </param>
+        /// <param name="lastRpoCalculatedOn"> The time (in UTC) when the last RPO value was calculated by Protection Service. </param>
+        /// <param name="primaryAvailabilityZone"> The primary availability zone. </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary Extended Location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery Extended Location. </param>
+        /// <param name="vmEncryptionType"> The encryption type of the VM. </param>
+        /// <param name="tfoAzureVmName"> The test failover vm name. </param>
+        /// <param name="recoveryAzureGeneration"> The recovery azure generation. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
+        /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AReplicationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IEnumerable<A2AProtectedDiskDetails> protectedDisks, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IEnumerable<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId)
+        {
+            return A2AReplicationDetails(fabricObjectId: fabricObjectId, initialPrimaryZone: initialPrimaryZone, initialPrimaryFabricLocation: initialPrimaryFabricLocation, initialRecoveryZone: initialRecoveryZone, initialPrimaryExtendedLocation: initialPrimaryExtendedLocation, initialRecoveryExtendedLocation: initialRecoveryExtendedLocation, initialRecoveryFabricLocation: initialRecoveryFabricLocation, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmGroupCreateOption: multiVmGroupCreateOption, managementId: managementId, protectionClusterId: default, isClusterInfraReady: default, protectedDisks: protectedDisks, unprotectedDisks: unprotectedDisks, protectedManagedDisks: protectedManagedDisks, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, primaryFabricLocation: primaryFabricLocation, recoveryFabricLocation: recoveryFabricLocation, osType: osType, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryCloudService: recoveryCloudService, recoveryAvailabilitySet: recoveryAvailabilitySet, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, vmNics: vmNics, vmSyncedConfigDetails: vmSyncedConfigDetails, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, lastHeartbeat: lastHeartbeat, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isReplicationAgentUpdateRequired: isReplicationAgentUpdateRequired, agentCertificateExpireOn: agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired: isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId: recoveryFabricObjectId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, lifecycleId: lifecycleId, testFailoverRecoveryFabricObjectId: testFailoverRecoveryFabricObjectId, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, primaryAvailabilityZone: primaryAvailabilityZone, recoveryAvailabilityZone: recoveryAvailabilityZone, primaryExtendedLocation: primaryExtendedLocation, recoveryExtendedLocation: recoveryExtendedLocation, vmEncryptionType: vmEncryptionType, tfoAzureVmName: tfoAzureVmName, recoveryAzureGeneration: recoveryAzureGeneration, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, autoProtectionOfDataDisk: autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, churnOptionSelected: default);
+        }
+
+        /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
+        /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
+        /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
+        /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
+        /// <param name="recoveryAzureStorageAccount"> The recovery Azure storage account. </param>
+        /// <param name="recoveryAzureLogStorageAccountId"> The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection. </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="rpoInSeconds"> Last RPO value. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The selected recovery azure network Id. </param>
+        /// <param name="selectedSourceNicId"> The selected source nic Id which will be used as the primary nic during failover. </param>
+        /// <param name="encryption"> The encryption info. </param>
+        /// <param name="osDetails"> The operating system info. </param>
+        /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
+        /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The target resource group Id. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureReplicationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks)
+        {
+            return HyperVReplicaAzureReplicationDetails(azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, lastReplicatedOn: lastReplicatedOn, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, initialReplicationDetails: initialReplicationDetails, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedSourceNicId: selectedSourceNicId, encryption: encryption, osDetails: osDetails, sourceVmRamSizeInMB: sourceVmRamSizeInMB, sourceVmCpuCount: sourceVmCpuCount, enableRdpOnTargetOption: enableRdpOnTargetOption, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, lastRecoveryPointReceived: lastRecoveryPointReceived, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, protectedManagedDisks: protectedManagedDisks, allAvailableOSUpgradeConfigurations: default, targetVmSecurityProfile: default);
+        }
+
+        /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
+        /// <param name="infrastructureVmId"> The infrastructure VM Id. </param>
+        /// <param name="vCenterInfrastructureId"> The vCenter infrastructure Id. </param>
+        /// <param name="protectionStage"> The protection stage. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="rpoInSeconds"> The RPO in seconds. </param>
+        /// <param name="compressedDataRateInMB"> The compressed data change rate in MB. </param>
+        /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
+        /// <param name="ipAddress"> The source IP address. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="isAgentUpdateRequired"> A value indicating whether installed agent needs to be updated. </param>
+        /// <param name="isRebootAfterUpdateRequired"> A value indicating whether the source server requires a restart after update. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="processServerName"> The process server name. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi vm sync is enabled or disabled. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="diskResized"> A value indicating whether any disk is resized for this VM. </param>
+        /// <param name="masterTargetId"> The master target Id. </param>
+        /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
+        /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="vhdName"> The OS disk VHD name. </param>
+        /// <param name="osDiskId"> The id of the disk containing the OS. </param>
+        /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
+        /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
+        /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
+        /// <param name="recoveryAzureStorageAccount"> The recovery Azure storage account. </param>
+        /// <param name="recoveryAzureLogStorageAccountId"> The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The selected recovery azure network Id. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The test failover virtual network. </param>
+        /// <param name="selectedSourceNicId"> The selected source nic Id which will be used as the primary nic during failover. </param>
+        /// <param name="discoveryType"> A value indicating the discovery type of the machine. Value can be vCenter or physical. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="datastores"> The datastores of the on-premise machine. Value can be list of strings that contain datastore names. </param>
+        /// <param name="targetVmId"> The ARM Id of the target Azure VM. This value will be null until the VM is failed over. Only after failure it will be populated with the ARM Id of the Azure VM. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The target resource group Id. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="validationErrors"> The validation errors of the on-premise machine Value can be list of validation errors. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="lastUpdateReceivedOn"> The last update time received from on-prem components. </param>
+        /// <param name="replicaId"> The replica id of the protected item. </param>
+        /// <param name="osVersion"> The OS Version of the protected item. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="firmwareType"> The firmware type of this protected item. </param>
+        /// <param name="azureVmGeneration"> The target generation for this protected item. </param>
+        /// <param name="isAdditionalStatsAvailable"> A value indicating whether additional IR stats are available or not. </param>
+        /// <param name="totalDataTransferred"> The total transferred data in bytes. </param>
+        /// <param name="totalProgressHealth"> The progress health. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
+        /// <param name="switchProviderDetails"> The switch provider blocking error information. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageAzureV2ReplicationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InMageAzureV2ReplicationDetails InMageAzureV2ReplicationDetails(string infrastructureVmId, string vCenterInfrastructureId, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, int? resyncProgressPercentage, long? rpoInSeconds, double? compressedDataRateInMB, double? uncompressedDataRateInMB, IPAddress ipAddress, string agentVersion, DateTimeOffset? agentExpireOn, string isAgentUpdateRequired, string isRebootAfterUpdateRequired, DateTimeOffset? lastHeartbeat, Guid? processServerId, string processServerName, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, IEnumerable<InMageAzureV2ProtectedDiskDetails> protectedDisks, string diskResized, string masterTargetId, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, string osType, string vhdName, string osDiskId, IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string discoveryType, string enableRdpOnTargetOption, IEnumerable<string> datastores, string targetVmId, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, IEnumerable<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, IEnumerable<InMageAzureV2ManagedDiskDetails> protectedManagedDisks, DateTimeOffset? lastRecoveryPointReceived, string firmwareType, string azureVmGeneration, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, InMageAzureV2SwitchProviderDetails switchProviderDetails)
+        {
+            return InMageAzureV2ReplicationDetails(infrastructureVmId: infrastructureVmId, vCenterInfrastructureId: vCenterInfrastructureId, protectionStage: protectionStage, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, resyncProgressPercentage: resyncProgressPercentage, rpoInSeconds: rpoInSeconds, compressedDataRateInMB: compressedDataRateInMB, uncompressedDataRateInMB: uncompressedDataRateInMB, ipAddress: ipAddress, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isAgentUpdateRequired: isAgentUpdateRequired, isRebootAfterUpdateRequired: isRebootAfterUpdateRequired, lastHeartbeat: lastHeartbeat, processServerId: processServerId, processServerName: processServerName, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmSyncStatus: multiVmSyncStatus, protectedDisks: protectedDisks, diskResized: diskResized, masterTargetId: masterTargetId, sourceVmCpuCount: sourceVmCpuCount, sourceVmRamSizeInMB: sourceVmRamSizeInMB, osType: osType, vhdName: vhdName, osDiskId: osDiskId, azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, selectedSourceNicId: selectedSourceNicId, discoveryType: discoveryType, enableRdpOnTargetOption: enableRdpOnTargetOption, datastores: datastores, targetVmId: targetVmId, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, validationErrors: validationErrors, lastRpoCalculatedOn: lastRpoCalculatedOn, lastUpdateReceivedOn: lastUpdateReceivedOn, replicaId: replicaId, osVersion: osVersion, protectedManagedDisks: protectedManagedDisks, lastRecoveryPointReceived: lastRecoveryPointReceived, firmwareType: firmwareType, azureVmGeneration: azureVmGeneration, isAdditionalStatsAvailable: isAdditionalStatsAvailable, totalDataTransferred: totalDataTransferred, totalProgressHealth: totalProgressHealth, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, switchProviderBlockingErrorDetails: switchProviderBlockingErrorDetails, switchProviderDetails: switchProviderDetails, supportedOSVersions: default, allAvailableOSUpgradeConfigurations: default, osName: default);
+        }
+
+        /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
+        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="osName"> The name of the OS on the VM. </param>
+        /// <param name="firmwareType"> The firmware type. </param>
+        /// <param name="targetGeneration"> The target generation. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
+        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
+        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
+        /// <param name="targetVmName"> Target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="confidentialVmKeyVaultId"> The confidential VM key vault Id for ADE installation. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="targetNetworkId"> The target network Id. </param>
+        /// <param name="testNetworkId"> The test network Id. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="migrationRecoveryPointId"> The recovery point Id to which the VM was migrated. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
+        /// <param name="initialSeedingProgressPercentage"> The initial seeding progress percentage. </param>
+        /// <param name="migrationProgressPercentage"> The migration progress percentage. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resumeProgressPercentage"> The resume progress percentage. </param>
+        /// <param name="initialSeedingRetryCount"> The initial seeding retry count. </param>
+        /// <param name="resyncRetryCount"> The resync retry count. </param>
+        /// <param name="resumeRetryCount"> The resume retry count. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
+        /// <param name="seedDiskTags"> The tags for the seed disks. </param>
+        /// <param name="targetDiskTags"> The tags for the target disks. </param>
+        /// <param name="supportedOSVersions"> List of supported inplace OS Upgrade versions. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtMigrationDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IEnumerable<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IEnumerable<string> supportedOSVersions)
+        {
+            return VMwareCbtMigrationDetails(vmwareMachineId: vmwareMachineId, osType: osType, osName: osName, firmwareType: firmwareType, targetGeneration: targetGeneration, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, dataMoverRunAsAccountId: dataMoverRunAsAccountId, snapshotRunAsAccountId: snapshotRunAsAccountId, storageAccountId: storageAccountId, targetVmName: targetVmName, targetVmSize: targetVmSize, targetLocation: targetLocation, targetResourceGroupId: targetResourceGroupId, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, confidentialVmKeyVaultId: confidentialVmKeyVaultId, targetVmSecurityProfile: targetVmSecurityProfile, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, targetVmTags: targetVmTags, protectedDisks: protectedDisks, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, vmNics: vmNics, targetNicTags: targetNicTags, migrationRecoveryPointId: migrationRecoveryPointId, lastRecoveryPointReceived: lastRecoveryPointReceived, lastRecoveryPointId: lastRecoveryPointId, initialSeedingProgressPercentage: initialSeedingProgressPercentage, migrationProgressPercentage: migrationProgressPercentage, resyncProgressPercentage: resyncProgressPercentage, resumeProgressPercentage: resumeProgressPercentage, deltaSyncProgressPercentage: default, isCheckSumResyncCycle: default, initialSeedingRetryCount: initialSeedingRetryCount, resyncRetryCount: resyncRetryCount, resumeRetryCount: resumeRetryCount, deltaSyncRetryCount: default, resyncRequired: resyncRequired, resyncState: resyncState, performAutoResync: performAutoResync, seedDiskTags: seedDiskTags, targetDiskTags: targetDiskTags, supportedOSVersions: supportedOSVersions, applianceMonitoringDetails: default, gatewayOperationDetails: default, operationName: default);
+        }
+
+        /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
+        /// <param name="diskId"> The disk id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskPath"> The disk path. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
+        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
+        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
+        /// <param name="targetBlobUri"> The uri of the target blob. </param>
+        /// <param name="targetDiskName"> The name for the target managed disk. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtProtectedDiskDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
+        {
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: default, sectorSizeInBytes: default);
         }
     }
 }

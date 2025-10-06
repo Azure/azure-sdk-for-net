@@ -10,7 +10,6 @@
      -->
     <NoWarn>
       $(NoWarn);
-      AZC0006;
       AZC0007;
     </NoWarn>
   </PropertyGroup>

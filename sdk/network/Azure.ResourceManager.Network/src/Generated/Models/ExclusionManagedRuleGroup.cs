@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The managed rule group for exclusion. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; set; }
         /// <summary> List of rules that will be excluded. If none specified, all rules in the group will be excluded. </summary>
+        [WirePath("rules")]
         public IList<ExclusionManagedRule> Rules { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Quota counter values. </summary>
+        [WirePath("value")]
         public IReadOnlyList<QuotaCounterContract> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
+        [WirePath("count")]
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

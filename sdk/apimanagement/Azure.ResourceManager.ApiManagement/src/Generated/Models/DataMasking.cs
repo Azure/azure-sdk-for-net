@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Masking settings for Url query parameters. </summary>
+        [WirePath("queryParams")]
         public IList<DataMaskingEntity> QueryParams { get; }
         /// <summary> Masking settings for headers. </summary>
+        [WirePath("headers")]
         public IList<DataMaskingEntity> Headers { get; }
     }
 }

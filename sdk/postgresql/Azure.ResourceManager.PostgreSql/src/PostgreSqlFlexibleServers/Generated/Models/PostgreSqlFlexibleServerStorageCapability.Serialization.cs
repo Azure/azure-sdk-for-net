@@ -8,34 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerStorageCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerStorageCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerStorageCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerStorageCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlFlexibleServerStorageCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerStorageCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(SupportedIops))
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(SupportedMaximumIops))
+            {
+                writer.WritePropertyName("supportedMaximumIops"u8);
+                writer.WriteNumberValue(SupportedMaximumIops.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(StorageSizeInMB))
             {
                 writer.WritePropertyName("storageSizeMb"u8);
                 writer.WriteNumberValue(StorageSizeInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaximumStorageSizeMb))
+            {
+                writer.WritePropertyName("maximumStorageSizeMb"u8);
+                writer.WriteNumberValue(MaximumStorageSizeMb.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedThroughput))
+            {
+                writer.WritePropertyName("supportedThroughput"u8);
+                writer.WriteNumberValue(SupportedThroughput.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedMaximumThroughput))
+            {
+                writer.WritePropertyName("supportedMaximumThroughput"u8);
+                writer.WriteNumberValue(SupportedMaximumThroughput.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultIopsTier))
             {
@@ -48,36 +78,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedIopsTiers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         PostgreSqlFlexibleServerStorageCapability IJsonModel<PostgreSqlFlexibleServerStorageCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerStorageCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,20 +98,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerStorageCapability DeserializePostgreSqlFlexibleServerStorageCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long? supportedIops = default;
+            int? supportedMaximumIops = default;
             long? storageSizeMb = default;
+            long? maximumStorageSizeMb = default;
+            int? supportedThroughput = default;
+            int? supportedMaximumThroughput = default;
             string defaultIopsTier = default;
             IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedIops"u8))
@@ -119,6 +127,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("supportedMaximumIops"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedMaximumIops = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("storageSizeMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -126,6 +143,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         continue;
                     }
                     storageSizeMb = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("maximumStorageSizeMb"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumStorageSizeMb = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("supportedThroughput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedThroughput = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("supportedMaximumThroughput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedMaximumThroughput = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("defaultIopsTier"u8))
@@ -163,18 +207,211 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlFlexibleServerStorageCapability(
                 status,
                 reason,
                 serializedAdditionalRawData,
                 supportedIops,
+                supportedMaximumIops,
                 storageSizeMb,
+                maximumStorageSizeMb,
+                supportedThroughput,
+                supportedMaximumThroughput,
                 defaultIopsTier,
                 supportedIopsTiers ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>());
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedIops))
+                {
+                    builder.Append("  supportedIops: ");
+                    builder.AppendLine($"'{SupportedIops.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaximumIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMaximumIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedMaximumIops))
+                {
+                    builder.Append("  supportedMaximumIops: ");
+                    builder.AppendLine($"{SupportedMaximumIops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageSizeMb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageSizeInMB))
+                {
+                    builder.Append("  storageSizeMb: ");
+                    builder.AppendLine($"'{StorageSizeInMB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumStorageSizeMb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumStorageSizeMb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumStorageSizeMb))
+                {
+                    builder.Append("  maximumStorageSizeMb: ");
+                    builder.AppendLine($"'{MaximumStorageSizeMb.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedThroughput))
+                {
+                    builder.Append("  supportedThroughput: ");
+                    builder.AppendLine($"{SupportedThroughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaximumThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMaximumThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedMaximumThroughput))
+                {
+                    builder.Append("  supportedMaximumThroughput: ");
+                    builder.AppendLine($"{SupportedMaximumThroughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultIopsTier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultIopsTier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultIopsTier))
+                {
+                    builder.Append("  defaultIopsTier: ");
+                    if (DefaultIopsTier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultIopsTier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultIopsTier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedIopsTiers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedIopsTiers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedIopsTiers))
+                {
+                    if (SupportedIopsTiers.Any())
+                    {
+                        builder.Append("  supportedIopsTiers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedIopsTiers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedIopsTiers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CapabilityStatus))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerStorageCapability>.Write(ModelReaderWriterOptions options)
@@ -184,9 +421,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,11 +437,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlFlexibleServerStorageCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

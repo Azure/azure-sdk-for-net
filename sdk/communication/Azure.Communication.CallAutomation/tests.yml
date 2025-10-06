@@ -8,16 +8,10 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
-      Int:
-        SubscriptionConfigurations:
-          - $(sub-config-communication-int-test-resources-common)
-          - $(sub-config-communication-int-test-resources-net)
-    Clouds: Public
     TestResourceDirectories:
-      - communication/test-resources/
+      - communication/
     EnvVars:
       # SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS skips certain CallAutomation tests that required human interactions
       SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS: TRUE

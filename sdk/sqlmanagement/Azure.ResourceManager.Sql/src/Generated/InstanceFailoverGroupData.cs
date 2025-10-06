@@ -84,12 +84,15 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </summary>
+        [WirePath("properties.secondaryType")]
         public GeoSecondaryInstanceType? SecondaryType { get; set; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
+        [WirePath("properties.readWriteEndpoint")]
         public InstanceFailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
         internal InstanceFailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
+        [WirePath("properties.readOnlyEndpoint.failoverPolicy")]
         public ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy
         {
             get => ReadOnlyEndpoint is null ? default : ReadOnlyEndpoint.FailoverPolicy;
@@ -102,12 +105,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Local replication role of the failover group instance. </summary>
+        [WirePath("properties.replicationRole")]
         public InstanceFailoverGroupReplicationRole? ReplicationRole { get; }
         /// <summary> Replication state of the failover group instance. </summary>
+        [WirePath("properties.replicationState")]
         public string ReplicationState { get; }
         /// <summary> Partner region information for the failover group. </summary>
+        [WirePath("properties.partnerRegions")]
         public IList<PartnerRegionInfo> PartnerRegions { get; }
         /// <summary> List of managed instance pairs in the failover group. </summary>
+        [WirePath("properties.managedInstancePairs")]
         public IList<ManagedInstancePairInfo> ManagedInstancePairs { get; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnection"/>. </summary>
-        internal MonitorWorkspacePrivateEndpointConnection()
+        public MonitorWorkspacePrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
@@ -77,15 +76,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The group ids for the private endpoint resource. </summary>
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> The private endpoint resource. </summary>
-        internal SubResource PrivateEndpoint { get; }
+        internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint?.Id;
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public MonitorPrivateLinkServiceConnectionState ConnectionState { get; }
+        public MonitorPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

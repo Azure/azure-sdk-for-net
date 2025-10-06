@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.IO;
 
 namespace System.ClientModel.Primitives;
@@ -91,6 +92,7 @@ public abstract class PipelineMessageClassifier
     {
         public override bool TryClassify(PipelineMessage message, out bool isError)
         {
+            Argument.AssertNotNull(message, nameof(message));
             message.AssertResponse();
 
             int statusKind = message.Response!.Status / 100;
@@ -102,6 +104,8 @@ public abstract class PipelineMessageClassifier
 
         public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
         {
+            Argument.AssertNotNull(message, nameof(message));
+
             isRetriable = exception is null ?
                 IsRetriable(message) :
                 IsRetriable(message, exception);

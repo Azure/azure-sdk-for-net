@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskCreateOption Upload { get; } = new DiskCreateOption(UploadValue);
         /// <summary> Create a new disk by using a deep copy process, where the resource creation is considered complete only after all data has been copied from the source. </summary>
         public static DiskCreateOption CopyStart { get; } = new DiskCreateOption(CopyStartValue);
-        /// <summary> Similar to Import create option. Create a new Trusted Launch VM or Confidential VM supported disk by importing additional blob for VM guest state specified by securityDataUri in storage account specified by storageAccountId. </summary>
+        /// <summary> Similar to Import create option. Create a new Trusted Launch VM or Confidential VM supported disk by importing additional blobs for VM guest state specified by securityDataUri and VM metadata specified by securityMetadataUri in storage account specified by storageAccountId. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
         public static DiskCreateOption ImportSecure { get; } = new DiskCreateOption(ImportSecureValue);
-        /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in both disk and VM guest state. </summary>
+        /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in disk, VM guest state and VM metadata. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
         public static DiskCreateOption UploadPreparedSecure { get; } = new DiskCreateOption(UploadPreparedSecureValue);
         /// <summary> Create a new disk by exporting from elastic san volume snapshot. </summary>
         public static DiskCreateOption CopyFromSanSnapshot { get; } = new DiskCreateOption(CopyFromSanSnapshotValue);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(DiskCreateOption left, DiskCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are not the same. </summary>
         public static bool operator !=(DiskCreateOption left, DiskCreateOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskCreateOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskCreateOption"/>. </summary>
         public static implicit operator DiskCreateOption(string value) => new DiskCreateOption(value);
 
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

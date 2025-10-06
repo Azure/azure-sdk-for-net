@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the administrator user account which can be used to SSH to nodes. </summary>
+        [WirePath("adminUserName")]
         public string AdminUserName { get; set; }
         /// <summary> SSH public key of the administrator user account. </summary>
+        [WirePath("adminUserSshPublicKey")]
         public string AdminUserSshPublicKey { get; set; }
         /// <summary> Password of the administrator user account. </summary>
+        [WirePath("adminUserPassword")]
         public string AdminUserPassword { get; set; }
     }
 }

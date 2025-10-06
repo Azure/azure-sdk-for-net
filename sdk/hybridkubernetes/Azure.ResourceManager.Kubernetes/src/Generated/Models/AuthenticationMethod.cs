@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Kubernetes.Models
     public readonly partial struct AuthenticationMethod : IEquatable<AuthenticationMethod>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AuthenticationMethod"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AuthenticationMethod(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TokenValue = "Token";
         private const string AADValue = "AAD";
 
-        /// <summary> Token. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AuthenticationMethod(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Token. </summary>
         public static AuthenticationMethod Token { get; } = new AuthenticationMethod(TokenValue);
-        /// <summary> AAD. </summary>
+
+        /// <summary> Gets the AAD. </summary>
         public static AuthenticationMethod AAD { get; } = new AuthenticationMethod(AADValue);
+
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthenticationMethod left, AuthenticationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthenticationMethod left, AuthenticationMethod right) => !left.Equals(right);
+
         /// <summary> Converts a string to a <see cref="AuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthenticationMethod(string value) => new AuthenticationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthenticationMethod?(string value) => value == null ? null : new AuthenticationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthenticationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

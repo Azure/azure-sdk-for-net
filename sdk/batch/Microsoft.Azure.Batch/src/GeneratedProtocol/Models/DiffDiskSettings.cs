@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// location e.g., cache disk space for Ephemeral OS disk provisioning.
         /// For more information on Ephemeral OS disk size requirements, please
         /// refer to Ephemeral OS disk size requirements for Windows VMs at
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements
+        /// https://docs.microsoft.com/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements
         /// and Linux VMs at
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements.
+        /// https://docs.microsoft.com/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements.
         /// Possible values include: 'CacheDisk'
         /// </remarks>
         [JsonProperty(PropertyName = "placement")]

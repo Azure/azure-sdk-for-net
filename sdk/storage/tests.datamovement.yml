@@ -1,0 +1,30 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    SDKType: datamovement
+    ServiceDirectory: storage
+    BuildInParallel: true
+    TimeoutInMinutes: 180
+    Location: westus2
+    CloudConfig:
+      Public:
+      # PrivatePreview:
+      #  SubscriptionConfiguration: $(sub-config-storage-test-resources)
+    SupportedClouds: Public #, PrivatePreview
+    ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
+      MatrixConfigs:
+        - Name: Storage_all_versions
+          Path: sdk/storage/platform-matrix-all-versions.json
+          Selection: sparse
+          GenerateVMJobs: true
+    EnvVars:
+      DYLD_LIBRARY_PATH: /usr/local/opt/openssl@3/lib
+      ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
+        AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml
+    - bash: brew install openssl@3
+      displayName: (MacOS) Install OpenSSL
+      condition: contains(variables['OSVmImage'], 'mac')

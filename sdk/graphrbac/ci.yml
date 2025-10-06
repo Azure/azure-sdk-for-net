@@ -8,4 +8,4 @@ extends:
   parameters:
     ServiceDirectory: graphrbac
     ArtifactName: packages
-    Artifacts:
+    Artifacts: []

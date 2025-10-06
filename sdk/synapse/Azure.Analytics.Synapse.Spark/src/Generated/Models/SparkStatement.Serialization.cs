@@ -55,5 +55,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             return new SparkStatement(id, code, state, output);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkStatement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSparkStatement(document.RootElement);
+        }
     }
 }

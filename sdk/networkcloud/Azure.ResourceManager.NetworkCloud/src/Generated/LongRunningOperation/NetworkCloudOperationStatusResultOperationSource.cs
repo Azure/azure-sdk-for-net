@@ -8,7 +8,6 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 
@@ -18,13 +17,13 @@ namespace Azure.ResourceManager.NetworkCloud
     {
         NetworkCloudOperationStatusResult IOperationSource<NetworkCloudOperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement);
         }
 
         async ValueTask<NetworkCloudOperationStatusResult> IOperationSource<NetworkCloudOperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement);
         }
     }

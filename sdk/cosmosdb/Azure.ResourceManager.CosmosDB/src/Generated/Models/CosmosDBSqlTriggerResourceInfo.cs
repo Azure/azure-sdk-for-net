@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -77,12 +76,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL trigger. </summary>
+        [WirePath("id")]
         public string TriggerName { get; set; }
         /// <summary> Body of the Trigger. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
         /// <summary> Type of the Trigger. </summary>
+        [WirePath("triggerType")]
         public CosmosDBSqlTriggerType? TriggerType { get; set; }
         /// <summary> The operation the trigger is associated with. </summary>
+        [WirePath("triggerOperation")]
         public CosmosDBSqlTriggerOperation? TriggerOperation { get; set; }
     }
 }

@@ -22,9 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="expiryDateTime"> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of "2018-12-01T05:00:00Z". Default value is NULL. Type: string (or Expression with resultType string). </param>
-        internal AzureDataLakeStoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties, object expiryDateTime) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
+        internal AzureDataLakeStoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IList<MetadataItem> metadata, IDictionary<string, object> additionalProperties, object expiryDateTime) : base(type, maxConcurrentConnections, copyBehavior, metadata, additionalProperties)
         {
             ExpiryDateTime = expiryDateTime;
             Type = type ?? "AzureDataLakeStoreWriteSettings";

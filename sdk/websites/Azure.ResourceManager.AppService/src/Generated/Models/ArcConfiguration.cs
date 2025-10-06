@@ -72,18 +72,24 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the artifacts storage type. </summary>
+        [WirePath("artifactsStorageType")]
         public ArtifactStorageType? ArtifactsStorageType { get; set; }
         /// <summary> Gets or sets the artifact storage class name. </summary>
+        [WirePath("artifactStorageClassName")]
         public string ArtifactStorageClassName { get; set; }
         /// <summary> Gets or sets the artifact storage mount path. </summary>
+        [WirePath("artifactStorageMountPath")]
         public string ArtifactStorageMountPath { get; set; }
         /// <summary> Gets or sets the artifact storage node name. </summary>
+        [WirePath("artifactStorageNodeName")]
         public string ArtifactStorageNodeName { get; set; }
         /// <summary> Gets or sets the artifact storage access mode. </summary>
+        [WirePath("artifactStorageAccessMode")]
         public string ArtifactStorageAccessMode { get; set; }
         /// <summary> Gets or sets the front end service configuration. </summary>
         internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
         /// <summary> Gets or sets the front end service kind. </summary>
+        [WirePath("frontEndServiceConfiguration.kind")]
         public FrontEndServiceType? FrontEndServiceKind
         {
             get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the kube config. </summary>
+        [WirePath("kubeConfig")]
         public string KubeConfig { get; set; }
     }
 }

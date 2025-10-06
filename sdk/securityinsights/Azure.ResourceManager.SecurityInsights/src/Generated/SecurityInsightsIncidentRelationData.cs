@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -78,14 +77,19 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary> The resource ID of the related resource. </summary>
+        [WirePath("properties.relatedResourceId")]
         public ResourceIdentifier RelatedResourceId { get; set; }
         /// <summary> The name of the related resource. </summary>
+        [WirePath("properties.relatedResourceName")]
         public string RelatedResourceName { get; }
         /// <summary> The resource type of the related resource. </summary>
+        [WirePath("properties.relatedResourceType")]
         public ResourceType? RelatedResourceType { get; }
         /// <summary> The resource kind of the related resource. </summary>
+        [WirePath("properties.relatedResourceKind")]
         public string RelatedResourceKind { get; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

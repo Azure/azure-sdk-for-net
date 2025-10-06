@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -95,28 +93,37 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isHostnameAlreadyVerified")]
         public bool? IsHostnameAlreadyVerified { get; }
         /// <summary> DNS verification test result. </summary>
+        [WirePath("properties.customDomainVerificationTest")]
         public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
-        /// <summary> Raw failure information if DNS verification fails. </summary>
-        public ResponseError CustomDomainVerificationFailureInfo { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.hasConflictOnScaleUnit")]
         public bool? HasConflictOnScaleUnit { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.hasConflictAcrossSubscription")]
         public bool? HasConflictAcrossSubscription { get; }
         /// <summary> Name of the conflicting app on scale unit if it's within the same subscription. </summary>
+        [WirePath("properties.conflictingAppResourceId")]
         public string ConflictingAppResourceId { get; }
         /// <summary> CName records controller can see for this hostname. </summary>
+        [WirePath("properties.cNameRecords")]
         public IList<string> CNameRecords { get; }
         /// <summary> TXT records controller can see for this hostname. </summary>
+        [WirePath("properties.txtRecords")]
         public IList<string> TxtRecords { get; }
         /// <summary> A records controller can see for this hostname. </summary>
+        [WirePath("properties.aRecords")]
         public IList<string> ARecords { get; }
         /// <summary> Alternate CName records controller can see for this hostname. </summary>
+        [WirePath("properties.alternateCNameRecords")]
         public IList<string> AlternateCNameRecords { get; }
         /// <summary> Alternate TXT records controller can see for this hostname. </summary>
+        [WirePath("properties.alternateTxtRecords")]
         public IList<string> AlternateTxtRecords { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

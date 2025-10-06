@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The target resource where getting the flow log and traffic analytics (optional) status. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
     }
 }

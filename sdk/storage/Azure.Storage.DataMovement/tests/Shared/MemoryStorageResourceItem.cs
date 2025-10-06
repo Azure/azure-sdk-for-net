@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,9 +19,13 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override string ResourceId => "MemoryBuffer";
 
-        protected internal override DataTransferOrder TransferType => DataTransferOrder.Unordered;
+        protected internal override TransferOrder TransferType => TransferOrder.Unordered;
+
+        protected internal override long MaxSupportedSingleTransferSize => long.MaxValue;
 
         protected internal override long MaxSupportedChunkSize => long.MaxValue;
+
+        protected internal override int MaxSupportedChunkCount => int.MaxValue;
 
         protected internal override long? Length => Buffer.Length;
 
@@ -29,7 +34,10 @@ namespace Azure.Storage.DataMovement.Tests
             Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath-{Guid.NewGuid()}/resource-item-{Guid.NewGuid()}");
         }
 
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -70,15 +78,20 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceItemProperties(Buffer.Length, new ETag("etag"), DateTimeOffset.UtcNow, default));
+            return Task.FromResult(new StorageResourceItemProperties()
+            {
+                ResourceLength = Buffer.Length,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow
+            });
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
             throw new NotImplementedException();
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
             throw new NotImplementedException();
         }
@@ -87,6 +100,21 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var slice = length.HasValue ? Buffer.Slice((int)position, (int)length.Value) : Buffer.Slice((int)position);
             return Task.FromResult(new StorageResourceReadStreamResult(new MemoryStream(slice.ToArray())));
+        }
+
+        protected internal override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected internal override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,12 +4,9 @@ parameters:
   Container: false
 
 steps:
-  - task: MSBuild@1
-    displayName: Install DevOps Logger
-    condition: and(succeeded(), eq(${{ parameters.Container }}, false))
-    inputs:
-      solution: eng/InstallDevopsLogger.proj
-      msbuildArguments: /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"
+  # Need to authenticate so our pipeline can update packages in the feed.
+  - task: NuGetAuthenticate@1
+
   # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
     displayName: 'Use .NET SDK'
@@ -17,15 +14,14 @@ steps:
     inputs:
       useGlobalJson: true
       performMultiLevelLookup: true
-  - task: UseDotNet@2
-    condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-    displayName: 'Use .NET 6.0 SDK'
+  - task: UseDotNet@2 # We need .NET 8 for the .NET 8 tests
+    displayName: 'Use .NET 8.0 SDK'
     retryCountOnTaskFailure: 3
     inputs:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
       packageType: sdk
       performMultiLevelLookup: true
-      version: "6.0.x"
+      version: "8.0.x"
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'

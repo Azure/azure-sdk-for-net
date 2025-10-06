@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -47,13 +46,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
-        internal SiteRecoveryHealthError()
+        public SiteRecoveryHealthError()
         {
-            InnerHealthErrors = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
+            SiteRecoveryInnerHealthErrorsList = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
-        /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
+        /// <param name="siteRecoveryInnerHealthErrorsList"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
         /// <param name="errorLevel"> Level of error. </param>
@@ -69,9 +68,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryHealthError(IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SiteRecoveryHealthError(IList<SiteRecoveryInnerHealthError> siteRecoveryInnerHealthErrorsList, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            InnerHealthErrors = innerHealthErrors;
+            SiteRecoveryInnerHealthErrorsList = siteRecoveryInnerHealthErrorsList;
             ErrorSource = errorSource;
             ErrorType = errorType;
             ErrorLevel = errorLevel;
@@ -90,34 +89,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </summary>
-        public IReadOnlyList<SiteRecoveryInnerHealthError> InnerHealthErrors { get; }
+        public IList<SiteRecoveryInnerHealthError> SiteRecoveryInnerHealthErrorsList { get; }
         /// <summary> Source of error. </summary>
-        public string ErrorSource { get; }
+        public string ErrorSource { get; set; }
         /// <summary> Type of error. </summary>
-        public string ErrorType { get; }
+        public string ErrorType { get; set; }
         /// <summary> Level of error. </summary>
-        public string ErrorLevel { get; }
+        public string ErrorLevel { get; set; }
         /// <summary> Category of error. </summary>
-        public string ErrorCategory { get; }
+        public string ErrorCategory { get; set; }
         /// <summary> Error code. </summary>
-        public string ErrorCode { get; }
+        public string ErrorCode { get; set; }
         /// <summary> Summary message of the entity. </summary>
-        public string SummaryMessage { get; }
+        public string SummaryMessage { get; set; }
         /// <summary> Error message. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; set; }
         /// <summary> Possible causes of error. </summary>
-        public string PossibleCauses { get; }
+        public string PossibleCauses { get; set; }
         /// <summary> Recommended action to resolve error. </summary>
-        public string RecommendedAction { get; }
+        public string RecommendedAction { get; set; }
         /// <summary> Error creation time (UTC). </summary>
-        public DateTimeOffset? CreationTimeUtc { get; }
+        public DateTimeOffset? CreationTimeUtc { get; set; }
         /// <summary> DRA error message. </summary>
-        public string RecoveryProviderErrorMessage { get; }
+        public string RecoveryProviderErrorMessage { get; set; }
         /// <summary> ID of the entity. </summary>
-        public string EntityId { get; }
+        public string EntityId { get; set; }
         /// <summary> The health error unique id. </summary>
-        public string ErrorId { get; }
+        public string ErrorId { get; set; }
         /// <summary> Value indicating whether the health error is customer resolvable. </summary>
-        public HealthErrorCustomerResolvability? CustomerResolvability { get; }
+        public HealthErrorCustomerResolvability? CustomerResolvability { get; set; }
     }
 }

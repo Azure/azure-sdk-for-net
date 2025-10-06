@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </summary>
+        [WirePath("publicNetworkAccess")]
         public HybridComputePublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> The Guid id of the private link scope. </summary>
+        [WirePath("privateLinkScopeId")]
         public string PrivateLinkScopeId { get; }
         /// <summary> The collection of associated Private Endpoint Connections. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<PrivateEndpointConnectionDataModel> PrivateEndpointConnections { get; }
     }
 }

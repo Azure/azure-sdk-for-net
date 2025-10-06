@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.IotHub.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.IotHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetSubscriptionQuotaRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Devices/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSubscriptionQuotaRequest(string subscriptionId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubUserSubscriptionQuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubUserSubscriptionQuotaListResult.DeserializeIotHubUserSubscriptionQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,7 +105,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubUserSubscriptionQuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubUserSubscriptionQuotaListResult.DeserializeIotHubUserSubscriptionQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

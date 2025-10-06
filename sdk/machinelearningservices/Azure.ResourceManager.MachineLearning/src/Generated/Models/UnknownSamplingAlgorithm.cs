@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownSamplingAlgorithm. </summary>
+    /// <summary> Unknown version of SamplingAlgorithm. </summary>
     internal partial class UnknownSamplingAlgorithm : SamplingAlgorithm
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSamplingAlgorithm"/>. </summary>

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Time grain . </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> Retention period for the current time grain. </summary>
+        [WirePath("retention")]
         public string Retention { get; }
     }
 }

@@ -53,5 +53,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new MetricAnomalyAlertSnoozeCondition(autoSnooze, snoozeScope, onlyForSuccessive);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricAnomalyAlertSnoozeCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetricAnomalyAlertSnoozeCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

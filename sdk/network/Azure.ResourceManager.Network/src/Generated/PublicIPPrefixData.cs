@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -68,26 +67,36 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the public ip address. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The public IP prefix SKU. </summary>
+        [WirePath("sku")]
         public PublicIPPrefixSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The public IP address version. </summary>
+        [WirePath("properties.publicIPAddressVersion")]
         public NetworkIPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The list of tags associated with the public IP prefix. </summary>
+        [WirePath("properties.ipTags")]
         public IList<IPTag> IPTags { get; }
         /// <summary> The Length of the Public IP Prefix. </summary>
+        [WirePath("properties.prefixLength")]
         public int? PrefixLength { get; set; }
         /// <summary> The allocated Prefix. </summary>
+        [WirePath("properties.ipPrefix")]
         public string IPPrefix { get; }
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
+        [WirePath("properties.publicIPAddresses")]
         public IReadOnlyList<SubResource> PublicIPAddresses { get; }
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         internal WritableSubResource LoadBalancerFrontendIPConfiguration { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.loadBalancerFrontendIpConfiguration.id")]
         public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
             get => LoadBalancerFrontendIPConfiguration?.Id;
@@ -96,6 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The customIpPrefix that this prefix is associated with. </summary>
         internal WritableSubResource CustomIPPrefix { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.customIPPrefix.id")]
         public ResourceIdentifier CustomIPPrefixId
         {
             get => CustomIPPrefix is null ? default : CustomIPPrefix.Id;
@@ -108,10 +118,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP prefix resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> NatGateway of Public IP Prefix. </summary>
+        [WirePath("properties.natGateway")]
         public NatGatewayData NatGateway { get; set; }
     }
 }

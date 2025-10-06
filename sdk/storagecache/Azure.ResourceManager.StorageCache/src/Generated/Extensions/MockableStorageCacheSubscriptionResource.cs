@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Mocking
@@ -78,7 +75,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -108,7 +105,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,11 +131,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkAmlFSSubnets</description>
+        /// <description>CheckAmlFSSubnets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,11 +166,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkAmlFSSubnets</description>
+        /// <description>CheckAmlFSSubnets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,11 +201,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// <description>GetRequiredAmlFSSubnetsSize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,11 +236,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// <description>GetRequiredAmlFSSubnetsSize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +275,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +301,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +327,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +353,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +379,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +406,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,7 +433,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +463,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

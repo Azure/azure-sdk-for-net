@@ -6,100 +6,59 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Kubernetes;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kubernetes.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableKubernetesSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _connectedClusterClientDiagnostics;
-        private ConnectedClusterRestOperations _connectedClusterRestClient;
+        private ConnectedCluster _connectedClusterRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKubernetesSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableKubernetesSubscriptionResource for mocking. </summary>
         protected MockableKubernetesSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKubernetesSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKubernetesSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKubernetesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ConnectedClusterClientDiagnostics => _connectedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kubernetes", ConnectedClusterResource.ResourceType.Namespace, Diagnostics);
-        private ConnectedClusterRestOperations ConnectedClusterRestClient => _connectedClusterRestClient ??= new ConnectedClusterRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConnectedClusterResource.ResourceType));
+        private ClientDiagnostics ConnectedClusterClientDiagnostics => _connectedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kubernetes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ConnectedCluster ConnectedClusterRestClient => _connectedClusterRestClient ??= new ConnectedCluster(ConnectedClusterClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
-        /// <summary>
-        /// API to enumerate registered connected K8s clusters under a Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedCluster_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "MockableKubernetesSubscriptionResource.GetConnectedClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionAsyncCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
         }
 
-        /// <summary>
-        /// API to enumerate registered connected K8s clusters under a Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedCluster_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterResource> GetConnectedClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "MockableKubernetesSubscriptionResource.GetConnectedClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
         }
     }
 }

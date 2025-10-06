@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +40,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate schemas.</param>
         public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator schemaValidator)
-            : this(client, null, schemaValidator)
+            : this(client, schemaValidator, groupName: null)
         {
         }
 
@@ -51,7 +53,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate schemas.</param>
         /// <param name="serializerOptions">The set of <see cref="SchemaRegistrySerializerOptions"/> to use when configuring the serializer.</param>
         public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator schemaValidator, SchemaRegistrySerializerOptions serializerOptions)
-            : this(client, null, schemaValidator, serializerOptions)
+            : this(client, schemaValidator, null, serializerOptions)
         {
         }
 
@@ -62,8 +64,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
         /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate schemas.</param>
-        public SchemaRegistrySerializer(SchemaRegistryClient client, string groupName, SchemaValidator schemaValidator)
-            : this(client, groupName, schemaValidator, default)
+        public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator schemaValidator, string groupName)
+            : this(client, schemaValidator, groupName, default)
         {
         }
 
@@ -75,7 +77,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
         /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate schemas.</param>
         /// <param name="serializerOptions">The set of <see cref="SchemaRegistrySerializerOptions"/> to use when configuring the serializer.</param>
-        public SchemaRegistrySerializer(SchemaRegistryClient client, string groupName, SchemaValidator schemaValidator, SchemaRegistrySerializerOptions serializerOptions)
+        public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator schemaValidator, string groupName, SchemaRegistrySerializerOptions serializerOptions)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName;
@@ -299,7 +301,11 @@ namespace Azure.Data.SchemaRegistry.Serialization
             }
 
             // Attempt to validate
-            _schemaValidator.Validate(value, dataType, schemaString);
+            var isValid = _schemaValidator.TryValidate(value, dataType, schemaString, out var validationErrors);
+            if (!isValid)
+            {
+                throw new AggregateException(validationErrors);
+            }
 
             try
             {
@@ -315,7 +321,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
             }
             catch (Exception ex) when (ex is not RequestFailedException)
             {
-                throw new Exception("An error occured while attempting to get the Id for the schema.", ex);
+                throw new Exception("An error occurred while attempting to get the Id for the schema.", ex);
             }
         }
 
@@ -516,7 +522,11 @@ namespace Azure.Data.SchemaRegistry.Serialization
             }
 
             // Attempt to validate
-            _schemaValidator.Validate(objectToReturn, dataType, schemaDefinition);
+            var isValid = _schemaValidator.TryValidate(objectToReturn, dataType, schemaDefinition, out var validationErrors);
+            if (!isValid)
+            {
+                throw new AggregateException(validationErrors);
+            }
 
             return objectToReturn;
         }

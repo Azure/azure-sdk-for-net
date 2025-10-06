@@ -1,0 +1,137 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\access\src\_Specs_.Azure.ClientGenerator.Core.Access.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\header\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\path\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Path.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\flatten-property\src\_Specs_.Azure.ClientGenerator.Core.FlattenProperty.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\src\_Specs_.Azure.ClientGenerator.Core.ClientLocation.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\hierarchy-building\src\_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.csproj" />
+<!--   not yet buildable <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />-->
+    <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\lro\standard\src\_Specs_.Azure.Core.Lro.Standard.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\basic\src\_Specs_.Azure.Core.Basic.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\page\src\_Specs_.Azure.Core.Page.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\scalar\src\_Specs_.Azure.Core.Scalar.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\traits\src\_Specs_.Azure.Core.Traits.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\encode\duration\src\_Specs_.Azure.Encode.Duration.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\example\basic\src\_Specs_.Azure.Example.Basic.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\model\src\_Specs_.Azure.Core.Model.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\payload\pageable\src\_Specs_.Azure.Payload.Pageable.csproj" />
+    <ProjectReference Include="..\Spector\http\type\array\src\Type.Array.csproj" />
+    <ProjectReference Include="..\Spector\http\type\enum\extensible\src\Type.Enum.Extensible.csproj" />
+    <ProjectReference Include="..\Spector\http\type\enum\fixed\src\Type.Enum.Fixed.csproj" />
+    <ProjectReference Include="..\Spector\http\authentication\api-key\src\Authentication.ApiKey.csproj" />
+    <ProjectReference Include="..\Spector\http\authentication\http\custom\src\Authentication.Http.Custom.csproj" />
+    <ProjectReference Include="..\Spector\http\authentication\oauth2\src\Authentication.OAuth2.csproj" />
+    <ProjectReference Include="..\Spector\http\authentication\union\src\Authentication.Union.csproj" />
+    <ProjectReference Include="..\Spector\http\client\namespace\src\Client.ClientNamespace.csproj" />
+    <ProjectReference Include="..\Spector\http\client\naming\src\Client.Naming.csproj" />
+    <ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
+    <ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
+    <ProjectReference Include="..\Spector\http\client\structure\client-operation-group\src\Client.Structure.Service.csproj" Aliases="ClientStructureClientOperationGroup" />
+    <ProjectReference Include="..\Spector\http\client\structure\default\src\Client.Structure.Service.Default.csproj" Aliases="ClientStructureDefault" />
+    <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />
+    <ProjectReference Include="..\Spector\http\client\structure\renamed-operation\src\Client.Structure.Service.Renamed.Operation.csproj" Aliases="ClientStructureRenamedOperation" />
+    <ProjectReference Include="..\Spector\http\client\structure\two-operation-group\src\Client.Structure.Service.TwoOperationGroup.csproj" Aliases="ClientStructureTwoOperationGroup" />
+    <ProjectReference Include="..\Spector\http\encode\bytes\src\Encode.Bytes.csproj" />
+    <ProjectReference Include="..\Spector\http\encode\datetime\src\Encode.Datetime.csproj" />
+    <ProjectReference Include="..\Spector\http\encode\duration\src\Encode.Duration.csproj" />
+    <ProjectReference Include="..\Spector\http\encode\numeric\src\Encode.Numeric.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\basic\src\Parameters.Basic.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\body-optionality\src\Parameters.BodyOptionality.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\collection-format\src\Parameters.CollectionFormat.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\spread\src\Parameters.Spread.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\path\src\Parameters.Path.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\content-negotiation\src\Payload.ContentNegotiation.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\json-merge-patch\src\Payload.JsonMergePatch.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\media-type\src\Payload.MediaType.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\multipart\src\Payload.MultiPart.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\pageable\src\Payload.Pageable.csproj" />
+    <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v1\src\Resiliency.SrvDriven.V1.csproj" Aliases="SrvDrivenV1" />
+    <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v2\src\Resiliency.SrvDriven.V2.csproj" Aliases="SrvDrivenV2" />
+    <ProjectReference Include="..\Spector\http\routes\src\Routes.csproj" />
+    <ProjectReference Include="..\Spector\http\serialization\encoded-name\json\src\Serialization.EncodedName.Json.csproj" />
+    <ProjectReference Include="..\Spector\http\server\endpoint\not-defined\src\Server.Endpoint.NotDefined.csproj" />
+    <ProjectReference Include="..\Spector\http\server\path\multiple\src\Server.Path.Multiple.csproj" />
+    <ProjectReference Include="..\Spector\http\server\path\single\src\Server.Path.Single.csproj" />
+    <ProjectReference Include="..\Spector\http\server\versions\not-versioned\src\Server.Versions.NotVersioned.csproj" />
+    <ProjectReference Include="..\Spector\http\server\versions\versioned\src\Server.Versions.Versioned.csproj" />
+    <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
+    <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
+    <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />
+    <ProjectReference Include="..\Spector\http\type\dictionary\src\Type.Dictionary.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\empty\src\Type.Model.Empty.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\inheritance\enum-discriminator\src\Type.Model.Inheritance.EnumDiscriminator.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\inheritance\nested-discriminator\src\Type.Model.Inheritance.NestedDiscriminator.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\inheritance\not-discriminated\src\Type.Model.Inheritance.NotDiscriminated.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\inheritance\recursive\src\Type.Model.Inheritance.Recursive.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\inheritance\single-discriminator\src\Type.Model.Inheritance.SingleDiscriminator.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\usage\src\Type.Model.Usage.csproj" />
+    <ProjectReference Include="..\Spector\http\type\model\visibility\src\Type.Model.Visibility.csproj" />
+    <ProjectReference Include="..\Spector\http\type\property\additional-properties\src\Type.Property.AdditionalProperties.csproj" />
+    <ProjectReference Include="..\Spector\http\type\property\nullable\src\Type.Property.Nullable.csproj" />
+    <ProjectReference Include="..\Spector\http\type\property\optionality\src\Type.Property.Optional.csproj" />
+    <ProjectReference Include="..\Spector\http\type\property\value-types\src\Type.Property.ValueTypes.csproj" />
+    <ProjectReference Include="..\Spector\http\type\scalar\src\Type.Scalar.csproj" />
+    <ProjectReference Include="..\Spector\http\type\union\src\Type.Union.csproj" />
+    <ProjectReference Include="..\Spector\http\versioning\added\v1\src\Versioning.Added.V1.csproj" Aliases="VersioningAddedV1" />
+    <ProjectReference Include="..\Spector\http\versioning\added\v2\src\Versioning.Added.V2.csproj" Aliases="VersioningAddedV2"/>
+    <ProjectReference Include="..\Spector\http\versioning\madeOptional\v1\src\Versioning.MadeOptional.V1.csproj" Aliases="MadeOptionalV1" />
+    <ProjectReference Include="..\Spector\http\versioning\madeOptional\v2\src\Versioning.MadeOptional.V2.csproj" Aliases="MadeOptionalV2" />
+    <ProjectReference Include="..\Spector\http\versioning\removed\v1\src\Versioning.Removed.V1.csproj" Aliases="RemovedV1" />
+    <ProjectReference Include="..\Spector\http\versioning\removed\v2\src\Versioning.Removed.V2.csproj" Aliases="RemovedV2" />
+    <ProjectReference Include="..\Spector\http\versioning\removed\v2Preview\src\Versioning.Removed.V2Preview.csproj" Aliases="RemovedV2Preview" />
+    <ProjectReference Include="..\Spector\http\versioning\renamedFrom\v1\src\Versioning.RenamedFrom.V1.csproj" Aliases="RenamedFromV1" />
+    <ProjectReference Include="..\Spector\http\versioning\renamedFrom\v2\src\Versioning.RenamedFrom.V2.csproj" Aliases="RenamedFromV2" />
+    <ProjectReference Include="..\Spector\http\versioning\returnTypeChangedFrom\v1\src\Versioning.ReturnTypeChangedFrom.V1.csproj" Aliases="ReturnTypeChangedFromV1" />
+    <ProjectReference Include="..\Spector\http\versioning\returnTypeChangedFrom\v2\src\Versioning.ReturnTypeChangedFrom.V2.csproj" Aliases="ReturnTypeChangedFromV2" />
+    <ProjectReference Include="..\Spector\http\versioning\typeChangedFrom\v1\src\Versioning.TypeChangedFrom.V1.csproj" Aliases="TypeChangedFromV1" />
+    <ProjectReference Include="..\Spector\http\versioning\typeChangedFrom\v2\src\Versioning.TypeChangedFrom.V2.csproj" Aliases="TypeChangedFromV2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="TestProjects.Spector.Tests.BuildProperties">
+      <_Parameter1>$(RepoRoot)</_Parameter1>
+      <_Parameter2>$(RepoRoot)\eng\packages\http-client-csharp\generator\artifacts</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <!-- Include shared code from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core.TestFramework\src\ProcessTracker.cs" LinkBase="Shared/TestFramework" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TypeFormatters.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Http\**\TestData\**\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

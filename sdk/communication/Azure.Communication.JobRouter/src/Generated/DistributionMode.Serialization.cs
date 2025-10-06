@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -16,17 +15,25 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownDistributionMode))]
     public partial class DistributionMode : IUtf8JsonSerializable, IJsonModel<DistributionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DistributionMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributionMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributionMode)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
@@ -46,14 +53,13 @@ namespace Azure.Communication.JobRouter
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DistributionMode IJsonModel<DistributionMode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -61,7 +67,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<DistributionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributionMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributionMode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +76,7 @@ namespace Azure.Communication.JobRouter
 
         internal static DistributionMode DeserializeDistributionMode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,9 +101,9 @@ namespace Azure.Communication.JobRouter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DistributionMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributionMode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,11 +115,11 @@ namespace Azure.Communication.JobRouter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDistributionMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DistributionMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributionMode)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -123,15 +129,15 @@ namespace Azure.Communication.JobRouter
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DistributionMode FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDistributionMode(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

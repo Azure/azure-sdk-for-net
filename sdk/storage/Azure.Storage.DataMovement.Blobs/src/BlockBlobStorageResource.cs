@@ -28,33 +28,29 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
 
-        protected override string ResourceId => "BlockBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.BlockBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the storage resource.
-        /// </summary>
-        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
+        protected override TransferOrder TransferType => TransferOrder.Unordered;
 
-        /// <summary>
-        /// Store Max Initial Size that a Put Blob can get to.
-        /// </summary>
-        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxUploadBytes;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
+        protected override int MaxSupportedChunkCount => Constants.Blob.Block.MaxBlocks;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        /// <summary>
+        /// For mocking.
+        /// </summary>
+        internal BlockBlobStorageResource()
+        {
+            _blocks = new ConcurrentDictionary<long, string>();
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -157,7 +153,11 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Default to Upload
                 await BlobClient.UploadAsync(
                     stream,
-                    _options.ToBlobUploadOptions(overwrite, _maxInitialSize),
+                    DataMovementBlobsExtensions.GetBlobUploadOptions(
+                        _options,
+                        overwrite,
+                        MaxSupportedSingleTransferSize,  // We don't want any internal partioning
+                        options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -204,7 +204,11 @@ namespace Azure.Storage.DataMovement.Blobs
             // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
                 sourceResource.Uri,
-                _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
+                DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceAuthentication,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -236,7 +240,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
+            string id = options?.BlockId ?? Storage.Shared.StorageExtensions.GenerateBlockId(range.Offset);
             if (!_blocks.TryAdd(range.Offset, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
@@ -299,6 +303,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeTransferOptions">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -306,15 +313,20 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task which Commits the list of ids</returns>
         protected override async Task CompleteTransferAsync(
             bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            // Call commit block list if the blob was uploaded in chunks.
             if (_blocks != null && !_blocks.IsEmpty)
             {
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await BlobClient.CommitBlockListAsync(
                     blockIds,
-                    _options.ToCommitBlockOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCommitBlockOptions(
+                        _options,
+                        overwrite,
+                        completeTransferOptions?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
@@ -336,19 +348,50 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointData(BlobType.Block);
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new BlobDestinationCheckpointData(
-                BlobType.Block,
-                _options?.HttpHeaders,
-                _options?.AccessTier,
-                _options?.Metadata,
-                _options?.Tags);
+            return new BlobDestinationCheckpointDetails(
+                isBlobTypeSet: true,
+                blobType: BlobType.Block,
+                blobOptions: _options);
+        }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        /// <summary>
+        /// Creates this resource an empty directory stub. This is only intended to be used
+        /// for HNS accounts as empty directories do not exist on FNS accounts.
+        ///
+        /// Creates an empty Block Blob with the hdi_isfolder metadata. All other properties
+        /// of the blob are left default.
+        /// </summary>
+        internal async Task CreateEmptyDirectoryStubAsync(CancellationToken cancellationToken = default)
+        {
+            Dictionary<string, string> folderMetadata = new() {
+                { DataMovementBlobConstants.FolderMetadataKey, "true" }
+            };
+
+            BlobUploadOptions options = new()
+            {
+                Metadata = folderMetadata
+            };
+            await BlobClient.UploadAsync(Stream.Null, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

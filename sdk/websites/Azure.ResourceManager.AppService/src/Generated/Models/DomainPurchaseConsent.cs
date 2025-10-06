@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </summary>
+        [WirePath("agreementKeys")]
         public IList<string> AgreementKeys { get; }
         /// <summary> Client IP address. </summary>
+        [WirePath("agreedBy")]
         public string AgreedBy { get; set; }
         /// <summary> Timestamp when the agreements were accepted. </summary>
+        [WirePath("agreedAt")]
         public DateTimeOffset? AgreedOn { get; set; }
     }
 }

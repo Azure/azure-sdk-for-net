@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
+
 namespace Azure.Data.Tables
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace Azure.Data.Tables
         /// </summary>
         UpdateReplace,
         /// <summary>
-        /// Delete the entity. This is equivalent to <see cref="TableClient.DeleteEntity"/>
+        /// Delete the entity. This is equivalent to <see cref="TableClient.DeleteEntity(string, string, ETag, CancellationToken)"/>
         /// </summary>
         Delete,
         /// <summary>

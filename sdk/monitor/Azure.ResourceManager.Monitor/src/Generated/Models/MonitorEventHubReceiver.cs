@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -72,8 +71,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
         /// <param name="tenantId"> The tenant Id for the subscription containing this event hub. </param>
         /// <param name="subscriptionId"> The Id for the subscription containing this event hub. </param>
+        /// <param name="managedIdentity"> The principal id of the managed identity. The value can be "None", "SystemAssigned". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorEventHubReceiver(string name, string eventHubNameSpace, string eventHubName, bool? useCommonAlertSchema, Guid? tenantId, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorEventHubReceiver(string name, string eventHubNameSpace, string eventHubName, bool? useCommonAlertSchema, Guid? tenantId, string subscriptionId, string managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EventHubNameSpace = eventHubNameSpace;
@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
             UseCommonAlertSchema = useCommonAlertSchema;
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
+            ManagedIdentity = managedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,5 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public Guid? TenantId { get; set; }
         /// <summary> The Id for the subscription containing this event hub. </summary>
         public string SubscriptionId { get; set; }
+        /// <summary> The principal id of the managed identity. The value can be "None", "SystemAssigned". </summary>
+        public string ManagedIdentity { get; set; }
     }
 }

@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Gets or sets the properties. </summary>
         internal HciClusterRawCertificate Properties { get; set; }
         /// <summary> Gets the certificates. </summary>
+        [WirePath("properties.certificates")]
         public IList<string> Certificates
         {
             get

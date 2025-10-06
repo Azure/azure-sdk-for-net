@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>
+        [WirePath("fqdn")]
         public string Fqdn { get; set; }
         /// <summary> A list of private ip addresses of the private endpoint. </summary>
+        [WirePath("ipAddresses")]
         public IList<string> IPAddresses { get; }
     }
 }

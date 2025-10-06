@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -44,16 +42,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the private link service connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource id of private link service. </summary>
+        [WirePath("properties.privateLinkServiceId")]
         public ResourceIdentifier PrivateLinkServiceId { get; set; }
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </summary>
+        [WirePath("properties.groupIds")]
         public IList<string> GroupIds { get; }
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>
+        [WirePath("properties.requestMessage")]
         public string RequestMessage { get; set; }
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
     }
 }

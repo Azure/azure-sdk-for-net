@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HealthcareApis.Models;
@@ -33,8 +32,25 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01";
+            _apiVersion = apiVersion ?? "2024-03-31";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByIotConnectorRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HealthcareApis/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/iotconnectors/", false);
+            uri.AppendPath(iotConnectorName, true);
+            uri.AppendPath("/fhirdestinations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByIotConnectorRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName)
@@ -82,7 +98,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotFhirDestinationCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,13 +129,21 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotFhirDestinationCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByIotConnectorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByIotConnectorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName)
@@ -160,7 +184,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotFhirDestinationCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +217,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotFhirDestinationCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotFhirDestinationCollection.DeserializeIotFhirDestinationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

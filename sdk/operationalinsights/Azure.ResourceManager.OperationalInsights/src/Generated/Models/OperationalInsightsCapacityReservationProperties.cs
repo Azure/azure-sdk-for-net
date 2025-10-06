@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsCapacityReservationProperties"/>. </summary>
         /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
-        /// <param name="minCapacity"> Minimum CapacityReservation value in GB. </param>
+        /// <param name="minCapacity"> Minimum CapacityReservation value in Gigabytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn, long? minCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The last time Sku was updated. </summary>
+        [WirePath("lastSkuUpdate")]
         public DateTimeOffset? LastSkuUpdatedOn { get; }
-        /// <summary> Minimum CapacityReservation value in GB. </summary>
+        /// <summary> Minimum CapacityReservation value in Gigabytes. </summary>
+        [WirePath("minCapacity")]
         public long? MinCapacity { get; }
     }
 }

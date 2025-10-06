@@ -3,9 +3,9 @@
 This sample demonstrates how to send requests to the Azure App Configuration service asynchronously. It also shows how to create and retrieve configuration settings with labels, and provides an example scenario where labels are used to group configuration settings for "beta" and "production" application instances.  To get started, you'll need a connection string to Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
 
  ## Create a ConfigurationClient
- 
+
 To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
- 
+
 For the sample below, you can set `connectionString` in an environment variable, a configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
 
 ```C# Snippet:AzConfigSample2_CreateConfigurationClient
@@ -51,15 +51,29 @@ await client.SetConfigurationSettingAsync(instancesToUpdate);
 
 ## Search by label filter
 
-To gather all the information available for the "production" environment, call `GetConfigurationSettingsAsync` with a setting selector that filters for settings with the "production" label.  This will retrieve all the Configuration Settings in the store that satisfy that condition. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-key-value#filtering) for more information about filtering.
+To gather all the information available for the "production" environment, call `GetConfigurationSettingsAsync` with a setting selector that filters for settings with the "production" label.  This will retrieve all the Configuration Settings in the store that satisfy that condition. See App Configuration [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api-key-value#filtering) for more information about filtering.
 
 ```C# Snippet:AzConfigSample2_GetConfigurationSettingsAsync
 var selector = new SettingSelector { LabelFilter = "production" };
 
-Debug.WriteLine("Settings for Production environment:");
+Console.WriteLine("Settings for Production environment:");
 await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAsync(selector))
 {
     Console.WriteLine(setting);
+}
+```
+
+# Retrieve labels
+
+To gather all the labels whose names start with the "production" environment, call `GetLabelsAsync` with a label selector that filters for labels that start with the "production" label name.  This will retrieve all the labels in the store that satisfy that condition. See App Configuration [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api-labels#filtering) for more information about filtering.
+
+```C# Snippet:AzConfigSample2_GetLabelsAsync
+var labelsSelector = new SettingLabelSelector { NameFilter = "production*" };
+
+Console.WriteLine("Labels for Production environment:");
+await foreach (SettingLabel label in client.GetLabelsAsync(labelsSelector))
+{
+    Console.WriteLine(label.Name);
 }
 ```
 

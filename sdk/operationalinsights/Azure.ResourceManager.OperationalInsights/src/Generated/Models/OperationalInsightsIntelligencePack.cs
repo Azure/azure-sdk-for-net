@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the intelligence pack. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The enabled boolean for the intelligence pack. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; }
         /// <summary> The display name of the intelligence pack. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
     }
 }

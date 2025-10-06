@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The network traffic is allowed or denied. </summary>
+        [WirePath("securityRuleAccessResult")]
         public SecurityRuleAccess? SecurityRuleAccessResult { get; }
         /// <summary> List of results network security groups diagnostic. </summary>
+        [WirePath("evaluatedNetworkSecurityGroups")]
         public IReadOnlyList<EvaluatedNetworkSecurityGroup> EvaluatedNetworkSecurityGroups { get; }
     }
 }

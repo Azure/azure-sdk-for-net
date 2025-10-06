@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Type of the DNS record. Example: TXT. </summary>
+        [WirePath("type")]
         public string DnsRecordType { get; }
         /// <summary> Name of the DNS record. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Value of the DNS record. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Represents an expiry time in seconds to represent how long this entry can be cached by the resolver, default = 3600sec. </summary>
+        [WirePath("ttl")]
         public int? TimeToLiveInSeconds { get; }
     }
 }

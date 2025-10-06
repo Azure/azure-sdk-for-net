@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether the pod identity addon is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </summary>
+        [WirePath("allowNetworkPluginKubenet")]
         public bool? AllowNetworkPluginKubenet { get; set; }
         /// <summary> The pod identities to use in the cluster. </summary>
+        [WirePath("userAssignedIdentities")]
         public IList<ManagedClusterPodIdentity> UserAssignedIdentities { get; }
         /// <summary> The pod identity exceptions to allow. </summary>
+        [WirePath("userAssignedIdentityExceptions")]
         public IList<ManagedClusterPodIdentityException> UserAssignedIdentityExceptions { get; }
     }
 }

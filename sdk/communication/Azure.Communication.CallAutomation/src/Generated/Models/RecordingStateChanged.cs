@@ -18,29 +18,30 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
-        /// <param name="recordingId"> The call recording id. </param>
-        /// <param name="state"></param>
-        /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="recordingType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal RecordingStateChanged(string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingType? recordingType, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <param name="state"></param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        /// <param name="recordingKind"></param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingKind? recordingKind, ResultInformation resultInformation)
         {
-            RecordingId = recordingId;
-            State = state;
-            StartDateTime = startDateTime;
-            RecordingType = recordingType;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            RecordingId = recordingId;
+            State = state;
+            StartDateTime = startDateTime;
+            RecordingKind = recordingKind;
+            ResultInformation = resultInformation;
         }
-
         /// <summary> The call recording id. </summary>
         public string RecordingId { get; }
         /// <summary> The time of the recording started. </summary>
         public DateTimeOffset? StartDateTime { get; }
-        /// <summary> Gets the recording type. </summary>
-        public RecordingType? RecordingType { get; }
+        /// <summary> Gets the recording kind. </summary>
+        public RecordingKind? RecordingKind { get; }
     }
 }

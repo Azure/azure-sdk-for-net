@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The MetricsResponseSeriesItem. </summary>
+    /// <summary>
+    /// The MetricsResponseSeriesItem.
+    /// Serialized Name: MetricsResponseSeriesItem
+    /// </summary>
     public partial class MetricsResponseSeriesItem
     {
         /// <summary>
@@ -54,10 +56,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesItem"/>. </summary>
-        /// <param name="metric"></param>
-        /// <param name="unit"></param>
-        /// <param name="groups"></param>
-        /// <param name="data"></param>
+        /// <param name="metric"> Serialized Name: MetricsResponseSeriesItem.metric. </param>
+        /// <param name="unit"> Serialized Name: MetricsResponseSeriesItem.unit. </param>
+        /// <param name="groups"> Serialized Name: MetricsResponseSeriesItem.groups. </param>
+        /// <param name="data"> Serialized Name: MetricsResponseSeriesItem.data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricsResponseSeriesItem(string metric, MetricsResponseSeriesItemUnit? unit, IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,13 +70,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the metric. </summary>
+        /// <summary> Serialized Name: MetricsResponseSeriesItem.metric. </summary>
         public string Metric { get; }
-        /// <summary> Gets the unit. </summary>
+        /// <summary> Serialized Name: MetricsResponseSeriesItem.unit. </summary>
         public MetricsResponseSeriesItemUnit? Unit { get; }
-        /// <summary> Gets the groups. </summary>
+        /// <summary> Serialized Name: MetricsResponseSeriesItem.groups. </summary>
         public IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> Groups { get; }
-        /// <summary> Gets the data. </summary>
+        /// <summary> Serialized Name: MetricsResponseSeriesItem.data. </summary>
         public IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> Data { get; }
     }
 }

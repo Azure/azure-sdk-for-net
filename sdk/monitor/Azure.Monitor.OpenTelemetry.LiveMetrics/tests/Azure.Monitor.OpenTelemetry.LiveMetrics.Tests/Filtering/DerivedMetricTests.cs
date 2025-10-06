@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
     using Xunit;
-
     using RequestTelemetry = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Request;
+    using TelemetryType = OpenTelemetry.LiveMetrics.Models.TelemetryType;
 
     public class DerivedMetricTests
     {
@@ -17,14 +18,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void DerivedMetricFiltersCorrectly()
         {
             // ARRANGE
-            var filterInfo1 = new FilterInfo("Name", FilterInfoPredicate.Contains, "dog");
-            var filterInfo2 = new FilterInfo("Name", FilterInfoPredicate.Contains, "cat");
+            var filterInfo1 = new FilterInfo("Name", PredicateType.Contains, "dog");
+            var filterInfo2 = new FilterInfo("Name", PredicateType.Contains, "cat");
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new[] { new FilterConjunctionGroupInfo(new List<FilterInfo> { filterInfo1, filterInfo2 }) },
                 projection: "Name",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies both filters" };
@@ -54,10 +56,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Name",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies both filters" };
@@ -79,10 +82,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: null,
                 projection: "Name",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies both filters" };
@@ -102,13 +106,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void DerivedMetricPerformsLogicalConnectionsBetweenFiltersCorrectly()
         {
             // ARRANGE
-            var filterInfoDog = new FilterInfo("Name", FilterInfoPredicate.Contains, "dog");
-            var filterInfoCat = new FilterInfo("Name", FilterInfoPredicate.Contains, "cat");
-            var filterInfoApple = new FilterInfo("Name", FilterInfoPredicate.Contains, "apple");
-            var filterInfoOrange = new FilterInfo("Name", FilterInfoPredicate.Contains, "orange");
+            var filterInfoDog = new FilterInfo("Name", PredicateType.Contains, "dog");
+            var filterInfoCat = new FilterInfo("Name", PredicateType.Contains, "cat");
+            var filterInfoApple = new FilterInfo("Name", PredicateType.Contains, "apple");
+            var filterInfoOrange = new FilterInfo("Name", PredicateType.Contains, "orange");
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups:
                     new[]
                     {
@@ -116,7 +120,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
                         new FilterConjunctionGroupInfo(new[] { filterInfoApple, filterInfoOrange })
                     },
                 projection: "Name",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass1 = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies the first OR." };
@@ -158,10 +163,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Id",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock() { Name = "1.23", Id = "5.67" };
@@ -172,7 +178,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(DerivedMetricInfoAggregation.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(5.67d, projection);
         }
@@ -183,10 +189,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "CustomDimensions.Dimension1",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock(new List<KeyValuePairString>() { new("Dimension.1", "1.5") });
@@ -197,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(DerivedMetricInfoAggregation.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(1.5d, projection);
         }
@@ -208,10 +215,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "CustomMetrics.Metric1",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock() { Metrics = { ["Metric1"] = 1.75d } };
@@ -222,7 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(DerivedMetricInfoAggregation.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(1.75d, projection);
         }
@@ -233,10 +241,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "COUNT()",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new RequestTelemetry();
@@ -247,7 +256,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(DerivedMetricInfoAggregation.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(1d, projection);
         }
@@ -258,10 +267,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Duration",
-                aggregation: DerivedMetricInfoAggregation.Avg
+                aggregation: AggregationType.Avg,
+                backEndAggregation: AggregationType.Avg
             );
 
             var telemetry = new DocumentMock() { Duration = TimeSpan.FromMilliseconds(120) };
@@ -272,7 +282,34 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(DerivedMetricInfoAggregation.Avg, metric.AggregationType);
+            Assert.Equal(AggregationType.Avg, metric.AggregationType);
+            Assert.Empty(errors);
+            Assert.Equal(120, projection);
+        }
+
+        [Fact]
+        public void DerivedMetricProjectsCorrectlyWhenDurationIsString()
+        {
+            // ARRANGE
+            var metricInfo = new DerivedMetricInfo(
+                id: "Metric1",
+                telemetryType: TelemetryType.Request.ToString(),
+                filterGroups: new FilterConjunctionGroupInfo[0],
+                projection: "Duration",
+                aggregation: AggregationType.Avg,
+                backEndAggregation: AggregationType.Avg
+            );
+
+            var durationString = TimeSpan.FromMilliseconds(120).ToString();
+            var telemetry = new DocumentMockWithStringDuration(durationString);
+
+            // ACT
+            CollectionConfigurationError[] errors;
+            var metric = new DerivedMetric<DocumentMockWithStringDuration>(metricInfo, out errors);
+            double projection = metric.Project(telemetry);
+
+            // ASSERT
+            Assert.Equal(AggregationType.Avg, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(120, projection);
         }
@@ -281,14 +318,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void DerivedMetricReportsErrorsForInvalidFilters()
         {
             // ARRANGE
-            var filterInfo1 = new FilterInfo("Name", FilterInfoPredicate.Equal, "Sky");
-            var filterInfo2 = new FilterInfo("NonExistentField", FilterInfoPredicate.Equal, "Comparand");
+            var filterInfo1 = new FilterInfo("Name", PredicateType.Equal, "Sky");
+            var filterInfo2 = new FilterInfo("NonExistentField", PredicateType.Equal, "Comparand");
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new[] { new FilterConjunctionGroupInfo(new[] { filterInfo1, filterInfo2 }) },
                 projection: "Name",
-                aggregation: DerivedMetricInfoAggregation.Avg
+                aggregation: AggregationType.Avg,
+                backEndAggregation: AggregationType.Avg
             );
 
             // ACT
@@ -321,10 +359,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "NonExistentFieldName",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             // ACT, ASSERT
@@ -338,10 +377,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Id",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock() { Id = "NotDoubleValue" };
@@ -370,10 +410,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "*",
-                aggregation: DerivedMetricInfoAggregation.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             // ACT, ASSERT

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -48,9 +47,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
+        /// <param name="azureApp"> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> or <paramref name="azureApp"/> is null. </exception>
-        public ConnectToTargetSqlMISyncTaskInput(MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp)
+        public ConnectToTargetSqlMISyncTaskInput(DataMigrationMISqlConnectionInfo targetConnectionInfo, DataMigrationAadApp azureApp)
         {
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
             Argument.AssertNotNull(azureApp, nameof(azureApp));
@@ -61,9 +60,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
+        /// <param name="azureApp"> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetSqlMISyncTaskInput(MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetSqlMISyncTaskInput(DataMigrationMISqlConnectionInfo targetConnectionInfo, DataMigrationAadApp azureApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetConnectionInfo = targetConnectionInfo;
             AzureApp = azureApp;
@@ -76,8 +75,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for Azure SQL Database Managed Instance. </summary>
-        public MISqlConnectionInfo TargetConnectionInfo { get; set; }
-        /// <summary> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </summary>
-        public AzureActiveDirectoryApp AzureApp { get; set; }
+        public DataMigrationMISqlConnectionInfo TargetConnectionInfo { get; set; }
+        /// <summary> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </summary>
+        public DataMigrationAadApp AzureApp { get; set; }
     }
 }

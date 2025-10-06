@@ -3,7 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);0618</NoWarn>
   </PropertyGroup>
+
+  <!-- TEMP until Azure.Core releases with updated dependencies, since these dependencies impact test behavior -->
+  <ItemGroup>
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+  <!-- ======================================================================================================= -->
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
@@ -15,11 +22,14 @@
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
-
+<!-- Remove before shipping GA -->
+  <PropertyGroup>
+        <DefineConstants>PREVIEW_FEATURE_FLAG</DefineConstants>
+  </PropertyGroup>
+<!-- End remove before shipping GA -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
-    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
     <ProjectReference Include="..\integration\Integration.Identity.Container\Integration.Identity.Container.csproj" />
     <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
     <ContentWithTargetPath Update="Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />

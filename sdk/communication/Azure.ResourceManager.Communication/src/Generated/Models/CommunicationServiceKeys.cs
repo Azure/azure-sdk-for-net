@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> The primary access key. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
         /// <summary> The secondary access key. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
         /// <summary> CommunicationService connection string constructed via the primaryKey. </summary>
+        [WirePath("primaryConnectionString")]
         public string PrimaryConnectionString { get; }
         /// <summary> CommunicationService connection string constructed via the secondaryKey. </summary>
+        [WirePath("secondaryConnectionString")]
         public string SecondaryConnectionString { get; }
     }
 }

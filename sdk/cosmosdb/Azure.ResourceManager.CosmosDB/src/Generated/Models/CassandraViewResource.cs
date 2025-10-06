@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra view. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> View Definition of the Cosmos DB Cassandra view. </summary>
+        [WirePath("viewDefinition")]
         public string ViewDefinition { get; set; }
     }
 }

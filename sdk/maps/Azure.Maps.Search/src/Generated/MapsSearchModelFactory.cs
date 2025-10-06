@@ -7,147 +7,214 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.GeoJson;
-using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class MapsSearchModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.PolygonResult"/>. </summary>
-        /// <param name="polygons"> Results array. </param>
-        /// <returns> A new <see cref="Models.PolygonResult"/> instance for mocking. </returns>
-        public static PolygonResult PolygonResult(IEnumerable<PolygonObject> polygons = null)
+        /// <summary> Initializes a new instance of <see cref="Models.GeocodingResponse"/>. </summary>
+        /// <param name="type"> The type of a FeatureCollection object must be FeatureCollection. </param>
+        /// <param name="features"></param>
+        /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
+        /// <returns> A new <see cref="Models.GeocodingResponse"/> instance for mocking. </returns>
+        public static GeocodingResponse GeocodingResponse(FeatureCollectionEnum? type = null, IEnumerable<FeaturesItem> features = null, string nextLink = null)
         {
-            polygons ??= new List<PolygonObject>();
+            features ??= new List<FeaturesItem>();
 
-            return new PolygonResult(polygons?.ToList());
+            return new GeocodingResponse(type, features?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolygonObject"/>. </summary>
-        /// <param name="providerId"> ID of the returned entity. </param>
-        /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if "error" is not present. </param>
-        /// <returns> A new <see cref="Models.PolygonObject"/> instance for mocking. </returns>
-        public static PolygonObject PolygonObject(string providerId = null, GeoObject geometryData = null)
-        {
-            return new PolygonObject(providerId, geometryData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategorySet"/>. </summary>
-        /// <param name="id"> Category ID. </param>
-        /// <returns> A new <see cref="Models.PointOfInterestCategorySet"/> instance for mocking. </returns>
-        public static PointOfInterestCategorySet PointOfInterestCategorySet(int? id = null)
-        {
-            return new PointOfInterestCategorySet(id);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestClassification"/>. </summary>
-        /// <param name="code"> Code property. </param>
-        /// <param name="names"> Names array. </param>
-        /// <returns> A new <see cref="Models.PointOfInterestClassification"/> instance for mocking. </returns>
-        public static PointOfInterestClassification PointOfInterestClassification(string code = null, IEnumerable<ClassificationName> names = null)
-        {
-            names ??= new List<ClassificationName>();
-
-            return new PointOfInterestClassification(code, names?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClassificationName"/>. </summary>
-        /// <param name="nameLocale"> Name Locale property. </param>
-        /// <param name="name"> Name property. </param>
-        /// <returns> A new <see cref="Models.ClassificationName"/> instance for mocking. </returns>
-        public static ClassificationName ClassificationName(string nameLocale = null, string name = null)
-        {
-            return new ClassificationName(nameLocale, name);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BrandName"/>. </summary>
-        /// <param name="name"> Name of the brand. </param>
-        /// <returns> A new <see cref="Models.BrandName"/> instance for mocking. </returns>
-        public static BrandName BrandName(string name = null)
-        {
-            return new BrandName(name);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperatingHours"/>. </summary>
-        /// <param name="mode"> Value used in the request: none or "nextSevenDays". </param>
-        /// <param name="timeRanges"> List of time ranges for the next 7 days. </param>
-        /// <returns> A new <see cref="Models.OperatingHours"/> instance for mocking. </returns>
-        public static OperatingHours OperatingHours(string mode = null, IEnumerable<OperatingHoursTimeRange> timeRanges = null)
-        {
-            timeRanges ??= new List<OperatingHoursTimeRange>();
-
-            return new OperatingHours(mode, timeRanges?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MapsDataSource"/>. </summary>
-        /// <param name="geometry"> Information about the geometric shape of the result. Only present if type == Geography. </param>
-        /// <returns> A new <see cref="Models.MapsDataSource"/> instance for mocking. </returns>
-        public static MapsDataSource MapsDataSource(GeometryIdentifier geometry = null)
-        {
-            return new MapsDataSource(geometry);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeometryIdentifier"/>. </summary>
-        /// <param name="id"> Pass this as geometryId to the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API to fetch geometry information for this result. </param>
-        /// <returns> A new <see cref="Models.GeometryIdentifier"/> instance for mocking. </returns>
-        public static GeometryIdentifier GeometryIdentifier(string id = null)
-        {
-            return new GeometryIdentifier(id);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategoryTreeResult"/>. </summary>
-        /// <param name="categories"> Categories array. </param>
-        /// <returns> A new <see cref="Models.PointOfInterestCategoryTreeResult"/> instance for mocking. </returns>
-        public static PointOfInterestCategoryTreeResult PointOfInterestCategoryTreeResult(IEnumerable<PointOfInterestCategory> categories = null)
-        {
-            categories ??= new List<PointOfInterestCategory>();
-
-            return new PointOfInterestCategoryTreeResult(categories?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategory"/>. </summary>
-        /// <param name="id"> Unique ID for the category. ID can be used to restrict search results to specific categories through other Search Service APIs, like [Get Search POI](https://docs.microsoft.com/rest/api/maps/search/getsearchpoi). </param>
-        /// <param name="name"> Name of the category. </param>
-        /// <param name="childIds"> Array of child category ids. </param>
-        /// <param name="synonyms"> Array of alternative names of the category. </param>
-        /// <returns> A new <see cref="Models.PointOfInterestCategory"/> instance for mocking. </returns>
-        public static PointOfInterestCategory PointOfInterestCategory(int? id = null, string name = null, IEnumerable<int> childIds = null, IEnumerable<string> synonyms = null)
-        {
-            childIds ??= new List<int>();
-            synonyms ??= new List<string>();
-
-            return new PointOfInterestCategory(id, name, childIds?.ToList(), synonyms?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReverseSearchAddressItem"/>. </summary>
-        /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
-        /// <param name="roadUse"></param>
-        /// <param name="matchType">
-        /// Information on the type of match.
-        ///
+        /// <summary> Initializes a new instance of <see cref="Models.FeaturesItemProperties"/>. </summary>
+        /// <param name="type">
         /// One of:
-        ///   * AddressPoint
-        ///   * HouseNumberRange
-        ///   * Street
+        /// * Address
+        /// * RoadBlock
+        /// * RoadIntersection
+        /// * Neighborhood
+        /// * PopulatedPlace
+        /// * Postcode1
+        /// * AdminDivision1
+        /// * AdminDivision2
+        /// * CountryRegion
         /// </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressItem"/> instance for mocking. </returns>
-        public static ReverseSearchAddressItem ReverseSearchAddressItem(MapsAddress address = null, string position = null, IEnumerable<RoadKind> roadUse = null, MapsSearchMatchType? matchType = null)
+        /// <param name="confidence">
+        /// The level of confidence that the geocoded location result is a match. Use this value with the match code to determine for more complete information about the match.
+        ///
+        /// The confidence of a geocoded location is based on many factors including the relative importance of the geocoded location and the user’s location, if specified.
+        /// </param>
+        /// <param name="matchCodes">
+        /// One or more match code values that represent the geocoding level for each location in the response.
+        ///
+        /// For example, a geocoded location with match codes of `Good` and `Ambiguous` means that more than one geocode location was found for the location information and that the geocode service did not have search up-hierarchy to find a match.
+        ///
+        /// Similarly, a geocoded location with match codes of `Ambiguous` and `UpHierarchy` implies that a geocode location could not be found that matched all the provided location information, so the geocode service had to search up-hierarchy and found multiple matches at that level. An example of up an `Ambiguous` and `UpHierarchy` result is when you provide complete address information, but the geocode service cannot locate a match for the street address and instead returns information for more than one RoadBlock value.
+        ///
+        /// The possible values are:
+        ///
+        /// `Good`: The location has only one match or all returned matches are considered strong matches. For example, a query for New York returns several Good matches.
+        ///
+        /// `Ambiguous`: The location is one of a set of possible matches. For example, when you query for the street address 128 Main St., the response may return two locations for 128 North Main St. and 128 South Main St. because there is not enough information to determine which option to choose.
+        ///
+        /// `UpHierarchy`: The location represents a move up the geographic hierarchy. This occurs when a match for the location request was not found, so a less precise result is returned. For example, if a match for the requested address cannot be found, then a match code of `UpHierarchy` with a RoadBlock entity type may be returned.
+        /// </param>
+        /// <param name="address"> The address of the result. </param>
+        /// <param name="geocodePoints"> A collection of geocode points that differ in how they were calculated and their suggested use. </param>
+        /// <returns> A new <see cref="Models.FeaturesItemProperties"/> instance for mocking. </returns>
+        public static FeaturesItemProperties FeaturesItemProperties(string type = null, ConfidenceEnum? confidence = null, IEnumerable<MatchCodesEnum> matchCodes = null, Address address = null, IEnumerable<GeocodePointsItem> geocodePoints = null)
         {
-            roadUse ??= new List<RoadKind>();
+            matchCodes ??= new List<MatchCodesEnum>();
+            geocodePoints ??= new List<GeocodePointsItem>();
 
-            return new ReverseSearchAddressItem(address, position, roadUse?.ToList(), matchType);
+            return new FeaturesItemProperties(type, confidence, matchCodes?.ToList(), address, geocodePoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/>. </summary>
-        /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
-        /// <returns> A new <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(MapsAddress address = null, string position = null)
+        /// <summary> Initializes a new instance of <see cref="Models.Address"/>. </summary>
+        /// <param name="addressLine"> AddressLine that includes Street Name and Number. </param>
+        /// <param name="locality"> locality property. </param>
+        /// <param name="neighborhood"> neighborhood property. </param>
+        /// <param name="adminDistricts"> The subdivision name in the country or region for an address. This element is typically treated as the first order administrative subdivision, but in some cases it also contains the second, third, or fourth order subdivision in a country, dependency, or region. </param>
+        /// <param name="postalCode"> Postal Code property. </param>
+        /// <param name="countryRegion"></param>
+        /// <param name="formattedAddress"> Formatted Address property. </param>
+        /// <param name="streetName"> The name of the street from formattedAddress. </param>
+        /// <param name="streetNumber"> The number in the street, if available, from formattedAddress. </param>
+        /// <param name="intersection"> The address of the result. </param>
+        /// <returns> A new <see cref="Models.Address"/> instance for mocking. </returns>
+        public static Address Address(string addressLine = null, string locality = null, string neighborhood = null, IEnumerable<AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, Intersection intersection = null)
         {
-            return new ReverseSearchCrossStreetAddressResultItem(address, position);
+            adminDistricts ??= new List<AddressAdminDistrictsItem>();
+
+            return new Address(
+                addressLine,
+                locality,
+                neighborhood,
+                adminDistricts?.ToList(),
+                postalCode,
+                countryRegion,
+                formattedAddress,
+                streetName,
+                streetNumber,
+                intersection);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AddressAdminDistrictsItem"/>. </summary>
+        /// <param name="name">
+        /// The name for the corresponding adminDistrict field,
+        /// For adminDistrict[0], this could be full name of state such as Washington,
+        /// For adminDistrict[1], this could be the full name of the county
+        /// </param>
+        /// <param name="shortName">
+        /// The short name for the corresponding adminDistrict field,
+        /// For adminDistrict[0], this could be short name of state such as WA,
+        /// For adminDistrict[1], this could be the short name of the county
+        /// </param>
+        /// <returns> A new <see cref="Models.AddressAdminDistrictsItem"/> instance for mocking. </returns>
+        public static AddressAdminDistrictsItem AddressAdminDistrictsItem(string name = null, string shortName = null)
+        {
+            return new AddressAdminDistrictsItem(name, shortName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AddressCountryRegion"/>. </summary>
+        /// <param name="iso"> ISO of country/region. </param>
+        /// <param name="name"> name of country/region. </param>
+        /// <returns> A new <see cref="Models.AddressCountryRegion"/> instance for mocking. </returns>
+        public static AddressCountryRegion AddressCountryRegion(string iso = null, string name = null)
+        {
+            return new AddressCountryRegion(iso, name);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Intersection"/>. </summary>
+        /// <param name="baseStreet"> Primary street for the location. </param>
+        /// <param name="secondaryStreet1"> The first intersecting street. </param>
+        /// <param name="secondaryStreet2"> If any, the second intersecting street. </param>
+        /// <param name="intersectionType"> Type of intersection. </param>
+        /// <param name="displayName"> Complete name of the intersection. </param>
+        /// <returns> A new <see cref="Models.Intersection"/> instance for mocking. </returns>
+        public static Intersection Intersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null)
+        {
+            return new Intersection(baseStreet, secondaryStreet1, secondaryStreet2, intersectionType, displayName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorDetail"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
+        public static ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, IEnumerable<ErrorDetail> details = null, IEnumerable<ErrorAdditionalInfo> additionalInfo = null)
+        {
+            details ??= new List<ErrorDetail>();
+            additionalInfo ??= new List<ErrorAdditionalInfo>();
+
+            return new ErrorDetail(code, message, target, details?.ToList(), additionalInfo?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorAdditionalInfo"/>. </summary>
+        /// <param name="type"> The additional info type. </param>
+        /// <param name="info"> The additional info. </param>
+        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
+        public static ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null)
+        {
+            return new ErrorAdditionalInfo(type, info);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GeocodingBatchResponse"/>. </summary>
+        /// <param name="summary"> Summary for the batch request. </param>
+        /// <param name="batchItems"> Array containing the batch results. </param>
+        /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
+        /// <returns> A new <see cref="Models.GeocodingBatchResponse"/> instance for mocking. </returns>
+        public static GeocodingBatchResponse GeocodingBatchResponse(GeocodingBatchResponseSummary summary = null, IEnumerable<GeocodingBatchResponseItem> batchItems = null, string nextLink = null)
+        {
+            batchItems ??= new List<GeocodingBatchResponseItem>();
+
+            return new GeocodingBatchResponse(summary, batchItems?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GeocodingBatchResponseSummary"/>. </summary>
+        /// <param name="successfulRequests"> Number of successful requests in the batch. </param>
+        /// <param name="totalRequests"> Total number of requests in the batch. </param>
+        /// <returns> A new <see cref="Models.GeocodingBatchResponseSummary"/> instance for mocking. </returns>
+        public static GeocodingBatchResponseSummary GeocodingBatchResponseSummary(int? successfulRequests = null, int? totalRequests = null)
+        {
+            return new GeocodingBatchResponseSummary(successfulRequests, totalRequests);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GeocodingBatchResponseItem"/>. </summary>
+        /// <param name="optionalId"> id of the batchItem which would be the same as the id in the request. </param>
+        /// <param name="type"> The type of a FeatureCollection object must be FeatureCollection. </param>
+        /// <param name="features"></param>
+        /// <param name="nextLink"> The is the link to the next page of the features returned. If it's the last page, no this field. </param>
+        /// <param name="error"> The error detail. </param>
+        /// <returns> A new <see cref="Models.GeocodingBatchResponseItem"/> instance for mocking. </returns>
+        public static GeocodingBatchResponseItem GeocodingBatchResponseItem(string optionalId = null, FeatureCollectionEnum? type = null, IEnumerable<FeaturesItem> features = null, string nextLink = null, ErrorDetail error = null)
+        {
+            features ??= new List<FeaturesItem>();
+
+            return new GeocodingBatchResponseItem(optionalId, type, features?.ToList(), nextLink, error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BoundaryProperties"/>. </summary>
+        /// <param name="name"> The name associated with the geographical area. </param>
+        /// <param name="copyright"> The copyright string. </param>
+        /// <param name="copyrightUrl"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
+        /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
+        /// <returns> A new <see cref="Models.BoundaryProperties"/> instance for mocking. </returns>
+        public static BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
+        {
+            geometriesCopyright ??= new List<GeometryCopyright>();
+
+            return new BoundaryProperties(name, copyright, copyrightUrl, geometriesCopyright?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GeometryCopyright"/>. </summary>
+        /// <param name="sourceName"> The name of the data provider. </param>
+        /// <param name="copyright"> The copyright string for the data provider. </param>
+        /// <returns> A new <see cref="Models.GeometryCopyright"/> instance for mocking. </returns>
+        public static GeometryCopyright GeometryCopyright(string sourceName = null, string copyright = null)
+        {
+            return new GeometryCopyright(sourceName, copyright);
         }
     }
 }

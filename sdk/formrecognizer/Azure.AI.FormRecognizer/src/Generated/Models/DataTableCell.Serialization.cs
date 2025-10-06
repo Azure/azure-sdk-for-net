@@ -5,9 +5,18 @@
 
 #nullable disable
 
+using System.Text.Json;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class DataTableCell
     {
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataTableCell FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataTableCell(document.RootElement);
+        }
     }
 }

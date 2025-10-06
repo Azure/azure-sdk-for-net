@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncidentList"/>. </summary>
-        /// <param name="value"> Array of incidents. </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentList(IEnumerable<SecurityInsightsIncidentData> value)
         {
@@ -58,13 +57,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentList"/>. </summary>
+        /// <param name="value"></param>
         /// <param name="nextLink"> URL to fetch the next set of incidents. </param>
-        /// <param name="value"> Array of incidents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentList(string nextLink, IReadOnlyList<SecurityInsightsIncidentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IncidentList(IReadOnlyList<SecurityInsightsIncidentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,9 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<SecurityInsightsIncidentData> Value { get; }
         /// <summary> URL to fetch the next set of incidents. </summary>
         public string NextLink { get; }
-        /// <summary> Array of incidents. </summary>
-        public IReadOnlyList<SecurityInsightsIncidentData> Value { get; }
     }
 }

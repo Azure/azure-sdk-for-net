@@ -6,17 +6,20 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
-require: https://github.com/Azure/azure-rest-api-specs/blob/7990bc19fe4941681605891960006538d3528f78/specification/containerinstance/resource-manager/readme.md
-tag: package-2023-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/6ba5680f1a58735e8f4d64ddbf8965e750cff9ee/specification/containerinstance/resource-manager/readme.md
+#tag: package-preview-2024-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -106,4 +109,58 @@ rename-mapping:
   SecurityContextDefinition: ContainerSecurityContextDefinition
   SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
   SecurityContextDefinition.privileged: IsPrivileged
+  ContainerGroupProperties.properties.osType: ContainerGroupOsType
+  ContainerGroupProperties.properties.provisioningState: ContainerGroupProvisioningState
+  UpdateProfile: NGroupUpdateProfile
+  UpdateProfileRollingUpdateProfile: NGroupRollingUpdateProfile
+  SecretReference: ContainerGroupSecretReference
+  NetworkProfile: ContainerGroupNetworkProfile
+  ElasticProfile: ContainerGroupElasticProfile
+  PlacementProfile: ContainerGroupPlacementProfile
+  FileShare: ContainerGroupFileShare
+  FileShareProperties: ContainerGroupFileShareProperties
+  IdentityAcls: ContainerGroupIdentityAccessControlLevels
+  IdentityAccessLevel: ContainerGroupIdentityAccessLevel
+  IdentityAccessControl: ContainerGroupIdentityAccessControl
+  NGroupCGPropertyVolume: NGroupContainerGroupPropertyVolume
+  NGroupCGPropertyContainer: NGroupContainerGroupPropertyContainer
+
+directive:
+  # The list operation is expected to return the same data as the resource. However, starting from version 2024-05-01-preview, a new model was introduced for this list operation that caused a breaking change. This directive is used to mitigate the issue.
+  - from: containerInstance.json
+    where: $.definitions
+    transform: >
+      $.ContainerGroupProperties.properties.properties.properties.provisioningState['enum'] = [
+              "NotSpecified",
+              "Accepted",
+              "Pending",
+              "Updating",
+              "Creating",
+              "Repairing",
+              "Unhealthy",
+              "Failed",
+              "Canceled",
+              "Succeeded",
+              "Deleting",
+              "NotAccessible",
+              "PreProvisioned"
+            ];
+      $.ContainerGroupProperties.properties.properties.properties.provisioningState['x-ms-enum'] = {
+              "name": "ContainerGroupProvisioningState",
+              "modelAsString": true
+            };
+      $.ContainerGroupListResult.properties.value.items['$ref'] = "#/definitions/ContainerGroup";
+  # As Lro the 'Delete' operations should not return 200, however the service returns. This directive is used to mitigate the issue.
+  - from: containerInstance.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}']
+    transform: >
+      $.delete.responses['200'] = {
+            "description": "OK"
+          };
+  - from: containerInstance.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}']
+    transform: >
+      $.delete.responses['200'] = {
+            "description": "OK"
+          };
 ```

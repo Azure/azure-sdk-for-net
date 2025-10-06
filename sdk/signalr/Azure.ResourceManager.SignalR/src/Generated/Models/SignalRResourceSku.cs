@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -101,16 +100,20 @@ namespace Azure.ResourceManager.SignalR.Models
         ///
         /// Allowed values: Standard_S1, Free_F1
         /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
         ///
         /// `Basic` is deprecated, use `Standard` instead.
         /// </summary>
+        [WirePath("tier")]
         public SignalRSkuTier? Tier { get; set; }
         /// <summary> Not used. Retained for future use. </summary>
+        [WirePath("size")]
         public string Size { get; }
         /// <summary> Not used. Retained for future use. </summary>
+        [WirePath("family")]
         public string Family { get; }
         /// <summary>
         /// Optional, integer. The unit count of the resource. 1 by default.
@@ -119,6 +122,7 @@ namespace Azure.ResourceManager.SignalR.Models
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100
         /// </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

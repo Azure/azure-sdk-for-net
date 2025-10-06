@@ -2,6 +2,7 @@ name: GitHub Scheduled Event Processor
 
 on:
   schedule:
+    # These are generated/confirmed using https://crontab.cronhub.io/
     # Close stale issues, runs every day at 1am - CloseStaleIssues
     - cron: '0 1 * * *'
     # Identify stale pull requests, every Friday at 5am - IdentifyStalePullRequests
@@ -14,9 +15,10 @@ on:
     - cron: '30 4,10,16,22 * * *'
     # Lock closed issues, every 6 hours at 05:30 AM, 11:30 AM, 05:30 PM and 11:30 PM - LockClosedIssues
     - cron: '30 5,11,17,23 * * *'
-    # Enforce max life of issues, every Monday at 10:00 AM - EnforceMaxLifeOfIssues
+    # Enforce max life of issues, every M,W,F at 10:00 AM PST - EnforceMaxLifeOfIssues
     # Note: GitHub uses UTC, to run at 10am PST, the cron task needs to be 6pm (1800 hours) UTC
-    - cron: '0 18 * * MON'
+    #       When scheduling for multiple days the numeric days 0-6 (0=Sunday) must be used.
+    - cron: '0 18 * * 1,3,5'
 # This removes all unnecessary permissions, the ones needed will be set below.
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions: {}
@@ -37,7 +39,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20240229.2
+          --version 1.0.0-dev.20250425.1
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
@@ -67,10 +69,7 @@ jobs:
       - name: Close Stale Issues Scheduled Event
         if: github.event.schedule == '0 1 * * *'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json CloseStaleIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} CloseStaleIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,10 +77,7 @@ jobs:
       - name: Identify Stale PullRequests Scheduled Event
         if: github.event.schedule == '0 5 * * FRI'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json IdentifyStalePullRequests
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} IdentifyStalePullRequests
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -89,10 +85,7 @@ jobs:
       - name: Close Stale PullRequests Scheduled Event
         if: github.event.schedule == '30 2,8,14,20 * * *'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json CloseStalePullRequests
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} CloseStalePullRequests
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -100,10 +93,7 @@ jobs:
       - name: Identify Stale Issues Scheduled Event
         if: github.event.schedule == '30 3,9,15,21 * * *'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json IdentifyStaleIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} IdentifyStaleIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -111,10 +101,7 @@ jobs:
       - name: Close Addressed Issues Scheduled Event
         if: github.event.schedule == '30 4,10,16,22 * * *'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json CloseAddressedIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} CloseAddressedIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -122,21 +109,22 @@ jobs:
       - name: Lock Closed Issues Scheduled Event
         if: github.event.schedule == '30 5,11,17,23 * * *'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json LockClosedIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} LockClosedIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enforce Max Life of Issues Scheduled Event
-        if: github.event.schedule == '0 18 * * MON'
+        if: github.event.schedule == '0 18 * * 1,3,5'
         run: |
-          cat > payload.json << 'EOF'
-          ${{ toJson(github.event) }}
-          EOF
-          github-event-processor ${{ github.event_name }} payload.json EnforceMaxLifeOfIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} EnforceMaxLifeOfIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Archive github event data
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: event
+          path: ${{ github.event_path }}

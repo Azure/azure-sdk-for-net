@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result of the request to list routes. It contains a list of route objects and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list routes. It contains a list of route objects and a URL link to get the next set of results.
+    /// Serialized Name: RouteListResult
+    /// </summary>
     internal partial class RouteListResult
     {
         /// <summary>
@@ -53,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteListResult"/>. </summary>
-        /// <param name="value"> List of AzureFrontDoor routes within a profile. </param>
-        /// <param name="nextLink"> URL to get the next set of route objects if there are any. </param>
+        /// <param name="value">
+        /// List of AzureFrontDoor routes within a profile.
+        /// Serialized Name: RouteListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of route objects if there are any.
+        /// Serialized Name: RouteListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RouteListResult(IReadOnlyList<FrontDoorRouteData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of AzureFrontDoor routes within a profile. </summary>
+        /// <summary>
+        /// List of AzureFrontDoor routes within a profile.
+        /// Serialized Name: RouteListResult.value
+        /// </summary>
         public IReadOnlyList<FrontDoorRouteData> Value { get; }
-        /// <summary> URL to get the next set of route objects if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of route objects if there are any.
+        /// Serialized Name: RouteListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.CustomerInsights
 
         LinkResourceFormatResource IOperationSource<LinkResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = LinkResourceFormatData.DeserializeLinkResourceFormatData(document.RootElement);
+            var data = ModelReaderWriter.Read<LinkResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
             return new LinkResourceFormatResource(_client, data);
         }
 
         async ValueTask<LinkResourceFormatResource> IOperationSource<LinkResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = LinkResourceFormatData.DeserializeLinkResourceFormatData(document.RootElement);
-            return new LinkResourceFormatResource(_client, data);
+            var data = ModelReaderWriter.Read<LinkResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
+            return await Task.FromResult(new LinkResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

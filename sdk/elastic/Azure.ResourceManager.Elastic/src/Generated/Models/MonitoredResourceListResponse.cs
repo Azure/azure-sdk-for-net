@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -49,14 +48,14 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
         internal MonitoredResourceListResponse()
         {
-            Value = new ChangeTrackingList<MonitoredResourceContent>();
+            Value = new ChangeTrackingList<MonitoredResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceListResponse(IReadOnlyList<MonitoredResourceContent> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredResourceListResponse(IReadOnlyList<MonitoredResourceInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Results of a list operation. </summary>
-        public IReadOnlyList<MonitoredResourceContent> Value { get; }
+        public IReadOnlyList<MonitoredResourceInfo> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

@@ -18,18 +18,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> If specified, only job executions created at or after the specified time are included. </summary>
+        [WirePath("createTimeMin")]
         public DateTimeOffset? CreateTimeMin { get; set; }
         /// <summary> If specified, only job executions created before the specified time are included. </summary>
+        [WirePath("createTimeMax")]
         public DateTimeOffset? CreateTimeMax { get; set; }
         /// <summary> If specified, only job executions completed at or after the specified time are included. </summary>
+        [WirePath("endTimeMin")]
         public DateTimeOffset? EndTimeMin { get; set; }
         /// <summary> If specified, only job executions completed before the specified time are included. </summary>
+        [WirePath("endTimeMax")]
         public DateTimeOffset? EndTimeMax { get; set; }
         /// <summary> If specified, only active or only completed job executions are included. </summary>
+        [WirePath("isActive")]
         public bool? IsActive { get; set; }
         /// <summary> The number of elements in the collection to skip. </summary>
-        public int? Skip { get; set; }
+        [WirePath("skip")]
+        public long? Skip { get; set; }
         /// <summary> The number of elements to return from the collection. </summary>
-        public int? Top { get; set; }
+        [WirePath("top")]
+        public long? Top { get; set; }
     }
 }

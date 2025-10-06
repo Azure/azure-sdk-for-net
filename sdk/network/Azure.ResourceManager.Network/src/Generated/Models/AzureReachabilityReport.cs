@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -82,10 +81,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The aggregation level of Azure reachability report. Can be Country, State or City. </summary>
+        [WirePath("aggregationLevel")]
         public string AggregationLevel { get; }
         /// <summary> Parameters that define a geographic location. </summary>
+        [WirePath("providerLocation")]
         public AzureReachabilityReportLocation ProviderLocation { get; }
         /// <summary> List of Azure reachability report items. </summary>
+        [WirePath("reachabilityReport")]
         public IReadOnlyList<AzureReachabilityReportItem> ReachabilityReport { get; }
     }
 }

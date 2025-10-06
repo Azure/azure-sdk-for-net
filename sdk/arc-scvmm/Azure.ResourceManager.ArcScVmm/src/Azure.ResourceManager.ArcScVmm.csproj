@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Version>1.0.0-beta.5</Version>
-    <PackageId>Azure.ResourceManager.ArcScVmm</PackageId>
-    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Arc.ScVmm.</Description>
-    <PackageTags>azure;management;arm;resource manager;arcscvmm</PackageTags>
-  </PropertyGroup>
-</Project>

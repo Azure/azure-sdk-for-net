@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/arc-scvmm/Azure.ResourceManager.ScVmm",
+  "Tag": ""
+}

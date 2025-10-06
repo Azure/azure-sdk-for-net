@@ -11,6 +11,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineResponseHeaders : IEnumerable<KeyValuePair<string, string>>
 {
+    private const string RetryAfterHeaderName = "Retry-After";
+
     /// <summary>
     /// Attempts to retrieve the value associated with the specified header
     /// name.
@@ -37,4 +39,26 @@ public abstract class PipelineResponseHeaders : IEnumerable<KeyValuePair<string,
     public abstract IEnumerator<KeyValuePair<string, string>> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    internal static bool TryGetRetryAfter(PipelineResponse response, out TimeSpan value)
+    {
+        // See: https://www.rfc-editor.org/rfc/rfc7231#section-7.1.3
+        if (response.Headers.TryGetValue(RetryAfterHeaderName, out string? retryAfter))
+        {
+            if (int.TryParse(retryAfter, out var delaySeconds))
+            {
+                value = TimeSpan.FromSeconds(delaySeconds);
+                return true;
+            }
+
+            if (DateTimeOffset.TryParse(retryAfter, out DateTimeOffset retryAfterDate))
+            {
+                value = retryAfterDate - DateTimeOffset.Now;
+                return true;
+            }
+        }
+
+        value = default;
+        return false;
+    }
 }

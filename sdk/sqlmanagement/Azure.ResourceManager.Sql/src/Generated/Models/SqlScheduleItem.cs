@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -84,12 +83,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Start day. </summary>
+        [WirePath("startDay")]
         public SqlDayOfWeek StartDay { get; set; }
         /// <summary> Start time. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary> Stop day. </summary>
+        [WirePath("stopDay")]
         public SqlDayOfWeek StopDay { get; set; }
         /// <summary> Stop time. </summary>
+        [WirePath("stopTime")]
         public string StopTime { get; set; }
     }
 }

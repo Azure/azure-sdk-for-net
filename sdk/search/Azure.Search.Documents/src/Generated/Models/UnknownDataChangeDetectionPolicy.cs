@@ -5,18 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownDataChangeDetectionPolicy. </summary>
+    /// <summary> Unknown version of DataChangeDetectionPolicy. </summary>
     internal partial class UnknownDataChangeDetectionPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataChangeDetectionPolicy"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
-        internal UnknownDataChangeDetectionPolicy(string oDataType) : base(oDataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataChangeDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
         {
             ODataType = oDataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataChangeDetectionPolicy"/> for deserialization. </summary>
+        internal UnknownDataChangeDetectionPolicy()
+        {
         }
     }
 }

@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public ServiceAccountUsageUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public ServiceAccountUsageMetricName Name { get; }
         /// <summary> The quota period used to summarize the usage values. </summary>
+        [WirePath("quotaPeriod")]
         public string QuotaPeriod { get; }
         /// <summary> Maximum value for this metric. </summary>
+        [WirePath("limit")]
         public double? Limit { get; }
         /// <summary> Current value for this metric. </summary>
+        [WirePath("currentValue")]
         public double? CurrentValue { get; }
         /// <summary> Next reset time for current quota. </summary>
+        [WirePath("nextResetTime")]
         public string NextResetTime { get; }
         /// <summary> Cognitive Services account quota usage status. </summary>
+        [WirePath("status")]
         public ServiceAccountQuotaUsageStatus? Status { get; }
     }
 }

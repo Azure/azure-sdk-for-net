@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -48,35 +47,35 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzedDocument"/>. </summary>
-        /// <param name="docType"> Document type. </param>
+        /// <param name="documentType"> Document type. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="docType"/> or <paramref name="spans"/> is null. </exception>
-        internal AnalyzedDocument(string docType, IEnumerable<DocumentSpan> spans, float confidence)
+        /// <exception cref="ArgumentNullException"> <paramref name="documentType"/> or <paramref name="spans"/> is null. </exception>
+        internal AnalyzedDocument(string documentType, IEnumerable<DocumentSpan> spans, float confidence)
         {
-            Argument.AssertNotNull(docType, nameof(docType));
+            Argument.AssertNotNull(documentType, nameof(documentType));
             Argument.AssertNotNull(spans, nameof(spans));
 
-            DocType = docType;
+            DocumentType = documentType;
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
-            Fields = new ChangeTrackingDictionary<string, DocumentField>();
+            FieldsPrivate = new ChangeTrackingDictionary<string, DocumentField>();
             Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzedDocument"/>. </summary>
-        /// <param name="docType"> Document type. </param>
+        /// <param name="documentType"> Document type. </param>
         /// <param name="boundingRegions"> Bounding regions covering the document. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
-        /// <param name="fields"> Dictionary of named field values. </param>
+        /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzedDocument(string docType, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fields, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzedDocument(string documentType, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fieldsPrivate, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DocType = docType;
+            DocumentType = documentType;
             BoundingRegions = boundingRegions;
             Spans = spans;
-            Fields = fields;
+            FieldsPrivate = fieldsPrivate;
             Confidence = confidence;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -87,13 +86,11 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Document type. </summary>
-        public string DocType { get; }
+        public string DocumentType { get; }
         /// <summary> Bounding regions covering the document. </summary>
         public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
         /// <summary> Location of the document in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
-        /// <summary> Dictionary of named field values. </summary>
-        public IReadOnlyDictionary<string, DocumentField> Fields { get; }
         /// <summary> Confidence of correctly extracting the document. </summary>
         public float Confidence { get; }
     }

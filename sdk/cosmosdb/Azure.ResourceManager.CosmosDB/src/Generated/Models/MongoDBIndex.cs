@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Cosmos DB MongoDB collection index keys. </summary>
         internal MongoIndexKeys Key { get; set; }
         /// <summary> List of keys for each MongoDB collection in the Azure Cosmos DB service. </summary>
+        [WirePath("key.keys")]
         public IList<string> Keys
         {
             get
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Cosmos DB MongoDB collection index key options. </summary>
+        [WirePath("options")]
         public MongoDBIndexConfig Options { get; set; }
     }
 }

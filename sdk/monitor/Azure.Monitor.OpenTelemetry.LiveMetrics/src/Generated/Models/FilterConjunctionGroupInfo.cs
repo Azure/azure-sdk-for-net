@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -14,19 +15,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     internal partial class FilterConjunctionGroupInfo
     {
         /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/>. </summary>
-        internal FilterConjunctionGroupInfo()
+        /// <param name="filters"> An array of filters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
+        internal FilterConjunctionGroupInfo(IEnumerable<FilterInfo> filters)
         {
-            Filters = new ChangeTrackingList<FilterInfo>();
+            Argument.AssertNotNull(filters, nameof(filters));
+
+            Filters = filters.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/>. </summary>
-        /// <param name="filters"></param>
+        /// <param name="filters"> An array of filters. </param>
         internal FilterConjunctionGroupInfo(IReadOnlyList<FilterInfo> filters)
         {
             Filters = filters;
         }
 
-        /// <summary> Gets the filters. </summary>
+        /// <summary> An array of filters. </summary>
         public IReadOnlyList<FilterInfo> Filters { get; }
     }
 }

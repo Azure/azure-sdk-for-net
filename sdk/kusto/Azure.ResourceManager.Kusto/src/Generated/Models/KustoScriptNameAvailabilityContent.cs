@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Script name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </summary>
+        [WirePath("type")]
         public KustoScriptType ResourceType { get; }
     }
 }

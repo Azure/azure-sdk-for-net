@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -80,22 +79,31 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
+        [WirePath("properties.cloudManagementEndpoint")]
         public string CloudManagementEndpoint { get; set; }
         /// <summary> App id of cluster AAD identity. </summary>
+        [WirePath("properties.aadClientId")]
         public Guid? AadClientId { get; set; }
         /// <summary> Tenant id of cluster AAD identity. </summary>
+        [WirePath("properties.aadTenantId")]
         public Guid? AadTenantId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
+        [WirePath("properties.desiredProperties")]
         public HciClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [WirePath("identity.principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [WirePath("identity.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        [WirePath("identity.type")]
         public HciManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        [WirePath("identity.userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the value. </summary>
+        [WirePath("value")]
         public IReadOnlyList<AppServicePrivateLinkResourceData> Value { get; }
     }
 }

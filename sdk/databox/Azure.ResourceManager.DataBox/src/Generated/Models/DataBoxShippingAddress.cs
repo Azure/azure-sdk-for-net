@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -49,17 +48,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/>, <paramref name="country"/> or <paramref name="postalCode"/> is null. </exception>
-        public DataBoxShippingAddress(string streetAddress1, string country, string postalCode)
+        /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
+        public DataBoxShippingAddress(string streetAddress1, string country)
         {
             Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
             Argument.AssertNotNull(country, nameof(country));
-            Argument.AssertNotNull(postalCode, nameof(postalCode));
 
             StreetAddress1 = streetAddress1;
             Country = country;
-            PostalCode = postalCode;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>

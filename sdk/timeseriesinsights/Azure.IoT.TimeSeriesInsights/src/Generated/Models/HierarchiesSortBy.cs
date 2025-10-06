@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public static bool operator ==(HierarchiesSortBy left, HierarchiesSortBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HierarchiesSortBy"/> values are not the same. </summary>
         public static bool operator !=(HierarchiesSortBy left, HierarchiesSortBy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HierarchiesSortBy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HierarchiesSortBy"/>. </summary>
         public static implicit operator HierarchiesSortBy(string value) => new HierarchiesSortBy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

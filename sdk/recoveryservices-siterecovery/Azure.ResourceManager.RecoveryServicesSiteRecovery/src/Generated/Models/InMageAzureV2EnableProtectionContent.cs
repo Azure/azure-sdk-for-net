@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The storage account to be used for logging during replication. </param>
         /// <param name="targetAzureV1ResourceGroupId"> The Id of the target resource group (for classic deployment) in which the failover VM is to be created. </param>
         /// <param name="targetAzureV2ResourceGroupId"> The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created. </param>
-        /// <param name="diskType"> The DiskType. </param>
+        /// <param name="diskType"> The disk type. </param>
         /// <param name="targetAvailabilitySetId"> The target availability set ARM Id for resource manager deployment. </param>
         /// <param name="targetAvailabilityZone"> The target availability zone. </param>
         /// <param name="targetProximityPlacementGroupId"> The proximity placement group ARM Id. </param>
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public ResourceIdentifier TargetAzureV1ResourceGroupId { get; set; }
         /// <summary> The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created. </summary>
         public ResourceIdentifier TargetAzureV2ResourceGroupId { get; set; }
-        /// <summary> The DiskType. </summary>
+        /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType? DiskType { get; set; }
         /// <summary> The target availability set ARM Id for resource manager deployment. </summary>
         public ResourceIdentifier TargetAvailabilitySetId { get; set; }

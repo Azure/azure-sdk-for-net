@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Output of check resource usage API. </summary>
+    /// <summary>
+    /// Output of check resource usage API.
+    /// Serialized Name: ResourceUsage
+    /// </summary>
     public partial class CdnUsage
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
-        /// <param name="resourceType"> Resource type for which the usage is provided. </param>
-        /// <param name="unit"> Unit of the usage. e.g. count. </param>
-        /// <param name="currentValue"> Actual value of usage on the specified resource type. </param>
-        /// <param name="limit"> Quota of the specified resource type. </param>
+        /// <param name="resourceType">
+        /// Resource type for which the usage is provided.
+        /// Serialized Name: ResourceUsage.resourceType
+        /// </param>
+        /// <param name="unit">
+        /// Unit of the usage. e.g. count.
+        /// Serialized Name: ResourceUsage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// Actual value of usage on the specified resource type.
+        /// Serialized Name: ResourceUsage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// Quota of the specified resource type.
+        /// Serialized Name: ResourceUsage.limit
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnUsage(string resourceType, CdnUsageUnit? unit, int? currentValue, int? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource type for which the usage is provided. </summary>
+        /// <summary>
+        /// Resource type for which the usage is provided.
+        /// Serialized Name: ResourceUsage.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> Unit of the usage. e.g. count. </summary>
+        /// <summary>
+        /// Unit of the usage. e.g. count.
+        /// Serialized Name: ResourceUsage.unit
+        /// </summary>
         public CdnUsageUnit? Unit { get; }
-        /// <summary> Actual value of usage on the specified resource type. </summary>
+        /// <summary>
+        /// Actual value of usage on the specified resource type.
+        /// Serialized Name: ResourceUsage.currentValue
+        /// </summary>
         public int? CurrentValue { get; }
-        /// <summary> Quota of the specified resource type. </summary>
+        /// <summary>
+        /// Quota of the specified resource type.
+        /// Serialized Name: ResourceUsage.limit
+        /// </summary>
         public int? Limit { get; }
     }
 }

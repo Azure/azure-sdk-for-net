@@ -61,6 +61,8 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Map `WebPubSubHub` to endpoint routing
 
+The name of the hub has to match the class name e.g. `SampleHub`.
+
 ```C# Snippet:WebPubSubMapHub
 public void Configure(IApplicationBuilder app)
 {
@@ -71,23 +73,35 @@ public void Configure(IApplicationBuilder app)
 }
 ```
 
+Hub name can be overriden by using extension method.
+
+```C# Snippet:WebPubSubMapHubCustom
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEndpoints(endpoint =>
+    {
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler", "customHub");
+    });
+}
+```
+
 ## Key concepts
 
-For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://docs.microsoft.com/azure/azure-web-pubsub/key-concepts)
+For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://learn.microsoft.com/azure/azure-web-pubsub/key-concepts)
 
 ### `WebPubSubHub`
 
-`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides 4 methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
+`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
 
 > NOTE
 >
-> Among the 4 methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
+> Among the those methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` and `AuthenticationException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
 
 ## Examples
 
 ### Handle upstream `Connect` event
 
-```C# Snippet:WebPubSubHubMethods
+```C# Snippet:HandleConnectEvent
 private sealed class SampleHub : WebPubSubHub
 {
     internal WebPubSubServiceClient<SampleHub> _serviceClient;
@@ -105,6 +119,106 @@ private sealed class SampleHub : WebPubSubHub
             UserId = request.ConnectionContext.UserId
         };
         return new ValueTask<ConnectEventResponse>(response);
+    }
+}
+```
+
+### Handle upstream MQTT `Connect` event
+```C# Snippet:HandleMqttConnectEvent
+private sealed class SampleHub2 : WebPubSubHub
+{
+    internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+    // Need to ensure service client is injected by call `AddServiceHub<SampleHub2>` in ConfigureServices.
+    public SampleHub2(WebPubSubServiceClient<SampleHub> serviceClient)
+    {
+        _serviceClient = serviceClient;
+    }
+
+    public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+    {
+        // By converting the request to MqttConnectEventRequest, you can get the MQTT specific information.
+        if (request is MqttConnectEventRequest mqttRequest)
+        {
+            if (mqttRequest.Mqtt.Username != "baduser")
+            {
+                var response = mqttRequest.CreateMqttResponse(mqttRequest.ConnectionContext.UserId, null, null);
+                // You can customize the user properties that will be sent to the client in the MQTT CONNACK packet.
+                response.Mqtt.UserProperties = new List<MqttUserProperty>()
+                {
+                    new("name", "value")
+                };
+                return ValueTask.FromResult(response as ConnectEventResponse);
+            }
+            else
+            {
+                var errorResponse = mqttRequest.Mqtt.ProtocolVersion switch
+                {
+                    // You can specify the MQTT specific error code and message.
+                    MqttProtocolVersion.V311 => mqttRequest.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized, "not authorized"),
+                    MqttProtocolVersion.V500 => mqttRequest.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.Banned, "The user is banned."),
+                    _ => throw new System.NotSupportedException("Unsupported MQTT protocol version")
+                };
+                // You can customize the user properties that will be sent to the client in the MQTT CONNACK packet.
+                errorResponse.Mqtt.UserProperties = new List<MqttUserProperty>()
+                {
+                    new("name", "value")
+                };
+                throw new MqttConnectionException(errorResponse);
+            }
+        }
+        else
+        {
+            // If you don't need to handle MQTT specific logic, you can still return a general response for MQTT clients.
+            return ValueTask.FromResult(request.CreateResponse(request.ConnectionContext.UserId, null, request.Subprotocols.FirstOrDefault(), null));
+        }
+    }
+}
+```
+
+### Handle upstream MQTT `Connected` event
+```C# Snippet:HandleMqttConnectedEvent
+private sealed class SampleHub3 : WebPubSubHub
+{
+    internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+    // Need to ensure service client is injected by call `AddServiceHub<SampleHub3>` in ConfigureServices.
+    public SampleHub3(WebPubSubServiceClient<SampleHub> serviceClient)
+    {
+        _serviceClient = serviceClient;
+    }
+
+    public override Task OnConnectedAsync(ConnectedEventRequest request)
+    {
+        if (request.ConnectionContext is MqttConnectionContext mqttContext)
+        {
+            // Have your own logic here
+        }
+        return Task.CompletedTask;
+    }
+}
+```
+
+
+### Handle upstream MQTT `Disconnected` event
+```C# Snippet:HandleMqttDisconnectedEvent
+private sealed class SampleHub4 : WebPubSubHub
+{
+    internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+    // Need to ensure service client is injected by call `AddServiceHub<SampleHub4>` in ConfigureServices.
+    public SampleHub4(WebPubSubServiceClient<SampleHub> serviceClient)
+    {
+        _serviceClient = serviceClient;
+    }
+
+    public override Task OnDisconnectedAsync(DisconnectedEventRequest request)
+    {
+        if (request is MqttDisconnectedEventRequest mqttDisconnected)
+        {
+            // Have your own logic here
+        }
+        return Task.CompletedTask;
     }
 }
 ```
@@ -131,8 +245,6 @@ You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [sample_ref]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/tests/Samples/

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Cdn
 
         FrontDoorOriginResource IOperationSource<FrontDoorOriginResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FrontDoorOriginData.DeserializeFrontDoorOriginData(document.RootElement);
+            var data = ModelReaderWriter.Read<FrontDoorOriginData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new FrontDoorOriginResource(_client, data);
         }
 
         async ValueTask<FrontDoorOriginResource> IOperationSource<FrontDoorOriginResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FrontDoorOriginData.DeserializeFrontDoorOriginData(document.RootElement);
-            return new FrontDoorOriginResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorOriginData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            return await Task.FromResult(new FrontDoorOriginResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

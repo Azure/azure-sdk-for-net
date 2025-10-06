@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,83 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.0 (2025-09-22)
+
+### Other Changes
+
+- Updated the Azure.Identity dependency to version 1.16.0
+
+## 1.12.0 (2025-06-12)
+
+### Features Added
+
+- Added support for [managed identity as a federated identity credential](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-config-app-trust-managed-identity?tabs=microsoft-entra-admin-center%2Cdotnet#azure-identity-client-libraries) in the client factory by specifying configuration item `credential` as "managedidentityasfederatedidentity" and providing the following named configuration items:
+
+  - `tenantId` : The tenant where the target resource was created
+  - `clientId` : The client identifier for the application, which must be granted access on the target resource
+  - One of [`managedIdentityClientId`, `managedIdentityObjectId`, `managedIdentityResourceId`] : The user-assigned managed identity which you configured as a Federated Identity Credential (FIC)
+  - `azureCloud`: One of the following Azure cloud environments:
+    - `public` for Entra ID Global cloud
+    - `usgov` for Entra ID US Government
+    - `china` for Entra ID China operated by 21Vianet
+
+
+## 1.11.0 (2025-03-15)
+
+### Features Added
+
+- Added support for [AzurePipelinesCredential](https://learn.microsoft.com/dotnet/api/azure.identity.azurepipelinescredential?view=azure-dotnet) in the client factory by specifying configuration item `credential` as "azurepipelines" and providing each credential parameter as a named configuration item.
+
+### Bugs Fixed
+
+- Fixed an issue when creating clients from configuration using the ASP.NET Core integration testing library, `Microsoft.AspNetCore.Mvc.Testing`.  Due to a difference in how an section value is represented, logic was interpreting a setting with a child object as an empty connection string value.  The child object is now properly parsed and applied for client construction.  ([#48368](https://github.com/Azure/azure-sdk-for-net/issues/48368))
+
+## 1.10.0 (2025-02-11)
+
+### Other Changes
+- Updated dependencies to ensure they are up-to-date with the latest targets and trimming from built-in dependencies.
+
+## 1.9.0 (2024-11-26)
+
+### Other Changes
+
+- Updated dependency `Microsoft.Extensions.DependencyInjection.Abstractions` to version `8.0.2`
+- Updated dependency `Microsoft.Bcl.AsyncInterfaces` to version `8.0.0`
+
+## 1.8.0 (2024-11-05)
+
+### Features Added
+
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.13.1`.
+
+## 1.7.6 (2024-10-04)
+
+### Other Changes
+
+- Improved the efficiency of `AzureEventSourceLogForwarder` by eliminating message formatting. ([#46202](https://github.com/Azure/azure-sdk-for-net/pull/46202))
+
+## 1.7.5 (2024-08-15)
+
+### Other Changes
+
+- Updated dependency `Azure.Core` to version `1.42.0`.
+
+## 1.7.4 (2024-06-13)
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.11.4`.
+
+## 1.7.3 (2024-04-16)
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.11.0`.
 
 ## 1.7.2 (2024-02-12)
 

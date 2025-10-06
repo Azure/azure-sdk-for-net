@@ -45,6 +45,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Status = topic.Status;
             EnablePartitioning = topic.EnablePartitioning;
             MaxMessageSizeInKilobytes = topic.MaxMessageSizeInKilobytes;
+            SupportOrdering = topic.SupportOrdering;
             if (topic.UserMetadata != null)
             {
                 UserMetadata = topic.UserMetadata;
@@ -80,6 +81,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// The <see cref="TimeSpan"/> idle interval after which the topic is automatically deleted.
         /// </summary>
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-expiration#idleness">Service Bus: Idleness</seealso>
         public TimeSpan AutoDeleteOnIdle
         {
             get => _autoDeleteOnIdle;
@@ -197,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// Gets or sets the maximum message size, in kilobytes, for messages sent to this topic.
         /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
         /// </summary>
         public long? MaxMessageSizeInKilobytes { get; set; }
 
@@ -219,26 +221,22 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(CreateTopicOptions other)
         {
-            if (other is CreateTopicOptions otherOptions
-                && Name.Equals(otherOptions.Name, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(otherOptions.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(otherOptions.DefaultMessageTimeToLive)
-                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherOptions.DuplicateDetectionHistoryTimeWindow))
-                && EnableBatchedOperations == otherOptions.EnableBatchedOperations
-                && EnablePartitioning == otherOptions.EnablePartitioning
-                && MaxSizeInMegabytes == otherOptions.MaxSizeInMegabytes
-                && RequiresDuplicateDetection.Equals(otherOptions.RequiresDuplicateDetection)
-                && Status.Equals(otherOptions.Status)
-                && string.Equals(_userMetadata, otherOptions._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (AuthorizationRules != null && otherOptions.AuthorizationRules != null
-                    || AuthorizationRules == null && otherOptions.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(otherOptions.AuthorizationRules))
-                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
-            {
-                return true;
-            }
-
-            return false;
+            return other is not null
+                   && Name.Equals(other.Name, StringComparison.OrdinalIgnoreCase)
+                   && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
+                   && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
+                   && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
+                   && EnableBatchedOperations == other.EnableBatchedOperations
+                   && EnablePartitioning == other.EnablePartitioning
+                   && MaxSizeInMegabytes == other.MaxSizeInMegabytes
+                   && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
+                   && Status.Equals(other.Status)
+                   && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
+                   && (AuthorizationRules != null && other.AuthorizationRules != null
+                       || AuthorizationRules == null && other.AuthorizationRules == null)
+                   && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules))
+                   && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes)
+                   && SupportOrdering == other.SupportOrdering;
         }
 
         /// <summary></summary>

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether multichannel is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsMultiChannelEnabled { get; set; }
     }
 }

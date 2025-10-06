@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Gets the delegated subnets usage. </summary>
+        [WirePath("delegatedSubnetsUsage")]
         public IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
         /// <summary> location of the delegated subnet usage. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> subscriptionId of the delegated subnet usage. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
     }
 }

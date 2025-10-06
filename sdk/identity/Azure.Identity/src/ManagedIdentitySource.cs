@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,20 +38,27 @@ namespace Azure.Identity
                 Pipeline.HttpPipeline.Send(message, cancellationToken);
             }
 
-            return await HandleResponseAsync(async, context, message.Response, cancellationToken).ConfigureAwait(false);
+            return await HandleResponseAsync(async, context, message, cancellationToken).ConfigureAwait(false);
         }
 
         protected virtual async ValueTask<AccessToken> HandleResponseAsync(
             bool async,
             TokenRequestContext context,
-            Response response,
+            HttpMessage message,
             CancellationToken cancellationToken)
         {
             Exception exception = null;
+            Response response = message.Response;
             try
             {
                 if (response.Status == 200)
                 {
+                    // This avoids the json parsing if we have already been cancelled.
+                    // Also, this handles the sync case, where we don't have to check for cancellation.
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw new TaskCanceledException();
+                    }
                     using JsonDocument json = async
                     ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
                     : JsonDocument.Parse(response.ContentStream);
@@ -62,6 +70,11 @@ namespace Azure.Identity
             {
                 throw new CredentialUnavailableException(UnexpectedResponse, jex);
             }
+            catch (Exception e) when (response.Status == 200)
+            {
+                // This is a rare case where the request times out but the response was successful.
+                throw new RequestFailedException("Response from Managed Identity was successful, but the operation timed out prior to completion.", e);
+            }
             catch (Exception e)
             {
                 exception = e;
@@ -69,12 +82,23 @@ namespace Azure.Identity
 
             //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network/host"
             // rather than just timing out, as expected.
-            if (response.Status == 403)
+            // This case can also be hit when some service other than IMDS responds with a non-JSON response.
+            // In all such cases, we should treat the response as CredentialUnavailable.
+            if (response.IsError)
             {
-                string message = response.Content.ToString();
-                if (message.Contains("unreachable"))
+                string content = string.Empty;
+
+                try
                 {
-                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(message));
+                    content = response.Content.ToString();
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+                }
+                catch (Exception)
+                {
+                    // If the response is not json or the Content was null, it is not the IMDS and it should be treated as CredentialUnavailable
+                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(content));
                 }
             }
 
@@ -141,9 +165,14 @@ namespace Azure.Identity
                 }
             }
 
-            return accessToken != null && expiresOn.HasValue
-                ? new AccessToken(accessToken, expiresOn.Value)
-                : throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
+            if (accessToken != null && expiresOn.HasValue)
+            {
+                return new AccessToken(accessToken, expiresOn.Value, InferManagedIdentityRefreshInValue(expiresOn.Value));
+            }
+            else
+            {
+                throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
+            }
         }
 
         private static DateTimeOffset? TryParseExpiresOn(JsonElement jsonExpiresOn)
@@ -163,18 +192,15 @@ namespace Azure.Identity
             return null;
         }
 
-        private class ManagedIdentityResponseClassifier : ResponseClassifier
+        // Compute refresh_in as 1/2 expiresOn, but only if expiresOn > 2h.
+        internal static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
         {
-            public override bool IsRetriableResponse(HttpMessage message)
+            if (expiresOn > DateTimeOffset.UtcNow.AddHours(2) && expiresOn < DateTimeOffset.MaxValue)
             {
-                return message.Response.Status switch
-                {
-                    404 => true,
-                    410 => true,
-                    502 => false,
-                    _ => base.IsRetriableResponse(message)
-                };
+                // return the midpoint between now and expiresOn
+                return expiresOn.AddTicks(-(expiresOn.Ticks - DateTimeOffset.UtcNow.Ticks) / 2);
             }
+            return null;
         }
     }
 }

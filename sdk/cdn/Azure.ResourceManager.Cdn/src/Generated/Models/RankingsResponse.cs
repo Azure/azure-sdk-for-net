@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Rankings Response. </summary>
+    /// <summary>
+    /// Rankings Response
+    /// Serialized Name: RankingsResponse
+    /// </summary>
     public partial class RankingsResponse
     {
         /// <summary>
@@ -53,9 +55,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RankingsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="tables"></param>
+        /// <param name="dateTimeBegin"> Serialized Name: RankingsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: RankingsResponse.dateTimeEnd. </param>
+        /// <param name="tables"> Serialized Name: RankingsResponse.tables. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<RankingsResponseTablesItem> tables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,11 +67,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the date time begin. </summary>
+        /// <summary> Serialized Name: RankingsResponse.dateTimeBegin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
-        /// <summary> Gets the date time end. </summary>
+        /// <summary> Serialized Name: RankingsResponse.dateTimeEnd. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
-        /// <summary> Gets the tables. </summary>
+        /// <summary> Serialized Name: RankingsResponse.tables. </summary>
         public IReadOnlyList<RankingsResponseTablesItem> Tables { get; }
     }
 }

@@ -10,158 +10,31 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class UnknownJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxBasicJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
-            {
-                writer.WritePropertyName("jobStages"u8);
-                writer.WriteStartArray();
-                foreach (var item in JobStages)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
-            if (Optional.IsDefined(ShippingAddress))
-            {
-                writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
-            {
-                writer.WritePropertyName("deliveryPackage"u8);
-                writer.WriteObjectValue(DeliveryPackage);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
-            {
-                writer.WritePropertyName("returnPackage"u8);
-                writer.WriteObjectValue(ReturnPackage);
-            }
-            if (Optional.IsCollectionDefined(DataImportDetails))
-            {
-                writer.WritePropertyName("dataImportDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataImportDetails)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DataExportDetails))
-            {
-                writer.WritePropertyName("dataExportDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataExportDetails)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("jobDetailsType"u8);
-            writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Optional.IsDefined(Preferences))
-            {
-                writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
-            }
-            if (Optional.IsDefined(ReverseShippingDetails))
-            {
-                writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
-            {
-                writer.WritePropertyName("copyLogDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in CopyLogDetails)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
-            {
-                writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
-                writer.WriteStringValue(ReverseShipmentLabelSasKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
-            {
-                writer.WritePropertyName("chainOfCustodySasKey"u8);
-                writer.WriteStringValue(ChainOfCustodySasKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
-            {
-                writer.WritePropertyName("deviceErasureDetails"u8);
-                writer.WriteObjectValue(DeviceErasureDetails);
-            }
-            if (Optional.IsDefined(KeyEncryptionKey))
-            {
-                writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
-            }
-            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
-            {
-                writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
-                writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
-            {
-                writer.WritePropertyName("actions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Actions)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
-            {
-                writer.WritePropertyName("lastMitigationActionOnJob"u8);
-                writer.WriteObjectValue(LastMitigationActionOnJob);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
-            {
-                writer.WritePropertyName("datacenterAddress"u8);
-                writer.WriteObjectValue(DataCenterAddress);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
-            {
-                writer.WritePropertyName("dataCenterCode"u8);
-                writer.WriteStringValue(DataCenterCode.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         DataBoxBasicJobDetails IJsonModel<DataBoxBasicJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -169,7 +42,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,13 +72,13 @@ namespace Azure.ResourceManager.DataBox.Models
             string chainOfCustodySasKey = default;
             DeviceErasureDetails deviceErasureDetails = default;
             DataBoxKeyEncryptionKey keyEncryptionKey = default;
-            int? expectedDataSizeInTerabytes = default;
+            int? expectedDataSizeInTeraBytes = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
             LastMitigationActionOnJob lastMitigationActionOnJob = default;
-            DataCenterAddressResult dataCenterAddress = default;
+            DataCenterAddressResult datacenterAddress = default;
             DataCenterCode? dataCenterCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobStages"u8))
@@ -353,7 +226,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    expectedDataSizeInTerabytes = property.Value.GetInt32();
+                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -385,7 +258,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    datacenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"u8))
@@ -399,10 +272,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownJobDetails(
                 jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
                 contactDetails,
@@ -419,10 +292,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 chainOfCustodySasKey,
                 deviceErasureDetails,
                 keyEncryptionKey,
-                expectedDataSizeInTerabytes,
+                expectedDataSizeInTeraBytes,
                 actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
                 lastMitigationActionOnJob,
-                dataCenterAddress,
+                datacenterAddress,
                 dataCenterCode,
                 serializedAdditionalRawData);
         }
@@ -434,9 +307,9 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -448,11 +321,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The ID of the request that initiated the event. </summary>
+        [WirePath("id")]
         public Guid? Id { get; }
         /// <summary> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </summary>
+        [WirePath("addr")]
         public string Addr { get; }
         /// <summary> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </summary>
+        [WirePath("host")]
         public string Host { get; }
         /// <summary> The request method that generated the event. </summary>
+        [WirePath("method")]
         public string Method { get; }
         /// <summary> The user agent header of the request. </summary>
+        [WirePath("useragent")]
         public string UserAgent { get; }
     }
 }

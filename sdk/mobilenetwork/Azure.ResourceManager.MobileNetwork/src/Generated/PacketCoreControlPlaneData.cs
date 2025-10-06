@@ -101,8 +101,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
         /// <param name="signaling"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
+        /// <param name="homeNetworkPrivateKeysProvisioning"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
+        /// <param name="userConsent"> The user consent configuration for the packet core. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, PacketCoreSignalingConfiguration signaling, BinaryData interopSettings, HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning, UserConsentConfiguration userConsent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -116,12 +118,14 @@ namespace Azure.ResourceManager.MobileNetwork
             ControlPlaneAccessInterface = controlPlaneAccessInterface;
             ControlPlaneAccessVirtualIPv4Addresses = controlPlaneAccessVirtualIPv4Addresses;
             Sku = sku;
-            UeMtu = ueMtu;
+            UEMtu = ueMtu;
             LocalDiagnosticsAccess = localDiagnosticsAccess;
             DiagnosticsUpload = diagnosticsUpload;
             EventHub = eventHub;
             Signaling = signaling;
             InteropSettings = interopSettings;
+            HomeNetworkPrivateKeysProvisioning = homeNetworkPrivateKeysProvisioning;
+            UserConsent = userConsent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -131,36 +135,51 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The identity used to retrieve the ingress certificate from Azure key vault. </summary>
+        [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> The provisioning state of the packet core control plane resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The installation state of the packet core control plane resource. </summary>
+        [WirePath("properties.installation")]
         public MobileNetworkInstallation Installation { get; set; }
         /// <summary> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </summary>
+        [WirePath("properties.sites")]
         public IList<WritableSubResource> Sites { get; }
         /// <summary> The platform where the packet core is deployed. </summary>
+        [WirePath("properties.platform")]
         public MobileNetworkPlatformConfiguration Platform { get; set; }
         /// <summary> The core network technology generation (5G core or EPC / 4G core). </summary>
+        [WirePath("properties.coreNetworkTechnology")]
         public MobileNetworkCoreNetworkType? CoreNetworkTechnology { get; set; }
         /// <summary> The desired version of the packet core software. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> The currently installed version of the packet core software. </summary>
+        [WirePath("properties.installedVersion")]
         public string InstalledVersion { get; }
         /// <summary> The previous version of the packet core software that was deployed. Used when performing the rollback action. </summary>
+        [WirePath("properties.rollbackVersion")]
         public string RollbackVersion { get; }
         /// <summary> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </summary>
+        [WirePath("properties.controlPlaneAccessInterface")]
         public MobileNetworkInterfaceProperties ControlPlaneAccessInterface { get; set; }
         /// <summary> The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty. </summary>
+        [WirePath("properties.controlPlaneAccessVirtualIpv4Addresses")]
         public IList<string> ControlPlaneAccessVirtualIPv4Addresses { get; }
         /// <summary> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </summary>
+        [WirePath("properties.sku")]
         public MobileNetworkBillingSku Sku { get; set; }
         /// <summary> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </summary>
-        public int? UeMtu { get; set; }
+        [WirePath("properties.ueMtu")]
+        public int? UEMtu { get; set; }
         /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
+        [WirePath("properties.localDiagnosticsAccess")]
         public MobileNetworkLocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get; set; }
         /// <summary> Configuration for uploading packet core diagnostics. </summary>
         internal DiagnosticsUploadConfiguration DiagnosticsUpload { get; set; }
         /// <summary> The Storage Account Container URL to upload diagnostics to. </summary>
+        [WirePath("properties.diagnosticsUpload.storageAccountContainerUrl")]
         public Uri DiagnosticsUploadStorageAccountContainerUri
         {
             get => DiagnosticsUpload is null ? default : DiagnosticsUpload.StorageAccountContainerUri;
@@ -168,28 +187,11 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Configuration for sending packet core events to an Azure Event Hub. </summary>
+        [WirePath("properties.eventHub")]
         public MobileNetworkEventHubConfiguration EventHub { get; set; }
         /// <summary> Signaling configuration for the packet core. </summary>
-        internal SignalingConfiguration Signaling { get; set; }
-        /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>
-        public int? NasRerouteMacroMmeGroupId
-        {
-            get => Signaling is null ? default : Signaling.NasRerouteMacroMmeGroupId;
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Signaling is null)
-                        Signaling = new SignalingConfiguration();
-                    Signaling.NasRerouteMacroMmeGroupId = value.Value;
-                }
-                else
-                {
-                    Signaling = null;
-                }
-            }
-        }
-
+        [WirePath("properties.signaling")]
+        public PacketCoreSignalingConfiguration Signaling { get; set; }
         /// <summary>
         /// Settings to allow interoperability with third party components e.g. RANs and UEs.
         /// <para>
@@ -220,6 +222,30 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.interopSettings")]
         public BinaryData InteropSettings { get; set; }
+        /// <summary> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </summary>
+        internal HomeNetworkPrivateKeysProvisioning HomeNetworkPrivateKeysProvisioning { get; }
+        /// <summary> The provisioning state of the private keys for SUPI concealment. </summary>
+        [WirePath("properties.homeNetworkPrivateKeysProvisioning.state")]
+        public HomeNetworkPrivateKeysProvisioningState? HomeNetworkPrivateKeysProvisioningState
+        {
+            get => HomeNetworkPrivateKeysProvisioning?.State;
+        }
+
+        /// <summary> The user consent configuration for the packet core. </summary>
+        internal UserConsentConfiguration UserConsent { get; set; }
+        /// <summary> Allow Microsoft to access non-PII telemetry information from the packet core. </summary>
+        [WirePath("properties.userConsent.allowSupportTelemetryAccess")]
+        public bool? AllowSupportTelemetryAccess
+        {
+            get => UserConsent is null ? default : UserConsent.AllowSupportTelemetryAccess;
+            set
+            {
+                if (UserConsent is null)
+                    UserConsent = new UserConsentConfiguration();
+                UserConsent.AllowSupportTelemetryAccess = value;
+            }
+        }
     }
 }

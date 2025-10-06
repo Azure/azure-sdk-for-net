@@ -25,12 +25,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string TargetUser = "TARGET_USER_ID";
         protected const string TransfereeUser = "TRANSFEREE_USER_ID";
         protected const int defaultTestTimeout = 3;
-        private const string NoneMediaSubscriptionId = "null";
-        private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
-        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
-        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
+        private const string NoneMediaSubscription = "null";
+        private const string MediaStreamingSubscription = "{" +
+                                        " \"id\": \"22c3a25a-aed5-47df-9ef9-5ba5c7b6d08e\"," +
+                                        "\"state\": \"disabled\",\"subscribedContentTypes\": [" +
+                                        "\"audio\"] }";
+        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscription);
+        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription);
 
-        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"source\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
+        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"source\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaStreamingSubscription\": {0}}}";
 
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 
@@ -49,7 +52,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                     "\"invitationId\": \"invitationId\"" +
                                     "}";
 
-        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
+        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions? options = default)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -84,7 +87,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
-            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
+            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null);
 
             return callconn;
         }
@@ -98,7 +101,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallInvite CreateMockInvite(CallInvite? target = default)
         {
-            return target == default? new CallInvite(new CommunicationUserIdentifier(TargetUser)) : target;
+            return target == default ? new CallInvite(new CommunicationUserIdentifier(TargetUser)) : target;
         }
 
         protected CallConnection CreateMockCallConnection(int responseCode, string? responseContent = default, string? callConnectionId = default)

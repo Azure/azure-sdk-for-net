@@ -51,7 +51,10 @@
         "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
+        "authorizationApiVersion": "2018-09-01-preview",
+        "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
         "storageAccountName": "[concat(parameters('baseName'), 'prim')]",
+        "storageAccountResourceId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Storage/storageAccounts/',variables('storageAccountName'))]",
         "encryption": {
             "services": {
                 "blob": {
@@ -77,6 +80,9 @@
                 "name": "S1"
             },
             "kind": "TextTranslation",
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
             }
@@ -103,9 +109,25 @@
             "properties": {
                 "networkAcls": "[variables('networkAcls')]",
                 "supportsHttpsTrafficOnly": true,
+                "allowSharedKeyAccess": false,
                 "encryption": "[variables('encryption')]",
-                "accessTier": "Cool"
+                "accessTier": "Hot"
             }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('dataContributorRoleId', resourceGroup().id))]",
+            "scope": "[variables('storageAccountResourceId')]",
+            "properties": {
+                "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
+                "principalId": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName')), '2017-04-18', 'full').identity.principalId]",
+                "principalType": "ServicePrincipal"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName'))]",
+                "[variables('storageAccountResourceId')]"
+            ]
         },
         {
             "type": "Microsoft.CognitiveServices/accounts",
@@ -133,10 +155,6 @@
         "DOCUMENT_TRANSLATION_STORAGE_NAME": {
             "type": "string",
             "value": "[variables('storageAccountName')]"
-        },
-        "DOCUMENT_TRANSLATION_CONNECTION_STRING": {
-            "type": "string",
-            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
         },
         "TEXT_TRANSLATION_API_KEY": {
             "type": "string",

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 2.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,42 @@
 
 ### Other Changes
 
+## 2.1.0 (2025-07-25)
+
+### Features Added
+* Enable retry policy for HTTP requests with transient errors by default.
+
+### Other Changes
+* Upgrade `Microsoft.Extensions.Azure` to 1.12.0.
+
+## 2.0.1 (2025-03-12)
+
+### Bugs Fixed
+* Fix SignalR trigger completion message serialization for dotnet-isolated worker.
+
+## 2.0.0 (2025-03-04)
+
+### Breaking Changes
+* Modify `AddDefaultAuth` method in `SignalRFunctionsHostBuilderExtensions.cs` to use `IServiceCollection` instead of `IFunctionsHostBuilder` to remove the dependency for legacy package `Microsoft.Azure.Functions.Extensions`.
+
+### Bugs Fixed
+* Correctly support returning result for SignalR invocation in MessagePack protocol from isolated-worker process.
+
+### Other Changes
+* Update `MessagePack` to 2.5.192
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.29.0
+
+## 1.15.0 (2024-10-14)
+
+### Bugs Fixed
+* Fixed the issue that the function return value from isolated-worker process is not handled correctly.
+
+## 1.14.0 (2024-05-24)
+
+### Other Changes
+* Update `System.IdentityModel.Tokens.Jwt` to 6.35.0
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.25.2
+
 ## 1.13.0 (2024-02-06)
 
 ### Other Changes
@@ -18,7 +54,7 @@
 
 ## 1.12.0 (2023-11-07)
 ### Features Added
-* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about cutomize retry options, see samples.
+* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about customize retry options, see samples.
 * Added `HttpClientTimeout` to `SignalROptions` to configure HTTP client timeout for SignalR Service REST API calls. The default value is 100 seconds. User can also set "AzureSignalRHttpClientTimeout" in the app settings to override the default value.
 
 ### Bugs Fixed
@@ -69,7 +105,7 @@
 
 ### Bugs Fixed
 * Fixed the message order problem.
-* Fixed the ackable message timeout problem when multiple SignalR endpoints exist.
+* Fixed the ack-able message timeout problem when multiple SignalR endpoints exist.
 
 ## 1.7.0 (2022-02-22)
 **Following are the all changes in 1.7.0-beta.2 and 1.7.0-beta.1 versions.**

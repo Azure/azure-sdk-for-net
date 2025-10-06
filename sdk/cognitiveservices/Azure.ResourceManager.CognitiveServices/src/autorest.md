@@ -8,19 +8,21 @@ azure-arm: true
 csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/ba1884683c35d1ea63d229a7106f207e507c3861/specification/cognitiveservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/88652738431f51137c31860eb70a17cbce12a6d4/specification/cognitiveservices/resource-manager/readme.md
+#tag: package-2025-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 list-exception:
   - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
@@ -30,6 +32,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}: CognitiveServicesAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}: CommitmentPlan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}: CognitiveServicesCommitmentPlan
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}: CognitiveServicesCapabilityHost
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/capabilityHosts/{capabilityHostName}: CognitiveServicesProjectCapabilityHost
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/connections/{connectionName}: CognitiveServicesConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/connections/{connectionName}: CognitiveServicesProjectConnection
 
 rename-mapping:
   CheckSkuAvailabilityParameter.type: ResourceType
@@ -87,6 +93,35 @@ rename-mapping:
   Model: CognitiveServicesModel
   ModelSku: CognitiveServicesModelSku
   CapacityConfig: CognitiveServicesCapacityConfig
+  CalculateModelCapacityParameter: CalculateModelCapacityContent
+  RaiBlocklistItemBulkRequest: RaiBlocklistItemBulkContent
+  SkuResource: CognitiveServicesResourceSku
+  DeploymentProperties.dynamicThrottlingEnabled: IsDynamicThrottlingEnabled
+  RaiMonitorConfig.adxStorageResourceId: -|arm-id
+  UserOwnedAmlWorkspace.resourceId: -|arm-id
+  NetworkSecurityPerimeter.perimeterGuid: -|uuid
+  ByPassSelection: TrustedServicesByPassSelection
+  ContentLevel: RaiPolicyContentLevel
+  ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
+  ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
+  CapabilityHost: CognitiveServicesCapabilityHost
+  CapabilityHostProperties: CognitiveServicesCapabilityHostProperties
+  ConnectionPropertiesV2BasicResource: CognitiveServicesConnection
+  ConnectionUpdateContent: CognitiveServicesConnectionPatch
+  ConnectionPropertiesV2: CognitiveServicesConnectionProperties
+  Project: CognitiveServicesProject
+  ProjectProperties: CognitiveServicesProjectProperties
+  AADAuthTypeConnectionProperties: AadAuthTypeConnectionProperties
+  ConnectionAccessKey: CognitiveServicesConnectionAccessKey
+  ConnectionCategory: CognitiveServicesConnectionCategory
+  ConnectionGroup: CognitiveServicesConnectionGroup
+  ConnectionManagedIdentity: CognitiveServicesConnectionManagedIdentity
+  ConnectionOAuth2: CognitiveServicesConnectionOAuth2
+  ConnectionServicePrincipal: CognitiveServicesConnectionServicePrincipal
+  ConnectionUsernamePassword: CognitiveServicesConnectionUsernamePassword
+  NetworkInjections: AIFoundryNetworkInjection
+  PATAuthTypeConnectionProperties: PatAuthTypeConnectionProperties
+  ScenarioType: AIFoundryNetworkInjectionScenarioType
 
 prepend-rp-prefix:
   - Account
@@ -96,9 +131,13 @@ prepend-rp-prefix:
   - AccountProperties
   - AccountSku
   - AccountSkuListResult
+  - EncryptionScope
+  - EncryptionScopeProperties
   - IpRule
   - NetworkRuleAction
   - NetworkRuleSet
+  - NetworkSecurityPerimeter
+  - ResourceBase
   - SkuCapability
   - SkuChangeInfo
   - VirtualNetworkRule
@@ -135,6 +174,8 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Db: DB
+  SqlMi: SqlMI
 
 directive:
   - from: cognitiveservices.json

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Mocking
 {
@@ -49,15 +47,27 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ElasticOpenAIIntegrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticOpenAIIntegrationResource.CreateResourceIdentifier" /> to create an <see cref="ElasticOpenAIIntegrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
-        public virtual MonitoringTagRuleResource GetMonitoringTagRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticOpenAIIntegrationResource"/> object. </returns>
+        public virtual ElasticOpenAIIntegrationResource GetElasticOpenAIIntegrationResource(ResourceIdentifier id)
         {
-            MonitoringTagRuleResource.ValidateResourceId(id);
-            return new MonitoringTagRuleResource(Client, id);
+            ElasticOpenAIIntegrationResource.ValidateResourceId(id);
+            return new ElasticOpenAIIntegrationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticTagRuleResource.CreateResourceIdentifier" /> to create an <see cref="ElasticTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticTagRuleResource"/> object. </returns>
+        public virtual ElasticTagRuleResource GetElasticTagRuleResource(ResourceIdentifier id)
+        {
+            ElasticTagRuleResource.ValidateResourceId(id);
+            return new ElasticTagRuleResource(Client, id);
         }
     }
 }

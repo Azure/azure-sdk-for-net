@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The resource type name. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The aliases for property names. </summary>
+        [WirePath("aliases")]
         public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
     }
 }

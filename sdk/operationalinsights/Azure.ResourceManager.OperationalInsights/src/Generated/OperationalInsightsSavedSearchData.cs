@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -102,20 +101,28 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The category of the saved search. This helps the user to find a saved search faster. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> Saved search display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The query expression for the saved search. </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
         /// <summary> The function alias if query serves as a function. </summary>
+        [WirePath("properties.functionAlias")]
         public string FunctionAlias { get; set; }
         /// <summary> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </summary>
+        [WirePath("properties.functionParameters")]
         public string FunctionParameters { get; set; }
         /// <summary> The version number of the query language. The current version is 2 and is the default. </summary>
+        [WirePath("properties.version")]
         public long? Version { get; set; }
         /// <summary> The tags attached to the saved search. </summary>
+        [WirePath("properties.tags")]
         public IList<OperationalInsightsTag> Tags { get; }
     }
 }

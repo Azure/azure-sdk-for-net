@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -77,6 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Properties of a private link resource. </summary>
+        [WirePath("properties")]
         public AppServicePrivateLinkResourceProperties Properties { get; }
     }
 }

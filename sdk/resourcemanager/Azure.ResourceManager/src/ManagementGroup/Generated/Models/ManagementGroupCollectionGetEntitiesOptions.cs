@@ -20,12 +20,16 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </summary>
+        [WirePath("skipToken")]
         public string SkipToken { get; set; }
         /// <summary> Number of entities to skip over when retrieving results. Passing this in will override $skipToken. </summary>
+        [WirePath("skip")]
         public int? Skip { get; set; }
         /// <summary> Number of elements to return when retrieving results. Passing this in will override $skipToken. </summary>
+        [WirePath("top")]
         public int? Top { get; set; }
         /// <summary> This parameter specifies the fields to include in the response. Can include any combination of Name,DisplayName,Type,ParentDisplayNameChain,ParentChain, e.g. '$select=Name,DisplayName,Type,ParentDisplayNameChain,ParentNameChain'. When specified the $select parameter can override select in $skipToken. </summary>
+        [WirePath("select")]
         public string Select { get; set; }
         /// <summary>
         /// The $search parameter is used in conjunction with the $filter parameter to return three different outputs depending on the parameter passed in.
@@ -35,14 +39,19 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// With $search=ParentOnly the API will return only the group if the user has access to at least one of the descendants of the group.
         /// With $search=ChildrenOnly the API will return only the first level of children of the group entity info specified in $filter.  The user must have direct access to the children entities or one of it's descendants for it to show up in the results.
         /// </summary>
+        [WirePath("search")]
         public EntitySearchOption? Search { get; set; }
         /// <summary> The filter parameter allows you to filter on the the name or display name fields. You can check for equality on the name field (e.g. name eq '{entityName}')  and you can check for substrings on either the name or display name fields(e.g. contains(name, '{substringToSearch}'), contains(displayName, '{substringToSearch')). Note that the '{entityName}' and '{substringToSearch}' fields are checked case insensitively. </summary>
+        [WirePath("filter")]
         public string Filter { get; set; }
         /// <summary> The view parameter allows clients to filter the type of data that is returned by the getEntities call. </summary>
+        [WirePath("view")]
         public EntityViewOption? View { get; set; }
         /// <summary> A filter which allows the get entities call to focus on a particular group (i.e. "$filter=name eq 'groupName'"). </summary>
+        [WirePath("groupName")]
         public string GroupName { get; set; }
         /// <summary> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </summary>
+        [WirePath("cacheControl")]
         public string CacheControl { get; set; }
     }
 }

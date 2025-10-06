@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="targetConnectionInfo"/> or <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, PostgreSqlConnectionInfo sourceConnectionInfo)
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, PostgreSqlConnectionInfo sourceConnectionInfo, string encryptedKeyForSecureFields, DateTimeOffset? startedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo, string encryptedKeyForSecureFields, DateTimeOffset? startedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             TargetConnectionInfo = targetConnectionInfo;
@@ -88,9 +87,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Databases to migrate. </summary>
         public IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> SelectedDatabases { get; }
         /// <summary> Connection information for target Azure Database for PostgreSQL. </summary>
-        public PostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Connection information for source PostgreSQL. </summary>
-        public PostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
         /// <summary> Migration start time. </summary>

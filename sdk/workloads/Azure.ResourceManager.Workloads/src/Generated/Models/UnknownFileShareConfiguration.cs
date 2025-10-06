@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The UnknownFileShareConfiguration. </summary>
+    /// <summary> Unknown version of FileShareConfiguration. </summary>
     internal partial class UnknownFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFileShareConfiguration"/>. </summary>

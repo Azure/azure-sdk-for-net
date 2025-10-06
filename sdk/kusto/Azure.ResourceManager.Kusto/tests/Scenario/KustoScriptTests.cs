@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Kusto.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Tests.Scenario
@@ -28,9 +29,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var scriptName = GenerateAssetName("sdkScript");
 
+            var scriptUpdateContent = $".create table {GenerateAssetName("sdkScriptUpdateContentTable")} (Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)";
+
             var scriptDataUpdate = new KustoScriptData
             {
-                ForceUpdateTag = "tag1", ScriptUri = TE.ScriptUri, ScriptUriSasToken = TE.StorageAccountSasToken
+                ForceUpdateTag = "tag1", ScriptContent = scriptUpdateContent, ShouldContinueOnErrors = true, ScriptLevel = KustoScriptLevel.Database,  PrincipalPermissionsAction = PrincipalPermissionsAction.RetainPermissionOnScriptCompletion
             };
 
             var scriptContent =
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 "(Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)";
             var scriptDataCreate = new KustoScriptData
             {
-                ForceUpdateTag = "tag2", ScriptContent = scriptContent, ShouldContinueOnErrors = true
+                ForceUpdateTag = "tag2", ScriptContent = scriptContent, ShouldContinueOnErrors = true, ScriptLevel = KustoScriptLevel.Database, PrincipalPermissionsAction = PrincipalPermissionsAction.RetainPermissionOnScriptCompletion
             };
 
             Task<ArmOperation<KustoScriptResource>> CreateOrUpdateScriptAsync(
@@ -71,9 +74,10 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             AssertEquality(expectedScriptData.ForceUpdateTag, actualScriptData.ForceUpdateTag);
             AssertEquality(expectedFullScriptName, actualScriptData.Name);
             Assert.IsNull(actualScriptData.ScriptContent);
-            AssertEquality(expectedScriptData.ScriptUri, actualScriptData.ScriptUri);
             Assert.IsNull(actualScriptData.ScriptUriSasToken);
             AssertEquality(expectedScriptData.ShouldContinueOnErrors ?? false, actualScriptData.ShouldContinueOnErrors);
+            AssertEquality(expectedScriptData.ScriptLevel, actualScriptData.ScriptLevel);
+            AssertEquality(expectedScriptData.PrincipalPermissionsAction, actualScriptData.PrincipalPermissionsAction);
         }
     }
 }

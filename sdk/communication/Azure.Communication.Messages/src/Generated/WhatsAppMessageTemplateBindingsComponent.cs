@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.Messages;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
@@ -71,6 +70,6 @@ namespace Azure.Communication.Messages.Models.Channels
         }
 
         /// <summary> The name of the referenced item in the template values. </summary>
-        public string RefValue { get; }
+        public string RefValue { get; set; }
     }
 }

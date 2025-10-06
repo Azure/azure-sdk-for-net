@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -95,16 +94,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The upload file format version. </summary>
+        [WirePath("version")]
         public int Version { get; }
         /// <summary> An identifier for the Azure SIM onboarding public key used for encrypted upload. </summary>
+        [WirePath("azureKeyIdentifier")]
         public int AzureKeyIdentifier { get; }
         /// <summary> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </summary>
+        [WirePath("vendorKeyFingerprint")]
         public string VendorKeyFingerprint { get; }
         /// <summary> The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key. </summary>
+        [WirePath("encryptedTransportKey")]
         public string EncryptedTransportKey { get; }
         /// <summary> The encrypted transport key, signed using the SIM vendor private key. </summary>
+        [WirePath("signedTransportKey")]
         public string SignedTransportKey { get; }
         /// <summary> A list of SIMs to upload, with encrypted properties. </summary>
+        [WirePath("sims")]
         public IList<SimNameAndEncryptedProperties> Sims { get; }
     }
 }

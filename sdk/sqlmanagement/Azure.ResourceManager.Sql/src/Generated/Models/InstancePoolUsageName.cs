@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Usage name value. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Usage name localized value. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

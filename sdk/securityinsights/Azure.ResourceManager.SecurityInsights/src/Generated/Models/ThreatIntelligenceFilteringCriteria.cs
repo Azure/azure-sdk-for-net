@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -91,30 +90,43 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Page size. </summary>
+        [WirePath("pageSize")]
         public int? PageSize { get; set; }
         /// <summary> Minimum confidence. </summary>
+        [WirePath("minConfidence")]
         public int? MinConfidence { get; set; }
         /// <summary> Maximum confidence. </summary>
+        [WirePath("maxConfidence")]
         public int? MaxConfidence { get; set; }
         /// <summary> Start time for ValidUntil filter. </summary>
+        [WirePath("minValidUntil")]
         public DateTimeOffset? MinValidUntil { get; set; }
         /// <summary> End time for ValidUntil filter. </summary>
+        [WirePath("maxValidUntil")]
         public DateTimeOffset? MaxValidUntil { get; set; }
         /// <summary> Parameter to include/exclude disabled indicators. </summary>
+        [WirePath("includeDisabled")]
         public bool? IsIncludeDisabled { get; set; }
         /// <summary> Columns to sort by and sorting order. </summary>
+        [WirePath("sortBy")]
         public IList<ThreatIntelligenceSortingCriteria> SortBy { get; }
         /// <summary> Sources of threat intelligence indicators. </summary>
+        [WirePath("sources")]
         public IList<string> Sources { get; }
         /// <summary> Pattern types. </summary>
+        [WirePath("patternTypes")]
         public IList<string> PatternTypes { get; }
         /// <summary> Threat types of threat intelligence indicators. </summary>
+        [WirePath("threatTypes")]
         public IList<string> ThreatTypes { get; }
         /// <summary> Ids of threat intelligence indicators. </summary>
+        [WirePath("ids")]
         public IList<string> Ids { get; }
         /// <summary> Keywords for searching threat intelligence indicators. </summary>
+        [WirePath("keywords")]
         public IList<string> Keywords { get; }
         /// <summary> Skip token. </summary>
+        [WirePath("skipToken")]
         public string SkipToken { get; set; }
     }
 }

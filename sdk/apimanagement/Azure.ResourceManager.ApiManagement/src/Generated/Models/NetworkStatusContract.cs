@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -77,8 +76,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Gets the list of DNS servers IPV4 addresses. </summary>
+        [WirePath("dnsServers")]
         public IReadOnlyList<string> DnsServers { get; }
         /// <summary> Gets the list of Connectivity Status to the Resources on which the service depends upon. </summary>
+        [WirePath("connectivityStatus")]
         public IReadOnlyList<ConnectivityStatusContract> ConnectivityStatus { get; }
     }
 }

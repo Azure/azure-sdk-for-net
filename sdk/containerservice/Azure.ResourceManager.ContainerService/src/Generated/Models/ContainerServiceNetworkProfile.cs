@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -92,34 +91,49 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Network plugin used for building the Kubernetes network. </summary>
+        [WirePath("networkPlugin")]
         public ContainerServiceNetworkPlugin? NetworkPlugin { get; set; }
         /// <summary> The mode the network plugin should use. </summary>
+        [WirePath("networkPluginMode")]
         public ContainerServiceNetworkPluginMode? NetworkPluginMode { get; set; }
         /// <summary> Network policy used for building the Kubernetes network. </summary>
+        [WirePath("networkPolicy")]
         public ContainerServiceNetworkPolicy? NetworkPolicy { get; set; }
         /// <summary> This cannot be specified if networkPlugin is anything other than 'azure'. </summary>
+        [WirePath("networkMode")]
         public ContainerServiceNetworkMode? NetworkMode { get; set; }
         /// <summary> Network dataplane used in the Kubernetes cluster. </summary>
+        [WirePath("networkDataplane")]
         public NetworkDataplane? NetworkDataplane { get; set; }
         /// <summary> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </summary>
+        [WirePath("podCidr")]
         public string PodCidr { get; set; }
         /// <summary> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </summary>
+        [WirePath("serviceCidr")]
         public string ServiceCidr { get; set; }
         /// <summary> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </summary>
+        [WirePath("dnsServiceIP")]
         public string DnsServiceIP { get; set; }
         /// <summary> This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype). </summary>
+        [WirePath("outboundType")]
         public ContainerServiceOutboundType? OutboundType { get; set; }
         /// <summary> The default is 'standard'. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </summary>
+        [WirePath("loadBalancerSku")]
         public ContainerServiceLoadBalancerSku? LoadBalancerSku { get; set; }
         /// <summary> Profile of the cluster load balancer. </summary>
+        [WirePath("loadBalancerProfile")]
         public ManagedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
         /// <summary> Profile of the cluster NAT gateway. </summary>
+        [WirePath("natGatewayProfile")]
         public ManagedClusterNatGatewayProfile NatGatewayProfile { get; set; }
         /// <summary> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </summary>
+        [WirePath("podCidrs")]
         public IList<string> PodCidrs { get; }
         /// <summary> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </summary>
+        [WirePath("serviceCidrs")]
         public IList<string> ServiceCidrs { get; }
         /// <summary> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
+        [WirePath("ipFamilies")]
         public IList<IPFamily> IPFamilies { get; }
     }
 }

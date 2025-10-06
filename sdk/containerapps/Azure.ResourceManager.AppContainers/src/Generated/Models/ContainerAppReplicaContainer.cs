@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The Name of the Container. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The Id of the Container. </summary>
+        [WirePath("containerId")]
         public string ContainerId { get; set; }
         /// <summary> The container ready status. </summary>
+        [WirePath("ready")]
         public bool? IsReady { get; set; }
         /// <summary> The container start status. </summary>
+        [WirePath("started")]
         public bool? IsStarted { get; set; }
         /// <summary> The container restart count. </summary>
+        [WirePath("restartCount")]
         public int? RestartCount { get; set; }
         /// <summary> Current running state of the container. </summary>
+        [WirePath("runningState")]
         public ContainerAppContainerRunningState? RunningState { get; }
         /// <summary> The details of container current running state. </summary>
+        [WirePath("runningStateDetails")]
         public string RunningStateDetails { get; }
         /// <summary> Log Stream endpoint. </summary>
+        [WirePath("logStreamEndpoint")]
         public string LogStreamEndpoint { get; }
         /// <summary> Container exec endpoint. </summary>
+        [WirePath("execEndpoint")]
         public string ExecEndpoint { get; }
     }
 }

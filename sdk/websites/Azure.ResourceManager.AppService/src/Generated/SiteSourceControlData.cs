@@ -84,20 +84,28 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Repository or source control URL. </summary>
+        [WirePath("properties.repoUrl")]
         public Uri RepoUri { get; set; }
         /// <summary> Name of branch to use for deployment. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </summary>
+        [WirePath("properties.isManualIntegration")]
         public bool? IsManualIntegration { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </summary>
+        [WirePath("properties.isGitHubAction")]
         public bool? IsGitHubAction { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.deploymentRollbackEnabled")]
         public bool? IsDeploymentRollbackEnabled { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
+        [WirePath("properties.isMercurial")]
         public bool? IsMercurial { get; set; }
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
+        [WirePath("properties.gitHubActionConfiguration")]
         public GitHubActionConfiguration GitHubActionConfiguration { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -33,7 +33,24 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public void RegisterHub<THub>() where THub : WebPubSubHub
         {
             var hub = Create<THub>();
-            _hubRegistry[hub.GetType().Name] = hub;
+            RegisterHub(hub.GetType().Name, hub);
+        }
+
+        public void RegisterHub<THub>(string hubName) where THub : WebPubSubHub
+        {
+            var hub = Create<THub>();
+            RegisterHub(hubName, hub);
+        }
+
+        // For test only
+        internal void RegisterHub(string hubName, WebPubSubHub hub)
+        {
+            if (string.IsNullOrWhiteSpace(hubName))
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+
+            _hubRegistry[hubName] = hub ?? throw new ArgumentNullException(nameof(hub));
         }
 
         public WebPubSubHub GetHub(string hubName)
@@ -74,9 +91,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
             #endregion
 
+            WebPubSubEventRequest serviceRequest = null;
             try
             {
-                var serviceRequest = await request.ReadWebPubSubEventAsync(_requestValidator, context.RequestAborted).ConfigureAwait(false);
+                serviceRequest = await request.ReadWebPubSubEventAsync(_requestValidator, context.RequestAborted).ConfigureAwait(false);
                 Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
                 switch (serviceRequest)
@@ -86,7 +104,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         {
                             if (preflightRequest.IsValid)
                             {
-                                context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
+                                context.Response.Headers.Append(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                                 break;
                             }
                             context.Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -100,7 +118,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             if (response != null)
                             {
                                 SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.ConnectionStates);
-                                await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(response, response.GetType())).ConfigureAwait(false);
                             }
                             break;
                         }
@@ -135,18 +153,76 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 }
                 Log.SucceededToHandleRequest(_logger, serviceRequest.ConnectionContext);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception ex) when (ex is UnauthorizedAccessException or AuthenticationException)
             {
                 Log.FailedToHandleRequest(_logger, ex.Message, ex);
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
+                string responseBodyString;
+                if (serviceRequest is MqttConnectEventRequest mqttConnect)
+                {
+                    var responseBody = mqttConnect.Mqtt.ProtocolVersion switch
+                    {
+                        MqttProtocolVersion.V311 => ex switch
+                        {
+                            UnauthorizedAccessException => mqttConnect.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized, ex.Message),
+                            AuthenticationException => mqttConnect.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.BadUsernameOrPassword, ex.Message),
+                            // Should not reach here
+                            _ => throw new NotSupportedException($"Exception {ex.GetType().Name} is not supported.")
+                        },
+                        MqttProtocolVersion.V500 => ex switch
+                        {
+                            UnauthorizedAccessException => mqttConnect.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.NotAuthorized, ex.Message),
+                            AuthenticationException => mqttConnect.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.BadUserNameOrPassword, ex.Message),
+                            // Should not reach here
+                            _ => throw new NotSupportedException($"Exception {ex.GetType().Name} is not supported.")
+                        },
+                        // Should not reach here.
+                        _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
+                    };
+                    responseBodyString = JsonSerializer.Serialize(responseBody);
+                }
+                else
+                {
+                    responseBodyString = ex.Message;
+                }
+                await context.Response.WriteAsync(responseBodyString).ConfigureAwait(false);
+            }
+            catch (MqttConnectionException mqttException)
+            {
+                Log.FailedToHandleRequest(_logger, mqttException.Message, mqttException);
+                if (serviceRequest is MqttConnectEventRequest mqttConnect)
+                {
+                    context.Response.StatusCode = (int)MqttConnectCodeToHttpStatusCodeConverter.ToHttpStatusCode(mqttException.MqttErrorResponse.Mqtt.Code);
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(mqttException.MqttErrorResponse)).ConfigureAwait(false);
+                }
+                else
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    await context.Response.WriteAsync($"Exception of type '{nameof(MqttConnectionException)}' can only be thrown for MQTT clients.").ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
                 Log.FailedToHandleRequest(_logger, ex.Message, ex);
                 // logging to service.
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
+                string responseBodyString;
+                if (serviceRequest is MqttConnectEventRequest mqttConnect)
+                {
+                    var responseBody = mqttConnect.Mqtt.ProtocolVersion switch
+                    {
+                        MqttProtocolVersion.V311 => mqttConnect.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.ServerUnavailable, ex.Message),
+                        MqttProtocolVersion.V500 => mqttConnect.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
+                        // Should not reach here.
+                        _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
+                    };
+                    responseBodyString = JsonSerializer.Serialize(responseBody);
+                }
+                else
+                {
+                    responseBodyString = ex.Message;
+                }
+                await context.Response.WriteAsync(responseBodyString).ConfigureAwait(false);
             }
         }
 
@@ -155,7 +231,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             var updatedStates = connectionContext.UpdateStates(newStates);
             if (updatedStates != null)
             {
-                context.Response.Headers.Add(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
+                context.Response.Headers.Append(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
             }
         }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownOperationExtendedInfo. </summary>
+    /// <summary> Unknown version of OperationExtendedInfo. </summary>
     internal partial class UnknownOperationExtendedInfo : DataProtectionOperationExtendedInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOperationExtendedInfo"/>. </summary>

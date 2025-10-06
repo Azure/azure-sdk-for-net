@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string IPv4Value = "IPv4";
         private const string IPv6Value = "IPv6";
 
-        /// <summary> IPv4. </summary>
+        /// <summary> The IP configuration's public IP is IPv4. </summary>
         public static ServiceFabricManagedClusterPublicIPAddressVersion IPv4 { get; } = new ServiceFabricManagedClusterPublicIPAddressVersion(IPv4Value);
-        /// <summary> IPv6. </summary>
+        /// <summary> The IP configuration's public IP is IPv6. </summary>
         public static ServiceFabricManagedClusterPublicIPAddressVersion IPv6 { get; } = new ServiceFabricManagedClusterPublicIPAddressVersion(IPv6Value);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterPublicIPAddressVersion"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClusterPublicIPAddressVersion left, ServiceFabricManagedClusterPublicIPAddressVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterPublicIPAddressVersion"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedClusterPublicIPAddressVersion left, ServiceFabricManagedClusterPublicIPAddressVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterPublicIPAddressVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClusterPublicIPAddressVersion"/>. </summary>
         public static implicit operator ServiceFabricManagedClusterPublicIPAddressVersion(string value) => new ServiceFabricManagedClusterPublicIPAddressVersion(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

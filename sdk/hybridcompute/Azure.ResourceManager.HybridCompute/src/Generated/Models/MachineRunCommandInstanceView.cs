@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -76,20 +75,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Script execution status. </summary>
+        [WirePath("executionState")]
         public HybridComputeExecutionState? ExecutionState { get; }
         /// <summary> Communicate script configuration errors or execution messages. </summary>
+        [WirePath("executionMessage")]
         public string ExecutionMessage { get; }
         /// <summary> Exit code returned from script execution. </summary>
+        [WirePath("exitCode")]
         public int? ExitCode { get; }
         /// <summary> Script output stream. </summary>
+        [WirePath("output")]
         public string Output { get; }
         /// <summary> Script error stream. </summary>
+        [WirePath("error")]
         public string Error { get; }
         /// <summary> Script start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Script end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The  status information. </summary>
+        [WirePath("statuses")]
         public IReadOnlyList<ExtensionsResourceStatus> Statuses { get; }
     }
 }

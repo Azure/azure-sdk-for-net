@@ -88,24 +88,34 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> App Service app name. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName { get; set; }
         /// <summary> Fully qualified ARM domain resource URI. </summary>
+        [WirePath("properties.domainId")]
         public string DomainId { get; set; }
         /// <summary> Azure resource name. </summary>
+        [WirePath("properties.azureResourceName")]
         public string AzureResourceName { get; set; }
         /// <summary> Azure resource type. </summary>
+        [WirePath("properties.azureResourceType")]
         public AppServiceResourceType? AzureResourceType { get; set; }
         /// <summary> Custom DNS record type. </summary>
+        [WirePath("properties.customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
         /// <summary> Hostname type. </summary>
+        [WirePath("properties.hostNameType")]
         public AppServiceHostNameType? HostNameType { get; set; }
         /// <summary> SSL type. </summary>
+        [WirePath("properties.sslState")]
         public HostNameBindingSslState? SslState { get; set; }
         /// <summary> SSL certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string ThumbprintString { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("properties.virtualIP")]
         public string VirtualIP { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

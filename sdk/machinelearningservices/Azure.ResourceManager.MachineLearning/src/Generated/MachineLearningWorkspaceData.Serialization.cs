@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -17,22 +19,30 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -42,52 +52,166 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("allowPublicAccessWhenBehindVnet"u8);
-                writer.WriteBooleanValue(AllowPublicAccessWhenBehindVnet.Value);
+                writer.WritePropertyName("workspaceId"u8);
+                writer.WriteStringValue(WorkspaceId);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(KeyVault))
+            {
+                writer.WritePropertyName("keyVault"u8);
+                writer.WriteStringValue(KeyVault);
             }
             if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStringValue(ApplicationInsights);
+            }
+            if (Optional.IsDefined(ContainerRegistry))
+            {
+                if (ContainerRegistry != null)
+                {
+                    writer.WritePropertyName("containerRegistry"u8);
+                    writer.WriteStringValue(ContainerRegistry);
+                }
+                else
+                {
+                    writer.WriteNull("containerRegistry");
+                }
+            }
+            if (Optional.IsDefined(StorageAccount))
+            {
+                writer.WritePropertyName("storageAccount"u8);
+                writer.WriteStringValue(StorageAccount);
+            }
+            if (Optional.IsDefined(DiscoveryUri))
+            {
+                writer.WritePropertyName("discoveryUrl"u8);
+                writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(IsHbiWorkspace))
+            {
+                writer.WritePropertyName("hbiWorkspace"u8);
+                writer.WriteBooleanValue(IsHbiWorkspace.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceProvisionedResourceGroup))
+            {
+                writer.WritePropertyName("serviceProvisionedResourceGroup"u8);
+                writer.WriteStringValue(ServiceProvisionedResourceGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkCount))
+            {
+                writer.WritePropertyName("privateLinkCount"u8);
+                writer.WriteNumberValue(PrivateLinkCount.Value);
+            }
+            if (Optional.IsDefined(ImageBuildCompute))
+            {
+                writer.WritePropertyName("imageBuildCompute"u8);
+                writer.WriteStringValue(ImageBuildCompute);
+            }
+            if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
+            {
+                writer.WritePropertyName("allowPublicAccessWhenBehindVnet"u8);
+                writer.WriteBooleanValue(AllowPublicAccessWhenBehindVnet.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccessType))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ServerlessComputeSettings))
+            {
+                writer.WritePropertyName("serverlessComputeSettings"u8);
+                writer.WriteObjectValue(ServerlessComputeSettings, options);
+            }
+            if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            {
+                writer.WritePropertyName("sharedPrivateLinkResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in SharedPrivateLinkResources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotebookInfo))
+            {
+                writer.WritePropertyName("notebookInfo"u8);
+                writer.WriteObjectValue(NotebookInfo, options);
+            }
+            if (Optional.IsDefined(ServiceManagedResourcesSettings))
+            {
+                writer.WritePropertyName("serviceManagedResourcesSettings"u8);
+                writer.WriteObjectValue(ServiceManagedResourcesSettings, options);
+            }
+            if (Optional.IsDefined(PrimaryUserAssignedIdentity))
+            {
+                writer.WritePropertyName("primaryUserAssignedIdentity"u8);
+                writer.WriteStringValue(PrimaryUserAssignedIdentity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsStorageHnsEnabled))
+            {
+                writer.WritePropertyName("storageHnsEnabled"u8);
+                writer.WriteBooleanValue(IsStorageHnsEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MlFlowTrackingUri))
+            {
+                writer.WritePropertyName("mlFlowTrackingUri"u8);
+                writer.WriteStringValue(MlFlowTrackingUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(IsV1LegacyMode))
+            {
+                writer.WritePropertyName("v1LegacyMode"u8);
+                writer.WriteBooleanValue(IsV1LegacyMode.Value);
+            }
+            if (Optional.IsDefined(ManagedNetwork))
+            {
+                writer.WritePropertyName("managedNetwork"u8);
+                writer.WriteObjectValue(ManagedNetwork, options);
+            }
+            if (Optional.IsDefined(FeatureStoreSettings))
+            {
+                writer.WritePropertyName("featureStoreSettings"u8);
+                writer.WriteObjectValue(FeatureStoreSettings, options);
             }
             if (Optional.IsCollectionDefined(AssociatedWorkspaces))
             {
@@ -99,221 +223,20 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistries))
-            {
-                writer.WritePropertyName("containerRegistries"u8);
-                writer.WriteStartArray();
-                foreach (var item in ContainerRegistries)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ContainerRegistry))
-            {
-                writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteStringValue(ContainerRegistry);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(DiscoveryUri))
-            {
-                writer.WritePropertyName("discoveryUrl"u8);
-                writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
-            }
             if (Optional.IsDefined(EnableDataIsolation))
             {
                 writer.WritePropertyName("enableDataIsolation"u8);
                 writer.WriteBooleanValue(EnableDataIsolation.Value);
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
-            }
-            if (Optional.IsCollectionDefined(ExistingWorkspaces))
-            {
-                writer.WritePropertyName("existingWorkspaces"u8);
-                writer.WriteStartArray();
-                foreach (var item in ExistingWorkspaces)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(FeatureStoreSettings))
-            {
-                writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings);
-            }
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(IsHbiWorkspace))
-            {
-                writer.WritePropertyName("hbiWorkspace"u8);
-                writer.WriteBooleanValue(IsHbiWorkspace.Value);
             }
             if (Optional.IsDefined(HubResourceId))
             {
                 writer.WritePropertyName("hubResourceId"u8);
                 writer.WriteStringValue(HubResourceId);
             }
-            if (Optional.IsDefined(ImageBuildCompute))
-            {
-                writer.WritePropertyName("imageBuildCompute"u8);
-                writer.WriteStringValue(ImageBuildCompute);
-            }
-            if (Optional.IsDefined(KeyVault))
-            {
-                writer.WritePropertyName("keyVault"u8);
-                writer.WriteStringValue(KeyVault);
-            }
-            if (Optional.IsCollectionDefined(KeyVaults))
-            {
-                writer.WritePropertyName("keyVaults"u8);
-                writer.WriteStartArray();
-                foreach (var item in KeyVaults)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ManagedNetwork))
-            {
-                writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MlFlowTrackingUri))
-            {
-                writer.WritePropertyName("mlFlowTrackingUri"u8);
-                writer.WriteStringValue(MlFlowTrackingUri.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NotebookInfo))
-            {
-                writer.WritePropertyName("notebookInfo"u8);
-                writer.WriteObjectValue(NotebookInfo);
-            }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentity))
-            {
-                writer.WritePropertyName("primaryUserAssignedIdentity"u8);
-                writer.WriteStringValue(PrimaryUserAssignedIdentity);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkCount))
-            {
-                writer.WritePropertyName("privateLinkCount"u8);
-                writer.WriteNumberValue(PrivateLinkCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccessType))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceManagedResourcesSettings))
-            {
-                writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ServiceProvisionedResourceGroup))
-            {
-                writer.WritePropertyName("serviceProvisionedResourceGroup"u8);
-                writer.WriteStringValue(ServiceProvisionedResourceGroup);
-            }
-            if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
-            {
-                writer.WritePropertyName("sharedPrivateLinkResources"u8);
-                writer.WriteStartArray();
-                foreach (var item in SharedPrivateLinkResources)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
-            {
-                writer.WritePropertyName("softDeleteRetentionInDays"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
-            }
-            if (Optional.IsDefined(StorageAccount))
-            {
-                writer.WritePropertyName("storageAccount"u8);
-                writer.WriteStringValue(StorageAccount);
-            }
-            if (Optional.IsCollectionDefined(StorageAccounts))
-            {
-                writer.WritePropertyName("storageAccounts"u8);
-                writer.WriteStartArray();
-                foreach (var item in StorageAccounts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsStorageHnsEnabled))
-            {
-                writer.WritePropertyName("storageHnsEnabled"u8);
-                writer.WriteBooleanValue(IsStorageHnsEnabled.Value);
-            }
-            if (Optional.IsDefined(SystemDatastoresAuthMode))
-            {
-                writer.WritePropertyName("systemDatastoresAuthMode"u8);
-                writer.WriteStringValue(SystemDatastoresAuthMode);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            if (Optional.IsDefined(IsV1LegacyMode))
-            {
-                writer.WritePropertyName("v1LegacyMode"u8);
-                writer.WriteBooleanValue(IsV1LegacyMode.Value);
-            }
             if (Optional.IsDefined(WorkspaceHubConfig))
             {
                 writer.WritePropertyName("workspaceHubConfig"u8);
-                writer.WriteObjectValue(WorkspaceHubConfig);
-            }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
-            {
-                writer.WritePropertyName("workspaceId"u8);
-                writer.WriteStringValue(WorkspaceId);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WriteObjectValue(WorkspaceHubConfig, options);
             }
             writer.WriteEndObject();
         }
@@ -323,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -332,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -347,45 +270,40 @@ namespace Azure.ResourceManager.MachineLearning
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            bool? allowPublicAccessWhenBehindVnet = default;
-            string applicationInsights = default;
-            IList<string> associatedWorkspaces = default;
-            IList<string> containerRegistries = default;
-            string containerRegistry = default;
-            string description = default;
-            Uri discoveryUrl = default;
-            bool? enableDataIsolation = default;
-            MachineLearningEncryptionSetting encryption = default;
-            IList<string> existingWorkspaces = default;
-            FeatureStoreSettings featureStoreSettings = default;
-            string friendlyName = default;
-            bool? hbiWorkspace = default;
-            ResourceIdentifier hubResourceId = default;
-            string imageBuildCompute = default;
-            string keyVault = default;
-            IList<string> keyVaults = default;
-            ManagedNetworkSettings managedNetwork = default;
-            Uri mlFlowTrackingUri = default;
-            MachineLearningNotebookResourceInfo notebookInfo = default;
-            string primaryUserAssignedIdentity = default;
-            IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default;
-            int? privateLinkCount = default;
-            MachineLearningProvisioningState? provisioningState = default;
-            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
-            ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
-            string serviceProvisionedResourceGroup = default;
-            IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default;
-            int? softDeleteRetentionInDays = default;
-            string storageAccount = default;
-            IList<string> storageAccounts = default;
-            bool? storageHnsEnabled = default;
-            string systemDatastoresAuthMode = default;
-            Guid? tenantId = default;
-            bool? v1LegacyMode = default;
-            WorkspaceHubConfig workspaceHubConfig = default;
             string workspaceId = default;
+            string description = default;
+            string friendlyName = default;
+            string keyVault = default;
+            string applicationInsights = default;
+            string containerRegistry = default;
+            string storageAccount = default;
+            Uri discoveryUrl = default;
+            MachineLearningProvisioningState? provisioningState = default;
+            MachineLearningEncryptionSetting encryption = default;
+            bool? hbiWorkspace = default;
+            string serviceProvisionedResourceGroup = default;
+            int? privateLinkCount = default;
+            string imageBuildCompute = default;
+            bool? allowPublicAccessWhenBehindVnet = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
+            IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default;
+            ServerlessComputeSettings serverlessComputeSettings = default;
+            IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default;
+            MachineLearningNotebookResourceInfo notebookInfo = default;
+            ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
+            string primaryUserAssignedIdentity = default;
+            Guid? tenantId = default;
+            bool? storageHnsEnabled = default;
+            Uri mlFlowTrackingUri = default;
+            bool? v1LegacyMode = default;
+            ManagedNetworkSettings managedNetwork = default;
+            FeatureStoreSettings featureStoreSettings = default;
+            IList<string> associatedWorkspaces = default;
+            bool? enableDataIsolation = default;
+            ResourceIdentifier hubResourceId = default;
+            WorkspaceHubConfig workspaceHubConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -394,8 +312,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerMachineLearningContext.Default);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -452,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMachineLearningContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -464,13 +381,24 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("allowPublicAccessWhenBehindVnet"u8))
+                        if (property0.NameEquals("workspaceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowPublicAccessWhenBehindVnet = property0.Value.GetBoolean();
+                            workspaceId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("friendlyName"u8))
+                        {
+                            friendlyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyVault"u8))
+                        {
+                            keyVault = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("applicationInsights"u8))
@@ -478,42 +406,19 @@ namespace Azure.ResourceManager.MachineLearning
                             applicationInsights = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("associatedWorkspaces"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            associatedWorkspaces = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("containerRegistries"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            containerRegistries = array;
-                            continue;
-                        }
                         if (property0.NameEquals("containerRegistry"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                containerRegistry = null;
+                                continue;
+                            }
                             containerRegistry = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"u8))
+                        if (property0.NameEquals("storageAccount"u8))
                         {
-                            description = property0.Value.GetString();
+                            storageAccount = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("discoveryUrl"u8))
@@ -525,13 +430,13 @@ namespace Azure.ResourceManager.MachineLearning
                             discoveryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enableDataIsolation"u8))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            enableDataIsolation = property0.Value.GetBoolean();
+                            provisioningState = new MachineLearningProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -543,34 +448,6 @@ namespace Azure.ResourceManager.MachineLearning
                             encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("existingWorkspaces"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            existingWorkspaces = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("featureStoreSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("hbiWorkspace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -580,13 +457,18 @@ namespace Azure.ResourceManager.MachineLearning
                             hbiWorkspace = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hubResourceId"u8))
+                        if (property0.NameEquals("serviceProvisionedResourceGroup"u8))
+                        {
+                            serviceProvisionedResourceGroup = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            hubResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            privateLinkCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("imageBuildCompute"u8))
@@ -594,55 +476,22 @@ namespace Azure.ResourceManager.MachineLearning
                             imageBuildCompute = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVault"u8))
-                        {
-                            keyVault = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaults"u8))
+                        if (property0.NameEquals("allowPublicAccessWhenBehindVnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            keyVaults = array;
+                            allowPublicAccessWhenBehindVnet = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("managedNetwork"u8))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("mlFlowTrackingUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            mlFlowTrackingUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("notebookInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryUserAssignedIdentity"u8))
-                        {
-                            primaryUserAssignedIdentity = property0.Value.GetString();
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -659,45 +508,13 @@ namespace Azure.ResourceManager.MachineLearning
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkCount"u8))
+                        if (property0.NameEquals("serverlessComputeSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            privateLinkCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new MachineLearningProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new MachineLearningPublicNetworkAccessType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceManagedResourcesSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceProvisionedResourceGroup"u8))
-                        {
-                            serviceProvisionedResourceGroup = property0.Value.GetString();
+                            serverlessComputeSettings = ServerlessComputeSettings.DeserializeServerlessComputeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharedPrivateLinkResources"u8))
@@ -714,46 +531,27 @@ namespace Azure.ResourceManager.MachineLearning
                             sharedPrivateLinkResources = array;
                             continue;
                         }
-                        if (property0.NameEquals("softDeleteRetentionInDays"u8))
+                        if (property0.NameEquals("notebookInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            softDeleteRetentionInDays = property0.Value.GetInt32();
+                            notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("storageAccount"u8))
-                        {
-                            storageAccount = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccounts"u8))
+                        if (property0.NameEquals("serviceManagedResourcesSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            storageAccounts = array;
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("storageHnsEnabled"u8))
+                        if (property0.NameEquals("primaryUserAssignedIdentity"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageHnsEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("systemDatastoresAuthMode"u8))
-                        {
-                            systemDatastoresAuthMode = property0.Value.GetString();
+                            primaryUserAssignedIdentity = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("tenantId"u8))
@@ -765,6 +563,24 @@ namespace Azure.ResourceManager.MachineLearning
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("storageHnsEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageHnsEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("mlFlowTrackingUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            mlFlowTrackingUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("v1LegacyMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -772,6 +588,56 @@ namespace Azure.ResourceManager.MachineLearning
                                 continue;
                             }
                             v1LegacyMode = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("managedNetwork"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("featureStoreSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("associatedWorkspaces"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            associatedWorkspaces = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("enableDataIsolation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableDataIsolation = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("hubResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hubResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workspaceHubConfig"u8))
@@ -783,20 +649,15 @@ namespace Azure.ResourceManager.MachineLearning
                             workspaceHubConfig = WorkspaceHubConfig.DeserializeWorkspaceHubConfig(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("workspaceId"u8))
-                        {
-                            workspaceId = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspaceData(
                 id,
                 name,
@@ -807,44 +668,821 @@ namespace Azure.ResourceManager.MachineLearning
                 identity,
                 kind,
                 sku,
-                allowPublicAccessWhenBehindVnet,
-                applicationInsights,
-                associatedWorkspaces ?? new ChangeTrackingList<string>(),
-                containerRegistries ?? new ChangeTrackingList<string>(),
-                containerRegistry,
-                description,
-                discoveryUrl,
-                enableDataIsolation,
-                encryption,
-                existingWorkspaces ?? new ChangeTrackingList<string>(),
-                featureStoreSettings,
-                friendlyName,
-                hbiWorkspace,
-                hubResourceId,
-                imageBuildCompute,
-                keyVault,
-                keyVaults ?? new ChangeTrackingList<string>(),
-                managedNetwork,
-                mlFlowTrackingUri,
-                notebookInfo,
-                primaryUserAssignedIdentity,
-                privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(),
-                privateLinkCount,
-                provisioningState,
-                publicNetworkAccess,
-                serviceManagedResourcesSettings,
-                serviceProvisionedResourceGroup,
-                sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(),
-                softDeleteRetentionInDays,
-                storageAccount,
-                storageAccounts ?? new ChangeTrackingList<string>(),
-                storageHnsEnabled,
-                systemDatastoresAuthMode,
-                tenantId,
-                v1LegacyMode,
-                workspaceHubConfig,
                 workspaceId,
+                description,
+                friendlyName,
+                keyVault,
+                applicationInsights,
+                containerRegistry,
+                storageAccount,
+                discoveryUrl,
+                provisioningState,
+                encryption,
+                hbiWorkspace,
+                serviceProvisionedResourceGroup,
+                privateLinkCount,
+                imageBuildCompute,
+                allowPublicAccessWhenBehindVnet,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(),
+                serverlessComputeSettings,
+                sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(),
+                notebookInfo,
+                serviceManagedResourcesSettings,
+                primaryUserAssignedIdentity,
+                tenantId,
+                storageHnsEnabled,
+                mlFlowTrackingUri,
+                v1LegacyMode,
+                managedNetwork,
+                featureStoreSettings,
+                associatedWorkspaces ?? new ChangeTrackingList<string>(),
+                enableDataIsolation,
+                hubResourceId,
+                workspaceHubConfig,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    workspaceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceId))
+                {
+                    builder.Append("    workspaceId: ");
+                    if (WorkspaceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkspaceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkspaceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    friendlyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FriendlyName))
+                {
+                    builder.Append("    friendlyName: ");
+                    if (FriendlyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FriendlyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FriendlyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    keyVault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVault))
+                {
+                    builder.Append("    keyVault: ");
+                    if (KeyVault.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVault}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVault}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationInsights), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    applicationInsights: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationInsights))
+                {
+                    builder.Append("    applicationInsights: ");
+                    if (ApplicationInsights.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApplicationInsights}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApplicationInsights}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistry), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerRegistry: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerRegistry))
+                {
+                    builder.Append("    containerRegistry: ");
+                    if (ContainerRegistry.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerRegistry}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerRegistry}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageAccount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccount))
+                {
+                    builder.Append("    storageAccount: ");
+                    if (StorageAccount.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageAccount}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageAccount}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiscoveryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    discoveryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiscoveryUri))
+                {
+                    builder.Append("    discoveryUrl: ");
+                    builder.AppendLine($"'{DiscoveryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Encryption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    encryption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Encryption))
+                {
+                    builder.Append("    encryption: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Encryption, options, 4, false, "    encryption: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHbiWorkspace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hbiWorkspace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHbiWorkspace))
+                {
+                    builder.Append("    hbiWorkspace: ");
+                    var boolValue = IsHbiWorkspace.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceProvisionedResourceGroup), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceProvisionedResourceGroup: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceProvisionedResourceGroup))
+                {
+                    builder.Append("    serviceProvisionedResourceGroup: ");
+                    if (ServiceProvisionedResourceGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceProvisionedResourceGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceProvisionedResourceGroup}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateLinkCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkCount))
+                {
+                    builder.Append("    privateLinkCount: ");
+                    builder.AppendLine($"{PrivateLinkCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageBuildCompute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    imageBuildCompute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageBuildCompute))
+                {
+                    builder.Append("    imageBuildCompute: ");
+                    if (ImageBuildCompute.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ImageBuildCompute}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ImageBuildCompute}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowPublicAccessWhenBehindVnet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowPublicAccessWhenBehindVnet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
+                {
+                    builder.Append("    allowPublicAccessWhenBehindVnet: ");
+                    var boolValue = AllowPublicAccessWhenBehindVnet.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccessType))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    builder.AppendLine($"'{PublicNetworkAccessType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerlessComputeSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serverlessComputeSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerlessComputeSettings))
+                {
+                    builder.Append("    serverlessComputeSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServerlessComputeSettings, options, 4, false, "    serverlessComputeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResources), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sharedPrivateLinkResources: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
+                {
+                    if (SharedPrivateLinkResources.Any())
+                    {
+                        builder.Append("    sharedPrivateLinkResources: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SharedPrivateLinkResources)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sharedPrivateLinkResources: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotebookInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    notebookInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotebookInfo))
+                {
+                    builder.Append("    notebookInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NotebookInfo, options, 4, false, "    notebookInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CosmosDbCollectionsThroughput", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceManagedResourcesSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      serviceManagedResourcesSettings: {");
+                builder.AppendLine("        cosmosDb: {");
+                builder.Append("          collectionsThroughput: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("        }");
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceManagedResourcesSettings))
+                {
+                    builder.Append("    serviceManagedResourcesSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServiceManagedResourcesSettings, options, 4, false, "    serviceManagedResourcesSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryUserAssignedIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryUserAssignedIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryUserAssignedIdentity))
+                {
+                    builder.Append("    primaryUserAssignedIdentity: ");
+                    if (PrimaryUserAssignedIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryUserAssignedIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryUserAssignedIdentity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("    tenantId: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageHnsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageHnsEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStorageHnsEnabled))
+                {
+                    builder.Append("    storageHnsEnabled: ");
+                    var boolValue = IsStorageHnsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MlFlowTrackingUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    mlFlowTrackingUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MlFlowTrackingUri))
+                {
+                    builder.Append("    mlFlowTrackingUri: ");
+                    builder.AppendLine($"'{MlFlowTrackingUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsV1LegacyMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    v1LegacyMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsV1LegacyMode))
+                {
+                    builder.Append("    v1LegacyMode: ");
+                    var boolValue = IsV1LegacyMode.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedNetwork), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    managedNetwork: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedNetwork))
+                {
+                    builder.Append("    managedNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedNetwork, options, 4, false, "    managedNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureStoreSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    featureStoreSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeatureStoreSettings))
+                {
+                    builder.Append("    featureStoreSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FeatureStoreSettings, options, 4, false, "    featureStoreSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssociatedWorkspaces), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    associatedWorkspaces: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AssociatedWorkspaces))
+                {
+                    if (AssociatedWorkspaces.Any())
+                    {
+                        builder.Append("    associatedWorkspaces: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AssociatedWorkspaces)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableDataIsolation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableDataIsolation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableDataIsolation))
+                {
+                    builder.Append("    enableDataIsolation: ");
+                    var boolValue = EnableDataIsolation.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HubResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hubResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HubResourceId))
+                {
+                    builder.Append("    hubResourceId: ");
+                    builder.AppendLine($"'{HubResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceHubConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    workspaceHubConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceHubConfig))
+                {
+                    builder.Append("    workspaceHubConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, WorkspaceHubConfig, options, 4, false, "    workspaceHubConfig: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceData>.Write(ModelReaderWriterOptions options)
@@ -854,9 +1492,11 @@ namespace Azure.ResourceManager.MachineLearning
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -868,11 +1508,11 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningWorkspaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -42,29 +42,20 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         private bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
 
         [NonEvent]
-        public void ConfigureFailed(Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ConfigureFailed(ex.FlattenException().ToInvariantString());
-            }
-        }
-
-        [NonEvent]
-        public void GetEnvironmentVariableFailed(string envVarName, Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                GetEnvironmentVariableFailed(envVarName, ex.FlattenException().ToInvariantString());
-            }
-        }
-
-        [NonEvent]
         public void MapLogLevelFailed(EventLevel level)
         {
             if (IsEnabled(EventLevel.Warning))
             {
                 MapLogLevelFailed(level.ToString());
+            }
+        }
+
+        [NonEvent]
+        public void ConfigureFailed(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ConfigureFailed(ex.FlattenException().ToInvariantString());
             }
         }
 
@@ -80,13 +71,67 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(4, Message = "Vendor instrumentation added for: {0}.", Level = EventLevel.Verbose)]
         public void VendorInstrumentationAdded(string packageName) => WriteEvent(4, packageName);
 
-        [Event(5, Message = "Failed to Read environment variable {0}, exception: {1}", Level = EventLevel.Error)]
-        public void GetEnvironmentVariableFailed(string envVarName, string exceptionMessage) => WriteEvent(5, envVarName, exceptionMessage);
+        [Event(5, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
+        public void MapLogLevelFailed(string level) => WriteEvent(5, level);
 
-        [Event(6, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
-        public void MapLogLevelFailed(string level) => WriteEvent(6, level);
+        [Event(6, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
+        public void LogForwarderIsAlreadyRegistered() => WriteEvent(6);
 
-        [Event(7, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
-        public void LogForwarderIsAlreadyRegistered() => WriteEvent(7);
+        [NonEvent]
+        public void FailedToParseConnectionString(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToParseConnectionString(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(8, Message = "Failed to parse ConnectionString due to an exception: {0}", Level = EventLevel.Error)]
+        public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(8, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToReadEnvironmentVariables(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToReadEnvironmentVariables(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(9, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
+        public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(9, errorMessage);
+
+        [NonEvent]
+        public void SdkVersionCreateFailed(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                SdkVersionCreateFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(11, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
+        public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(11, exceptionMessage);
+
+        [Event(12, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
+        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(12, typeName, value);
+
+        [NonEvent]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorInitializingPartOfSdkVersion(typeName, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(13, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(13, typeName, exceptionMessage);
+
+        [Event(14, Message = "Invalid sampler type '{0}'. Supported values: microsoft.rate_limited, microsoft.fixed_percentage", Level = EventLevel.Warning)]
+        public void InvalidSamplerType(string samplerType) => WriteEvent(14, samplerType);
+
+        [Event(15, Message = "Invalid sampler argument '{1}' for sampler '{0}'. Ignoring.", Level = EventLevel.Warning)]
+        public void InvalidSamplerArgument(string samplerType, string samplerArg) => WriteEvent(15, samplerType, samplerArg);
     }
 }

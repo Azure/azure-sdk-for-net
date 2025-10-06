@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -77,18 +76,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Container image tag. </summary>
+        [WirePath("image")]
         public string Image { get; set; }
         /// <summary> Custom container name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Container start command. </summary>
+        [WirePath("command")]
         public IList<string> Command { get; }
         /// <summary> Container start command arguments. </summary>
+        [WirePath("args")]
         public IList<string> Args { get; }
         /// <summary> Container environment variables. </summary>
+        [WirePath("env")]
         public IList<ContainerAppEnvironmentVariable> Env { get; }
         /// <summary> Container resource requirements. </summary>
+        [WirePath("resources")]
         public AppContainerResources Resources { get; set; }
         /// <summary> Container volume mounts. </summary>
+        [WirePath("volumeMounts")]
         public IList<ContainerAppVolumeMount> VolumeMounts { get; }
     }
 }

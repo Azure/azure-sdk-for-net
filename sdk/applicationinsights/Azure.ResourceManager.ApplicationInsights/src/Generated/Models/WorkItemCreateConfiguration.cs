@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Unique connector id. </summary>
+        [WirePath("ConnectorId")]
         public string ConnectorId { get; set; }
         /// <summary> Serialized JSON object for detailed properties. </summary>
+        [WirePath("ConnectorDataConfiguration")]
         public string ConnectorDataConfiguration { get; set; }
         /// <summary> Boolean indicating validate only. </summary>
+        [WirePath("ValidateOnly")]
         public bool? IsValidateOnly { get; set; }
         /// <summary> Custom work item properties. </summary>
+        [WirePath("WorkItemProperties")]
         public IDictionary<string, string> WorkItemProperties { get; }
     }
 }

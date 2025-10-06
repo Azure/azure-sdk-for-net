@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -28,6 +27,11 @@ namespace Azure.Search.Documents.Models
         {
             Text = text;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SuggestResult"/> for deserialization. </summary>
+        internal SuggestResult()
+        {
         }
 
         /// <summary> The text of the suggestion result. </summary>

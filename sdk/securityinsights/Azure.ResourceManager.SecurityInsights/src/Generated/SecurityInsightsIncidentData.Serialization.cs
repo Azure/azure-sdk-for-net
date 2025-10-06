@@ -8,8 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -18,88 +19,72 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsIncidentData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
+            if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalInfo);
-            }
-            if (Optional.IsDefined(Classification))
-            {
-                writer.WritePropertyName("classification"u8);
-                writer.WriteStringValue(Classification.Value.ToString());
-            }
-            if (Optional.IsDefined(ClassificationComment))
-            {
-                writer.WritePropertyName("classificationComment"u8);
-                writer.WriteStringValue(ClassificationComment);
-            }
-            if (Optional.IsDefined(ClassificationReason))
-            {
-                writer.WritePropertyName("classificationReason"u8);
-                writer.WriteStringValue(ClassificationReason.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdTimeUtc"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FirstActivityOn))
+            if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("firstActivityTimeUtc"u8);
-                writer.WriteStringValue(FirstActivityOn.Value, "O");
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IncidentUri))
+            if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("incidentUrl"u8);
-                writer.WriteStringValue(IncidentUri.AbsoluteUri);
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IncidentNumber))
+            if (Optional.IsDefined(Classification))
             {
-                writer.WritePropertyName("incidentNumber"u8);
-                writer.WriteNumberValue(IncidentNumber.Value);
+                writer.WritePropertyName("classification"u8);
+                writer.WriteStringValue(Classification.Value.ToString());
+            }
+            if (Optional.IsDefined(ClassificationReason))
+            {
+                writer.WritePropertyName("classificationReason"u8);
+                writer.WriteStringValue(ClassificationReason.Value.ToString());
+            }
+            if (Optional.IsDefined(ClassificationComment))
+            {
+                writer.WritePropertyName("classificationComment"u8);
+                writer.WriteStringValue(ClassificationComment);
+            }
+            if (Optional.IsDefined(Owner))
+            {
+                writer.WritePropertyName("owner"u8);
+                writer.WriteObjectValue(Owner, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -107,9 +92,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstActivityOn))
+            {
+                writer.WritePropertyName("firstActivityTimeUtc"u8);
+                writer.WriteStringValue(FirstActivityOn.Value, "O");
             }
             if (Optional.IsDefined(LastActivityOn))
             {
@@ -121,10 +111,20 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Owner))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
+                writer.WritePropertyName("createdTimeUtc"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncidentNumber))
+            {
+                writer.WritePropertyName("incidentNumber"u8);
+                writer.WriteNumberValue(IncidentNumber.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
+            {
+                writer.WritePropertyName("additionalData"u8);
+                writer.WriteObjectValue(AdditionalInfo, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
             {
@@ -141,36 +141,25 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Severity))
+            if (options.Format != "W" && Optional.IsDefined(IncidentUri))
             {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WritePropertyName("incidentUrl"u8);
+                writer.WriteStringValue(IncidentUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(ProviderName))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WritePropertyName("providerName"u8);
+                writer.WriteStringValue(ProviderName);
             }
-            if (Optional.IsDefined(Title))
+            if (options.Format != "W" && Optional.IsDefined(ProviderIncidentId))
             {
-                writer.WritePropertyName("title"u8);
-                writer.WriteStringValue(Title);
+                writer.WritePropertyName("providerIncidentId"u8);
+                writer.WriteStringValue(ProviderIncidentId);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(TeamInformation))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("teamInformation"u8);
+                writer.WriteObjectValue(TeamInformation, options);
             }
             writer.WriteEndObject();
         }
@@ -180,7 +169,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsIncidentData DeserializeSecurityInsightsIncidentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,25 +189,28 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            SecurityInsightsIncidentAdditionalInfo additionalData = default;
-            SecurityInsightsIncidentClassification? classification = default;
-            string classificationComment = default;
-            SecurityInsightsIncidentClassificationReason? classificationReason = default;
-            DateTimeOffset? createdTimeUtc = default;
+            string title = default;
             string description = default;
-            DateTimeOffset? firstActivityTimeUtc = default;
-            Uri incidentUrl = default;
-            int? incidentNumber = default;
-            IList<SecurityInsightsIncidentLabel> labels = default;
-            DateTimeOffset? lastActivityTimeUtc = default;
-            DateTimeOffset? lastModifiedTimeUtc = default;
-            SecurityInsightsIncidentOwnerInfo owner = default;
-            IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds = default;
             SecurityInsightsIncidentSeverity? severity = default;
             SecurityInsightsIncidentStatus? status = default;
-            string title = default;
+            SecurityInsightsIncidentClassification? classification = default;
+            SecurityInsightsIncidentClassificationReason? classificationReason = default;
+            string classificationComment = default;
+            SecurityInsightsIncidentOwnerInfo owner = default;
+            IList<SecurityInsightsIncidentLabel> labels = default;
+            DateTimeOffset? firstActivityTimeUtc = default;
+            DateTimeOffset? lastActivityTimeUtc = default;
+            DateTimeOffset? lastModifiedTimeUtc = default;
+            DateTimeOffset? createdTimeUtc = default;
+            int? incidentNumber = default;
+            SecurityInsightsIncidentAdditionalInfo additionalData = default;
+            IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds = default;
+            Uri incidentUrl = default;
+            string providerName = default;
+            string providerIncidentId = default;
+            TeamInformation teamInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -251,7 +243,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -263,13 +255,32 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"u8))
+                        if (property0.NameEquals("title"u8))
+                        {
+                            title = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value, options);
+                            severity = new SecurityInsightsIncidentSeverity(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new SecurityInsightsIncidentStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("classification"u8))
@@ -281,11 +292,6 @@ namespace Azure.ResourceManager.SecurityInsights
                             classification = new SecurityInsightsIncidentClassification(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("classificationComment"u8))
-                        {
-                            classificationComment = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("classificationReason"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -295,45 +301,18 @@ namespace Azure.ResourceManager.SecurityInsights
                             classificationReason = new SecurityInsightsIncidentClassificationReason(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdTimeUtc"u8))
+                        if (property0.NameEquals("classificationComment"u8))
+                        {
+                            classificationComment = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("owner"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            createdTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("firstActivityTimeUtc"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            firstActivityTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("incidentUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            incidentUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("incidentNumber"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            incidentNumber = property0.Value.GetInt32();
+                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labels"u8))
@@ -348,6 +327,15 @@ namespace Azure.ResourceManager.SecurityInsights
                                 array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item, options));
                             }
                             labels = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("firstActivityTimeUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firstActivityTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastActivityTimeUtc"u8))
@@ -368,13 +356,31 @@ namespace Azure.ResourceManager.SecurityInsights
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("owner"u8))
+                        if (property0.NameEquals("createdTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value, options);
+                            createdTimeUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("incidentNumber"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            incidentNumber = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalData"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("relatedAnalyticRuleIds"u8))
@@ -398,27 +404,32 @@ namespace Azure.ResourceManager.SecurityInsights
                             relatedAnalyticRuleIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("severity"u8))
+                        if (property0.NameEquals("incidentUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            severity = new SecurityInsightsIncidentSeverity(property0.Value.GetString());
+                            incidentUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"u8))
+                        if (property0.NameEquals("providerName"u8))
+                        {
+                            providerName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("providerIncidentId"u8))
+                        {
+                            providerIncidentId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("teamInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            status = new SecurityInsightsIncidentStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("title"u8))
-                        {
-                            title = property0.Value.GetString();
+                            teamInformation = TeamInformation.DeserializeTeamInformation(property0.Value, options);
                             continue;
                         }
                     }
@@ -426,34 +437,488 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIncidentData(
                 id,
                 name,
                 type,
                 systemData,
-                additionalData,
-                classification,
-                classificationComment,
-                classificationReason,
-                createdTimeUtc,
+                title,
                 description,
-                firstActivityTimeUtc,
-                incidentUrl,
-                incidentNumber,
-                labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
-                lastActivityTimeUtc,
-                lastModifiedTimeUtc,
-                owner,
-                relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 severity,
                 status,
-                title,
+                classification,
+                classificationReason,
+                classificationComment,
+                owner,
+                labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
+                firstActivityTimeUtc,
+                lastActivityTimeUtc,
+                lastModifiedTimeUtc,
+                createdTimeUtc,
+                incidentNumber,
+                additionalData,
+                relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                incidentUrl,
+                providerName,
+                providerIncidentId,
+                teamInformation,
                 etag,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    title: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Title))
+                {
+                    builder.Append("    title: ");
+                    if (Title.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Title}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Title}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    severity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    builder.Append("    severity: ");
+                    builder.AppendLine($"'{Severity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Classification), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    classification: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Classification))
+                {
+                    builder.Append("    classification: ");
+                    builder.AppendLine($"'{Classification.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClassificationReason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    classificationReason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClassificationReason))
+                {
+                    builder.Append("    classificationReason: ");
+                    builder.AppendLine($"'{ClassificationReason.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClassificationComment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    classificationComment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClassificationComment))
+                {
+                    builder.Append("    classificationComment: ");
+                    if (ClassificationComment.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClassificationComment}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClassificationComment}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Owner), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    owner: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Owner))
+                {
+                    builder.Append("    owner: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Owner, options, 4, false, "    owner: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Labels), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    labels: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Labels))
+                {
+                    if (Labels.Any())
+                    {
+                        builder.Append("    labels: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Labels)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    labels: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstActivityOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    firstActivityTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FirstActivityOn))
+                {
+                    builder.Append("    firstActivityTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(FirstActivityOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastActivityOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastActivityTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastActivityOn))
+                {
+                    builder.Append("    lastActivityTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastActivityOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastModifiedTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    builder.Append("    lastModifiedTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    createdTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncidentNumber), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    incidentNumber: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncidentNumber))
+                {
+                    builder.Append("    incidentNumber: ");
+                    builder.AppendLine($"{IncidentNumber.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    additionalData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdditionalInfo))
+                {
+                    builder.Append("    additionalData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AdditionalInfo, options, 4, false, "    additionalData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelatedAnalyticRuleIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    relatedAnalyticRuleIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
+                {
+                    if (RelatedAnalyticRuleIds.Any())
+                    {
+                        builder.Append("    relatedAnalyticRuleIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RelatedAnalyticRuleIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncidentUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    incidentUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncidentUri))
+                {
+                    builder.Append("    incidentUrl: ");
+                    builder.AppendLine($"'{IncidentUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    providerName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderName))
+                {
+                    builder.Append("    providerName: ");
+                    if (ProviderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProviderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProviderName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderIncidentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    providerIncidentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderIncidentId))
+                {
+                    builder.Append("    providerIncidentId: ");
+                    if (ProviderIncidentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProviderIncidentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProviderIncidentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TeamInformation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    teamInformation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TeamInformation))
+                {
+                    builder.Append("    teamInformation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TeamInformation, options, 4, false, "    teamInformation: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentData>.Write(ModelReaderWriterOptions options)
@@ -463,9 +928,11 @@ namespace Azure.ResourceManager.SecurityInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -477,11 +944,11 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityInsightsIncidentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support reading '{options.Format}' format.");
             }
         }
 

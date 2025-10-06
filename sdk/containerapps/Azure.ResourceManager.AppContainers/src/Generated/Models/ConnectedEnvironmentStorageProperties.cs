@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
-    internal partial class ConnectedEnvironmentStorageProperties
+    public partial class ConnectedEnvironmentStorageProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,25 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
+        /// <param name="provisioningState"> Provisioning state of the storage. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureFile = azureFile;
+            ProvisioningState = provisioningState;
+            DeploymentErrors = deploymentErrors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure file properties. </summary>
+        [WirePath("azureFile")]
         public ContainerAppAzureFileProperties AzureFile { get; set; }
+        /// <summary> Provisioning state of the storage. </summary>
+        [WirePath("provisioningState")]
+        public ConnectedEnvironmentStorageProvisioningState? ProvisioningState { get; }
+        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("deploymentErrors")]
+        public string DeploymentErrors { get; }
     }
 }

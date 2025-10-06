@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -201,6 +199,14 @@ namespace Azure.AI.FormRecognizer.Models
                 confidence,
                 elements ?? new ChangeTrackingList<string>(),
                 page);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FieldValue_internal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFieldValue_internal(document.RootElement);
         }
     }
 }

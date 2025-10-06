@@ -8,29 +8,37 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class SmbSetting : IUtf8JsonSerializable, IJsonModel<SmbSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SmbSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SmbSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbSetting)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
-                writer.WriteObjectValue(Multichannel);
+                writer.WriteObjectValue(Multichannel, options);
             }
             if (Optional.IsDefined(Versions))
             {
@@ -52,6 +60,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);
             }
+            if (Optional.IsDefined(EncryptionInTransit))
+            {
+                writer.WritePropertyName("encryptionInTransit"u8);
+                writer.WriteObjectValue(EncryptionInTransit, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,14 +73,13 @@ namespace Azure.ResourceManager.Storage.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SmbSetting IJsonModel<SmbSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static SmbSetting DeserializeSmbSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,8 +107,9 @@ namespace Azure.ResourceManager.Storage.Models
             string authenticationMethods = default;
             string kerberosTicketEncryption = default;
             string channelEncryption = default;
+            EncryptionInTransit encryptionInTransit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("multichannel"u8))
@@ -128,19 +141,172 @@ namespace Azure.ResourceManager.Storage.Models
                     channelEncryption = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("encryptionInTransit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionInTransit = EncryptionInTransit.DeserializeEncryptionInTransit(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SmbSetting(
                 multichannel,
                 versions,
                 authenticationMethods,
                 kerberosTicketEncryption,
                 channelEncryption,
+                encryptionInTransit,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsMultiChannelEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  multichannel: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Multichannel))
+                {
+                    builder.Append("  multichannel: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Multichannel, options, 2, false, "  multichannel: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Versions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  versions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Versions))
+                {
+                    builder.Append("  versions: ");
+                    if (Versions.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Versions}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Versions}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationMethods), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authenticationMethods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationMethods))
+                {
+                    builder.Append("  authenticationMethods: ");
+                    if (AuthenticationMethods.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthenticationMethods}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthenticationMethods}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KerberosTicketEncryption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kerberosTicketEncryption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KerberosTicketEncryption))
+                {
+                    builder.Append("  kerberosTicketEncryption: ");
+                    if (KerberosTicketEncryption.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KerberosTicketEncryption}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KerberosTicketEncryption}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChannelEncryption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  channelEncryption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ChannelEncryption))
+                {
+                    builder.Append("  channelEncryption: ");
+                    if (ChannelEncryption.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ChannelEncryption}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ChannelEncryption}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsRequired", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encryptionInTransit: ");
+                builder.AppendLine("{");
+                builder.Append("    required: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionInTransit))
+                {
+                    builder.Append("  encryptionInTransit: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EncryptionInTransit, options, 2, false, "  encryptionInTransit: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SmbSetting>.Write(ModelReaderWriterOptions options)
@@ -150,9 +316,11 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SmbSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,11 +332,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSmbSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmbSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -44,6 +43,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new MetricFeedbackList(nextLink, value ?? new ChangeTrackingList<MetricFeedback>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricFeedbackList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMetricFeedbackList(document.RootElement);
         }
     }
 }

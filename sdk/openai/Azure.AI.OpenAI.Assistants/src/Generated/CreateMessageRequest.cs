@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -50,7 +49,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="role"> The role to associate with the new message. </param>
         /// <param name="content"> The textual content for the new message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public CreateMessageRequest(MessageRole role, string content)
+        internal CreateMessageRequest(MessageRole role, string content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -66,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="fileIds"> A list of up to 10 file IDs to associate with the message, as used by tools like 'code_interpreter' or 'retrieval' that can read files. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateMessageRequest(MessageRole role, string content, IList<string> fileIds, IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateMessageRequest(MessageRole role, string content, IReadOnlyList<string> fileIds, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Content = content;
@@ -85,8 +84,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> The textual content for the new message. </summary>
         public string Content { get; }
         /// <summary> A list of up to 10 file IDs to associate with the message, as used by tools like 'code_interpreter' or 'retrieval' that can read files. </summary>
-        public IList<string> FileIds { get; }
+        public IReadOnlyList<string> FileIds { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

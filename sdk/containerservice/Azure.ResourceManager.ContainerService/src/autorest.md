@@ -12,12 +12,16 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6
 #tag: package-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../tests/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-singleton-resource:
@@ -151,7 +155,7 @@ acronym-mapping:
   UDP: Udp
 
 override-operation-name:
-  ResolvePrivateLinkServiceId_POST: ResolvePrivateLinkServiceId
+  ResolvePrivateLinkServiceId_Post: ResolvePrivateLinkServiceId
   AgentPools_GetAvailableAgentPoolVersions: GetAvailableAgentPoolVersions
 
 prepend-rp-prefix:
@@ -189,21 +193,6 @@ prepend-rp-prefix:
   - TrustedAccessRoleBinding
   - TrustedAccessRoleRule
   - TrustedAccessRoleBindingProvisioningState
-
-operations-to-lro-api-version-override:
-  AgentPools_CreateOrUpdate: "2017-08-31"
-  AgentPools_Delete: "2017-08-31"
-  AgentPools_UpgradeNodeImageVersion: "2017-08-31"
-  ManagedClusters_CreateOrUpdate: "2017-08-31"
-  ManagedClusters_Delete: "2017-08-31"
-  ManagedClusters_UpdateTags: "2017-08-31"
-  ManagedClusters_ResetServicePrincipalProfile: "2017-08-31"
-  ManagedClusters_ResetAADProfile: "2017-08-31"
-  ManagedClusters_RotateClusterCertificates: "2017-08-31"
-  ManagedClusters_Stop: "2017-08-31"
-  ManagedClusters_Start: "2017-08-31"
-  ManagedClusters_RunCommand: "2017-08-31"
-  PrivateEndpointConnections_Delete: "2017-08-31"
 
 directive:
   - from: managedClusters.json

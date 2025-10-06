@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -50,14 +49,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the IpGroups resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
+        [WirePath("properties.ipAddresses")]
         public IList<string> IPAddresses { get; }
         /// <summary> List of references to Firewall resources that this IpGroups is associated with. </summary>
+        [WirePath("properties.firewalls")]
         public IReadOnlyList<WritableSubResource> Firewalls { get; }
         /// <summary> List of references to Firewall Policies resources that this IpGroups is associated with. </summary>
+        [WirePath("properties.firewallPolicies")]
         public IReadOnlyList<WritableSubResource> FirewallPolicies { get; }
     }
 }

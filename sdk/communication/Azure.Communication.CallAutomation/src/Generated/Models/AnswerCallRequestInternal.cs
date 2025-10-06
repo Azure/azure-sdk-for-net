@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -30,24 +29,27 @@ namespace Azure.Communication.CallAutomation
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's will be used when inviting a pstn target.
-        /// Required only when transferring call to PSTN, if this is an incoming voip call.
+        /// <param name="mediaStreamingOptions">
+        /// Media Streaming Options.
+        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel sourceCallerIdNumber)
+        /// <param name="transcriptionOptions">
+        /// Transcription Options.
+        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
+        /// </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
             OperationContext = operationContext;
-            MediaStreamingConfiguration = mediaStreamingConfiguration;
-            TranscriptionConfiguration = transcriptionConfiguration;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
-            SourceCallerIdNumber = sourceCallerIdNumber;
+            MediaStreamingOptions = mediaStreamingOptions;
+            TranscriptionOptions = transcriptionOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -56,18 +58,21 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
-        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
         /// <summary>
-        /// The source caller Id, a phone number, that's will be used when inviting a pstn target.
-        /// Required only when transferring call to PSTN, if this is an incoming voip call.
+        /// Media Streaming Options.
+        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </summary>
-        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
+        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
+        /// <summary>
+        /// Transcription Options.
+        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
+        /// </summary>
+        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
     }
 }

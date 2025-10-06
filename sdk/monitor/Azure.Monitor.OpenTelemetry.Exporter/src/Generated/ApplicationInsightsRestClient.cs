@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -57,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case 206:
                     {
                         TrackResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrackResponse.DeserializeTrackResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -86,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case 206:
                     {
                         TrackResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrackResponse.DeserializeTrackResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

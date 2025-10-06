@@ -6,12 +6,12 @@
     {
       "Agent": {
         "msi_image": {
-          "OSVmImage": "ubuntu-22.04",
+          "OSVmImage": "env:LINUXVMIMAGE",
           "Pool": "azsdk-pool-mms-ubuntu-2204-identitymsi",
           "AdditionalTestFilters": "TestCategory=IdentityVM"
         },
         "ubuntu_keyring_container": {
-          "OSVmImage": "ubuntu-20.04",
+          "OSVmImage": "env:LINUXVMIMAGE",
           "Pool": "Azure Pipelines",
           "Container": "ubuntu_netcore_keyring"
         }

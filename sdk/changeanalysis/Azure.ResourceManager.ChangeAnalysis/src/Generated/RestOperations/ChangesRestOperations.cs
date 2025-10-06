@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ChangeAnalysis.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.ChangeAnalysis
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListChangesByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ChangeAnalysis/changes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$startTime", startTime, "O", true);
+            uri.AppendQuery("$endTime", endTime, "O", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListChangesByResourceGroupRequest(string subscriptionId, string resourceGroupName, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
@@ -83,7 +101,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,13 +131,30 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChangesBySubscriptionRequestUri(string subscriptionId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ChangeAnalysis/changes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$startTime", startTime, "O", true);
+            uri.AppendQuery("$endTime", endTime, "O", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListChangesBySubscriptionRequest(string subscriptionId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
@@ -164,7 +199,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,13 +227,21 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChangesByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListChangesByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
@@ -238,7 +281,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -270,13 +313,21 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChangesBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListChangesBySubscriptionNextPageRequest(string nextLink, string subscriptionId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
@@ -314,7 +365,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -344,7 +395,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 case 200:
                     {
                         ChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChangeList.DeserializeChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

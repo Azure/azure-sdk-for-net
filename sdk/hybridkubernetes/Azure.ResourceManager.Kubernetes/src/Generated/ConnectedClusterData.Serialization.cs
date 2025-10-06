@@ -8,412 +8,243 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    public partial class ConnectedClusterData : IUtf8JsonSerializable, IJsonModel<ConnectedClusterData>
+    /// <summary> Represents a connected cluster. </summary>
+    public partial class ConnectedClusterData : TrackedResourceData, IJsonModel<ConnectedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/> for deserialization. </summary>
+        internal ConnectedClusterData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{format}' format.");
-            }
-
             writer.WriteStartObject();
-            writer.WritePropertyName("identity"u8);
-            JsonSerializer.Serialize(writer, Identity);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("agentPublicKeyCertificate"u8);
-            writer.WriteStringValue(AgentPublicKeyCertificate);
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
-            {
-                writer.WritePropertyName("kubernetesVersion"u8);
-                writer.WriteStringValue(KubernetesVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalNodeCount))
-            {
-                writer.WritePropertyName("totalNodeCount"u8);
-                writer.WriteNumberValue(TotalNodeCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalCoreCount))
-            {
-                writer.WritePropertyName("totalCoreCount"u8);
-                writer.WriteNumberValue(TotalCoreCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
-            {
-                writer.WritePropertyName("agentVersion"u8);
-                writer.WriteStringValue(AgentVersion);
-            }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(Distribution))
-            {
-                writer.WritePropertyName("distribution"u8);
-                writer.WriteStringValue(Distribution);
-            }
-            if (Optional.IsDefined(Infrastructure))
-            {
-                writer.WritePropertyName("infrastructure"u8);
-                writer.WriteStringValue(Infrastructure);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Offering))
-            {
-                writer.WritePropertyName("offering"u8);
-                writer.WriteStringValue(Offering);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
-            {
-                writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
-                writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectivityOn))
-            {
-                writer.WritePropertyName("lastConnectivityTime"u8);
-                writer.WriteStringValue(LastConnectivityOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityStatus))
-            {
-                writer.WritePropertyName("connectivityStatus"u8);
-                writer.WriteStringValue(ConnectivityStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(PrivateLinkState))
-            {
-                writer.WritePropertyName("privateLinkState"u8);
-                writer.WriteStringValue(PrivateLinkState.Value.ToString());
-            }
-            if (Optional.IsDefined(PrivateLinkScopeResourceId))
-            {
-                writer.WritePropertyName("privateLinkScopeResourceId"u8);
-                writer.WriteStringValue(PrivateLinkScopeResourceId);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        ConnectedClusterData IJsonModel<ConnectedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
+            writer.WritePropertyName("identity"u8);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
+        }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterData IJsonModel<ConnectedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectedClusterData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support reading '{format}' format.");
+            }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectedClusterData(document.RootElement, options);
         }
 
-        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string agentPublicKeyCertificate = default;
-            string kubernetesVersion = default;
-            int? totalNodeCount = default;
-            int? totalCoreCount = default;
-            string agentVersion = default;
-            ProvisioningState? provisioningState = default;
-            string distribution = default;
-            string infrastructure = default;
-            string offering = default;
-            DateTimeOffset? managedIdentityCertificateExpirationTime = default;
-            DateTimeOffset? lastConnectivityTime = default;
-            ConnectivityStatus? connectivityStatus = default;
-            PrivateLinkState? privateLinkState = default;
-            string privateLinkScopeResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ConnectedClusterProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            ConnectedClusterKind? kind = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = ConnectedClusterProperties.DeserializeConnectedClusterProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    name = property.Value.GetString();
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesContext.Default);
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("agentPublicKeyCertificate"u8))
-                        {
-                            agentPublicKeyCertificate = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("kubernetesVersion"u8))
-                        {
-                            kubernetesVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalNodeCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalNodeCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("totalCoreCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            totalCoreCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("agentVersion"u8))
-                        {
-                            agentVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("distribution"u8))
-                        {
-                            distribution = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("infrastructure"u8))
-                        {
-                            infrastructure = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("offering"u8))
-                        {
-                            offering = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("managedIdentityCertificateExpirationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedIdentityCertificateExpirationTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastConnectivityTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastConnectivityTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("connectivityStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectivityStatus = new ConnectivityStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateLinkState = new PrivateLinkState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkScopeResourceId"u8))
-                        {
-                            privateLinkScopeResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    kind = new ConnectedClusterKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectedClusterData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 identity,
-                agentPublicKeyCertificate,
-                kubernetesVersion,
-                totalNodeCount,
-                totalCoreCount,
-                agentVersion,
-                provisioningState,
-                distribution,
-                infrastructure,
-                offering,
-                managedIdentityCertificateExpirationTime,
-                lastConnectivityTime,
-                connectivityStatus,
-                privateLinkState,
-                privateLinkScopeResourceId,
-                serializedAdditionalRawData);
+                kind);
         }
 
-        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectedClusterData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectedClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="connectedClusterData"> The <see cref="ConnectedClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectedClusterData connectedClusterData)
+        {
+            if (connectedClusterData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(connectedClusterData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ConnectedClusterData"/> from. </param>
+        internal static ConnectedClusterData FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeConnectedClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

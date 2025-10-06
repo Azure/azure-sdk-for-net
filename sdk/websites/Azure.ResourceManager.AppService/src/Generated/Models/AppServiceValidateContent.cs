@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -108,38 +107,55 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public ValidateResourceType ValidateResourceType { get; }
         /// <summary> Expected location of the resource. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
+        [WirePath("properties.serverFarmId")]
         public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> Name of the target SKU for the App Service plan. </summary>
+        [WirePath("properties.skuName")]
         public string SkuName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.needLinuxWorkers")]
         public bool? NeedLinuxWorkers { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isSpot")]
         public bool? IsSpot { get; set; }
         /// <summary> Target capacity of the App Service plan (number of VMs). </summary>
+        [WirePath("properties.capacity")]
         public int? Capacity { get; set; }
         /// <summary> Name of App Service Environment where app or App Service plan should be created. </summary>
+        [WirePath("properties.hostingEnvironment")]
         public string HostingEnvironment { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
+        [WirePath("properties.isXenon")]
         public bool? IsXenon { get; set; }
         /// <summary> Base URL of the container registry. </summary>
+        [WirePath("properties.containerRegistryBaseUrl")]
         public Uri ContainerRegistryBaseUri { get; set; }
         /// <summary> Username for to access the container registry. </summary>
+        [WirePath("properties.containerRegistryUsername")]
         public string ContainerRegistryUsername { get; set; }
         /// <summary> Password for to access the container registry. </summary>
+        [WirePath("properties.containerRegistryPassword")]
         public string ContainerRegistryPassword { get; set; }
         /// <summary> Repository name (image name). </summary>
+        [WirePath("properties.containerImageRepository")]
         public string ContainerImageRepository { get; set; }
         /// <summary> Image tag. </summary>
+        [WirePath("properties.containerImageTag")]
         public string ContainerImageTag { get; set; }
         /// <summary> Platform (windows or linux). </summary>
+        [WirePath("properties.containerImagePlatform")]
         public string ContainerImagePlatform { get; set; }
         /// <summary> App Service Environment Properties. </summary>
+        [WirePath("properties.appServiceEnvironment")]
         public AppServiceEnvironmentProperties AppServiceEnvironment { get; set; }
     }
 }

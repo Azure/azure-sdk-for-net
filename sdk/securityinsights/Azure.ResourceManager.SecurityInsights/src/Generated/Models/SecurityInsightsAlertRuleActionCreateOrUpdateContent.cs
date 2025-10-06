@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -71,10 +70,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </summary>
+        [WirePath("properties.logicAppResourceId")]
         public ResourceIdentifier LogicAppResourceId { get; set; }
         /// <summary> Logic App Callback URL for this specific workflow. </summary>
+        [WirePath("properties.triggerUri")]
         public Uri TriggerUri { get; set; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

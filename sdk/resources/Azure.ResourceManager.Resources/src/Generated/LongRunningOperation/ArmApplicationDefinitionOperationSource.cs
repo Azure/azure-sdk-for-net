@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Resources
 
         ArmApplicationDefinitionResource IOperationSource<ArmApplicationDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ArmApplicationDefinitionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new ArmApplicationDefinitionResource(_client, data);
         }
 
         async ValueTask<ArmApplicationDefinitionResource> IOperationSource<ArmApplicationDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
-            return new ArmApplicationDefinitionResource(_client, data);
+            var data = ModelReaderWriter.Read<ArmApplicationDefinitionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
+            return await Task.FromResult(new ArmApplicationDefinitionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

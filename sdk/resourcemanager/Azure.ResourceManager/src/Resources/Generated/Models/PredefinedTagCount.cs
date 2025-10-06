@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Type of count. </summary>
+        [WirePath("type")]
         public string PredefinedTagCountType { get; }
         /// <summary> Value of count. </summary>
+        [WirePath("value")]
         public int? Value { get; }
     }
 }

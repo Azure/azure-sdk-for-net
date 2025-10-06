@@ -11,10 +11,23 @@ parameters:
   - name: SkipCheckoutNone
     type: boolean
     default: false
+  - name: TokenToUseForAuth
+    type: string
+    default: ''
+  - name: PreserveAuthToken
+    type: boolean
+    default: false
 
 steps:
   - ${{ if not(parameters.SkipCheckoutNone) }}:
       - checkout: none
+
+  - ${{ if ne(parameters.TokenToUseForAuth, '') }}:
+    - pwsh: |
+        $base64Token = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nobody:${{ parameters.TokenToUseForAuth }}"))
+        Write-Host "##vso[task.setvariable variable=_base64AuthToken;issecret=true;]$base64Token"
+        git config set --global "http.extraheader" "AUTHORIZATION: basic $base64Token"
+      displayName: Setup git config auth header
 
   - task: PowerShell@2
     ${{ if eq(length(parameters.Repositories), 1) }}:
@@ -30,7 +43,34 @@ steps:
         # 7.2 behavior for command argument passing. Newer behaviors will result
         # in errors from git.exe.
         $PSNativeCommandArgumentPassing = 'Legacy'
-        
+
+        function Retry()
+        {
+            Run 3 @args
+        }
+
+        function Run()
+        {
+            $retries, $command, $arguments = $args
+            if ($retries -isnot [int]) {
+                $command, $arguments = $args
+                $retries = 0
+            }
+            Write-Host "==>" $command $arguments
+            $attempt = 0
+            $sleep = 5
+
+            while ($true) {
+                $attempt++
+                & $command $arguments
+                if (!$LASTEXITCODE) { return }
+                if ($attempt -gt $retries) { exit $LASTEXITCODE }
+                Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
+                Start-Sleep -Seconds $sleep
+                $sleep *= 2
+            }
+        }
+
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
             $dir = $repository.WorkingDirectory
@@ -42,29 +82,27 @@ steps:
 
             if (Test-Path .git/info/sparse-checkout) {
               $hasInitialized = $true
-              Write-Host "Repository $($repository.Name) has already been initialized. Skipping this step."
+              Write-Host "Repository $($repository.Name) has already been initialized in $pwd. Skipping this step."
             } else {
-              Write-Host "Repository $($repository.Name) is being initialized."
+              Write-Host "Repository $($repository.Name) is being initialized in $pwd"
 
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
-                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
-                git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+                Retry git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
               } else {
-                Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-                git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+                Retry git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
               }
 
               # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
-              Write-Host "git config gc.auto 0"
-              git config gc.auto 0
+              Run git config gc.auto 0
 
-              Write-Host "git sparse-checkout init"
-              git sparse-checkout init
+              Run git sparse-checkout init
 
               # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
               # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
-              Write-Host "git sparse-checkout set --no-cone '/*' '!/*/' '/eng'"
-              git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
+              # '/*' '!/*/' -> only checkout files in top level directory
+              # '/eng' -> checkout required eng/ scripts/configs
+              # '.config' -> required for files like .config/1espt/PipelineAutobaseliningConfig.yml and .config/guardian/.gdnbaselines used by 1es PT scripts
+              git sparse-checkout set --no-cone '/*' '!/*/' '/eng' '/.config'
             }
 
             # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
@@ -82,10 +120,8 @@ steps:
               $commitish = $repository.Commitish -replace '^refs/heads/', ''
 
               # use -- to prevent git from interpreting the commitish as a path
-              Write-Host "git -c advice.detachedHead=false checkout $commitish --"
-
               # This will use the default branch if repo.Commitish is empty
-              git -c advice.detachedHead=false checkout $commitish --
+              Retry git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }
@@ -103,3 +139,9 @@ steps:
         }
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
+
+  - ${{ if and(ne(parameters.TokenToUseForAuth, ''), not(parameters.PreserveAuthToken)) }}:
+    - pwsh: |
+        git config unset --global "http.extraheader"
+      displayName: Removing git config auth header
+      condition: always()

@@ -9,10 +9,8 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 
 namespace Azure.ResourceManager.ManagementGroups
@@ -36,6 +34,18 @@ namespace Azure.ResourceManager.ManagementGroups
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string groupId, string subscriptionId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string groupId, string subscriptionId, string cacheControl)
@@ -82,7 +92,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,13 +123,25 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string groupId, string subscriptionId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string groupId, string subscriptionId, string cacheControl)
@@ -198,6 +220,18 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateGetSubscriptionRequestUri(string groupId, string subscriptionId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSubscriptionRequest(string groupId, string subscriptionId, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
@@ -242,7 +276,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +309,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,6 +318,21 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupRequestUri(string groupId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetSubscriptionsUnderManagementGroupRequest(string groupId, string skipToken)
@@ -331,7 +380,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -364,13 +413,21 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupNextPageRequestUri(string nextLink, string groupId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSubscriptionsUnderManagementGroupNextPageRequest(string nextLink, string groupId, string skipToken)
@@ -413,7 +470,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +505,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

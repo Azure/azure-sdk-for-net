@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Subscription.Tests
 {
+    [LiveOnly(Reason = "Tests rely on PII data.")]
     internal class TenantPolicyDefinitionTests : SubscriptionManagementTestBase
     {
         private TenantPolicyDefinitionCollection _tenantPolicyDefinitionCollection => GetTenantPolicyDefinition().Result;

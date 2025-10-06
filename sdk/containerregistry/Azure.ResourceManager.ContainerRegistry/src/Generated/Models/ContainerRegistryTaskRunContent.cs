@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -47,8 +46,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of task against which run has to be queued. </summary>
+        [WirePath("taskId")]
         public ResourceIdentifier TaskId { get; set; }
         /// <summary> Set of overridable parameters that can be passed when running a Task. </summary>
+        [WirePath("overrideTaskStepProperties")]
         public ContainerRegistryOverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
     }
 }

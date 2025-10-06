@@ -8,79 +8,69 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ClientModel.Tests.Mocks;
 
 public class MockPipelineTransport : PipelineTransport
 {
-    private readonly Func<int, int> _responseFactory;
-    private int _retryCount;
+    private readonly Func<PipelineMessage, MockPipelineResponse> _responseFactory;
+    private readonly bool _addDelay;
 
     public string Id { get; }
 
-    public Action<int>? OnSendingRequest { get; set; }
-    public Action<int>? OnReceivedResponse { get; set; }
+    public Action<MockPipelineMessage>? OnSendingRequest { get; set; }
+    public Action<MockPipelineMessage>? OnReceivedResponse { get; set; }
 
     public MockPipelineTransport(string id, params int[] codes)
-        : this(id, i => codes[i])
     {
+        Id = id;
+        var requestIndex = 0;
+        _responseFactory = _ => { return new MockPipelineResponse(codes[requestIndex++]); };
     }
 
-    public MockPipelineTransport(string id, Func<int, int> responseFactory)
+    public MockPipelineTransport(string id, Func<PipelineMessage, MockPipelineResponse> responseFactory, bool enableLogging = false, ILoggerFactory? loggerFactory = null, bool addDelay = false) : base(enableLogging, loggerFactory)
     {
         Id = id;
         _responseFactory = responseFactory;
+        _addDelay = addDelay;
     }
 
     protected override PipelineMessage CreateMessageCore()
     {
-        return new RetriableTransportMessage();
+        return new MockPipelineMessage();
     }
 
     protected override void ProcessCore(PipelineMessage message)
     {
-        try
+        Stamp(message, "Transport");
+
+        OnSendingRequest?.Invoke((MockPipelineMessage)message);
+
+        ((MockPipelineMessage)message).SetResponse(_responseFactory(message));
+
+        if (_addDelay)
         {
-            Stamp(message, "Transport");
-
-            OnSendingRequest?.Invoke(_retryCount);
-
-            if (message is RetriableTransportMessage transportMessage)
-            {
-                int status = _responseFactory(_retryCount);
-                transportMessage.SetResponse(status);
-            }
-
-            OnReceivedResponse?.Invoke(_retryCount);
+            Task.Delay(TimeSpan.FromSeconds(4)).Wait();
         }
-        finally
-        {
-            _retryCount++;
-        }
+
+        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
-    protected override ValueTask ProcessCoreAsync(PipelineMessage message)
+    protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        try
+        Stamp(message, "Transport");
+
+        OnSendingRequest?.Invoke((MockPipelineMessage)message);
+
+        ((MockPipelineMessage)message).SetResponse(_responseFactory(message));
+
+        if (_addDelay)
         {
-            Stamp(message, "Transport");
-
-            OnSendingRequest?.Invoke(_retryCount);
-
-            if (message is RetriableTransportMessage transportMessage)
-            {
-                int status = _responseFactory(_retryCount);
-                transportMessage.SetResponse(status);
-            }
-
-            OnReceivedResponse?.Invoke(_retryCount);
-        }
-        finally
-        {
-            _retryCount++;
+            await Task.Delay(TimeSpan.FromSeconds(4));
         }
 
-        return new ValueTask();
+        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
     private void Stamp(PipelineMessage message, string prefix)
@@ -99,91 +89,5 @@ public class MockPipelineTransport : PipelineTransport
         }
 
         values.Add($"{prefix}:{Id}");
-    }
-
-    private class RetriableTransportMessage : PipelineMessage
-    {
-        public RetriableTransportMessage() : this(new TransportRequest())
-        {
-        }
-
-        protected internal RetriableTransportMessage(PipelineRequest request) : base(request)
-        {
-        }
-
-        public void SetResponse(int status)
-        {
-            Response = new RetriableTransportResponse(status);
-        }
-    }
-
-    private class TransportRequest : PipelineRequest
-    {
-        private Uri? _uri;
-        private readonly PipelineRequestHeaders _headers;
-
-        public TransportRequest()
-        {
-            _headers = new MockRequestHeaders();
-            _uri = new Uri("https://www.example.com");
-        }
-
-        public override void Dispose() { }
-
-        protected override BinaryContent? ContentCore
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        protected override PipelineRequestHeaders HeadersCore
-            => _headers;
-
-        protected override string MethodCore
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        protected override Uri? UriCore
-        {
-            get => _uri;
-            set => _uri = value;
-        }
-    }
-
-    private class RetriableTransportResponse : PipelineResponse
-    {
-        public RetriableTransportResponse(int status)
-        {
-            Status = status;
-        }
-
-        public override int Status { get; }
-
-        public override string ReasonPhrase => throw new NotImplementedException();
-
-        public override Stream? ContentStream
-        {
-            get => null;
-            set => throw new NotImplementedException();
-        }
-
-        public override BinaryData Content => throw new NotImplementedException();
-
-        protected override PipelineResponseHeaders HeadersCore
-            => throw new NotImplementedException();
-
-        public override void Dispose() { }
-
-        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

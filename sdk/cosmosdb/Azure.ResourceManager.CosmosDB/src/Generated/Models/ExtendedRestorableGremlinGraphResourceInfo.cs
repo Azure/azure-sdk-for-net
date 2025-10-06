@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableGremlinGraphResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this graph event. </param>
+        /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>
         /// <param name="graphName"> The name of this Gremlin graph. </param>
         /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableGremlinGraphResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string graphName, string graphId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableGremlinGraphResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string graphName, string graphId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
+            CanUndelete = canUndelete;
+            CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
             GraphName = graphName;
             GraphId = graphId;
@@ -68,14 +72,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> The operation type of this graph event. </summary>
+        [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
+        /// <summary> A state of this graph to identify if this graph is restorable in same account. </summary>
+        [WirePath("canUndelete")]
+        public string CanUndelete { get; }
+        /// <summary> The reason why this graph can not be restored in same account. </summary>
+        [WirePath("canUndeleteReason")]
+        public string CanUndeleteReason { get; }
         /// <summary> The time when this graph event happened. </summary>
+        [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
         /// <summary> The name of this Gremlin graph. </summary>
+        [WirePath("ownerId")]
         public string GraphName { get; }
         /// <summary> The resource ID of this Gremlin graph. </summary>
+        [WirePath("ownerResourceId")]
         public string GraphId { get; }
     }
 }
