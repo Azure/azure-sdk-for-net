@@ -84,6 +84,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optional. Specifies the source customer provided key to use to encrypt the source blob.
+        /// Applicable only for service version 2026-02-06 or later.
         /// </summary>
         public CustomerProvidedKey? SourceCustomerProvidedKey { get; set; }
     }
