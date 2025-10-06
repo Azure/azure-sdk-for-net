@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class BazData : IJsonModel<BazData>
+    public partial class BazData : TrackedResourceData, IJsonModel<BazData>
     {
         /// <summary> Initializes a new instance of <see cref="BazData"/> for deserialization. </summary>
         internal BazData()
@@ -82,7 +82,7 @@ namespace MgmtTypeSpec
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             BazProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

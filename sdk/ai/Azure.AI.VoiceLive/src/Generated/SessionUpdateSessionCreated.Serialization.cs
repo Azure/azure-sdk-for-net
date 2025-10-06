@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// connection is established as the first server event. This event will contain
     /// the default Session configuration.
     /// </summary>
-    public partial class SessionUpdateSessionCreated : IJsonModel<SessionUpdateSessionCreated>
+    public partial class SessionUpdateSessionCreated : SessionUpdate, IJsonModel<SessionUpdateSessionCreated>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionCreated"/> for deserialization. </summary>
         internal SessionUpdateSessionCreated()
@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive
             ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponseSession session = default;
+            VoiceLiveSessionResponse session = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("session"u8))
                 {
-                    session = ResponseSession.DeserializeResponseSession(prop.Value, options);
+                    session = VoiceLiveSessionResponse.DeserializeVoiceLiveSessionResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

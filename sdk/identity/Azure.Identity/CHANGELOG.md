@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- TenantId is now configured via MSAL's `WithTenantId` instead of `WithTenantIdFromAuthority` to prevent malformed Uris to the authority.
+
 ### Other Changes
+
+- Deprecated `BrowserCustomizationOptions.UseEmbeddedWebView` property. This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead.
 
 ## 1.16.0 (2025-09-09)
 

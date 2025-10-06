@@ -251,7 +251,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     Assert.That(destinationProperties.AccessTier.ToString(), Is.Not.EqualTo(_defaultAccessTier.ToString()));
                 }
-                if (!premium)
+                else
                 {
                     // Premium accounts do not support tags
                     GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
@@ -363,7 +363,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource,
                 destinationResource,
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,

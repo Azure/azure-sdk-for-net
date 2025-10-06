@@ -10,6 +10,7 @@ using Azure;
 using Azure.AI.VoiceLive;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -48,7 +49,8 @@ namespace Azure.AI.VoiceLive.Tests
             var docs = new List<JsonDocument>();
             foreach (var msg in socket.GetSentTextMessages())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(msg);
@@ -74,21 +76,21 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var session = CreateSessionWithFakeSocket(out var fake);
 
-            var options = new SessionOptions
+            var options = new VoiceLiveSessionOptions
             {
                 Voice = new AzureStandardVoice(TestConstants.VoiceName),
                 Model = TestConstants.ModelName,
                 Instructions = "You are a helpful assistant.",
-                TurnDetection = new ServerVad { Threshold = 0.5f, SilenceDurationMs = 500 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                TurnDetection = new ServerVadTurnDetection { Threshold = 0.5f, SilenceDurationMs = 500 },
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
             // Ensure we control modalities explicitly (clear defaults then add back only text & audio)
             options.Modalities.Clear();
-            options.Modalities.Add(InputModality.Text);
-            options.Modalities.Add(InputModality.Audio);
+            options.Modalities.Add(InteractionModality.Text);
+            options.Modalities.Add(InteractionModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(options);
+            await session.ConfigureSessionAsync(options);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages, Is.Not.Empty, "Expected at least one session.update message to be sent.");
@@ -118,7 +120,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ConfigureConversationSession_IncludesTools()
         {
             var session = CreateSessionWithFakeSocket(out var fake);
-            var options = new SessionOptions
+            var options = new VoiceLiveSessionOptions
             {
                 Model = TestConstants.ModelName,
                 Voice = new AzureStandardVoice(TestConstants.VoiceName)
@@ -127,7 +129,7 @@ namespace Azure.AI.VoiceLive.Tests
             options.Tools.Add(new VoiceLiveFunctionDefinition("get_weather") { Description = "Gets the weather." });
             options.Tools.Add(new VoiceLiveFunctionDefinition("book_flight") { Description = "Books a flight." });
 
-            await session.ConfigureConversationSessionAsync(options);
+            await session.ConfigureSessionAsync(options);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages, Is.Not.Empty, "Expected session.update message.");
@@ -144,7 +146,7 @@ namespace Azure.AI.VoiceLive.Tests
         public void ConfigureConversationSession_NullOptions_Throws()
         {
             var session = CreateSessionWithFakeSocket(out _);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await session.ConfigureConversationSessionAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await session.ConfigureSessionAsync(null));
         }
 
         [Test]
@@ -152,22 +154,81 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var session = CreateSessionWithFakeSocket(out var fake);
 
-            var options1 = new SessionOptions { Model = TestConstants.ModelName };
+            var options1 = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
             options1.Modalities.Clear();
-            options1.Modalities.Add(InputModality.Text);
+            options1.Modalities.Add(InteractionModality.Text);
 
-            var options2 = new SessionOptions { Model = TestConstants.ModelName };
+            var options2 = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
             options2.Modalities.Clear();
-            options2.Modalities.Add(InputModality.Audio);
+            options2.Modalities.Add(InteractionModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(options1);
-            await session.ConfigureConversationSessionAsync(options2);
+            await session.ConfigureSessionAsync(options1);
+            await session.ConfigureSessionAsync(options2);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages.Count, Is.GreaterThanOrEqualTo(2), "Expected two session.update messages after two configuration calls.");
 
             // Dispose docs not used further
-            foreach (var d in updateMessages) d.Dispose();
+            foreach (var d in updateMessages)
+                d.Dispose();
+        }
+
+        [Ignore("WIP")]
+        [Test]
+        public void VoiceSetGetTest()
+        {
+            var voice = new AzureStandardVoice("en-US-JennyNeural");
+
+            var sessionOpts = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                Voice = voice
+            };
+
+            Assert.That(sessionOpts.Voice, Is.Not.Null);
+            Assert.That(sessionOpts.Voice, Is.TypeOf<AzureStandardVoice>());
+            var retrievedVoice = (AzureStandardVoice)sessionOpts.Voice;
+            Assert.That(retrievedVoice.Name, Is.EqualTo("en-US-JennyNeural"));
+        }
+
+        [Test]
+        public void MaxTokensSetGetTest()
+        {
+            var sessionOpts = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                MaxResponseOutputTokens = 4
+            };
+
+            Assert.AreEqual(4, sessionOpts.MaxResponseOutputTokens.NumericValue);
+
+            var sessionOpts2 = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                MaxResponseOutputTokens = MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption()
+            };
+
+            Assert.IsNull(sessionOpts2.MaxResponseOutputTokens.NumericValue);
+        }
+
+        [Test]
+        public void ToolChoiceSetGet()
+        {
+            var sessionOpts = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                ToolChoice = "my_tool"
+            };
+
+            Assert.AreEqual("my_tool", sessionOpts.ToolChoice.FunctionName);
+
+            var sessionOpts2 = new VoiceLiveSessionOptions
+            {
+                Model = TestConstants.ModelName,
+                ToolChoice = ToolChoiceLiteral.None
+            };
+
+            Assert.IsNull(sessionOpts2.ToolChoice.FunctionName);
         }
     }
 }

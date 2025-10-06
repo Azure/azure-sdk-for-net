@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class BarSettingsResourceData : IJsonModel<BarSettingsResourceData>
+    public partial class BarSettingsResourceData : ResourceData, IJsonModel<BarSettingsResourceData>
     {
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/> for deserialization. </summary>
         internal BarSettingsResourceData()

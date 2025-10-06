@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Azure custom voice configuration (preferred). </summary>
+    /// <summary> Azure custom voice configuration. </summary>
     public partial class AzureCustomVoice : AzureVoice
     {
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/>. </summary>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="endpointId"> Endpoint ID cannot be empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="endpointId"/> is null. </exception>
-        public AzureCustomVoice(string name, string endpointId) : base("azure-custom")
+        public AzureCustomVoice(string name, string endpointId) : base(AzureVoiceType.AzureCustom)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(endpointId, nameof(endpointId));
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="endpointId"> Endpoint ID cannot be empty. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="pitch"></param>
         /// <param name="rate"></param>
         /// <param name="volume"></param>
-        internal AzureCustomVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string endpointId, float? temperature, string customLexiconUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzureCustomVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string endpointId, float? temperature, string customLexiconUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             EndpointId = endpointId;

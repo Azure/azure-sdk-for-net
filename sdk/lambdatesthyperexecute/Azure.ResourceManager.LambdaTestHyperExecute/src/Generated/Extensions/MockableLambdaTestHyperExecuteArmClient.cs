@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.LambdaTestHyperExecute;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableLambdaTestHyperExecuteArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableLambdaTestHyperExecuteArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableLambdaTestHyperExecuteArmClient for mocking. </summary>
         protected MockableLambdaTestHyperExecuteArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLambdaTestHyperExecuteArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableLambdaTestHyperExecuteArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableLambdaTestHyperExecuteArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableLambdaTestHyperExecuteArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LambdaTestHyperExecuteOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LambdaTestHyperExecuteOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="LambdaTestHyperExecuteOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="LambdaTestHyperExecuteOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LambdaTestHyperExecuteOrganizationResource"/> object. </returns>
         public virtual LambdaTestHyperExecuteOrganizationResource GetLambdaTestHyperExecuteOrganizationResource(ResourceIdentifier id)

@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="DatasetCredential"/>. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
-        internal DatasetCredential(BlobReference blobReference)
+        internal DatasetCredential(AIProjectBlobReference blobReference)
         {
             BlobReference = blobReference;
         }
@@ -23,13 +23,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="DatasetCredential"/>. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetCredential(BlobReference blobReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatasetCredential(AIProjectBlobReference blobReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobReference = blobReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Credential info to access the storage account. </summary>
-        public BlobReference BlobReference { get; }
+        public AIProjectBlobReference BlobReference { get; }
     }
 }

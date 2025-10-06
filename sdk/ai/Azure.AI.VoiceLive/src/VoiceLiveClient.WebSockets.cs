@@ -13,6 +13,7 @@ namespace Azure.AI.VoiceLive
 #pragma warning disable AZC0015, AZC0107 // Client methods should return approved types
     public partial class VoiceLiveClient
     {
+#pragma warning disable AZC0004 // Websocket is an async only class
         /// <summary>
         /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication.
         /// </summary>
@@ -30,24 +31,9 @@ namespace Azure.AI.VoiceLive
 
             VoiceLiveSession session = _keyCredential != null ? new(this, webSocketEndpoint, _keyCredential) : new(this, webSocketEndpoint, _tokenCredential);
 
-            await session.ConnectAsync(cancellationToken).ConfigureAwait(false);
+            await session.ConnectAsync(_options.Headers, cancellationToken).ConfigureAwait(false);
 
             return session;
-        }
-
-        /// <summary>
-        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
-        /// simultaneously sending and receiving WebSocket messages.
-        /// </remarks>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <param name="model"></param>
-        /// <returns>A new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
-        public virtual VoiceLiveSession StartSession(string model, CancellationToken cancellationToken = default)
-        {
-            return StartSessionAsync(model, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -61,7 +47,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
         public virtual async Task<VoiceLiveSession> StartSessionAsync(
-            RequestSession sessionConfig,
+            VoiceLiveSessionOptions sessionConfig,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
@@ -74,23 +60,7 @@ namespace Azure.AI.VoiceLive
 
             return session;
         }
-
-        /// <summary>
-        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication with specified session configuration.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
-        /// simultaneously sending and receiving WebSocket messages.
-        /// </remarks>
-        /// <param name="sessionConfig">The configuration for the session.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>A new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
-        public virtual VoiceLiveSession StartSession(
-            RequestSession sessionConfig,
-            CancellationToken cancellationToken = default)
-        {
-            return StartSessionAsync(sessionConfig, cancellationToken).EnsureCompleted();
-        }
+#pragma warning restore AZC0004 // Websocket is an async only class
 
         /// <summary>
         /// Converts an HTTP endpoint to a WebSocket endpoint.

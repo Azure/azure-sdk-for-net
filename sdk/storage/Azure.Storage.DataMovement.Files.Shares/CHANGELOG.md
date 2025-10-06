@@ -1,14 +1,28 @@
 # Release History
 
-## 12.3.0-beta.1 (Unreleased)
+## 12.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` disposes the `CancellationTokenSource` after transfer reaches a `Completed` or `Paused` state
+    - `TransferManager` uses a `CancellationTokenSource` also does not link the`CancellationToken` passed to it's methods
+    - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
+- Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
+- Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
 
 ### Other Changes
+
+## 12.3.0-beta.1 (2025-09-16)
+
+### Features Added
+- Added support for NFS -> SMB and SMB -> NFS Share-to-Share copy transfers.
+
+### Bugs Fixed
+- Fixed property/permission/metadata preservation when overwriting an existing directory for SMB and NFS transfers.
 
 ## 12.2.2 (2025-09-10)
 

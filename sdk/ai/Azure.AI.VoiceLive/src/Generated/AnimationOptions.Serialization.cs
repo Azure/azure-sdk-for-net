@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Configuration for animation outputs including blendshapes, visemes, and emotion metadata. </summary>
+    /// <summary> Configuration for animation outputs including blendshapes and visemes metadata. </summary>
     public partial class AnimationOptions : IJsonModel<AnimationOptions>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -44,14 +44,9 @@ namespace Azure.AI.VoiceLive
                 writer.WriteStartArray();
                 foreach (AnimationOutputType item in Outputs)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EmotionDetectionIntervalMs))
-            {
-                writer.WritePropertyName("emotion_detection_interval_ms"u8);
-                writer.WriteNumberValue(EmotionDetectionIntervalMs.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -97,7 +92,6 @@ namespace Azure.AI.VoiceLive
             }
             string modelName = default;
             IList<AnimationOutputType> outputs = default;
-            int? emotionDetectionIntervalMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,18 +109,9 @@ namespace Azure.AI.VoiceLive
                     List<AnimationOutputType> array = new List<AnimationOutputType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAnimationOutputType());
+                        array.Add(new AnimationOutputType(item.GetString()));
                     }
                     outputs = array;
-                    continue;
-                }
-                if (prop.NameEquals("emotion_detection_interval_ms"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    emotionDetectionIntervalMs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +119,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnimationOptions(modelName, outputs ?? new ChangeTrackingList<AnimationOutputType>(), emotionDetectionIntervalMs, additionalBinaryDataProperties);
+            return new AnimationOptions(modelName, outputs ?? new ChangeTrackingList<AnimationOutputType>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

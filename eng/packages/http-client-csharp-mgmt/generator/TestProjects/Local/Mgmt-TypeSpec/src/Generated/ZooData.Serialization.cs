@@ -19,7 +19,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class ZooData : IJsonModel<ZooData>
+    public partial class ZooData : TrackedResourceData, IJsonModel<ZooData>
     {
         /// <summary> Initializes a new instance of <see cref="ZooData"/> for deserialization. </summary>
         internal ZooData()
@@ -88,7 +88,7 @@ namespace MgmtTypeSpec
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             ZooProperties properties = default;
             ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

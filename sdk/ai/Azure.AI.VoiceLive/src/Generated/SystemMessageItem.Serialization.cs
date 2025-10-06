@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The SystemMessageItem. </summary>
-    public partial class SystemMessageItem : IJsonModel<SystemMessageItem>
+    /// <summary> A system message item within a conversation. </summary>
+    public partial class SystemMessageItem : MessageItem, IJsonModel<SystemMessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="SystemMessageItem"/> for deserialization. </summary>
         internal SystemMessageItem()
@@ -39,13 +39,6 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(SystemMessageItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("content"u8);
-            writer.WriteStartArray();
-            foreach (InputTextContentPart item in Content)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -76,9 +69,9 @@ namespace Azure.AI.VoiceLive
             ItemType @type = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string role = "system";
+            ResponseMessageRole role = default;
+            IList<MessageContentPart> content = default;
             ItemParamStatus? status = default;
-            IList<InputTextContentPart> content = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -93,7 +86,17 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString();
+                    role = new ResponseMessageRole(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("content"u8))
+                {
+                    List<MessageContentPart> array = new List<MessageContentPart>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MessageContentPart.DeserializeMessageContentPart(item, options));
+                    }
+                    content = array;
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -102,17 +105,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemParamStatus();
-                    continue;
-                }
-                if (prop.NameEquals("content"u8))
-                {
-                    List<InputTextContentPart> array = new List<InputTextContentPart>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(InputTextContentPart.DeserializeInputTextContentPart(item, options));
-                    }
-                    content = array;
+                    status = new ItemParamStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,8 +118,8 @@ namespace Azure.AI.VoiceLive
                 id,
                 additionalBinaryDataProperties,
                 role,
-                status,
-                content);
+                content,
+                status);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

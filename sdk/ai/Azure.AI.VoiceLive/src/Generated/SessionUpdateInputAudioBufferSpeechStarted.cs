@@ -15,7 +15,6 @@ namespace Azure.AI.VoiceLive
     /// detected in the audio buffer. This can happen any time audio is added to the
     /// buffer (unless speech is already detected). The client may want to use this
     /// event to interrupt audio playback or provide visual feedback to the user.
-    /// 
     /// The client should expect to receive a `input_audio_buffer.speech_stopped` event
     /// when speech stops. The `item_id` property is the ID of the user message item
     /// that will be created when speech stops and will also be included in the
@@ -25,12 +24,7 @@ namespace Azure.AI.VoiceLive
     public partial class SessionUpdateInputAudioBufferSpeechStarted : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>. </summary>
-        /// <param name="audioStartMs">
-        /// Milliseconds from the start of all audio written to the buffer during the
-        /// session when speech was first detected. This will correspond to the
-        /// beginning of audio sent to the model, and thus includes the
-        /// `prefix_padding_ms` configured in the Session.
-        /// </param>
+        /// <param name="audioStartMs"></param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
         internal SessionUpdateInputAudioBufferSpeechStarted(int audioStartMs, string itemId) : base(ServerEventType.InputAudioBufferSpeechStarted)
         {
@@ -42,26 +36,13 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="audioStartMs">
-        /// Milliseconds from the start of all audio written to the buffer during the
-        /// session when speech was first detected. This will correspond to the
-        /// beginning of audio sent to the model, and thus includes the
-        /// `prefix_padding_ms` configured in the Session.
-        /// </param>
+        /// <param name="audioStartMs"></param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
         internal SessionUpdateInputAudioBufferSpeechStarted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioStartMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             AudioStartMs = audioStartMs;
             ItemId = itemId;
         }
-
-        /// <summary>
-        /// Milliseconds from the start of all audio written to the buffer during the
-        /// session when speech was first detected. This will correspond to the
-        /// beginning of audio sent to the model, and thus includes the
-        /// `prefix_padding_ms` configured in the Session.
-        /// </summary>
-        public int AudioStartMs { get; }
 
         /// <summary> The ID of the user message item that will be created when speech stops. </summary>
         public string ItemId { get; }

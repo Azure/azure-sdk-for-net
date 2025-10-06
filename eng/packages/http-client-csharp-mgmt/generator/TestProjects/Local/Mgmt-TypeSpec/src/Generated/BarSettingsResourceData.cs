@@ -20,23 +20,18 @@ namespace MgmtTypeSpec
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
-        /// <param name="property"></param>
-        /// <param name="anotherProperty"></param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/> or <paramref name="innerProp2"/> is null. </exception>
-        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, string innerProp2, int middleProp1, int prop2)
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> is null. </exception>
+        public BarSettingsResourceData(string innerProp2, int middleProp1, int prop2)
         {
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
             StringArray = new ChangeTrackingList<string>();
-            Property = @property;
-            AnotherProperty = anotherProperty;
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
-            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, new ChangeTrackingDictionary<string, string>(), new ChangeTrackingList<string>(), prop2);
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -79,6 +74,41 @@ namespace MgmtTypeSpec
 
         /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
+
+        /// <summary> enabled. </summary>
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? PropertyLeft
+        {
+            get
+            {
+                return Property is null ? default : Property.Left;
+            }
+            set
+            {
+                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? AnotherPropertyLeft
+        {
+            get
+            {
+                return AnotherProperty is null ? default : AnotherProperty.Left;
+            }
+            set
+            {
+                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
         public int? InnerProp1
@@ -136,6 +166,10 @@ namespace MgmtTypeSpec
         {
             get
             {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
                 return FlattenedNestedProperty.MiddleProp2;
             }
         }
@@ -145,6 +179,10 @@ namespace MgmtTypeSpec
         {
             get
             {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
                 return FlattenedNestedProperty.Prop1;
             }
         }
@@ -166,47 +204,16 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> enabled. </summary>
-        public bool? IsEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsEnabled;
-            }
-        }
-
-        /// <summary> enabled. </summary>
-        public int? PropertyLeft
-        {
-            get
-            {
-                return Property is null ? default : Property.Left;
-            }
-            set
-            {
-                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
-            }
-        }
-
-        /// <summary> enabled. </summary>
-        public int? AnotherPropertyLeft
-        {
-            get
-            {
-                return AnotherProperty is null ? default : AnotherProperty.Left;
-            }
-            set
-            {
-                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
-            }
-        }
-
         /// <summary> Gets the RandomCollectionProp. </summary>
         public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {
             get
             {
                 return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
+            }
+            set
+            {
+                OptionalFlattenProperty = new OptionalFlattenPropertyType(value);
             }
         }
     }

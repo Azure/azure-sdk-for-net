@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The InputAudioContentPart. </summary>
-    public partial class InputAudioContentPart : UserContentPart
+    /// <summary> Input audio content part. </summary>
+    public partial class InputAudioContentPart : MessageContentPart
     {
         /// <summary> Initializes a new instance of <see cref="InputAudioContentPart"/>. </summary>
         /// <param name="audio"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        public InputAudioContentPart(string audio) : base("input_audio")
+        public InputAudioContentPart(string audio) : base(ContentPartType.InputAudio)
         {
             Argument.AssertNotNull(audio, nameof(audio));
 
@@ -24,18 +24,18 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="InputAudioContentPart"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="audio"></param>
         /// <param name="transcript"></param>
-        internal InputAudioContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio, string transcript) : base(@type, additionalBinaryDataProperties)
+        internal InputAudioContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio, string transcript) : base(@type, additionalBinaryDataProperties)
         {
             Audio = audio;
             Transcript = transcript;
         }
 
-        /// <summary> Gets the Audio. </summary>
-        public string Audio { get; }
+        /// <summary> Gets or sets the Audio. </summary>
+        public string Audio { get; set; }
 
         /// <summary> Gets or sets the Transcript. </summary>
         public string Transcript { get; set; }

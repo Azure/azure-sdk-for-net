@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFileServices()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileServicesGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/FileServicesGet.json
             // this example is just showing the usage of "FileServices_GetServiceProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutFileServices()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileServicesPut.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/FileServicesPut.json
             // this example is just showing the usage of "FileServices_SetServiceProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutFileServicesEnableSMBMultichannel()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileServicesPut_EnableSMBMultichannel.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/FileServicesPut_EnableSMBMultichannel.json
             // this example is just showing the usage of "FileServices_SetServiceProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,9 +104,12 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             FileServiceData data = new FileServiceData
             {
-                ProtocolSmbSetting = new SmbSetting
+                ProtocolSettings = new FileServiceProtocolSettings
                 {
-                    IsMultiChannelEnabled = true,
+                    SmbSetting = new SmbSetting
+                    {
+                        IsMultiChannelEnabled = true,
+                    },
                 },
             };
             ArmOperation<FileServiceResource> lro = await fileService.CreateOrUpdateAsync(WaitUntil.Completed, data);
@@ -123,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutFileServicesEnableSecureSmbFeatures()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileServicesPut_EnableSecureSmbFeatures.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/FileServicesPut_EnableSecureSmbFeatures.json
             // this example is just showing the usage of "FileServices_SetServiceProperties" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,12 +145,57 @@ namespace Azure.ResourceManager.Storage.Samples
             // invoke the operation
             FileServiceData data = new FileServiceData
             {
-                ProtocolSmbSetting = new SmbSetting
+                ProtocolSettings = new FileServiceProtocolSettings
                 {
-                    Versions = "SMB2.1;SMB3.0;SMB3.1.1",
-                    AuthenticationMethods = "NTLMv2;Kerberos",
-                    KerberosTicketEncryption = "RC4-HMAC;AES-256",
-                    ChannelEncryption = "AES-128-CCM;AES-128-GCM;AES-256-GCM",
+                    SmbSetting = new SmbSetting
+                    {
+                        Versions = "SMB2.1;SMB3.0;SMB3.1.1",
+                        AuthenticationMethods = "NTLMv2;Kerberos",
+                        KerberosTicketEncryption = "RC4-HMAC;AES-256",
+                        ChannelEncryption = "AES-128-CCM;AES-128-GCM;AES-256-GCM",
+                    },
+                },
+            };
+            ArmOperation<FileServiceResource> lro = await fileService.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            FileServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FileServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_PutFileServicesEncryptionInTransitRequired()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/FileServicesPut_EncryptionInTransitRequired.json
+            // this example is just showing the usage of "FileServices_SetServiceProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FileServiceResource created on azure
+            // for more information of creating FileServiceResource, please refer to the document of FileServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res4410";
+            string accountName = "sto8607";
+            ResourceIdentifier fileServiceResourceId = FileServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            FileServiceResource fileService = client.GetFileServiceResource(fileServiceResourceId);
+
+            // invoke the operation
+            FileServiceData data = new FileServiceData
+            {
+                ProtocolSettings = new FileServiceProtocolSettings
+                {
+                    SmbSetting = new SmbSetting
+                    {
+                        IsRequired = true,
+                    },
+                    IsRequired = true,
                 },
             };
             ArmOperation<FileServiceResource> lro = await fileService.CreateOrUpdateAsync(WaitUntil.Completed, data);

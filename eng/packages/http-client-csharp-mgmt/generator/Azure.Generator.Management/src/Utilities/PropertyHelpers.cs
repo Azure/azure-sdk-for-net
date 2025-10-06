@@ -83,10 +83,16 @@ namespace Azure.Generator.Management.Utilities
         public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
-            // For collection types, we do not do null check and initialization in getter, they have been initialized in constructor.
+            // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
-                return new List<MethodBodyStatement>() { Return(new MemberExpression(internalProperty, innerProperty.Name)) };
+                return new List<MethodBodyStatement> {
+                    new IfStatement(checkNullExpression)
+                    {
+                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                    },
+                    Return(new MemberExpression(internalProperty, innerProperty.Name))
+                };
             }
 
             if (includeGetterNullCheck == true)
@@ -135,11 +141,7 @@ namespace Azure.Generator.Management.Utilities
 
         public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
-            if (innerProperty.Type.IsCollection)
-            {
-                return null;
-            }
-
+            // To not introduce breaking change, for collection types, we keep the setter for collection-type properties during safe flatten.
             var isOverriddenValueType = IsOverriddenValueType(innerProperty);
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);

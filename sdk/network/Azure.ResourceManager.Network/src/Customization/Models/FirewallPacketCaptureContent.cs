@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 Protocol,
                 Flags,
                 Filters,
+                null,
                 _serializedAdditionalRawData);
         }
     }

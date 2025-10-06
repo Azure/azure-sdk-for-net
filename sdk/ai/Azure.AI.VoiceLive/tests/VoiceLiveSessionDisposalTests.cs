@@ -73,9 +73,9 @@ namespace Azure.AI.VoiceLive.Tests
             // SendInputAudioAsync(byte[]) should throw
             Assert.ThrowsAsync<ObjectDisposedException>(async () => await session.SendInputAudioAsync(new byte[] { 0x01 }));
 
-            // ConfigureConversationSessionAsync should throw
-            var convoOptions = new SessionOptions { Model = TestConstants.ModelName };
-            Assert.ThrowsAsync<ObjectDisposedException>(async () => await session.ConfigureConversationSessionAsync(convoOptions));
+            // ConfigureSessionAsync should throw
+            var convoOptions = new VoiceLiveSessionOptions { Model = TestConstants.ModelName };
+            Assert.ThrowsAsync<ObjectDisposedException>(async () => await session.ConfigureSessionAsync(convoOptions));
         }
 
         [Test]

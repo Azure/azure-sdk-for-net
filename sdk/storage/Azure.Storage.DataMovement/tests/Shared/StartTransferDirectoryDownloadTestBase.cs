@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement.Tests
                 string.Join("/", sourceDirectoryName, "bar", "pik", GetNewObjectName()),
             };
 
-            CancellationTokenSource cts = new();
+            using CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitInSec));
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
@@ -220,7 +220,7 @@ namespace Azure.Storage.DataMovement.Tests
                 string.Join("/", sourceDirectoryName, "bar", "pik", GetNewObjectName()),
             };
 
-            CancellationTokenSource cts = new();
+            using CancellationTokenSource cts = new();
             cts.CancelAfter(waitInSec);
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string sourceDirectoryName = "foo";
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
             await SetupSourceDirectoryAsync(test.Container, sourceDirectoryName, new(), cancellationTokenSource.Token);
 
@@ -410,13 +410,13 @@ namespace Azure.Storage.DataMovement.Tests
                 string.Join("/", prefix, "space folder", "space file"),
             ];
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
                 prefix,
                 itemNames.Select(name => (name, Constants.KB)).ToList(),
                 directoryName: directoryName,
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationTokenSource.Token);
         }
 
         [Test]
@@ -426,12 +426,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             string[] items = { "file1", "file2", "dir1/file1" };
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await DownloadDirectoryAndVerifyAsync(
                 test.Container,
                 string.Empty,
                 items.Select(name => (name, Constants.KB)).ToList(),
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationTokenSource.Token);
         }
         #endregion DirectoryDownloadTests
 
@@ -476,6 +476,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 MaximumConcurrency = concurrency,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
@@ -493,7 +494,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
             // Create transfer to do a AwaitCompletion
             TransferOptions options = new TransferOptions();
@@ -526,7 +527,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
             TransferOptions options = new TransferOptions()
             {
@@ -567,7 +568,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
@@ -609,7 +610,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
             TransferOptions options = new TransferOptions()
             {

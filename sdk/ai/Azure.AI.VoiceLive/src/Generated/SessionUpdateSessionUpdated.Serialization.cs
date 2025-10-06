@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a session is updated with a `session.update` event, unless
     /// there is an error.
     /// </summary>
-    public partial class SessionUpdateSessionUpdated : IJsonModel<SessionUpdateSessionUpdated>
+    public partial class SessionUpdateSessionUpdated : SessionUpdate, IJsonModel<SessionUpdateSessionUpdated>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionUpdated"/> for deserialization. </summary>
         internal SessionUpdateSessionUpdated()
@@ -74,7 +74,7 @@ namespace Azure.AI.VoiceLive
             ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponseSession session = default;
+            VoiceLiveSessionResponse session = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -89,7 +89,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("session"u8))
                 {
-                    session = ResponseSession.DeserializeResponseSession(prop.Value, options);
+                    session = VoiceLiveSessionResponse.DeserializeVoiceLiveSessionResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

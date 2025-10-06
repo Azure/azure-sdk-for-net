@@ -314,7 +314,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     FooData patch = new FooData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -362,7 +362,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = Get(cancellationToken).Value.Data;
+                    FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     FooData patch = new FooData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -409,7 +409,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     FooData patch = new FooData();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -452,7 +452,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = Get(cancellationToken).Value.Data;
+                    FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     FooData patch = new FooData();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<FooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
@@ -494,7 +494,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     FooData patch = new FooData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -540,7 +540,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = Get(cancellationToken).Value.Data;
+                    FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     FooData patch = new FooData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

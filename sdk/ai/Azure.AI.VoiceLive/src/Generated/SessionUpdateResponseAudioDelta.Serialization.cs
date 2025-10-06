@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the model-generated audio is updated. </summary>
-    public partial class SessionUpdateResponseAudioDelta : IJsonModel<SessionUpdateResponseAudioDelta>
+    public partial class SessionUpdateResponseAudioDelta : SessionUpdate, IJsonModel<SessionUpdateResponseAudioDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioDelta()
@@ -49,11 +49,6 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("delta"u8);
             writer.WriteBase64StringValue(Delta.ToArray(), "D");
-            if (Optional.IsDefined(EventId))
-            {
-                writer.WritePropertyName("event_id"u8);
-                writer.WriteStringValue(EventId);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -82,18 +77,23 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             ServerEventType @type = default;
+            string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             string itemId = default;
             int outputIndex = default;
             int contentIndex = default;
             BinaryData delta = default;
-            string eventId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ServerEventType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("event_id"u8))
+                {
+                    eventId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -121,11 +121,6 @@ namespace Azure.AI.VoiceLive
                     delta = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
-                if (prop.NameEquals("event_id"u8))
-                {
-                    eventId = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -133,13 +128,13 @@ namespace Azure.AI.VoiceLive
             }
             return new SessionUpdateResponseAudioDelta(
                 @type,
+                eventId,
                 additionalBinaryDataProperties,
                 responseId,
                 itemId,
                 outputIndex,
                 contentIndex,
-                delta,
-                eventId);
+                delta);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
