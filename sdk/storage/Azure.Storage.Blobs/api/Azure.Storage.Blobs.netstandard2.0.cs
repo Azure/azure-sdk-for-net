@@ -311,6 +311,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
@@ -1193,6 +1194,7 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
@@ -1461,6 +1463,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
     public partial class PageBlobUploadPagesOptions
@@ -1572,6 +1575,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.RequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
