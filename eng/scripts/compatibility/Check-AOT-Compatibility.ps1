@@ -49,7 +49,6 @@ $csprojContent | Set-Content -Path $csprojFile
 $programFile = "Program.cs"
 
 $programFileContent = @"
-using $PackageName;
 using System;
 namespace AotCompatibility
 {
