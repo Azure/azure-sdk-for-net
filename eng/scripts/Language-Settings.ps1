@@ -67,24 +67,21 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; otherwise use IsAotCompatible from csproj
+      # CheckAOTCompat logic: if set in CI.yml, respect that value; otherwise use AotCompatOptOut from project settings
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
-        # Value is explicitly set in CI.yml, respect that
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
           $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
         }
       }
       else {
-        # Value not set in CI.yml, if not explicitly opted out of AOT compat, run the check
+        # If not explicitly opted out of AOT compat, run the check
         $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -ne 'true'
-        Write-Host "Package $($pkgProp.ArtifactName) does not have CheckAOTCompat set in its CI.yml, defaulting to aot opt out ($($AotCompatOptOut)) from csproj: $($pkgProp.CIParameters["CheckAOTCompat"])"
       }
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
       if ($pkgProp.CIParameters["CheckAOTCompat"]) {
-        Write-Host "Package $($pkgProp.ArtifactName) has CheckAOTCompat set to true, looking for AOTTestInputs in its CI.yml"
         $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
         if ($aotArtifacts) {
           $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
