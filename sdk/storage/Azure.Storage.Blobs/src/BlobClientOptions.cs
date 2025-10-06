@@ -229,7 +229,7 @@ namespace Azure.Storage.Blobs
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
         /// <summary>
-        /// Whether to include the StorageRequestValidationPipelinePolicy which throws an exception when the
+        /// Whether to include the StorageRequestValidationPipelinePolicy, which throws an exception when the
         /// <see cref="Constants.HeaderNames.ClientRequestId"/> header is different for the request and the response.
         /// </summary>
         public bool DontIncludeStorageRequestValidationPipelinePolicy { get; set; } = Constants.DontIncludeStorageRequestValidationPipelinePolicy;
