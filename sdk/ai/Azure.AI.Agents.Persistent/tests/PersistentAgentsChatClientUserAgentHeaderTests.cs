@@ -29,7 +29,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 AssertContainsMEAIHeader(request.Headers);
                 requestPaths.Add($"{request.Method}:{request.Uri.Path}");
-                return GerResponse(request);
+                return GetResponse(request);
             });
 
             PersistentAgentsChatClient chatClient = GetChatClient(mockTransport, threadId);
@@ -60,7 +60,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 AssertContainsMEAIHeader(request.Headers);
                 requestPaths.Add($"{request.Method}:{request.Uri.Path}");
-                return GerResponse(request, emptyRunList);
+                return GetResponse(request, emptyRunList);
             });
 
             PersistentAgentsChatClient chatClient = GetChatClient(mockTransport);
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 AssertContainsMEAIHeader(request.Headers);
                 requestPaths.Add($"{request.Method}:{request.Uri.Path}");
-                return GerResponse(request, emptyRunList);
+                return GetResponse(request, emptyRunList);
             });
 
             PersistentAgentsChatClient chatClient = GetChatClient(mockTransport);
@@ -121,7 +121,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(Regex.IsMatch(userAgent, @"MEAI/(\d+\.\d+\.\d+.*)"), "Expected 'MEAI/' to be followed by a version number in the User-Agent header.");
         }
 
-        private static MockResponse GerResponse(MockRequest request, bool? emptyRunList = true)
+        private static MockResponse GetResponse(MockRequest request, bool? emptyRunList = true)
         {
             // Sent by client.Administration.GetAgentAsync(...) method
             if (request.Method == RequestMethod.Get && request.Uri.Path == $"/assistants/{AgentId}")
