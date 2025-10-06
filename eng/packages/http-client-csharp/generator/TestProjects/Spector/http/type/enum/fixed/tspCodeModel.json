@@ -24,13 +24,135 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$id": "4",
+            "kind": "enum",
+            "decorators": [],
+            "name": "DaysOfWeekEnum",
+            "isGeneratedName": false,
+            "namespace": "Type.Enum.Fixed",
+            "doc": "Days of the week",
+            "valueType": {
+              "$id": "5",
+              "kind": "string",
+              "decorators": [],
+              "name": "string",
+              "doc": "A sequence of textual characters.",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "values": [
+              {
+                "$id": "6",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Monday",
+                "value": "Monday",
+                "doc": "Monday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "7",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Tuesday",
+                "value": "Tuesday",
+                "doc": "Tuesday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "8",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Wednesday",
+                "value": "Wednesday",
+                "doc": "Wednesday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "9",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Thursday",
+                "value": "Thursday",
+                "doc": "Thursday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "10",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Friday",
+                "value": "Friday",
+                "doc": "Friday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "11",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Saturday",
+                "value": "Saturday",
+                "doc": "Saturday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              },
+              {
+                "$id": "12",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "Sunday",
+                "value": "Sunday",
+                "doc": "Sunday.",
+                "enumType": {
+                  "$ref": "4"
+                },
+                "valueType": {
+                  "$ref": "5"
+                }
+              }
+            ],
+            "isFixed": true,
+            "isFlags": false,
+            "usage": "Input,Output,Json",
+            "access": "public",
+            "crossLanguageDefinitionId": "Type.Enum.Fixed.DaysOfWeekEnum",
+            "apiVersions": [],
+            "isUnionAsEnum": false,
+            "__accessSet": true
           },
           "doc": "Monday.",
           "decorators": []
         },
         {
-          "$id": "4",
+          "$id": "13",
           "kind": "enumvalue",
           "name": "Tuesday",
           "value": "Tuesday",
@@ -38,13 +160,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "Tuesday.",
           "decorators": []
         },
         {
-          "$id": "5",
+          "$id": "14",
           "kind": "enumvalue",
           "name": "Wednesday",
           "value": "Wednesday",
@@ -52,13 +174,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "Wednesday.",
           "decorators": []
         },
         {
-          "$id": "6",
+          "$id": "15",
           "kind": "enumvalue",
           "name": "Thursday",
           "value": "Thursday",
@@ -66,13 +188,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "Thursday.",
           "decorators": []
         },
         {
-          "$id": "7",
+          "$id": "16",
           "kind": "enumvalue",
           "name": "Friday",
           "value": "Friday",
@@ -80,13 +202,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "Friday.",
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "17",
           "kind": "enumvalue",
           "name": "Saturday",
           "value": "Saturday",
@@ -94,13 +216,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "Saturday.",
           "decorators": []
         },
         {
-          "$id": "9",
+          "$id": "18",
           "kind": "enumvalue",
           "name": "Sunday",
           "value": "Sunday",
@@ -108,7 +230,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$ref": "4"
           },
           "doc": "Sunday.",
           "decorators": []
@@ -124,13 +246,13 @@
   ],
   "constants": [
     {
-      "$id": "10",
+      "$id": "19",
       "kind": "constant",
       "name": "getKnownValueContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "11",
+        "$id": "20",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -140,13 +262,13 @@
       "decorators": []
     },
     {
-      "$id": "12",
+      "$id": "21",
       "kind": "constant",
       "name": "GetKnownValueResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "13",
+        "$id": "22",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -156,13 +278,13 @@
       "decorators": []
     },
     {
-      "$id": "14",
+      "$id": "23",
       "kind": "constant",
       "name": "GetKnownValueResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "15",
+        "$id": "24",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -172,13 +294,13 @@
       "decorators": []
     },
     {
-      "$id": "16",
+      "$id": "25",
       "kind": "constant",
       "name": "GetKnownValueResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "17",
+        "$id": "26",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -188,13 +310,13 @@
       "decorators": []
     },
     {
-      "$id": "18",
+      "$id": "27",
       "kind": "constant",
       "name": "GetKnownValueResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "19",
+        "$id": "28",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -204,13 +326,13 @@
       "decorators": []
     },
     {
-      "$id": "20",
+      "$id": "29",
       "kind": "constant",
       "name": "GetKnownValueResponseContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "21",
+        "$id": "30",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -223,20 +345,20 @@
   "models": [],
   "clients": [
     {
-      "$id": "22",
+      "$id": "31",
       "kind": "client",
       "name": "FixedClient",
       "namespace": "Type.Enum.Fixed",
       "methods": [],
       "parameters": [
         {
-          "$id": "23",
+          "$id": "32",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "24",
+            "$id": "33",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -247,7 +369,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "25",
+              "$id": "34",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -265,32 +387,32 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "26",
+          "$id": "35",
           "kind": "client",
           "name": "String",
           "namespace": "Type.Enum.Fixed",
           "methods": [
             {
-              "$id": "27",
+              "$id": "36",
               "kind": "basic",
               "name": "getKnownValue",
               "accessibility": "public",
               "apiVersions": [],
               "doc": "getKnownValue",
               "operation": {
-                "$id": "28",
+                "$id": "37",
                 "name": "getKnownValue",
                 "resourceName": "String",
                 "doc": "getKnownValue",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "29",
+                    "$id": "38",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "10"
+                      "$ref": "19"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -314,7 +436,7 @@
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "12"
+                          "$ref": "21"
                         }
                       }
                     ],
@@ -335,12 +457,12 @@
               },
               "parameters": [
                 {
-                  "$id": "30",
+                  "$id": "39",
                   "kind": "method",
                   "name": "accept",
                   "serializedName": "Accept",
                   "type": {
-                    "$ref": "10"
+                    "$ref": "19"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -363,26 +485,26 @@
               "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue"
             },
             {
-              "$id": "31",
+              "$id": "40",
               "kind": "basic",
               "name": "putKnownValue",
               "accessibility": "public",
               "apiVersions": [],
               "doc": "putKnownValue",
               "operation": {
-                "$id": "32",
+                "$id": "41",
                 "name": "putKnownValue",
                 "resourceName": "String",
                 "doc": "putKnownValue",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "33",
+                    "$id": "42",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "14"
+                      "$ref": "23"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -393,7 +515,7 @@
                     "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType"
                   },
                   {
-                    "$id": "34",
+                    "$id": "43",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -436,12 +558,12 @@
               },
               "parameters": [
                 {
-                  "$id": "35",
+                  "$id": "44",
                   "kind": "method",
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "16"
+                    "$ref": "25"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -453,7 +575,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "36",
+                  "$id": "45",
                   "kind": "method",
                   "name": "body",
                   "serializedName": "body",
@@ -478,26 +600,26 @@
               "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue"
             },
             {
-              "$id": "37",
+              "$id": "46",
               "kind": "basic",
               "name": "putUnknownValue",
               "accessibility": "public",
               "apiVersions": [],
               "doc": "putUnknownValue",
               "operation": {
-                "$id": "38",
+                "$id": "47",
                 "name": "putUnknownValue",
                 "resourceName": "String",
                 "doc": "putUnknownValue",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "39",
+                    "$id": "48",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "18"
+                      "$ref": "27"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -508,7 +630,7 @@
                     "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType"
                   },
                   {
-                    "$id": "40",
+                    "$id": "49",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -551,12 +673,12 @@
               },
               "parameters": [
                 {
-                  "$id": "41",
+                  "$id": "50",
                   "kind": "method",
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "20"
+                    "$ref": "29"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -568,7 +690,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "42",
+                  "$id": "51",
                   "kind": "method",
                   "name": "body",
                   "serializedName": "body",
@@ -595,13 +717,13 @@
           ],
           "parameters": [
             {
-              "$id": "43",
+              "$id": "52",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "44",
+                "$id": "53",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -612,7 +734,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "45",
+                  "$id": "54",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -629,7 +751,7 @@
           "crossLanguageDefinitionId": "Type.Enum.Fixed.String",
           "apiVersions": [],
           "parent": {
-            "$ref": "22"
+            "$ref": "31"
           }
         }
       ]
