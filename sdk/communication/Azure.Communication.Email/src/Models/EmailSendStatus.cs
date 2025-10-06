@@ -10,7 +10,7 @@ namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailSendStatus")]
     [CodeGenSuppress("EmailSendStatus", typeof(string), typeof(string), typeof(string))]
-    public partial struct EmailSendStatus
+    public partial struct EmailSendStatus : IEquatable<EmailSendStatus>
     {
         /// <summary>
         /// The values of all declared <see cref="EmailSendStatus"/> properties as string constants.
