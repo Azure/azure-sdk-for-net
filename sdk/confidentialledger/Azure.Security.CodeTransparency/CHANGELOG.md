@@ -22,7 +22,7 @@
 
 ### Features Added
 
-- Aligned with the latest (Feb 25) changes to the IETF draft: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
+- Aligned with the latest changes (Feb 25) of the IETF draft: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
 - Updated receipt verification logic.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
