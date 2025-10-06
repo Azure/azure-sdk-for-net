@@ -26,7 +26,45 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "1"
+            "$id": "4",
+            "kind": "enum",
+            "decorators": [],
+            "name": "Enum",
+            "isGeneratedName": false,
+            "namespace": "_Specs_.Azure.Example.Basic",
+            "valueType": {
+              "$id": "5",
+              "kind": "string",
+              "decorators": [],
+              "name": "string",
+              "doc": "A sequence of textual characters.",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "values": [
+              {
+                "$id": "6",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "EnumValue1",
+                "value": "EnumValue1",
+                "valueType": {
+                  "$ref": "5"
+                },
+                "enumType": {
+                  "$ref": "4"
+                }
+              }
+            ],
+            "isFixed": false,
+            "isFlags": false,
+            "usage": "Input,Output,Json",
+            "access": "public",
+            "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Enum",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
+            "isUnionAsEnum": true,
+            "__accessSet": true
           },
           "decorators": []
         }
@@ -38,12 +76,12 @@
       "decorators": []
     },
     {
-      "$id": "4",
+      "$id": "7",
       "kind": "enum",
       "name": "Versions",
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Versions",
       "valueType": {
-        "$id": "5",
+        "$id": "8",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51,15 +89,53 @@
       },
       "values": [
         {
-          "$id": "6",
+          "$id": "9",
           "kind": "enumvalue",
           "name": "v2022_12_01_preview",
           "value": "2022-12-01-preview",
           "valueType": {
-            "$ref": "5"
+            "$ref": "8"
           },
           "enumType": {
-            "$ref": "4"
+            "$id": "10",
+            "kind": "enum",
+            "decorators": [],
+            "name": "Versions",
+            "isGeneratedName": false,
+            "namespace": "_Specs_.Azure.Example.Basic",
+            "valueType": {
+              "$id": "11",
+              "kind": "string",
+              "decorators": [],
+              "name": "string",
+              "doc": "A sequence of textual characters.",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "values": [
+              {
+                "$id": "12",
+                "kind": "enumvalue",
+                "decorators": [],
+                "name": "v2022_12_01_preview",
+                "value": "2022-12-01-preview",
+                "enumType": {
+                  "$ref": "10"
+                },
+                "valueType": {
+                  "$ref": "11"
+                }
+              }
+            ],
+            "isFixed": true,
+            "isFlags": false,
+            "usage": "ApiVersionEnum",
+            "access": "public",
+            "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Versions",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
+            "isUnionAsEnum": false,
+            "__accessSet": true
           },
           "decorators": []
         }
@@ -73,13 +149,13 @@
   ],
   "constants": [
     {
-      "$id": "7",
+      "$id": "13",
       "kind": "constant",
       "name": "basicActionContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "8",
+        "$id": "14",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -89,13 +165,13 @@
       "decorators": []
     },
     {
-      "$id": "9",
+      "$id": "15",
       "kind": "constant",
       "name": "basicActionContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "10",
+        "$id": "16",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -107,7 +183,7 @@
   ],
   "models": [
     {
-      "$id": "11",
+      "$id": "17",
       "kind": "model",
       "name": "ActionRequest",
       "namespace": "_Specs_.Azure.Example.Basic",
@@ -116,12 +192,12 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "12",
+          "$id": "18",
           "kind": "property",
           "name": "stringProperty",
           "serializedName": "stringProperty",
           "type": {
-            "$id": "13",
+            "$id": "19",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -141,12 +217,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "14",
+          "$id": "20",
           "kind": "property",
           "name": "modelProperty",
           "serializedName": "modelProperty",
           "type": {
-            "$id": "15",
+            "$id": "21",
             "kind": "model",
             "name": "Model",
             "namespace": "_Specs_.Azure.Example.Basic",
@@ -155,12 +231,12 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "16",
+                "$id": "22",
                 "kind": "property",
                 "name": "int32Property",
                 "serializedName": "int32Property",
                 "type": {
-                  "$id": "17",
+                  "$id": "23",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -180,12 +256,12 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "18",
+                "$id": "24",
                 "kind": "property",
                 "name": "float32Property",
                 "serializedName": "float32Property",
                 "type": {
-                  "$id": "19",
+                  "$id": "25",
                   "kind": "float32",
                   "name": "float32",
                   "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -205,7 +281,7 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "20",
+                "$id": "26",
                 "kind": "property",
                 "name": "enumProperty",
                 "serializedName": "enumProperty",
@@ -241,16 +317,16 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "21",
+          "$id": "27",
           "kind": "property",
           "name": "arrayProperty",
           "serializedName": "arrayProperty",
           "type": {
-            "$id": "22",
+            "$id": "28",
             "kind": "array",
             "name": "Array",
             "valueType": {
-              "$id": "23",
+              "$id": "29",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -273,22 +349,22 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "24",
+          "$id": "30",
           "kind": "property",
           "name": "recordProperty",
           "serializedName": "recordProperty",
           "type": {
-            "$id": "25",
+            "$id": "31",
             "kind": "dict",
             "keyType": {
-              "$id": "26",
+              "$id": "32",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
               "decorators": []
             },
             "valueType": {
-              "$id": "27",
+              "$id": "33",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -312,10 +388,10 @@
       ]
     },
     {
-      "$ref": "15"
+      "$ref": "21"
     },
     {
-      "$id": "28",
+      "$id": "34",
       "kind": "model",
       "name": "ActionResponse",
       "namespace": "_Specs_.Azure.Example.Basic",
@@ -324,12 +400,12 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "29",
+          "$id": "35",
           "kind": "property",
           "name": "stringProperty",
           "serializedName": "stringProperty",
           "type": {
-            "$id": "30",
+            "$id": "36",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -349,12 +425,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "31",
+          "$id": "37",
           "kind": "property",
           "name": "modelProperty",
           "serializedName": "modelProperty",
           "type": {
-            "$ref": "15"
+            "$ref": "21"
           },
           "optional": true,
           "readOnly": false,
@@ -370,12 +446,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "32",
+          "$id": "38",
           "kind": "property",
           "name": "arrayProperty",
           "serializedName": "arrayProperty",
           "type": {
-            "$ref": "22"
+            "$ref": "28"
           },
           "optional": true,
           "readOnly": false,
@@ -391,12 +467,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "33",
+          "$id": "39",
           "kind": "property",
           "name": "recordProperty",
           "serializedName": "recordProperty",
           "type": {
-            "$ref": "25"
+            "$ref": "31"
           },
           "optional": true,
           "readOnly": false,
@@ -416,13 +492,13 @@
   ],
   "clients": [
     {
-      "$id": "34",
+      "$id": "40",
       "kind": "client",
       "name": "AzureExampleClient",
       "namespace": "AzureExampleBasicClient",
       "methods": [
         {
-          "$id": "35",
+          "$id": "41",
           "kind": "basic",
           "name": "basicAction",
           "accessibility": "public",
@@ -430,19 +506,19 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "36",
+            "$id": "42",
             "name": "basicAction",
             "resourceName": "AzureExampleClient",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "37",
+                "$id": "43",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "38",
+                  "$id": "44",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -452,7 +528,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "39",
+                    "$id": "45",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -466,12 +542,12 @@
                 "readOnly": false
               },
               {
-                "$id": "40",
+                "$id": "46",
                 "kind": "query",
                 "name": "queryParam",
                 "serializedName": "query-param",
                 "type": {
-                  "$id": "41",
+                  "$id": "47",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -486,12 +562,12 @@
                 "readOnly": false
               },
               {
-                "$id": "42",
+                "$id": "48",
                 "kind": "header",
                 "name": "headerParam",
                 "serializedName": "header-param",
                 "type": {
-                  "$id": "43",
+                  "$id": "49",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -506,13 +582,13 @@
                 "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.headerParam"
               },
               {
-                "$id": "44",
+                "$id": "50",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
-                  "$ref": "7"
+                  "$ref": "13"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -523,12 +599,12 @@
                 "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.contentType"
               },
               {
-                "$id": "45",
+                "$id": "51",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "9"
+                  "$ref": "15"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -539,12 +615,12 @@
                 "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.accept"
               },
               {
-                "$id": "46",
+                "$id": "52",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
                 "type": {
-                  "$ref": "11"
+                  "$ref": "17"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -564,7 +640,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "28"
+                  "$ref": "34"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -587,12 +663,12 @@
           },
           "parameters": [
             {
-              "$id": "47",
+              "$id": "53",
               "kind": "method",
               "name": "queryParam",
               "serializedName": "query-param",
               "type": {
-                "$id": "48",
+                "$id": "54",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -608,12 +684,12 @@
               "decorators": []
             },
             {
-              "$id": "49",
+              "$id": "55",
               "kind": "method",
               "name": "headerParam",
               "serializedName": "header-param",
               "type": {
-                "$id": "50",
+                "$id": "56",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -629,12 +705,12 @@
               "decorators": []
             },
             {
-              "$id": "51",
+              "$id": "57",
               "kind": "method",
               "name": "body",
               "serializedName": "body",
               "type": {
-                "$ref": "11"
+                "$ref": "17"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -646,13 +722,13 @@
               "decorators": []
             },
             {
-              "$id": "52",
+              "$id": "58",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
-                "$ref": "7"
+                "$ref": "13"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -664,12 +740,12 @@
               "decorators": []
             },
             {
-              "$id": "53",
+              "$id": "59",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "9"
+                "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -683,7 +759,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "28"
+              "$ref": "34"
             }
           },
           "isOverride": false,
@@ -694,13 +770,13 @@
       ],
       "parameters": [
         {
-          "$id": "54",
+          "$id": "60",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "55",
+            "$id": "61",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -711,7 +787,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "56",
+              "$id": "62",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
