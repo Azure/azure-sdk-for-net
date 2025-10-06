@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp.Models
     /// "NoCredentialsSet": Access and Secret key pair have not been generated.
     /// "CredentialsExpired": Access and Secret key pair have expired.
     /// "Active": The certificate has been installed and credentials are unexpired.
-    /// Serialized Name: CredentialsStatus
     /// </summary>
     public readonly partial struct BucketCredentialStatus : IEquatable<BucketCredentialStatus>
     {
@@ -33,20 +32,11 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string CredentialsExpiredValue = "CredentialsExpired";
         private const string ActiveValue = "Active";
 
-        /// <summary>
-        /// Access and Secret key pair have not been generated.
-        /// Serialized Name: CredentialsStatus.NoCredentialsSet
-        /// </summary>
+        /// <summary> Access and Secret key pair have not been generated. </summary>
         public static BucketCredentialStatus NoCredentialsSet { get; } = new BucketCredentialStatus(NoCredentialsSetValue);
-        /// <summary>
-        /// Access and Secret key pair have expired.
-        /// Serialized Name: CredentialsStatus.CredentialsExpired
-        /// </summary>
+        /// <summary> Access and Secret key pair have expired. </summary>
         public static BucketCredentialStatus CredentialsExpired { get; } = new BucketCredentialStatus(CredentialsExpiredValue);
-        /// <summary>
-        /// The certificate has been installed on the bucket server and the bucket credentials are unexpired.
-        /// Serialized Name: CredentialsStatus.Active
-        /// </summary>
+        /// <summary> The certificate has been installed on the bucket server and the bucket credentials are unexpired. </summary>
         public static BucketCredentialStatus Active { get; } = new BucketCredentialStatus(ActiveValue);
         /// <summary> Determines if two <see cref="BucketCredentialStatus"/> values are the same. </summary>
         public static bool operator ==(BucketCredentialStatus left, BucketCredentialStatus right) => left.Equals(right);

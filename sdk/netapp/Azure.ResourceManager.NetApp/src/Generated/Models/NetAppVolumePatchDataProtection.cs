@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// DataProtection type volumes include an object containing details of the replication
-    /// Serialized Name: VolumePatchPropertiesDataProtection
-    /// </summary>
+    /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumePatchDataProtection
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
-        /// <param name="backup">
-        /// Backup Properties
-        /// Serialized Name: VolumePatchPropertiesDataProtection.backup
-        /// </param>
-        /// <param name="snapshot">
-        /// Snapshot properties.
-        /// Serialized Name: VolumePatchPropertiesDataProtection.snapshot
-        /// </param>
+        /// <param name="backup"> Backup Properties. </param>
+        /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,20 +62,11 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Backup Properties
-        /// Serialized Name: VolumePatchPropertiesDataProtection.backup
-        /// </summary>
+        /// <summary> Backup Properties. </summary>
         public NetAppVolumeBackupConfiguration Backup { get; set; }
-        /// <summary>
-        /// Snapshot properties.
-        /// Serialized Name: VolumePatchPropertiesDataProtection.snapshot
-        /// </summary>
+        /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
-        /// <summary>
-        /// Snapshot Policy ResourceId
-        /// Serialized Name: VolumeSnapshotProperties.snapshotPolicyId
-        /// </summary>
+        /// <summary> Snapshot Policy ResourceId. </summary>
         public ResourceIdentifier SnapshotPolicyId
         {
             get => Snapshot is null ? default : Snapshot.SnapshotPolicyId;

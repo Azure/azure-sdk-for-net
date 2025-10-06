@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Properties of the server managing the lifecycle of volume buckets
-    /// Serialized Name: BucketServerProperties
-    /// </summary>
+    /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
     public partial class NetAppBucketServerProperties
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBucketServerProperties"/>. </summary>
-        /// <param name="fqdn">
-        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
-        /// Serialized Name: BucketServerProperties.fqdn
-        /// </param>
-        /// <param name="certificateCommonName">
-        /// Certificate Common Name taken from the certificate installed on the bucket server
-        /// Serialized Name: BucketServerProperties.certificateCommonName
-        /// </param>
-        /// <param name="certificateExpiryOn">
-        /// The bucket server's certificate expiry date.
-        /// Serialized Name: BucketServerProperties.certificateExpiryDate
-        /// </param>
-        /// <param name="ipAddress">
-        /// The bucket server's IPv4 address
-        /// Serialized Name: BucketServerProperties.ipAddress
-        /// </param>
-        /// <param name="certificateObject">
-        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
-        /// Serialized Name: BucketServerProperties.certificateObject
-        /// </param>
+        /// <param name="fqdn"> The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate. </param>
+        /// <param name="certificateCommonName"> Certificate Common Name taken from the certificate installed on the bucket server. </param>
+        /// <param name="certificateExpiryOn"> The bucket server's certificate expiry date. </param>
+        /// <param name="ipAddress"> The bucket server's IPv4 address. </param>
+        /// <param name="certificateObject"> A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppBucketServerProperties(string fqdn, string certificateCommonName, DateTimeOffset? certificateExpiryOn, string ipAddress, string certificateObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate.
-        /// Serialized Name: BucketServerProperties.fqdn
-        /// </summary>
+        /// <summary> The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate. </summary>
         public string Fqdn { get; set; }
-        /// <summary>
-        /// Certificate Common Name taken from the certificate installed on the bucket server
-        /// Serialized Name: BucketServerProperties.certificateCommonName
-        /// </summary>
+        /// <summary> Certificate Common Name taken from the certificate installed on the bucket server. </summary>
         public string CertificateCommonName { get; }
-        /// <summary>
-        /// The bucket server's certificate expiry date.
-        /// Serialized Name: BucketServerProperties.certificateExpiryDate
-        /// </summary>
+        /// <summary> The bucket server's certificate expiry date. </summary>
         public DateTimeOffset? CertificateExpiryOn { get; }
-        /// <summary>
-        /// The bucket server's IPv4 address
-        /// Serialized Name: BucketServerProperties.ipAddress
-        /// </summary>
+        /// <summary> The bucket server's IPv4 address. </summary>
         public string IPAddress { get; }
-        /// <summary>
-        /// A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner.
-        /// Serialized Name: BucketServerProperties.certificateObject
-        /// </summary>
+        /// <summary> A base64-encoded PEM file, which includes both the bucket server's certificate and private key. It is used to authenticate the user and allows access to volume data in a read-only manner. </summary>
         public string CertificateObject { get; set; }
     }
 }

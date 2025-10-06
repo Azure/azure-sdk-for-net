@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The mirror state property describes the current status of data replication for a resource. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
-    /// Serialized Name: MirrorState
-    /// </summary>
+    /// <summary> The mirror state property describes the current status of data replication for a resource. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
     public readonly partial struct NetAppMirrorState : IEquatable<NetAppMirrorState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MirroredValue = "Mirrored";
         private const string BrokenValue = "Broken";
 
-        /// <summary>
-        /// The mirror state is still uninitialized
-        /// Serialized Name: MirrorState.Uninitialized
-        /// </summary>
+        /// <summary> The mirror state is still uninitialized. </summary>
         public static NetAppMirrorState Uninitialized { get; } = new NetAppMirrorState(UninitializedValue);
-        /// <summary>
-        /// The mirror state is mirrored
-        /// Serialized Name: MirrorState.Mirrored
-        /// </summary>
+        /// <summary> The mirror state is mirrored. </summary>
         public static NetAppMirrorState Mirrored { get; } = new NetAppMirrorState(MirroredValue);
-        /// <summary>
-        /// The mirror state is broken
-        /// Serialized Name: MirrorState.Broken
-        /// </summary>
+        /// <summary> The mirror state is broken. </summary>
         public static NetAppMirrorState Broken { get; } = new NetAppMirrorState(BrokenValue);
         /// <summary> Determines if two <see cref="NetAppMirrorState"/> values are the same. </summary>
         public static bool operator ==(NetAppMirrorState left, NetAppMirrorState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Patchable Quota Rule of a Volume
-    /// Serialized Name: VolumeQuotaRulePatch
-    /// </summary>
+    /// <summary> Patchable Quota Rule of a Volume. </summary>
     public partial class NetAppVolumeQuotaRulePatch
     {
         /// <summary>
@@ -55,26 +52,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRulePatch"/>. </summary>
-        /// <param name="tags">
-        /// Resource tags
-        /// Serialized Name: VolumeQuotaRulePatch.tags
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the resource
-        /// Serialized Name: VolumeQuotaRulePatch.properties.provisioningState
-        /// </param>
-        /// <param name="quotaSizeInKiBs">
-        /// Size of quota
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaSizeInKiBs
-        /// </param>
-        /// <param name="quotaType">
-        /// Type of quota
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaType
-        /// </param>
-        /// <param name="quotaTarget">
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaTarget
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,30 +68,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: VolumeQuotaRulePatch.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Provisioning state of the resource
-        /// Serialized Name: VolumeQuotaRulePatch.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state of the resource. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Size of quota
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaSizeInKiBs
-        /// </summary>
+        /// <summary> Size of quota. </summary>
         public long? QuotaSizeInKiBs { get; set; }
-        /// <summary>
-        /// Type of quota
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaType
-        /// </summary>
+        /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; set; }
-        /// <summary>
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaTarget
-        /// </summary>
+        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; set; }
     }
 }

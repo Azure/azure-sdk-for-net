@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppVolumeQuotaRule data model.
     /// Quota Rule of a Volume
-    /// Serialized Name: VolumeQuotaRule
     /// </summary>
     public partial class NetAppVolumeQuotaRuleData : TrackedResourceData
     {
@@ -65,22 +64,10 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the resource
-        /// Serialized Name: VolumeQuotaRule.properties.provisioningState
-        /// </param>
-        /// <param name="quotaSizeInKiBs">
-        /// Size of quota
-        /// Serialized Name: VolumeQuotaRule.properties.quotaSizeInKiBs
-        /// </param>
-        /// <param name="quotaType">
-        /// Type of quota
-        /// Serialized Name: VolumeQuotaRule.properties.quotaType
-        /// </param>
-        /// <param name="quotaTarget">
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: VolumeQuotaRule.properties.quotaTarget
-        /// </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -96,25 +83,13 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// Provisioning state of the resource
-        /// Serialized Name: VolumeQuotaRule.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state of the resource. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Size of quota
-        /// Serialized Name: VolumeQuotaRule.properties.quotaSizeInKiBs
-        /// </summary>
+        /// <summary> Size of quota. </summary>
         public long? QuotaSizeInKiBs { get; set; }
-        /// <summary>
-        /// Type of quota
-        /// Serialized Name: VolumeQuotaRule.properties.quotaType
-        /// </summary>
+        /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; set; }
-        /// <summary>
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: VolumeQuotaRule.properties.quotaTarget
-        /// </summary>
+        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; set; }
     }
 }

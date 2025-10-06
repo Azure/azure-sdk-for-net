@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Backup status
-    /// Serialized Name: BackupStatus
-    /// </summary>
+    /// <summary> Backup status. </summary>
     public partial class NetAppVolumeBackupStatus
     {
         /// <summary>
@@ -54,42 +51,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupStatus"/>. </summary>
-        /// <param name="isHealthy">
-        /// Backup health status
-        /// Serialized Name: BackupStatus.healthy
-        /// </param>
-        /// <param name="relationshipStatus">
-        /// Status of the backup mirror relationship
-        /// Serialized Name: BackupStatus.relationshipStatus
-        /// </param>
-        /// <param name="mirrorState">
-        /// The mirror state property describes the current status of data replication for a backup. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
-        /// Serialized Name: BackupStatus.mirrorState
-        /// </param>
-        /// <param name="unhealthyReason">
-        /// Reason for the unhealthy backup relationship
-        /// Serialized Name: BackupStatus.unhealthyReason
-        /// </param>
-        /// <param name="errorMessage">
-        /// Displays error message if the backup is in an error state
-        /// Serialized Name: BackupStatus.errorMessage
-        /// </param>
-        /// <param name="lastTransferSize">
-        /// Displays the last transfer size
-        /// Serialized Name: BackupStatus.lastTransferSize
-        /// </param>
-        /// <param name="lastTransferType">
-        /// Displays the last transfer type
-        /// Serialized Name: BackupStatus.lastTransferType
-        /// </param>
-        /// <param name="totalTransferBytes">
-        /// Displays the total bytes transferred
-        /// Serialized Name: BackupStatus.totalTransferBytes
-        /// </param>
-        /// <param name="transferProgressBytes">
-        /// Displays the total number of bytes transferred for the ongoing operation
-        /// Serialized Name: BackupStatus.transferProgressBytes
-        /// </param>
+        /// <param name="isHealthy"> Backup health status. </param>
+        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a backup. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
+        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
+        /// <param name="lastTransferType"> Displays the last transfer type. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -105,50 +75,23 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Backup health status
-        /// Serialized Name: BackupStatus.healthy
-        /// </summary>
+        /// <summary> Backup health status. </summary>
         public bool? IsHealthy { get; }
-        /// <summary>
-        /// Status of the backup mirror relationship
-        /// Serialized Name: BackupStatus.relationshipStatus
-        /// </summary>
+        /// <summary> Status of the backup mirror relationship. </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }
-        /// <summary>
-        /// The mirror state property describes the current status of data replication for a backup. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
-        /// Serialized Name: BackupStatus.mirrorState
-        /// </summary>
+        /// <summary> The mirror state property describes the current status of data replication for a backup. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
         public NetAppMirrorState? MirrorState { get; }
-        /// <summary>
-        /// Reason for the unhealthy backup relationship
-        /// Serialized Name: BackupStatus.unhealthyReason
-        /// </summary>
+        /// <summary> Reason for the unhealthy backup relationship. </summary>
         public string UnhealthyReason { get; }
-        /// <summary>
-        /// Displays error message if the backup is in an error state
-        /// Serialized Name: BackupStatus.errorMessage
-        /// </summary>
+        /// <summary> Displays error message if the backup is in an error state. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Displays the last transfer size
-        /// Serialized Name: BackupStatus.lastTransferSize
-        /// </summary>
+        /// <summary> Displays the last transfer size. </summary>
         public long? LastTransferSize { get; }
-        /// <summary>
-        /// Displays the last transfer type
-        /// Serialized Name: BackupStatus.lastTransferType
-        /// </summary>
+        /// <summary> Displays the last transfer type. </summary>
         public string LastTransferType { get; }
-        /// <summary>
-        /// Displays the total bytes transferred
-        /// Serialized Name: BackupStatus.totalTransferBytes
-        /// </summary>
+        /// <summary> Displays the total bytes transferred. </summary>
         public long? TotalTransferBytes { get; }
-        /// <summary>
-        /// Displays the total number of bytes transferred for the ongoing operation
-        /// Serialized Name: BackupStatus.transferProgressBytes
-        /// </summary>
+        /// <summary> Displays the total number of bytes transferred for the ongoing operation. </summary>
         public long? TransferProgressBytes { get; }
     }
 }

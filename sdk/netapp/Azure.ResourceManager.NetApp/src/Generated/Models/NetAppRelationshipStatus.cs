@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The status of the Volume Replication
-    /// Serialized Name: RelationshipStatus
-    /// </summary>
+    /// <summary> The status of the Volume Replication. </summary>
     public readonly partial struct NetAppRelationshipStatus : IEquatable<NetAppRelationshipStatus>
     {
     }

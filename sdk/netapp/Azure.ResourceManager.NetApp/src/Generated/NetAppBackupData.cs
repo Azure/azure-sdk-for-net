@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppBackup data model.
     /// Backup under a Backup Vault
-    /// Serialized Name: Backup
     /// </summary>
     public partial class NetAppBackupData : ResourceData
     {
@@ -53,10 +52,7 @@ namespace Azure.ResourceManager.NetApp
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
-        /// <param name="volumeResourceId">
-        /// ResourceId used to identify the Volume
-        /// Serialized Name: Backup.properties.volumeResourceId
-        /// </param>
+        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeResourceId"/> is null. </exception>
         public NetAppBackupData(ResourceIdentifier volumeResourceId)
         {
@@ -70,62 +66,20 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupId">
-        /// UUID v4 used to identify the Backup
-        /// Serialized Name: Backup.properties.backupId
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the backup
-        /// Serialized Name: Backup.properties.creationDate
-        /// </param>
-        /// <param name="snapshotCreationOn">
-        /// The snapshot creation date of the backup
-        /// Serialized Name: Backup.properties.snapshotCreationDate
-        /// </param>
-        /// <param name="completionOn">
-        /// The completion date of the backup
-        /// Serialized Name: Backup.properties.completionDate
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure lifecycle management
-        /// Serialized Name: Backup.properties.provisioningState
-        /// </param>
-        /// <param name="size">
-        /// Size of backup in bytes
-        /// Serialized Name: Backup.properties.size
-        /// </param>
-        /// <param name="label">
-        /// Label for backup
-        /// Serialized Name: Backup.properties.label
-        /// </param>
-        /// <param name="backupType">
-        /// Type of backup Manual or Scheduled
-        /// Serialized Name: Backup.properties.backupType
-        /// </param>
-        /// <param name="failureReason">
-        /// Failure reason
-        /// Serialized Name: Backup.properties.failureReason
-        /// </param>
-        /// <param name="volumeResourceId">
-        /// ResourceId used to identify the Volume
-        /// Serialized Name: Backup.properties.volumeResourceId
-        /// </param>
-        /// <param name="useExistingSnapshot">
-        /// Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups
-        /// Serialized Name: Backup.properties.useExistingSnapshot
-        /// </param>
-        /// <param name="snapshotName">
-        /// The name of the snapshot
-        /// Serialized Name: Backup.properties.snapshotName
-        /// </param>
-        /// <param name="backupPolicyArmResourceId">
-        /// ResourceId used to identify the backup policy
-        /// Serialized Name: Backup.properties.backupPolicyResourceId
-        /// </param>
-        /// <param name="isLargeVolume">
-        /// Specifies if the backup is for a large volume.
-        /// Serialized Name: Backup.properties.isLargeVolume
-        /// </param>
+        /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
+        /// <param name="createdOn"> The creation date of the backup. </param>
+        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
+        /// <param name="completionOn"> The completion date of the backup. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="size"> Size of backup in bytes. </param>
+        /// <param name="label"> Label for backup. </param>
+        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
+        /// <param name="failureReason"> Failure reason. </param>
+        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
+        /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
+        /// <param name="snapshotName"> The name of the snapshot. </param>
+        /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
+        /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -151,75 +105,33 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// UUID v4 used to identify the Backup
-        /// Serialized Name: Backup.properties.backupId
-        /// </summary>
+        /// <summary> UUID v4 used to identify the Backup. </summary>
         public string BackupId { get; }
-        /// <summary>
-        /// The creation date of the backup
-        /// Serialized Name: Backup.properties.creationDate
-        /// </summary>
+        /// <summary> The creation date of the backup. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The snapshot creation date of the backup
-        /// Serialized Name: Backup.properties.snapshotCreationDate
-        /// </summary>
+        /// <summary> The snapshot creation date of the backup. </summary>
         public DateTimeOffset? SnapshotCreationOn { get; }
-        /// <summary>
-        /// The completion date of the backup
-        /// Serialized Name: Backup.properties.completionDate
-        /// </summary>
+        /// <summary> The completion date of the backup. </summary>
         public DateTimeOffset? CompletionOn { get; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: Backup.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Size of backup in bytes
-        /// Serialized Name: Backup.properties.size
-        /// </summary>
+        /// <summary> Size of backup in bytes. </summary>
         public long? Size { get; }
-        /// <summary>
-        /// Label for backup
-        /// Serialized Name: Backup.properties.label
-        /// </summary>
+        /// <summary> Label for backup. </summary>
         public string Label { get; set; }
-        /// <summary>
-        /// Type of backup Manual or Scheduled
-        /// Serialized Name: Backup.properties.backupType
-        /// </summary>
+        /// <summary> Type of backup Manual or Scheduled. </summary>
         public NetAppBackupType? BackupType { get; }
-        /// <summary>
-        /// Failure reason
-        /// Serialized Name: Backup.properties.failureReason
-        /// </summary>
+        /// <summary> Failure reason. </summary>
         public string FailureReason { get; }
-        /// <summary>
-        /// ResourceId used to identify the Volume
-        /// Serialized Name: Backup.properties.volumeResourceId
-        /// </summary>
+        /// <summary> ResourceId used to identify the Volume. </summary>
         public ResourceIdentifier VolumeResourceId { get; set; }
-        /// <summary>
-        /// Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups
-        /// Serialized Name: Backup.properties.useExistingSnapshot
-        /// </summary>
+        /// <summary> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </summary>
         public bool? UseExistingSnapshot { get; set; }
-        /// <summary>
-        /// The name of the snapshot
-        /// Serialized Name: Backup.properties.snapshotName
-        /// </summary>
+        /// <summary> The name of the snapshot. </summary>
         public string SnapshotName { get; set; }
-        /// <summary>
-        /// ResourceId used to identify the backup policy
-        /// Serialized Name: Backup.properties.backupPolicyResourceId
-        /// </summary>
+        /// <summary> ResourceId used to identify the backup policy. </summary>
         public ResourceIdentifier BackupPolicyArmResourceId { get; }
-        /// <summary>
-        /// Specifies if the backup is for a large volume.
-        /// Serialized Name: Backup.properties.isLargeVolume
-        /// </summary>
+        /// <summary> Specifies if the backup is for a large volume. </summary>
         public bool? IsLargeVolume { get; }
     }
 }

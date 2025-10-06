@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Relocate volume request
-    /// Serialized Name: RelocateVolumeRequest
-    /// </summary>
+    /// <summary> Relocate volume request. </summary>
     public partial class RelocateVolumeContent
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RelocateVolumeContent"/>. </summary>
-        /// <param name="creationToken">
-        /// New creation token for the volume that controls the mount point name
-        /// Serialized Name: RelocateVolumeRequest.creationToken
-        /// </param>
+        /// <param name="creationToken"> New creation token for the volume that controls the mount point name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RelocateVolumeContent(string creationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// New creation token for the volume that controls the mount point name
-        /// Serialized Name: RelocateVolumeRequest.creationToken
-        /// </summary>
+        /// <summary> New creation token for the volume that controls the mount point name. </summary>
         public string CreationToken { get; set; }
     }
 }

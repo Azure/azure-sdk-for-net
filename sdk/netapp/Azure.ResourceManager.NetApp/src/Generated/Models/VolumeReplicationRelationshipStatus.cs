@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Status of the mirror relationship
-    /// Serialized Name: VolumeReplicationRelationshipStatus
-    /// </summary>
+    /// <summary> Status of the mirror relationship. </summary>
     public readonly partial struct VolumeReplicationRelationshipStatus : IEquatable<VolumeReplicationRelationshipStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string IdleValue = "Idle";
         private const string TransferringValue = "Transferring";
 
-        /// <summary>
-        /// Idle
-        /// Serialized Name: VolumeReplicationRelationshipStatus.Idle
-        /// </summary>
+        /// <summary> Idle. </summary>
         public static VolumeReplicationRelationshipStatus Idle { get; } = new VolumeReplicationRelationshipStatus(IdleValue);
-        /// <summary>
-        /// Transferring
-        /// Serialized Name: VolumeReplicationRelationshipStatus.Transferring
-        /// </summary>
+        /// <summary> Transferring. </summary>
         public static VolumeReplicationRelationshipStatus Transferring { get; } = new VolumeReplicationRelationshipStatus(TransferringValue);
         /// <summary> Determines if two <see cref="VolumeReplicationRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(VolumeReplicationRelationshipStatus left, VolumeReplicationRelationshipStatus right) => left.Equals(right);

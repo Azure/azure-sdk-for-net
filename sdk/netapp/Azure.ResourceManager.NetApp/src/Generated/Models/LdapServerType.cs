@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The type of the LDAP server
-    /// Serialized Name: LdapServerType
-    /// </summary>
+    /// <summary> The type of the LDAP server. </summary>
     public readonly partial struct LdapServerType : IEquatable<LdapServerType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ActiveDirectoryValue = "ActiveDirectory";
         private const string OpenLdapValue = "OpenLDAP";
 
-        /// <summary>
-        /// The volume should use Active Directory for LDAP connections.
-        /// Serialized Name: LdapServerType.ActiveDirectory
-        /// </summary>
+        /// <summary> The volume should use Active Directory for LDAP connections. </summary>
         public static LdapServerType ActiveDirectory { get; } = new LdapServerType(ActiveDirectoryValue);
-        /// <summary>
-        /// The volume should use OpenLDAP for LDAP connections.
-        /// Serialized Name: LdapServerType.OpenLDAP
-        /// </summary>
+        /// <summary> The volume should use OpenLDAP for LDAP connections. </summary>
         public static LdapServerType OpenLdap { get; } = new LdapServerType(OpenLdapValue);
         /// <summary> Determines if two <see cref="LdapServerType"/> values are the same. </summary>
         public static bool operator ==(LdapServerType left, LdapServerType right) => left.Equals(right);

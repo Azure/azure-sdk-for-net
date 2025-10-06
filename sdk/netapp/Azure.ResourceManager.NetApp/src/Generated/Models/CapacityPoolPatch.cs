@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Capacity pool patch resource
-    /// Serialized Name: CapacityPoolPatch
-    /// </summary>
+    /// <summary> Capacity pool patch resource. </summary>
     public partial class CapacityPoolPatch : TrackedResourceData
     {
         /// <summary>
@@ -63,22 +60,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="size">
-        /// Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776).
-        /// Serialized Name: CapacityPoolPatch.properties.size
-        /// </param>
-        /// <param name="qosType">
-        /// The qos type of the pool
-        /// Serialized Name: CapacityPoolPatch.properties.qosType
-        /// </param>
-        /// <param name="isCoolAccessEnabled">
-        /// If enabled (true) the pool can contain cool Access enabled volumes.
-        /// Serialized Name: CapacityPoolPatch.properties.coolAccess
-        /// </param>
-        /// <param name="customThroughputMibps">
-        /// Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level
-        /// Serialized Name: CapacityPoolPatch.properties.customThroughputMibps
-        /// </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, float? customThroughputMibps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -94,25 +79,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776).
-        /// Serialized Name: CapacityPoolPatch.properties.size
-        /// </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
         public long? Size { get; set; }
-        /// <summary>
-        /// The qos type of the pool
-        /// Serialized Name: CapacityPoolPatch.properties.qosType
-        /// </summary>
+        /// <summary> The qos type of the pool. </summary>
         public CapacityPoolQosType? QosType { get; set; }
-        /// <summary>
-        /// If enabled (true) the pool can contain cool Access enabled volumes.
-        /// Serialized Name: CapacityPoolPatch.properties.coolAccess
-        /// </summary>
+        /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
         public bool? IsCoolAccessEnabled { get; set; }
-        /// <summary>
-        /// Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level
-        /// Serialized Name: CapacityPoolPatch.properties.customThroughputMibps
-        /// </summary>
+        /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
         public float? CustomThroughputMibps { get; set; }
     }
 }

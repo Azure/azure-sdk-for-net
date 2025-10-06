@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The effective CIFS username when accessing the volume data.
-    /// Serialized Name: CifsUser
-    /// </summary>
+    /// <summary> The effective CIFS username when accessing the volume data. </summary>
     internal partial class CifsUser
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CifsUser"/>. </summary>
-        /// <param name="username">
-        /// The CIFS user's username
-        /// Serialized Name: CifsUser.username
-        /// </param>
+        /// <param name="username"> The CIFS user's username. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CifsUser(string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The CIFS user's username
-        /// Serialized Name: CifsUser.username
-        /// </summary>
+        /// <summary> The CIFS user's username. </summary>
         public string Username { get; set; }
     }
 }

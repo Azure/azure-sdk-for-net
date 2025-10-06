@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Schedule
-    /// Serialized Name: ReplicationSchedule
-    /// </summary>
+    /// <summary> Schedule. </summary>
     public readonly partial struct NetAppReplicationSchedule : IEquatable<NetAppReplicationSchedule>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string HourlyValue = "hourly";
         private const string DailyValue = "daily";
 
-        /// <summary>
-        /// _10minutely
-        /// Serialized Name: ReplicationSchedule._10minutely
-        /// </summary>
+        /// <summary> _10minutely. </summary>
         public static NetAppReplicationSchedule TenMinutely { get; } = new NetAppReplicationSchedule(TenMinutelyValue);
-        /// <summary>
-        /// hourly
-        /// Serialized Name: ReplicationSchedule.hourly
-        /// </summary>
+        /// <summary> hourly. </summary>
         public static NetAppReplicationSchedule Hourly { get; } = new NetAppReplicationSchedule(HourlyValue);
-        /// <summary>
-        /// daily
-        /// Serialized Name: ReplicationSchedule.daily
-        /// </summary>
+        /// <summary> daily. </summary>
         public static NetAppReplicationSchedule Daily { get; } = new NetAppReplicationSchedule(DailyValue);
         /// <summary> Determines if two <see cref="NetAppReplicationSchedule"/> values are the same. </summary>
         public static bool operator ==(NetAppReplicationSchedule left, NetAppReplicationSchedule right) => left.Equals(right);

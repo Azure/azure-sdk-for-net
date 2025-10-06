@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Quota Report for volume
-    /// Serialized Name: ListQuotaReportResponse
-    /// </summary>
+    /// <summary> Quota Report for volume. </summary>
     public partial class NetAppVolumeQuotaReportListResult
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        /// <param name="value">
-        /// List of volume quota report records
-        /// Serialized Name: ListQuotaReportResponse.value
-        /// </param>
+        /// <param name="value"> List of volume quota report records. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of volume quota report records
-        /// Serialized Name: ListQuotaReportResponse.value
-        /// </summary>
+        /// <summary> List of volume quota report records. </summary>
         public IReadOnlyList<NetAppVolumeQuotaReport> Value { get; }
     }
 }

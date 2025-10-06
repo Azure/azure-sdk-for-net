@@ -20,8 +20,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug:
- show-serialized-names: true
+# mgmt-debug:
+# show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

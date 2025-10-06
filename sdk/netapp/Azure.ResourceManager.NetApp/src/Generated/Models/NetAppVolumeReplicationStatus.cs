@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Replication status
-    /// Serialized Name: ReplicationStatus
-    /// </summary>
+    /// <summary> Replication status. </summary>
     public partial class NetAppVolumeReplicationStatus
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplicationStatus"/>. </summary>
-        /// <param name="isHealthy">
-        /// Replication health check
-        /// Serialized Name: ReplicationStatus.healthy
-        /// </param>
-        /// <param name="volumeReplicationRelationshipStatus">
-        /// Status of the mirror relationship
-        /// Serialized Name: ReplicationStatus.relationshipStatus
-        /// </param>
-        /// <param name="mirrorState">
-        /// The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
-        /// Serialized Name: ReplicationStatus.mirrorState
-        /// </param>
-        /// <param name="totalProgress">
-        /// The progress of the replication
-        /// Serialized Name: ReplicationStatus.totalProgress
-        /// </param>
-        /// <param name="errorMessage">
-        /// Displays error message if the replication is in an error state
-        /// Serialized Name: ReplicationStatus.errorMessage
-        /// </param>
+        /// <param name="isHealthy"> Replication health check. </param>
+        /// <param name="volumeReplicationRelationshipStatus"> Status of the mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="totalProgress"> The progress of the replication. </param>
+        /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeReplicationStatus(bool? isHealthy, VolumeReplicationRelationshipStatus? volumeReplicationRelationshipStatus, NetAppMirrorState? mirrorState, string totalProgress, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Replication health check
-        /// Serialized Name: ReplicationStatus.healthy
-        /// </summary>
+        /// <summary> Replication health check. </summary>
         public bool? IsHealthy { get; }
-        /// <summary>
-        /// Status of the mirror relationship
-        /// Serialized Name: ReplicationStatus.relationshipStatus
-        /// </summary>
+        /// <summary> Status of the mirror relationship. </summary>
         public VolumeReplicationRelationshipStatus? VolumeReplicationRelationshipStatus { get; }
-        /// <summary>
-        /// The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized.
-        /// Serialized Name: ReplicationStatus.mirrorState
-        /// </summary>
+        /// <summary> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
         public NetAppMirrorState? MirrorState { get; }
-        /// <summary>
-        /// The progress of the replication
-        /// Serialized Name: ReplicationStatus.totalProgress
-        /// </summary>
+        /// <summary> The progress of the replication. </summary>
         public string TotalProgress { get; }
-        /// <summary>
-        /// Displays error message if the replication is in an error state
-        /// Serialized Name: ReplicationStatus.errorMessage
-        /// </summary>
+        /// <summary> Displays error message if the replication is in an error state. </summary>
         public string ErrorMessage { get; }
     }
 }

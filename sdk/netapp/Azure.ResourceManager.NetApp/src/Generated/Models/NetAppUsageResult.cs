@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Usages entity model
-    /// Serialized Name: UsageResult
-    /// </summary>
+    /// <summary> Usages entity model. </summary>
     public partial class NetAppUsageResult
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppUsageResult"/>. </summary>
-        /// <param name="id">
-        /// The id of the usage.
-        /// Serialized Name: UsageResult.id
-        /// </param>
-        /// <param name="name">
-        /// The name of the usage.
-        /// Serialized Name: UsageResult.name
-        /// </param>
-        /// <param name="currentValue">
-        /// The current usage value for the subscription.
-        /// Serialized Name: UsageResult.properties.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The limit of the usage.
-        /// Serialized Name: UsageResult.properties.limit
-        /// </param>
-        /// <param name="unit">
-        /// The unit of the usage.
-        /// Serialized Name: UsageResult.properties.unit
-        /// </param>
+        /// <param name="id"> The id of the usage. </param>
+        /// <param name="name"> The name of the usage. </param>
+        /// <param name="currentValue"> The current usage value for the subscription. </param>
+        /// <param name="limit"> The limit of the usage. </param>
+        /// <param name="unit"> The unit of the usage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppUsageResult(string id, NetAppUsageName name, int? currentValue, int? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The id of the usage.
-        /// Serialized Name: UsageResult.id
-        /// </summary>
+        /// <summary> The id of the usage. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The name of the usage.
-        /// Serialized Name: UsageResult.name
-        /// </summary>
+        /// <summary> The name of the usage. </summary>
         public NetAppUsageName Name { get; }
-        /// <summary>
-        /// The current usage value for the subscription.
-        /// Serialized Name: UsageResult.properties.currentValue
-        /// </summary>
+        /// <summary> The current usage value for the subscription. </summary>
         public int? CurrentValue { get; }
-        /// <summary>
-        /// The limit of the usage.
-        /// Serialized Name: UsageResult.properties.limit
-        /// </summary>
+        /// <summary> The limit of the usage. </summary>
         public int? Limit { get; }
-        /// <summary>
-        /// The unit of the usage.
-        /// Serialized Name: UsageResult.properties.unit
-        /// </summary>
+        /// <summary> The unit of the usage. </summary>
         public string Unit { get; }
     }
 }

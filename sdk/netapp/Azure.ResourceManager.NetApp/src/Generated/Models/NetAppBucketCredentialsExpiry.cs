@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The bucket's Access and Secret key pair Expiry Time expressed as the number of days from now.
-    /// Serialized Name: BucketCredentialsExpiry
-    /// </summary>
+    /// <summary> The bucket's Access and Secret key pair Expiry Time expressed as the number of days from now. </summary>
     public partial class NetAppBucketCredentialsExpiry
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBucketCredentialsExpiry"/>. </summary>
-        /// <param name="keyPairExpiryDays">
-        /// The number of days from now until the newly generated Access and Secret key pair will expire.
-        /// Serialized Name: BucketCredentialsExpiry.keyPairExpiryDays
-        /// </param>
+        /// <param name="keyPairExpiryDays"> The number of days from now until the newly generated Access and Secret key pair will expire. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppBucketCredentialsExpiry(int? keyPairExpiryDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The number of days from now until the newly generated Access and Secret key pair will expire.
-        /// Serialized Name: BucketCredentialsExpiry.keyPairExpiryDays
-        /// </summary>
+        /// <summary> The number of days from now until the newly generated Access and Secret key pair will expire. </summary>
         public int? KeyPairExpiryDays { get; set; }
     }
 }

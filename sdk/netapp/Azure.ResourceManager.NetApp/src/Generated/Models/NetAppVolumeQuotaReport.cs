@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Quota report record properties
-    /// Serialized Name: QuotaReport
-    /// </summary>
+    /// <summary> Quota report record properties. </summary>
     public partial class NetAppVolumeQuotaReport
     {
         /// <summary>
@@ -54,30 +51,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReport"/>. </summary>
-        /// <param name="quotaType">
-        /// Type of quota
-        /// Serialized Name: QuotaReport.quotaType
-        /// </param>
-        /// <param name="quotaTarget">
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: QuotaReport.quotaTarget
-        /// </param>
-        /// <param name="quotaLimitUsedInKiBs">
-        /// Specifies the current usage in kibibytes for the user/group quota.
-        /// Serialized Name: QuotaReport.quotaLimitUsedInKiBs
-        /// </param>
-        /// <param name="quotaLimitTotalInKiBs">
-        /// Specifies the total size limit in kibibytes for the user/group quota.
-        /// Serialized Name: QuotaReport.quotaLimitTotalInKiBs
-        /// </param>
-        /// <param name="percentageUsed">
-        /// Percentage of used size compared to total size.
-        /// Serialized Name: QuotaReport.percentageUsed
-        /// </param>
-        /// <param name="isDerivedQuota">
-        /// Flag to indicate whether the quota is derived from default quota.
-        /// Serialized Name: QuotaReport.isDerivedQuota
-        /// </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
+        /// <param name="quotaLimitUsedInKiBs"> Specifies the current usage in kibibytes for the user/group quota. </param>
+        /// <param name="quotaLimitTotalInKiBs"> Specifies the total size limit in kibibytes for the user/group quota. </param>
+        /// <param name="percentageUsed"> Percentage of used size compared to total size. </param>
+        /// <param name="isDerivedQuota"> Flag to indicate whether the quota is derived from default quota. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeQuotaReport(NetAppVolumeQuotaType? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,35 +69,17 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Type of quota
-        /// Serialized Name: QuotaReport.quotaType
-        /// </summary>
+        /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; }
-        /// <summary>
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: QuotaReport.quotaTarget
-        /// </summary>
+        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; }
-        /// <summary>
-        /// Specifies the current usage in kibibytes for the user/group quota.
-        /// Serialized Name: QuotaReport.quotaLimitUsedInKiBs
-        /// </summary>
+        /// <summary> Specifies the current usage in kibibytes for the user/group quota. </summary>
         public long? QuotaLimitUsedInKiBs { get; }
-        /// <summary>
-        /// Specifies the total size limit in kibibytes for the user/group quota.
-        /// Serialized Name: QuotaReport.quotaLimitTotalInKiBs
-        /// </summary>
+        /// <summary> Specifies the total size limit in kibibytes for the user/group quota. </summary>
         public long? QuotaLimitTotalInKiBs { get; }
-        /// <summary>
-        /// Percentage of used size compared to total size.
-        /// Serialized Name: QuotaReport.percentageUsed
-        /// </summary>
+        /// <summary> Percentage of used size compared to total size. </summary>
         public float? PercentageUsed { get; }
-        /// <summary>
-        /// Flag to indicate whether the quota is derived from default quota.
-        /// Serialized Name: QuotaReport.isDerivedQuota
-        /// </summary>
+        /// <summary> Flag to indicate whether the quota is derived from default quota. </summary>
         public bool? IsDerivedQuota { get; }
     }
 }

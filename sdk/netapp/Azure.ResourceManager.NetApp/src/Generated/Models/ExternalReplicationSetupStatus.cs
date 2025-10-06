@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup.
-    /// Serialized Name: ExternalReplicationSetupStatus
-    /// </summary>
+    /// <summary> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </summary>
     public readonly partial struct ExternalReplicationSetupStatus : IEquatable<ExternalReplicationSetupStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ReplicationCreateRequiredValue = "ReplicationCreateRequired";
         private const string NoActionRequiredValue = "NoActionRequired";
 
-        /// <summary>
-        /// Your cluster needs to be peered by using the 'peerExternalCluster' action
-        /// Serialized Name: ExternalReplicationSetupStatus.ClusterPeerRequired
-        /// </summary>
+        /// <summary> Your cluster needs to be peered by using the 'peerExternalCluster' action. </summary>
         public static ExternalReplicationSetupStatus ClusterPeerRequired { get; } = new ExternalReplicationSetupStatus(ClusterPeerRequiredValue);
-        /// <summary>
-        /// The peering needs to be accepted on your cluster before the setup can proceed
-        /// Serialized Name: ExternalReplicationSetupStatus.ClusterPeerPending
-        /// </summary>
+        /// <summary> The peering needs to be accepted on your cluster before the setup can proceed. </summary>
         public static ExternalReplicationSetupStatus ClusterPeerPending { get; } = new ExternalReplicationSetupStatus(ClusterPeerPendingValue);
-        /// <summary>
-        /// Need to call 'authorizeExternalReplication' and accept the returned 'vserver peer accept' command on your cluster to finish setting up the external replication
-        /// Serialized Name: ExternalReplicationSetupStatus.VServerPeerRequired
-        /// </summary>
+        /// <summary> Need to call 'authorizeExternalReplication' and accept the returned 'vserver peer accept' command on your cluster to finish setting up the external replication. </summary>
         public static ExternalReplicationSetupStatus VServerPeerRequired { get; } = new ExternalReplicationSetupStatus(VServerPeerRequiredValue);
-        /// <summary>
-        /// Need to call 'authorizeExternalReplication' to finish setting up the external replication
-        /// Serialized Name: ExternalReplicationSetupStatus.ReplicationCreateRequired
-        /// </summary>
+        /// <summary> Need to call 'authorizeExternalReplication' to finish setting up the external replication. </summary>
         public static ExternalReplicationSetupStatus ReplicationCreateRequired { get; } = new ExternalReplicationSetupStatus(ReplicationCreateRequiredValue);
-        /// <summary>
-        /// External Replication setup is complete, you can now monitor the 'mirrorState' in the replication status for the health of the replication
-        /// Serialized Name: ExternalReplicationSetupStatus.NoActionRequired
-        /// </summary>
+        /// <summary> External Replication setup is complete, you can now monitor the 'mirrorState' in the replication status for the health of the replication. </summary>
         public static ExternalReplicationSetupStatus NoActionRequired { get; } = new ExternalReplicationSetupStatus(NoActionRequiredValue);
         /// <summary> Determines if two <see cref="ExternalReplicationSetupStatus"/> values are the same. </summary>
         public static bool operator ==(ExternalReplicationSetupStatus left, ExternalReplicationSetupStatus right) => left.Equals(right);

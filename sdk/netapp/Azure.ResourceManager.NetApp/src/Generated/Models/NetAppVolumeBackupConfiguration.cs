@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Volume Backup Properties
-    /// Serialized Name: VolumeBackupProperties
-    /// </summary>
+    /// <summary> Volume Backup Properties. </summary>
     public partial class NetAppVolumeBackupConfiguration
     {
         /// <summary>
@@ -50,18 +47,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
-        /// <param name="backupPolicyId">
-        /// Backup Policy Resource ID
-        /// Serialized Name: VolumeBackupProperties.backupPolicyId
-        /// </param>
-        /// <param name="isPolicyEnforced">
-        /// Policy Enforced
-        /// Serialized Name: VolumeBackupProperties.policyEnforced
-        /// </param>
-        /// <param name="backupVaultId">
-        /// Backup Vault Resource ID
-        /// Serialized Name: VolumeBackupProperties.backupVaultId
-        /// </param>
+        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="isPolicyEnforced"> Policy Enforced. </param>
+        /// <param name="backupVaultId"> Backup Vault Resource ID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, ResourceIdentifier backupVaultId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,20 +59,11 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Backup Policy Resource ID
-        /// Serialized Name: VolumeBackupProperties.backupPolicyId
-        /// </summary>
+        /// <summary> Backup Policy Resource ID. </summary>
         public ResourceIdentifier BackupPolicyId { get; set; }
-        /// <summary>
-        /// Policy Enforced
-        /// Serialized Name: VolumeBackupProperties.policyEnforced
-        /// </summary>
+        /// <summary> Policy Enforced. </summary>
         public bool? IsPolicyEnforced { get; set; }
-        /// <summary>
-        /// Backup Vault Resource ID
-        /// Serialized Name: VolumeBackupProperties.backupVaultId
-        /// </summary>
+        /// <summary> Backup Vault Resource ID. </summary>
         public ResourceIdentifier BackupVaultId { get; set; }
     }
 }

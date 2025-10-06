@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// DataProtection type volumes include an object containing details of the replication
-    /// Serialized Name: VolumePropertiesDataProtection
-    /// </summary>
+    /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumeDataProtection
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeDataProtection"/>. </summary>
-        /// <param name="backup">
-        /// Backup Properties
-        /// Serialized Name: VolumePropertiesDataProtection.backup
-        /// </param>
-        /// <param name="replication">
-        /// Replication properties
-        /// Serialized Name: VolumePropertiesDataProtection.replication
-        /// </param>
-        /// <param name="snapshot">
-        /// Snapshot properties.
-        /// Serialized Name: VolumePropertiesDataProtection.snapshot
-        /// </param>
-        /// <param name="volumeRelocation">
-        /// VolumeRelocation properties
-        /// Serialized Name: VolumePropertiesDataProtection.volumeRelocation
-        /// </param>
+        /// <param name="backup"> Backup Properties. </param>
+        /// <param name="replication"> Replication properties. </param>
+        /// <param name="snapshot"> Snapshot properties. </param>
+        /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,25 +66,13 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Backup Properties
-        /// Serialized Name: VolumePropertiesDataProtection.backup
-        /// </summary>
+        /// <summary> Backup Properties. </summary>
         public NetAppVolumeBackupConfiguration Backup { get; set; }
-        /// <summary>
-        /// Replication properties
-        /// Serialized Name: VolumePropertiesDataProtection.replication
-        /// </summary>
+        /// <summary> Replication properties. </summary>
         public NetAppReplicationObject Replication { get; set; }
-        /// <summary>
-        /// Snapshot properties.
-        /// Serialized Name: VolumePropertiesDataProtection.snapshot
-        /// </summary>
+        /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
-        /// <summary>
-        /// Snapshot Policy ResourceId
-        /// Serialized Name: VolumeSnapshotProperties.snapshotPolicyId
-        /// </summary>
+        /// <summary> Snapshot Policy ResourceId. </summary>
         public ResourceIdentifier SnapshotPolicyId
         {
             get => Snapshot is null ? default : Snapshot.SnapshotPolicyId;
@@ -111,10 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary>
-        /// VolumeRelocation properties
-        /// Serialized Name: VolumePropertiesDataProtection.volumeRelocation
-        /// </summary>
+        /// <summary> VolumeRelocation properties. </summary>
         public NetAppVolumeRelocationProperties VolumeRelocation { get; set; }
     }
 }

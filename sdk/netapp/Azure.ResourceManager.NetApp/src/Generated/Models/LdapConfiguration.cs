@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// LDAP configuration
-    /// Serialized Name: LdapConfiguration
-    /// </summary>
+    /// <summary> LDAP configuration. </summary>
     public partial class LdapConfiguration
     {
         /// <summary>
@@ -55,26 +52,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
-        /// <param name="domain">
-        /// Name of the LDAP configuration domain
-        /// Serialized Name: LdapConfiguration.domain
-        /// </param>
-        /// <param name="ldapServers">
-        /// List of LDAP server IP addresses (IPv4 only) for the LDAP domain.
-        /// Serialized Name: LdapConfiguration.ldapServers
-        /// </param>
-        /// <param name="ldapOverTls">
-        /// Specifies whether or not the LDAP traffic needs to be secured via TLS.
-        /// Serialized Name: LdapConfiguration.ldapOverTLS
-        /// </param>
-        /// <param name="serverCACertificate">
-        /// When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate.
-        /// Serialized Name: LdapConfiguration.serverCACertificate
-        /// </param>
-        /// <param name="certificateCNHost">
-        /// The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry.
-        /// Serialized Name: LdapConfiguration.certificateCNHost
-        /// </param>
+        /// <param name="domain"> Name of the LDAP configuration domain. </param>
+        /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
+        /// <param name="ldapOverTls"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
+        /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LdapConfiguration(string domain, IList<string> ldapServers, bool? ldapOverTls, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,30 +68,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the LDAP configuration domain
-        /// Serialized Name: LdapConfiguration.domain
-        /// </summary>
+        /// <summary> Name of the LDAP configuration domain. </summary>
         public string Domain { get; set; }
-        /// <summary>
-        /// List of LDAP server IP addresses (IPv4 only) for the LDAP domain.
-        /// Serialized Name: LdapConfiguration.ldapServers
-        /// </summary>
+        /// <summary> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </summary>
         public IList<string> LdapServers { get; }
-        /// <summary>
-        /// Specifies whether or not the LDAP traffic needs to be secured via TLS.
-        /// Serialized Name: LdapConfiguration.ldapOverTLS
-        /// </summary>
+        /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
         public bool? LdapOverTls { get; set; }
-        /// <summary>
-        /// When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate.
-        /// Serialized Name: LdapConfiguration.serverCACertificate
-        /// </summary>
+        /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </summary>
         public string ServerCACertificate { get; set; }
-        /// <summary>
-        /// The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry.
-        /// Serialized Name: LdapConfiguration.certificateCNHost
-        /// </summary>
+        /// <summary> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </summary>
         public string CertificateCNHost { get; set; }
     }
 }

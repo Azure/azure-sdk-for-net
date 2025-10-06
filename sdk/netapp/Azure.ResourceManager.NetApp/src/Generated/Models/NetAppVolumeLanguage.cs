@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Language supported for volume.
-    /// Serialized Name: VolumeLanguage
-    /// </summary>
+    /// <summary> Language supported for volume. </summary>
     public readonly partial struct NetAppVolumeLanguage : IEquatable<NetAppVolumeLanguage>
     {
         private readonly string _value;
@@ -95,350 +92,143 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string EnUsValue = "en-us";
         private const string EnUsUtf8Value = "en-us.utf-8";
 
-        /// <summary>
-        /// Posix with UTF-8
-        /// Serialized Name: VolumeLanguage.c.utf-8
-        /// </summary>
+        /// <summary> Posix with UTF-8. </summary>
         public static NetAppVolumeLanguage CUtf8 { get; } = new NetAppVolumeLanguage(CUtf8Value);
-        /// <summary>
-        /// UTF-8 with 4 byte character support
-        /// Serialized Name: VolumeLanguage.utf8mb4
-        /// </summary>
+        /// <summary> UTF-8 with 4 byte character support. </summary>
         public static NetAppVolumeLanguage Utf8Mb4 { get; } = new NetAppVolumeLanguage(Utf8Mb4Value);
-        /// <summary>
-        /// Arabic - Deprecated
-        /// Serialized Name: VolumeLanguage.ar
-        /// </summary>
+        /// <summary> Arabic - Deprecated. </summary>
         public static NetAppVolumeLanguage Ar { get; } = new NetAppVolumeLanguage(ArValue);
-        /// <summary>
-        /// Arabic with UTF-8
-        /// Serialized Name: VolumeLanguage.ar.utf-8
-        /// </summary>
+        /// <summary> Arabic with UTF-8. </summary>
         public static NetAppVolumeLanguage ArUtf8 { get; } = new NetAppVolumeLanguage(ArUtf8Value);
-        /// <summary>
-        /// Croatian - Deprecated
-        /// Serialized Name: VolumeLanguage.hr
-        /// </summary>
+        /// <summary> Croatian - Deprecated. </summary>
         public static NetAppVolumeLanguage Hr { get; } = new NetAppVolumeLanguage(HrValue);
-        /// <summary>
-        /// Croatian with UTF-8
-        /// Serialized Name: VolumeLanguage.hr.utf-8
-        /// </summary>
+        /// <summary> Croatian with UTF-8. </summary>
         public static NetAppVolumeLanguage HrUtf8 { get; } = new NetAppVolumeLanguage(HrUtf8Value);
-        /// <summary>
-        /// Czech - Deprecated
-        /// Serialized Name: VolumeLanguage.cs
-        /// </summary>
+        /// <summary> Czech - Deprecated. </summary>
         public static NetAppVolumeLanguage Cs { get; } = new NetAppVolumeLanguage(CsValue);
-        /// <summary>
-        /// Czech with UTF-8
-        /// Serialized Name: VolumeLanguage.cs.utf-8
-        /// </summary>
+        /// <summary> Czech with UTF-8. </summary>
         public static NetAppVolumeLanguage CsUtf8 { get; } = new NetAppVolumeLanguage(CsUtf8Value);
-        /// <summary>
-        /// Danish - Deprecated
-        /// Serialized Name: VolumeLanguage.da
-        /// </summary>
+        /// <summary> Danish - Deprecated. </summary>
         public static NetAppVolumeLanguage Da { get; } = new NetAppVolumeLanguage(DaValue);
-        /// <summary>
-        /// Danish with UTF-8
-        /// Serialized Name: VolumeLanguage.da.utf-8
-        /// </summary>
+        /// <summary> Danish with UTF-8. </summary>
         public static NetAppVolumeLanguage DaUtf8 { get; } = new NetAppVolumeLanguage(DaUtf8Value);
-        /// <summary>
-        /// Dutch - Deprecated
-        /// Serialized Name: VolumeLanguage.nl
-        /// </summary>
+        /// <summary> Dutch - Deprecated. </summary>
         public static NetAppVolumeLanguage Nl { get; } = new NetAppVolumeLanguage(NlValue);
-        /// <summary>
-        /// Dutch with UTF-8
-        /// Serialized Name: VolumeLanguage.nl.utf-8
-        /// </summary>
+        /// <summary> Dutch with UTF-8. </summary>
         public static NetAppVolumeLanguage NlUtf8 { get; } = new NetAppVolumeLanguage(NlUtf8Value);
-        /// <summary>
-        /// English - Deprecated
-        /// Serialized Name: VolumeLanguage.en
-        /// </summary>
+        /// <summary> English - Deprecated. </summary>
         public static NetAppVolumeLanguage En { get; } = new NetAppVolumeLanguage(EnValue);
-        /// <summary>
-        /// English with UTF-8
-        /// Serialized Name: VolumeLanguage.en.utf-8
-        /// </summary>
+        /// <summary> English with UTF-8. </summary>
         public static NetAppVolumeLanguage EnUtf8 { get; } = new NetAppVolumeLanguage(EnUtf8Value);
-        /// <summary>
-        /// Finnish - Deprecated
-        /// Serialized Name: VolumeLanguage.fi
-        /// </summary>
+        /// <summary> Finnish - Deprecated. </summary>
         public static NetAppVolumeLanguage Fi { get; } = new NetAppVolumeLanguage(FiValue);
-        /// <summary>
-        /// Finnish with UTF-8
-        /// Serialized Name: VolumeLanguage.fi.utf-8
-        /// </summary>
+        /// <summary> Finnish with UTF-8. </summary>
         public static NetAppVolumeLanguage FiUtf8 { get; } = new NetAppVolumeLanguage(FiUtf8Value);
-        /// <summary>
-        /// French - Deprecated
-        /// Serialized Name: VolumeLanguage.fr
-        /// </summary>
+        /// <summary> French - Deprecated. </summary>
         public static NetAppVolumeLanguage Fr { get; } = new NetAppVolumeLanguage(FrValue);
-        /// <summary>
-        /// French with UTF-8
-        /// Serialized Name: VolumeLanguage.fr.utf-8
-        /// </summary>
+        /// <summary> French with UTF-8. </summary>
         public static NetAppVolumeLanguage FrUtf8 { get; } = new NetAppVolumeLanguage(FrUtf8Value);
-        /// <summary>
-        /// German - Deprecated
-        /// Serialized Name: VolumeLanguage.de
-        /// </summary>
+        /// <summary> German - Deprecated. </summary>
         public static NetAppVolumeLanguage De { get; } = new NetAppVolumeLanguage(DeValue);
-        /// <summary>
-        /// German with UTF-8
-        /// Serialized Name: VolumeLanguage.de.utf-8
-        /// </summary>
+        /// <summary> German with UTF-8. </summary>
         public static NetAppVolumeLanguage DeUtf8 { get; } = new NetAppVolumeLanguage(DeUtf8Value);
-        /// <summary>
-        /// Hebrew - Deprecated
-        /// Serialized Name: VolumeLanguage.he
-        /// </summary>
+        /// <summary> Hebrew - Deprecated. </summary>
         public static NetAppVolumeLanguage He { get; } = new NetAppVolumeLanguage(HeValue);
-        /// <summary>
-        /// Hebrew with UTF-8
-        /// Serialized Name: VolumeLanguage.he.utf-8
-        /// </summary>
+        /// <summary> Hebrew with UTF-8. </summary>
         public static NetAppVolumeLanguage HeUtf8 { get; } = new NetAppVolumeLanguage(HeUtf8Value);
-        /// <summary>
-        /// Hungarian - Deprecated
-        /// Serialized Name: VolumeLanguage.hu
-        /// </summary>
+        /// <summary> Hungarian - Deprecated. </summary>
         public static NetAppVolumeLanguage Hu { get; } = new NetAppVolumeLanguage(HuValue);
-        /// <summary>
-        /// Hungarian with UTF-8
-        /// Serialized Name: VolumeLanguage.hu.utf-8
-        /// </summary>
+        /// <summary> Hungarian with UTF-8. </summary>
         public static NetAppVolumeLanguage HuUtf8 { get; } = new NetAppVolumeLanguage(HuUtf8Value);
-        /// <summary>
-        /// Italian - Deprecated
-        /// Serialized Name: VolumeLanguage.it
-        /// </summary>
+        /// <summary> Italian - Deprecated. </summary>
         public static NetAppVolumeLanguage It { get; } = new NetAppVolumeLanguage(ItValue);
-        /// <summary>
-        /// Italian with UTF-8
-        /// Serialized Name: VolumeLanguage.it.utf-8
-        /// </summary>
+        /// <summary> Italian with UTF-8. </summary>
         public static NetAppVolumeLanguage ItUtf8 { get; } = new NetAppVolumeLanguage(ItUtf8Value);
-        /// <summary>
-        /// Japanese euc-j - Deprecated
-        /// Serialized Name: VolumeLanguage.ja
-        /// </summary>
+        /// <summary> Japanese euc-j - Deprecated. </summary>
         public static NetAppVolumeLanguage Ja { get; } = new NetAppVolumeLanguage(JaValue);
-        /// <summary>
-        /// Japanese euc-j with UTF-8
-        /// Serialized Name: VolumeLanguage.ja.utf-8
-        /// </summary>
+        /// <summary> Japanese euc-j with UTF-8. </summary>
         public static NetAppVolumeLanguage JaUtf8 { get; } = new NetAppVolumeLanguage(JaUtf8Value);
-        /// <summary>
-        /// Japanese euc-j - Deprecated
-        /// Serialized Name: VolumeLanguage.ja-v1
-        /// </summary>
+        /// <summary> Japanese euc-j - Deprecated. </summary>
         public static NetAppVolumeLanguage JaV1 { get; } = new NetAppVolumeLanguage(JaV1Value);
-        /// <summary>
-        /// Japanese euc-j with UTF-8
-        /// Serialized Name: VolumeLanguage.ja-v1.utf-8
-        /// </summary>
+        /// <summary> Japanese euc-j with UTF-8. </summary>
         public static NetAppVolumeLanguage JaV1Utf8 { get; } = new NetAppVolumeLanguage(JaV1Utf8Value);
-        /// <summary>
-        /// Japanese pck
-        /// Serialized Name: VolumeLanguage.ja-jp.pck
-        /// </summary>
+        /// <summary> Japanese pck. </summary>
         public static NetAppVolumeLanguage JaJpPck { get; } = new NetAppVolumeLanguage(JaJpPckValue);
-        /// <summary>
-        /// Japanese pck with UTF-8 - Deprecated
-        /// Serialized Name: VolumeLanguage.ja-jp.pck.utf-8
-        /// </summary>
+        /// <summary> Japanese pck with UTF-8 - Deprecated. </summary>
         public static NetAppVolumeLanguage JaJpPckUtf8 { get; } = new NetAppVolumeLanguage(JaJpPckUtf8Value);
-        /// <summary>
-        /// Japanese cp932
-        /// Serialized Name: VolumeLanguage.ja-jp.932
-        /// </summary>
+        /// <summary> Japanese cp932. </summary>
         public static NetAppVolumeLanguage JaJp932 { get; } = new NetAppVolumeLanguage(JaJp932Value);
-        /// <summary>
-        /// Japanese cp932 with UTF-8 - Deprecated
-        /// Serialized Name: VolumeLanguage.ja-jp.932.utf-8
-        /// </summary>
+        /// <summary> Japanese cp932 with UTF-8 - Deprecated. </summary>
         public static NetAppVolumeLanguage JaJp932Utf8 { get; } = new NetAppVolumeLanguage(JaJp932Utf8Value);
-        /// <summary>
-        /// Japanese pck - sjis
-        /// Serialized Name: VolumeLanguage.ja-jp.pck-v2
-        /// </summary>
+        /// <summary> Japanese pck - sjis. </summary>
         public static NetAppVolumeLanguage JaJpPckV2 { get; } = new NetAppVolumeLanguage(JaJpPckV2Value);
-        /// <summary>
-        /// Japanese pck - sjis with UTF-8 - Deprecated
-        /// Serialized Name: VolumeLanguage.ja-jp.pck-v2.utf-8
-        /// </summary>
+        /// <summary> Japanese pck - sjis with UTF-8 - Deprecated. </summary>
         public static NetAppVolumeLanguage JaJpPckV2Utf8 { get; } = new NetAppVolumeLanguage(JaJpPckV2Utf8Value);
-        /// <summary>
-        /// Korean - Deprecated
-        /// Serialized Name: VolumeLanguage.ko
-        /// </summary>
+        /// <summary> Korean - Deprecated. </summary>
         public static NetAppVolumeLanguage Ko { get; } = new NetAppVolumeLanguage(KoValue);
-        /// <summary>
-        /// Korean with UTF-8
-        /// Serialized Name: VolumeLanguage.ko.utf-8
-        /// </summary>
+        /// <summary> Korean with UTF-8. </summary>
         public static NetAppVolumeLanguage KoUtf8 { get; } = new NetAppVolumeLanguage(KoUtf8Value);
-        /// <summary>
-        /// Norwegian - Deprecated
-        /// Serialized Name: VolumeLanguage.no
-        /// </summary>
+        /// <summary> Norwegian - Deprecated. </summary>
         public static NetAppVolumeLanguage No { get; } = new NetAppVolumeLanguage(NoValue);
-        /// <summary>
-        /// Norwegian with UTF-8
-        /// Serialized Name: VolumeLanguage.no.utf-8
-        /// </summary>
+        /// <summary> Norwegian with UTF-8. </summary>
         public static NetAppVolumeLanguage NoUtf8 { get; } = new NetAppVolumeLanguage(NoUtf8Value);
-        /// <summary>
-        /// Polish - Deprecated
-        /// Serialized Name: VolumeLanguage.pl
-        /// </summary>
+        /// <summary> Polish - Deprecated. </summary>
         public static NetAppVolumeLanguage Pl { get; } = new NetAppVolumeLanguage(PlValue);
-        /// <summary>
-        /// Polish with UTF-8
-        /// Serialized Name: VolumeLanguage.pl.utf-8
-        /// </summary>
+        /// <summary> Polish with UTF-8. </summary>
         public static NetAppVolumeLanguage PlUtf8 { get; } = new NetAppVolumeLanguage(PlUtf8Value);
-        /// <summary>
-        /// Portuguese - Deprecated
-        /// Serialized Name: VolumeLanguage.pt
-        /// </summary>
+        /// <summary> Portuguese - Deprecated. </summary>
         public static NetAppVolumeLanguage Pt { get; } = new NetAppVolumeLanguage(PtValue);
-        /// <summary>
-        /// Portuguese with UTF-8
-        /// Serialized Name: VolumeLanguage.pt.utf-8
-        /// </summary>
+        /// <summary> Portuguese with UTF-8. </summary>
         public static NetAppVolumeLanguage PtUtf8 { get; } = new NetAppVolumeLanguage(PtUtf8Value);
-        /// <summary>
-        /// Posix - Deprecated
-        /// Serialized Name: VolumeLanguage.c
-        /// </summary>
+        /// <summary> Posix - Deprecated. </summary>
         public static NetAppVolumeLanguage C { get; } = new NetAppVolumeLanguage(CValue);
-        /// <summary>
-        /// Romanian - Deprecated
-        /// Serialized Name: VolumeLanguage.ro
-        /// </summary>
+        /// <summary> Romanian - Deprecated. </summary>
         public static NetAppVolumeLanguage Ro { get; } = new NetAppVolumeLanguage(RoValue);
-        /// <summary>
-        /// Romanian with UTF-8
-        /// Serialized Name: VolumeLanguage.ro.utf-8
-        /// </summary>
+        /// <summary> Romanian with UTF-8. </summary>
         public static NetAppVolumeLanguage RoUtf8 { get; } = new NetAppVolumeLanguage(RoUtf8Value);
-        /// <summary>
-        /// Russian - Deprecated
-        /// Serialized Name: VolumeLanguage.ru
-        /// </summary>
+        /// <summary> Russian - Deprecated. </summary>
         public static NetAppVolumeLanguage Ru { get; } = new NetAppVolumeLanguage(RuValue);
-        /// <summary>
-        /// Russian with UTF-8
-        /// Serialized Name: VolumeLanguage.ru.utf-8
-        /// </summary>
+        /// <summary> Russian with UTF-8. </summary>
         public static NetAppVolumeLanguage RuUtf8 { get; } = new NetAppVolumeLanguage(RuUtf8Value);
-        /// <summary>
-        /// Simplified Chinese - Deprecated
-        /// Serialized Name: VolumeLanguage.zh
-        /// </summary>
+        /// <summary> Simplified Chinese - Deprecated. </summary>
         public static NetAppVolumeLanguage Zh { get; } = new NetAppVolumeLanguage(ZhValue);
-        /// <summary>
-        /// Simplified Chinese with UTF-8
-        /// Serialized Name: VolumeLanguage.zh.utf-8
-        /// </summary>
+        /// <summary> Simplified Chinese with UTF-8. </summary>
         public static NetAppVolumeLanguage ZhUtf8 { get; } = new NetAppVolumeLanguage(ZhUtf8Value);
-        /// <summary>
-        /// Simplified gbk Chinese
-        /// Serialized Name: VolumeLanguage.zh.gbk
-        /// </summary>
+        /// <summary> Simplified gbk Chinese. </summary>
         public static NetAppVolumeLanguage ZhGbk { get; } = new NetAppVolumeLanguage(ZhGbkValue);
-        /// <summary>
-        /// Simplified gbk Chinese with UTF-8 - Deprecated
-        /// Serialized Name: VolumeLanguage.zh.gbk.utf-8
-        /// </summary>
+        /// <summary> Simplified gbk Chinese with UTF-8 - Deprecated. </summary>
         public static NetAppVolumeLanguage ZhGbkUtf8 { get; } = new NetAppVolumeLanguage(ZhGbkUtf8Value);
-        /// <summary>
-        /// Traditional Chinese BIG 5
-        /// Serialized Name: VolumeLanguage.zh-tw.big5
-        /// </summary>
+        /// <summary> Traditional Chinese BIG 5. </summary>
         public static NetAppVolumeLanguage ZhTwBig5 { get; } = new NetAppVolumeLanguage(ZhTwBig5Value);
-        /// <summary>
-        /// Traditional Chinese BIG 5 with UTF-8 - Deprecated
-        /// Serialized Name: VolumeLanguage.zh-tw.big5.utf-8
-        /// </summary>
+        /// <summary> Traditional Chinese BIG 5 with UTF-8 - Deprecated. </summary>
         public static NetAppVolumeLanguage ZhTwBig5Utf8 { get; } = new NetAppVolumeLanguage(ZhTwBig5Utf8Value);
-        /// <summary>
-        /// Traditional Chinese EUC-TW
-        /// Serialized Name: VolumeLanguage.zh-tw
-        /// </summary>
+        /// <summary> Traditional Chinese EUC-TW. </summary>
         public static NetAppVolumeLanguage ZhTw { get; } = new NetAppVolumeLanguage(ZhTwValue);
-        /// <summary>
-        /// Traditional Chinese EUC-TW with UTF-8 - Deprecated
-        /// Serialized Name: VolumeLanguage.zh-tw.utf-8
-        /// </summary>
+        /// <summary> Traditional Chinese EUC-TW with UTF-8 - Deprecated. </summary>
         public static NetAppVolumeLanguage ZhTwUtf8 { get; } = new NetAppVolumeLanguage(ZhTwUtf8Value);
-        /// <summary>
-        /// Slovak - Deprecated
-        /// Serialized Name: VolumeLanguage.sk
-        /// </summary>
+        /// <summary> Slovak - Deprecated. </summary>
         public static NetAppVolumeLanguage Sk { get; } = new NetAppVolumeLanguage(SkValue);
-        /// <summary>
-        /// Slovak with UTF-8
-        /// Serialized Name: VolumeLanguage.sk.utf-8
-        /// </summary>
+        /// <summary> Slovak with UTF-8. </summary>
         public static NetAppVolumeLanguage SkUtf8 { get; } = new NetAppVolumeLanguage(SkUtf8Value);
-        /// <summary>
-        /// Slovenian - Deprecated
-        /// Serialized Name: VolumeLanguage.sl
-        /// </summary>
+        /// <summary> Slovenian - Deprecated. </summary>
         public static NetAppVolumeLanguage Sl { get; } = new NetAppVolumeLanguage(SlValue);
-        /// <summary>
-        /// Slovenian with UTF-8
-        /// Serialized Name: VolumeLanguage.sl.utf-8
-        /// </summary>
+        /// <summary> Slovenian with UTF-8. </summary>
         public static NetAppVolumeLanguage SlUtf8 { get; } = new NetAppVolumeLanguage(SlUtf8Value);
-        /// <summary>
-        /// Spanish - Deprecated
-        /// Serialized Name: VolumeLanguage.es
-        /// </summary>
+        /// <summary> Spanish - Deprecated. </summary>
         public static NetAppVolumeLanguage Es { get; } = new NetAppVolumeLanguage(EsValue);
-        /// <summary>
-        /// Spanish with UTF-8
-        /// Serialized Name: VolumeLanguage.es.utf-8
-        /// </summary>
+        /// <summary> Spanish with UTF-8. </summary>
         public static NetAppVolumeLanguage EsUtf8 { get; } = new NetAppVolumeLanguage(EsUtf8Value);
-        /// <summary>
-        /// Swedish - Deprecated
-        /// Serialized Name: VolumeLanguage.sv
-        /// </summary>
+        /// <summary> Swedish - Deprecated. </summary>
         public static NetAppVolumeLanguage Sv { get; } = new NetAppVolumeLanguage(SvValue);
-        /// <summary>
-        /// Swedish with UTF-8
-        /// Serialized Name: VolumeLanguage.sv.utf-8
-        /// </summary>
+        /// <summary> Swedish with UTF-8. </summary>
         public static NetAppVolumeLanguage SvUtf8 { get; } = new NetAppVolumeLanguage(SvUtf8Value);
-        /// <summary>
-        /// Turkish - Deprecated
-        /// Serialized Name: VolumeLanguage.tr
-        /// </summary>
+        /// <summary> Turkish - Deprecated. </summary>
         public static NetAppVolumeLanguage Tr { get; } = new NetAppVolumeLanguage(TrValue);
-        /// <summary>
-        /// Turkish with UTF-8
-        /// Serialized Name: VolumeLanguage.tr.utf-8
-        /// </summary>
+        /// <summary> Turkish with UTF-8. </summary>
         public static NetAppVolumeLanguage TrUtf8 { get; } = new NetAppVolumeLanguage(TrUtf8Value);
-        /// <summary>
-        /// US English - Deprecated
-        /// Serialized Name: VolumeLanguage.en-us
-        /// </summary>
+        /// <summary> US English - Deprecated. </summary>
         public static NetAppVolumeLanguage EnUs { get; } = new NetAppVolumeLanguage(EnUsValue);
-        /// <summary>
-        /// US English with UTF-8
-        /// Serialized Name: VolumeLanguage.en-us.utf-8
-        /// </summary>
+        /// <summary> US English with UTF-8. </summary>
         public static NetAppVolumeLanguage EnUsUtf8 { get; } = new NetAppVolumeLanguage(EnUsUtf8Value);
         /// <summary> Determines if two <see cref="NetAppVolumeLanguage"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeLanguage left, NetAppVolumeLanguage right) => left.Equals(right);

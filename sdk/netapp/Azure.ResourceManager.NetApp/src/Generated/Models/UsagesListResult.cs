@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Usages result
-    /// Serialized Name: UsagesListResult
-    /// </summary>
+    /// <summary> Usages result. </summary>
     internal partial class UsagesListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
-        /// <param name="value">
-        /// A list of usages
-        /// Serialized Name: UsagesListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of results.
-        /// Serialized Name: UsagesListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of usages. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UsagesListResult(IReadOnlyList<NetAppUsageResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of usages
-        /// Serialized Name: UsagesListResult.value
-        /// </summary>
+        /// <summary> A list of usages. </summary>
         public IReadOnlyList<NetAppUsageResult> Value { get; }
-        /// <summary>
-        /// URL to get the next set of results.
-        /// Serialized Name: UsagesListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

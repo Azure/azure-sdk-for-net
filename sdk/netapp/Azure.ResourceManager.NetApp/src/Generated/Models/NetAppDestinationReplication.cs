@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Destination replication properties
-    /// Serialized Name: DestinationReplication
-    /// </summary>
+    /// <summary> Destination replication properties. </summary>
     public partial class NetAppDestinationReplication
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppDestinationReplication"/>. </summary>
-        /// <param name="resourceId">
-        /// The resource ID of the remote volume
-        /// Serialized Name: DestinationReplication.resourceId
-        /// </param>
-        /// <param name="replicationType">
-        /// Indicates whether the replication is cross zone or cross region.
-        /// Serialized Name: DestinationReplication.replicationType
-        /// </param>
-        /// <param name="region">
-        /// The remote region for the destination volume.
-        /// Serialized Name: DestinationReplication.region
-        /// </param>
-        /// <param name="zone">
-        /// The remote zone for the destination volume.
-        /// Serialized Name: DestinationReplication.zone
-        /// </param>
+        /// <param name="resourceId"> The resource ID of the remote volume. </param>
+        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
+        /// <param name="region"> The remote region for the destination volume. </param>
+        /// <param name="zone"> The remote zone for the destination volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppDestinationReplication(ResourceIdentifier resourceId, NetAppReplicationType? replicationType, string region, string zone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,25 +66,13 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource ID of the remote volume
-        /// Serialized Name: DestinationReplication.resourceId
-        /// </summary>
+        /// <summary> The resource ID of the remote volume. </summary>
         public ResourceIdentifier ResourceId { get; }
-        /// <summary>
-        /// Indicates whether the replication is cross zone or cross region.
-        /// Serialized Name: DestinationReplication.replicationType
-        /// </summary>
+        /// <summary> Indicates whether the replication is cross zone or cross region. </summary>
         public NetAppReplicationType? ReplicationType { get; }
-        /// <summary>
-        /// The remote region for the destination volume.
-        /// Serialized Name: DestinationReplication.region
-        /// </summary>
+        /// <summary> The remote region for the destination volume. </summary>
         public string Region { get; }
-        /// <summary>
-        /// The remote zone for the destination volume.
-        /// Serialized Name: DestinationReplication.zone
-        /// </summary>
+        /// <summary> The remote zone for the destination volume. </summary>
         public string Zone { get; }
     }
 }
