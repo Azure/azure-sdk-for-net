@@ -44,6 +44,6 @@ namespace Azure.Communication.Email
         /// <summary>
         /// Optional unique identifier (CID) to reference an inline attachment.
         /// </summary>
-        public string ContentId { get; }
+        public string ContentId { get; set; }
     }
 }

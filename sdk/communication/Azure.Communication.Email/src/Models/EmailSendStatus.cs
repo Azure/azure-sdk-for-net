@@ -12,6 +12,9 @@ namespace Azure.Communication.Email
     [CodeGenSuppress("EmailSendStatus", typeof(string), typeof(string), typeof(string))]
     public partial struct EmailSendStatus
     {
+        /// <summary>
+        /// The values of all declared <see cref="EmailSendStatus"/> properties as string constants.
+        /// </summary>
         public static class Values
         {
             /// <summary> Canceled </summary>

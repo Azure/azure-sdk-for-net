@@ -118,6 +118,14 @@ namespace Azure.Communication.Email
         public static implicit operator Azure.Communication.Email.EmailSendStatus (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Email.EmailSendStatus left, Azure.Communication.Email.EmailSendStatus right) { throw null; }
         public override string ToString() { throw null; }
+        public static partial class Values
+        {
+            public const string Canceled = "Canceled";
+            public const string Failed = "Failed";
+            public const string NotStarted = "NotStarted";
+            public const string Running = "Running";
+            public const string Succeeded = "Succeeded";
+        }
     }
 }
 namespace Microsoft.Extensions.Azure
