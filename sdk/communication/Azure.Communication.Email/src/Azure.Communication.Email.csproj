@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This client library enables working with the Microsoft Azure Communication Email service.</Description>
     <AssemblyTitle>Azure Communication Email Service</AssemblyTitle>
-    <Version>1.2.0</Version>
+    <Version>1.1.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Email Service;Microsoft;Azure;Azure Communication Service;Azure Communication Email Service;Email;Communication</PackageTags>
