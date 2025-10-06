@@ -54,15 +54,11 @@ namespace Azure.ResourceManager.ComputeFleet
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ComputeFleet.ComputeFleetResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeFleet.ComputeFleetResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeFleet.ComputeFleetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeFleet.ComputeFleetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine> GetVirtualMachines(string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine> GetVirtualMachinesAsync(string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss> GetVirtualMachineScaleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss> GetVirtualMachineScaleSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeFleet.ComputeFleetResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -193,32 +189,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.ComputeFleetData ComputeFleetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties properties = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetImageReference ComputeFleetImageReference(Azure.Core.ResourceIdentifier id = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetInnerError ComputeFleetInnerError(string exceptionType = null, string errorDetail = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState, Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributes vmAttributes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> additionalLocationsLocationProfiles, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile, System.DateTimeOffset? createdOn, string uniqueId) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState?), Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile = null, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributes vmAttributes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> additionalLocationsLocationProfiles = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string uniqueId = null, Azure.ResourceManager.ComputeFleet.Models.FleetMode? mode = default(Azure.ResourceManager.ComputeFleet.Models.FleetMode?), Azure.ResourceManager.ComputeFleet.Models.CapacityType? capacityType = default(Azure.ResourceManager.ComputeFleet.Models.CapacityType?), Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy zoneAllocationPolicy = null) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState?), Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile = null, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributes vmAttributes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> additionalLocationsLocationProfiles = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string uniqueId = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmProfile ComputeFleetVmProfile(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssOSProfile osProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssStorageProfile storageProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssNetworkProfile networkProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityProfile securityProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetBootDiagnostics bootDiagnostics = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProfile extensionProfile = null, string licenseType = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetScheduledEventsProfile scheduledEventsProfile = null, string userData = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmGalleryApplication> galleryApplications = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProperties hardwareVmSizeProperties = null, Azure.Core.ResourceIdentifier serviceArtifactReferenceId = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityPostureReference securityPostureReference = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss ComputeFleetVmss(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss ComputeFleetVmss(Azure.Core.ResourceIdentifier id = null, string type = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtension ComputeFleetVmssExtension(Azure.Core.ResourceIdentifier id = null, string name = null, string extensionType = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProperties ComputeFleetVmssExtensionProperties(string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? shouldAutoUpgradeMinorVersion = default(bool?), bool? isAutomaticUpgradeEnabled = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null, bool? isSuppressFailuresEnabled = default(bool?), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetKeyVaultSecretReference protectedSettingsFromKeyVault = null) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.VirtualMachine VirtualMachine(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CapacityType : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.CapacityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CapacityType(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.CapacityType VCpu { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.CapacityType Vm { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.CapacityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.CapacityType left, Azure.ResourceManager.ComputeFleet.Models.CapacityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.CapacityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.CapacityType left, Azure.ResourceManager.ComputeFleet.Models.CapacityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ComputeFleetApiError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError>
     {
@@ -697,17 +672,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     {
         public ComputeFleetProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> AdditionalLocationsLocationProfiles { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeFleet.Models.CapacityType? CapacityType { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile ComputeProfile { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.ComputeFleet.Models.FleetMode? Mode { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile RegularPriorityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile SpotPriorityProfile { get { throw null; } set { } }
         public string UniqueId { get { throw null; } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributes VmAttributes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> VmSizesProfile { get { throw null; } }
-        public Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1182,12 +1154,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ComputeFleetVmss : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>
+    public partial class ComputeFleetVmss : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>
     {
         internal ComputeFleetVmss() { }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError Error { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState OperationStatus { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public string Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1577,24 +1551,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FleetMode : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.FleetMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FleetMode(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.FleetMode Instance { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.FleetMode Managed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.FleetMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.FleetMode left, Azure.ResourceManager.ComputeFleet.Models.FleetMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.FleetMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.FleetMode left, Azure.ResourceManager.ComputeFleet.Models.FleetMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LocalStorageDiskType : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType>
     {
         private readonly object _dummy;
@@ -1708,39 +1664,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualMachine : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>
-    {
-        internal VirtualMachine() { }
-        public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError Error { get { throw null; } }
-        public Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus OperationStatus { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeFleet.Models.VirtualMachine System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeFleet.Models.VirtualMachine System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VirtualMachine>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmOperationStatus : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VmOperationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus CancelFailedStatusUnknown { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus Creating { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus left, Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus left, Azure.ResourceManager.ComputeFleet.Models.VmOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class WindowsSetupAdditionalInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformation>
     {
         public WindowsSetupAdditionalInformation() { }
@@ -1788,47 +1711,5 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName left, Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ZoneAllocationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>
-    {
-        public ZoneAllocationPolicy(Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy distributionStrategy) { }
-        public Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy DistributionStrategy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.ZonePreference> ZonePreferences { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZoneAllocationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ZoneDistributionStrategy : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ZoneDistributionStrategy(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy BestEffortSingleZone { get { throw null; } }
-        public static Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy Prioritized { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy left, Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy left, Azure.ResourceManager.ComputeFleet.Models.ZoneDistributionStrategy right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ZonePreference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>
-    {
-        public ZonePreference(string zone) { }
-        public int? Rank { get { throw null; } set { } }
-        public string Zone { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeFleet.Models.ZonePreference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeFleet.Models.ZonePreference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ZonePreference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
