@@ -436,7 +436,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string snapshot, string versionId, int? timeout, string leaseId, DeleteSnapshotsOption? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobDeleteType? blobDeleteType, BlobAccessTierRequestConditions blobAccessTierRequestConditions)
+        internal HttpMessage CreateDeleteRequest(string snapshot, string versionId, int? timeout, string leaseId, DeleteSnapshotsOption? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobDeleteType? blobDeleteType, DateTimeOffset? accessTierIfModifiedSince, DateTimeOffset? accessTierIfUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -489,13 +489,13 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
-            if (blobAccessTierRequestConditions?.AccessTierIfModifiedSince != null)
+            if (accessTierIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-access-tier-if-modified-since", blobAccessTierRequestConditions.AccessTierIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-access-tier-if-modified-since", accessTierIfModifiedSince.Value, "R");
             }
-            if (blobAccessTierRequestConditions?.AccessTierIfUnmodifiedSince != null)
+            if (accessTierIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-access-tier-if-unmodified-since", blobAccessTierRequestConditions.AccessTierIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-access-tier-if-unmodified-since", accessTierIfUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -513,11 +513,12 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobDeleteType"> Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled. </param>
-        /// <param name="blobAccessTierRequestConditions"> Parameter group. </param>
+        /// <param name="accessTierIfModifiedSince"> Specify this header value to operate only on a blob if the access-tier has been modified since the specified date/time. </param>
+        /// <param name="accessTierIfUnmodifiedSince"> Specify this header value to operate only on a blob if the access-tier has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOption? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, BlobAccessTierRequestConditions blobAccessTierRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOption? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, DateTimeOffset? accessTierIfModifiedSince = null, DateTimeOffset? accessTierIfUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(snapshot, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType, blobAccessTierRequestConditions);
+            using var message = CreateDeleteRequest(snapshot, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType, accessTierIfModifiedSince, accessTierIfUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -541,11 +542,12 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobDeleteType"> Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled. </param>
-        /// <param name="blobAccessTierRequestConditions"> Parameter group. </param>
+        /// <param name="accessTierIfModifiedSince"> Specify this header value to operate only on a blob if the access-tier has been modified since the specified date/time. </param>
+        /// <param name="accessTierIfUnmodifiedSince"> Specify this header value to operate only on a blob if the access-tier has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOption? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, BlobAccessTierRequestConditions blobAccessTierRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOption? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, DateTimeOffset? accessTierIfModifiedSince = null, DateTimeOffset? accessTierIfUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(snapshot, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType, blobAccessTierRequestConditions);
+            using var message = CreateDeleteRequest(snapshot, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType, accessTierIfModifiedSince, accessTierIfUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDeleteHeaders(message.Response);
             switch (message.Response.Status)

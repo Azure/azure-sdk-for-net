@@ -362,12 +362,6 @@ namespace Azure.Storage.Blobs.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
-    public partial class BlobAccessTierRequestConditions
-    {
-        public BlobAccessTierRequestConditions() { }
-        public System.DateTimeOffset? AccessTierIfModifiedSince { get { throw null; } set { } }
-        public System.DateTimeOffset? AccessTierIfUnmodifiedSince { get { throw null; } set { } }
-    }
     public partial class BlobAnalyticsLogging
     {
         public BlobAnalyticsLogging() { }
@@ -1030,7 +1024,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobRequestConditions : Azure.Storage.Blobs.Models.BlobLeaseRequestConditions
     {
         public BlobRequestConditions() { }
-        public Azure.Storage.Blobs.Models.BlobAccessTierRequestConditions AccessTierRequestConditions { get { throw null; } set { } }
+        public System.DateTimeOffset? AccessTierIfModifiedSince { get { throw null; } set { } }
+        public System.DateTimeOffset? AccessTierIfUnmodifiedSince { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }

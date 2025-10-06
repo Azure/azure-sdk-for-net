@@ -21,9 +21,16 @@ namespace Azure.Storage.Blobs.Models
         public string LeaseId { get; set; }
 
         /// <summary>
-        /// Optionally limit requests to resources whose access tier was modified/unmodified since this time.
+        /// Specify this header value to operate only on a blob if the access-tier has been modified since the specified date/time.
+        /// Note: If this is specified, AccessTierIfUnmodifiedSince cannot be specified.
         /// </summary>
-        public BlobAccessTierRequestConditions AccessTierRequestConditions { get; set; }
+        public DateTimeOffset? AccessTierIfModifiedSince { get; set; }
+
+        /// <summary>
+        /// Specify this header value to operate only on a blob if the access-tier has not been modified since the specified date/time.
+        /// Note: If this is specified, AccessTierIfModifiedSince cannot be specified.
+        /// </summary>
+        public DateTimeOffset? AccessTierIfUnmodifiedSince { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -36,8 +43,8 @@ namespace Azure.Storage.Blobs.Models
         {
             Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
             LeaseId = deepCopySource.LeaseId;
-            AccessTierRequestConditions.AccessTierIfModifiedSince = deepCopySource.AccessTierRequestConditions.AccessTierIfModifiedSince;
-            AccessTierRequestConditions.AccessTierIfUnmodifiedSince = deepCopySource.AccessTierRequestConditions.AccessTierIfUnmodifiedSince;
+            AccessTierIfModifiedSince = deepCopySource.AccessTierIfModifiedSince;
+            AccessTierIfUnmodifiedSince = deepCopySource.AccessTierIfUnmodifiedSince;
         }
 
         /// <summary>
@@ -120,14 +127,14 @@ namespace Azure.Storage.Blobs.Models
                 conditions.Append(nameof(TagConditions)).Append('=').Append(TagConditions).Append(';');
             }
 
-            if (AccessTierRequestConditions.AccessTierIfModifiedSince != null)
+            if (AccessTierIfModifiedSince != null)
             {
-                conditions.Append(nameof(AccessTierRequestConditions.AccessTierIfModifiedSince)).Append('=').Append(AccessTierRequestConditions.AccessTierIfModifiedSince).Append(';');
+                conditions.Append(nameof(AccessTierIfModifiedSince)).Append('=').Append(AccessTierIfModifiedSince).Append(';');
             }
 
-            if (AccessTierRequestConditions.AccessTierIfUnmodifiedSince != null)
+            if (AccessTierIfUnmodifiedSince != null)
             {
-                conditions.Append(nameof(AccessTierRequestConditions.AccessTierIfUnmodifiedSince)).Append('=').Append(AccessTierRequestConditions.AccessTierIfUnmodifiedSince).Append(';');
+                conditions.Append(nameof(AccessTierIfUnmodifiedSince)).Append('=').Append(AccessTierIfUnmodifiedSince).Append(';');
             }
         }
     }

@@ -3936,10 +3936,10 @@ namespace Azure.Storage.Blobs.Test
             await blob.SetAccessTierAsync(AccessTier.Cool);
             DateTimeOffset changeTime = Recording.UtcNow;
 
-            BlobAccessTierRequestConditions condition;
+            BlobRequestConditions accessConditions;
             if (isAccessTierModifiedSince)
             {
-                condition = new BlobAccessTierRequestConditions
+                accessConditions = new BlobRequestConditions
                 {
                     // requires modification since yesterday (which there should be modification in this time window)
                     AccessTierIfModifiedSince = changeTime.AddDays(-1)
@@ -3947,14 +3947,12 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                condition = new BlobAccessTierRequestConditions
+                accessConditions = new BlobRequestConditions
                 {
                     // requires no modification after 5 minutes from now (which there should be no modification then)
                     AccessTierIfUnmodifiedSince = changeTime.AddMinutes(5)
                 };
             }
-            BlobRequestConditions accessConditions = new();
-            accessConditions.AccessTierRequestConditions = condition;
 
             // Act
             Response response = await blob.DeleteAsync(conditions: accessConditions);
@@ -3978,10 +3976,10 @@ namespace Azure.Storage.Blobs.Test
             await blob.SetAccessTierAsync(AccessTier.Cool);
             DateTimeOffset changeTime = Recording.UtcNow;
 
-            BlobAccessTierRequestConditions condition;
+            BlobRequestConditions accessConditions;
             if (isAccessTierModifiedSince)
             {
-                condition = new BlobAccessTierRequestConditions
+                accessConditions = new BlobRequestConditions
                 {
                     // requires modification after 5 minutes from now (which there should be no modification then)
                     AccessTierIfModifiedSince = changeTime.AddMinutes(5)
@@ -3989,14 +3987,12 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                condition = new BlobAccessTierRequestConditions
+                accessConditions = new BlobRequestConditions
                 {
                     // requires no modification since yesterday (which there should be modification in this time window)
                     AccessTierIfUnmodifiedSince = changeTime.AddDays(-1)
                 };
             }
-            BlobRequestConditions accessConditions = new();
-            accessConditions.AccessTierRequestConditions = condition;
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
