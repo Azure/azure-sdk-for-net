@@ -113,12 +113,11 @@ namespace Azure.AI.VoiceLive
         /// This provides a unified interface for OpenAI voices, complementing the
         /// existing string-based OAIVoice for backward compatibility.
         /// </summary>
-        /// <param name="type"> The type of the voice. </param>
         /// <param name="name"> The name of the OpenAI voice. </param>
         /// <returns> A new <see cref="VoiceLive.OpenAIVoice"/> instance for mocking. </returns>
-        public static OpenAIVoice OpenAIVoice(string @type = default, OAIVoice name = default)
+        public static OpenAIVoice OpenAIVoice(OAIVoice name = default)
         {
-            return new OpenAIVoice(@type, name, additionalBinaryDataProperties: null);
+            return new OpenAIVoice("openai", name, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -211,11 +210,10 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
-        /// <param name="type"> The type of echo cancellation model to use. </param>
         /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
-        public static AudioEchoCancellation AudioEchoCancellation(string @type = default)
+        public static AudioEchoCancellation AudioEchoCancellation()
         {
-            return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
+            return new AudioEchoCancellation("server_echo_cancellation", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
@@ -258,7 +256,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
         /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
-        public static VideoParams VideoParams(int? bitrate = default, string codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
+        public static VideoParams VideoParams(int? bitrate = default, VideoParamsCodec? codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
         {
             return new VideoParams(
                 bitrate,
@@ -1449,9 +1447,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
         /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
         /// <param name="text"></param>
-        /// <param name="timestampType"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default, string timestampType = default)
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default)
         {
             return new SessionUpdateResponseAudioTimestampDelta(
                 ServerEventType.ResponseAudioTimestampDelta,
@@ -1464,7 +1461,7 @@ namespace Azure.AI.VoiceLive
                 audioOffsetMs,
                 audioDurationMs,
                 text,
-                timestampType);
+                "word");
         }
 
         /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
@@ -1603,6 +1600,75 @@ namespace Azure.AI.VoiceLive
                 callId,
                 arguments,
                 name);
+        }
+
+        /// <summary>
+        /// OpenAI voice configuration with explicit type field.
+        ///             
+        ///             This provides a unified interface for OpenAI voices, complementing the
+        ///             existing string-based OAIVoice for backward compatibility.
+        /// </summary>
+        /// <param name="type"> The type of the voice. </param>
+        /// <param name="name"> The name of the OpenAI voice. </param>
+        /// <returns> A new <see cref="VoiceLive.OpenAIVoice"/> instance for mocking. </returns>
+        public static OpenAIVoice OpenAIVoice(string @type = default, OAIVoice name = default)
+        {
+            return new OpenAIVoice(@type, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
+        /// <param name="type"> The type of echo cancellation model to use. </param>
+        /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
+        public static AudioEchoCancellation AudioEchoCancellation(string @type = default)
+        {
+            return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Video streaming parameters for avatar. </summary>
+        /// <param name="bitrate"> Bitrate in bits per second (e.g., 2000000 for 2 Mbps). </param>
+        /// <param name="codec"> Codec to use for encoding. Currently only 'h264' is supported. </param>
+        /// <param name="crop"> Optional cropping settings for the video stream. </param>
+        /// <param name="resolution"> Optional resolution settings for the video stream. </param>
+        /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
+        /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
+        /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
+        public static VideoParams VideoParams(int? bitrate = default, string codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
+        {
+            return new VideoParams(
+                bitrate,
+                codec,
+                crop,
+                resolution,
+                background,
+                gopSize,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="outputIndex"></param>
+        /// <param name="contentIndex"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
+        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
+        /// <param name="text"></param>
+        /// <param name="timestampType"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, int audioOffsetMs = 0, int audioDurationMs = 0, string text = default, string timestampType = default)
+        {
+            return new SessionUpdateResponseAudioTimestampDelta(
+                ServerEventType.ResponseAudioTimestampDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                contentIndex,
+                audioOffsetMs,
+                audioDurationMs,
+                text,
+                timestampType);
         }
     }
 }

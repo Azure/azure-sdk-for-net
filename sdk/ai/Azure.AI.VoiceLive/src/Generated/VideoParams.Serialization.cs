@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Codec))
             {
                 writer.WritePropertyName("codec"u8);
-                writer.WriteStringValue(Codec);
+                writer.WriteStringValue(Codec.Value.ToString());
             }
             if (Optional.IsDefined(Crop))
             {
@@ -106,7 +106,7 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             int? bitrate = default;
-            string codec = default;
+            VideoParamsCodec? codec = default;
             VideoCrop crop = default;
             VideoResolution resolution = default;
             VideoBackground background = default;
@@ -125,7 +125,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("codec"u8))
                 {
-                    codec = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    codec = new VideoParamsCodec(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("crop"u8))
