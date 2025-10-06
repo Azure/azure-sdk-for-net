@@ -65,10 +65,11 @@ byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose
 try
 {
     new CodeTransparencyClient(transparentStatementBytes).RunTransparentStatementVerification(transparentStatementBytes);
+    Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    Console.WriteLine($"Verification failed: {e.Message}");
 }
 ```
 
@@ -84,10 +85,11 @@ byte[] inputReceipt = readFileBytes("<input_receipt>");
 try
 {
     CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, inputReceipt, inputSignedStatement);
+    Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    Console.WriteLine($"Verification failed: {e.Message}");
 }
 ```
 
