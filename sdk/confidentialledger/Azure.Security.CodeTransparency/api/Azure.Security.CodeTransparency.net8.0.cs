@@ -6,6 +6,12 @@ namespace Azure.Security.CodeTransparency
         public static Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    public partial class CborUtils
+    {
+        public CborUtils() { }
+        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key) { throw null; }
+        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key) { throw null; }
+    }
     public partial class CodeTransparencyCertificateClient
     {
         protected CodeTransparencyCertificateClient() { }
@@ -19,6 +25,7 @@ namespace Azure.Security.CodeTransparency
     public partial class CodeTransparencyClient
     {
         protected CodeTransparencyClient() { }
+        public CodeTransparencyClient(byte[] transparentStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
