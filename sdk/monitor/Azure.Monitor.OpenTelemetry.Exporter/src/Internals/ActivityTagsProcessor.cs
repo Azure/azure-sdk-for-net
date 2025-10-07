@@ -100,6 +100,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         case SemanticConventions.AttributeDbSystem:
                             activityType = OperationType.Db;
                             break;
+                        case SemanticConventions.AttributeDbSystemName:
+                            activityType = OperationType.Db | OperationType.V2;
+                            break;
                         case SemanticConventions.AttributeMessagingSystem:
                             activityType = OperationType.Messaging;
                             break;

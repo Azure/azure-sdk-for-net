@@ -329,9 +329,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///<summary>
         /// Gets Database dependency target and name from activity tag objects.
         ///</summary>
-        internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
+        internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects, bool isNewSchemaVersion)
         {
-            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
+
+            string statementDbNameKey;
+            string statementDbSystemKey;
+            if (isNewSchemaVersion) {
+                statementDbNameKey = SemanticConventions.AttributeDbNamespace;
+                statementDbSystemKey = SemanticConventions.AttributeDbSystemName;
+            } else {
+                statementDbNameKey = SemanticConventions.AttributeDbName;
+                statementDbSystemKey = SemanticConventions.AttributeDbSystem;
+            }
+
+            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, statementDbSystemKey);
             string? target = peerServiceAndDbSystem[0]?.ToString();
             var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
 
@@ -340,7 +351,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
-            var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            var dbName = AzMonList.GetTagValue(ref tagObjects, statementDbNameKey)?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
@@ -353,7 +364,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             else if (isTargetEmpty && isDbNameEmpty)
             {
-                target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
+                target = AzMonList.GetTagValue(ref tagObjects, statementDbSystemKey)?.ToString();
             }
 
             return (DbName: dbName, DbTarget: target);
