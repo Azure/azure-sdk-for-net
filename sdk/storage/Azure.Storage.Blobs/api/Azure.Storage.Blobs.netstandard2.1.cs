@@ -1564,6 +1564,9 @@ namespace Azure.Storage.Blobs.Models
         StandardRagrs = 2,
         StandardZrs = 3,
         PremiumLrs = 4,
+        StandardGzrs = 5,
+        PremiumZrs = 6,
+        StandardRagzrs = 7,
     }
     public partial class StageBlockFromUriOptions
     {
