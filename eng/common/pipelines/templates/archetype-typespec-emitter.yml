@@ -266,12 +266,19 @@ extends:
           - pwsh: |
               Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
 
+              # Resolve EmitterPackageJsonOutputPath to absolute path if it's relative
+              $emitterPath = '${{ parameters.EmitterPackageJsonOutputPath }}'
+              if (-not [System.IO.Path]::IsPathRooted($emitterPath)) {
+                $emitterPath = Join-Path '$(Build.SourcesDirectory)' $emitterPath
+              }
+              Write-Host "Resolved emitter package path: $emitterPath"
+
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 Push-Location $(Build.SourcesDirectory)/eng/common/tsp-client
                 npm exec --no -- tsp-client generate-config-files `
                   --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                  --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
+                  --emitter-package-json-path "$emitterPath" `
                   --overrides '$(buildArtifactsPath)/packages/overrides.json'
                 Pop-Location
               } else {
@@ -279,7 +286,7 @@ extends:
                 Push-Location $(Build.SourcesDirectory)/eng/common/tsp-client
                 npm exec --no -- tsp-client generate-config-files `
                   --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                  --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
+                  --emitter-package-json-path "$emitterPath"
                 Pop-Location
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
