@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.4.1 (2025-07-29)
 
 ### Other Changes
+- Added support for a new communication identifier `TeamsExtensionUserIdentifierModel`.
+- Added properties for communication identifier 'PhoneNumberIdentifierModel'.
 
 ## 1.4.0 (2025-06-17)
 
