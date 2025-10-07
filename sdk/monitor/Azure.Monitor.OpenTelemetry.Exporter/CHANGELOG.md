@@ -17,6 +17,8 @@
   `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
   ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
 
+* Added handling of stable database client span semantic conventions
+
 ### Breaking Changes
 
 ### Bugs Fixed
