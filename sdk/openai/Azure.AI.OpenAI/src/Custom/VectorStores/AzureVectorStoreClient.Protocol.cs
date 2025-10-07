@@ -5,56 +5,55 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Threading;
 using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.VectorStores;
 
 internal partial class AzureVectorStoreClient : VectorStoreClient
 {
-    public override AsyncCollectionResult GetVectorStoresAsync(int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult<VectorStore> GetVectorStoresAsync(VectorStoreCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         return new AzureAsyncCollectionResult<VectorStore, VectorStoreCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetVectorStoresRequest(limit, order, continuation?.After ?? after, before, options),
-            page => VectorStoreCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
-            options?.CancellationToken ?? default);
+            continuation => CreateGetVectorStoresRequest(options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => VectorStoreCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
+            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
-    public override CollectionResult GetVectorStores(int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult<VectorStore> GetVectorStores(VectorStoreCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         return new AzureCollectionResult<VectorStore, VectorStoreCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetVectorStoresRequest(limit, order, continuation?.After ?? after, before, options),
-            page => VectorStoreCollectionPageToken.FromResponse(page, limit, order, before),
-            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
+            continuation => CreateGetVectorStoresRequest(options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, options?.BeforeId, cancellationToken.ToRequestOptions()),
+            page => VectorStoreCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
+            page => ModelReaderWriter.Read<InternalListVectorStoresResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
-    public override AsyncCollectionResult GetFileAssociationsAsync(string vectorStoreId, int? limit, string order, string after, string before, string filter, RequestOptions options)
+    public override AsyncCollectionResult<VectorStoreFile> GetVectorStoreFilesAsync(string vectorStoreId, VectorStoreFileCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-        return new AzureAsyncCollectionResult<VectorStoreFileAssociation, VectorStoreFileCollectionPageToken>(
+        return new AzureAsyncCollectionResult<VectorStoreFile, VectorStoreFileCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetVectorStoreFilesRequest(vectorStoreId, limit, order, continuation?.After ?? after, before, filter, options),
-            page => VectorStoreFileCollectionPageToken.FromResponse(page, vectorStoreId, limit, order, before, filter),
-            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
-            options?.CancellationToken ?? default);
+            continuation => CreateGetVectorStoreFilesRequest(vectorStoreId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, options?.BeforeId, options?.Filter.ToString(), cancellationToken.ToRequestOptions()),
+            page => VectorStoreFileCollectionPageToken.FromResponse(page, vectorStoreId, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId, options?.Filter.ToString()),
+            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
-    public override CollectionResult GetFileAssociations(string vectorStoreId, int? limit, string order, string after, string before, string filter, RequestOptions options)
+    public override CollectionResult<VectorStoreFile> GetVectorStoreFiles(string vectorStoreId, VectorStoreFileCollectionOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-        return new AzureCollectionResult<VectorStoreFileAssociation, VectorStoreFileCollectionPageToken>(
+        return new AzureCollectionResult<VectorStoreFile, VectorStoreFileCollectionPageToken>(
             Pipeline,
-            options,
-            continuation => CreateGetVectorStoreFilesRequest(vectorStoreId, limit, order, continuation?.After ?? after, before, filter, options),
-            page => VectorStoreFileCollectionPageToken.FromResponse(page, vectorStoreId, limit, order, before, filter),
-            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data);
+            continuation => CreateGetVectorStoreFilesRequest(vectorStoreId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, options?.BeforeId, options?.Filter.ToString(), cancellationToken.ToRequestOptions()),
+            page => VectorStoreFileCollectionPageToken.FromResponse(page, vectorStoreId, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId, options?.Filter.ToString()),
+            page => ModelReaderWriter.Read<InternalListVectorStoreFilesResponse>(page.GetRawResponse().Content).Data,
+            cancellationToken);
     }
 
     internal override PipelineMessage CreateGetVectorStoresRequest(int? limit, string order, string after, string before, RequestOptions options)
@@ -101,7 +100,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             .WithPath("vector_stores", vectorStoreId, "files")
             .Build();
 
-    internal override PipelineMessage CreateCreateVectorStoreFileRequest(string vectorStoreId, BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateAddFileToVectorStoreRequest(string vectorStoreId, BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
             .WithPath("vector_stores", vectorStoreId, "files")
@@ -110,7 +109,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateRemoveFileFromStoreRequest(string vectorStoreId, string fileId, RequestOptions options)
+    internal override PipelineMessage CreateRemoveFileFromVectorStoreRequest(string vectorStoreId, string fileId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("DELETE")
             .WithPath("vector_stores", vectorStoreId, "files", fileId)
@@ -118,7 +117,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateGetFileAssociationRequest(string vectorStoreId, string fileId, RequestOptions options)
+    internal override PipelineMessage CreateGetVectorStoreFileRequest(string vectorStoreId, string fileId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
         .WithMethod("GET")
             .WithPath("vector_stores", vectorStoreId, "files", fileId)
@@ -135,7 +134,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateCreateVectorStoreFileBatchRequest(string vectorStoreId, BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateAddFileBatchToVectorStoreRequest(string vectorStoreId, BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
             .WithPath("vector_stores", vectorStoreId, "file_batches")
@@ -152,7 +151,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateCancelBatchFileJobRequest(string vectorStoreId, string batchId, RequestOptions options)
+    internal override PipelineMessage CreateCancelVectorStoreFileBatchRequest(string vectorStoreId, string batchId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
             .WithPath("vector_stores", vectorStoreId, "file_batches", batchId, "cancel")
@@ -160,7 +159,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateGetFilesInVectorStoreBatchRequest(string vectorStoreId, string batchId, int? limit, string order, string after, string before, string filter, RequestOptions options)
+    internal override PipelineMessage CreateGetVectorStoreFilesInBatchRequest(string vectorStoreId, string batchId, int? limit, string order, string after, string before, string filter, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithOptions(options)
             .WithMethod("GET")

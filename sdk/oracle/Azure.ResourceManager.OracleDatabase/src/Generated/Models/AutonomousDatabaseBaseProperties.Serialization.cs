@@ -196,10 +196,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lifecycleState"u8);
                 writer.WriteStringValue(LifecycleState.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledOperations))
+            if (Optional.IsCollectionDefined(ScheduledOperationsList))
             {
-                writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                writer.WritePropertyName("scheduledOperationsList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScheduledOperationsList)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PrivateEndpointIP))
             {

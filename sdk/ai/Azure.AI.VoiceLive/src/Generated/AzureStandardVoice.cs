@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="AzureStandardVoice"/>. </summary>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzureStandardVoice(string name) : base("azure-standard")
+        public AzureStandardVoice(string name) : base(AzureVoiceType.AzureStandard)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStandardVoice"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="pitch"></param>
         /// <param name="rate"></param>
         /// <param name="volume"></param>
-        internal AzureStandardVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzureStandardVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;

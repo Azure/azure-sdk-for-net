@@ -7,36 +7,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AssistantMessageItem. </summary>
+    /// <summary> An assistant message item within a conversation. </summary>
     public partial class AssistantMessageItem : MessageItem
     {
         /// <summary> Initializes a new instance of <see cref="AssistantMessageItem"/>. </summary>
-        /// <param name="content"></param>
+        /// <param name="content"> The content parts of the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public AssistantMessageItem(IEnumerable<OutputTextContentPart> content) : base("assistant")
+        public AssistantMessageItem(IEnumerable<MessageContentPart> content) : base(ResponseMessageRole.Assistant, content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Content = content.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssistantMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="role"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        internal AssistantMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemParamStatus? status, IList<OutputTextContentPart> content) : base(@type, id, additionalBinaryDataProperties, role, status)
+        /// <param name="role"> The role of the message origionator. </param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
+        internal AssistantMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties, role, content, status)
         {
-            Content = content;
         }
-
-        /// <summary> Gets the Content. </summary>
-        public IList<OutputTextContentPart> Content { get; }
     }
 }

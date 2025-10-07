@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal SessionUpdateResponseOutputItemAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseOutputItemAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
@@ -43,6 +43,6 @@ namespace Azure.AI.VoiceLive
         public int OutputIndex { get; }
 
         /// <summary> Gets the Item. </summary>
-        public ResponseItem Item { get; }
+        public SessionResponseItem Item { get; }
     }
 }

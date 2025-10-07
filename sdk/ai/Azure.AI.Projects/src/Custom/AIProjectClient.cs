@@ -18,8 +18,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private const int _defaultMaxCacheSize = 100;
-        private readonly ConnectionCacheManager _cacheManager;
-        private readonly TokenCredential _tokenCredential;
+        private readonly ClientConnectionCacheManager _cacheManager;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
@@ -40,39 +39,18 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint">
-        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
-        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
-        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
-        /// specify the Foundry Project name.
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AIProjectClient(Uri endpoint, TokenCredential credential = null) : this(endpoint, credential, new AIProjectClientOptions())
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> Service credential. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AIProjectClient(Uri endpoint, TokenCredential credential, AIProjectClientOptions options)
-            : base(options.ClientCacheSize)
-        {
-            options ??= new AIProjectClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = CreatePipeline(credential, options);
-            _apiVersion = options.Version;
-            _tokenCredential = credential;
-
-            _cacheManager = new ConnectionCacheManager(_endpoint, credential);
-        }
-
-        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
-        {
-        }
-
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
         public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AIProjectClientOptions options)
             : base(options.ClientCacheSize)
         {
@@ -85,6 +63,8 @@ namespace Azure.AI.Projects
             _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+
+            _cacheManager = new ClientConnectionCacheManager(_endpoint, tokenProvider);
         }
 
         /// <summary>
@@ -99,25 +79,41 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
-        /// <summary> Initializes a new instance of DatasetsOperations. </summary>
-        public virtual DatasetsOperations GetDatasetsOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
+        internal AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectIndexesOperations. </summary>
+        internal AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
+        internal AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectDatasetsOperations. </summary>
+        internal AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
         {
             // Custom method to allow for passing of credential used when SAS is not provided.
-            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedDatasetsOperations;
+            return Volatile.Read(ref _cachedAIProjectDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDatasetsOperations, new AIProjectDatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedAIProjectDatasetsOperations;
         }
 
         /// <summary> Gets the client for managing connections. </summary>
-        public virtual ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
+        public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
-        public virtual DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
+        public virtual AIProjectDatasetsOperations Datasets { get => GetAIProjectDatasetsOperationsClient(); }
         /// <summary> Gets the client for managing deployments. </summary>
-        public virtual DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
-        /// <summary> Gets the client for evaluations operations. </summary>
-        public virtual Evaluations Evaluations { get => GetEvaluationsClient(); }
+        public virtual AIProjectDeploymentsOperations Deployments { get => GetAIProjectDeploymentsOperationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
-        public virtual IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
+        public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
         /// <summary> Gets the client for telemetry operations. </summary>
-        public virtual Telemetry Telemetry { get => new Telemetry(this); }
+        public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 
         private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)
         => ClientPipeline.Create(

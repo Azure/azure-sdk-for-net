@@ -376,7 +376,7 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.AsExpression()).ToArray()), out var resourceIdVar),
+                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.AsArgument()).ToArray()), out var resourceIdVar),
                 Return(New.Instance(typeof(ResourceIdentifier), resourceIdVar))
             };
 

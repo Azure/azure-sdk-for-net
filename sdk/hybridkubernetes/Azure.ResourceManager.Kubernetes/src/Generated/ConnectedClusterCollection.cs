@@ -247,8 +247,20 @@ namespace Azure.ResourceManager.Kubernetes
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ConnectedClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,8 +288,20 @@ namespace Azure.ResourceManager.Kubernetes
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ConnectedClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,8 +329,20 @@ namespace Azure.ResourceManager.Kubernetes
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ConnectedClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<ConnectedClusterResource>(response.GetRawResponse());
@@ -338,8 +374,20 @@ namespace Azure.ResourceManager.Kubernetes
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ConnectedClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<ConnectedClusterResource>(response.GetRawResponse());

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure custom voice configuration. </summary>
-    public partial class AzureCustomVoice : IJsonModel<AzureCustomVoice>
+    public partial class AzureCustomVoice : AzureVoice, IJsonModel<AzureCustomVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/> for deserialization. </summary>
         internal AzureCustomVoice()
@@ -120,7 +120,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "azure-custom";
+            AzureVoiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string endpointId = default;
@@ -136,7 +136,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new AzureVoiceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
