@@ -1659,6 +1659,42 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
 }
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+    public partial class ActionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>
+    {
+        internal ActionState() { }
+        public string ActionType { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public string EndTime { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string StartTime { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.StepState> StepStates { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.ActionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.ActionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActionStateStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActionStateStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus left, Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus left, Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AdministrativeCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>
     {
         public AdministrativeCredentials(string username) { }
@@ -2186,6 +2222,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BareMetalMachineReplaceSafeguardMode : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BareMetalMachineReplaceSafeguardMode(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode All { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BareMetalMachineReplaceStoragePolicy : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BareMetalMachineReplaceStoragePolicy(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy DiscardAll { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy Preserve { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BareMetalMachineRunCommandContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent>
     {
         public BareMetalMachineRunCommandContent(long limitTimeSeconds, string script) { }
@@ -2210,6 +2282,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BareMetalMachineRunDataExtractsParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>
+    {
+        public BareMetalMachineRunDataExtractsParameters(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> commands, long limitTimeSeconds) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> Commands { get { throw null; } }
+        public long LimitTimeSeconds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BareMetalMachineRunReadCommandsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>
     {
@@ -2381,6 +2465,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol left, Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>
+    {
+        internal CertificateInfo() { }
+        public string Hash { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudServicesNetworkDetailedStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus>
     {
@@ -2437,6 +2533,84 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CloudServicesNetworkStorageMode : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CloudServicesNetworkStorageMode(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode None { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CloudServicesNetworkStorageOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>
+    {
+        public CloudServicesNetworkStorageOptions() { }
+        public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? Mode { get { throw null; } set { } }
+        public long? SizeMiB { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageApplianceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CloudServicesNetworkStorageOptionsPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>
+    {
+        public CloudServicesNetworkStorageOptionsPatch() { }
+        public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? Mode { get { throw null; } set { } }
+        public long? SizeMiB { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageApplianceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CloudServicesNetworkStorageStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>
+    {
+        internal CloudServicesNetworkStorageStatus() { }
+        public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? Mode { get { throw null; } }
+        public long? SizeMiB { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus? Status { get { throw null; } }
+        public string StatusMessage { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VolumeId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CloudServicesNetworkStorageStatusStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CloudServicesNetworkStorageStatusStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus Available { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus ExpandingVolume { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus ExpansionFailed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ClusterAvailableUpgradeVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion>
@@ -2814,6 +2988,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CommandOutputOverride : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>
+    {
+        public CommandOutputOverride() { }
+        public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector AssociatedIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.CommandOutputType? CommandOutputType { get { throw null; } set { } }
+        public System.Uri ContainerUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CommandOutputSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>
     {
         public CommandOutputSettings() { }
@@ -2825,6 +3012,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommandOutputType : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.CommandOutputType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommandOutputType(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunCommand { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunDataExtracts { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunReadCommands { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType StorageRunReadCommands { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType left, Azure.ResourceManager.NetworkCloud.Models.CommandOutputType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CommandOutputType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType left, Azure.ResourceManager.NetworkCloud.Models.CommandOutputType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsoleDetailedStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus>
@@ -4277,6 +4484,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RelayType : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.RelayType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RelayType(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.RelayType Platform { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.RelayType Public { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RelayType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RelayType left, Azure.ResourceManager.NetworkCloud.Models.RelayType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RelayType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RelayType left, Azure.ResourceManager.NetworkCloud.Models.RelayType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RemoteVendorManagementFeature : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature>
     {
         private readonly object _dummy;
@@ -4441,6 +4666,53 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.SkipShutdown left, Azure.ResourceManager.NetworkCloud.Models.SkipShutdown right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StepState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StepState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>
+    {
+        internal StepState() { }
+        public string EndTime { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string StartTime { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.StepStateStatus? Status { get { throw null; } }
+        public string StepName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StepState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StepState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StepStateStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.StepStateStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StepStateStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus NotStarted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus left, Azure.ResourceManager.NetworkCloud.Models.StepStateStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StepStateStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus left, Azure.ResourceManager.NetworkCloud.Models.StepStateStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class StorageApplianceCommandSpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>
+    {
+        public StorageApplianceCommandSpecification(string command) { }
+        public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
+        public string Command { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StorageApplianceConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration>
     {
         public StorageApplianceConfiguration(Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber) { }
@@ -4506,6 +4778,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class StorageApplianceRunReadCommandsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>
+    {
+        public StorageApplianceRunReadCommandsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> commands, long limitTimeSeconds) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> Commands { get { throw null; } }
+        public long LimitTimeSeconds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StorageApplianceSkuSlot : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot>
     {
@@ -4632,6 +4916,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType left, Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class VirtualMachineAssignRelayContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>
+    {
+        public VirtualMachineAssignRelayContent(Azure.Core.ResourceIdentifier machineId) { }
+        public Azure.Core.ResourceIdentifier MachineId { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.RelayType? RelayType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachineBootMethod : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod>
