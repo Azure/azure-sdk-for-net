@@ -259,41 +259,27 @@ extends:
             displayName: Download pipeline artifacts
 
           - pwsh: |
-              Push-Location eng/common/tsp-client
-              try {
-                npm ci
-              } finally {
-                Pop-Location
-              }
+              npm ci
             displayName: Install tsp-client
+            workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
 
           - pwsh: |
               Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
 
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
-                Push-Location eng/common/tsp-client
-                try {
-                  npm exec --no -- tsp-client generate-config-files `
+                npm exec --no -- tsp-client generate-config-files `
                   --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                   --emitter-package-json-path '$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonOutputPath }}' `
                   --overrides '$(buildArtifactsPath)/packages/overrides.json'
-                } finally {
-                  Pop-Location
-                }
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-                Push-Location eng/common/tsp-client
-                try {
-                  npm exec --no -- tsp-client generate-config-files `
+                npm exec --no -- tsp-client generate-config-files `
                   --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                   --emitter-package-json-path '$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonOutputPath }}'
-                } finally {
-                  Pop-Location
-                }
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(Build.SourcesDirectory)
+            workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
 
           - ${{ parameters.InitializationSteps }}
 
