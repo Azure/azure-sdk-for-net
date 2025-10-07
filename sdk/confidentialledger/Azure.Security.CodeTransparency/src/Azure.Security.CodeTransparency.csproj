@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.Security.CodeTransparency client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure.Security.CodeTransparency client library</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.5</Version>
     <PackageTags>Azure.Security.CodeTransparency;scitt;cose;ccf;receipt;countersignature;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
