@@ -109,17 +109,6 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTags))
-            {
-                writer.WritePropertyName("resourceTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in ResourceTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
             {
                 writer.WritePropertyName("currentDedicatedNodes"u8);
@@ -174,16 +163,6 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
@@ -245,16 +224,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (Optional.IsDefined(TargetNodeCommunicationMode))
-            {
-                writer.WritePropertyName("targetNodeCommunicationMode"u8);
-                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCommunicationMode))
-            {
-                writer.WritePropertyName("currentNodeCommunicationMode"u8);
-                writer.WriteStringValue(CurrentNodeCommunicationMode.Value.ToString());
-            }
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
@@ -311,7 +280,6 @@ namespace Azure.Compute.Batch
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             TimeSpan? resizeTimeout = default;
             IReadOnlyList<ResizeError> resizeErrors = default;
-            IReadOnlyDictionary<string, string> resourceTags = default;
             int? currentDedicatedNodes = default;
             int? currentLowPriorityNodes = default;
             int? targetDedicatedNodes = default;
@@ -323,7 +291,6 @@ namespace Azure.Compute.Batch
             bool? enableInterNodeCommunication = default;
             NetworkConfiguration networkConfiguration = default;
             BatchStartTask startTask = default;
-            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences = default;
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
@@ -332,8 +299,6 @@ namespace Azure.Compute.Batch
             BatchPoolStatistics stats = default;
             IReadOnlyList<MountConfiguration> mountConfiguration = default;
             BatchPoolIdentity identity = default;
-            BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
-            BatchNodeCommunicationMode? currentNodeCommunicationMode = default;
             UpgradePolicy upgradePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -458,20 +423,6 @@ namespace Azure.Compute.Batch
                     resizeErrors = array;
                     continue;
                 }
-                if (property.NameEquals("resourceTags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    resourceTags = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("currentDedicatedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -567,20 +518,6 @@ namespace Azure.Compute.Batch
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("applicationPackageReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -673,24 +610,6 @@ namespace Azure.Compute.Batch
                     identity = BatchPoolIdentity.DeserializeBatchPoolIdentity(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("currentNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    currentNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("upgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -721,7 +640,6 @@ namespace Azure.Compute.Batch
                 virtualMachineConfiguration,
                 resizeTimeout,
                 resizeErrors ?? new ChangeTrackingList<ResizeError>(),
-                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
                 currentDedicatedNodes,
                 currentLowPriorityNodes,
                 targetDedicatedNodes,
@@ -733,7 +651,6 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
@@ -742,8 +659,6 @@ namespace Azure.Compute.Batch
                 stats,
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 identity,
-                targetNodeCommunicationMode,
-                currentNodeCommunicationMode,
                 upgradePolicy,
                 serializedAdditionalRawData);
         }

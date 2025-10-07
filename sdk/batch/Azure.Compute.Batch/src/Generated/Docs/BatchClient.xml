@@ -31,7 +31,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetApplicationAsync("my_application_id", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null);
+Response response = await client.GetApplicationAsync("my_application_id", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -47,7 +47,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetApplication("my_application_id", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null);
+Response response = client.GetApplication("my_application_id", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -69,7 +69,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
-        Sku = "2016-datacenter-smalldisk",
+        Sku = "2025-datacenter-smalldisk",
         Version = "latest",
     }, "batch.node.windows amd64"),
     TargetDedicatedNodes = 2,
@@ -86,13 +86,149 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool", "Standard_DC2as_v5")
+{
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    {
+        Publisher = "MicrosoftWindowsServer",
+        Offer = "WindowsServer",
+        Sku = "2019-datacenter-core-g2",
+        Version = "latest",
+    }, "batch.node.windows amd64")
+    {
+        DataDisks = {new DataDisk(0, 1024)
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+            },
+        }},
+        OsDisk = new BatchOsDisk
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+                SecurityProfile = new BatchVmDiskSecurityProfile
+                {
+                    SecurityEncryptionType = SecurityEncryptionTypes.DiskWithVMGuestState,
+                },
+            },
+        },
+        SecurityProfile = new SecurityProfile
+        {
+            SecurityType = SecurityTypes.ConfidentialVM,
+            UefiSettings = new BatchUefiSettings
+            {
+                SecureBootEnabled = true,
+                VTpmEnabled = true,
+            },
+        },
+    },
+    TargetDedicatedNodes = 1,
+};
+Response response = await client.CreatePoolAsync(pool);
+]]></code>
+This sample shows how to call CreatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool", "Standard_D2ds_v5")
+{
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    {
+        Publisher = "MicrosoftWindowsServer",
+        Offer = "WindowsServer",
+        Sku = "2019-datacenter-core-g2",
+        Version = "latest",
+    }, "batch.node.windows amd64")
+    {
+        DataDisks = {new DataDisk(0, 1024)
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+            },
+        }},
+        OsDisk = new BatchOsDisk
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+            },
+        },
+    },
+    TargetDedicatedNodes = 1,
+};
+Response response = await client.CreatePoolAsync(pool);
+]]></code>
+This sample shows how to call CreatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("dualstackpool", "Standard_D2ds_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "UbuntuServer",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
+    }, "batch.node.ubuntu 20.04"),
+    ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
+    TargetDedicatedNodes = 1,
+    TargetLowPriorityNodes = 0,
+    NetworkConfiguration = new NetworkConfiguration
+    {
+        EndpointConfiguration = new BatchPoolEndpointConfiguration(new BatchInboundNatPool[]
+        {
+            new BatchInboundNatPool("sshpool", InboundEndpointProtocol.Tcp, 22, 40000, 40500)
+            {
+                NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1000, NetworkSecurityGroupRuleAccess.Allow, "*")
+                {
+                    SourcePortRanges = {"*"},
+                }},
+            }
+        }),
+        PublicIpAddressConfiguration = new BatchPublicIpAddressConfiguration
+        {
+            IpFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+        },
+    },
+};
+Response response = await client.CreatePoolAsync(pool);
+]]></code>
+This sample shows how to call CreatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
+{
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    {
+        Publisher = "Canonical",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04"),
     ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
     TargetDedicatedNodes = 5,
@@ -134,13 +270,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "Standard_D2ds_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04")
     {
         OsDisk = new BatchOsDisk
@@ -176,31 +312,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "UbuntuServer",
-        Sku = "18_04-lts-gen2",
-        Version = "latest",
-    }, "batch.node.ubuntu 18.04"),
-    ResourceTags =
-    {
-        ["TagName1"] = "TagValue1",
-        ["TagName2"] = "TagValue2"
-    },
-    TargetDedicatedNodes = 1,
-};
-Response response = await client.CreatePoolAsync(pool);
-]]></code>
-This sample shows how to call CreatePoolAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
-{
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
-    {
-        Publisher = "Canonical",
-        Offer = "UbuntuServer",
+        Offer = "ubuntu-24_04-lts",
         Sku = "18_04-lts-gen2",
         Version = "latest",
     }, "batch.node.ubuntu 18.04")
@@ -225,13 +337,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04"),
     ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
     TargetDedicatedNodes = 5,
@@ -250,12 +362,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
+        Offer = "ubuntu-24_04-lts",
         Sku = "120_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
@@ -279,13 +391,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04")
     {
         Extensions = {new VMExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
@@ -308,7 +420,6 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
     TaskSlotsPerNode = 3,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
     Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
-    TargetNodeCommunicationMode = BatchNodeCommunicationMode.Simplified,
 };
 Response response = await client.CreatePoolAsync(pool);
 ]]></code>
@@ -318,13 +429,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
-        Sku = "2016-datacenter-smalldisk",
+        Sku = "2025-datacenter-smalldisk",
         Version = "latest",
     }, "batch.node.windows amd64")
     {
@@ -353,7 +464,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
-        Sku = "2016-datacenter-smalldisk",
+        Sku = "2025-datacenter-smalldisk",
         Version = "latest",
     }, "batch.node.windows amd64"),
     TargetDedicatedNodes = 2,
@@ -370,13 +481,149 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool", "Standard_DC2as_v5")
+{
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    {
+        Publisher = "MicrosoftWindowsServer",
+        Offer = "WindowsServer",
+        Sku = "2019-datacenter-core-g2",
+        Version = "latest",
+    }, "batch.node.windows amd64")
+    {
+        DataDisks = {new DataDisk(0, 1024)
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+            },
+        }},
+        OsDisk = new BatchOsDisk
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+                SecurityProfile = new BatchVmDiskSecurityProfile
+                {
+                    SecurityEncryptionType = SecurityEncryptionTypes.DiskWithVMGuestState,
+                },
+            },
+        },
+        SecurityProfile = new SecurityProfile
+        {
+            SecurityType = SecurityTypes.ConfidentialVM,
+            UefiSettings = new BatchUefiSettings
+            {
+                SecureBootEnabled = true,
+                VTpmEnabled = true,
+            },
+        },
+    },
+    TargetDedicatedNodes = 1,
+};
+Response response = client.CreatePool(pool);
+]]></code>
+This sample shows how to call CreatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool", "Standard_D2ds_v5")
+{
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    {
+        Publisher = "MicrosoftWindowsServer",
+        Offer = "WindowsServer",
+        Sku = "2019-datacenter-core-g2",
+        Version = "latest",
+    }, "batch.node.windows amd64")
+    {
+        DataDisks = {new DataDisk(0, 1024)
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+            },
+        }},
+        OsDisk = new BatchOsDisk
+        {
+            ManagedDisk = new ManagedDisk
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId"),
+                },
+                StorageAccountType = StorageAccountType.StandardLRS,
+            },
+        },
+    },
+    TargetDedicatedNodes = 1,
+};
+Response response = client.CreatePool(pool);
+]]></code>
+This sample shows how to call CreatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("dualstackpool", "Standard_D2ds_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "UbuntuServer",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
+    }, "batch.node.ubuntu 20.04"),
+    ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
+    TargetDedicatedNodes = 1,
+    TargetLowPriorityNodes = 0,
+    NetworkConfiguration = new NetworkConfiguration
+    {
+        EndpointConfiguration = new BatchPoolEndpointConfiguration(new BatchInboundNatPool[]
+        {
+            new BatchInboundNatPool("sshpool", InboundEndpointProtocol.Tcp, 22, 40000, 40500)
+            {
+                NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1000, NetworkSecurityGroupRuleAccess.Allow, "*")
+                {
+                    SourcePortRanges = {"*"},
+                }},
+            }
+        }),
+        PublicIpAddressConfiguration = new BatchPublicIpAddressConfiguration
+        {
+            IpFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+        },
+    },
+};
+Response response = client.CreatePool(pool);
+]]></code>
+This sample shows how to call CreatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
+{
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    {
+        Publisher = "Canonical",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04"),
     ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
     TargetDedicatedNodes = 5,
@@ -418,13 +665,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "Standard_D2ds_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04")
     {
         OsDisk = new BatchOsDisk
@@ -460,31 +707,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "UbuntuServer",
-        Sku = "18_04-lts-gen2",
-        Version = "latest",
-    }, "batch.node.ubuntu 18.04"),
-    ResourceTags =
-    {
-        ["TagName1"] = "TagValue1",
-        ["TagName2"] = "TagValue2"
-    },
-    TargetDedicatedNodes = 1,
-};
-Response response = client.CreatePool(pool);
-]]></code>
-This sample shows how to call CreatePool.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
-{
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
-    {
-        Publisher = "Canonical",
-        Offer = "UbuntuServer",
+        Offer = "ubuntu-24_04-lts",
         Sku = "18_04-lts-gen2",
         Version = "latest",
     }, "batch.node.ubuntu 18.04")
@@ -509,13 +732,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04"),
     ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
     TargetDedicatedNodes = 5,
@@ -534,12 +757,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
+        Offer = "ubuntu-24_04-lts",
         Sku = "120_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
@@ -563,13 +786,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
-        Offer = "0001-com-ubuntu-server-focal",
-        Sku = "20_04-lts",
+        Offer = "ubuntu-24_04-lts",
+        Sku = "server",
     }, "batch.node.ubuntu 20.04")
     {
         Extensions = {new VMExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
@@ -592,7 +815,6 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
     TaskSlotsPerNode = 3,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
     Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
-    TargetNodeCommunicationMode = BatchNodeCommunicationMode.Simplified,
 };
 Response response = client.CreatePool(pool);
 ]]></code>
@@ -602,13 +824,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
+BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_D4d_v5")
 {
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
-        Sku = "2016-datacenter-smalldisk",
+        Sku = "2025-datacenter-smalldisk",
         Version = "latest",
     }, "batch.node.windows amd64")
     {
@@ -641,7 +863,7 @@ using RequestContent content = RequestContent.Create(new
         {
             publisher = "MicrosoftWindowsServer",
             offer = "WindowsServer",
-            sku = "2016-datacenter-smalldisk",
+            sku = "2025-datacenter-smalldisk",
             version = "latest",
         },
         nodeAgentSKUId = "batch.node.windows amd64",
@@ -664,15 +886,202 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    id = "pool2",
-    vmSize = "standard_a1",
+    id = "pool",
+    vmSize = "Standard_DC2as_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "MicrosoftWindowsServer",
+            offer = "WindowsServer",
+            sku = "2019-datacenter-core-g2",
+            version = "latest",
+        },
+        osDisk = new
+        {
+            managedDisk = new
+            {
+                storageAccountType = "standard_lrs",
+                diskEncryptionSet = new
+                {
+                    id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                },
+                securityProfile = new
+                {
+                    securityEncryptionType = "DiskWithVMGuestState",
+                },
+            },
+        },
+        dataDisks = new object[]
+        {
+            new
+            {
+                lun = 0,
+                diskSizeGB = 1024,
+                managedDisk = new
+                {
+                    storageAccountType = "standard_lrs",
+                    diskEncryptionSet = new
+                    {
+                        id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                    },
+                },
+            }
+        },
+        securityProfile = new
+        {
+            securityType = "confidentialVM",
+            uefiSettings = new
+            {
+                vTpmEnabled = true,
+                secureBootEnabled = true,
+            },
+        },
+        nodeAgentSKUId = "batch.node.windows amd64",
+    },
+    targetDedicatedNodes = 1,
+});
+Response response = await client.CreatePoolAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "pool",
+    vmSize = "Standard_D2ds_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "MicrosoftWindowsServer",
+            offer = "WindowsServer",
+            sku = "2019-datacenter-core-g2",
+            version = "latest",
+        },
+        osDisk = new
+        {
+            managedDisk = new
+            {
+                storageAccountType = "standard_lrs",
+                diskEncryptionSet = new
+                {
+                    id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                },
+            },
+        },
+        dataDisks = new object[]
+        {
+            new
+            {
+                lun = 0,
+                diskSizeGB = 1024,
+                managedDisk = new
+                {
+                    storageAccountType = "standard_lrs",
+                    diskEncryptionSet = new
+                    {
+                        id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                    },
+                },
+            }
+        },
+        nodeAgentSKUId = "batch.node.windows amd64",
+    },
+    targetDedicatedNodes = 1,
+});
+Response response = await client.CreatePoolAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "dualstackpool",
+    vmSize = "Standard_D2ds_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "UbuntuServer",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
+        },
+        nodeAgentSKUId = "batch.node.ubuntu 20.04",
+    },
+    networkConfiguration = new
+    {
+        publicIPAddressConfiguration = new
+        {
+            ipFamilies = new object[]
+            {
+                "IPv4",
+                "IPv6"
+            },
+        },
+        endpointConfiguration = new
+        {
+            inboundNATPools = new object[]
+            {
+                new
+                {
+                    backendPort = 22,
+                    frontendPortRangeStart = 40000,
+                    frontendPortRangeEnd = 40500,
+                    name = "sshpool",
+                    protocol = "tcp",
+                    networkSecurityGroupRules = new object[]
+                    {
+                        new
+                        {
+                            access = "allow",
+                            priority = 1000,
+                            sourceAddressPrefix = "*",
+                            sourcePortRanges = new object[]
+                            {
+                                "*"
+                            },
+                        }
+                    },
+                }
+            },
+        },
+    },
+    resizeTimeout = "PT15M",
+    targetDedicatedNodes = 1,
+    targetLowPriorityNodes = 0,
+});
+Response response = await client.CreatePoolAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "pool2",
+    vmSize = "Standard_D4d_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "Canonical",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
     },
@@ -743,14 +1152,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "mypool001",
-    vmSize = "standard_d2s_v3",
+    vmSize = "Standard_D2ds_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         osDisk = new
         {
@@ -792,39 +1201,7 @@ using RequestContent content = RequestContent.Create(new
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "UbuntuServer",
-            sku = "18_04-lts-gen2",
-            version = "latest",
-        },
-        nodeAgentSKUId = "batch.node.ubuntu 18.04",
-    },
-    targetDedicatedNodes = 1,
-    resourceTags = new
-    {
-        TagName1 = "TagValue1",
-        TagName2 = "TagValue2",
-    },
-});
-Response response = await client.CreatePoolAsync(content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CreatePoolAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    id = "mypool001",
-    vmSize = "STANDARD_DC2s_V2",
-    virtualMachineConfiguration = new
-    {
-        imageReference = new
-        {
-            publisher = "Canonical",
-            offer = "UbuntuServer",
+            offer = "ubuntu-24_04-lts",
             sku = "18_04-lts-gen2",
             version = "latest",
         },
@@ -854,14 +1231,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "pool2",
-    vmSize = "standard_a1",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
     },
@@ -897,13 +1274,13 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "pool2",
-    vmSize = "standard_a1",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
+            offer = "ubuntu-24_04-lts",
             sku = "120_04-lts",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
@@ -939,14 +1316,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "pool2",
-    vmSize = "standard_a1",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
         extensions = new object[]
@@ -985,7 +1362,6 @@ using RequestContent content = RequestContent.Create(new
             value = "myvalue",
         }
     },
-    targetNodeCommunicationMode = "simplified",
 });
 Response response = await client.CreatePoolAsync(content);
 
@@ -1000,14 +1376,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "mypool002",
-    vmSize = "Standard_A1_v2",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "MicrosoftWindowsServer",
             offer = "WindowsServer",
-            sku = "2016-datacenter-smalldisk",
+            sku = "2025-datacenter-smalldisk",
             version = "latest",
         },
         windowsConfiguration = new
@@ -1045,7 +1421,7 @@ using RequestContent content = RequestContent.Create(new
         {
             publisher = "MicrosoftWindowsServer",
             offer = "WindowsServer",
-            sku = "2016-datacenter-smalldisk",
+            sku = "2025-datacenter-smalldisk",
             version = "latest",
         },
         nodeAgentSKUId = "batch.node.windows amd64",
@@ -1068,15 +1444,202 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    id = "pool2",
-    vmSize = "standard_a1",
+    id = "pool",
+    vmSize = "Standard_DC2as_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "MicrosoftWindowsServer",
+            offer = "WindowsServer",
+            sku = "2019-datacenter-core-g2",
+            version = "latest",
+        },
+        osDisk = new
+        {
+            managedDisk = new
+            {
+                storageAccountType = "standard_lrs",
+                diskEncryptionSet = new
+                {
+                    id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                },
+                securityProfile = new
+                {
+                    securityEncryptionType = "DiskWithVMGuestState",
+                },
+            },
+        },
+        dataDisks = new object[]
+        {
+            new
+            {
+                lun = 0,
+                diskSizeGB = 1024,
+                managedDisk = new
+                {
+                    storageAccountType = "standard_lrs",
+                    diskEncryptionSet = new
+                    {
+                        id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                    },
+                },
+            }
+        },
+        securityProfile = new
+        {
+            securityType = "confidentialVM",
+            uefiSettings = new
+            {
+                vTpmEnabled = true,
+                secureBootEnabled = true,
+            },
+        },
+        nodeAgentSKUId = "batch.node.windows amd64",
+    },
+    targetDedicatedNodes = 1,
+});
+Response response = client.CreatePool(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "pool",
+    vmSize = "Standard_D2ds_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "MicrosoftWindowsServer",
+            offer = "WindowsServer",
+            sku = "2019-datacenter-core-g2",
+            version = "latest",
+        },
+        osDisk = new
+        {
+            managedDisk = new
+            {
+                storageAccountType = "standard_lrs",
+                diskEncryptionSet = new
+                {
+                    id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                },
+            },
+        },
+        dataDisks = new object[]
+        {
+            new
+            {
+                lun = 0,
+                diskSizeGB = 1024,
+                managedDisk = new
+                {
+                    storageAccountType = "standard_lrs",
+                    diskEncryptionSet = new
+                    {
+                        id = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Compute/diskEncryptionSets/DiskEncryptionSetId",
+                    },
+                },
+            }
+        },
+        nodeAgentSKUId = "batch.node.windows amd64",
+    },
+    targetDedicatedNodes = 1,
+});
+Response response = client.CreatePool(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "dualstackpool",
+    vmSize = "Standard_D2ds_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "UbuntuServer",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
+        },
+        nodeAgentSKUId = "batch.node.ubuntu 20.04",
+    },
+    networkConfiguration = new
+    {
+        publicIPAddressConfiguration = new
+        {
+            ipFamilies = new object[]
+            {
+                "IPv4",
+                "IPv6"
+            },
+        },
+        endpointConfiguration = new
+        {
+            inboundNATPools = new object[]
+            {
+                new
+                {
+                    backendPort = 22,
+                    frontendPortRangeStart = 40000,
+                    frontendPortRangeEnd = 40500,
+                    name = "sshpool",
+                    protocol = "tcp",
+                    networkSecurityGroupRules = new object[]
+                    {
+                        new
+                        {
+                            access = "allow",
+                            priority = 1000,
+                            sourceAddressPrefix = "*",
+                            sourcePortRanges = new object[]
+                            {
+                                "*"
+                            },
+                        }
+                    },
+                }
+            },
+        },
+    },
+    resizeTimeout = "PT15M",
+    targetDedicatedNodes = 1,
+    targetLowPriorityNodes = 0,
+});
+Response response = client.CreatePool(content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "pool2",
+    vmSize = "Standard_D4d_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "Canonical",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
     },
@@ -1147,14 +1710,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "mypool001",
-    vmSize = "standard_d2s_v3",
+    vmSize = "Standard_D2ds_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         osDisk = new
         {
@@ -1196,39 +1759,7 @@ using RequestContent content = RequestContent.Create(new
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "UbuntuServer",
-            sku = "18_04-lts-gen2",
-            version = "latest",
-        },
-        nodeAgentSKUId = "batch.node.ubuntu 18.04",
-    },
-    targetDedicatedNodes = 1,
-    resourceTags = new
-    {
-        TagName1 = "TagValue1",
-        TagName2 = "TagValue2",
-    },
-});
-Response response = client.CreatePool(content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CreatePool.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    id = "mypool001",
-    vmSize = "STANDARD_DC2s_V2",
-    virtualMachineConfiguration = new
-    {
-        imageReference = new
-        {
-            publisher = "Canonical",
-            offer = "UbuntuServer",
+            offer = "ubuntu-24_04-lts",
             sku = "18_04-lts-gen2",
             version = "latest",
         },
@@ -1258,14 +1789,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "pool2",
-    vmSize = "standard_a1",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
     },
@@ -1301,13 +1832,13 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "pool2",
-    vmSize = "standard_a1",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
+            offer = "ubuntu-24_04-lts",
             sku = "120_04-lts",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
@@ -1343,14 +1874,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "pool2",
-    vmSize = "standard_a1",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "Canonical",
-            offer = "0001-com-ubuntu-server-focal",
-            sku = "20_04-lts",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
         },
         nodeAgentSKUId = "batch.node.ubuntu 20.04",
         extensions = new object[]
@@ -1389,7 +1920,6 @@ using RequestContent content = RequestContent.Create(new
             value = "myvalue",
         }
     },
-    targetNodeCommunicationMode = "simplified",
 });
 Response response = client.CreatePool(content);
 
@@ -1404,14 +1934,14 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "mypool002",
-    vmSize = "Standard_A1_v2",
+    vmSize = "Standard_D4d_v5",
     virtualMachineConfiguration = new
     {
         imageReference = new
         {
             publisher = "MicrosoftWindowsServer",
             offer = "WindowsServer",
-            sku = "2016-datacenter-smalldisk",
+            sku = "2025-datacenter-smalldisk",
             version = "latest",
         },
         windowsConfiguration = new
@@ -1433,6 +1963,30 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
+This sample shows how to call GetPoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchPool> response = await client.GetPoolAsync("pool");
+]]></code>
+This sample shows how to call GetPoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchPool> response = await client.GetPoolAsync("pool");
+]]></code>
+This sample shows how to call GetPoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchPool> response = await client.GetPoolAsync("pool");
+]]></code>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
@@ -1506,6 +2060,30 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
+Response<BatchPool> response = client.GetPool("pool");
+]]></code>
+This sample shows how to call GetPool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchPool> response = client.GetPool("pool");
+]]></code>
+This sample shows how to call GetPool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchPool> response = client.GetPool("pool");
+]]></code>
+This sample shows how to call GetPool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
 Response<BatchPool> response = client.GetPool("mypool001");
 ]]></code>
 This sample shows how to call GetPool.
@@ -1552,7 +2130,40 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPoolAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPoolAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPoolAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -1574,7 +2185,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = await client.GetPoolAsync("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -1621,7 +2232,40 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPool and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPool and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPool and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -1643,7 +2287,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = client.GetPool("pool", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -1689,6 +2333,47 @@ using RequestContent content = RequestContent.Create(new
 Response response = await client.UpdatePoolAsync("poolId", content);
 
 Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdatePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    vmSize = "Standard_D2ds_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "Canonical",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
+            version = "latest",
+        },
+        diskEncryptionConfiguration = new
+        {
+            targets = new object[]
+            {
+                "osdisk",
+                "temporarydisk"
+            },
+            customerManagedKey = new
+            {
+                keyUrl = "https://<vaultEndpoint>/keys/<keyName>/<keyVersion>",
+                identityReference = new
+                {
+                    resourceId = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1",
+                },
+            },
+        },
+        nodeAgentSKUId = "batch.node.ubuntu 20.04",
+    },
+});
+Response response = await client.UpdatePoolAsync("poolId", content);
+
+Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
     <member name="UpdatePool(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
@@ -1704,6 +2389,47 @@ using RequestContent content = RequestContent.Create(new
     startTask = new
     {
         commandLine = "/bin/bash -c 'echo start task'",
+    },
+});
+Response response = client.UpdatePool("poolId", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdatePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    vmSize = "Standard_D2ds_v5",
+    virtualMachineConfiguration = new
+    {
+        imageReference = new
+        {
+            publisher = "Canonical",
+            offer = "ubuntu-24_04-lts",
+            sku = "server",
+            version = "latest",
+        },
+        diskEncryptionConfiguration = new
+        {
+            targets = new object[]
+            {
+                "osdisk",
+                "temporarydisk"
+            },
+            customerManagedKey = new
+            {
+                keyUrl = "https://<vaultEndpoint>/keys/<keyName>/<keyVersion>",
+                identityReference = new
+                {
+                    resourceId = "/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1",
+                },
+            },
+        },
+        nodeAgentSKUId = "batch.node.ubuntu 20.04",
     },
 });
 Response response = client.UpdatePool("poolId", content);
@@ -1873,7 +2599,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
+BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
 {
     StartTask = new BatchStartTask("/bin/bash -c 'echo start task'"),
 };
@@ -1888,7 +2614,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
+BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
 {
     StartTask = new BatchStartTask("/bin/bash -c 'echo start task'"),
 };
@@ -1909,7 +2635,6 @@ using RequestContent content = RequestContent.Create(new
     {
         commandLine = "/bin/bash -c 'echo start task'",
     },
-    certificateReferences = Array.Empty<object>(),
     applicationPackageReferences = Array.Empty<object>(),
     metadata = Array.Empty<object>(),
 });
@@ -1932,7 +2657,6 @@ using RequestContent content = RequestContent.Create(new
     {
         commandLine = "/bin/bash -c 'echo start task'",
     },
-    certificateReferences = Array.Empty<object>(),
     applicationPackageReferences = Array.Empty<object>(),
     metadata = Array.Empty<object>(),
 });
@@ -1971,7 +2695,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetJobAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = await client.GetJobAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("poolInfo").ToString());
@@ -1985,7 +2709,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetJob("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = client.GetJob("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("poolInfo").ToString());
@@ -2169,13 +2893,13 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
+        Pool = new BatchPoolSpecification("Standard_D2ds_v5")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
-                Sku = "2016-datacenter-smalldisk",
+                Sku = "2025-datacenter-smalldisk",
                 Version = "latest",
             }, "batch.node.windows amd64")
             {
@@ -2217,14 +2941,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
                 MaxTaskRetryCount = 2,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("0123456789abcdef0123456789abcdef01234567", "sha1")
-            {
-                StoreLocation = BatchCertificateStoreLocation.LocalMachine,
-                StoreName = "Root",
-                Visibility = {BatchCertificateVisibility.Task},
-            }},
             Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
-            TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
 })
@@ -2301,13 +3018,13 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
+        Pool = new BatchPoolSpecification("Standard_D2ds_v5")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
-                Sku = "2016-datacenter-smalldisk",
+                Sku = "2025-datacenter-smalldisk",
                 Version = "latest",
             }, "batch.node.windows amd64")
             {
@@ -2349,14 +3066,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
                 MaxTaskRetryCount = 2,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("0123456789abcdef0123456789abcdef01234567", "sha1")
-            {
-                StoreLocation = BatchCertificateStoreLocation.LocalMachine,
-                StoreName = "Root",
-                Visibility = {BatchCertificateVisibility.Task},
-            }},
             Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
-            TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
 })
@@ -2492,14 +3202,14 @@ using RequestContent content = RequestContent.Create(new
             poolLifetimeOption = "job",
             pool = new
             {
-                vmSize = "STANDARD_D2S_V3",
+                vmSize = "Standard_D2ds_v5",
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
                     {
                         publisher = "MicrosoftWindowsServer",
                         offer = "WindowsServer",
-                        sku = "2016-datacenter-smalldisk",
+                        sku = "2025-datacenter-smalldisk",
                         version = "latest",
                     },
                     nodeAgentSKUId = "batch.node.windows amd64",
@@ -2552,20 +3262,6 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 2,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "0123456789abcdef0123456789abcdef01234567",
-                        thumbprintAlgorithm = "sha1",
-                        storeLocation = "localmachine",
-                        storeName = "Root",
-                        visibility = new object[]
-                        {
-                            "task"
-                        },
-                    }
-                },
                 metadata = new object[]
                 {
                     new
@@ -2574,7 +3270,6 @@ using RequestContent content = RequestContent.Create(new
                         value = "myvalue",
                     }
                 },
-                targetNodeCommunicationMode = "default",
             },
         },
     },
@@ -2679,14 +3374,14 @@ using RequestContent content = RequestContent.Create(new
             poolLifetimeOption = "job",
             pool = new
             {
-                vmSize = "STANDARD_D2S_V3",
+                vmSize = "Standard_D2ds_v5",
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
                     {
                         publisher = "MicrosoftWindowsServer",
                         offer = "WindowsServer",
-                        sku = "2016-datacenter-smalldisk",
+                        sku = "2025-datacenter-smalldisk",
                         version = "latest",
                     },
                     nodeAgentSKUId = "batch.node.windows amd64",
@@ -2739,20 +3434,6 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 2,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "0123456789abcdef0123456789abcdef01234567",
-                        thumbprintAlgorithm = "sha1",
-                        storeLocation = "localmachine",
-                        storeName = "Root",
-                        visibility = new object[]
-                        {
-                            "task"
-                        },
-                    }
-                },
                 metadata = new object[]
                 {
                     new
@@ -2761,7 +3442,6 @@ using RequestContent content = RequestContent.Create(new
                         value = "myvalue",
                     }
                 },
-                targetNodeCommunicationMode = "default",
             },
         },
     },
@@ -2809,7 +3489,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetJobTaskCountsAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null);
+Response response = await client.GetJobTaskCountsAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("taskCounts").GetProperty("active").ToString());
@@ -2832,7 +3512,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetJobTaskCounts("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null);
+Response response = client.GetJobTaskCounts("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("taskCounts").GetProperty("active").ToString());
@@ -2845,160 +3525,6 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("running").To
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("completed").ToString());
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("succeeded").ToString());
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToString());
-]]></code></example>
-    </member>
-    <member name="CreateCertificateAsync(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call CreateCertificateAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", BinaryData.FromObjectAsJson("U3dhZ2dlciByb2Nrcw=="))
-{
-    CertificateFormat = BatchCertificateFormat.Pfx,
-    Password = "<ExamplePassword>",
-};
-Response response = await client.CreateCertificateAsync(certificate);
-]]></code></example>
-    </member>
-    <member name="CreateCertificate(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call CreateCertificate.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", BinaryData.FromObjectAsJson("U3dhZ2dlciByb2Nrcw=="))
-{
-    CertificateFormat = BatchCertificateFormat.Pfx,
-    Password = "<ExamplePassword>",
-};
-Response response = client.CreateCertificate(certificate);
-]]></code></example>
-    </member>
-    <member name="CreateCertificateAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call CreateCertificateAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    thumbprintAlgorithm = "sha1",
-    thumbprint = "0123456789abcdef0123456789abcdef01234567",
-    data = "U3dhZ2dlciByb2Nrcw==",
-    certificateFormat = "pfx",
-    password = "<ExamplePassword>",
-});
-Response response = await client.CreateCertificateAsync(content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="CreateCertificate(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call CreateCertificate.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    thumbprintAlgorithm = "sha1",
-    thumbprint = "0123456789abcdef0123456789abcdef01234567",
-    data = "U3dhZ2dlciByb2Nrcw==",
-    certificateFormat = "pfx",
-    password = "<ExamplePassword>",
-});
-Response response = client.CreateCertificate(content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="CancelCertificateDeletionAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call CancelCertificateDeletionAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.CancelCertificateDeletionAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="CancelCertificateDeletion(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call CancelCertificateDeletion.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.CancelCertificateDeletion("sha1", "0123456789abcdef0123456789abcdef01234567");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
-      <example>
-This sample shows how to call GetCertificateAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response<BatchCertificate> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
-]]></code></example>
-    </member>
-    <member name="GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
-      <example>
-This sample shows how to call GetCertificate.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response<BatchCertificate> response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
-]]></code></example>
-    </member>
-    <member name="GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
-      <example>
-This sample shows how to call GetCertificateAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("data").ToString());
-]]></code></example>
-    </member>
-    <member name="GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
-      <example>
-This sample shows how to call GetCertificate and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("data").ToString());
 ]]></code></example>
     </member>
     <member name="GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
@@ -3031,7 +3557,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetJobScheduleAsync("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = await client.GetJobScheduleAsync("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").ToString());
@@ -3045,7 +3571,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetJobSchedule("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = client.GetJobSchedule("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").ToString());
@@ -3324,8 +3850,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
 {
-    DoNotRunUntil = DateTimeOffset.Parse("2014-09-10T02:30:00.000Z"),
-    DoNotRunAfter = DateTimeOffset.Parse("2014-09-10T06:30:00.000Z"),
+    DoNotRunUntil = DateTimeOffset.Parse("2025-09-10T02:30:00.000Z"),
+    DoNotRunAfter = DateTimeOffset.Parse("2025-09-10T06:30:00.000Z"),
     StartWindow = XmlConvert.ToTimeSpan("PT1M"),
     RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
 }, new BatchJobSpecification(new BatchPoolInfo
@@ -3333,13 +3859,13 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobSchedule)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
+        Pool = new BatchPoolSpecification("Standard_D2ds_v5")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
-                Sku = "2016-datacenter-smalldisk",
+                Sku = "2025-datacenter-smalldisk",
                 Version = "latest",
             }, "batch.node.windows amd64")
             {
@@ -3381,14 +3907,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
                 MaxTaskRetryCount = 2,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("0123456789abcdef0123456789abcdef01234567", "sha1")
-            {
-                StoreLocation = BatchCertificateStoreLocation.LocalMachine,
-                StoreName = "Root",
-                Visibility = {BatchCertificateVisibility.Task},
-            }},
             Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
-            TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
 })
@@ -3464,8 +3983,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
 {
-    DoNotRunUntil = DateTimeOffset.Parse("2014-09-10T02:30:00.000Z"),
-    DoNotRunAfter = DateTimeOffset.Parse("2014-09-10T06:30:00.000Z"),
+    DoNotRunUntil = DateTimeOffset.Parse("2025-09-10T02:30:00.000Z"),
+    DoNotRunAfter = DateTimeOffset.Parse("2025-09-10T06:30:00.000Z"),
     StartWindow = XmlConvert.ToTimeSpan("PT1M"),
     RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
 }, new BatchJobSpecification(new BatchPoolInfo
@@ -3473,13 +3992,13 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobSchedule)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
+        Pool = new BatchPoolSpecification("Standard_D2ds_v5")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
-                Sku = "2016-datacenter-smalldisk",
+                Sku = "2025-datacenter-smalldisk",
                 Version = "latest",
             }, "batch.node.windows amd64")
             {
@@ -3521,14 +4040,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
                 MaxTaskRetryCount = 2,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("0123456789abcdef0123456789abcdef01234567", "sha1")
-            {
-                StoreLocation = BatchCertificateStoreLocation.LocalMachine,
-                StoreName = "Root",
-                Visibility = {BatchCertificateVisibility.Task},
-            }},
             Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
-            TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
 })
@@ -3617,8 +4129,8 @@ using RequestContent content = RequestContent.Create(new
     id = "jobScheduleId",
     schedule = new
     {
-        doNotRunUntil = "2014-09-10T02:30:00.000Z",
-        doNotRunAfter = "2014-09-10T06:30:00.000Z",
+        doNotRunUntil = "2025-09-10T02:30:00.000Z",
+        doNotRunAfter = "2025-09-10T06:30:00.000Z",
         startWindow = "PT1M",
         recurrenceInterval = "PT5M",
     },
@@ -3681,14 +4193,14 @@ using RequestContent content = RequestContent.Create(new
                 poolLifetimeOption = "jobschedule",
                 pool = new
                 {
-                    vmSize = "STANDARD_D2S_V3",
+                    vmSize = "Standard_D2ds_v5",
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
                         {
                             publisher = "MicrosoftWindowsServer",
                             offer = "WindowsServer",
-                            sku = "2016-datacenter-smalldisk",
+                            sku = "2025-datacenter-smalldisk",
                             version = "latest",
                         },
                         nodeAgentSKUId = "batch.node.windows amd64",
@@ -3741,20 +4253,6 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 2,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "0123456789abcdef0123456789abcdef01234567",
-                            thumbprintAlgorithm = "sha1",
-                            storeLocation = "localmachine",
-                            storeName = "Root",
-                            visibility = new object[]
-                            {
-                                "task"
-                            },
-                        }
-                    },
                     metadata = new object[]
                     {
                         new
@@ -3763,7 +4261,6 @@ using RequestContent content = RequestContent.Create(new
                             value = "myvalue",
                         }
                     },
-                    targetNodeCommunicationMode = "default",
                 },
             },
         },
@@ -3820,8 +4317,8 @@ using RequestContent content = RequestContent.Create(new
     id = "jobScheduleId",
     schedule = new
     {
-        doNotRunUntil = "2014-09-10T02:30:00.000Z",
-        doNotRunAfter = "2014-09-10T06:30:00.000Z",
+        doNotRunUntil = "2025-09-10T02:30:00.000Z",
+        doNotRunAfter = "2025-09-10T06:30:00.000Z",
         startWindow = "PT1M",
         recurrenceInterval = "PT5M",
     },
@@ -3884,14 +4381,14 @@ using RequestContent content = RequestContent.Create(new
                 poolLifetimeOption = "jobschedule",
                 pool = new
                 {
-                    vmSize = "STANDARD_D2S_V3",
+                    vmSize = "Standard_D2ds_v5",
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
                         {
                             publisher = "MicrosoftWindowsServer",
                             offer = "WindowsServer",
-                            sku = "2016-datacenter-smalldisk",
+                            sku = "2025-datacenter-smalldisk",
                             version = "latest",
                         },
                         nodeAgentSKUId = "batch.node.windows amd64",
@@ -3944,20 +4441,6 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 2,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "0123456789abcdef0123456789abcdef01234567",
-                            thumbprintAlgorithm = "sha1",
-                            storeLocation = "localmachine",
-                            storeName = "Root",
-                            visibility = new object[]
-                            {
-                                "task"
-                            },
-                        }
-                    },
                     metadata = new object[]
                     {
                         new
@@ -3966,7 +4449,6 @@ using RequestContent content = RequestContent.Create(new
                             value = "myvalue",
                         }
                     },
-                    targetNodeCommunicationMode = "default",
                 },
             },
         },
@@ -4977,7 +5459,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetTaskAsync("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = await client.GetTaskAsync("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -4991,7 +5473,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetTask("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null);
+Response response = client.GetTask("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5189,7 +5671,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetTaskFileAsync("jobId", "task1", "wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null);
+Response response = await client.GetTaskFileAsync("jobId", "task1", "wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5203,7 +5685,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetTaskFile("jobId", "task1", "wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null);
+Response response = client.GetTaskFile("jobId", "task1", "wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5220,7 +5702,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
 {
     IsAdmin = false,
-    ExpiryTime = DateTimeOffset.Parse("2017-08-01T00:00:00Z"),
+    ExpiryTime = DateTimeOffset.Parse("2025-08-01T00:00:00Z"),
     Password = "Password",
 };
 Response response = await client.CreateNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", user);
@@ -5237,7 +5719,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
 {
     IsAdmin = false,
-    ExpiryTime = DateTimeOffset.Parse("2017-08-01T00:00:00Z"),
+    ExpiryTime = DateTimeOffset.Parse("2025-08-01T00:00:00Z"),
     Password = "Password",
 };
 Response response = client.CreateNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", user);
@@ -5255,7 +5737,7 @@ using RequestContent content = RequestContent.Create(new
 {
     name = "userName",
     isAdmin = false,
-    expiryTime = "2017-08-01T00:00:00Z",
+    expiryTime = "2025-08-01T00:00:00Z",
     password = "Password",
 });
 Response response = await client.CreateNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", content);
@@ -5275,7 +5757,7 @@ using RequestContent content = RequestContent.Create(new
 {
     name = "userName",
     isAdmin = false,
-    expiryTime = "2017-08-01T00:00:00Z",
+    expiryTime = "2025-08-01T00:00:00Z",
     password = "Password",
 });
 Response response = client.CreateNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", content);
@@ -5320,7 +5802,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserUpdateOptions updateOptions = new BatchNodeUserUpdateOptions
 {
     Password = "12345",
-    ExpiryTime = DateTimeOffset.Parse("2016-11-27T00:45:48.7320857Z"),
+    ExpiryTime = DateTimeOffset.Parse("2025-11-27T00:45:48.7320857Z"),
 };
 Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", "userName", updateOptions);
 ]]></code></example>
@@ -5336,7 +5818,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchNodeUserUpdateOptions updateOptions = new BatchNodeUserUpdateOptions
 {
     Password = "12345",
-    ExpiryTime = DateTimeOffset.Parse("2016-11-27T00:45:48.7320857Z"),
+    ExpiryTime = DateTimeOffset.Parse("2025-11-27T00:45:48.7320857Z"),
 };
 Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", "userName", updateOptions);
 ]]></code></example>
@@ -5352,7 +5834,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     password = "12345",
-    expiryTime = "2016-11-27T00:45:48.7320857Z",
+    expiryTime = "2025-11-27T00:45:48.7320857Z",
 });
 Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", "userName", content);
 
@@ -5370,7 +5852,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     password = "12345",
-    expiryTime = "2016-11-27T00:45:48.7320857Z",
+    expiryTime = "2025-11-27T00:45:48.7320857Z",
 });
 Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", "userName", content);
 
@@ -5386,6 +5868,14 @@ TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
 Response<BatchNode> response = await client.GetNodeAsync("poolId", "tvm-1695681911_2-20161122t193202z");
+]]></code>
+This sample shows how to call GetNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchNode> response = await client.GetNodeAsync("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d");
 ]]></code></example>
     </member>
     <member name="GetNode(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
@@ -5397,6 +5887,14 @@ TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
 Response<BatchNode> response = client.GetNode("poolId", "tvm-1695681911_2-20161122t193202z");
+]]></code>
+This sample shows how to call GetNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchNode> response = client.GetNode("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d");
 ]]></code></example>
     </member>
     <member name="GetNodeAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
@@ -5407,7 +5905,18 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetNodeAsync("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null);
+Response response = await client.GetNodeAsync("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetNodeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.GetNodeAsync("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d", null, DateTimeOffset.Parse("Fri, 27 Jun 2025 08:55:44 GMT"), null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5421,7 +5930,18 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetNode("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null);
+Response response = client.GetNode("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetNode and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.GetNode("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d", null, DateTimeOffset.Parse("Fri, 27 Jun 2025 08:55:44 GMT"), null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5512,6 +6032,14 @@ TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
 Response<BatchNodeRemoteLoginSettings> response = await client.GetNodeRemoteLoginSettingsAsync("poolId", "tvm-1695681911_1-20161121t182739z");
+]]></code>
+This sample shows how to call GetNodeRemoteLoginSettingsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchNodeRemoteLoginSettings> response = await client.GetNodeRemoteLoginSettingsAsync("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d");
 ]]></code></example>
     </member>
     <member name="GetNodeRemoteLoginSettings(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)">
@@ -5523,6 +6051,14 @@ TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
 Response<BatchNodeRemoteLoginSettings> response = client.GetNodeRemoteLoginSettings("poolId", "tvm-1695681911_1-20161121t182739z");
+]]></code>
+This sample shows how to call GetNodeRemoteLoginSettings.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response<BatchNodeRemoteLoginSettings> response = client.GetNodeRemoteLoginSettings("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d");
 ]]></code></example>
     </member>
     <member name="GetNodeRemoteLoginSettingsAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
@@ -5533,7 +6069,19 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetNodeRemoteLoginSettingsAsync("poolId", "tvm-1695681911_1-20161121t182739z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null);
+Response response = await client.GetNodeRemoteLoginSettingsAsync("poolId", "tvm-1695681911_1-20161121t182739z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
+Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
+]]></code>
+This sample shows how to call GetNodeRemoteLoginSettingsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.GetNodeRemoteLoginSettingsAsync("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d", null, DateTimeOffset.Parse("Fri, 27 Jun 2025 08:52:43 GMT"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
@@ -5548,7 +6096,19 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetNodeRemoteLoginSettings("poolId", "tvm-1695681911_1-20161121t182739z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null);
+Response response = client.GetNodeRemoteLoginSettings("poolId", "tvm-1695681911_1-20161121t182739z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
+Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
+]]></code>
+This sample shows how to call GetNodeRemoteLoginSettings and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.GetNodeRemoteLoginSettings("dualstackpool", "tvmps_5d8adec89961dcc011329b38df999a841f6cc815a5710678b741f04b33556ed2_d", null, DateTimeOffset.Parse("Fri, 27 Jun 2025 08:52:43 GMT"), null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
@@ -5563,7 +6123,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig"), DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
+UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2025-12-09T18%3A51%3A00Z&sp=w&sv=2025-05-31&sr=c&sig"), DateTimeOffset.Parse("2025-11-27T00:00:00Z"));
 Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("poolId", "tvm-1695681911_1-20161121t182739z", uploadOptions);
 ]]></code></example>
     </member>
@@ -5575,7 +6135,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig"), DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
+UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2025-12-09T18%3A51%3A00Z&sp=w&sv=2025-05-31&sr=c&sig"), DateTimeOffset.Parse("2025-11-27T00:00:00Z"));
 Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("poolId", "tvm-1695681911_1-20161121t182739z", uploadOptions);
 ]]></code></example>
     </member>
@@ -5589,8 +6149,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    containerUrl = "https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig",
-    startTime = "2017-11-27T00:00:00Z",
+    containerUrl = "https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2025-12-09T18%3A51%3A00Z&sp=w&sv=2025-05-31&sr=c&sig",
+    startTime = "2025-11-27T00:00:00Z",
 });
 Response response = await client.UploadNodeLogsAsync("poolId", "tvm-1695681911_1-20161121t182739z", content);
 
@@ -5609,8 +6169,8 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    containerUrl = "https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig",
-    startTime = "2017-11-27T00:00:00Z",
+    containerUrl = "https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2025-12-09T18%3A51%3A00Z&sp=w&sv=2025-05-31&sr=c&sig",
+    startTime = "2025-11-27T00:00:00Z",
 });
 Response response = client.UploadNodeLogs("poolId", "tvm-1695681911_1-20161121t182739z", content);
 
@@ -5649,7 +6209,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetNodeExtensionAsync("poolId", "tvm-1695681911_2-20161122t193202z", "batchNodeExtension", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null);
+Response response = await client.GetNodeExtensionAsync("poolId", "tvm-1695681911_2-20161122t193202z", "batchNodeExtension", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5663,7 +6223,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetNodeExtension("poolId", "tvm-1695681911_2-20161122t193202z", "batchNodeExtension", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null);
+Response response = client.GetNodeExtension("poolId", "tvm-1695681911_2-20161122t193202z", "batchNodeExtension", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5725,7 +6285,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetNodeFileAsync("poolId", "nodeId", "workitems\\jobId\\job-1\\task1\\wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null);
+Response response = await client.GetNodeFileAsync("poolId", "nodeId", "workitems\\jobId\\job-1\\task1\\wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5739,7 +6299,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetNodeFile("poolId", "nodeId", "workitems\\jobId\\job-1\\task1\\wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null);
+Response response = client.GetNodeFile("poolId", "nodeId", "workitems\\jobId\\job-1\\task1\\wd\\testFile.txt", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -5779,7 +6339,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetApplicationsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null))
+await foreach (BinaryData item in client.GetApplicationsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -5796,7 +6356,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetApplications(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null))
+foreach (BinaryData item in client.GetApplications(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -5839,7 +6399,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -5858,7 +6418,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetPoolUsageMetrics(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+foreach (BinaryData item in client.GetPoolUsageMetrics(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -5903,7 +6463,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetPoolsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+await foreach (BinaryData item in client.GetPoolsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -5918,7 +6478,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetPools(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+foreach (BinaryData item in client.GetPools(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -5959,7 +6519,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetSupportedImagesAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null))
+await foreach (BinaryData item in client.GetSupportedImagesAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
@@ -5977,7 +6537,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetSupportedImages(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null))
+foreach (BinaryData item in client.GetSupportedImages(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("nodeAgentSKUId").ToString());
@@ -6021,7 +6581,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetPoolNodeCountsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null))
+await foreach (BinaryData item in client.GetPoolNodeCountsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -6036,7 +6596,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetPoolNodeCounts(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null))
+foreach (BinaryData item in client.GetPoolNodeCounts(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolId").ToString());
@@ -6077,7 +6637,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+await foreach (BinaryData item in client.GetJobsAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolInfo").ToString());
@@ -6092,7 +6652,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobs(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+foreach (BinaryData item in client.GetJobs(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolInfo").ToString());
@@ -6133,7 +6693,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolInfo").ToString());
@@ -6148,7 +6708,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobsFromSchedules("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+foreach (BinaryData item in client.GetJobsFromSchedules("jobScheduleId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolInfo").ToString());
@@ -6189,7 +6749,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatusesAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null))
+await foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatusesAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6204,70 +6764,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null))
+foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
-      <example>
-This sample shows how to call GetCertificatesAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-await foreach (BatchCertificate item in client.GetCertificatesAsync())
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
-      <example>
-This sample shows how to call GetCertificates.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-foreach (BatchCertificate item in client.GetCertificates())
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
-      <example>
-This sample shows how to call GetCertificatesAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetCertificatesAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("data").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
-      <example>
-This sample shows how to call GetCertificates and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetCertificates(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("data").ToString());
 }
 ]]></code></example>
     </member>
@@ -6305,7 +6805,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobSchedulesAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+await foreach (BinaryData item in client.GetJobSchedulesAsync(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").ToString());
@@ -6320,7 +6820,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobSchedules(null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+foreach (BinaryData item in client.GetJobSchedules(null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").ToString());
@@ -6361,7 +6861,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetTasksAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+await foreach (BinaryData item in client.GetTasksAsync("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6376,7 +6876,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetTasks("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null, null))
+foreach (BinaryData item in client.GetTasks("jobId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6417,7 +6917,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetSubTasksAsync("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null))
+await foreach (BinaryData item in client.GetSubTasksAsync("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6432,7 +6932,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetSubTasks("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null))
+foreach (BinaryData item in client.GetSubTasks("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6473,7 +6973,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetTaskFilesAsync("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, false, null))
+await foreach (BinaryData item in client.GetTaskFilesAsync("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, false, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6488,7 +6988,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetTaskFiles("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, false, null))
+foreach (BinaryData item in client.GetTaskFiles("jobId", "taskId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, false, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6529,7 +7029,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetNodesAsync("poolId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null))
+await foreach (BinaryData item in client.GetNodesAsync("poolId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6544,7 +7044,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetNodes("poolId", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null, null))
+foreach (BinaryData item in client.GetNodes("poolId", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6585,7 +7085,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetNodeExtensionsAsync("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null))
+await foreach (BinaryData item in client.GetNodeExtensionsAsync("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6600,7 +7100,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetNodeExtensions("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, null))
+foreach (BinaryData item in client.GetNodeExtensions("poolId", "tvm-1695681911_2-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6641,7 +7141,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetNodeFilesAsync("poolId", "tvm-1695681911_1-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, false, null))
+await foreach (BinaryData item in client.GetNodeFilesAsync("poolId", "tvm-1695681911_1-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, false, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -6656,7 +7156,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetNodeFiles("poolId", "tvm-1695681911_1-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2017 00:00:00 GMT"), null, null, false, null))
+foreach (BinaryData item in client.GetNodeFiles("poolId", "tvm-1695681911_1-20161122t193202z", null, DateTimeOffset.Parse("Fri, 17 Feb 2025 00:00:00 GMT"), null, null, false, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());

@@ -39,6 +39,16 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("provision"u8);
                 writer.WriteStringValue(IpAddressProvisioningType.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(IpFamilies))
+            {
+                writer.WritePropertyName("ipFamilies"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpFamilies)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(IpAddressIds))
             {
                 writer.WritePropertyName("ipAddressIds"u8);
@@ -51,6 +61,16 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IpTags))
+            {
+                writer.WritePropertyName("ipTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpTags)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +112,9 @@ namespace Azure.Compute.Batch
                 return null;
             }
             IpAddressProvisioningType? provision = default;
+            IList<IPFamily> ipFamilies = default;
             IList<ResourceIdentifier> ipAddressIds = default;
+            IList<IPTag> ipTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,6 +126,20 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     provision = new IpAddressProvisioningType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipFamilies"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IPFamily> array = new List<IPFamily>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new IPFamily(item.GetString()));
+                    }
+                    ipFamilies = array;
                     continue;
                 }
                 if (property.NameEquals("ipAddressIds"u8))
@@ -127,13 +163,27 @@ namespace Azure.Compute.Batch
                     ipAddressIds = array;
                     continue;
                 }
+                if (property.NameEquals("ipTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IPTag> array = new List<IPTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IPTag.DeserializeIPTag(item, options));
+                    }
+                    ipTags = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPublicIpAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new BatchPublicIpAddressConfiguration(provision, ipFamilies ?? new ChangeTrackingList<IPFamily>(), ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipTags ?? new ChangeTrackingList<IPTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPublicIpAddressConfiguration>.Write(ModelReaderWriterOptions options)

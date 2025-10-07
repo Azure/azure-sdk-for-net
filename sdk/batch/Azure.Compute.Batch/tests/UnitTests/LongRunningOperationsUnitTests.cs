@@ -29,8 +29,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocating = new BatchNode(NodeId, null, BatchNodeState.Deallocating, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocating = new BatchNode(NodeId, null, BatchNodeState.Deallocating, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null,null, "affinityId", "vmSize", 0, 0, 0, 0, null,  null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -119,7 +119,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, null,"affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -177,7 +177,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeDeallocated = new BatchNode(NodeId, null, BatchNodeState.Deallocated, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -220,54 +220,6 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 // Assert
                 Assert.Pass();
             }
-        }
-
-        [Test]
-        /// <summary>
-        /// Verify that normal delete certificate flow succeeds
-        /// </summary>
-        public async Task DeleteCertificateOperation_Normal()
-        {
-            // Arrange
-            var mockResponse = new MockResponse(200).AddHeader("Retry-After", "0");
-            string Thumbprint = "thumbprint";
-            string ThumbprintAlgorithm = "thumbprintAlgorithm";
-            int CallsToGet = 0;
-
-            BatchCertificate batchCertificate = new BatchCertificate(Thumbprint, ThumbprintAlgorithm, null, null, null, null, null, null, null, null, null, null, null);
-
-            Mock<BatchClient> clientMock = new Mock<BatchClient>();
-            clientMock.Setup(c => c.GetCertificateAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<CancellationToken>())
-            )
-             .ReturnsAsync((string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, CancellationToken cancellationToken) =>
-             {
-                 if (CallsToGet++ <= 2)
-                 {
-                     // return a certificate that is deleting
-                     return Response.FromValue(batchCertificate, mockResponse);
-                 }
-                 else
-                 {
-                     throw new RequestFailedException(status: 404, message: "Not Found", errorCode: BatchErrorCode.CertificateNotFound.ToString(), null);
-                 }
-             }
-             );
-
-            BatchClient batchClient = clientMock.Object;
-
-            // Act
-            DeleteCertificateOperation deleteCertificateOperation = new DeleteCertificateOperation(batchClient, Thumbprint + ";" + ThumbprintAlgorithm);
-            await deleteCertificateOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            // Assert
-            Assert.IsTrue(deleteCertificateOperation.HasCompleted);
-            Assert.IsTrue(deleteCertificateOperation.HasValue);
         }
 
         [Test]
@@ -720,7 +672,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null,null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,null, null,null,null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null,null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -767,8 +719,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow.AddMinutes(1), BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow.AddMinutes(1), BatchPoolState.Active, null, null, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -816,8 +768,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int CallsToGet = 0;
             DateTimeOffset creationTime = DateTimeOffset.UtcNow;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -964,8 +916,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Rebooting, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Rebooting, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1015,8 +967,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string poolId = "pool1";
             int CallsToGetNode = 0;
 
-            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Reimaging, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeRebooting = new BatchNode(NodeId, null, BatchNodeState.Reimaging, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1065,8 +1017,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1116,8 +1068,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1165,8 +1117,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Resizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1216,8 +1168,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchNode batchNodeStarting = new BatchNode(NodeId, null, BatchNodeState.Starting, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
-            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeStarting = new BatchNode(NodeId, null, BatchNodeState.Starting, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
+            BatchNode batchNodeIdle = new BatchNode(NodeId, null, BatchNodeState.Idle, null, null, null, null, null, null, "affinityId", "vmSize", 0, 0, 0, 0, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetNodeAsync(
@@ -1266,8 +1218,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Stopping, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Stopping, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -1317,8 +1269,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool1";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Stopping, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Stopping, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolFinished = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Active, null, AllocationState.Steady, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
