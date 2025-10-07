@@ -116,7 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TagObjects_Mapped_HonorsNewSchema()
+        public void TagObjects_Mapped_HonorsNewHTTPSchema()
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
 
@@ -138,6 +138,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeServerAddress));
             Assert.Equal("8888", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeServerPort));
             Assert.Equal("/test", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlPath));
+        }
+
+        [Fact]
+        public void TagObjects_Mapped_HonorsNewDBSchema()
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                [SemanticConventions.AttributeDbNamespace] = "mysqlserver",
+                [SemanticConventions.AttributeDbSystemName] = "mssql",
+                [SemanticConventions.AttributePeerService] = "localhost",
+                [SemanticConventions.AttributeDbQueryText] = "Select * from table",
+            };
+
+            using var activity = CreateTestActivity(tagObjects);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            Assert.Equal(OperationType.Db | OperationType.V2, activityTagsProcessor.activityType);
+            Assert.Equal(5, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal("mysqlserver", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbNamespace));
+            Assert.Equal("mssql", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbSystemName));
+            Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributePeerService));
+            Assert.Equal("Select * from table", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbQueryText));
         }
 
         [Fact]
