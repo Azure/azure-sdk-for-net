@@ -21,6 +21,7 @@ Write-Host "BuildID: $BuildID"
 Write-Host "ArtifactsJson: $ArtifactsJson"
 
 $packageNamesArray = @()
+$artifacts = $null
 
 # If ArtifactsJson is provided, extract package names from it
 if (![String]::IsNullOrWhiteSpace($ArtifactsJson)) {
@@ -43,10 +44,9 @@ else {
   exit 1
 }
 
-if (![String]::IsNullOrWhiteSpace($ArtifactsJson)) {
+if ($artifacts) {
   # When using ArtifactsJson, process each artifact with its name and groupId (if applicable)
   try {
-    $artifacts = $ArtifactsJson | ConvertFrom-Json
     foreach ($artifact in $artifacts) {
       $packageName = $artifact.name      
       $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
