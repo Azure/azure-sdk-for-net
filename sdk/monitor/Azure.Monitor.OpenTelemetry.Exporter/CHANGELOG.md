@@ -18,6 +18,7 @@
   ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
 
 * Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
 
 ### Breaking Changes
 
