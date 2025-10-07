@@ -769,7 +769,6 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             SearchInternal<T>(
                 searchText,
-                null,
                 options,
                 async: false,
                 cancellationToken)
@@ -828,7 +827,6 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             await SearchInternal<T>(
                 searchText,
-                null,
                 options,
                 async: true,
                 cancellationToken)
@@ -1006,7 +1004,6 @@ namespace Azure.Search.Documents
 
             return SearchInternal<T>(
                 null,
-                null,
                 options,
                 async: false,
                 cancellationToken)
@@ -1061,9 +1058,32 @@ namespace Azure.Search.Documents
 
             return await SearchInternal<T>(
                 null,
-                null,
                 options,
                 async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+            string searchText,
+            SearchOptions options,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
+            if (options != null && searchText != null)
+            {
+                options = options.Clone();
+                options.SearchText = searchText;
+            }
+            else if (options == null)
+            {
+                options = new SearchOptions() { SearchText = searchText };
+            }
+            return await SearchInternal<T>(
+                options,
+                $"{nameof(SearchClient)}.{nameof(Search)}",
+                async,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -1091,6 +1111,29 @@ namespace Azure.Search.Documents
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
+
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+            SearchOptions options,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
+            return await SearchInternal<T>(
+                options,
+                operationName,
+                async,
+                cancellationToken,
+                (Stream stream, bool async) =>
+                {
+                    return SearchResults<T>.DeserializeAsync(
+                        stream,
+                        Serializer,
+                        async,
+                        cancellationToken);
+                }
+            ).ConfigureAwait(false);
         }
 
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
