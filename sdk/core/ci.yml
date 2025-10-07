@@ -51,6 +51,7 @@ extends:
       - /eng/Directory.Build.Common.props
       - /eng/Directory.Build.Common.targets
       - /eng/service.proj
+      - /sdk/keyvault/Azure.Security.KeyVault.Secrets/
 
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
