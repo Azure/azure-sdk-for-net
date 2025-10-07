@@ -37,12 +37,9 @@ internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
             throw new InvalidOperationException($"{returnType.ToFriendlyName()} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
         }
 
-        var obj = Activator.CreateInstance(typeToActivate, true);
-        if (obj is null)
-        {
+        var obj = Activator.CreateInstance(typeToActivate, true) ??
             //we should never get here, but just in case
             throw new InvalidOperationException($"Unable to create instance of {typeToActivate.ToFriendlyName()}.");
-        }
 
         return obj;
     }
