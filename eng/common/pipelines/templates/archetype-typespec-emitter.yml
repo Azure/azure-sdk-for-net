@@ -259,7 +259,12 @@ extends:
             displayName: Download pipeline artifacts
 
           - pwsh: |
-              npm install -g @azure-tools/typespec-client-generator-cli@latest
+              Push-Location eng/common/tsp-client
+              try {
+                npm ci
+              } finally {
+                Pop-Location
+              }
             displayName: Install tsp-client
 
           - pwsh: |
@@ -267,16 +272,25 @@ extends:
 
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
-                tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
-                --overrides '$(buildArtifactsPath)/packages/overrides.json'
+                Push-Location eng/common/tsp-client
+                try {
+                  npm exec --no -- tsp-client generate-config-files `
+                  --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                  --emitter-package-json-path '$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonOutputPath }}' `
+                  --overrides '$(buildArtifactsPath)/packages/overrides.json'
+                } finally {
+                  Pop-Location
+                }
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-
-                tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
+                Push-Location eng/common/tsp-client
+                try {
+                  npm exec --no -- tsp-client generate-config-files `
+                  --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                  --emitter-package-json-path '$(Build.SourcesDirectory)/${{ parameters.EmitterPackageJsonOutputPath }}'
+                } finally {
+                  Pop-Location
+                }
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
             workingDirectory: $(Build.SourcesDirectory)
