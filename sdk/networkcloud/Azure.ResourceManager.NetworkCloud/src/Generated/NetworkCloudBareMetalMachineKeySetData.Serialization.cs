@@ -86,11 +86,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("privilegeLevel"u8);
             writer.WriteStringValue(PrivilegeLevel.ToString());
-            if (Optional.IsDefined(PrivilegeLevelName))
-            {
-                writer.WritePropertyName("privilegeLevelName"u8);
-                writer.WriteStringValue(PrivilegeLevelName);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -152,7 +147,6 @@ namespace Azure.ResourceManager.NetworkCloud
             DateTimeOffset? lastValidation = default;
             string osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
-            string privilegeLevelName = default;
             BareMetalMachineKeySetProvisioningState? provisioningState = default;
             IList<KeySetUser> userList = default;
             IReadOnlyList<KeySetUserStatus> userListStatus = default;
@@ -286,11 +280,6 @@ namespace Azure.ResourceManager.NetworkCloud
                             privilegeLevel = new BareMetalMachineKeySetPrivilegeLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privilegeLevelName"u8))
-                        {
-                            privilegeLevelName = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -350,7 +339,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 lastValidation,
                 osGroupName,
                 privilegeLevel,
-                privilegeLevelName,
                 provisioningState,
                 userList,
                 userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),

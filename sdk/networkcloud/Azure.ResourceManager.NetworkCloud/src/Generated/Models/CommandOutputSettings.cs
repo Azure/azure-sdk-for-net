@@ -48,19 +48,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="CommandOutputSettings"/>. </summary>
         public CommandOutputSettings()
         {
-            Overrides = new ChangeTrackingList<CommandOutputOverride>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommandOutputSettings"/>. </summary>
         /// <param name="associatedIdentity"> The selection of the managed identity to use with this storage account container. The identity type must be either system assigned or user assigned. </param>
         /// <param name="containerUri"> The URL of the storage account container that is to be used by the specified identities. </param>
-        /// <param name="overrides"> The list of optional overrides allowing for association of storage containers and identities to specific types of command output. If a type is not overridden, the default identity and storage container will be utilized. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommandOutputSettings(ManagedServiceIdentitySelector associatedIdentity, Uri containerUri, IList<CommandOutputOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommandOutputSettings(ManagedServiceIdentitySelector associatedIdentity, Uri containerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssociatedIdentity = associatedIdentity;
             ContainerUri = containerUri;
-            Overrides = overrides;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,7 +65,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ManagedServiceIdentitySelector AssociatedIdentity { get; set; }
         /// <summary> The URL of the storage account container that is to be used by the specified identities. </summary>
         public Uri ContainerUri { get; set; }
-        /// <summary> The list of optional overrides allowing for association of storage containers and identities to specific types of command output. If a type is not overridden, the default identity and storage container will be utilized. </summary>
-        public IList<CommandOutputOverride> Overrides { get; }
     }
 }

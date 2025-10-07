@@ -52,16 +52,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionStates))
-            {
-                writer.WritePropertyName("actionStates"u8);
-                writer.WriteStartArray();
-                foreach (var item in ActionStates)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
             writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
             if (Optional.IsDefined(AnalyticsOutputSettings))
@@ -252,7 +242,6 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<ActionState> actionStates = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
             AnalyticsOutputSettings analyticsOutputSettings = default;
             ResourceIdentifier analyticsWorkspaceId = default;
@@ -362,20 +351,6 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("actionStates"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ActionState> array = new List<ActionState>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ActionState.DeserializeActionState(item, options));
-                            }
-                            actionStates = array;
-                            continue;
-                        }
                         if (property0.NameEquals("aggregatorOrSingleRackDefinition"u8))
                         {
                             aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
@@ -663,7 +638,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 etag,
                 extendedLocation,
                 identity,
-                actionStates ?? new ChangeTrackingList<ActionState>(),
                 aggregatorOrSingleRackDefinition,
                 analyticsOutputSettings,
                 analyticsWorkspaceId,

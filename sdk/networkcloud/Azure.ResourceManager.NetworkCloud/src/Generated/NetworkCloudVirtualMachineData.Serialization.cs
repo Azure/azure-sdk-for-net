@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
@@ -115,11 +110,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("networkData"u8);
                 writer.WriteStringValue(NetworkData);
             }
-            if (Optional.IsDefined(NetworkDataContent))
-            {
-                writer.WritePropertyName("networkDataContent"u8);
-                writer.WriteStringValue(NetworkDataContent);
-            }
             if (Optional.IsCollectionDefined(PlacementHints))
             {
                 writer.WritePropertyName("placementHints"u8);
@@ -156,11 +146,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
-            }
-            if (Optional.IsDefined(UserDataContent))
-            {
-                writer.WritePropertyName("userDataContent"u8);
-                writer.WriteStringValue(UserDataContent);
             }
             if (Optional.IsDefined(VirtioInterface))
             {
@@ -219,7 +204,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             ETag? etag = default;
             ExtendedLocation extendedLocation = default;
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -240,14 +224,12 @@ namespace Azure.ResourceManager.NetworkCloud
             long memorySizeGB = default;
             IList<NetworkAttachment> networkAttachments = default;
             string networkData = default;
-            string networkDataContent = default;
             IList<VirtualMachinePlacementHint> placementHints = default;
             VirtualMachinePowerState? powerState = default;
             VirtualMachineProvisioningState? provisioningState = default;
             IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             NetworkCloudStorageProfile storageProfile = default;
             string userData = default;
-            string userDataContent = default;
             VirtualMachineVirtioInterfaceType? virtioInterface = default;
             VirtualMachineDeviceModelType? vmDeviceModel = default;
             string vmImage = default;
@@ -269,15 +251,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -435,11 +408,6 @@ namespace Azure.ResourceManager.NetworkCloud
                             networkData = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("networkDataContent"u8))
-                        {
-                            networkDataContent = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("placementHints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -494,11 +462,6 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("userData"u8))
                         {
                             userData = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("userDataContent"u8))
-                        {
-                            userDataContent = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("virtioInterface"u8))
@@ -572,7 +535,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 location,
                 etag,
                 extendedLocation,
-                identity,
                 adminUsername,
                 availabilityZone,
                 bareMetalMachineId,
@@ -587,14 +549,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 memorySizeGB,
                 networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
                 networkData,
-                networkDataContent,
                 placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(),
                 powerState,
                 provisioningState,
                 sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(),
                 storageProfile,
                 userData,
-                userDataContent,
                 virtioInterface,
                 vmDeviceModel,
                 vmImage,

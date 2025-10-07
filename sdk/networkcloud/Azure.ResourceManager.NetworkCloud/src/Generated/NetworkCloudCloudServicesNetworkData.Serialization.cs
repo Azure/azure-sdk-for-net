@@ -127,16 +127,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(StorageOptions))
-            {
-                writer.WritePropertyName("storageOptions"u8);
-                writer.WriteObjectValue(StorageOptions, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StorageStatus))
-            {
-                writer.WritePropertyName("storageStatus"u8);
-                writer.WriteObjectValue(StorageStatus, options);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
@@ -193,8 +183,6 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
             string interfaceName = default;
             CloudServicesNetworkProvisioningState? provisioningState = default;
-            CloudServicesNetworkStorageOptions storageOptions = default;
-            CloudServicesNetworkStorageStatus storageStatus = default;
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -382,24 +370,6 @@ namespace Azure.ResourceManager.NetworkCloud
                             provisioningState = new CloudServicesNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageOptions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageOptions = CloudServicesNetworkStorageOptions.DeserializeCloudServicesNetworkStorageOptions(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("storageStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageStatus = CloudServicesNetworkStorageStatus.DeserializeCloudServicesNetworkStorageStatus(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("virtualMachinesAssociatedIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -449,8 +419,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 interfaceName,
                 provisioningState,
-                storageOptions,
-                storageStatus,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

@@ -48,16 +48,6 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionStates))
-            {
-                writer.WritePropertyName("actionStates"u8);
-                writer.WriteStartArray();
-                foreach (var item in ActionStates)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
@@ -81,11 +71,6 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
             writer.WriteStringValue(BootMacAddress);
-            if (options.Format != "W" && Optional.IsDefined(CaCertificate))
-            {
-                writer.WritePropertyName("caCertificate"u8);
-                writer.WriteObjectValue(CaCertificate, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
@@ -254,13 +239,11 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<ActionState> actionStates = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            CertificateInfo caCertificate = default;
             ResourceIdentifier clusterId = default;
             BareMetalMachineCordonStatus? cordonStatus = default;
             BareMetalMachineDetailedStatus? detailedStatus = default;
@@ -358,20 +341,6 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("actionStates"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ActionState> array = new List<ActionState>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ActionState.DeserializeActionState(item, options));
-                            }
-                            actionStates = array;
-                            continue;
-                        }
                         if (property0.NameEquals("associatedResourceIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -411,15 +380,6 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("bootMacAddress"u8))
                         {
                             bootMacAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("caCertificate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            caCertificate = CertificateInfo.DeserializeCertificateInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
@@ -651,13 +611,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 location,
                 etag,
                 extendedLocation,
-                actionStates ?? new ChangeTrackingList<ActionState>(),
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 bmcConnectionString,
                 bmcCredentials,
                 bmcMacAddress,
                 bootMacAddress,
-                caCertificate,
                 clusterId,
                 cordonStatus,
                 detailedStatus,

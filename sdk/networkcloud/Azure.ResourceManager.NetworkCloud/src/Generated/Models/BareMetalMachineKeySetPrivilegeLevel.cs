@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         private const string StandardValue = "Standard";
         private const string SuperuserValue = "Superuser";
-        private const string OtherValue = "Other";
 
         /// <summary> Standard. </summary>
         public static BareMetalMachineKeySetPrivilegeLevel Standard { get; } = new BareMetalMachineKeySetPrivilegeLevel(StandardValue);
         /// <summary> Superuser. </summary>
         public static BareMetalMachineKeySetPrivilegeLevel Superuser { get; } = new BareMetalMachineKeySetPrivilegeLevel(SuperuserValue);
-        /// <summary> Other. </summary>
-        public static BareMetalMachineKeySetPrivilegeLevel Other { get; } = new BareMetalMachineKeySetPrivilegeLevel(OtherValue);
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetPrivilegeLevel"/> values are the same. </summary>
         public static bool operator ==(BareMetalMachineKeySetPrivilegeLevel left, BareMetalMachineKeySetPrivilegeLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetPrivilegeLevel"/> values are not the same. </summary>

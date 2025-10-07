@@ -56,14 +56,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="additionalEgressEndpoints"> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </param>
         /// <param name="enableDefaultEgressEndpoints"> The indicator of whether the platform default endpoints are allowed for the egress traffic. </param>
-        /// <param name="storageOptions"> The storage options for the cloud services network. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudCloudServicesNetworkPatch(IDictionary<string, string> tags, IList<EgressEndpoint> additionalEgressEndpoints, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, CloudServicesNetworkStorageOptionsPatch storageOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudCloudServicesNetworkPatch(IDictionary<string, string> tags, IList<EgressEndpoint> additionalEgressEndpoints, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             AdditionalEgressEndpoints = additionalEgressEndpoints;
             EnableDefaultEgressEndpoints = enableDefaultEgressEndpoints;
-            StorageOptions = storageOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,7 +71,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IList<EgressEndpoint> AdditionalEgressEndpoints { get; }
         /// <summary> The indicator of whether the platform default endpoints are allowed for the egress traffic. </summary>
         public CloudServicesNetworkEnableDefaultEgressEndpoint? EnableDefaultEgressEndpoints { get; set; }
-        /// <summary> The storage options for the cloud services network. </summary>
-        public CloudServicesNetworkStorageOptionsPatch StorageOptions { get; set; }
     }
 }
