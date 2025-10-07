@@ -22,7 +22,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetAssistantsRequest(options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
@@ -32,7 +32,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetAssistantsRequest(options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
@@ -62,7 +62,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetMessagesRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
@@ -73,7 +73,7 @@ internal partial class AzureAssistantClient : AssistantClient
            Pipeline,
            continuation => CreateGetMessagesRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
            page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
+           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
            cancellationToken);
     }
 
@@ -218,7 +218,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetRunsRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
@@ -229,7 +229,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetRunsRequest(threadId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
@@ -342,7 +342,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetRunStepsRequest(threadId, runId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
@@ -355,7 +355,7 @@ internal partial class AzureAssistantClient : AssistantClient
             Pipeline,
             continuation => CreateGetRunStepsRequest(threadId, runId, options?.PageSizeLimit, options?.Order.ToString(), continuation?.After ?? options?.AfterId, continuation?.Before ?? options?.BeforeId, cancellationToken.ToRequestOptions()),
             page => AssistantCollectionPageToken.FromResponse(page, options?.PageSizeLimit, options?.Order.ToString(), options?.BeforeId),
-            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data,
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default).Data,
             cancellationToken);
     }
 
