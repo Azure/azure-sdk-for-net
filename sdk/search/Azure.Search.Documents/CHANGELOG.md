@@ -1,9 +1,85 @@
 # Release History
 
+## 11.7.0 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 11.7.0-beta.7 (2025-09-05)
+
+### Features Added
+- Added support for Knowledge Agent knowledge sources.
+- Added support for Knowledge Agent answer synthesis.
+- Added `VectorFilterMode.StrictPostFilter`.
+
+### Breaking Changes
+- Dropped support for Knowledge Agent target index. Use knowledge sources instead.
+- Moved `QueryDebugMode` from `SemanticSearchOptions` to `SearchOptions` as it is no longer tied only to semantic queries.
+
+## 11.7.0-beta.6 (2025-08-11)
+
+### Features Added
+- Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
+
+## 11.7.0-beta.5 (2025-06-17)
+
+### Bugs Fixed
+- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
+
 ## 11.6.1 (2025-06-17)
 
 ### Bugs Fixed
 - Added support for HTTP status code 206 (Partial Content) in the `Search` method to handle partial results returned by the service.
+
+## 11.7.0-beta.4 (2025-05-14)
+
+### Features Added
+- Added new `KnowledgeAgent` resource APIs in `SearchIndexClient` and introduced `KnowledgeAgentRetrievalClient` for managing and querying KnowledgeAgents, enabling multi-index grounding for agentic retrieval.
+- Added a method overload for search query to include the `QuerySourceAuthorization` parameter to enforce per-user filtering in queries.
+- Added `Resync` method in `SearchIndexerClient` to resync selective options from the data source to be re-ingested by the indexer.
+- Added `PermissionFilter` to `SearchField`, `SimpleField`, and `SimpleFieldAttribute`, indicating whether the field should be used as a permission filter.
+- Added `PermissionFilterOption` to `SearchIndex`, indicating whether permission filtering is enabled for the index.
+- Added `RerankerBoostedScore` to `SemanticSearchResult` and updated `SemanticConfiguration` with a new `RankingOrder` property.
+- Introduced new skill `ChatCompletionSkill` that integrates with Azure AI Foundry.
+- Enhanced `DocumentIntelligenceLayoutSkill` with new properties: `ChunkingProperties`, `ExtractionOptions`, and `OutputFormat`.
+- Added `IndexerPermissionOptions` to `SearchIndexerDataSourceConnection` to support ingestion of various types of permission data.
+- Introduced sub-field vector support (multi-vectors) via `VectorQuery.Fields`, and added new query option `VectorQuery.PerDocumentVectorLimit`.
+
+## 11.7.0-beta.3 (2025-03-25)
+
+### Features Added
+- Added support for the `GetIndexStatsSummary` API in `SearchIndexClient`.
+- Added extension methods to get `SearchClient`, `SearchIndexClient` and `SearchIndexerClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
+
+## 11.7.0-beta.2 (2024-11-25)
+
+### Features Added
+- `FacetResults` is now a recursive data structure to support hierarchical aggregation and facet filtering.
+- `QueryAnswer` now supports a `MaxCharLength` option to limit the character length of the answer.
+- `QueryCaption` now supports a `MaxCharLength` option to limit the character length of the caption.
+- `VectorizableTextQuery` now supports a `QueryRewrites` option to specify the number query rewrites the service will generate.
+- `SemanticSearchOptions` now supports a `QueryRewrites` option to specify the number query rewrites the service will generate.
+- `VectorSearchCompression` now supports configuring the `RescoringOptions`.
+- `IndexingParametersConfiguration` now supports two additional options for `MarkdownParsingSubmode` and `MarkdownHeaderDepth`.
+- Added a new skill: `DocumentIntelligenceLayoutSkill` that extracts content and layout information (as markdown), via Azure AI Services, from files within the enrichment pipeline.
+- Added 2 subtypes of `CognitiveServiceAccounts`: `AzureCognitiveServiceAccount` and `AzureCognitiveServiceAccountKey`.
+
+### Bugs Fixed
+- Fixed a bug in the `SearchResult.DocumentDebugInfo` property by changing its type from `IReadOnlyList<DocumentDebugInfo>` to `DocumentDebugInfo`. ([#46958](https://github.com/Azure/azure-sdk-for-net/issues/46958))
+
+## 11.7.0-beta.1 (2024-09-24)
+
+### Features Added
+- Added support for `VectorSearchCompression.TruncationDimension`, which allows specifying the number of dimensions to truncate vectors to.
+- Added support for `VectorQuery.FilterOverride`, which allows vector queries to override the broader `SearchOptions.Filter`, enabling more specific configurations for vector queries.
+- `SplitSkill` now supports tokenization.
+- `DocumentDebugInfo` is extended with vector scores for the results.
 
 ## 11.6.0 (2024-07-17)
 
@@ -48,7 +124,7 @@
 ### Features Added
 - Added support for new embedding models `text-embedding-3-small` and `text-embedding-3-large`, as part of our existing `AzureOpenAIVectorizer` and `AzureOpenAIEmbeddingSkill` features. 
 - Added support for `AIServicesVisionVectorizer` and `VisionVectorizeSkill` to generate embeddings for an image or text using the Azure AI Services Vision Vectorize API.
-- Added support for `AzureMachineLearningVectorizer`, allowing users to specify an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog to generate vector embeddings of query strings.
+- Added support for `AzureMachineLearningVectorizer`, allowing users to specify an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog to generate vector embeddings of query strings.
 - Added support for `byte` to `SearchFieldDataType`.
 
 ## 11.6.0-beta.3 (2024-03-05)
@@ -82,7 +158,7 @@
 - Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
 - Added support for [Semantic Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
 - Added support for [`PiiDetectionSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-pii-detection). It allows you extracts personal information from an input text and gives you the option of masking it using the Text Analytics API.
-- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2, which now includes support for additional languages. Refer to the language lists [here](https://docs.microsoft.com/azure/cognitive-services/computer-vision/language-support).
+- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2, which now includes support for additional languages. Refer to the language lists [here](https://learn.microsoft.com/azure/cognitive-services/computer-vision/language-support).
 - Added new languages for ` SplitSkill`. Language lists can be found [here](https://learn.microsoft.com/azure/search/cognitive-search-skill-textsplit#skill-parameters).
 - Deprecated `SentimentSkill.SkillVersion.V1` and `EntityRecognitionSkill.SkillVersion.V1`; use `SentimentSkill.SkillVersion.V3` and `EntityRecognitionSkill.SkillVersion.V3` instead.
 
@@ -121,7 +197,7 @@
 ## 11.5.0-beta.2 (2022-10-11)
 
 ### Features Added
-- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2 which supports a lot more languages for both APIs. Language lists can be found [here](https://docs.microsoft.com/azure/cognitive-services/computer-vision/language-support).
+- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2 which supports a lot more languages for both APIs. Language lists can be found [here](https://learn.microsoft.com/azure/cognitive-services/computer-vision/language-support).
 
 ### Bugs Fixed
 - Fixed user-assigned identity type names ([#29813](https://github.com/Azure/azure-sdk-for-net/issues/29813)).
@@ -134,7 +210,7 @@
 ## 11.4.0 (2022-09-06)
 
 ### Features Added
-- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
+- Support for [Azure Active Directory](https://learn.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://learn.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
 - Added multi-cloud support via `SearchClientOptions.Audience` to allow users to select the Azure cloud where the resource is located ([#30306](https://github.com/Azure/azure-sdk-for-net/issues/30306)).
 
 ### Bugs Fixed
@@ -150,7 +226,7 @@
 ## 11.4.0-beta.9 (2022-08-08)
 
 ### Features Added
-- Added support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in `SimpleField` and `SearchableField`.
+- Added support for [Lexical normalizers](https://learn.microsoft.com/azure/search/search-normalizers#normalizers) in `SimpleField` and `SearchableField`.
 - Added multi-cloud support via `SearchClientOptions.Audience` to allow users to select the Azure cloud where the resource is located ([#30306](https://github.com/Azure/azure-sdk-for-net/issues/30306)).
 
 ## 11.4.0-beta.8 (2022-07-07)
@@ -169,13 +245,13 @@
 ## 11.4.0-beta.6 (2022-02-08)
 
 ### Features Added
-- Added `Unk` as an `OcrSkillLanguage` value. The values are used to set the default language code for the [OCR cognitive skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-ocr).
-- Support for [`AzureMachineLearningSkill`](https://docs.microsoft.com/azure/search/cognitive-search-aml-skill). The AML skill allows you to extend AI enrichment with a custom [Azure Machine Learning](https://docs.microsoft.com/azure/machine-learning/overview-what-is-azure-machine-learning) (AML) model. Once an AML model is [trained and deployed](https://docs.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace), an AML skill integrates it into AI enrichment.
+- Added `Unk` as an `OcrSkillLanguage` value. The values are used to set the default language code for the [OCR cognitive skill](https://learn.microsoft.com/azure/search/cognitive-search-skill-ocr).
+- Support for [`AzureMachineLearningSkill`](https://learn.microsoft.com/azure/search/cognitive-search-aml-skill). The AML skill allows you to extend AI enrichment with a custom [Azure Machine Learning](https://learn.microsoft.com/azure/machine-learning/overview-what-is-azure-machine-learning) (AML) model. Once an AML model is [trained and deployed](https://learn.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace), an AML skill integrates it into AI enrichment.
 
 ## 11.4.0-beta.5 (2021-11-09)
 
 ### Features Added
-- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview). `SearchOptions` now support specifying `SemanticSettings` to influence the search behavior.
+- Added support for [Semantic Search](https://learn.microsoft.com/azure/search/semantic-search-overview). `SearchOptions` now support specifying `SemanticSettings` to influence the search behavior.
 
 ### Breaking Changes
 - Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
@@ -184,7 +260,7 @@
 ## 11.4.0-beta.4 (2021-10-05)
 
 ### Features Added
-- Added APIs to [reset documents](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-docs-preview) and [skills](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-skills-preview).
+- Added APIs to [reset documents](https://learn.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-docs-preview) and [skills](https://learn.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-skills-preview).
 
 ### Breaking Changes
 - Renamed `QueryAnswer` to `QueryAnswerType` in `SearchOptions`.
@@ -195,12 +271,12 @@
 ## 11.4.0-beta.3 (2021-09-07)
 
 ### Features Added
-- Support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in [text analysers](https://docs.microsoft.com/rest/api/searchservice/test-analyzer) via `AnalyzeTextOptions`.
+- Support for [Lexical normalizers](https://learn.microsoft.com/azure/search/search-normalizers#normalizers) in [text analysers](https://learn.microsoft.com/rest/api/searchservice/test-analyzer) via `AnalyzeTextOptions`.
 
 ## 11.4.0-beta.2 (2021-08-10)
 
 ### Features Added
-- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
+- Support for [Azure Active Directory](https://learn.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://learn.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
 
 ### Bugs Fixed
 - Enhanced the documentation of some `SearchOptions` properties by adding links to REST docs - https://github.com/Azure/azure-sdk-for-net/issues/22808
@@ -208,8 +284,8 @@
 ## 11.4.0-beta.1 (2021-07-06)
 
 ### Features Added
-- Support for additional/enhanced skills - [EntityLinkingSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-linking-v3), [EntityRecognitionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition-v3), [PiiDetectionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-pii-detection), [SentimentSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment-v3)
-- Use managed identities in Azure Active Directory with [SearchIndexerDataIdentity](https://docs.microsoft.com/azure/search/search-howto-managed-identities-data-sources)
+- Support for additional/enhanced skills - [EntityLinkingSkill](https://learn.microsoft.com/azure/search/cognitive-search-skill-entity-linking-v3), [EntityRecognitionSkill](https://learn.microsoft.com/azure/search/cognitive-search-skill-entity-recognition-v3), [PiiDetectionSkill](https://learn.microsoft.com/azure/search/cognitive-search-skill-pii-detection), [SentimentSkill](https://learn.microsoft.com/azure/search/cognitive-search-skill-sentiment-v3)
+- Use managed identities in Azure Active Directory with [SearchIndexerDataIdentity](https://learn.microsoft.com/azure/search/search-howto-managed-identities-data-sources)
 
 ## 11.3.0 (2021-06-08)
 
@@ -219,16 +295,16 @@
 ## 11.3.0-beta.2 (2021-05-11)
 
 ### Added
-- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview).
+- Added support for [Semantic Search](https://learn.microsoft.com/azure/search/semantic-search-overview).
 
 ## 11.3.0-beta.1 (2021-04-06)
 
 ### Added
-- Added support for [`Azure.Core.GeoJson`](https://docs.microsoft.com/dotnet/api/azure.core.geojson) types in `SearchDocument`, `SearchFilter` and `FieldBuilder`.
-- Added [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) based logging. Event source name is **Azure-Search-Documents**. Current set of events are focused on tuning batch sizes for [`SearchIndexingBufferedSender`](https://docs.microsoft.com/dotnet/api/azure.search.documents.searchindexingbufferedsender-1).
-- Added [`CustomEntityLookupSkill`](https://docs.microsoft.com/azure/search/cognitive-search-skill-custom-entity-lookup) and [`DocumentExtractionSkill`](https://docs.microsoft.com/azure/search/cognitive-search-skill-document-extraction). Added `DefaultCountryHint` in [`LanguageDetectionSkill`](https://docs.microsoft.com/azure/search/cognitive-search-skill-language-detection).
-- Added [`LexicalNormalizer`](https://docs.microsoft.com/azure/search/search-normalizers#predefined-normalizers) to include predefined set of normalizers. See [here](https://docs.microsoft.com/azure/search/search-normalizers) for more details on search normalizers. Added `Normalizer` as a [`SearchField`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchfield) in an index definition.
-- Added support for Azure Data Lake Storage Gen2 - [`AdlsGen2`](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-introduction) in [`SearchIndexerDataSourceType`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchindexerdatasourcetype).
+- Added support for [`Azure.Core.GeoJson`](https://learn.microsoft.com/dotnet/api/azure.core.geojson) types in `SearchDocument`, `SearchFilter` and `FieldBuilder`.
+- Added [`EventSource`](https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) based logging. Event source name is **Azure-Search-Documents**. Current set of events are focused on tuning batch sizes for [`SearchIndexingBufferedSender`](https://learn.microsoft.com/dotnet/api/azure.search.documents.searchindexingbufferedsender-1).
+- Added [`CustomEntityLookupSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-custom-entity-lookup) and [`DocumentExtractionSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-document-extraction). Added `DefaultCountryHint` in [`LanguageDetectionSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-language-detection).
+- Added [`LexicalNormalizer`](https://learn.microsoft.com/azure/search/search-normalizers#predefined-normalizers) to include predefined set of normalizers. See [here](https://learn.microsoft.com/azure/search/search-normalizers) for more details on search normalizers. Added `Normalizer` as a [`SearchField`](https://learn.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchfield) in an index definition.
+- Added support for Azure Data Lake Storage Gen2 - [`AdlsGen2`](https://learn.microsoft.com/azure/storage/blobs/data-lake-storage-introduction) in [`SearchIndexerDataSourceType`](https://learn.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchindexerdatasourcetype).
 
 ## 11.2.0 (2021-02-10)
 
@@ -389,5 +465,3 @@
 
 - Initial preview of the Azure.Search client library enabling you to query
   and update documents in search indexes.
-
-[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values

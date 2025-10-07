@@ -92,9 +92,19 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchRerankerScoreKeyJson = JsonEncodedText.Encode("@search.rerankerScore");
 
         /// <summary>
+        /// The @search.rerankerBoostedScore key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchRerankerBoostedScoreKeyJson = JsonEncodedText.Encode("@search.rerankerBoostedScore");
+
+        /// <summary>
         /// The @search.captions key.
         /// </summary>
         public static readonly JsonEncodedText SearchCaptionsKeyJson = JsonEncodedText.Encode("@search.captions");
+
+        /// <summary>
+        /// The @search.captions key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDocumentDebugInfoKeyJson = JsonEncodedText.Encode("@search.documentDebugInfo");
 
         /// <summary>
         /// The @search.action key.

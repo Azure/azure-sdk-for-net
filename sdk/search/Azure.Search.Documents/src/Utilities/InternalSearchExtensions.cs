@@ -16,7 +16,7 @@ namespace Azure.Search.Documents
     /// <summary>
     /// Search extension methods.
     /// </summary>
-    internal static partial class SearchExtensions
+    internal static partial class InternalSearchExtensions
     {
         /// <summary>
         /// Assert that the given URI uses HTTPS as its scheme.

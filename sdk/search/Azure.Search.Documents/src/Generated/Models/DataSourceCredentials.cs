@@ -5,24 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
     internal partial class DataSourceCredentials
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
         public DataSourceCredentials()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
-        /// <param name="connectionString"> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </param>
-        internal DataSourceCredentials(string connectionString)
+        /// <param name="connectionString"> The connection string for the datasource. For Azure SQL, Azure Blob, ADLS Gen 2 and Azure Table, this would be the connection string or resource ID if using managed identity. For CosmosDB this would be a formatted connection string specifying ApiKind or resource ID for managed identity. For Onelake files, connection string would be either the workspace guid or workspace FQDN; Onelake only supports managed identity connections. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceCredentials(string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </summary>
+        /// <summary> The connection string for the datasource. For Azure SQL, Azure Blob, ADLS Gen 2 and Azure Table, this would be the connection string or resource ID if using managed identity. For CosmosDB this would be a formatted connection string specifying ApiKind or resource ID for managed identity. For Onelake files, connection string would be either the workspace guid or workspace FQDN; Onelake only supports managed identity connections. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </summary>
         public string ConnectionString { get; set; }
     }
 }

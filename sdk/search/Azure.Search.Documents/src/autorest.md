@@ -7,12 +7,16 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
+```yaml
+use-model-reader-writer: true
+```
+
 ## Swagger Source(s)
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/fb2bf7ec6635f4dca9ebe505af5eda0534c377d9/specification/search/data-plane/Azure.Search/stable/2025-09-01/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/fb2bf7ec6635f4dca9ebe505af5eda0534c377d9/specification/search/data-plane/Azure.Search/stable/2025-09-01/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -57,6 +61,38 @@ directive:
   transform: >
     $["discriminator"] = "@odata.type";
 ```
+### Remove models that have newer versions
+
+These classes have `CodeGenModel` pointing to newer models. Don't try to generate the
+old models into the same class.
+
+```yaml
+directive:
+  - remove-model: EdgeNGramTokenFilter
+  - remove-model: KeywordTokenizer
+  - remove-model: LuceneStandardTokenizer
+  - remove-model: NGramTokenFilter
+```
+
+### Retain `rerankWithOriginalVectors` and `defaultOversampling` in `VectorSearchCompressionConfiguration`
+
+```yaml
+directive:
+- from: "searchservice.json"
+  where: $.definitions.VectorSearchCompressionConfiguration
+  transform: >
+    $.properties.rerankWithOriginalVectors = {
+      "type": "boolean",
+      "description": "If set to true, once the ordered set of results calculated using compressed vectors are obtained, they will be reranked again by recalculating the full-precision similarity scores. This will improve recall at the expense of latency.",
+      "x-nullable": true
+    };
+    $.properties.defaultOversampling = {
+      "type": "number",
+      "format": "double",
+      "description": "Default oversampling factor. Oversampling will internally request more documents (specified by this multiplier) in the initial search. This increases the set of results that will be reranked using recomputed similarity scores from full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when rerankWithOriginalVectors is true. Higher values improve recall at the expense of latency.",
+      "x-nullable": true
+    };
+```
 
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
@@ -79,22 +115,6 @@ directive:
   where: $.paths["/docs('{key}')"].get.responses["200"].schema
   transform:  >
     $.additionalProperties = true;
-```
-
-### Fix for 206 response
-
-```yaml
-directive:
-  - from: "searchindex.json"
-    where: $.paths
-    transform: >
-      let response206 = {
-        "description": "Response containing partial documents that match the search criteria.",
-        "schema": {
-          "$ref": "#/definitions/SearchDocumentsResult"
-        }
-      };
-      $["/docs/search.post.search"].post.responses["206"] = response206;
 ```
 
 ### Archboard feedback for 2024-07-01

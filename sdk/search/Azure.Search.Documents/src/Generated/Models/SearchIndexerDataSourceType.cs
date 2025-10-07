@@ -28,19 +28,22 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string AzureTableValue = "azuretable";
         private const string MySqlValue = "mysql";
         private const string AdlsGen2Value = "adlsgen2";
+        private const string OneLakeValue = "onelake";
 
-        /// <summary> Indicates an Azure SQL datasource. </summary>
+        /// <summary> Definition of an Azure SQL datasource whose credentials can either be a standard SQL connection string or the ResourceId of the SQL resource. The container property refers to the table or view to be indexed. Query parameter is not supported for this datasource. </summary>
         public static SearchIndexerDataSourceType AzureSql { get; } = new SearchIndexerDataSourceType(AzureSqlValue);
-        /// <summary> Indicates a CosmosDB datasource. </summary>
+        /// <summary> Definition of an CosmosDB datasource whose credentials can either be a formatted connection string containing details for AccountEndpoint, AccountKey, and Database for a key based connection or details for ResourceID and ApiKind for keyless connection. The container property refers to cosmosdb collection to be indexed and the optional query property refers to a SQL query on the collection. </summary>
         public static SearchIndexerDataSourceType CosmosDb { get; } = new SearchIndexerDataSourceType(CosmosDbValue);
-        /// <summary> Indicates an Azure Blob datasource. </summary>
+        /// <summary> Definition of an Azure Blob datasource whose credentials can either be a storage connection string or the ResourceId of the storage account. The container property refers to the blob container to be indexed and the optional query property refers to a specific sub-folder in the container. </summary>
         public static SearchIndexerDataSourceType AzureBlob { get; } = new SearchIndexerDataSourceType(AzureBlobValue);
-        /// <summary> Indicates an Azure Table datasource. </summary>
+        /// <summary> Definition of an Azure Table datasource whose credentials can either be a table connection string or the ResourceId of the storage account. The container property refers to the blob container to be indexed and the optional query property can be used to filter rows. </summary>
         public static SearchIndexerDataSourceType AzureTable { get; } = new SearchIndexerDataSourceType(AzureTableValue);
-        /// <summary> Indicates a MySql datasource. </summary>
+        /// <summary> Definition of an Azure SQL datasource whose credentials can either be a standard ADO.NET formatted SQL connection string or the ResourceId of the SQL resource. The container property refers to the table or view to be indexed. Query parameter is not supported for this datasource. </summary>
         public static SearchIndexerDataSourceType MySql { get; } = new SearchIndexerDataSourceType(MySqlValue);
-        /// <summary> Indicates an ADLS Gen2 datasource. </summary>
+        /// <summary> Definition of an Azure ADLS Gen 2 datasource whose credentials can either be a storage connection string or the ResourceId of the storage account. The container property refers to the blob container to be indexed and the optional query property refers to a specific sub-folder in the container. </summary>
         public static SearchIndexerDataSourceType AdlsGen2 { get; } = new SearchIndexerDataSourceType(AdlsGen2Value);
+        /// <summary> Definition of an Microsoft Fabric Onelake datasource whose credentials can either be the Fabric workspace GUID or a workspace FQDN. The container property refers to the lakehouse GUID and the optional query property refers to folders or shortcuts in the lakehouse. </summary>
+        public static SearchIndexerDataSourceType OneLake { get; } = new SearchIndexerDataSourceType(OneLakeValue);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>

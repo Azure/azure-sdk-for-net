@@ -36,7 +36,7 @@ namespace Azure.Search.Documents
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="indexName"/> or <paramref name="apiVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2024-07-01")
+        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2025-09-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -119,7 +119,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchOptions);
+            content.JsonWriter.WriteObjectValue(searchOptions, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -140,7 +140,6 @@ namespace Azure.Search.Documents
             switch (message.Response.Status)
             {
                 case 200:
-                case 206:
                     {
                         SearchDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
@@ -168,7 +167,6 @@ namespace Azure.Search.Documents
             switch (message.Response.Status)
             {
                 case 200:
-                case 206:
                     {
                         SearchDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
@@ -299,7 +297,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(suggestOptions);
+            content.JsonWriter.WriteObjectValue(suggestOptions, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -374,7 +372,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batch);
+            content.JsonWriter.WriteObjectValue(batch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -451,7 +449,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(autocompleteOptions);
+            content.JsonWriter.WriteObjectValue(autocompleteOptions, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

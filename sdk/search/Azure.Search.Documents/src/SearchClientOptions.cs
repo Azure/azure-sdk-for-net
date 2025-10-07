@@ -40,13 +40,18 @@ namespace Azure.Search.Documents
             /// The 2024-07-01 version of the Azure Cognitive Search service.
             /// </summary>
             V2024_07_01 = 3,
+
+            /// <summary>
+            /// The 2025-09-01 version of the Azure Cognitive Search service.
+            /// </summary>
+            V2025_09_01 = 4
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -180,7 +185,7 @@ namespace Azure.Search.Documents
     /// <summary>
     /// Search extension methods.
     /// </summary>
-    internal static partial class SearchExtensions
+    internal static partial class InternalSearchExtensions
     {
         /// <summary>
         /// Validate a <see cref="SearchClientOptions.ServiceVersion"/>.
@@ -201,6 +206,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2020_06_30 => version,
                 SearchClientOptions.ServiceVersion.V2023_11_01 => version,
                 SearchClientOptions.ServiceVersion.V2024_07_01 => version,
+                SearchClientOptions.ServiceVersion.V2025_09_01 => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -225,6 +231,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
                 SearchClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
                 SearchClientOptions.ServiceVersion.V2024_07_01 => "2024-07-01",
+                SearchClientOptions.ServiceVersion.V2025_09_01 => "2025-09-01",
                 _ => throw CreateInvalidVersionException(version)
             };
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Models;
 
@@ -13,6 +14,38 @@ namespace Azure.Search.Documents
     /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
     public partial class SearchOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         public SearchOptions()
         {
@@ -34,6 +67,8 @@ namespace Azure.Search.Documents
         public string SessionId { get; set; }
         /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
         public string ScoringProfile { get; set; }
+        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
+        public QueryDebugMode? Debug { get; set; }
         /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>
         public SearchMode? SearchMode { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>

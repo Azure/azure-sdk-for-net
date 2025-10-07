@@ -32,12 +32,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="textSplitMode"> A value indicating which split mode to perform. </param>
         /// <param name="maximumPageLength"> The desired maximum page length. Default is 10000. </param>
         /// <param name="pageOverlapLength"> Only applicable when textSplitMode is set to 'pages'. If specified, n+1th chunk will start with this number of characters/tokens from the end of the nth chunk. </param>
         /// <param name="maximumPagesToTake"> Only applicable when textSplitMode is set to 'pages'. If specified, the SplitSkill will discontinue splitting after processing the first 'maximumPagesToTake' pages, in order to improve performance when only a few initial pages are needed from each document. </param>
-        internal SplitSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, SplitSkillLanguage? defaultLanguageCode, TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake) : base(oDataType, name, description, context, inputs, outputs)
+        internal SplitSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, SplitSkillLanguage? defaultLanguageCode, TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
         {
             DefaultLanguageCode = defaultLanguageCode;
             TextSplitMode = textSplitMode;
@@ -45,6 +46,11 @@ namespace Azure.Search.Documents.Indexes.Models
             PageOverlapLength = pageOverlapLength;
             MaximumPagesToTake = maximumPagesToTake;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.SplitSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SplitSkill"/> for deserialization. </summary>
+        internal SplitSkill()
+        {
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
