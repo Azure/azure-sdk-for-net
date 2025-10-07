@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrUpdateAsync(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateAsync("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        manualPrivateLinkServiceConnections = new object[]
+        {
+            new
+            {
+                properties = new
+                {
+                    privateLinkServiceId = "<privateLinkServiceId>",
+                    groupIds = new object[]
+                    {
+                        "<groupIds>"
+                    },
+                    privateLinkServiceConnectionState = new object(),
+                },
+            }
+        },
+    },
+});
+Response response = await client.CreateOrUpdateAsync("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("groupIds")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("requestMessage").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdate("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        manualPrivateLinkServiceConnections = new object[]
+        {
+            new
+            {
+                properties = new
+                {
+                    privateLinkServiceId = "<privateLinkServiceId>",
+                    groupIds = new object[]
+                    {
+                        "<groupIds>"
+                    },
+                    privateLinkServiceConnectionState = new object(),
+                },
+            }
+        },
+    },
+});
+Response response = client.CreateOrUpdate("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("groupIds")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("requestMessage").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetPrivateEndpointAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetPrivateEndpointAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetPrivateEndpointAsync("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPrivateEndpointAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetPrivateEndpointAsync("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("groupIds")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("requestMessage").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetPrivateEndpoint(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetPrivateEndpoint and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Response response = client.GetPrivateEndpoint("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetPrivateEndpoint with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Response response = client.GetPrivateEndpoint("<resourceGroupName>", "<clusterName>", "<privateEndpointName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("groupIds")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("requestMessage").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetPrivateEndpointsByClusterAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetPrivateEndpointsByClusterAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetPrivateEndpointsByClusterAsync("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetPrivateEndpointsByClusterAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetPrivateEndpointsByClusterAsync("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("groupIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("requestMessage").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetPrivateEndpointsByCluster(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetPrivateEndpointsByCluster and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetPrivateEndpointsByCluster("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetPrivateEndpointsByCluster with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetPrivateEndpointsByCluster("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("groupIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("requestMessage").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("manualPrivateLinkServiceConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(WaitUntil,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Operation operation = await client.DeleteAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", "<privateEndpointName>");
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Operation operation = await client.DeleteAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", "<privateEndpointName>");
+]]></code></example>
+    </member>
+    <member name="Delete(WaitUntil,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Operation operation = client.Delete(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", "<privateEndpointName>");
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+PrivateEndpointsClient client = new PrivateEndpointsClient("<SubscriptionId>", credential);
+
+Operation operation = client.Delete(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", "<privateEndpointName>");
+]]></code></example>
+    </member>
+  </members>
+</doc>

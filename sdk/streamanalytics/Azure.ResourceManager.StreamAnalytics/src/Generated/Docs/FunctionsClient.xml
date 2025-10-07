@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrReplaceAsync(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrReplaceAsync("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        type = "Scalar",
+        properties = new
+        {
+            inputs = new object[]
+            {
+                new
+                {
+                    dataType = "<dataType>",
+                    isConfigurationParameter = true,
+                }
+            },
+            output = new
+            {
+                dataType = "<dataType>",
+            },
+            binding = new
+            {
+                properties = new
+                {
+                    endpoint = "<endpoint>",
+                    apiKey = "<apiKey>",
+                    inputs = new
+                    {
+                        name = "<name>",
+                        columnNames = new object[]
+                        {
+                            new
+                            {
+                                name = "<name>",
+                                dataType = "<dataType>",
+                                mapTo = 1234,
+                            }
+                        },
+                    },
+                    outputs = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            dataType = "<dataType>",
+                        }
+                    },
+                    batchSize = 1234,
+                },
+                type = "Microsoft.MachineLearning/WebService",
+            },
+        },
+    },
+    name = "<name>",
+});
+Response response = await client.CreateOrReplaceAsync("<resourceGroupName>", "<jobName>", "<functionName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplace(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplace and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrReplace("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplace with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        type = "Scalar",
+        properties = new
+        {
+            inputs = new object[]
+            {
+                new
+                {
+                    dataType = "<dataType>",
+                    isConfigurationParameter = true,
+                }
+            },
+            output = new
+            {
+                dataType = "<dataType>",
+            },
+            binding = new
+            {
+                properties = new
+                {
+                    endpoint = "<endpoint>",
+                    apiKey = "<apiKey>",
+                    inputs = new
+                    {
+                        name = "<name>",
+                        columnNames = new object[]
+                        {
+                            new
+                            {
+                                name = "<name>",
+                                dataType = "<dataType>",
+                                mapTo = 1234,
+                            }
+                        },
+                    },
+                    outputs = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            dataType = "<dataType>",
+                        }
+                    },
+                    batchSize = 1234,
+                },
+                type = "Microsoft.MachineLearning/WebService",
+            },
+        },
+    },
+    name = "<name>",
+});
+Response response = client.CreateOrReplace("<resourceGroupName>", "<jobName>", "<functionName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(string,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateAsync("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call UpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        type = "Scalar",
+        properties = new
+        {
+            inputs = new object[]
+            {
+                new
+                {
+                    dataType = "<dataType>",
+                    isConfigurationParameter = true,
+                }
+            },
+            output = new
+            {
+                dataType = "<dataType>",
+            },
+            binding = new
+            {
+                properties = new
+                {
+                    endpoint = "<endpoint>",
+                    apiKey = "<apiKey>",
+                    inputs = new
+                    {
+                        name = "<name>",
+                        columnNames = new object[]
+                        {
+                            new
+                            {
+                                name = "<name>",
+                                dataType = "<dataType>",
+                                mapTo = 1234,
+                            }
+                        },
+                    },
+                    outputs = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            dataType = "<dataType>",
+                        }
+                    },
+                    batchSize = 1234,
+                },
+                type = "Microsoft.MachineLearning/WebService",
+            },
+        },
+    },
+    name = "<name>",
+});
+Response response = await client.UpdateAsync("<resourceGroupName>", "<jobName>", "<functionName>", content, ifMatch: new ETag("<ifMatch>"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="Update(string,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call Update and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Update("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Update with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        type = "Scalar",
+        properties = new
+        {
+            inputs = new object[]
+            {
+                new
+                {
+                    dataType = "<dataType>",
+                    isConfigurationParameter = true,
+                }
+            },
+            output = new
+            {
+                dataType = "<dataType>",
+            },
+            binding = new
+            {
+                properties = new
+                {
+                    endpoint = "<endpoint>",
+                    apiKey = "<apiKey>",
+                    inputs = new
+                    {
+                        name = "<name>",
+                        columnNames = new object[]
+                        {
+                            new
+                            {
+                                name = "<name>",
+                                dataType = "<dataType>",
+                                mapTo = 1234,
+                            }
+                        },
+                    },
+                    outputs = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            dataType = "<dataType>",
+                        }
+                    },
+                    batchSize = 1234,
+                },
+                type = "Microsoft.MachineLearning/WebService",
+            },
+        },
+    },
+    name = "<name>",
+});
+Response response = client.Update("<resourceGroupName>", "<jobName>", "<functionName>", content, ifMatch: new ETag("<ifMatch>"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = await client.DeleteAsync("<resourceGroupName>", "<jobName>", "<functionName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = await client.DeleteAsync("<resourceGroupName>", "<jobName>", "<functionName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = client.Delete("<resourceGroupName>", "<jobName>", "<functionName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = client.Delete("<resourceGroupName>", "<jobName>", "<functionName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetFunctionAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetFunctionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetFunctionAsync("<resourceGroupName>", "<jobName>", "<functionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFunctionAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetFunctionAsync("<resourceGroupName>", "<jobName>", "<functionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFunction(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetFunction and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = client.GetFunction("<resourceGroupName>", "<jobName>", "<functionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFunction with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+Response response = client.GetFunction("<resourceGroupName>", "<jobName>", "<functionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="RetrieveDefaultDefinitionAsync(string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RetrieveDefaultDefinitionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = null;
+Response response = await client.RetrieveDefaultDefinitionAsync("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call RetrieveDefaultDefinitionAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    bindingRetrievalProperties = new
+    {
+        executeEndpoint = "<executeEndpoint>",
+        udfType = "Scalar",
+    },
+    bindingType = "Microsoft.MachineLearning/WebService",
+});
+Response response = await client.RetrieveDefaultDefinitionAsync("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="RetrieveDefaultDefinition(string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RetrieveDefaultDefinition and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = null;
+Response response = client.RetrieveDefaultDefinition("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call RetrieveDefaultDefinition with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    bindingRetrievalProperties = new
+    {
+        executeEndpoint = "<executeEndpoint>",
+        udfType = "Scalar",
+    },
+    bindingType = "Microsoft.MachineLearning/WebService",
+});
+Response response = client.RetrieveDefaultDefinition("<resourceGroupName>", "<jobName>", "<functionName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFunctionsByStreamingJobAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetFunctionsByStreamingJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetFunctionsByStreamingJobAsync("<resourceGroupName>", "<jobName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetFunctionsByStreamingJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetFunctionsByStreamingJobAsync("<resourceGroupName>", "<jobName>", "<select>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetFunctionsByStreamingJob(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetFunctionsByStreamingJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetFunctionsByStreamingJob("<resourceGroupName>", "<jobName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetFunctionsByStreamingJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetFunctionsByStreamingJob("<resourceGroupName>", "<jobName>", "<select>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("dataType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("inputs")[0].GetProperty("isConfigurationParameter").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("output").GetProperty("dataType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("properties").GetProperty("binding").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="TestAsync(WaitUntil,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call TestAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = null;
+Operation<BinaryData> operation = await client.TestAsync(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<functionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call TestAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        type = "Scalar",
+        properties = new
+        {
+            inputs = new object[]
+            {
+                new
+                {
+                    dataType = "<dataType>",
+                    isConfigurationParameter = true,
+                }
+            },
+            output = new
+            {
+                dataType = "<dataType>",
+            },
+            binding = new
+            {
+                properties = new
+                {
+                    endpoint = "<endpoint>",
+                    apiKey = "<apiKey>",
+                    inputs = new
+                    {
+                        name = "<name>",
+                        columnNames = new object[]
+                        {
+                            new
+                            {
+                                name = "<name>",
+                                dataType = "<dataType>",
+                                mapTo = 1234,
+                            }
+                        },
+                    },
+                    outputs = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            dataType = "<dataType>",
+                        }
+                    },
+                    batchSize = 1234,
+                },
+                type = "Microsoft.MachineLearning/WebService",
+            },
+        },
+    },
+    name = "<name>",
+});
+Operation<BinaryData> operation = await client.TestAsync(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<functionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+]]></code></example>
+    </member>
+    <member name="Test(WaitUntil,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Test and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = null;
+Operation<BinaryData> operation = client.Test(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<functionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Test with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FunctionsClient client = new FunctionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        type = "Scalar",
+        properties = new
+        {
+            inputs = new object[]
+            {
+                new
+                {
+                    dataType = "<dataType>",
+                    isConfigurationParameter = true,
+                }
+            },
+            output = new
+            {
+                dataType = "<dataType>",
+            },
+            binding = new
+            {
+                properties = new
+                {
+                    endpoint = "<endpoint>",
+                    apiKey = "<apiKey>",
+                    inputs = new
+                    {
+                        name = "<name>",
+                        columnNames = new object[]
+                        {
+                            new
+                            {
+                                name = "<name>",
+                                dataType = "<dataType>",
+                                mapTo = 1234,
+                            }
+                        },
+                    },
+                    outputs = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            dataType = "<dataType>",
+                        }
+                    },
+                    batchSize = 1234,
+                },
+                type = "Microsoft.MachineLearning/WebService",
+            },
+        },
+    },
+    name = "<name>",
+});
+Operation<BinaryData> operation = client.Test(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<functionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

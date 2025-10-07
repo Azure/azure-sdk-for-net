@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrReplaceAsync(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrReplaceAsync("<resourceGroupName>", "<jobName>", "<transformationName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        streamingUnits = 1234,
+        validStreamingUnits = new object[]
+        {
+            1234
+        },
+        query = "<query>",
+    },
+    name = "<name>",
+});
+Response response = await client.CreateOrReplaceAsync("<resourceGroupName>", "<jobName>", "<transformationName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("streamingUnits").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("validStreamingUnits")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("query").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplace(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplace and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrReplace("<resourceGroupName>", "<jobName>", "<transformationName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplace with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        streamingUnits = 1234,
+        validStreamingUnits = new object[]
+        {
+            1234
+        },
+        query = "<query>",
+    },
+    name = "<name>",
+});
+Response response = client.CreateOrReplace("<resourceGroupName>", "<jobName>", "<transformationName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("streamingUnits").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("validStreamingUnits")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("query").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(string,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateAsync("<resourceGroupName>", "<jobName>", "<transformationName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call UpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        streamingUnits = 1234,
+        validStreamingUnits = new object[]
+        {
+            1234
+        },
+        query = "<query>",
+    },
+    name = "<name>",
+});
+Response response = await client.UpdateAsync("<resourceGroupName>", "<jobName>", "<transformationName>", content, ifMatch: new ETag("<ifMatch>"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("streamingUnits").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("validStreamingUnits")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("query").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="Update(string,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call Update and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Update("<resourceGroupName>", "<jobName>", "<transformationName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Update with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        streamingUnits = 1234,
+        validStreamingUnits = new object[]
+        {
+            1234
+        },
+        query = "<query>",
+    },
+    name = "<name>",
+});
+Response response = client.Update("<resourceGroupName>", "<jobName>", "<transformationName>", content, ifMatch: new ETag("<ifMatch>"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("streamingUnits").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("validStreamingUnits")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("query").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTransformationAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTransformationAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetTransformationAsync("<resourceGroupName>", "<jobName>", "<transformationName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTransformationAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetTransformationAsync("<resourceGroupName>", "<jobName>", "<transformationName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("streamingUnits").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("validStreamingUnits")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("query").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTransformation(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTransformation and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+Response response = client.GetTransformation("<resourceGroupName>", "<jobName>", "<transformationName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTransformation with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TransformationsClient client = new TransformationsClient("<SubscriptionId>", credential);
+
+Response response = client.GetTransformation("<resourceGroupName>", "<jobName>", "<transformationName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("streamingUnits").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("validStreamingUnits")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("query").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

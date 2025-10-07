@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSkusAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSkusAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SkuClient client = new SkuClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetSkusAsync("<resourceGroupName>", "<jobName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSkusAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SkuClient client = new SkuClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetSkusAsync("<resourceGroupName>", "<jobName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("resourceType").ToString());
+    Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("minimum").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("maximum").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("default").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("scaleType").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("allowedValues")[0].ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSkus(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSkus and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SkuClient client = new SkuClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetSkus("<resourceGroupName>", "<jobName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSkus with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SkuClient client = new SkuClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetSkus("<resourceGroupName>", "<jobName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("resourceType").ToString());
+    Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("minimum").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("maximum").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("default").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("scaleType").ToString());
+    Console.WriteLine(result.GetProperty("capacity").GetProperty("allowedValues")[0].ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

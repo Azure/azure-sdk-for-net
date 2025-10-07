@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetClusterAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetClusterAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Response response = await client.GetClusterAsync("<resourceGroupName>", "<clusterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetClusterAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Response response = await client.GetClusterAsync("<resourceGroupName>", "<clusterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCluster(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCluster and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Response response = client.GetCluster("<resourceGroupName>", "<clusterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCluster with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Response response = client.GetCluster("<resourceGroupName>", "<clusterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetClustersBySubscriptionAsync(RequestContext)">
+      <example>
+This sample shows how to call GetClustersBySubscriptionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetClustersBySubscriptionAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetClustersBySubscriptionAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetClustersBySubscriptionAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetClustersBySubscription(RequestContext)">
+      <example>
+This sample shows how to call GetClustersBySubscription and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetClustersBySubscription(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetClustersBySubscription with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetClustersBySubscription(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetClustersByResourceGroupAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetClustersByResourceGroupAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetClustersByResourceGroupAsync("<resourceGroupName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetClustersByResourceGroupAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetClustersByResourceGroupAsync("<resourceGroupName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetClustersByResourceGroup(string,RequestContext)">
+      <example>
+This sample shows how to call GetClustersByResourceGroup and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetClustersByResourceGroup("<resourceGroupName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetClustersByResourceGroup with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetClustersByResourceGroup("<resourceGroupName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetStreamingJobsAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetStreamingJobsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetStreamingJobsAsync("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetStreamingJobsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetStreamingJobsAsync("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("streamingUnits").ToString());
+    Console.WriteLine(result.GetProperty("jobState").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetStreamingJobs(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetStreamingJobs and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetStreamingJobs("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetStreamingJobs with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetStreamingJobs("<resourceGroupName>", "<clusterName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("streamingUnits").ToString());
+    Console.WriteLine(result.GetProperty("jobState").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateAsync(WaitUntil,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    sku = new
+    {
+        name = "Default",
+        capacity = 1234,
+    },
+    properties = new object(),
+    tags = new
+    {
+        key = "<tags>",
+    },
+    location = "<location>",
+});
+Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content, matchConditions: null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(WaitUntil,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    sku = new
+    {
+        name = "Default",
+        capacity = 1234,
+    },
+    properties = new object(),
+    tags = new
+    {
+        key = "<tags>",
+    },
+    location = "<location>",
+});
+Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content, matchConditions: null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(WaitUntil,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.UpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call UpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    sku = new
+    {
+        name = "Default",
+        capacity = 1234,
+    },
+    properties = new object(),
+    tags = new
+    {
+        key = "<tags>",
+    },
+    location = "<location>",
+});
+Operation<BinaryData> operation = await client.UpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content, ifMatch: new ETag("<ifMatch>"));
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="Update(WaitUntil,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call Update and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.Update(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Update with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    sku = new
+    {
+        name = "Default",
+        capacity = 1234,
+    },
+    properties = new object(),
+    tags = new
+    {
+        key = "<tags>",
+    },
+    location = "<location>",
+});
+Operation<BinaryData> operation = client.Update(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>", content, ifMatch: new ETag("<ifMatch>"));
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("clusterId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAllocated").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("capacityAssigned").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(WaitUntil,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Operation operation = await client.DeleteAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>");
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Operation operation = await client.DeleteAsync(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>");
+]]></code></example>
+    </member>
+    <member name="Delete(WaitUntil,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Operation operation = client.Delete(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>");
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ClustersClient client = new ClustersClient("<SubscriptionId>", credential);
+
+Operation operation = client.Delete(WaitUntil.Completed, "<resourceGroupName>", "<clusterName>");
+]]></code></example>
+    </member>
+  </members>
+</doc>

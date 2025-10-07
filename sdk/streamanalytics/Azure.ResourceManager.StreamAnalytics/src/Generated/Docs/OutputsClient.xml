@@ -1,0 +1,951 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrReplaceAsync(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrReplaceAsync("<resourceGroupName>", "<jobName>", "<outputName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        datasource = new
+        {
+            properties = new
+            {
+                payloadUri = "<payloadUri>",
+            },
+            type = "Raw",
+        },
+        timeWindow = "<timeWindow>",
+        sizeWindow = 1234,
+        serialization = new
+        {
+            properties = new
+            {
+                deltaTablePath = "<deltaTablePath>",
+                partitionColumns = new object[]
+                {
+                    "<partitionColumns>"
+                },
+            },
+            type = "Delta",
+        },
+        watermarkSettings = new
+        {
+            watermarkMode = "None",
+            maxWatermarkDifferenceAcrossPartitions = "<maxWatermarkDifferenceAcrossPartitions>",
+        },
+        payloadColumnName = "<payloadColumnName>",
+        MessagingCatalogConfiguration = new
+        {
+            endpoint = "<endpoint>",
+            errorPolicy = "Drop",
+            messageGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                    messages = new object[]
+                    {
+                        new
+                        {
+                            id = "<id>",
+                            schemaVersion = "<schemaVersion>",
+                        }
+                    },
+                }
+            },
+            schemaGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                }
+            },
+            format = "NotSet",
+            protocol = "NotSet",
+            schemaFormat = "<schemaFormat>",
+            authenticationMode = "Msi",
+            accessToken = "<accessToken>",
+            refreshToken = "<refreshToken>",
+        },
+        cloudEventProperties = new
+        {
+            key = new object(),
+        },
+    },
+    name = "<name>",
+});
+Response response = await client.CreateOrReplaceAsync("<resourceGroupName>", "<jobName>", "<outputName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplace(string,string,string,RequestContent,MatchConditions,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplace and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrReplace("<resourceGroupName>", "<jobName>", "<outputName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplace with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        datasource = new
+        {
+            properties = new
+            {
+                payloadUri = "<payloadUri>",
+            },
+            type = "Raw",
+        },
+        timeWindow = "<timeWindow>",
+        sizeWindow = 1234,
+        serialization = new
+        {
+            properties = new
+            {
+                deltaTablePath = "<deltaTablePath>",
+                partitionColumns = new object[]
+                {
+                    "<partitionColumns>"
+                },
+            },
+            type = "Delta",
+        },
+        watermarkSettings = new
+        {
+            watermarkMode = "None",
+            maxWatermarkDifferenceAcrossPartitions = "<maxWatermarkDifferenceAcrossPartitions>",
+        },
+        payloadColumnName = "<payloadColumnName>",
+        MessagingCatalogConfiguration = new
+        {
+            endpoint = "<endpoint>",
+            errorPolicy = "Drop",
+            messageGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                    messages = new object[]
+                    {
+                        new
+                        {
+                            id = "<id>",
+                            schemaVersion = "<schemaVersion>",
+                        }
+                    },
+                }
+            },
+            schemaGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                }
+            },
+            format = "NotSet",
+            protocol = "NotSet",
+            schemaFormat = "<schemaFormat>",
+            authenticationMode = "Msi",
+            accessToken = "<accessToken>",
+            refreshToken = "<refreshToken>",
+        },
+        cloudEventProperties = new
+        {
+            key = new object(),
+        },
+    },
+    name = "<name>",
+});
+Response response = client.CreateOrReplace("<resourceGroupName>", "<jobName>", "<outputName>", content, matchConditions: null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(string,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateAsync("<resourceGroupName>", "<jobName>", "<outputName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call UpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        datasource = new
+        {
+            properties = new
+            {
+                payloadUri = "<payloadUri>",
+            },
+            type = "Raw",
+        },
+        timeWindow = "<timeWindow>",
+        sizeWindow = 1234,
+        serialization = new
+        {
+            properties = new
+            {
+                deltaTablePath = "<deltaTablePath>",
+                partitionColumns = new object[]
+                {
+                    "<partitionColumns>"
+                },
+            },
+            type = "Delta",
+        },
+        watermarkSettings = new
+        {
+            watermarkMode = "None",
+            maxWatermarkDifferenceAcrossPartitions = "<maxWatermarkDifferenceAcrossPartitions>",
+        },
+        payloadColumnName = "<payloadColumnName>",
+        MessagingCatalogConfiguration = new
+        {
+            endpoint = "<endpoint>",
+            errorPolicy = "Drop",
+            messageGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                    messages = new object[]
+                    {
+                        new
+                        {
+                            id = "<id>",
+                            schemaVersion = "<schemaVersion>",
+                        }
+                    },
+                }
+            },
+            schemaGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                }
+            },
+            format = "NotSet",
+            protocol = "NotSet",
+            schemaFormat = "<schemaFormat>",
+            authenticationMode = "Msi",
+            accessToken = "<accessToken>",
+            refreshToken = "<refreshToken>",
+        },
+        cloudEventProperties = new
+        {
+            key = new object(),
+        },
+    },
+    name = "<name>",
+});
+Response response = await client.UpdateAsync("<resourceGroupName>", "<jobName>", "<outputName>", content, ifMatch: new ETag("<ifMatch>"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="Update(string,string,string,RequestContent,ETag?,RequestContext)">
+      <example>
+This sample shows how to call Update and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Update("<resourceGroupName>", "<jobName>", "<outputName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Update with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        datasource = new
+        {
+            properties = new
+            {
+                payloadUri = "<payloadUri>",
+            },
+            type = "Raw",
+        },
+        timeWindow = "<timeWindow>",
+        sizeWindow = 1234,
+        serialization = new
+        {
+            properties = new
+            {
+                deltaTablePath = "<deltaTablePath>",
+                partitionColumns = new object[]
+                {
+                    "<partitionColumns>"
+                },
+            },
+            type = "Delta",
+        },
+        watermarkSettings = new
+        {
+            watermarkMode = "None",
+            maxWatermarkDifferenceAcrossPartitions = "<maxWatermarkDifferenceAcrossPartitions>",
+        },
+        payloadColumnName = "<payloadColumnName>",
+        MessagingCatalogConfiguration = new
+        {
+            endpoint = "<endpoint>",
+            errorPolicy = "Drop",
+            messageGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                    messages = new object[]
+                    {
+                        new
+                        {
+                            id = "<id>",
+                            schemaVersion = "<schemaVersion>",
+                        }
+                    },
+                }
+            },
+            schemaGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                }
+            },
+            format = "NotSet",
+            protocol = "NotSet",
+            schemaFormat = "<schemaFormat>",
+            authenticationMode = "Msi",
+            accessToken = "<accessToken>",
+            refreshToken = "<refreshToken>",
+        },
+        cloudEventProperties = new
+        {
+            key = new object(),
+        },
+    },
+    name = "<name>",
+});
+Response response = client.Update("<resourceGroupName>", "<jobName>", "<outputName>", content, ifMatch: new ETag("<ifMatch>"));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = await client.DeleteAsync("<resourceGroupName>", "<jobName>", "<outputName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = await client.DeleteAsync("<resourceGroupName>", "<jobName>", "<outputName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = client.Delete("<resourceGroupName>", "<jobName>", "<outputName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = client.Delete("<resourceGroupName>", "<jobName>", "<outputName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetOutputAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetOutputAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetOutputAsync("<resourceGroupName>", "<jobName>", "<outputName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetOutputAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetOutputAsync("<resourceGroupName>", "<jobName>", "<outputName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetOutput(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetOutput and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = client.GetOutput("<resourceGroupName>", "<jobName>", "<outputName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetOutput with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+Response response = client.GetOutput("<resourceGroupName>", "<jobName>", "<outputName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetOutputsByStreamingJobAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetOutputsByStreamingJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetOutputsByStreamingJobAsync("<resourceGroupName>", "<jobName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetOutputsByStreamingJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetOutputsByStreamingJobAsync("<resourceGroupName>", "<jobName>", "<select>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetOutputsByStreamingJob(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetOutputsByStreamingJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetOutputsByStreamingJob("<resourceGroupName>", "<jobName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetOutputsByStreamingJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetOutputsByStreamingJob("<resourceGroupName>", "<jobName>", "<select>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("datasource").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("timeWindow").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("sizeWindow").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("serialization").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("since").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("diagnostics").GetProperty("conditions")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastOutputEventTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("lastOutputEventTimestamps")[0].GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("watermarkMode").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("watermarkSettings").GetProperty("maxWatermarkDifferenceAcrossPartitions").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("payloadColumnName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("endpoint").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("errorPolicy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("messageGroups")[0].GetProperty("messages")[0].GetProperty("schemaVersion").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaGroups")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("format").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("protocol").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("schemaFormat").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("authenticationMode").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("accessToken").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("MessagingCatalogConfiguration").GetProperty("refreshToken").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cloudEventProperties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="TestAsync(WaitUntil,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call TestAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = null;
+Operation<BinaryData> operation = await client.TestAsync(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<outputName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call TestAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        datasource = new
+        {
+            properties = new
+            {
+                payloadUri = "<payloadUri>",
+            },
+            type = "Raw",
+        },
+        timeWindow = "<timeWindow>",
+        sizeWindow = 1234,
+        serialization = new
+        {
+            properties = new
+            {
+                deltaTablePath = "<deltaTablePath>",
+                partitionColumns = new object[]
+                {
+                    "<partitionColumns>"
+                },
+            },
+            type = "Delta",
+        },
+        watermarkSettings = new
+        {
+            watermarkMode = "None",
+            maxWatermarkDifferenceAcrossPartitions = "<maxWatermarkDifferenceAcrossPartitions>",
+        },
+        payloadColumnName = "<payloadColumnName>",
+        MessagingCatalogConfiguration = new
+        {
+            endpoint = "<endpoint>",
+            errorPolicy = "Drop",
+            messageGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                    messages = new object[]
+                    {
+                        new
+                        {
+                            id = "<id>",
+                            schemaVersion = "<schemaVersion>",
+                        }
+                    },
+                }
+            },
+            schemaGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                }
+            },
+            format = "NotSet",
+            protocol = "NotSet",
+            schemaFormat = "<schemaFormat>",
+            authenticationMode = "Msi",
+            accessToken = "<accessToken>",
+            refreshToken = "<refreshToken>",
+        },
+        cloudEventProperties = new
+        {
+            key = new object(),
+        },
+    },
+    name = "<name>",
+});
+Operation<BinaryData> operation = await client.TestAsync(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<outputName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+]]></code></example>
+    </member>
+    <member name="Test(WaitUntil,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Test and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = null;
+Operation<BinaryData> operation = client.Test(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<outputName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Test with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+OutputsClient client = new OutputsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        datasource = new
+        {
+            properties = new
+            {
+                payloadUri = "<payloadUri>",
+            },
+            type = "Raw",
+        },
+        timeWindow = "<timeWindow>",
+        sizeWindow = 1234,
+        serialization = new
+        {
+            properties = new
+            {
+                deltaTablePath = "<deltaTablePath>",
+                partitionColumns = new object[]
+                {
+                    "<partitionColumns>"
+                },
+            },
+            type = "Delta",
+        },
+        watermarkSettings = new
+        {
+            watermarkMode = "None",
+            maxWatermarkDifferenceAcrossPartitions = "<maxWatermarkDifferenceAcrossPartitions>",
+        },
+        payloadColumnName = "<payloadColumnName>",
+        MessagingCatalogConfiguration = new
+        {
+            endpoint = "<endpoint>",
+            errorPolicy = "Drop",
+            messageGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                    messages = new object[]
+                    {
+                        new
+                        {
+                            id = "<id>",
+                            schemaVersion = "<schemaVersion>",
+                        }
+                    },
+                }
+            },
+            schemaGroups = new object[]
+            {
+                new
+                {
+                    id = "<id>",
+                }
+            },
+            format = "NotSet",
+            protocol = "NotSet",
+            schemaFormat = "<schemaFormat>",
+            authenticationMode = "Msi",
+            accessToken = "<accessToken>",
+            refreshToken = "<refreshToken>",
+        },
+        cloudEventProperties = new
+        {
+            key = new object(),
+        },
+    },
+    name = "<name>",
+});
+Operation<BinaryData> operation = client.Test(WaitUntil.Completed, "<resourceGroupName>", "<jobName>", "<outputName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
