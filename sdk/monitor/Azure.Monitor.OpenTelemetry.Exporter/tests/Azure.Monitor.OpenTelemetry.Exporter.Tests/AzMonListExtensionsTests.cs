@@ -566,7 +566,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerSocketAddress, serverSocketAddress));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbName, "DbName"));
 
-            Assert.Equal(expectedTarget, mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            Assert.Equal(expectedTarget, mappedTags.GetDbDependencyTargetAndName(false).DbTarget);
         }
 
         [Fact]
@@ -574,7 +574,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var mappedTags = AzMonList.Initialize();
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbName, "DbName"));
-            Assert.Equal("DbName", mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            Assert.Equal("DbName", mappedTags.GetDbDependencyTargetAndName(false).DbTarget);
         }
 
         [Fact]
@@ -582,14 +582,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var mappedTags = AzMonList.Initialize();
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbSystem, "DbSystem"));
-            Assert.Equal("DbSystem", mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            Assert.Equal("DbSystem", mappedTags.GetDbDependencyTargetAndName(false).DbTarget);
         }
 
         [Fact]
         public void DbDependencyTargetIsSetToNullByDefault()
         {
             var mappedTags = AzMonList.Initialize();
-            Assert.Null(mappedTags.GetDbDependencyTargetAndName().DbTarget);
+            Assert.Null(mappedTags.GetDbDependencyTargetAndName(false).DbTarget);
         }
     }
 }

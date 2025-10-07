@@ -331,7 +331,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///</summary>
         internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects, bool isNewSchemaVersion)
         {
-
             string statementDbNameKey;
             string statementDbSystemKey;
             if (isNewSchemaVersion) {
@@ -380,7 +379,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Http:
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
-                    return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+                    return tagObjects.GetDbDependencyTargetAndName(type.HasFlag(OperationType.V2)).DbTarget;
                 case OperationType.Messaging:
                     return tagObjects.GetMessagingUrlAndSourceOrTarget(ActivityKind.Producer).SourceOrTarget;
                 default:
