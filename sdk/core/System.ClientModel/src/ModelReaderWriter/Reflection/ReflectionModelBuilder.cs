@@ -22,11 +22,8 @@ internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
 
     private static IPersistableModel<object> GetInstance(Type returnType)
     {
-        var model = GetObjectInstance(returnType) as IPersistableModel<object>;
-        if (model is null)
-        {
+        var model = GetObjectInstance(returnType) as IPersistableModel<object> ??
             throw new InvalidOperationException($"{returnType.ToFriendlyName()} does not implement {nameof(IPersistableModel<object>)}");
-        }
         return model;
     }
 
