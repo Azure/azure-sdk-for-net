@@ -176,22 +176,20 @@ namespace Azure.AI.Projects
         /// <summary> Represents a request for a pending upload. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadConfiguration"/> instance for mocking. </returns>
-        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = default, string connectionName = default, PendingUploadType pendingUploadType = default)
+        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = default, string connectionName = default)
         {
-            return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadConfiguration(pendingUploadId, connectionName, "BlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a pending upload request. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
-        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
+        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
         {
-            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadResult(blobReference, pendingUploadId, version, "BlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Blob reference details. </summary>
@@ -206,11 +204,10 @@ namespace Azure.AI.Projects
 
         /// <summary> SAS Credential definition. </summary>
         /// <param name="sasUri"></param>
-        /// <param name="type"> Type of credential. </param>
         /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
-        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default, string @type = default)
+        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default)
         {
-            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
+            return new BlobReferenceSasCredential(sasUri, "SAS", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a reference to a blob for consumption. </summary>
