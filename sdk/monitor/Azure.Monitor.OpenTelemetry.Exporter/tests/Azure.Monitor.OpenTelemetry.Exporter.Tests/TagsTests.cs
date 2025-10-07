@@ -157,7 +157,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Db | OperationType.V2, activityTagsProcessor.activityType);
-            Assert.Equal(5, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(4, activityTagsProcessor.MappedTags.Length);
             Assert.Equal("mysqlserver", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbNamespace));
             Assert.Equal("mssql", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbSystemName));
             Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributePeerService));
