@@ -18,6 +18,9 @@ namespace Azure.Storage.Blobs.Models
             SkuName.StandardRagrs => "Standard_RAGRS",
             SkuName.StandardZrs => "Standard_ZRS",
             SkuName.PremiumLrs => "Premium_LRS",
+            SkuName.StandardGzrs => "Standard_GZRS",
+            SkuName.PremiumZrs => "Premium_ZRS",
+            SkuName.StandardRagzrs => "Standard_RAGZRS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.")
         };
 
@@ -28,6 +31,9 @@ namespace Azure.Storage.Blobs.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGRS")) return SkuName.StandardRagrs;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_ZRS")) return SkuName.StandardZrs;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS")) return SkuName.PremiumLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_GZRS")) return SkuName.StandardGzrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_ZRS")) return SkuName.PremiumZrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGZRS")) return SkuName.StandardRagzrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.");
         }
     }
