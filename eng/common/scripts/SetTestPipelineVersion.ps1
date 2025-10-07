@@ -43,19 +43,26 @@ else {
   exit 1
 }
 
-# Process packages with appropriate groupId
 if (![String]::IsNullOrWhiteSpace($ArtifactsJson)) {
-  # When using ArtifactsJson, process each artifact with its specific groupId
+  # When using ArtifactsJson, process each artifact with its name and groupId (if applicable)
   try {
     $artifacts = $ArtifactsJson | ConvertFrom-Json
     foreach ($artifact in $artifacts) {
-      $packageName = $artifact.name
-      $groupId = $artifact.groupId
-
-      Write-Host "Processing $packageName with groupId $groupId"
+      $packageName = $artifact.name      
       $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
-      # Use groupId+artifactName format for tag prefix (e.g., "com.azure.v2+azure-sdk-template_")
-      $prefix = "$groupId+$packageName$TagSeparator"
+      $prefix = "$packageName$TagSeparator"
+
+      if ($Language -eq "java") {
+        $groupId = $artifact.groupId
+        Write-Host "Processing $packageName with groupId $groupId"
+        if ([String]::IsNullOrWhiteSpace($groupId)) {
+          LogError "GroupId is missing for package $packageName."
+          exit 1
+        }
+        # Use groupId+artifactName format for tag prefix (e.g., "com.azure.v2+azure-sdk-template_")
+        $prefix = "$groupId+$packageName$TagSeparator"
+      }
+
       Write-Host "Get Latest Tag : git tag -l $prefix*"
       $latestTags = git tag -l "$prefix*"
 
@@ -77,14 +84,20 @@ if (![String]::IsNullOrWhiteSpace($ArtifactsJson)) {
 
       Write-Host "Version to publish [ $($newVersion.ToString()) ]"
 
-      SetPackageVersion -PackageName $packageName `
-        -Version $newVersion.ToString() `
-        -ServiceDirectory $ServiceDirectory `
-        -GroupId $groupId
+      if ($Language -ne "java") {
+        SetPackageVersion -PackageName $packageName `
+          -Version $newVersion.ToString() `
+          -ServiceDirectory $ServiceDirectory
+      } else {
+        SetPackageVersion -PackageName $packageName `
+          -Version $newVersion.ToString() `
+          -ServiceDirectory $ServiceDirectory `
+          -GroupId $groupId
+      }
     }
   }
   catch {
-    LogError "Failed to process ArtifactsJson: $($_.Exception.Message)"
+    LogError "Failed to process ArtifactsJson: $ArtifactsJson, exception: $($_.Exception.Message)"
     exit 1
   }
 } else {
@@ -92,8 +105,7 @@ if (![String]::IsNullOrWhiteSpace($ArtifactsJson)) {
   foreach ($packageName in $packageNamesArray) {
     Write-Host "Processing $packageName"
     $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
-    # For legacy PackageNames, assume com.azure groupId for backward compatibility
-    $prefix = "com.azure+$packageName$TagSeparator"
+    $prefix = "$packageName$TagSeparator"
     Write-Host "Get Latest Tag : git tag -l $prefix*"
     $latestTags = git tag -l "$prefix*"
 
