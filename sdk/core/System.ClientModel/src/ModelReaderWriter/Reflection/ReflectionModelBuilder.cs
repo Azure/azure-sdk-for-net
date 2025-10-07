@@ -22,11 +22,8 @@ internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
 
     private static IPersistableModel<object> GetInstance(Type returnType)
     {
-        var model = GetObjectInstance(returnType) as IPersistableModel<object>;
-        if (model is null)
-        {
+        var model = GetObjectInstance(returnType) as IPersistableModel<object> ??
             throw new InvalidOperationException($"{returnType.ToFriendlyName()} does not implement {nameof(IPersistableModel<object>)}");
-        }
         return model;
     }
 
@@ -40,12 +37,9 @@ internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
             throw new InvalidOperationException($"{returnType.ToFriendlyName()} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
         }
 
-        var obj = Activator.CreateInstance(typeToActivate, true);
-        if (obj is null)
-        {
+        var obj = Activator.CreateInstance(typeToActivate, true) ??
             //we should never get here, but just in case
             throw new InvalidOperationException($"Unable to create instance of {typeToActivate.ToFriendlyName()}.");
-        }
 
         return obj;
     }
