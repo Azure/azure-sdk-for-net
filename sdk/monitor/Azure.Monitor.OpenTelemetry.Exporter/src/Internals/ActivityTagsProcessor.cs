@@ -11,8 +11,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static readonly string[] s_semantics = {
             SemanticConventions.AttributeDbStatement,
+            SemanticConventions.AttributeDbQueryText,
             SemanticConventions.AttributeDbSystem,
+            SemanticConventions.AttributeDbSystemName,
             SemanticConventions.AttributeDbName,
+            SemanticConventions.AttributeDbNamespace,
 
             // required - HTTP
             SemanticConventions.AttributeHttpMethod,
