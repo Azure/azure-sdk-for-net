@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
@@ -35,12 +34,10 @@ namespace Azure.ResourceManager.Maps.Tests
             var parameters = GetDefaultMapsAccountData();
 
             // Create account
-            Thread.Sleep(30000);
             var newAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(newAccount.Data, true, MapsSkuName.G2);
 
             // Now get the account
-            Thread.Sleep(30000);
             var account = (await mapCollection.GetAsync(accountName)).Value;
             VerifyAccountProperties(account.Data, true, MapsSkuName.G2);
 
@@ -69,7 +66,6 @@ namespace Azure.ResourceManager.Maps.Tests
             newParameters.Tags.Clear();
             newParameters.Tags.Add("key3", "value3");
             newParameters.Tags.Add("key4", "value4");
-            Thread.Sleep(30000);
             var updatedAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
             Assert.AreEqual(2, updatedAccount.Data.Tags.Count);
             Assert.AreEqual("value3", updatedAccount.Data.Tags["key3"]);
@@ -91,7 +87,6 @@ namespace Azure.ResourceManager.Maps.Tests
             var newAccount = await CreateDefaultMapsAccount(mapCollection);
 
             // Delete an account
-            Thread.Sleep(30000);
             await newAccount.DeleteAsync(WaitUntil.Completed);
 
             // Delete an account which was just deleted
