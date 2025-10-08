@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.AI.VoiceLive
@@ -113,17 +114,16 @@ namespace Azure.AI.VoiceLive
         /// This provides a unified interface for OpenAI voices, complementing the
         /// existing string-based OAIVoice for backward compatibility.
         /// </summary>
-        /// <param name="type"> The type of the voice. </param>
         /// <param name="name"> The name of the OpenAI voice. </param>
         /// <returns> A new <see cref="VoiceLive.OpenAIVoice"/> instance for mocking. </returns>
-        public static OpenAIVoice OpenAIVoice(string @type = default, OAIVoice name = default)
+        public static OpenAIVoice OpenAIVoice(OAIVoice name = default)
         {
-            return new OpenAIVoice(@type, name, additionalBinaryDataProperties: null);
+            return new OpenAIVoice("openai", name, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Base for Azure voice configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, and <see cref="AzurePersonalVoice"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureCustomVoice"/>, <see cref="VoiceLive.AzureStandardVoice"/>, and <see cref="VoiceLive.AzurePersonalVoice"/>.
         /// </summary>
         /// <param name="type"> The type of the Azure voice. </param>
         /// <returns> A new <see cref="VoiceLive.AzureVoice"/> instance for mocking. </returns>
@@ -211,11 +211,10 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
-        /// <param name="type"> The type of echo cancellation model to use. </param>
         /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
-        public static AudioEchoCancellation AudioEchoCancellation(string @type = default)
+        public static AudioEchoCancellation AudioEchoCancellation()
         {
-            return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
+            return new AudioEchoCancellation("server_echo_cancellation", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
@@ -258,7 +257,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
         /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
-        public static VideoParams VideoParams(int? bitrate = default, string codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
+        public static VideoParams VideoParams(int? bitrate = default, VideoParamsCodec? codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
         {
             return new VideoParams(
                 bitrate,
@@ -320,7 +319,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// The base representation of a voicelive tool definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLiveFunctionDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.VoiceLiveFunctionDefinition"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveToolDefinition"/> instance for mocking. </returns>
@@ -341,7 +340,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.MessageItem"/>, <see cref="VoiceLive.FunctionCallItem"/>, and <see cref="VoiceLive.FunctionCallOutputItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -371,7 +370,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any message content part; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputTextContentPart"/>, <see cref="InputAudioContentPart"/>, and <see cref="OutputTextContentPart"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.InputTextContentPart"/>, <see cref="VoiceLive.InputAudioContentPart"/>, and <see cref="VoiceLive.OutputTextContentPart"/>.
         /// </summary>
         /// <param name="type"> The type of the content part. </param>
         /// <returns> A new <see cref="VoiceLive.MessageContentPart"/> instance for mocking. </returns>
@@ -497,7 +496,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Top-level union for turn detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetectionEn"/>, and <see cref="AzureSemanticVadTurnDetectionMultilingual"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ServerVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.TurnDetection"/> instance for mocking. </returns>
@@ -531,7 +530,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, and <see cref="AzureSemanticEouDetectionMultilingual"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticEouDetection"/>, <see cref="VoiceLive.AzureSemanticEouDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/>.
         /// </summary>
         /// <param name="model"></param>
         /// <returns> A new <see cref="VoiceLive.EouDetection"/> instance for mocking. </returns>
@@ -717,7 +716,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for all non-success response details.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ResponseCancelledDetails"/>, <see cref="VoiceLive.ResponseIncompleteDetails"/>, and <see cref="VoiceLive.ResponseFailedDetails"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseStatusDetails"/> instance for mocking. </returns>
@@ -752,7 +751,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, and <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -786,7 +785,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any content part; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestTextContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="ResponseTextContentPart"/>, and <see cref="ResponseAudioContentPart"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.RequestTextContentPart"/>, <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.ResponseTextContentPart"/>, and <see cref="VoiceLive.ResponseAudioContentPart"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveContentPart"/> instance for mocking. </returns>
@@ -914,7 +913,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionUpdateError"/>, <see cref="SessionUpdateSessionCreated"/>, <see cref="SessionUpdateSessionUpdated"/>, <see cref="SessionUpdateAvatarConnecting"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="SessionUpdateResponseAnimationVisemeDone"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, and <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, and <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>.
         /// </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
@@ -1449,9 +1448,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
         /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
         /// <param name="text"></param>
-        /// <param name="timestampType"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default, string timestampType = default)
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default)
         {
             return new SessionUpdateResponseAudioTimestampDelta(
                 ServerEventType.ResponseAudioTimestampDelta,
@@ -1464,7 +1462,7 @@ namespace Azure.AI.VoiceLive
                 audioOffsetMs,
                 audioDurationMs,
                 text,
-                timestampType);
+                "word");
         }
 
         /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
@@ -1603,6 +1601,79 @@ namespace Azure.AI.VoiceLive
                 callId,
                 arguments,
                 name);
+        }
+
+        /// <summary>
+        /// OpenAI voice configuration with explicit type field.
+        ///             
+        ///             This provides a unified interface for OpenAI voices, complementing the
+        ///             existing string-based OAIVoice for backward compatibility.
+        /// </summary>
+        /// <param name="type"> The type of the voice. </param>
+        /// <param name="name"> The name of the OpenAI voice. </param>
+        /// <returns> A new <see cref="VoiceLive.OpenAIVoice"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OpenAIVoice OpenAIVoice(string @type, OAIVoice name)
+        {
+            return new OpenAIVoice(@type, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
+        /// <param name="type"> The type of echo cancellation model to use. </param>
+        /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AudioEchoCancellation AudioEchoCancellation(string @type)
+        {
+            return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Video streaming parameters for avatar. </summary>
+        /// <param name="bitrate"> Bitrate in bits per second (e.g., 2000000 for 2 Mbps). </param>
+        /// <param name="codec"> Codec to use for encoding. Currently only 'h264' is supported. </param>
+        /// <param name="crop"> Optional cropping settings for the video stream. </param>
+        /// <param name="resolution"> Optional resolution settings for the video stream. </param>
+        /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
+        /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
+        /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VideoParams VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize)
+        {
+            return new VideoParams(
+                bitrate,
+                codec,
+                crop,
+                resolution,
+                background,
+                gopSize,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="outputIndex"></param>
+        /// <param name="contentIndex"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
+        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
+        /// <param name="text"></param>
+        /// <param name="timestampType"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType)
+        {
+            return new SessionUpdateResponseAudioTimestampDelta(
+                ServerEventType.ResponseAudioTimestampDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                contentIndex,
+                audioOffsetMs,
+                audioDurationMs,
+                text,
+                timestampType);
         }
     }
 }
