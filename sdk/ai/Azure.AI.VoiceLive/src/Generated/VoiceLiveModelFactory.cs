@@ -257,7 +257,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
         /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
-        public static VideoParams VideoParams(int? bitrate = default, VideoParamsCodec? codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
+        public static VideoParams VideoParams(int? bitrate = default, string codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
         {
             return new VideoParams(
                 bitrate,
@@ -1625,27 +1625,6 @@ namespace Azure.AI.VoiceLive
         public static AudioEchoCancellation AudioEchoCancellation(string @type)
         {
             return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Video streaming parameters for avatar. </summary>
-        /// <param name="bitrate"> Bitrate in bits per second (e.g., 2000000 for 2 Mbps). </param>
-        /// <param name="codec"> Codec to use for encoding. Currently only 'h264' is supported. </param>
-        /// <param name="crop"> Optional cropping settings for the video stream. </param>
-        /// <param name="resolution"> Optional resolution settings for the video stream. </param>
-        /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
-        /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
-        /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VideoParams VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize)
-        {
-            return new VideoParams(
-                bitrate,
-                codec,
-                crop,
-                resolution,
-                background,
-                gopSize,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
