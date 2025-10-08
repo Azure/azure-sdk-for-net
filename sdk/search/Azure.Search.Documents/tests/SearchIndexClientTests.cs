@@ -458,7 +458,10 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
 
-            AnalyzeTextOptions request = new("I dARe YoU tO reAd It IN A nORmAl vOiCE.", LexicalNormalizerName.Lowercase);
+            AnalyzeTextOptions request = new("I dARe YoU tO reAd It IN A nORmAl vOiCE.")
+            {
+                NormalizerName = LexicalNormalizerName.Lowercase
+            };
 
             Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
@@ -466,7 +469,10 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(1, tokens.Count);
             Assert.AreEqual("i dare you to read it in a normal voice.", tokens[0].Token);
 
-            request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.", LexicalNormalizerName.AsciiFolding);
+            request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.")
+            {
+                NormalizerName = LexicalNormalizerName.AsciiFolding
+            };
 
             result = await client.AnalyzeTextAsync(resources.IndexName, request);
             tokens = result.Value;

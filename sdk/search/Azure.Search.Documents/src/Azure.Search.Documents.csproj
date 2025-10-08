@@ -17,7 +17,6 @@
     <NoWarn>
      $(NoWarn);
      AZC0004;
-     AZC0035; <!-- Missing model factory methods.  #51224-->
     </NoWarn>
   </PropertyGroup>
 
@@ -31,7 +30,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
 

@@ -412,5 +412,124 @@ namespace Azure.Search.Documents.Models
             bool succeeded,
             int status) =>
             new IndexingResult(key, errorMessage, succeeded, status, serializedAdditionalRawData: null);
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="description"> The description of the index. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
+        /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
+        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
+        /// <param name="suggesters"> The suggesters for the index. </param>
+        /// <param name="analyzers">
+        /// The analyzers for the index.
+        /// Please note <see cref="LexicalAnalyzer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/> and <see cref="StopAnalyzer"/>.
+        /// </param>
+        /// <param name="tokenizers">
+        /// The tokenizers for the index.
+        /// Please note <see cref="LexicalTokenizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ClassicTokenizer"/>, <see cref="EdgeNGramTokenizer"/>, <see cref="KeywordTokenizer"/>, <see cref="MicrosoftLanguageStemmingTokenizer"/>, <see cref="MicrosoftLanguageTokenizer"/>, <see cref="NGramTokenizer"/>, <see cref="PathHierarchyTokenizer"/>, <see cref="PatternTokenizer"/>, <see cref="LuceneStandardTokenizer"/> and <see cref="UaxUrlEmailTokenizer"/>.
+        /// </param>
+        /// <param name="tokenFilters">
+        /// The token filters for the index.
+        /// Please note <see cref="TokenFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AsciiFoldingTokenFilter"/>, <see cref="CjkBigramTokenFilter"/>, <see cref="CommonGramTokenFilter"/>, <see cref="DictionaryDecompounderTokenFilter"/>, <see cref="EdgeNGramTokenFilter"/>, <see cref="ElisionTokenFilter"/>, <see cref="KeepTokenFilter"/>, <see cref="KeywordMarkerTokenFilter"/>, <see cref="LengthTokenFilter"/>, <see cref="LimitTokenFilter"/>, <see cref="NGramTokenFilter"/>, <see cref="PatternCaptureTokenFilter"/>, <see cref="PatternReplaceTokenFilter"/>, <see cref="PhoneticTokenFilter"/>, <see cref="ShingleTokenFilter"/>, <see cref="SnowballTokenFilter"/>, <see cref="StemmerOverrideTokenFilter"/>, <see cref="StemmerTokenFilter"/>, <see cref="StopwordsTokenFilter"/>, <see cref="SynonymTokenFilter"/>, <see cref="TruncateTokenFilter"/>, <see cref="UniqueTokenFilter"/> and <see cref="WordDelimiterTokenFilter"/>.
+        /// </param>
+        /// <param name="charFilters">
+        /// The character filters for the index.
+        /// Please note <see cref="CharFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MappingCharFilter"/> and <see cref="PatternReplaceCharFilter"/>.
+        /// </param>
+        /// <param name="normalizers">
+        /// The normalizers for the index.
+        /// Please note <see cref="LexicalNormalizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomNormalizer"/>.
+        /// </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="similarity">
+        /// The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used.
+        /// Please note <see cref="SimilarityAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BM25Similarity"/> and <see cref="ClassicSimilarity"/>.
+        /// </param>
+        /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
+        /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
+        /// <param name="etag"> The ETag of the index. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public static SearchIndex SearchIndex(string name = null, string description = null, IList<SearchField> fields = null, IList<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IList<SearchSuggester> suggesters = null, IList<LexicalAnalyzer> analyzers = null, IList<LexicalTokenizer> tokenizers = null, IList<TokenFilter> tokenFilters = null, IList<CharFilter> charFilters = null, IList<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSearch semanticSearch = null, VectorSearch vectorSearch = null, string etag = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        {
+            fields ??= new List<SearchField>();
+            scoringProfiles ??= new List<ScoringProfile>();
+            suggesters ??= new List<SearchSuggester>();
+            analyzers ??= new List<LexicalAnalyzer>();
+            tokenizers ??= new List<LexicalTokenizer>();
+            tokenFilters ??= new List<TokenFilter>();
+            charFilters ??= new List<CharFilter>();
+            normalizers ??= new List<LexicalNormalizer>();
+            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, etag, serializedAdditionalRawData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
+        /// <param name="name"> The name of the datasource. </param>
+        /// <param name="description"> The description of the datasource. </param>
+        /// <param name="type"> The type of the datasource. </param>
+        /// <param name="connectionString"> Credentials for the datasource. </param>
+        /// <param name="container"> The data container for the datasource. </param>
+        /// <param name="dataChangeDetectionPolicy">
+        /// The data change detection policy for the datasource.
+        /// The available derived classes include <see cref="HighWaterMarkChangeDetectionPolicy"/> and <see cref="SqlIntegratedChangeTrackingPolicy"/>.
+        /// </param>
+        /// <param name="dataDeletionDetectionPolicy">
+        /// The data deletion detection policy for the datasource.
+        /// The available derived classes include <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
+        /// </param>
+        /// <param name="etag"> The ETag of the data source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition. Once you have encrypted your data source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public static SearchIndexerDataSourceConnection SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, string connectionString, SearchIndexerDataContainer container, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string etag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+            return new SearchIndexerDataSourceConnection(name, description, type, connectionString, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, etag, encryptionKey, serializedAdditionalRawData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexer"/>. </summary>
+        /// <param name="name"> The name of the indexer. </param>
+        /// <param name="description"> The description of the indexer. </param>
+        /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
+        /// <param name="skillsetName"> The name of the skillset executing with this indexer. </param>
+        /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        /// <param name="schedule"> The schedule for this indexer. </param>
+        /// <param name="parameters"> Parameters for indexer execution. </param>
+        /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
+        /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
+        /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
+        /// <param name="etag"> The ETag of the indexer. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public static SearchIndexer SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, string etag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            fieldMappings ??= new List<FieldMapping>();
+            outputFieldMappings ??= new List<FieldMapping>();
+            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, serializedAdditionalRawData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
+        /// <param name="name"> The name of the synonym map. </param>
+        /// <param name="format"> The format of the synonym map. Only the 'solr' format is currently supported. </param>
+        /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="etag"> The ETag of the synonym map. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public static SynonymMap SynonymMap(string name, string format, string synonyms, SearchResourceEncryptionKey encryptionKey, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+            return new SynonymMap(name, format, synonyms, encryptionKey, etag, serializedAdditionalRawData);
+        }
     }
 }
