@@ -14,7 +14,7 @@ namespace UtilityMethods
     {
         // Static JSON representation for create vm operations
 
-        private static readonly string CreateVmJsonContent = @"
+        private static readonly string _ = @"
             {
               ""resourceConfigParameters"": {
                 ""resourceCount"": 1,
@@ -117,13 +117,13 @@ namespace UtilityMethods
             }";
 
         // Amount of time to wait between each polling request
-        private static readonly int PollingIntervalInSeconds = 15;
+        private static readonly int s_pollingIntervalInSeconds = 15;
 
         // Amount of time to wait before polling requests start, this is because the p50 for compute operations is approximately 2 minutes
-        private static readonly int InitialWaitTimeBeforePollingInSeconds = 30;
+        private static readonly int s_initialWaitTimeBeforePollingInSeconds = 30;
 
         // Timeout for polling operation status
-        private static readonly int OperationTimeoutInMinutes = 125;
+        private static readonly int s_operationTimeoutInMinutes = 125;
 
         /// <summary>
         ///   Utility method to get the first subnet id from a virtual network  
@@ -132,10 +132,15 @@ namespace UtilityMethods
         /// <returns></returns>
         public static ResourceIdentifier GetSubnetId(GenericResource vnet)
         {
-            var properties = vnet.Data.Properties.ToObjectFromJson() as Dictionary<string, object>;
-            var subnets = properties["subnets"] as IEnumerable<object>;
-            var subnet = subnets.First() as IDictionary<string, object>;
-            return new ResourceIdentifier(subnet["id"] as string);
+            if (vnet.Data.Properties.ToObjectFromJson() is not Dictionary<string, object> properties || !properties.TryGetValue("subnets", out var subnetsObj) || subnetsObj is not IEnumerable<object> subnets)
+            {
+                throw new InvalidOperationException("The virtual network does not contain any subnets.");
+            }
+            if (subnets.FirstOrDefault() is not IDictionary<string, object> subnet || !subnet.TryGetValue("id", out var idObj) || idObj is not string id)
+            {
+                throw new InvalidOperationException("The subnet does not contain a valid 'id' property.");
+            }
+            return new ResourceIdentifier(id);
         }
 
         /// <summary>
@@ -199,7 +204,7 @@ namespace UtilityMethods
         public static bool IsOperationTerminal(ScheduledActionOperationState? state)
         {
             return state != null &&
-                (state == ScheduledActionOperationState.Succeeded |
+                (state == ScheduledActionOperationState.Succeeded ||
                 state == ScheduledActionOperationState.Failed ||
                 state == ScheduledActionOperationState.Cancelled);
         }
@@ -305,7 +310,7 @@ namespace UtilityMethods
 
         public static async Task<Dictionary<string, ResourceIdentifier>> PollOperationStatus(HashSet<string> opIdsFromOperationReq, Dictionary<string, ResourceOperationDetails> completedOps, string location, SubscriptionResource resource)
         {
-            await Task.Delay(InitialWaitTimeBeforePollingInSeconds);
+            await Task.Delay(s_initialWaitTimeBeforePollingInSeconds);
 
             GetOperationStatusContent getOpsStatusRequest = new(opIdsFromOperationReq, Guid.NewGuid().ToString());
             GetOperationStatusResult? response = await resource.GetVirtualMachineOperationStatusAsync(location, getOpsStatusRequest);
@@ -313,7 +318,7 @@ namespace UtilityMethods
             var opIdsToResourceIds = new Dictionary<string, ResourceIdentifier>();
 
             // Cancellation token source is used in this case to cancel the polling operation after a certain time
-            using CancellationTokenSource cts = new(TimeSpan.FromMinutes(OperationTimeoutInMinutes));
+            using CancellationTokenSource cts = new(TimeSpan.FromMinutes(s_operationTimeoutInMinutes));
             while (!cts.Token.IsCancellationRequested)
             {
 
@@ -330,7 +335,7 @@ namespace UtilityMethods
                     response = await resource.GetVirtualMachineOperationStatusAsync(location, pendingOpIds);
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(PollingIntervalInSeconds), cts.Token);
+                await Task.Delay(TimeSpan.FromSeconds(s_pollingIntervalInSeconds), cts.Token);
             }
 
             return opIdsToResourceIds;
