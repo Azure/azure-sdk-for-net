@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Foundations;
@@ -39,7 +40,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A base class for connection credentials
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AIProjectConnectionApiKeyCredential"/>, <see cref="Projects.AIProjectConnectionEntraIdCredential"/>, <see cref="Projects.AIProjectConnectionCustomCredential"/>, <see cref="Projects.AIProjectConnectionSasCredential"/>, and <see cref="Projects.NoAuthenticationCredentials"/>.
         /// </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <returns> A new <see cref="Projects.AIProjectConnectionBaseCredential"/> instance for mocking. </returns>
@@ -90,7 +91,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// DatasetVersion Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataset"/> and <see cref="FolderDataset"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FileDataset"/> and <see cref="Projects.FolderDataset"/>.
         /// </summary>
         /// <param name="dataUri"></param>
         /// <param name="type"> Dataset type. </param>
@@ -173,25 +174,14 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Represents a request for a pending upload. </summary>
-        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
-        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
-        /// <returns> A new <see cref="Projects.PendingUploadConfiguration"/> instance for mocking. </returns>
-        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = default, string connectionName = default, PendingUploadType pendingUploadType = default)
-        {
-            return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Represents the response for a pending upload request. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
-        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
+        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
         {
-            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadResult(blobReference, pendingUploadId, version, "BlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Blob reference details. </summary>
@@ -206,11 +196,10 @@ namespace Azure.AI.Projects
 
         /// <summary> SAS Credential definition. </summary>
         /// <param name="sasUri"></param>
-        /// <param name="type"> Type of credential. </param>
         /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
-        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default, string @type = default)
+        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default)
         {
-            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
+            return new BlobReferenceSasCredential(sasUri, "SAS", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a reference to a blob for consumption. </summary>
@@ -223,7 +212,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Index resource Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="AIProjectCosmosDBIndex"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAISearchIndex"/>, <see cref="Projects.ManagedAzureAISearchIndex"/>, and <see cref="Projects.AIProjectCosmosDBIndex"/>.
         /// </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -362,7 +351,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Model Deployment Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModelDeployment"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ModelDeployment"/>.
         /// </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
@@ -413,6 +402,28 @@ namespace Azure.AI.Projects
                 size,
                 tier,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the response for a pending upload request. </summary>
+        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="pendingUploadId"> ID for this upload request. </param>
+        /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
+        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
+        /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType)
+        {
+            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> SAS Credential definition. </summary>
+        /// <param name="sasUri"></param>
+        /// <param name="type"> Type of credential. </param>
+        /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri, string @type)
+        {
+            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
         }
     }
 }

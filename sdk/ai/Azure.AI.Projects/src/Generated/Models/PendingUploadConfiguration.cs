@@ -14,8 +14,13 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadConfiguration"/>. </summary>
-        public PendingUploadConfiguration()
+        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pendingUploadType"/> is null. </exception>
+        public PendingUploadConfiguration(PendingUploadType pendingUploadType)
         {
+            Argument.AssertNotNull(pendingUploadType, nameof(pendingUploadType));
+
+            PendingUploadType = pendingUploadType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadConfiguration"/>. </summary>
@@ -36,8 +41,5 @@ namespace Azure.AI.Projects
 
         /// <summary> Azure Storage Account connection name to use for generating temporary SAS token. </summary>
         public string ConnectionName { get; set; }
-
-        /// <summary> BlobReference is the only supported type. </summary>
-        public PendingUploadType PendingUploadType { get; } = "BlobReference";
     }
 }

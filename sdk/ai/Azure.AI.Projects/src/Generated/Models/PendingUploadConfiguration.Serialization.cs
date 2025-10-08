@@ -42,7 +42,7 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(ConnectionName);
             }
             writer.WritePropertyName("pendingUploadType"u8);
-            writer.WriteStringValue(PendingUploadType.ToString());
+            writer.WriteStringValue(PendingUploadType.ToSerialString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,7 +103,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("pendingUploadType"u8))
                 {
-                    pendingUploadType = new PendingUploadType(prop.Value.GetString());
+                    pendingUploadType = prop.Value.GetString().ToPendingUploadType();
                     continue;
                 }
                 if (options.Format != "W")
