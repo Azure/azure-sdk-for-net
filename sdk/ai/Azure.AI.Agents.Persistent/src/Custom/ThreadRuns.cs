@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -435,7 +434,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response SubmitToolOutputsToRunInternal(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs = null, IEnumerable<ToolApproval> toolApprovals = null, bool? stream = null, CancellationToken cancellationToken = default)
+        internal virtual Response SubmitToolOutputsToRunInternal(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = null, IEnumerable<ToolApproval> toolApprovals = null, bool? stream = null, CancellationToken cancellationToken = default)
         {
             // We hide this method because setting stream to true will result in streaming response,
             // which cannot be deserialized to ThreadRun.
@@ -455,7 +454,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolApprovals"> A list of tools for which the approval is being submitted. </param>
         /// <param name="stream"> If true, returns a stream of events that happen during the Run as server-sent events, terminating when the run enters a terminal state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response> SubmitToolOutputsToRunAsyncInternal(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, bool? stream = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> SubmitToolOutputsToRunAsyncInternal(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, bool? stream = null, CancellationToken cancellationToken = default)
         {
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
                 toolOutputs.ToList(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
@@ -501,7 +500,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default,  CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken);
@@ -529,6 +528,69 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+        /// /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(run, nameof(run));
+            Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+        /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default,  CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(run, nameof(run));
+            Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(run, nameof(run));
+            Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(run, nameof(run));
+            Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+        /// /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs=default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(run, nameof(run));
+            Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 

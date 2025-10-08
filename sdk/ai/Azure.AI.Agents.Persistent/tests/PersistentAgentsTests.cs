@@ -112,6 +112,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             MicrosoftFabric,
             Sharepoint,
             CodeInterpreter,
+            ComputerUse,
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -167,6 +168,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
             {ToolTypes.Sharepoint, "Hello, summarize the key points of the first document in the list."},
             {ToolTypes.CodeInterpreter,  "What feature does Smart Eyewear offer?"},
+            {ToolTypes.ComputerUse, "I can see a web browser with bing.com open and the cursor in the search box. Type 'movies near me' without pressing Enter or any other key. Only type 'movies near me'."},
         };
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
@@ -184,6 +186,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.MicrosoftFabric, "You are helpful agent."},
             {ToolTypes.Sharepoint, "You are helpful agent."},
             {ToolTypes.CodeInterpreter, "You are helpful agent."},
+            {ToolTypes.ComputerUse, "You are an computer automation assistant. Use the computer_use_preview tool to interact with the screen when needed."}
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
@@ -1128,7 +1131,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     },
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided functions to help answer questions.",
                 tools: new List<ToolDefinition> { getFavouriteNameTool }
@@ -1184,7 +1187,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                     if (argType == ArgumentType.Metadata)
                     {
-                        toolRun = await client.Runs.SubmitToolOutputsToRunAsync(toolRun, toolOutputs);
+                        toolRun = await client.Runs.SubmitToolOutputsToRunAsync(toolRun, toolOutputs, toolApprovals: null);
                     }
                     else
                     {
@@ -1886,7 +1889,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 tools.Add(incorrectGeHhumidityByAddressTool);
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                    model: "gpt-4o-mini",
+                    model: "gpt-4o",
                     name: AGENT_NAME,
                     instructions: "Use the provided functions to help answer questions.",
                     tools: tools
@@ -2358,6 +2361,98 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.That(response.Contains(expectedWord), $"The word {expectedWord} was not found in the response: {response}");
         }
 
+        [RecordedTest]
+        public async Task TestComputerUsage()
+        {
+            ComputerUseToolDefinition computerUse = new(
+                computerUsePreview: new ComputerUseToolParameters(
+                    displayWidth: 1026,
+                    displayHeight: 769,
+                    environment: "windows"
+                )
+            );
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "gpt-4o",
+                instruction: ToolInstructions[ToolTypes.ComputerUse],
+                tools: [computerUse]
+            );
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            List<MessageInputContentBlock> contentBlocks = [
+                new MessageInputTextBlock(text: ToolPrompts[ToolTypes.ComputerUse]),
+            new MessageInputImageUriBlock(imageUrl: new MessageImageUriParam(uri: GetEncodedImage("cua_screenshot.jpg")))
+            ];
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                contentBlocks: contentBlocks
+            );
+            ThreadRun run = await client.Runs.CreateRunAsync(
+                thread.Id,
+                agent.Id);
+                do
+            {
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(500));
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+
+                if (run.Status == RunStatus.RequiresAction
+                    && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
+                {
+                    Console.WriteLine("Run requires action:");
+                    if (submitToolOutputsAction.ToolCalls == null || !submitToolOutputsAction.ToolCalls.Any())
+                    {
+                        Console.WriteLine("No tool calls provided - cancelling run");
+                        await client.Runs.CancelRunAsync(threadId: run.ThreadId, runId: run.Id);
+                        break;
+                    }
+
+                    List<ComputerToolOutput> toolOutputs = [];
+                    foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
+                    {
+                        ComputerToolOutput toolOutput = GetResolvedToolOutput(toolCall: toolCall, imageUri: GetEncodedImage("cua_screenshot_next.jpg"));
+                        if (toolOutput != null)
+                        {
+                            toolOutputs.Add(toolOutput);
+                            Console.WriteLine($"Tool outputs: {toolOutput}");
+                        }
+                    }
+                    run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs: toolOutputs, toolApprovals: null);
+                }
+            }
+            while (run.Status == RunStatus.Queued
+            || run.Status == RunStatus.InProgress
+            || run.Status == RunStatus.RequiresAction);
+            Assert.AreEqual(
+                RunStatus.Completed,
+                run.Status,
+                run.LastError?.Message);
+            // TODO: Uncomment the check for run steps when the issue with the service will be resolved.
+            //IEnumerable<RunStep> steps = client.Runs.GetRunSteps(run).Where((x) => x.StepDetails is RunStepToolCallDetails);
+            //Assert.That(steps.Any(), "No tool call were found.");
+            //bool computerCallFound = false;
+            //foreach (RunStep step in steps)
+            //{
+            //    if (step.StepDetails is RunStepToolCallDetails details)
+            //    {
+            //        foreach (RunStepToolCall call in details.ToolCalls)
+            //        {
+            //            if (call is RunStepComputerUseToolCall)
+            //            {
+            //                computerCallFound = true;
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    if (computerCallFound)
+            //        break;
+            //}
+            //Assert.True(computerCallFound, "Computer use call was not found.");
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: thread.Id).ToListAsync();
+            Assert.Greater(messages.Count, 1);
+        }
+
         #region Helpers
         private static async Task ValidateStream(
             PersistentAgentsClient client,
@@ -2539,10 +2634,17 @@ namespace Azure.AI.Agents.Persistent.Tests
             return batch;
         }
 
-        private static string GetFile([CallerFilePath] string pth = "", string fileName= FILE_NAME)
+        private static string GetFile([CallerFilePath] string pth = "", string fileName = FILE_NAME)
         {
             var dirName = Path.GetDirectoryName(pth) ?? "";
             return Path.Combine(new string[] { dirName, "TestData", fileName });
+        }
+
+        private static string GetEncodedImage(string name)
+        {
+            string imagePath = GetFile(fileName: name);
+            string imageBase64 = Convert.ToBase64String(File.ReadAllBytes(imagePath));
+            return $"data:image/jpeg;base64,{imageBase64}";
         }
 
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
@@ -2733,7 +2835,36 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.Fail(errorStep.Value.LastError.Message);
             }
         }
+        private static ComputerToolOutput GetResolvedToolOutput(RequiredToolCall toolCall, string imageUri)
+        {
+            if (toolCall is RequiredComputerUseToolCall computerUseToolCall)
+            {
+                Console.WriteLine($"Executing computer use action: {computerUseToolCall.ComputerUsePreview.Action.Type}");
+                ComputerScreenshot screenshot = new()
+                {
+                    ImageUrl = imageUri
+                };
+                if (computerUseToolCall.ComputerUsePreview.Action is TypeAction typeAction)
+                {
+                    Console.WriteLine($"    Text to type: {typeAction.Text}");
+                    // (add hook to input text in managed environment API here)
 
+                    ComputerToolOutput output = new(output: screenshot);
+                    output.ToolCallId = toolCall.Id;
+                    return output;
+                }
+                if (computerUseToolCall.ComputerUsePreview.Action is ScreenshotAction screenshotAction)
+                {
+                    Console.WriteLine($"    Screenshot requested");
+                    // (add hook to take screenshot in managed environment API here)
+
+                    ComputerToolOutput output = new(output: screenshot);
+                    output.ToolCallId = toolCall.Id;
+                    return output;
+                }
+            }
+            return null;
+        }
         #endregion
         #region Cleanup
         [TearDown]

@@ -155,7 +155,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
+                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs,toolApprovals: null);
             }
         }
         while (run.Status == RunStatus.Queued
