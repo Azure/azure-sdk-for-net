@@ -814,7 +814,10 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode FeatureVersionMismatch { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode FileLockConflict { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode FileShareProvisionedBandwidthDowngradeNotAllowed { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode FileShareProvisionedBandwidthInvalid { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode FileShareProvisionedIopsDowngradeNotAllowed { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode FileShareProvisionedIopsInvalid { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode FileShareProvisionedStorageInvalid { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode InsufficientAccountPermissions { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode InternalError { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode InvalidAuthenticationInfo { get { throw null; } }
@@ -859,6 +862,10 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotNotFound { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotOperationNotSupported { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode SharingViolation { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode TotalSharesCountExceedsAccountLimit { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode TotalSharesProvisionedBandwidthExceedsAccountLimit { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode TotalSharesProvisionedCapacityExceedsAccountLimit { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode TotalSharesProvisionedIopsExceedsAccountLimit { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode UnsupportedHeader { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode UnsupportedHttpVerb { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode UnsupportedQueryParameter { get { throw null; } }
