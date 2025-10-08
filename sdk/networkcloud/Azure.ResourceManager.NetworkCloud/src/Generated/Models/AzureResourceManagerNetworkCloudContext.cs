@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(BareMetalMachinePowerOffContent))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineReplaceContent))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineRunCommandContent))]
-    [ModelReaderWriterBuildable(typeof(BareMetalMachineRunDataExtractsParameters))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineRunReadCommandsContent))]
     [ModelReaderWriterBuildable(typeof(BgpAdvertisement))]
     [ModelReaderWriterBuildable(typeof(BgpServiceLoadBalancerConfiguration))]

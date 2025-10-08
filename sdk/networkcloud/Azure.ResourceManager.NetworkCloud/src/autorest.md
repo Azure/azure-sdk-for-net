@@ -18,6 +18,10 @@ sample-gen:
     # Not support generate samples from customized operations
     - AgentPools_Delete
     - BareMetalMachineKeySets_Delete
+    - BareMetalMachines_RunDataExtracts
+    - BareMetalMachines_RunDataExtractsAsync
+    - BareMetalMachines_RunDataExtractsRestricted
+    - BareMetalMachines_RunDataExtractsRestrictedAsync
     - BmcKeySets_Delete
     - CloudServicesNetworks_Delete
     - ClusterManagers_Delete
@@ -202,6 +206,10 @@ directive:
   # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
   - remove-operation: BareMetalMachines_CreateOrUpdate
   - remove-operation: BareMetalMachines_Delete
+  - remove-operation: BareMetalMachines_RunDataExtracts
+  - remove-operation: BareMetalMachines_RunDataExtractsAsync
+  - remove-operation: BareMetalMachines_RunDataExtractsRestricted
+  - remove-operation: BareMetalMachines_RunDataExtractsRestrictedAsync
   - remove-operation: Racks_CreateOrUpdate
   - remove-operation: Racks_Delete
   - remove-operation: StorageAppliances_CreateOrUpdate
