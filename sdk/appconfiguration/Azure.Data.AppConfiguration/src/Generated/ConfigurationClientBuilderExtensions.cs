@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Azure.Data.AppConfiguration;
@@ -23,6 +24,35 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(configuration);
+        }
+
+        /// <summary> Registers a <see cref="FeatureFlagClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="connectionString"> Connection string with authentication option and related parameters. </param>
+        public static IAzureClientBuilder<FeatureFlagClient, FeatureFlagClientOptions> AddFeatureFlagClient<TBuilder>(this TBuilder builder, string connectionString)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<FeatureFlagClient, FeatureFlagClientOptions>(options => new FeatureFlagClient(connectionString, options));
+        }
+
+        /// <summary> Registers a <see cref="FeatureFlagClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The  referencing the app configuration storage. </param>
+        public static IAzureClientBuilder<FeatureFlagClient, FeatureFlagClientOptions> AddFeatureFlagClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<FeatureFlagClient, FeatureFlagClientOptions>((options, credential) => new FeatureFlagClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="FeatureFlagClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<FeatureFlagClient, FeatureFlagClientOptions> AddFeatureFlagClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<FeatureFlagClient, FeatureFlagClientOptions>(configuration);
         }
     }
 }
