@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
         /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VideoParams(int? bitrate, VideoParamsCodec? codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VideoParams(int? bitrate, string codec, VideoCrop crop, VideoResolution resolution, VideoBackground background, int? gopSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bitrate = bitrate;
             Codec = codec;
@@ -42,9 +42,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Bitrate in bits per second (e.g., 2000000 for 2 Mbps). </summary>
         public int? Bitrate { get; set; }
-
-        /// <summary> Codec to use for encoding. Currently only 'h264' is supported. </summary>
-        public VideoParamsCodec? Codec { get; set; }
 
         /// <summary> Optional cropping settings for the video stream. </summary>
         public VideoCrop Crop { get; set; }
