@@ -86,7 +86,7 @@ function Should-Process-Package($packageInfo)
     $modifiedFiles  = @(Get-ChangedFiles -DiffPath "$packagePath/*" -DiffFilterType '')
     $filteredFileCount = $modifiedFiles.Count
     LogInfo "Number of modified files for package: $filteredFileCount"
-    return ($filteredFileCount -gt 0 -and $pkgInfo.IsNewSdk)
+    return ($filteredFileCount -gt 0 -and $packageInfo.IsNewSdk)
 }
 
 function Log-Input-Params()
@@ -165,7 +165,7 @@ foreach ($packageInfoFile in $packageInfoFiles)
         }
         else
         {
-            LogInfo "Pull request does not have any change for $($pkgArtifactName)). Skipping API change detect."
+            LogInfo "Pull request does not have any change for $($pkgArtifactName). Skipping API change detect."
         }
     }
     else
