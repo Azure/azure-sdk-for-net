@@ -38,7 +38,7 @@
     "dist/generator/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20251008.1"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20251008.2"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.28",
