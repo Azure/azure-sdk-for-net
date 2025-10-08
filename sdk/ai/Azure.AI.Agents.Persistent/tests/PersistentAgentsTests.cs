@@ -2318,7 +2318,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 model: "gpt-4o",
                 instruction: "Analyze images from internally uploaded files."
             );
-            PersistentAgentThread thread = client.Threads.CreateThread();
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
             var contentBlocks = new List<MessageInputContentBlock>
             {
                 new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
@@ -2334,11 +2334,24 @@ namespace Azure.AI.Agents.Persistent.Tests
                 contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
             }
 
-            PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
-                threadId: thread.Id,
-                role: MessageRole.User,
-                contentBlocks: contentBlocks
-            );
+            // TODO: Leave only async method when the 4734953(VSTS) will be resolved.
+            PersistentThreadMessage imageMessage;
+            if (IsAsync)
+            {
+                imageMessage = await client.Messages.CreateMessageAsync(
+                    threadId: thread.Id,
+                    role: MessageRole.User,
+                    contentBlocks: contentBlocks
+                );
+            }
+            else
+            {
+                imageMessage = client.Messages.CreateMessage(
+                    threadId: thread.Id,
+                    role: MessageRole.User,
+                    contentBlocks: contentBlocks
+                );
+            }
             ThreadRun run = client.Runs.CreateRun(
                 threadId: thread.Id,
                 assistantId: agent.Id
