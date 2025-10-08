@@ -40,7 +40,6 @@ If any details are missing, prompt the user accordingly:
 
 ## Step 5: Update SDK Details in Release Plan
 - Refer to #file:sdk-details-in-release-plan.instructions.md to add languages and package names to the release plan
-- If the TypeSpec project is for a management plane, refer to #file:verify-namespace-approval.instructions.md if this is first release of SDK.
 
 ## Step 6: Link SDK Pull Requests (if applicable)
 - Ask the user if they have already created SDK pull requests locally for any programming language
